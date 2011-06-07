@@ -1,0 +1,21 @@
+- line fitting for 2D and 3D points
+- polynomial
+
+- Should the difference between points and vectors be removed? algs seem to turn points into
+vectors on a whim.
+
+--------
+Split into these packages:
+- Structures
+  * data structures
+  * tests for equality
+  * other basic stuff
+- metric
+  * distance between objects
+  * closest point between objects
+- fitting
+  * best fit motion given associated points
+  * best fit lines
+
+Don't get into robust techniques, such as RANSAC
+No iterative, only closed form solutions for now
