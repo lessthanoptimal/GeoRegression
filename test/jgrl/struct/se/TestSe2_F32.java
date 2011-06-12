@@ -17,43 +17,36 @@
  * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jgrl.struct.affine;
+package jgrl.struct.se;
 
 import jgrl.struct.GenericInvertibleTransformTests_F32;
 import jgrl.struct.InvertibleTransform;
 import jgrl.struct.point.Point2D_F32;
-import jgrl.transform.affine.AffinePointOps;
+import jgrl.transform.se.SePointOps_F32;
 
 import java.util.Random;
 
 /**
  * @author Peter Abeles
  */
-public class TestAffine2D_F32 extends GenericInvertibleTransformTests_F32<Point2D_F32> {
+public class TestSe2_F32 extends GenericInvertibleTransformTests_F32<Point2D_F32> {
 
 	Random rand = new Random();
 
 	@Override
 	public Point2D_F32 createRandomPoint() {
-		return new Point2D_F32((float) (float) rand.nextGaussian() * 3,
-				(float) (float) rand.nextGaussian() * 3);
+		return new Point2D_F32((float) rand.nextGaussian() * 3,
+				(float) rand.nextGaussian() * 3);
 	}
 
 	@Override
-	public Affine2D_F32 createRandomTransform() {
-
-		float a11 = (float) (float) rand.nextGaussian() * 3.0f;
-		float a12 = (float) (float) rand.nextGaussian() * 3.0f;
-		float a21 = (float) (float) rand.nextGaussian() * 3.0f;
-		float a22 = (float) (float) rand.nextGaussian() * 3.0f;
-		float tx = (float) (float) rand.nextGaussian() * 3.0f;
-		float ty = (float) (float) rand.nextGaussian() * 3.0f;
-
-		return new Affine2D_F32(a11, a12, a21, a22, tx, ty);
+	public SpecialEuclidean createRandomTransform() {
+		return new Se2_F32((float) rand.nextGaussian() * 3, (float) rand.nextGaussian() * 3,
+				(rand.nextFloat() - 0.5f) * 2.0f * (float) Math.PI);
 	}
 
 	@Override
 	public Point2D_F32 apply(InvertibleTransform se, Point2D_F32 point, Point2D_F32 result) {
-		return AffinePointOps.transform((Affine2D_F32) se, point, result);
+		return SePointOps_F32.transform((Se2_F32) se, point, result);
 	}
 }

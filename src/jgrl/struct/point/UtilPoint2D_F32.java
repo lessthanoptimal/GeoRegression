@@ -87,6 +87,6 @@ public class UtilPoint2D_F32 {
 	}
 
 	public static boolean isEquals(GeoTuple2D_F32 a, GeoTuple2D_F32 b, float tol) {
-		return ((float) Math.abs(a.x - b.x) <= tol && (float) Math.abs(a.x - b.x) <= tol);
+		return (Math.abs(a.x - b.x) <= tol && (float) Math.abs(a.x - b.x) <= tol);
 	}
 }

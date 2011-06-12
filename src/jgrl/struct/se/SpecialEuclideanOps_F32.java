@@ -74,9 +74,9 @@ public class SpecialEuclideanOps_F32 {
 	 *
 	 * @param H   Homogeneous 4 by 4 matrix.
 	 * @param ret If not null where the results are written to.
-	 * @return Se3 transform.
+	 * @return Se3_F32 transform.
 	 */
-	public static Se3_F32 toSe3(DenseMatrix64F H, Se3_F32 ret) {
+	public static Se3_F32 toSe3_F64(DenseMatrix64F H, Se3_F32 ret) {
 		if (H.numCols != 4 || H.numRows != 4)
 			throw new IllegalArgumentException("The homogeneous matrix must be 4 by 4 by definition.");
 
@@ -124,7 +124,7 @@ public class SpecialEuclideanOps_F32 {
 	 *
 	 * @param H   Homogeneous 3 by 3 matrix.
 	 * @param ret If not null where the results are written to.
-	 * @return Se3 transform.
+	 * @return Se3_F32 transform.
 	 */
 	public static Se2_F32 toSe2(DenseMatrix64F H, Se2_F32 ret) {
 		if (H.numCols != 3 || H.numRows != 3)

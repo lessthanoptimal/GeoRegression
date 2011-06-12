@@ -29,7 +29,7 @@ import java.util.Random;
 /**
  * @author Peter Abeles
  */
-public class TestSe2 extends GenericInvertibleTransformTests_F64<Point2D_F64> {
+public class TestSe2_F64 extends GenericInvertibleTransformTests_F64<Point2D_F64> {
 
 	Random rand = new Random();
 
@@ -47,6 +47,6 @@ public class TestSe2 extends GenericInvertibleTransformTests_F64<Point2D_F64> {
 
 	@Override
 	public Point2D_F64 apply(InvertibleTransform se, Point2D_F64 point, Point2D_F64 result) {
-		return SePointOps_F64.transform((Se2_F64) se, (Point2D_F64) point, (Point2D_F64) result);
+		return SePointOps_F64.transform((Se2_F64) se, point, result);
 	}
 }

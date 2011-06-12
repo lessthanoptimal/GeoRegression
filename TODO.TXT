@@ -3,6 +3,3 @@
 
 - Should the difference between points and vectors be removed? algs seem to turn points into
 vectors on a whim.
-
-- autocode from 64bit to 32bit
-- 

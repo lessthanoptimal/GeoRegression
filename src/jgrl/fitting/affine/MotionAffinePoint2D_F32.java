@@ -44,10 +44,10 @@ public class MotionAffinePoint2D_F32 implements MotionTransformPoint<Affine2D_F3
 	Affine2D_F32 model = new Affine2D_F32();
 
 	public MotionAffinePoint2D_F32() {
-		solver = LinearSolverFactory.leastSquares(100,2);
-		x = new DenseMatrix64F(3,2);
-		A = new DenseMatrix64F(0,3);
-		y = new DenseMatrix64F(0,2);
+		solver = LinearSolverFactory.leastSquares(100, 2);
+		x = new DenseMatrix64F(3, 2);
+		A = new DenseMatrix64F(0, 3);
+		y = new DenseMatrix64F(0, 2);
 	}
 
 	@Override
@@ -60,50 +60,50 @@ public class MotionAffinePoint2D_F32 implements MotionTransformPoint<Affine2D_F3
 		// grow or shrink the matrix sizes
 		int N = fromPts.size();
 
-		if( N != toPts.size() ) {
+		if (N != toPts.size()) {
 			throw new IllegalArgumentException("From and to lists must be the same size");
-		} else if( N < 3 ) {
+		} else if (N < 3) {
 			throw new IllegalArgumentException("Must be at least 3 points");
 		}
 
-		if( A.data.length < N*3 ) {
-			A.reshape(N,3, true);
-			y.reshape(N,2, true);
-			for( int i = 0; i < N; i++ ) {
-				A.set(i,2,1);
+		if (A.data.length < N * 3) {
+			A.reshape(N, 3, true);
+			y.reshape(N, 2, true);
+			for (int i = 0; i < N; i++) {
+				A.set(i, 2, 1);
 			}
 		} else {
-			A.reshape(N,3, false);
-			y.reshape(N,2, false);
+			A.reshape(N, 3, false);
+			y.reshape(N, 2, false);
 		}
 
 		// put the data into the matrices
-		for( int i = 0; i < N; i++ ) {
+		for (int i = 0; i < N; i++) {
 			Point2D_F32 pt2 = fromPts.get(i);
 			Point2D_F32 pt1 = toPts.get(i);
 
 
-			A.set(i,0,pt2.x);
-			A.set(i,1,pt2.y);
+			A.set(i, 0, pt2.x);
+			A.set(i, 1, pt2.y);
 
-			y.set(i,0,pt1.x);
-			y.set(i,1,pt1.y);
+			y.set(i, 0, pt1.x);
+			y.set(i, 1, pt1.y);
 		}
 
 		// decompose A
-		if( !solver.setA(A) )
+		if (!solver.setA(A))
 			return false;
 
 		// solve
-		solver.solve(y,x);
+		solver.solve(y, x);
 
 		// write it into the model
-		model.a11 = (float)x.data[0];
-		model.a12 = (float)x.data[2];
-		model.tx = (float)x.data[4];
-		model.a21 = (float)x.data[1];
-		model.a22 = (float)x.data[3];
-		model.ty = (float)x.data[5];
+		model.a11 = (float) x.data[0];
+		model.a12 = (float) x.data[2];
+		model.tx = (float) x.data[4];
+		model.a21 = (float) x.data[1];
+		model.a22 = (float) x.data[3];
+		model.ty = (float) x.data[5];
 
 		return true;
 	}

@@ -85,7 +85,7 @@ public class TestIntersection2D_F32 {
 		for (int i = 0; i < 20; i++) {
 
 			tran.setTranslation((float) rand.nextGaussian(), (float) rand.nextGaussian());
-			tran.setYaw((float) (2 * Math.PI * i / 20));
+			tran.setYaw((float) (2 * (float) Math.PI * i / 20));
 
 			checkIntersection_p_to_ls(paraLine, target, tran);
 		}

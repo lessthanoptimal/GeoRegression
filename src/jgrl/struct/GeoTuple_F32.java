@@ -73,7 +73,7 @@ public abstract class GeoTuple_F32<T extends GeoTuple_F32> extends GeoTuple<T> {
 	 * @return norm.
 	 */
 	public float norm() {
-		return (float) Math.sqrt(normSq());
+		return (float) (float) Math.sqrt(normSq());
 	}
 
 	/**

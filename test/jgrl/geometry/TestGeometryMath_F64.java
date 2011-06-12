@@ -42,7 +42,7 @@ public class TestGeometryMath_F64 {
 
 	@Test
 	public void crossMatrix() {
-		double a = 1.1, b = -.5, c = 2.2;
+		double a = 1.1, b = -0.5, c = 2.2;
 
 		Vector3D_F64 v = new Vector3D_F64(a, b, c);
 
@@ -86,7 +86,7 @@ public class TestGeometryMath_F64 {
 		DenseMatrix64F P = RandomMatrices.createRandom(3, 1, rand);
 		DenseMatrix64F PP = new DenseMatrix64F(3, 1);
 
-		Point3D_F64 pt = new Point3D_F64(P.get(0, 0), P.get(1, 0), P.get(2, 0));
+		Point3D_F64 pt = new Point3D_F64((double) P.get(0, 0), (double) P.get(1, 0), (double) P.get(2, 0));
 
 		CommonOps.mult(M, P, PP);
 		GeometryMath_F64.rotate(M, pt, pt, true);

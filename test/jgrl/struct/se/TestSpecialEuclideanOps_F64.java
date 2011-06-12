@@ -37,7 +37,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestSpecialEuclideanOps {
+public class TestSpecialEuclideanOps_F64 {
 	@Test
 	public void toHomogeneous_3D() {
 		Se3_F64 se = SpecialEuclideanOps_F64.setEulerXYZ(0.1, 2, -0.3, 2, -3, 4.4, null);
@@ -85,12 +85,12 @@ public class TestSpecialEuclideanOps {
 	}
 
 	@Test
-	public void toSe3() {
+	public void toSe3_F64() {
 		Se3_F64 se = SpecialEuclideanOps_F64.setEulerXYZ(0.1, 2, -0.3, 2, -3, 4.4, null);
 
 		DenseMatrix64F H = SpecialEuclideanOps_F64.toHomogeneous(se, null);
 
-		Se3_F64 found = SpecialEuclideanOps_F64.toSe3(H, null);
+		Se3_F64 found = SpecialEuclideanOps_F64.toSe3_F64(H, null);
 
 		assertEquals(se.getX(), found.getX(), JgrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(se.getY(), found.getY(), JgrlConstants.DOUBLE_TEST_TOL);

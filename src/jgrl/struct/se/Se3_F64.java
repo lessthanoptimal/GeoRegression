@@ -56,7 +56,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	/**
-	 * Initializes the Se3 with the rotation matrix and translation vector.  If assign
+	 * Initializes the Se3_F64 with the rotation matrix and translation vector.  If assign
 	 * is true the reference to the provided parameters is saved, otherwise a copy is made.
 	 *
 	 * @param R	  Rotation matrix.
@@ -74,7 +74,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	/**
-	 * Set's 'this' Se3 to be identical to the provided transform.
+	 * Set's 'this' Se3_F64 to be identical to the provided transform.
 	 *
 	 * @param se The transform that is being copied.
 	 */
