@@ -23,7 +23,7 @@ import jgrl.struct.GenericInvertibleTransformTests_F64;
 import jgrl.struct.InvertibleTransform;
 import jgrl.struct.point.Point3D_F64;
 import jgrl.struct.point.Vector3D_F64;
-import jgrl.transform.se.SePointOps;
+import jgrl.transform.se.SePointOps_F64;
 import org.ejml.data.DenseMatrix64F;
 import org.junit.Test;
 
@@ -36,50 +36,50 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestSe3 extends GenericInvertibleTransformTests_F64<Point3D_F64> {
 
-    Random rand = new Random(234234);
+	Random rand = new Random(234234);
 
-    /**
-     * Checks to see if the constructor correctly saves the reference or copies the values.
-     */
-    @Test
-    public void constructor_assign() {
-        DenseMatrix64F R = new DenseMatrix64F(3,3);
-        Vector3D_F64 T = new Vector3D_F64(1,2,3);
+	/**
+	 * Checks to see if the constructor correctly saves the reference or copies the values.
+	 */
+	@Test
+	public void constructor_assign() {
+		DenseMatrix64F R = new DenseMatrix64F(3, 3);
+		Vector3D_F64 T = new Vector3D_F64(1, 2, 3);
 
-        Se3 a = new Se3(R,T,false);
-        assertTrue(R != a.getR());
-        assertTrue(T != a.getT());
+		Se3_F64 a = new Se3_F64(R, T, false);
+		assertTrue(R != a.getR());
+		assertTrue(T != a.getT());
 
-        a = new Se3(R,T,true);
-        assertTrue(R == a.getR());
-        assertTrue(T == a.getT());
-    }
+		a = new Se3_F64(R, T, true);
+		assertTrue(R == a.getR());
+		assertTrue(T == a.getT());
+	}
 
-    @Override
-    public Point3D_F64 createRandomPoint() {
-        return new Point3D_F64(rand.nextGaussian()*3,
-                rand.nextGaussian()*3,rand.nextGaussian()*3);
-    }
+	@Override
+	public Point3D_F64 createRandomPoint() {
+		return new Point3D_F64(rand.nextGaussian() * 3,
+				rand.nextGaussian() * 3, rand.nextGaussian() * 3);
+	}
 
-    @Override
-    public SpecialEuclidean createRandomTransform() {
+	@Override
+	public SpecialEuclidean createRandomTransform() {
 
-        double rotX = (rand.nextDouble()-0.5)*2.0*Math.PI;
-        double rotY = (rand.nextDouble()-0.5)*2.0*Math.PI;
-        double rotZ = (rand.nextDouble()-0.5)*2.0*Math.PI;
-        double x = rand.nextGaussian()*2;
-        double y = rand.nextGaussian()*2;
-        double z = rand.nextGaussian()*2;
+		double rotX = (rand.nextDouble() - 0.5) * 2.0 * Math.PI;
+		double rotY = (rand.nextDouble() - 0.5) * 2.0 * Math.PI;
+		double rotZ = (rand.nextDouble() - 0.5) * 2.0 * Math.PI;
+		double x = rand.nextGaussian() * 2;
+		double y = rand.nextGaussian() * 2;
+		double z = rand.nextGaussian() * 2;
 
-        Se3 ret = new Se3();
+		Se3_F64 ret = new Se3_F64();
 
-        SpecialEuclideanOps.setEulerXYZ(rotX,rotY,rotZ,x,y,z,ret);
+		SpecialEuclideanOps_F64.setEulerXYZ(rotX, rotY, rotZ, x, y, z, ret);
 
-        return ret;
-    }
+		return ret;
+	}
 
-    @Override
-    public Point3D_F64 apply(InvertibleTransform se, Point3D_F64 point, Point3D_F64 result) {
-        return SePointOps.transform((Se3)se,(Point3D_F64)point,(Point3D_F64)result);
-    }
+	@Override
+	public Point3D_F64 apply(InvertibleTransform se, Point3D_F64 point, Point3D_F64 result) {
+		return SePointOps_F64.transform((Se3_F64) se, (Point3D_F64) point, (Point3D_F64) result);
+	}
 }

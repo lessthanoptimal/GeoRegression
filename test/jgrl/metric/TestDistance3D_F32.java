@@ -17,7 +17,7 @@
  * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jgrl.fitting.se;
+package jgrl.metric;
 
 import org.junit.Test;
 
@@ -27,10 +27,15 @@ import static org.junit.Assert.fail;
 /**
  * @author Peter Abeles
  */
-public class TestComputeSpecialEuclidean {
+public class TestDistance3D_F32 {
 
-    @Test
-    public void stuff() {
-        fail("Implement");
-    }
+	@Test
+	public void distance_line_line() {
+		fail("Implement");
+	}
+
+	@Test
+	public void distance_line_point() {
+		fail("Implement");
+	}
 }

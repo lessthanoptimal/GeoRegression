@@ -30,74 +30,73 @@ import jgrl.struct.point.Vector3D_F64;
  * @author Peter Abeles
  */
 public class ClosestPoint3D_F64 {
-    /**
-     * Returns the point which is closest to the intersection of the two lines in 3D.  If the
-     * two lines are parallel the result is undefined.
-     *
-     * @param l0 first line. Not modified.
-     * @param l1 second line. Not modified.
-     * @param ret Point of intersection. If null a new point is declared. Modified.
-     * @return Closest point between two lines.
-     */
-    public static Point3D_F64 closetPoint( LineParametric3D_F64 l0 ,
-                                           LineParametric3D_F64 l1 ,
-                                           Point3D_F64 ret )
-    {
-        if( ret == null ) {
-            ret = new Point3D_F64();
-        }
+	/**
+	 * Returns the point which is closest to the intersection of the two lines in 3D.  If the
+	 * two lines are parallel the result is undefined.
+	 *
+	 * @param l0  first line. Not modified.
+	 * @param l1  second line. Not modified.
+	 * @param ret Point of intersection. If null a new point is declared. Modified.
+	 * @return Closest point between two lines.
+	 */
+	public static Point3D_F64 closetPoint(LineParametric3D_F64 l0,
+										  LineParametric3D_F64 l1,
+										  Point3D_F64 ret) {
+		if (ret == null) {
+			ret = new Point3D_F64();
+		}
 
-        ret.x = l0.p.x-l1.p.x;
-        ret.y = l0.p.y-l1.p.y;
-        ret.z = l0.p.z-l1.p.z;
+		ret.x = l0.p.x - l1.p.x;
+		ret.y = l0.p.y - l1.p.y;
+		ret.z = l0.p.z - l1.p.z;
 
-        // this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
-        double dv01v1 = MiscOps.dot(ret,l1.slope);
-        double dv1v0 = MiscOps.dot(l1.slope,l0.slope);
-        double dv1v1 = MiscOps.dot(l1.slope,l1.slope);
+		// this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
+		double dv01v1 = MiscOps.dot(ret, l1.slope);
+		double dv1v0 = MiscOps.dot(l1.slope, l0.slope);
+		double dv1v1 = MiscOps.dot(l1.slope, l1.slope);
 
-        double t0 = dv01v1*dv1v0 - MiscOps.dot(ret,l0.slope)*dv1v1;
-        double bottom = MiscOps.dot(l0.slope,l0.slope)*dv1v1 - dv1v0*dv1v0;
-        if( bottom == 0 )
-            return null;
-        
-        t0 /= bottom;
+		double t0 = dv01v1 * dv1v0 - MiscOps.dot(ret, l0.slope) * dv1v1;
+		double bottom = MiscOps.dot(l0.slope, l0.slope) * dv1v1 - dv1v0 * dv1v0;
+		if (bottom == 0)
+			return null;
 
-        // ( d1343 + mua d4321 ) / d4343
-        double t1 = (dv01v1 + t0*dv1v0)/dv1v1;
+		t0 /= bottom;
 
-        ret.x = 0.5*((l0.p.x + t0*l0.slope.x) + (l1.p.x + t1*l1.slope.x));
-        ret.y = 0.5*((l0.p.y + t0*l0.slope.y) + (l1.p.y + t1*l1.slope.y));
-        ret.z = 0.5*((l0.p.z + t0*l0.slope.z) + (l1.p.z + t1*l1.slope.z));
+		// ( d1343 + mua d4321 ) / d4343
+		double t1 = (dv01v1 + t0 * dv1v0) / dv1v1;
 
-        return ret;
-    }
+		ret.x = (double) 0.5 * ((l0.p.x + t0 * l0.slope.x) + (l1.p.x + t1 * l1.slope.x));
+		ret.y = (double) 0.5 * ((l0.p.y + t0 * l0.slope.y) + (l1.p.y + t1 * l1.slope.y));
+		ret.z = (double) 0.5 * ((l0.p.z + t0 * l0.slope.z) + (l1.p.z + t1 * l1.slope.z));
 
-    /**
-     * Finds the closest point on a line to the specified point.
-     *
-     * @param line Line on which the closest point is being found.  Not modified.
-     * @param pt The point whose closest point is being looked for.  Not modified.
-     * @param ret Storage for the solution.  If null is passed in a new point is created. Modified.
-     */
-    public static Point3D_F64 closetPoint( LineParametric3D_F64 line ,
-                                           Point3D_F64 pt ,
-                                           Point3D_F64 ret ) {
-        if( ret == null ) {
-            ret = new Point3D_F64();
-        }
+		return ret;
+	}
 
-        Vector3D_F64 ab = new Vector3D_F64(line.p,pt);
+	/**
+	 * Finds the closest point on a line to the specified point.
+	 *
+	 * @param line Line on which the closest point is being found.  Not modified.
+	 * @param pt   The point whose closest point is being looked for.  Not modified.
+	 * @param ret  Storage for the solution.  If null is passed in a new point is created. Modified.
+	 */
+	public static Point3D_F64 closetPoint(LineParametric3D_F64 line,
+										  Point3D_F64 pt,
+										  Point3D_F64 ret) {
+		if (ret == null) {
+			ret = new Point3D_F64();
+		}
 
-        double n = line.slope.norm();
+		Vector3D_F64 ab = new Vector3D_F64(line.p, pt);
 
-        double d = line.slope.dot(ab)/n;
+		double n = line.slope.norm();
 
-        ret.x = line.p.x + d*line.slope.x/n;
-        ret.y = line.p.y + d*line.slope.y/n;
-        ret.z = line.p.z + d*line.slope.z/n;
+		double d = line.slope.dot(ab) / n;
 
-        return ret;
-    }
+		ret.x = line.p.x + d * line.slope.x / n;
+		ret.y = line.p.y + d * line.slope.y / n;
+		ret.z = line.p.z + d * line.slope.z / n;
+
+		return ret;
+	}
 
 }

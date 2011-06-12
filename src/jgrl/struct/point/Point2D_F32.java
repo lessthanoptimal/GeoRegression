@@ -24,32 +24,35 @@ import jgrl.struct.GeoTuple2D_F32;
 /**
  * A point in 2D composed of float
  */
+@SuppressWarnings({"unchecked"})
 public class Point2D_F32 extends GeoTuple2D_F32<Point2D_F32> {
-    public Point2D_F32( float x , float y ) {
-        set(x,y);
-    }
 
-    public Point2D_F32(){}
+	public Point2D_F32(float x, float y) {
+		set(x, y);
+	}
 
-    public Point2D_F32( Point2D_F32 pt ) {
-        set( pt.x , pt.y );
-    }
+	public Point2D_F32() {
+	}
 
-    @Override
-    public Point2D_F32 createNewInstance() {
-        return new Point2D_F32();
-    }
+	public Point2D_F32(Point2D_F32 pt) {
+		set(pt.x, pt.y);
+	}
 
-    public void set( Point2D_F32 orig ) {
-        _set(orig);
-    }
+	@Override
+	public Point2D_F32 createNewInstance() {
+		return new Point2D_F32();
+	}
 
-    @Override
-    public Point2D_F32 copy() {
-        return new Point2D_F32(this);
-    }
+	public void set(Point2D_F32 orig) {
+		_set(orig);
+	}
 
-    public String toString() {
-        return "P( "+x+" "+y+" )";
-    }
+	@Override
+	public Point2D_F32 copy() {
+		return new Point2D_F32(this);
+	}
+
+	public String toString() {
+		return "P( " + x + " " + y + " )";
+	}
 }

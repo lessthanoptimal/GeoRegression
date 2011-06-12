@@ -19,6 +19,7 @@
 
 package jgrl.struct.se;
 
+import jgrl.autocode.JgrlConstants;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -29,17 +30,17 @@ import static org.junit.Assert.assertEquals;
 public class TestInvertibleTransformSequence {
 
 
-    @Test
-    public void computeTransform() {
-        InvertibleTransformSequence path = new InvertibleTransformSequence();
+	@Test
+	public void computeTransform() {
+		InvertibleTransformSequence path = new InvertibleTransformSequence();
 
-        path.addTransform(false,new Se2(1,2,0));
-        path.addTransform(true,new Se2(4,6,0));
+		path.addTransform(false, new Se2_F64(1, 2, 0));
+		path.addTransform(true, new Se2_F64(4, 6, 0));
 
-        Se2 found = new Se2();
-        path.computeTransform(found);
+		Se2_F64 found = new Se2_F64();
+		path.computeTransform(found);
 
-        assertEquals(3,found.getX(),1e-8);
-        assertEquals(4,found.getY(),1e-8);
-    }
+		assertEquals(3, found.getX(), JgrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(4, found.getY(), JgrlConstants.DOUBLE_TEST_TOL);
+	}
 }

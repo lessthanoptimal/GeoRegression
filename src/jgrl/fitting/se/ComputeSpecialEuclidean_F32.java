@@ -20,10 +20,10 @@
 package jgrl.fitting.se;
 
 import jgrl.fitting.MotionTransformPoint;
-import jgrl.struct.point.Point2D_F64;
-import jgrl.struct.point.Point3D_F64;
-import jgrl.struct.se.Se2;
-import jgrl.struct.se.Se3;
+import jgrl.struct.point.Point2D_F32;
+import jgrl.struct.point.Point3D_F32;
+import jgrl.struct.se.Se2_F32;
+import jgrl.struct.se.Se3_F32;
 
 import java.util.List;
 
@@ -34,29 +34,29 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class ComputeSpecialEuclidean {
+public class ComputeSpecialEuclidean_F32 {
 
-    public static MotionTransformPoint<Se2,Point2D_F64> fitPoints2D() {
-        return new MotionSe2PointSVD();
-    }
+	public static MotionTransformPoint<Se2_F32, Point2D_F32> fitPoints2D() {
+		return new MotionSe2PointSVD_F32();
+	}
 
-    public static MotionTransformPoint<Se3, Point3D_F64> fitPoints3D() {
-        return new MotionSe3PointCrossCovariance();
-    }
+	public static MotionTransformPoint<Se3_F32, Point3D_F32> fitPoints3D() {
+		return new MotionSe3PointCrossCovariance_F32();
+	}
 
-    public static Se2 fitPoints2D( List<Point2D_F64> from , List<Point2D_F64> to ) {
-        MotionTransformPoint<Se2,Point2D_F64> alg = fitPoints2D();
+	public static Se2_F32 fitPoints2D(List<Point2D_F32> from, List<Point2D_F32> to) {
+		MotionTransformPoint<Se2_F32, Point2D_F32> alg = fitPoints2D();
 
-        alg.process(from,to);
+		alg.process(from, to);
 
-        return alg.getMotion();
-    }
+		return alg.getMotion();
+	}
 
-    public static Se3 fitPoints3D( List<Point3D_F64> from , List<Point3D_F64> to ) {
-        MotionTransformPoint<Se3,Point3D_F64> alg = fitPoints3D();
+	public static Se3_F32 fitPoints3D(List<Point3D_F32> from, List<Point3D_F32> to) {
+		MotionTransformPoint<Se3_F32, Point3D_F32> alg = fitPoints3D();
 
-        alg.process(from,to);
+		alg.process(from, to);
 
-        return alg.getMotion();
-    }
+		return alg.getMotion();
+	}
 }

@@ -19,6 +19,7 @@
 
 package jgrl.struct.point;
 
+import jgrl.autocode.JgrlConstants;
 import jgrl.struct.GeoTuple_F64;
 
 import static junit.framework.Assert.assertEquals;
@@ -31,81 +32,81 @@ import static org.junit.Assert.assertTrue;
 @SuppressWarnings({"unchecked"})
 public class GenericGeoTupleTests_F64<T extends GeoTuple_F64> {
 
-    private T seed;
+	private T seed;
 
-    public GenericGeoTupleTests_F64(T seed) {
-        this.seed = seed;
-    }
+	public GenericGeoTupleTests_F64(T seed) {
+		this.seed = seed;
+	}
 
-    public void checkAll( int dimension ) {
-        checkCreateNewInstance();
-        checkDimension(dimension);
-        checkSetAndGetIndex();
-        checkNorm();
-        checkNormSq();
-        checkCopy();
-    }
+	public void checkAll(int dimension) {
+		checkCreateNewInstance();
+		checkDimension(dimension);
+		checkSetAndGetIndex();
+		checkNorm();
+		checkNormSq();
+		checkCopy();
+	}
 
-    public void checkCreateNewInstance() {
-        T a = (T)seed.createNewInstance();
+	public void checkCreateNewInstance() {
+		T a = (T) seed.createNewInstance();
 
-        assertTrue( a != null );
-        assertTrue(a.getClass() == seed.getClass());
-    }
+		assertTrue(a != null);
+		assertTrue(a.getClass() == seed.getClass());
+	}
 
-    public void checkDimension( int expected ) {
-        T a = (T)seed.createNewInstance();
+	public void checkDimension(int expected) {
+		T a = (T) seed.createNewInstance();
 
-        assertEquals(a.getDimension(),expected);
-    }
+		assertEquals(a.getDimension(), expected);
+	}
 
-    public void checkSetAndGetIndex() {
+	public void checkSetAndGetIndex() {
 
-        T a = (T)seed.createNewInstance();
+		T a = (T) seed.createNewInstance();
 
-        for( int i = 0; i < a.getDimension(); i++ ) {
-            assertEquals(0,a.getIndex(i),1e-8);
-            a.setIndex(i,2);
-            assertEquals(2,a.getIndex(i),1e-8);
-        }
-    }
+		for (int i = 0; i < a.getDimension(); i++) {
+			assertEquals(0, a.getIndex(i), JgrlConstants.DOUBLE_TEST_TOL);
+			a.setIndex(i, 2);
+			assertEquals(2, a.getIndex(i), JgrlConstants.DOUBLE_TEST_TOL);
+		}
+	}
 
-    public void checkNorm() {
-        T a = (T)seed.createNewInstance();
-        double total = 0;
-        for( int i = 0; i < a.getDimension(); i++ ) {
-            a.setIndex(i,i+1);
-            total += (i+1)*(i+1);
-        }
+	public void checkNorm() {
+		T a = (T) seed.createNewInstance();
+		double total = 0;
+		for (int i = 0; i < a.getDimension(); i++) {
+			a.setIndex(i, i + 1);
+			total += (i + 1) * (i + 1);
+		}
 
-        double expected = Math.sqrt(total);
-        assertEquals(expected,a.norm(),1e-8);
-    }
+		double expected = Math.sqrt(total);
+		assertEquals(expected, a.norm(), JgrlConstants.DOUBLE_TEST_TOL);
+	}
 
-    public void checkNormSq() {
-        T a = (T)seed.createNewInstance();
-        double total = 0;
-        for( int i = 0; i < a.getDimension(); i++ ) {
-            a.setIndex(i,i+1);
-            total += (i+1)*(i+1);
-        }
+	public void checkNormSq() {
+		T a = (T) seed.createNewInstance();
+		double total = 0;
+		for (int i = 0; i < a.getDimension(); i++) {
+			a.setIndex(i, i + 1);
+			total += (i + 1) * (i + 1);
+		}
 
-        assertEquals(total,a.normSq(),1e-8);
-    }
+		assertEquals(total, a.normSq(), JgrlConstants.DOUBLE_TEST_TOL);
+	}
 
-    public void checkCopy() {
-        T a = (T)seed.createNewInstance();
-        for( int i = 0; i < a.getDimension(); i++ ) {
-            a.setIndex(i,i+1);
-        }
+	public void checkCopy() {
+		T a = (T) seed.createNewInstance();
+		for (int i = 0; i < a.getDimension(); i++) {
+			a.setIndex(i, i + 1);
+		}
 
-        T b = (T)a.copy();
+		T b = (T) a.copy();
 
-        assertTrue(a != b );
-        for( int i = 0; i < a.getDimension(); i++ ) {
-            assertTrue(a.getIndex(i)==b.getIndex(i));
-        }
-    }
+		assertTrue(a != b);
+		for (int i = 0; i < a.getDimension(); i++) {
+			assertTrue(a.getIndex(i) == b.getIndex(i));
+		}
+	}
 
 
 }

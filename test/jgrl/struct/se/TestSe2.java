@@ -22,7 +22,7 @@ package jgrl.struct.se;
 import jgrl.struct.GenericInvertibleTransformTests_F64;
 import jgrl.struct.InvertibleTransform;
 import jgrl.struct.point.Point2D_F64;
-import jgrl.transform.se.SePointOps;
+import jgrl.transform.se.SePointOps_F64;
 
 import java.util.Random;
 
@@ -31,22 +31,22 @@ import java.util.Random;
  */
 public class TestSe2 extends GenericInvertibleTransformTests_F64<Point2D_F64> {
 
-    Random rand = new Random();
+	Random rand = new Random();
 
-    @Override
-    public Point2D_F64 createRandomPoint() {
-        return new Point2D_F64(rand.nextGaussian()*3,
-                rand.nextGaussian()*3);
-    }
+	@Override
+	public Point2D_F64 createRandomPoint() {
+		return new Point2D_F64(rand.nextGaussian() * 3,
+				rand.nextGaussian() * 3);
+	}
 
-    @Override
-    public SpecialEuclidean createRandomTransform() {
-        return new Se2(rand.nextGaussian()*3,rand.nextGaussian()*3,
-                (rand.nextDouble()-0.5)*2.0*Math.PI);
-    }
+	@Override
+	public SpecialEuclidean createRandomTransform() {
+		return new Se2_F64(rand.nextGaussian() * 3, rand.nextGaussian() * 3,
+				(rand.nextDouble() - 0.5) * 2.0 * Math.PI);
+	}
 
-    @Override
-    public Point2D_F64 apply(InvertibleTransform se, Point2D_F64 point, Point2D_F64 result) {
-        return SePointOps.transform((Se2)se,(Point2D_F64)point,(Point2D_F64)result);
-    }
+	@Override
+	public Point2D_F64 apply(InvertibleTransform se, Point2D_F64 point, Point2D_F64 result) {
+		return SePointOps_F64.transform((Se2_F64) se, (Point2D_F64) point, (Point2D_F64) result);
+	}
 }

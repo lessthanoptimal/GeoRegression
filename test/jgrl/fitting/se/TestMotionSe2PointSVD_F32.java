@@ -19,11 +19,12 @@
 
 package jgrl.fitting.se;
 
-import jgrl.struct.point.Point2D_F64;
-import jgrl.struct.point.UtilPoint2D;
-import jgrl.struct.se.Se2;
+import jgrl.autocode.JgrlConstants;
+import jgrl.struct.point.Point2D_F32;
+import jgrl.struct.point.UtilPoint2D_F32;
+import jgrl.struct.se.Se2_F32;
 import jgrl.test.GeometryUnitTest;
-import jgrl.transform.se.SePointOps;
+import jgrl.transform.se.SePointOps_F32;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -35,41 +36,41 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestMotionSe2PointSVD {
+public class TestMotionSe2PointSVD_F32 {
 
-    Random rand = new Random(434324);
+	Random rand = new Random(434324);
 
-    @Test
-    public void noiseless() {
-        Se2 tran = new Se2(2,-4,0.93);
+	@Test
+	public void noiseless() {
+		Se2_F32 tran = new Se2_F32(2, -4, 0.93f);
 
-        List<Point2D_F64> from = UtilPoint2D.random_F64(-10,10,30,rand);
-        List<Point2D_F64> to = new ArrayList<Point2D_F64>();
-        for( Point2D_F64 p : from ) {
-            to.add(SePointOps.transform(tran,p,null));
-        }
+		List<Point2D_F32> from = UtilPoint2D_F32.random(-10, 10, 30, rand);
+		List<Point2D_F32> to = new ArrayList<Point2D_F32>();
+		for (Point2D_F32 p : from) {
+			to.add(SePointOps_F32.transform(tran, p, null));
+		}
 
-        MotionSe2PointSVD alg = new MotionSe2PointSVD();
+		MotionSe2PointSVD_F32 alg = new MotionSe2PointSVD_F32();
 
-        assertTrue(alg.process(from,to));
+		assertTrue(alg.process(from, to));
 
-        Se2 tranFound = alg.getMotion();
+		Se2_F32 tranFound = alg.getMotion();
 
 //        tranFound.getTranslation().print();
 //        tran.getTranslation().print();
 
-        checkTransform(from, to, tranFound,1e-8);
-    }
+		checkTransform(from, to, tranFound, JgrlConstants.FLOAT_TEST_TOL);
+	}
 
-    public static void checkTransform(List<Point2D_F64> from, List<Point2D_F64> to, Se2 tranFound, double tol ) {
-        Point2D_F64 foundPt = new Point2D_F64();
-        for( int i = 0; i < from.size(); i++ ) {
+	public static void checkTransform(List<Point2D_F32> from, List<Point2D_F32> to, Se2_F32 tranFound, float tol) {
+		Point2D_F32 foundPt = new Point2D_F32();
+		for (int i = 0; i < from.size(); i++) {
 
-            Point2D_F64 p = from.get(i);
+			Point2D_F32 p = from.get(i);
 
-            SePointOps.transform(tranFound,p,foundPt);
+			SePointOps_F32.transform(tranFound, p, foundPt);
 
-            GeometryUnitTest.assertEquals(to.get(i),foundPt,tol);
-        }
-    }
+			GeometryUnitTest.assertEquals(to.get(i), foundPt, tol);
+		}
+	}
 }

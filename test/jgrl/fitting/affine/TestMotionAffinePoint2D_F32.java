@@ -19,9 +19,10 @@
 
 package jgrl.fitting.affine;
 
+import jgrl.autocode.JgrlConstants;
 import jgrl.struct.affine.Affine2D_F32;
 import jgrl.struct.point.Point2D_F32;
-import jgrl.struct.point.UtilPoint2D;
+import jgrl.struct.point.UtilPoint2D_F32;
 import jgrl.test.GeometryUnitTest;
 import jgrl.transform.affine.AffinePointOps;
 import org.junit.Test;
@@ -42,32 +43,32 @@ public class TestMotionAffinePoint2D_F32 {
 
 	@Test
 	public void noiseless() {
-		Affine2D_F32 tran = new Affine2D_F32(2f,-4f,0.3f,1.1f,0.93f,-3f);
+		Affine2D_F32 tran = new Affine2D_F32(2, -4, 0.3f, 1.1f, 0.93f, -3);
 
-		List<Point2D_F32> from = UtilPoint2D.random_F32(-10,10,30,rand);
+		List<Point2D_F32> from = UtilPoint2D_F32.random(-10, 10, 30, rand);
 		List<Point2D_F32> to = new ArrayList<Point2D_F32>();
-		for( Point2D_F32 p : from ) {
-			to.add(AffinePointOps.transform(tran,p,null));
+		for (Point2D_F32 p : from) {
+			to.add(AffinePointOps.transform(tran, p, null));
 		}
 
 		MotionAffinePoint2D_F32 alg = new MotionAffinePoint2D_F32();
 
-		assertTrue(alg.process(from,to));
+		assertTrue(alg.process(from, to));
 
 		Affine2D_F32 tranFound = alg.getMotion();
 
-		checkTransform(from, to, tranFound,1e-4);
+		checkTransform(from, to, tranFound, JgrlConstants.FLOAT_TEST_TOL);
 	}
 
-	public static void checkTransform(List<Point2D_F32> from, List<Point2D_F32> to, Affine2D_F32 tranFound, double tol ) {
+	public static void checkTransform(List<Point2D_F32> from, List<Point2D_F32> to, Affine2D_F32 tranFound, float tol) {
 		Point2D_F32 foundPt = new Point2D_F32();
-		for( int i = 0; i < from.size(); i++ ) {
+		for (int i = 0; i < from.size(); i++) {
 
 			Point2D_F32 p = from.get(i);
 
-			AffinePointOps.transform(tranFound,p,foundPt);
+			AffinePointOps.transform(tranFound, p, foundPt);
 
-			GeometryUnitTest.assertEquals(to.get(i),foundPt,tol);
+			GeometryUnitTest.assertEquals(to.get(i), foundPt, tol);
 		}
 	}
 }

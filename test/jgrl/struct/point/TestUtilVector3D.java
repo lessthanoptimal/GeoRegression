@@ -19,6 +19,7 @@
 
 package jgrl.struct.point;
 
+import jgrl.autocode.JgrlConstants;
 import org.junit.Test;
 
 import java.util.Random;
@@ -31,27 +32,27 @@ import static org.junit.Assert.*;
  */
 public class TestUtilVector3D {
 
-    Random rand = new Random(23423);
+	Random rand = new Random(23423);
 
-    @Test
-    public void isIdentical() {
-        Vector3D_F64 a = UtilVector3D.createRandom64(-1,1,rand);
-        Vector3D_F64 b = UtilVector3D.createRandom64(-1,1,rand);
+	@Test
+	public void isIdentical() {
+		Vector3D_F64 a = UtilVector3D.createRandom64(-1, 1, rand);
+		Vector3D_F64 b = UtilVector3D.createRandom64(-1, 1, rand);
 
 
-        // test positive
-        assertTrue(UtilVector3D.isIdentical(a,a.copy(),1e-8));
+		// test positive
+		assertTrue(UtilVector3D.isIdentical(a, a.copy(), JgrlConstants.DOUBLE_TEST_TOL));
 
-        // test negative
-        assertFalse(UtilVector3D.isIdentical(a,b,1e-8));
-    }
+		// test negative
+		assertFalse(UtilVector3D.isIdentical(a, b, JgrlConstants.DOUBLE_TEST_TOL));
+	}
 
-    @Test
-    public void normalize() {
-        Vector3D_F64 a = new Vector3D_F64(3,3,4);
+	@Test
+	public void normalize() {
+		Vector3D_F64 a = new Vector3D_F64(3, 3, 4);
 
-        UtilVector3D.normalize(a);
+		UtilVector3D.normalize(a);
 
-        assertEquals(1,a.norm(),1e-8);
-    }
+		assertEquals(1, a.norm(), JgrlConstants.DOUBLE_TEST_TOL);
+	}
 }

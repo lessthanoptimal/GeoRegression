@@ -1,0 +1,8 @@
+- line fitting for 2D and 3D points
+- polynomial
+
+- Should the difference between points and vectors be removed? algs seem to turn points into
+vectors on a whim.
+
+- autocode from 64bit to 32bit
+- 

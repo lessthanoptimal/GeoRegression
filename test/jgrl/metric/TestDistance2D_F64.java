@@ -19,7 +19,8 @@
 
 package jgrl.metric;
 
-import jgrl.geometry.UtilTrig;
+import jgrl.autocode.JgrlConstants;
+import jgrl.geometry.UtilTrig_F64;
 import jgrl.struct.line.LineParametric2D_F64;
 import jgrl.struct.line.LineSegment2D_F64;
 import jgrl.struct.point.Point2D_F64;
@@ -33,28 +34,28 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestDistance2D_F64 {
 
-    @Test
-    public void distance_parametric_line() {
-        double found = Distance2D_F64.distance(new LineParametric2D_F64(-2,0,1,1),new Point2D_F64(2,0));
-        double expected = UtilTrig.distance(0,2,2,0);
-        assertEquals(expected,found,1e-8);
-    }
+	@Test
+	public void distance_parametric_line() {
+		double found = Distance2D_F64.distance(new LineParametric2D_F64(-2, 0, 1, 1), new Point2D_F64(2, 0));
+		double expected = (double) UtilTrig_F64.distance(0, 2, 2, 0);
+		assertEquals(expected, found, JgrlConstants.DOUBLE_TEST_TOL);
+	}
 
-    @Test
-    public void distance_line_segment() {
-        // test inside the line
-        double found = Distance2D_F64.distance(new LineSegment2D_F64(-2,0,3,5),new Point2D_F64(2,0));
-        double expected = UtilTrig.distance(0,2,2,0);
-        assertEquals(expected,found,1e-8);
+	@Test
+	public void distance_line_segment() {
+		// test inside the line
+		double found = Distance2D_F64.distance(new LineSegment2D_F64(-2, 0, 3, 5), new Point2D_F64(2, 0));
+		double expected = (double) UtilTrig_F64.distance(0, 2, 2, 0);
+		assertEquals(expected, found, JgrlConstants.DOUBLE_TEST_TOL);
 
-        // test before the first end point
-        Distance2D_F64.distance(new LineSegment2D_F64(-2,0,3,5),new Point2D_F64(-5,-5));
-        UtilTrig.distance(-2,2,-5,-5);
-        assertEquals(expected,found,1e-8);
+		// test before the first end point
+		Distance2D_F64.distance(new LineSegment2D_F64(-2, 0, 3, 5), new Point2D_F64(-5, -5));
+		UtilTrig_F64.distance(-2, 2, -5, -5);
+		assertEquals(expected, found, JgrlConstants.DOUBLE_TEST_TOL);
 
-        // test after the second end point
-        Distance2D_F64.distance(new LineSegment2D_F64(-2,0,3,5),new Point2D_F64(10,0));
-        UtilTrig.distance(3,5,10,0);
-        assertEquals(expected,found,1e-8);
-    }
+		// test after the second end point
+		Distance2D_F64.distance(new LineSegment2D_F64(-2, 0, 3, 5), new Point2D_F64(10, 0));
+		UtilTrig_F64.distance(3, 5, 10, 0);
+		assertEquals(expected, found, JgrlConstants.DOUBLE_TEST_TOL);
+	}
 }

@@ -20,7 +20,7 @@
 package jgrl.struct;
 
 /**
- * Describes geometric objects that are composed of N double values.  Where N is the dimension
+ * Describes geometric objects that are composed of N float values.  Where N is the dimension
  * of space the object is contained in.  Points and vectors are two examples of a GeoTuple.  Each
  * value is the value of the object along a dimension in the space it occupies.
  *
@@ -28,72 +28,96 @@ package jgrl.struct;
  */
 public abstract class GeoTuple_F32<T extends GeoTuple_F32> extends GeoTuple<T> {
 
+	/**
+	 * Checks to see if the two GeoTuple have values which are nearly the same.  False is always
+	 * returned if the dimension is different.
+	 *
+	 * @param t   The GeoTuple it is being compared against.
+	 * @param tol How similar each element must be for them to be considered identical.
+	 * @return if they are identical or not.
+	 */
+	public boolean isIdentical(T t, float tol) {
+		if (t.getDimension() != getDimension())
+			return false;
 
-    /**
-     * Generic copy routine.  It is recommended that this be overriden with a faster implementation.
-     *
-     * @return An exact copy of this GeoTuple.
-     */
-    public T copy() {
-        T ret = createNewInstance();
+		int N = getDimension();
+		for (int i = 0; i < N; i++) {
+			float diff = (float) Math.abs(getIndex(i) - t.getIndex(i));
 
-        int N = getDimension();
-        for( int i = 0; i < N; i++ ) {
-            ret.setIndex( i , getIndex(i));
-        }
+			if (diff > tol)
+				return false;
+		}
 
-        return ret;
-    }
+		return true;
+	}
 
-    /**
-     * Computes the  Euclidean norm.
-     * @return norm.
-     */
-    public float norm() {
-        return (float)Math.sqrt(normSq());
-    }
+	/**
+	 * Generic copy routine.  It is recommended that this be overriden with a faster implementation.
+	 *
+	 * @return An exact copy of this GeoTuple.
+	 */
+	public T copy() {
+		T ret = createNewInstance();
 
-    /**
-     * Computes the square of the Euclidean norm.
-     * @return norm squared.
-     */
-    public float normSq() {
-        float total = 0;
-        int N = getDimension();
-        for( int i = 0; i < N; i++ ) {
-            float a = getIndex(i);
-            total += a*a;
-        }
+		int N = getDimension();
+		for (int i = 0; i < N; i++) {
+			ret.setIndex(i, getIndex(i));
+		}
 
-        return total;
-    }
+		return ret;
+	}
 
-    public float distance( GeoTuple_F32 t ) {
-        return (float)Math.sqrt(distance2(t));
-    }
+	/**
+	 * Computes the  Euclidean norm.
+	 *
+	 * @return norm.
+	 */
+	public float norm() {
+		return (float) Math.sqrt(normSq());
+	}
 
-    public float distance2( GeoTuple_F32 t ) {
-        if( t.getDimension() != getDimension() )
-            throw new IllegalArgumentException("Dimension of input tuple does not match");
+	/**
+	 * Computes the square of the Euclidean norm.
+	 *
+	 * @return norm squared.
+	 */
+	public float normSq() {
+		float total = 0;
+		int N = getDimension();
+		for (int i = 0; i < N; i++) {
+			float a = getIndex(i);
+			total += a * a;
+		}
 
-        float total = 0;
-        final int N = getDimension();
-        for( int i = 0; i < N; i++ ) {
-            float diff = Math.abs(getIndex(i) - t.getIndex(i));
+		return total;
+	}
 
-            total += diff*diff;
-        }
+	public float distance(T t) {
+		return (float) Math.sqrt(distance2(t));
+	}
 
-        return total;
-    }
+	public float distance2(T t) {
+		if (t.getDimension() != getDimension())
+			throw new IllegalArgumentException("Dimension of input tuple does not match");
 
-    /**
-     * Returns the value of the tuple along the specified coordinate system axis.
-     *
-     * @param index Which axis in the coordinate system.
-     * @return Its value.
-     */
-    public abstract float getIndex( int index );
+		float total = 0;
+		final int N = getDimension();
+		for (int i = 0; i < N; i++) {
+			float diff = (float) Math.abs(getIndex(i) - t.getIndex(i));
 
-    public abstract void setIndex( int index , float value );
+			total += diff * diff;
+		}
+
+		return total;
+	}
+
+	/**
+	 * Returns the value of the tuple along the specified coordinate system axis.
+	 *
+	 * @param index Which axis in the coordinate system.
+	 * @return Its value.
+	 */
+	public abstract float getIndex(int index);
+
+	public abstract void setIndex(int index, float value);
 }

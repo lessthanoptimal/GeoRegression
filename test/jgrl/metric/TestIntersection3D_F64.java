@@ -19,9 +19,18 @@
 
 package jgrl.metric;
 
+import org.junit.Test;
+
+import static org.junit.Assert.fail;
+
 
 /**
  * @author Peter Abeles
  */
 public class TestIntersection3D_F64 {
+
+	@Test
+	public void asfdasdf() {
+		fail("implement");
+	}
 }
