@@ -43,35 +43,35 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	private double c; // cos(yaw)
 	private double s; // sin(yaw)
 
-	public Se2_F64(GeoTuple2D_F64 tran, double yaw) {
-		this(tran.getX(), tran.getY(), yaw);
+	public Se2_F64( GeoTuple2D_F64 tran, double yaw ) {
+		this( tran.getX(), tran.getY(), yaw );
 	}
 
-	public Se2_F64(double x, double y, double yaw) {
-		set(x, y, yaw);
+	public Se2_F64( double x, double y, double yaw ) {
+		set( x, y, yaw );
 	}
 
-	public Se2_F64(double x, double y, double cosYaw, double sinYaw) {
-		set(x, y, cosYaw, sinYaw);
+	public Se2_F64( double x, double y, double cosYaw, double sinYaw ) {
+		set( x, y, cosYaw, sinYaw );
 	}
 
 	public Se2_F64() {
 	}
 
-	public void set(double x, double y, double yaw) {
-		this.tran.set(x, y);
-		this.c = Math.cos(yaw);
-		this.s = Math.sin(yaw);
+	public void set( double x, double y, double yaw ) {
+		this.tran.set( x, y );
+		this.c = Math.cos( yaw );
+		this.s = Math.sin( yaw );
 	}
 
-	public void set(double x, double y, double cosYaw, double sinYaw) {
-		this.tran.set(x, y);
+	public void set( double x, double y, double cosYaw, double sinYaw ) {
+		this.tran.set( x, y );
 		this.c = cosYaw;
 		this.s = sinYaw;
 	}
 
-	public void set(Se2_F64 target) {
-		this.tran.set(target.tran);
+	public void set( Se2_F64 target ) {
+		this.tran.set( target.tran );
 		this.c = target.c;
 		this.s = target.s;
 	}
@@ -80,37 +80,37 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 		return tran.getX();
 	}
 
-	public void setX(double x) {
-		tran.setX(x);
+	public void setX( double x ) {
+		tran.setX( x );
 	}
 
 	public double getY() {
 		return tran.getY();
 	}
 
-	public void setY(double y) {
-		tran.setY(y);
+	public void setY( double y ) {
+		tran.setY( y );
 	}
 
 	public Vector2D_F64 getTranslation() {
 		return tran;
 	}
 
-	public void setTranslation(Vector2D_F64 tran) {
+	public void setTranslation( Vector2D_F64 tran ) {
 		this.tran = tran;
 	}
 
-	public void setTranslation(double x, double y) {
-		this.tran.set(x, y);
+	public void setTranslation( double x, double y ) {
+		this.tran.set( x, y );
 	}
 
 	public double getYaw() {
-		return Math.atan2(s, c);
+		return Math.atan2( s, c );
 	}
 
-	public void setYaw(double yaw) {
-		this.c = Math.cos(yaw);
-		this.s = Math.sin(yaw);
+	public void setYaw( double yaw ) {
+		this.c = Math.cos( yaw );
+		this.s = Math.sin( yaw );
 	}
 
 	public double getCosineYaw() {
@@ -132,11 +132,11 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	}
 
 	@Override
-	public Se2_F64 concat(Se2_F64 second, Se2_F64 result) {
-		if (result == null)
+	public Se2_F64 concat( Se2_F64 second, Se2_F64 result ) {
+		if( result == null )
 			result = new Se2_F64();
 
-		result.setYaw(getYaw() + second.getYaw());
+		result.setYaw( getYaw() + second.getYaw() );
 
 		result.tran.x = second.tran.x + second.c * tran.x - second.s * tran.y;
 		result.tran.y = second.tran.y + second.s * tran.x + second.c * tran.y;
@@ -145,8 +145,8 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	}
 
 	@Override
-	public Se2_F64 invert(Se2_F64 inverse) {
-		if (inverse == null)
+	public Se2_F64 invert( Se2_F64 inverse ) {
+		if( inverse == null )
 			inverse = new Se2_F64();
 
 		double x = -tran.x;
@@ -164,11 +164,11 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	public void reset() {
 		c = 1;
 		s = 0;
-		tran.set(0, 0);
+		tran.set( 0, 0 );
 	}
 
 	public Se2_F64 copy() {
-		return new Se2_F64(tran.x, tran.y, c, s);
+		return new Se2_F64( tran.x, tran.y, c, s );
 	}
 
 	public String toString() {

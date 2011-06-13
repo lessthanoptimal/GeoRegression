@@ -31,8 +31,8 @@ public class Distance3D_F32 {
 	 * Distance that two lines are apart from each other.
 	 */
 	// todo should handle parallel lines
-	public static float distance(LineParametric3D_F32 l0,
-								 LineParametric3D_F32 l1) {
+	public static float distance( LineParametric3D_F32 l0,
+								   LineParametric3D_F32 l1 ) {
 		Point3D_F32 ret = new Point3D_F32();
 
 		ret.x = l0.p.x - l1.p.x;
@@ -40,25 +40,25 @@ public class Distance3D_F32 {
 		ret.z = l0.p.z - l1.p.z;
 
 		// this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
-		float dv01v1 = MiscOps.dot(ret, l1.slope);
-		float dv1v0 = MiscOps.dot(l1.slope, l0.slope);
-		float dv1v1 = MiscOps.dot(l1.slope, l1.slope);
+		float dv01v1 = MiscOps.dot( ret, l1.slope );
+		float dv1v0 = MiscOps.dot( l1.slope, l0.slope );
+		float dv1v1 = MiscOps.dot( l1.slope, l1.slope );
 
-		float t0 = dv01v1 * dv1v0 - MiscOps.dot(ret, l0.slope) * dv1v1;
-		t0 /= MiscOps.dot(l0.slope, l0.slope) * dv1v1 - dv1v0 * dv1v0;
+		float t0 = dv01v1 * dv1v0 - MiscOps.dot( ret, l0.slope ) * dv1v1;
+		t0 /= MiscOps.dot( l0.slope, l0.slope ) * dv1v1 - dv1v0 * dv1v0;
 
 		// ( d1343 + mua d4321 ) / d4343
-		float t1 = (dv01v1 + t0 * dv1v0) / dv1v1;
+		float t1 = ( dv01v1 + t0 * dv1v0 ) / dv1v1;
 
-		float dx = (l0.p.x + t0 * l0.slope.x) - (l1.p.x + t1 * l1.slope.x);
-		float dy = (l0.p.y + t0 * l0.slope.y) - (l1.p.y + t1 * l1.slope.y);
-		float dz = (l0.p.z + t0 * l0.slope.z) - (l1.p.z + t1 * l1.slope.z);
+		float dx = ( l0.p.x + t0 * l0.slope.x ) - ( l1.p.x + t1 * l1.slope.x );
+		float dy = ( l0.p.y + t0 * l0.slope.y ) - ( l1.p.y + t1 * l1.slope.y );
+		float dz = ( l0.p.z + t0 * l0.slope.z ) - ( l1.p.z + t1 * l1.slope.z );
 
-		return (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+		return (float)Math.sqrt( dx * dx + dy * dy + dz * dz );
 	}
 
-	public static float distance(LineParametric3D_F32 l,
-								 Point3D_F32 p) {
+	public static float distance( LineParametric3D_F32 l,
+								   Point3D_F32 p ) {
 		return 0;
 	}
 }

@@ -28,41 +28,41 @@ import static org.junit.Assert.*;
 
 public class TestUtilAngle {
 
-    @Test
-    public void isStandardDomain() {
-        assertTrue(UtilAngle.isStandardDomain(0.1));
-        assertTrue(UtilAngle.isStandardDomain(-0.1));
-        assertFalse(UtilAngle.isStandardDomain(4));
-        assertFalse(UtilAngle.isStandardDomain(-4));
-    }
+	@Test
+	public void isStandardDomain() {
+		assertTrue( UtilAngle.isStandardDomain( 0.1 ) );
+		assertTrue( UtilAngle.isStandardDomain( -0.1 ) );
+		assertFalse( UtilAngle.isStandardDomain( 4 ) );
+		assertFalse( UtilAngle.isStandardDomain( -4 ) );
+	}
 
-    /**
-     * Test the bound function by providing several test cases.
-     */
-    @Test
-    public void testBound() {
-        assertEquals(PI*0.5,bound(PI*2.5),1e-5);
-        assertEquals(-PI*0.5,bound(-PI*2.5),1e-5);
-        assertEquals(PI*0.5,bound(-PI*1.5),1e-5);
-        assertEquals(-PI*0.5,bound(PI*1.5),1e-5);
-        assertEquals(PI*0.3,bound(PI*8.3),1e-5);
-        assertEquals(PI*0.3,bound(PI*0.3),1e-5);
-        assertEquals(-PI*0.9,bound(-PI*0.9),1e-5);
-    }
+	/**
+	 * Test the bound function by providing several test cases.
+	 */
+	@Test
+	public void testBound() {
+		assertEquals( PI * 0.5, bound( PI * 2.5 ), 1e-5 );
+		assertEquals( -PI * 0.5, bound( -PI * 2.5 ), 1e-5 );
+		assertEquals( PI * 0.5, bound( -PI * 1.5 ), 1e-5 );
+		assertEquals( -PI * 0.5, bound( PI * 1.5 ), 1e-5 );
+		assertEquals( PI * 0.3, bound( PI * 8.3 ), 1e-5 );
+		assertEquals( PI * 0.3, bound( PI * 0.3 ), 1e-5 );
+		assertEquals( -PI * 0.9, bound( -PI * 0.9 ), 1e-5 );
+	}
 
-    @Test
-    public void testMinus() {
-        assertEquals(-0.1,minus(0.1,0.2),1e-5);
-        assertEquals(0.1,minus(0.2,0.1),1e-5);
-        assertEquals(0.1,minus(-0.1,-0.2),1e-5);
-        assertEquals(-0.1,minus(-0.2,-0.1),1e-5);
-        assertEquals(PI,minus(PI,0),1e-5);
-        assertEquals(-PI,minus(-PI,0),1e-5);
-        assertEquals(0,minus(-PI,PI),1e-5);
-        assertEquals(0,minus(PI,-PI),1e-5);
-        assertEquals(PI,minus(0.1*PI,-0.9*PI),1e-5);
-        assertEquals(-PI,minus(-0.9*PI,0.1*PI),1e-5);
-        assertEquals(0.2*PI,minus(0.9*PI,-0.9*PI),1e-5);
-        assertEquals(-0.2*PI,minus(-0.9*PI,0.9*PI),1e-5);
-    }
+	@Test
+	public void testMinus() {
+		assertEquals( -0.1, minus( 0.1, 0.2 ), 1e-5 );
+		assertEquals( 0.1, minus( 0.2, 0.1 ), 1e-5 );
+		assertEquals( 0.1, minus( -0.1, -0.2 ), 1e-5 );
+		assertEquals( -0.1, minus( -0.2, -0.1 ), 1e-5 );
+		assertEquals( PI, minus( PI, 0 ), 1e-5 );
+		assertEquals( -PI, minus( -PI, 0 ), 1e-5 );
+		assertEquals( 0, minus( -PI, PI ), 1e-5 );
+		assertEquals( 0, minus( PI, -PI ), 1e-5 );
+		assertEquals( PI, minus( 0.1 * PI, -0.9 * PI ), 1e-5 );
+		assertEquals( -PI, minus( -0.9 * PI, 0.1 * PI ), 1e-5 );
+		assertEquals( 0.2 * PI, minus( 0.9 * PI, -0.9 * PI ), 1e-5 );
+		assertEquals( -0.2 * PI, minus( -0.9 * PI, 0.9 * PI ), 1e-5 );
+	}
 }

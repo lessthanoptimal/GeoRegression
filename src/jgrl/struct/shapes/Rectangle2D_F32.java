@@ -43,7 +43,7 @@ public class Rectangle2D_F32 {
 	public Rectangle2D_F32() {
 	}
 
-	public Rectangle2D_F32(float tl_x, float tl_y, float width, float height) {
+	public Rectangle2D_F32( float tl_x, float tl_y, float width, float height ) {
 		this.width = width;
 		this.height = height;
 		this.tl_x = tl_x;
@@ -56,7 +56,7 @@ public class Rectangle2D_F32 {
 	 * @param x
 	 * @param y
 	 */
-	public void setPoint(float x, float y) {
+	public void setPoint( float x, float y ) {
 		this.tl_x = x;
 		this.tl_y = y;
 	}
@@ -65,7 +65,7 @@ public class Rectangle2D_F32 {
 		return width;
 	}
 
-	public void setWidth(float width) {
+	public void setWidth( float width ) {
 		this.width = width;
 	}
 
@@ -73,7 +73,7 @@ public class Rectangle2D_F32 {
 		return height;
 	}
 
-	public void setHeight(float height) {
+	public void setHeight( float height ) {
 		this.height = height;
 	}
 
@@ -89,7 +89,7 @@ public class Rectangle2D_F32 {
 	 *
 	 * @param x top left x-coordinate
 	 */
-	public void setX(float x) {
+	public void setX( float x ) {
 		this.tl_x = x;
 	}
 
@@ -105,7 +105,7 @@ public class Rectangle2D_F32 {
 	 *
 	 * @param y top left y-coordinate
 	 */
-	public void setY(float y) {
+	public void setY( float y ) {
 		this.tl_y = y;
 	}
 }

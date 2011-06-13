@@ -28,38 +28,38 @@ import jgrl.struct.point.Vector3D_F64;
  * @author Peter Abeles
  */
 public class Rodrigues {
-    // unit vector defining the axis of rotation
-    public Vector3D_F64 unitAxisRoation = new Vector3D_F64();
-    // the angle it is rotated by
-    public double theta;
+	// unit vector defining the axis of rotation
+	public Vector3D_F64 unitAxisRoation = new Vector3D_F64();
+	// the angle it is rotated by
+	public double theta;
 
-    public Rodrigues() {
-    }
+	public Rodrigues() {
+	}
 
-    public Rodrigues(double theta, Vector3D_F64 unitAxisRoation) {
-        this.theta = theta;
-        this.unitAxisRoation.set(unitAxisRoation);
-    }
+	public Rodrigues( double theta, Vector3D_F64 unitAxisRoation ) {
+		this.theta = theta;
+		this.unitAxisRoation.set( unitAxisRoation );
+	}
 
-    public Rodrigues(double theta, double x, double y , double z) {
-        this.theta = theta;
-        this.unitAxisRoation.set(x,y,z);
-        unitAxisRoation.normalize();
-    }
+	public Rodrigues( double theta, double x, double y, double z ) {
+		this.theta = theta;
+		this.unitAxisRoation.set( x, y, z );
+		unitAxisRoation.normalize();
+	}
 
-    public Vector3D_F64 getUnitAxisRoation() {
-        return unitAxisRoation;
-    }
+	public Vector3D_F64 getUnitAxisRoation() {
+		return unitAxisRoation;
+	}
 
-    public void setUnitAxisRoation(Vector3D_F64 unitAxisRoation) {
-        this.unitAxisRoation.set(unitAxisRoation);
-    }
+	public void setUnitAxisRoation( Vector3D_F64 unitAxisRoation ) {
+		this.unitAxisRoation.set( unitAxisRoation );
+	}
 
-    public double getTheta() {
-        return theta;
-    }
+	public double getTheta() {
+		return theta;
+	}
 
-    public void setTheta(double theta) {
-        this.theta = theta;
-    }
+	public void setTheta( double theta ) {
+		this.theta = theta;
+	}
 }

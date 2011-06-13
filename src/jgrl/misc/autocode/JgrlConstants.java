@@ -17,18 +17,15 @@
  * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jgrl.struct.point;
+package jgrl.misc.autocode;
+
 
 /**
- *
- *
+ * @author Peter Abeles
  */
-public class UtilPoint2DInt {
-    public static double distance( int x0 , int y0 , int x1 , int y1 )
-    {
-        int dx = x1-x0;
-        int dy = y1-y0;
+public class JgrlConstants {
 
-        return Math.sqrt(dx*dx + dy*dy);
-    }
+	public static float FLOAT_TEST_TOL = 1e-4f;
+	public static float DOUBLE_TEST_TOL = 1e-8f;
+
 }

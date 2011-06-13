@@ -37,9 +37,9 @@ public class SpecialEuclideanOps_F64 {
 	 *
 	 * @param se The transform which is to be set to no motion.
 	 */
-	public static void setToNoMotion(Se3_F64 se) {
-		CommonOps.setIdentity(se.getR());
-		se.getT().set(0, 0, 0);
+	public static void setToNoMotion( Se3_F64 se ) {
+		CommonOps.setIdentity( se.getR() );
+		se.getT().set( 0, 0, 0 );
 	}
 
 	/**
@@ -49,22 +49,22 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
-	public static DenseMatrix64F toHomogeneous(Se3_F64 se, DenseMatrix64F ret) {
-		if (ret == null)
-			ret = new DenseMatrix64F(4, 4);
+	public static DenseMatrix64F toHomogeneous( Se3_F64 se, DenseMatrix64F ret ) {
+		if( ret == null )
+			ret = new DenseMatrix64F( 4, 4 );
 		else {
-			ret.set(3, 0, 0);
-			ret.set(3, 1, 0);
-			ret.set(3, 2, 0);
+			ret.set( 3, 0, 0 );
+			ret.set( 3, 1, 0 );
+			ret.set( 3, 2, 0 );
 		}
 
-		CommonOps.insert(se.getR(), ret, 0, 0);
+		CommonOps.insert( se.getR(), ret, 0, 0 );
 		Vector3D_F64 T = se.getT();
 
-		ret.set(0, 3, T.x);
-		ret.set(1, 3, T.y);
-		ret.set(2, 3, T.z);
-		ret.set(3, 3, 1);
+		ret.set( 0, 3, T.x );
+		ret.set( 1, 3, T.y );
+		ret.set( 2, 3, T.z );
+		ret.set( 3, 3, 1 );
 
 		return ret;
 	}
@@ -76,16 +76,16 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F64 transform.
 	 */
-	public static Se3_F64 toSe3_F64(DenseMatrix64F H, Se3_F64 ret) {
-		if (H.numCols != 4 || H.numRows != 4)
-			throw new IllegalArgumentException("The homogeneous matrix must be 4 by 4 by definition.");
+	public static Se3_F64 toSe3_F64( DenseMatrix64F H, Se3_F64 ret ) {
+		if( H.numCols != 4 || H.numRows != 4 )
+			throw new IllegalArgumentException( "The homogeneous matrix must be 4 by 4 by definition." );
 
-		if (ret == null)
+		if( ret == null )
 			ret = new Se3_F64();
 
-		ret.setTranslation((double) H.get(0, 3), (double) H.get(1, 3), (double) H.get(2, 3));
+		ret.setTranslation( (double) H.get( 0, 3 ), (double) H.get( 1, 3 ), (double) H.get( 2, 3 ) );
 
-		CommonOps.extract(H, 0, 3, 0, 3, ret.getR(), 0, 0);
+		CommonOps.extract( H, 0, 3, 0, 3, ret.getR(), 0, 0 );
 
 		return ret;
 	}
@@ -97,24 +97,24 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
-	public static DenseMatrix64F toHomogeneous(Se2_F64 se, DenseMatrix64F ret) {
-		if (ret == null)
-			ret = new DenseMatrix64F(3, 3);
+	public static DenseMatrix64F toHomogeneous( Se2_F64 se, DenseMatrix64F ret ) {
+		if( ret == null )
+			ret = new DenseMatrix64F( 3, 3 );
 		else {
-			ret.set(2, 0, 0);
-			ret.set(2, 1, 0);
+			ret.set( 2, 0, 0 );
+			ret.set( 2, 1, 0 );
 		}
 
 		final double c = se.getCosineYaw();
 		final double s = se.getSineYaw();
 
-		ret.set(0, 0, c);
-		ret.set(0, 1, -s);
-		ret.set(1, 0, s);
-		ret.set(1, 1, c);
-		ret.set(0, 2, se.getX());
-		ret.set(1, 2, se.getY());
-		ret.set(2, 2, 1);
+		ret.set( 0, 0, c );
+		ret.set( 0, 1, -s );
+		ret.set( 1, 0, s );
+		ret.set( 1, 1, c );
+		ret.set( 0, 2, se.getX() );
+		ret.set( 1, 2, se.getY() );
+		ret.set( 2, 2, 1 );
 
 		return ret;
 	}
@@ -126,19 +126,19 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F64 transform.
 	 */
-	public static Se2_F64 toSe2(DenseMatrix64F H, Se2_F64 ret) {
-		if (H.numCols != 3 || H.numRows != 3)
-			throw new IllegalArgumentException("The homogeneous matrix must be 3 by 3 by definition.");
+	public static Se2_F64 toSe2( DenseMatrix64F H, Se2_F64 ret ) {
+		if( H.numCols != 3 || H.numRows != 3 )
+			throw new IllegalArgumentException( "The homogeneous matrix must be 3 by 3 by definition." );
 
-		if (ret == null)
+		if( ret == null )
 			ret = new Se2_F64();
 
-		ret.setTranslation((double) H.get(0, 2), (double) H.get(1, 2));
+		ret.setTranslation( (double) H.get( 0, 2 ), (double) H.get( 1, 2 ) );
 
-		double c = (double) H.get(0, 0);
-		double s = (double) H.get(1, 0);
+		double c = (double) H.get( 0, 0 );
+		double s = (double) H.get( 1, 0 );
 
-		ret.setYaw(Math.atan2(s, c));
+		ret.setYaw( Math.atan2( s, c ) );
 
 		return ret;
 	}
@@ -156,13 +156,13 @@ public class SpecialEuclideanOps_F64 {
 	 * @param se   If not null then the transform is written here.
 	 * @return The transform.
 	 */
-	public static Se3_F64 setEulerXYZ(double rotX, double rotY, double rotZ,
-									  double dx, double dy, double dz,
-									  Se3_F64 se) {
-		if (se == null)
+	public static Se3_F64 setEulerXYZ( double rotX, double rotY, double rotZ,
+									   double dx, double dy, double dz,
+									   Se3_F64 se ) {
+		if( se == null )
 			se = new Se3_F64();
 
-		RotationMatrixGenerator.eulerXYZ(rotX, rotY, rotZ, se.getR());
+		RotationMatrixGenerator.eulerXYZ( rotX, rotY, rotZ, se.getR() );
 		Vector3D_F64 T = se.getT();
 		T.x = dx;
 		T.y = dy;

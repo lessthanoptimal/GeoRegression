@@ -28,11 +28,11 @@ package jgrl.struct.affine;
 public class Affine2D_F64 implements Affine<Affine2D_F64> {
 
 	// rotational, sheer, enlarge, ... etc
-	public double a11,a12,a21,a22;
+	public double a11, a12, a21, a22;
 	// translational components
-	public double tx,ty;
+	public double tx, ty;
 
-	public Affine2D_F64(double a11, double a12, double a21, double a22, double tx, double ty) {
+	public Affine2D_F64( double a11, double a12, double a21, double a22, double tx, double ty ) {
 		this.a11 = a11;
 		this.a12 = a12;
 		this.a21 = a21;
@@ -56,7 +56,7 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 	}
 
 	@Override
-	public void set(Affine2D_F64 target) {
+	public void set( Affine2D_F64 target ) {
 		this.a11 = target.a11;
 		this.a12 = target.a12;
 		this.a21 = target.a21;
@@ -66,34 +66,34 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 	}
 
 	@Override
-	public Affine2D_F64 concat(Affine2D_F64 second, Affine2D_F64 result) {
+	public Affine2D_F64 concat( Affine2D_F64 second, Affine2D_F64 result ) {
 
 		Affine2D_F64 ret = new Affine2D_F64();
 
-		ret.a11 = second.a11*a11 + second.a12*a21;
-		ret.a12 = second.a11*a12 + second.a12*a22;
-		ret.a21 = second.a21*a11 + second.a22*a21;
-		ret.a22 = second.a21*a12 + second.a22*a22;
+		ret.a11 = second.a11 * a11 + second.a12 * a21;
+		ret.a12 = second.a11 * a12 + second.a12 * a22;
+		ret.a21 = second.a21 * a11 + second.a22 * a21;
+		ret.a22 = second.a21 * a12 + second.a22 * a22;
 
-		ret.tx = second.a11*tx + second.a12*ty + second.tx;
-		ret.ty = second.a21*tx + second.a22*ty + second.ty;
+		ret.tx = second.a11 * tx + second.a12 * ty + second.tx;
+		ret.ty = second.a21 * tx + second.a22 * ty + second.ty;
 
 		return ret;
 	}
 
 	@Override
-	public Affine2D_F64 invert(Affine2D_F64 inverse) {
+	public Affine2D_F64 invert( Affine2D_F64 inverse ) {
 		Affine2D_F64 inv = new Affine2D_F64();
 
 		double div = a11 * a22 - a12 * a21;
 
-		inv.a11 = a22 /div;
-		inv.a12 = -a12 /div;
-		inv.a21 = -a21 /div;
-		inv.a22 = a11 /div;
+		inv.a11 = a22 / div;
+		inv.a12 = -a12 / div;
+		inv.a21 = -a21 / div;
+		inv.a22 = a11 / div;
 
-		inv.tx = -(inv.a11 *tx + inv.a12 *ty);
-		inv.ty = -(inv.a21 *tx + inv.a22 *ty);
+		inv.tx = -( inv.a11 * tx + inv.a12 * ty );
+		inv.ty = -( inv.a21 * tx + inv.a22 * ty );
 
 		return inv;
 	}

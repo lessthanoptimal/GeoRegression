@@ -28,34 +28,34 @@ import jgrl.struct.GeoTuple3D_F32;
 @SuppressWarnings({"unchecked"})
 public class Point3D_F32 extends GeoTuple3D_F32 {
 
-	public Point3D_F32(Point3D_F32 pt) {
-		super(pt.x, pt.y, pt.z);
+	public Point3D_F32( Point3D_F32 pt ) {
+		super( pt.x, pt.y, pt.z );
 	}
 
-	public Point3D_F32(float x, float y, float z) {
-		super(x, y, z);
+	public Point3D_F32( float x, float y, float z ) {
+		super( x, y, z );
 	}
 
 	public Point3D_F32() {
 	}
 
-	public Point3D_F32 plus(Vector3D_F32 a) {
-		return new Point3D_F32(x + a.getX(), y + a.getY(), z + a.getZ());
+	public Point3D_F32 plus( Vector3D_F32 a ) {
+		return new Point3D_F32( x + a.getX(), y + a.getY(), z + a.getZ() );
 	}
 
 	// todo remove this?  Makes no sense mathematically
 
-	public Point3D_F32 plus(Point3D_F32 a) {
-		return new Point3D_F32(x + a.getX(), y + a.getY(), z + a.getZ());
+	public Point3D_F32 plus( Point3D_F32 a ) {
+		return new Point3D_F32( x + a.getX(), y + a.getY(), z + a.getZ() );
 	}
 
 	@Override
 	public Point3D_F32 copy() {
-		return new Point3D_F32(x, y, z);
+		return new Point3D_F32( x, y, z );
 	}
 
-	public void set(Point3D_F32 worldLoc) {
-		_set(worldLoc);
+	public void set( Point3D_F32 worldLoc ) {
+		_set( worldLoc );
 	}
 
 	@Override

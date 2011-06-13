@@ -27,31 +27,32 @@ import jgrl.struct.GeoTuple2D_F64;
 @SuppressWarnings({"unchecked"})
 public class Point2D_F64 extends GeoTuple2D_F64<Point2D_F64> {
 
-    public Point2D_F64( double x , double y ) {
-        set(x,y);
-    }
+	public Point2D_F64( double x, double y ) {
+		set( x, y );
+	}
 
-    public Point2D_F64(){}
+	public Point2D_F64() {
+	}
 
-    public Point2D_F64( Point2D_F64 pt ) {
-        set( pt.x , pt.y );
-    }
+	public Point2D_F64( Point2D_F64 pt ) {
+		set( pt.x, pt.y );
+	}
 
-    @Override
-    public Point2D_F64 createNewInstance() {
-        return new Point2D_F64();
-    }
+	@Override
+	public Point2D_F64 createNewInstance() {
+		return new Point2D_F64();
+	}
 
-    public void set( Point2D_F64 orig ) {
-        _set(orig);
-    }
+	public void set( Point2D_F64 orig ) {
+		_set( orig );
+	}
 
-    @Override
-    public Point2D_F64 copy() {
-        return new Point2D_F64(this);
-    }
+	@Override
+	public Point2D_F64 copy() {
+		return new Point2D_F64( this );
+	}
 
-    public String toString() {
-        return "P( "+x+" "+y+" )";
-    }
+	public String toString() {
+		return "P( " + x + " " + y + " )";
+	}
 }

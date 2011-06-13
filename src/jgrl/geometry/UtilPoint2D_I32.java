@@ -17,20 +17,17 @@
  * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jgrl.fitting.se;
-
-import org.junit.Test;
-
-import static org.junit.Assert.fail;
-
+package jgrl.geometry;
 
 /**
- * @author Peter Abeles
+ *
+ *
  */
-public class TestComputeSpecialEuclidean_F64 {
+public class UtilPoint2D_I32 {
+	public static double distance( int x0, int y0, int x1, int y1 ) {
+		int dx = x1 - x0;
+		int dy = y1 - y0;
 
-	@Test
-	public void stuff() {
-		fail("Implement");
+		return Math.sqrt( dx * dx + dy * dy );
 	}
 }

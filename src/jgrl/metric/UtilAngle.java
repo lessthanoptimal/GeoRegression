@@ -26,60 +26,60 @@ import static java.lang.Math.PI;
  * are in radians and have a domain of -pi to pi
  */
 public class UtilAngle {
-    public static final double PI2 = PI*2.0;
+	public static final double PI2 = PI * 2.0;
 
-    public static double radianToDegree( double angleRad ) {
-        return 180.0*angleRad/Math.PI;
-    }
+	public static double radianToDegree( double angleRad ) {
+		return 180.0 * angleRad / Math.PI;
+	}
 
-    public static double degreeToRadian( double angleDegree ) {
-        return Math.PI*angleDegree/180.0;
-    }
+	public static double degreeToRadian( double angleDegree ) {
+		return Math.PI * angleDegree / 180.0;
+	}
 
-    /**
-     * Checks to see if it is between -&pi and &pi.
-     *
-     * @param ang Angle being tested
-     * @return true if it is between -&pi and &pi;
-     */
-    public static boolean isStandardDomain( double ang ) {
-        return( ang <= Math.PI && ang >= -Math.PI );
-    }
+	/**
+	 * Checks to see if it is between -&pi and &pi.
+	 *
+	 * @param ang Angle being tested
+	 * @return true if it is between -&pi and &pi;
+	 */
+	public static boolean isStandardDomain( double ang ) {
+		return ( ang <= Math.PI && ang >= -Math.PI );
+	}
 
-    /**
-     * Returns an angle which is equivalent to the one provided, but between (inclusive) -pi and pi.
-     */
-    public static double bound( double ang ) {
-        ang %= PI2;
+	/**
+	 * Returns an angle which is equivalent to the one provided, but between (inclusive) -pi and pi.
+	 */
+	public static double bound( double ang ) {
+		ang %= PI2;
 
-        if( ang > PI ) {
-            return ang - PI2;
-        } else if( ang < -PI ) {
-            return ang + PI2;
-        }
+		if( ang > PI ) {
+			return ang - PI2;
+		} else if( ang < -PI ) {
+			return ang + PI2;
+		}
 
-        return ang;
-    }
+		return ang;
+	}
 
-    /**
-     * <p>
-     * Returns the difference between two angles and bounds the result between -pi and pi:<br>
-     * result = angA - angB<br>
-     * and takes in account boundary conditions.
-     * </p>
-     *
-     * @param angA first angle.  Must be between -pi and pi.
-     * @param angB second angle. Must be between -pi and pi.
-     * @return an angle between -pi and pi
-     */
-    public static double minus( double angA , double angB ) {
-         double diff = angA - angB;
+	/**
+	 * <p>
+	 * Returns the difference between two angles and bounds the result between -pi and pi:<br>
+	 * result = angA - angB<br>
+	 * and takes in account boundary conditions.
+	 * </p>
+	 *
+	 * @param angA first angle.  Must be between -pi and pi.
+	 * @param angB second angle. Must be between -pi and pi.
+	 * @return an angle between -pi and pi
+	 */
+	public static double minus( double angA, double angB ) {
+		double diff = angA - angB;
 
-        if( diff > Math.PI ) {
-            return PI2-diff;
-        } else if( diff < -Math.PI )
-            return -PI2-diff;
+		if( diff > Math.PI ) {
+			return PI2 - diff;
+		} else if( diff < -Math.PI )
+			return -PI2 - diff;
 
-        return diff;
-    }
+		return diff;
+	}
 }

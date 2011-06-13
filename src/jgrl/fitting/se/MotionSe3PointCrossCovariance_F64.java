@@ -22,8 +22,8 @@ package jgrl.fitting.se;
 import jgrl.fitting.MotionTransformPoint;
 import jgrl.geometry.GeometryMath_F64;
 import jgrl.geometry.RotationMatrixGenerator;
+import jgrl.geometry.UtilPoint3D_F64;
 import jgrl.struct.point.Point3D_F64;
-import jgrl.struct.point.UtilPoint3D_F64;
 import jgrl.struct.point.Vector3D_F64;
 import jgrl.struct.se.Se3_F64;
 import jgrl.struct.so.Quaternion;
@@ -73,13 +73,13 @@ public class MotionSe3PointCrossCovariance_F64 implements MotionTransformPoint<S
 	}
 
 	@Override
-	public boolean process(List<Point3D_F64> fromPts, List<Point3D_F64> toPts) {
-		if (fromPts.size() != toPts.size())
-			throw new IllegalArgumentException("There must be a 1 to 1 correspondence between the two sets of points");
+	public boolean process( List<Point3D_F64> fromPts, List<Point3D_F64> toPts ) {
+		if( fromPts.size() != toPts.size() )
+			throw new IllegalArgumentException( "There must be a 1 to 1 correspondence between the two sets of points" );
 
 		// find the mean of both sets of points
-		Point3D_F64 meanFrom = UtilPoint3D_F64.mean(fromPts);
-		Point3D_F64 meanTo = UtilPoint3D_F64.mean(toPts);
+		Point3D_F64 meanFrom = UtilPoint3D_F64.mean( fromPts );
+		Point3D_F64 meanTo = UtilPoint3D_F64.mean( toPts );
 
 		final int N = fromPts.size();
 
@@ -95,9 +95,9 @@ public class MotionSe3PointCrossCovariance_F64 implements MotionTransformPoint<S
 		double m21 = meanFrom.y * meanTo.x, m22 = meanFrom.y * meanTo.y, m23 = meanFrom.y * meanTo.z;
 		double m31 = meanFrom.z * meanTo.x, m32 = meanFrom.z * meanTo.y, m33 = meanFrom.z * meanTo.z;
 
-		for (int i = 0; i < N; i++) {
-			Point3D_F64 f = fromPts.get(i);
-			Point3D_F64 t = toPts.get(i);
+		for( int i = 0; i < N; i++ ) {
+			Point3D_F64 f = fromPts.get( i );
+			Point3D_F64 t = toPts.get( i );
 
 			s11 += f.x * t.x;
 			s12 += f.x * t.y;
@@ -120,26 +120,26 @@ public class MotionSe3PointCrossCovariance_F64 implements MotionTransformPoint<S
 		s32 = s32 / N - m32;
 		s33 = s33 / N - m33;
 
-		SimpleMatrix Sigma = new SimpleMatrix(3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33);
+		SimpleMatrix Sigma = new SimpleMatrix( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
 
 //        Sigma.print();
 
-		SimpleMatrix Delta = new SimpleMatrix(3, 1, true, s23 - s32, s31 - s13, s12 - s21);
+		SimpleMatrix Delta = new SimpleMatrix( 3, 1, true, s23 - s32, s31 - s13, s12 - s21 );
 
-		SimpleMatrix Q = new SimpleMatrix(4, 4);
-		SimpleMatrix BR = Sigma.plus(Sigma.transpose()).minus(SimpleMatrix.identity(3).scale(Sigma.trace()));
+		SimpleMatrix Q = new SimpleMatrix( 4, 4 );
+		SimpleMatrix BR = Sigma.plus( Sigma.transpose() ).minus( SimpleMatrix.identity( 3 ).scale( Sigma.trace() ) );
 
-		Q.set(0, 0, Sigma.trace());
-		Q.insertIntoThis(0, 1, Delta.transpose());
-		Q.insertIntoThis(1, 0, Delta);
-		Q.insertIntoThis(1, 1, BR);
+		Q.set( 0, 0, Sigma.trace() );
+		Q.insertIntoThis( 0, 1, Delta.transpose() );
+		Q.insertIntoThis( 1, 0, Delta );
+		Q.insertIntoThis( 1, 1, BR );
 
 //        Q.print();
 
-		extractQuaternionFromQ(Q);
+		extractQuaternionFromQ( Q );
 
 		// translation = meanTo - R*meanFrom
-		GeometryMath_F64.mult(motion.getR(), meanFrom, meanFrom);
+		GeometryMath_F64.mult( motion.getR(), meanFrom, meanFrom );
 		Vector3D_F64 T = motion.getT();
 		param[4] = T.x = meanTo.x - meanFrom.x;
 		param[5] = T.y = meanTo.y - meanFrom.y;
@@ -152,20 +152,20 @@ public class MotionSe3PointCrossCovariance_F64 implements MotionTransformPoint<S
 	 * The unit eigenvector corresponding to the maximum eigenvalue of Q is the rotation
 	 * parameterized as a quaternion.
 	 */
-	private void extractQuaternionFromQ(SimpleMatrix q) {
+	private void extractQuaternionFromQ( SimpleMatrix q ) {
 		SimpleEVD evd = q.eig();
 		int indexMax = evd.getIndexMax();
 
-		SimpleMatrix v_max = evd.getEigenVector(indexMax);
+		SimpleMatrix v_max = evd.getEigenVector( indexMax );
 
-		quat.q1 = v_max.get(0);
-		quat.q2 = v_max.get(1);
-		quat.q3 = v_max.get(2);
-		quat.q4 = v_max.get(3);
+		quat.q1 = v_max.get( 0 );
+		quat.q2 = v_max.get( 1 );
+		quat.q3 = v_max.get( 2 );
+		quat.q4 = v_max.get( 3 );
 		quat.normalize();
 
 
-		RotationMatrixGenerator.quaternionToMatrix(quat, motion.getR());
+		RotationMatrixGenerator.quaternionToMatrix( quat, motion.getR() );
 	}
 
 	@Override

@@ -29,13 +29,13 @@ import static org.junit.Assert.fail;
  */
 public class TestDistance3D_F64 {
 
-    @Test
-    public void distance_line_line() {
-        fail("Implement");
-    }
+	@Test
+	public void distance_line_line() {
+		fail( "Implement" );
+	}
 
-    @Test
-    public void distance_line_point() {
-        fail("Implement");
-    }
+	@Test
+	public void distance_line_point() {
+		fail( "Implement" );
+	}
 }

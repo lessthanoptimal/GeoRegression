@@ -36,15 +36,15 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 	 * @param tol How similar each element must be for them to be considered identical.
 	 * @return if they are identical or not.
 	 */
-	public boolean isIdentical(T t, double tol) {
-		if (t.getDimension() != getDimension())
+	public boolean isIdentical( T t, double tol ) {
+		if( t.getDimension() != getDimension() )
 			return false;
 
 		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			double diff = Math.abs(getIndex(i) - t.getIndex(i));
+		for( int i = 0; i < N; i++ ) {
+			double diff = Math.abs( getIndex( i ) - t.getIndex( i ) );
 
-			if (diff > tol)
+			if( diff > tol )
 				return false;
 		}
 
@@ -60,8 +60,8 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 		T ret = createNewInstance();
 
 		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			ret.setIndex(i, getIndex(i));
+		for( int i = 0; i < N; i++ ) {
+			ret.setIndex( i, getIndex( i ) );
 		}
 
 		return ret;
@@ -73,7 +73,7 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 	 * @return norm.
 	 */
 	public double norm() {
-		return (float) Math.sqrt(normSq());
+		return (float) Math.sqrt( normSq() );
 	}
 
 	/**
@@ -84,26 +84,26 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 	public double normSq() {
 		double total = 0;
 		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			double a = getIndex(i);
+		for( int i = 0; i < N; i++ ) {
+			double a = getIndex( i );
 			total += a * a;
 		}
 
 		return total;
 	}
 
-	public double distance(T t) {
-		return Math.sqrt(distance2(t));
+	public double distance( T t ) {
+		return Math.sqrt( distance2( t ) );
 	}
 
-	public double distance2(T t) {
-		if (t.getDimension() != getDimension())
-			throw new IllegalArgumentException("Dimension of input tuple does not match");
+	public double distance2( T t ) {
+		if( t.getDimension() != getDimension() )
+			throw new IllegalArgumentException( "Dimension of input tuple does not match" );
 
 		double total = 0;
 		final int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			double diff = Math.abs(getIndex(i) - t.getIndex(i));
+		for( int i = 0; i < N; i++ ) {
+			double diff = Math.abs( getIndex( i ) - t.getIndex( i ) );
 
 			total += diff * diff;
 		}
@@ -117,7 +117,7 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 	 * @param index Which axis in the coordinate system.
 	 * @return Its value.
 	 */
-	public abstract double getIndex(int index);
+	public abstract double getIndex( int index );
 
-	public abstract void setIndex(int index, double value);
+	public abstract void setIndex( int index, double value );
 }

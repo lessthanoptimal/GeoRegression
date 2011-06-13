@@ -26,118 +26,119 @@ package jgrl.struct;
  * @author Peter Abeles
  */
 public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_F64<T> {
-    public double x;
-    public double y;
+	public double x;
+	public double y;
 
-    public GeoTuple2D_F64( double x , double y ) {
-        this.x = x;
-        this.y = y;
-    }
+	public GeoTuple2D_F64( double x, double y ) {
+		this.x = x;
+		this.y = y;
+	}
 
-    public GeoTuple2D_F64(){}
+	public GeoTuple2D_F64() {
+	}
 
-    protected void _set( GeoTuple2D_F64 a ) {
-        x = a.x;
-        y = a.y;
-    }
+	protected void _set( GeoTuple2D_F64 a ) {
+		x = a.x;
+		y = a.y;
+	}
 
-    public void set( double x, double y ) {
-        this.x = x;
-        this.y = y;
-    }
+	public void set( double x, double y ) {
+		this.x = x;
+		this.y = y;
+	}
 
-    public boolean isIdentical( double x , double y  ) {
-        return this.x == x && this.y == y;
-    }
+	public boolean isIdentical( double x, double y ) {
+		return this.x == x && this.y == y;
+	}
 
-    public boolean isIdentical( double x , double y , double tol ) {
-        return( Math.abs(this.x - x) < tol && Math.abs(this.y - y) < tol );
-    }
+	public boolean isIdentical( double x, double y, double tol ) {
+		return ( Math.abs( this.x - x ) < tol && Math.abs( this.y - y ) < tol );
+	}
 
-    public boolean isIdentical( T t , double tol ) {
-        return( Math.abs(this.x - t.x) < tol && Math.abs(this.y - t.y) < tol );
-    }
+	public boolean isIdentical( T t, double tol ) {
+		return ( Math.abs( this.x - t.x ) < tol && Math.abs( this.y - t.y ) < tol );
+	}
 
-    public void setX(double x) {
-        this.x = x;
-    }
+	public void setX( double x ) {
+		this.x = x;
+	}
 
-    public void setY(double y) {
-        this.y = y;
-    }
+	public void setY( double y ) {
+		this.y = y;
+	}
 
-    public double getX() {
-        return x;
-    }
+	public double getX() {
+		return x;
+	}
 
-    public double getY() {
-        return y;
-    }
-
-	@Override
-    public double distance( T t ) {
-        double dx = t.x - x;
-        double dy = t.y - y;
-
-        return Math.sqrt(dx*dx + dy*dy );
-    }
+	public double getY() {
+		return y;
+	}
 
 	@Override
-    public double distance2( T t ) {
-        double dx = t.x - x;
-        double dy = t.y - y;
+	public double distance( T t ) {
+		double dx = t.x - x;
+		double dy = t.y - y;
 
-        return dx*dx + dy*dy;
-    }
+		return Math.sqrt( dx * dx + dy * dy );
+	}
 
-    @Override
-    public double getIndex( int index ) {
-        switch( index ) {
-            case 0:
-                return x;
+	@Override
+	public double distance2( T t ) {
+		double dx = t.x - x;
+		double dy = t.y - y;
 
-            case 1:
-                return y;
+		return dx * dx + dy * dy;
+	}
 
-            default:
-                throw new IllegalArgumentException("Invalid index");
-        }
-    }
+	@Override
+	public double getIndex( int index ) {
+		switch( index ) {
+			case 0:
+				return x;
 
-    @Override
-    public void setIndex( int index , double value ) {
-        switch( index ) {
-            case 0:
-                x = value;
-                break;
+			case 1:
+				return y;
 
-            case 1:
-                y = value;
-                break;
+			default:
+				throw new IllegalArgumentException( "Invalid index" );
+		}
+	}
 
-            default:
-                throw new IllegalArgumentException("Invalid index");
-        }
-    }
+	@Override
+	public void setIndex( int index, double value ) {
+		switch( index ) {
+			case 0:
+				x = value;
+				break;
 
-    @Override
-    public double norm() {
-        return Math.sqrt(x*x+y*y);
-    }
+			case 1:
+				y = value;
+				break;
 
-    @Override
-    public double normSq() {
-        return x*x+y*y;
-    }
+			default:
+				throw new IllegalArgumentException( "Invalid index" );
+		}
+	}
 
-    @Override
-    public int getDimension() {
-        return 2;
-    }
+	@Override
+	public double norm() {
+		return Math.sqrt( x * x + y * y );
+	}
 
-    public void print() {
-        System.out.println(this);
-    }
+	@Override
+	public double normSq() {
+		return x * x + y * y;
+	}
+
+	@Override
+	public int getDimension() {
+		return 2;
+	}
+
+	public void print() {
+		System.out.println( this );
+	}
 
 
 }

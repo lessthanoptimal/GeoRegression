@@ -17,9 +17,10 @@
  * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jgrl.struct.point;
+package jgrl.geometry;
 
-import jgrl.autocode.JgrlConstants;
+import jgrl.misc.autocode.JgrlConstants;
+import jgrl.struct.point.Vector3D_F64;
 import org.junit.Test;
 
 import java.util.Random;
@@ -30,29 +31,29 @@ import static org.junit.Assert.*;
 /**
  * @author Peter Abeles
  */
-public class TestUtilVector3D {
+public class TestUtilVector3D_F64 {
 
-	Random rand = new Random(23423);
+	Random rand = new Random( 23423 );
 
 	@Test
 	public void isIdentical() {
-		Vector3D_F64 a = UtilVector3D.createRandom64(-1, 1, rand);
-		Vector3D_F64 b = UtilVector3D.createRandom64(-1, 1, rand);
+		Vector3D_F64 a = UtilVector3D_F64.createRandom64( -1, 1, rand );
+		Vector3D_F64 b = UtilVector3D_F64.createRandom64( -1, 1, rand );
 
 
 		// test positive
-		assertTrue(UtilVector3D.isIdentical(a, a.copy(), JgrlConstants.DOUBLE_TEST_TOL));
+		assertTrue( UtilVector3D_F64.isIdentical( a, a.copy(), JgrlConstants.DOUBLE_TEST_TOL ) );
 
 		// test negative
-		assertFalse(UtilVector3D.isIdentical(a, b, JgrlConstants.DOUBLE_TEST_TOL));
+		assertFalse( UtilVector3D_F64.isIdentical( a, b, JgrlConstants.DOUBLE_TEST_TOL ) );
 	}
 
 	@Test
 	public void normalize() {
-		Vector3D_F64 a = new Vector3D_F64(3, 3, 4);
+		Vector3D_F64 a = new Vector3D_F64( 3, 3, 4 );
 
-		UtilVector3D.normalize(a);
+		UtilVector3D_F64.normalize( a );
 
-		assertEquals(1, a.norm(), JgrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 1, a.norm(), JgrlConstants.DOUBLE_TEST_TOL );
 	}
 }

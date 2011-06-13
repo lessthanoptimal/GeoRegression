@@ -19,11 +19,11 @@
 
 package jgrl.fitting.se;
 
-import jgrl.autocode.JgrlConstants;
+import jgrl.geometry.UtilPoint2D_F64;
+import jgrl.misc.autocode.JgrlConstants;
+import jgrl.misc.test.GeometryUnitTest;
 import jgrl.struct.point.Point2D_F64;
-import jgrl.struct.point.UtilPoint2D_F64;
 import jgrl.struct.se.Se2_F64;
-import jgrl.test.GeometryUnitTest;
 import jgrl.transform.se.SePointOps_F64;
 import org.junit.Test;
 
@@ -38,39 +38,39 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestMotionSe2PointSVD_F64 {
 
-	Random rand = new Random(434324);
+	Random rand = new Random( 434324 );
 
 	@Test
 	public void noiseless() {
-		Se2_F64 tran = new Se2_F64(2, -4, 0.93);
+		Se2_F64 tran = new Se2_F64( 2, -4, 0.93 );
 
-		List<Point2D_F64> from = UtilPoint2D_F64.random(-10, 10, 30, rand);
+		List<Point2D_F64> from = UtilPoint2D_F64.random( -10, 10, 30, rand );
 		List<Point2D_F64> to = new ArrayList<Point2D_F64>();
-		for (Point2D_F64 p : from) {
-			to.add(SePointOps_F64.transform(tran, p, null));
+		for( Point2D_F64 p : from ) {
+			to.add( SePointOps_F64.transform( tran, p, null ) );
 		}
 
 		MotionSe2PointSVD_F64 alg = new MotionSe2PointSVD_F64();
 
-		assertTrue(alg.process(from, to));
+		assertTrue( alg.process( from, to ) );
 
 		Se2_F64 tranFound = alg.getMotion();
 
 //        tranFound.getTranslation().print();
 //        tran.getTranslation().print();
 
-		checkTransform(from, to, tranFound, JgrlConstants.DOUBLE_TEST_TOL);
+		checkTransform( from, to, tranFound, JgrlConstants.DOUBLE_TEST_TOL );
 	}
 
-	public static void checkTransform(List<Point2D_F64> from, List<Point2D_F64> to, Se2_F64 tranFound, double tol) {
+	public static void checkTransform( List<Point2D_F64> from, List<Point2D_F64> to, Se2_F64 tranFound, double tol ) {
 		Point2D_F64 foundPt = new Point2D_F64();
-		for (int i = 0; i < from.size(); i++) {
+		for( int i = 0; i < from.size(); i++ ) {
 
-			Point2D_F64 p = from.get(i);
+			Point2D_F64 p = from.get( i );
 
-			SePointOps_F64.transform(tranFound, p, foundPt);
+			SePointOps_F64.transform( tranFound, p, foundPt );
 
-			GeometryUnitTest.assertEquals(to.get(i), foundPt, tol);
+			GeometryUnitTest.assertEquals( to.get( i ), foundPt, tol );
 		}
 	}
 }

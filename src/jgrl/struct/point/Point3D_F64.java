@@ -28,43 +28,43 @@ import jgrl.struct.GeoTuple3D_F64;
 @SuppressWarnings({"unchecked"})
 public class Point3D_F64 extends GeoTuple3D_F64 {
 
-    public Point3D_F64( Point3D_F64 pt ) {
-        super(pt.x, pt.y, pt.z);
-    }
+	public Point3D_F64( Point3D_F64 pt ) {
+		super( pt.x, pt.y, pt.z );
+	}
 
-    public Point3D_F64(double x, double y, double z) {
-        super(x, y, z);
-    }
+	public Point3D_F64( double x, double y, double z ) {
+		super( x, y, z );
+	}
 
-    public Point3D_F64(){}
+	public Point3D_F64() {
+	}
 
-    public Point3D_F64 plus( Vector3D_F64 a )
-    {
-        return new Point3D_F64( x+a.getX() , y+a.getY(), z+a.getZ());
-    }
+	public Point3D_F64 plus( Vector3D_F64 a ) {
+		return new Point3D_F64( x + a.getX(), y + a.getY(), z + a.getZ() );
+	}
 
-    // todo remove this?  Makes no sense mathematically
-    public Point3D_F64 plus( Point3D_F64 a )
-    {
-        return new Point3D_F64( x+a.getX() , y+a.getY(), z+a.getZ());
-    }
+	// todo remove this?  Makes no sense mathematically
 
-    @Override
-    public Point3D_F64 copy() {
-        return new Point3D_F64(x,y,z);
-    }
+	public Point3D_F64 plus( Point3D_F64 a ) {
+		return new Point3D_F64( x + a.getX(), y + a.getY(), z + a.getZ() );
+	}
 
-    public void set(Point3D_F64 worldLoc) {
-        _set(worldLoc);
-    }
+	@Override
+	public Point3D_F64 copy() {
+		return new Point3D_F64( x, y, z );
+	}
 
-    @Override
-    public String toString() {
-        return "P( "+x+" "+y+" "+z+" )";
-    }
+	public void set( Point3D_F64 worldLoc ) {
+		_set( worldLoc );
+	}
 
-    @Override
-    public Point3D_F64 createNewInstance() {
-        return new Point3D_F64();
-    }
+	@Override
+	public String toString() {
+		return "P( " + x + " " + y + " " + z + " )";
+	}
+
+	@Override
+	public Point3D_F64 createNewInstance() {
+		return new Point3D_F64();
+	}
 }

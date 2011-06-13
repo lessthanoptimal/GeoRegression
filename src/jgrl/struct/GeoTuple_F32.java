@@ -36,15 +36,15 @@ public abstract class GeoTuple_F32<T extends GeoTuple_F32> extends GeoTuple<T> {
 	 * @param tol How similar each element must be for them to be considered identical.
 	 * @return if they are identical or not.
 	 */
-	public boolean isIdentical(T t, float tol) {
-		if (t.getDimension() != getDimension())
+	public boolean isIdentical( T t, float tol ) {
+		if( t.getDimension() != getDimension() )
 			return false;
 
 		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			float diff = (float) Math.abs(getIndex(i) - t.getIndex(i));
+		for( int i = 0; i < N; i++ ) {
+			float diff = (float)Math.abs( getIndex( i ) - t.getIndex( i ) );
 
-			if (diff > tol)
+			if( diff > tol )
 				return false;
 		}
 
@@ -60,8 +60,8 @@ public abstract class GeoTuple_F32<T extends GeoTuple_F32> extends GeoTuple<T> {
 		T ret = createNewInstance();
 
 		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			ret.setIndex(i, getIndex(i));
+		for( int i = 0; i < N; i++ ) {
+			ret.setIndex( i, getIndex( i ) );
 		}
 
 		return ret;
@@ -73,7 +73,7 @@ public abstract class GeoTuple_F32<T extends GeoTuple_F32> extends GeoTuple<T> {
 	 * @return norm.
 	 */
 	public float norm() {
-		return (float) (float) Math.sqrt(normSq());
+		return (float) (float)Math.sqrt( normSq() );
 	}
 
 	/**
@@ -84,26 +84,26 @@ public abstract class GeoTuple_F32<T extends GeoTuple_F32> extends GeoTuple<T> {
 	public float normSq() {
 		float total = 0;
 		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			float a = getIndex(i);
+		for( int i = 0; i < N; i++ ) {
+			float a = getIndex( i );
 			total += a * a;
 		}
 
 		return total;
 	}
 
-	public float distance(T t) {
-		return (float) Math.sqrt(distance2(t));
+	public float distance( T t ) {
+		return (float)Math.sqrt( distance2( t ) );
 	}
 
-	public float distance2(T t) {
-		if (t.getDimension() != getDimension())
-			throw new IllegalArgumentException("Dimension of input tuple does not match");
+	public float distance2( T t ) {
+		if( t.getDimension() != getDimension() )
+			throw new IllegalArgumentException( "Dimension of input tuple does not match" );
 
 		float total = 0;
 		final int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			float diff = (float) Math.abs(getIndex(i) - t.getIndex(i));
+		for( int i = 0; i < N; i++ ) {
+			float diff = (float)Math.abs( getIndex( i ) - t.getIndex( i ) );
 
 			total += diff * diff;
 		}
@@ -117,7 +117,7 @@ public abstract class GeoTuple_F32<T extends GeoTuple_F32> extends GeoTuple<T> {
 	 * @param index Which axis in the coordinate system.
 	 * @return Its value.
 	 */
-	public abstract float getIndex(int index);
+	public abstract float getIndex( int index );
 
-	public abstract void setIndex(int index, float value);
+	public abstract void setIndex( int index, float value );
 }

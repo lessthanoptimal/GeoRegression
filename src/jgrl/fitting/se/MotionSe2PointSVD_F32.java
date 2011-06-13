@@ -21,8 +21,8 @@ package jgrl.fitting.se;
 
 import jgrl.fitting.MotionTransformPoint;
 import jgrl.geometry.GeometryMath_F32;
+import jgrl.geometry.UtilPoint2D_F32;
 import jgrl.struct.point.Point2D_F32;
-import jgrl.struct.point.UtilPoint2D_F32;
 import jgrl.struct.se.Se2_F32;
 import org.ejml.simple.SimpleMatrix;
 import org.ejml.simple.SimpleSVD;
@@ -59,13 +59,13 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 	}
 
 	@Override
-	public boolean process(List<Point2D_F32> fromPts, List<Point2D_F32> toPts) {
-		if (fromPts.size() != toPts.size())
-			throw new IllegalArgumentException("There must be a 1 to 1 correspondence between the two sets of points");
+	public boolean process( List<Point2D_F32> fromPts, List<Point2D_F32> toPts ) {
+		if( fromPts.size() != toPts.size() )
+			throw new IllegalArgumentException( "There must be a 1 to 1 correspondence between the two sets of points" );
 
 		// find the mean of both sets of points
-		Point2D_F32 meanFrom = UtilPoint2D_F32.mean(fromPts);
-		Point2D_F32 meanTo = UtilPoint2D_F32.mean(toPts);
+		Point2D_F32 meanFrom = UtilPoint2D_F32.mean( fromPts );
+		Point2D_F32 meanTo = UtilPoint2D_F32.mean( toPts );
 
 		final int N = fromPts.size();
 
@@ -79,9 +79,9 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 		float m11 = meanFrom.x * meanTo.x, m12 = meanFrom.x * meanTo.y;
 		float m21 = meanFrom.y * meanTo.x, m22 = meanFrom.y * meanTo.y;
 
-		for (int i = 0; i < N; i++) {
-			Point2D_F32 f = fromPts.get(i);
-			Point2D_F32 t = toPts.get(i);
+		for( int i = 0; i < N; i++ ) {
+			Point2D_F32 f = fromPts.get( i );
+			Point2D_F32 t = toPts.get( i );
 
 			s11 += f.x * t.x;
 			s12 += f.x * t.y;
@@ -94,37 +94,37 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 		s21 = s21 / N - m21;
 		s22 = s22 / N - m22;
 
-		SimpleMatrix Sigma = new SimpleMatrix(2, 2, true, s11, s12, s21, s22);
+		SimpleMatrix Sigma = new SimpleMatrix( 2, 2, true, s11, s12, s21, s22 );
 
 		// Compute the SVD of the cross correlation matrix
 		// The rotation matrix is R = V*U^T
 
-		SimpleSVD evd = Sigma.svd(false);
+		SimpleSVD evd = Sigma.svd( false );
 		SimpleMatrix U = evd.getU();
 		SimpleMatrix V = evd.getV();
 
-		SimpleMatrix R = V.mult(U.transpose());
+		SimpleMatrix R = V.mult( U.transpose() );
 
 		// There are situations where R might not have a determinant of one and is instead
 		// a reflection is returned
-		if (R.determinant() < 0) {
-			for (int i = 0; i < 2; i++)
-				V.set(i, 1, -V.get(i, 1));
-			R = V.mult(U.transpose());
+		if( R.determinant() < 0 ) {
+			for( int i = 0; i < 2; i++ )
+				V.set( i, 1, -V.get( i, 1 ) );
+			R = V.mult( U.transpose() );
 			float det = (float) R.determinant();
-			if (det < 0) {
-				System.out.println("Crap");
+			if( det < 0 ) {
+				System.out.println( "Crap" );
 			}
 		}
 
 		// extract the yaw from the rotation matrix
-		float yaw = (float) Math.atan2(R.get(1, 0), R.get(0, 0));
+		float yaw = (float)Math.atan2( R.get( 1, 0 ), R.get( 0, 0 ) );
 
 		// save the results
-		GeometryMath_F32.rotate(yaw, meanFrom, meanFrom);
+		GeometryMath_F32.rotate( yaw, meanFrom, meanFrom );
 		motion.getTranslation().x = meanTo.x - meanFrom.x;
 		motion.getTranslation().y = meanTo.y - meanFrom.y;
-		motion.setYaw(yaw);
+		motion.setYaw( yaw );
 
 		return true;
 	}

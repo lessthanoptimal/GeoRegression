@@ -40,33 +40,33 @@ public class LineParametric2D_F32 {
 	 */
 	public Vector2D_F32 slope = new Vector2D_F32();
 
-	public LineParametric2D_F32(float x_0, float y_0, float slopeX, float slopeY) {
-		p.set(x_0, y_0);
-		slope.set(slopeX, slopeY);
+	public LineParametric2D_F32( float x_0, float y_0, float slopeX, float slopeY ) {
+		p.set( x_0, y_0 );
+		slope.set( slopeX, slopeY );
 	}
 
-	public LineParametric2D_F32(Point2D_F32 p, Vector2D_F32 slope) {
-		setPoint(p);
-		setSlope(slope);
+	public LineParametric2D_F32( Point2D_F32 p, Vector2D_F32 slope ) {
+		setPoint( p );
+		setSlope( slope );
 	}
 
 	public LineParametric2D_F32() {
 	}
 
-	public void setPoint(Point2D_F32 pt) {
-		this.p.set(pt);
+	public void setPoint( Point2D_F32 pt ) {
+		this.p.set( pt );
 	}
 
-	public void setPoint(float x, float y) {
+	public void setPoint( float x, float y ) {
 		this.p.x = x;
 		this.p.y = y;
 	}
 
-	public void setSlope(Vector2D_F32 slope) {
-		this.slope.set(slope);
+	public void setSlope( Vector2D_F32 slope ) {
+		this.slope.set( slope );
 	}
 
-	public void setSlope(float slopeX, float slopeY) {
+	public void setSlope( float slopeX, float slopeY ) {
 		this.slope.x = slopeX;
 		this.slope.y = slopeY;
 	}
@@ -76,12 +76,12 @@ public class LineParametric2D_F32 {
 	 *
 	 * @param angle Angle of the line specified in radians.
 	 */
-	public void setAngle(float angle) {
-		slope.set((float) Math.cos(angle), (float) Math.sin(angle));
+	public void setAngle( float angle ) {
+		slope.set( (float)Math.cos( angle ), (float)Math.sin( angle ) );
 	}
 
 	public float getAngle() {
-		return (float) Math.atan2(slope.y, slope.x);
+		return (float)Math.atan2( slope.y, slope.x );
 	}
 
 	/**
@@ -90,8 +90,8 @@ public class LineParametric2D_F32 {
 	 * @param t Location along the line.
 	 * @return Point on the line.
 	 */
-	public Point2D_F32 getPointOnLine(float t) {
-		return new Point2D_F32(slope.x * t + p.x, slope.y * t + p.y);
+	public Point2D_F32 getPointOnLine( float t ) {
+		return new Point2D_F32( slope.x * t + p.x, slope.y * t + p.y );
 	}
 
 	public Point2D_F32 getPoint() {
@@ -115,6 +115,6 @@ public class LineParametric2D_F32 {
 	}
 
 	public LineParametric2D_F32 copy() {
-		return new LineParametric2D_F32(p, slope);
+		return new LineParametric2D_F32( p, slope );
 	}
 }

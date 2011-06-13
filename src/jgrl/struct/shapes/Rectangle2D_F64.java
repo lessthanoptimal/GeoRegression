@@ -23,7 +23,7 @@ package jgrl.struct.shapes;
  * <p>
  * Describes a 2D rectangle aligned along the coordinate system's axes.
  * </p>
- *
+ * <p/>
  * <p>
  * The "top left" point of the rectangle is defined by tl_x and tl_y.  The remaining
  * three corners are found by adding width and/or height to that point.
@@ -33,81 +33,79 @@ package jgrl.struct.shapes;
  */
 public class Rectangle2D_F64 {
 
-    // width and height of the rectangle
-    public double width;
-    public double height;
-    // location of the r
-    public double tl_x;
-    public double tl_y;
+	// width and height of the rectangle
+	public double width;
+	public double height;
+	// location of the r
+	public double tl_x;
+	public double tl_y;
 
-    public Rectangle2D_F64() {
-    }
+	public Rectangle2D_F64() {
+	}
 
-    public Rectangle2D_F64(double tl_x, double tl_y , double width , double height ) {
-        this.width = width;
-        this.height = height;
-        this.tl_x = tl_x;
-        this.tl_y = tl_y;
-    }
+	public Rectangle2D_F64( double tl_x, double tl_y, double width, double height ) {
+		this.width = width;
+		this.height = height;
+		this.tl_x = tl_x;
+		this.tl_y = tl_y;
+	}
 
-    /**
-     * Sets the top left point
-     *
-     * @param x
-     * @param y
-     */
-    public void setPoint( double x , double y ) {
-        this.tl_x = x;
-        this.tl_y = y;
-    }
+	/**
+	 * Sets the top left point
+	 *
+	 * @param x
+	 * @param y
+	 */
+	public void setPoint( double x, double y ) {
+		this.tl_x = x;
+		this.tl_y = y;
+	}
 
-    public double getWidth() {
-        return width;
-    }
+	public double getWidth() {
+		return width;
+	}
 
-    public void setWidth(double width) {
-        this.width = width;
-    }
+	public void setWidth( double width ) {
+		this.width = width;
+	}
 
-    public double getHeight() {
-        return height;
-    }
+	public double getHeight() {
+		return height;
+	}
 
-    public void setHeight(double height) {
-        this.height = height;
-    }
+	public void setHeight( double height ) {
+		this.height = height;
+	}
 
-    /**
-     *
-     * @return top left x-coordinate
-     */
-    public double getX() {
-        return tl_x;
-    }
+	/**
+	 * @return top left x-coordinate
+	 */
+	public double getX() {
+		return tl_x;
+	}
 
-    /**
-     * Sets the top left x-coordinate
-     *
-     * @param x top left x-coordinate
-     */
-    public void setX(double x) {
-        this.tl_x = x;
-    }
+	/**
+	 * Sets the top left x-coordinate
+	 *
+	 * @param x top left x-coordinate
+	 */
+	public void setX( double x ) {
+		this.tl_x = x;
+	}
 
-    /**
-     *
-     * @return top left y-coordinate
-     */
-    public double getY() {
-        return tl_y;
-    }
+	/**
+	 * @return top left y-coordinate
+	 */
+	public double getY() {
+		return tl_y;
+	}
 
-    /**
-     * Sets the top left y-coordinate
-     *
-     * @param y top left y-coordinate
-     */
-    public void setY(double y) {
-        this.tl_y = y;
-    }
+	/**
+	 * Sets the top left y-coordinate
+	 *
+	 * @param y top left y-coordinate
+	 */
+	public void setY( double y ) {
+		this.tl_y = y;
+	}
 }

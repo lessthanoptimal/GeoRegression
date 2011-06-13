@@ -17,7 +17,9 @@
  * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jgrl.struct.point;
+package jgrl.geometry;
+
+import jgrl.struct.point.Point3D_F64;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,47 +32,47 @@ import java.util.Random;
 public class UtilPoint3D_F64 {
 
 
-	public static List<Point3D_F64> copy(List<Point3D_F64> pts) {
+	public static List<Point3D_F64> copy( List<Point3D_F64> pts ) {
 		List<Point3D_F64> ret = new ArrayList<Point3D_F64>();
 
-		for (Point3D_F64 p : pts) {
-			ret.add(p.copy());
+		for( Point3D_F64 p : pts ) {
+			ret.add( p.copy() );
 		}
 
 		return ret;
 	}
 
-	public static void noiseNormal(List<Point3D_F64> pts, double sigma, Random rand) {
-		for (Point3D_F64 p : pts) {
+	public static void noiseNormal( List<Point3D_F64> pts, double sigma, Random rand ) {
+		for( Point3D_F64 p : pts ) {
 			p.x += rand.nextGaussian() * sigma;
 			p.y += rand.nextGaussian() * sigma;
 			p.z += rand.nextGaussian() * sigma;
 		}
 	}
 
-	public static List<Point3D_F64> random(double min, double max, int num, Random rand) {
+	public static List<Point3D_F64> random( double min, double max, int num, Random rand ) {
 		List<Point3D_F64> ret = new ArrayList<Point3D_F64>();
 
 		double d = max - min;
 
-		for (int i = 0; i < num; i++) {
+		for( int i = 0; i < num; i++ ) {
 			Point3D_F64 p = new Point3D_F64();
 			p.x = rand.nextDouble() * d + min;
 			p.y = rand.nextDouble() * d + min;
 			p.z = rand.nextDouble() * d + min;
 
-			ret.add(p);
+			ret.add( p );
 		}
 
 		return ret;
 	}
 
-	public static Point3D_F64 mean(List<Point3D_F64> points) {
+	public static Point3D_F64 mean( List<Point3D_F64> points ) {
 		Point3D_F64 mean = new Point3D_F64();
 
 		double x = 0, y = 0, z = 0;
 
-		for (Point3D_F64 p : points) {
+		for( Point3D_F64 p : points ) {
 			x += p.x;
 			y += p.y;
 			z += p.z;

@@ -17,20 +17,43 @@
  * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jgrl.fitting.se;
+package jgrl.geometry;
 
+import jgrl.misc.autocode.JgrlConstants;
+import jgrl.struct.point.Vector3D_F32;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import java.util.Random;
+
+import static org.junit.Assert.*;
 
 
 /**
  * @author Peter Abeles
  */
-public class TestComputeSpecialEuclidean_F32 {
+public class TestUtilVector3D_F32 {
+
+	Random rand = new Random( 23423 );
 
 	@Test
-	public void stuff() {
-		fail("Implement");
+	public void isIdentical() {
+		Vector3D_F32 a = UtilVector3D_F32.createRandom64( -1, 1, rand );
+		Vector3D_F32 b = UtilVector3D_F32.createRandom64( -1, 1, rand );
+
+
+		// test positive
+		assertTrue( UtilVector3D_F32.isIdentical( a, a.copy(), JgrlConstants.FLOAT_TEST_TOL ) );
+
+		// test negative
+		assertFalse( UtilVector3D_F32.isIdentical( a, b, JgrlConstants.FLOAT_TEST_TOL ) );
+	}
+
+	@Test
+	public void normalize() {
+		Vector3D_F32 a = new Vector3D_F32( 3, 3, 4 );
+
+		UtilVector3D_F32.normalize( a );
+
+		assertEquals( 1, a.norm(), JgrlConstants.FLOAT_TEST_TOL );
 	}
 }

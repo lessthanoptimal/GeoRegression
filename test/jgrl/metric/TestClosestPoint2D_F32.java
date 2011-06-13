@@ -19,7 +19,7 @@
 
 package jgrl.metric;
 
-import jgrl.autocode.JgrlConstants;
+import jgrl.misc.autocode.JgrlConstants;
 import jgrl.struct.line.LineParametric2D_F32;
 import jgrl.struct.point.Point2D_F32;
 import org.junit.Test;
@@ -34,20 +34,20 @@ public class TestClosestPoint2D_F32 {
 
 	@Test
 	public void closestPoint_parametric() {
-		LineParametric2D_F32 line = new LineParametric2D_F32(1, 2, -1, 1);
-		Point2D_F32 pt = new Point2D_F32(1, 0);
+		LineParametric2D_F32 line = new LineParametric2D_F32( 1, 2, -1, 1 );
+		Point2D_F32 pt = new Point2D_F32( 1, 0 );
 
-		Point2D_F32 found = ClosestPoint2D_F32.closestPoint(line, pt, null);
-		assertEquals(2, found.getX(), JgrlConstants.FLOAT_TEST_TOL);
-		assertEquals(1, found.getY(), JgrlConstants.FLOAT_TEST_TOL);
+		Point2D_F32 found = ClosestPoint2D_F32.closestPoint( line, pt, null );
+		assertEquals( 2, found.getX(), JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 1, found.getY(), JgrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
 	public void closestPointT_parametric() {
-		LineParametric2D_F32 line = new LineParametric2D_F32(1, 2, -1, 1);
-		Point2D_F32 pt = new Point2D_F32(1, 0);
+		LineParametric2D_F32 line = new LineParametric2D_F32( 1, 2, -1, 1 );
+		Point2D_F32 pt = new Point2D_F32( 1, 0 );
 
-		float found = ClosestPoint2D_F32.closestPointT(line, pt);
-		assertEquals(-1, found, JgrlConstants.FLOAT_TEST_TOL);
+		float found = ClosestPoint2D_F32.closestPointT( line, pt );
+		assertEquals( -1, found, JgrlConstants.FLOAT_TEST_TOL );
 	}
 }

@@ -31,11 +31,11 @@ public class TestDistance3D_F32 {
 
 	@Test
 	public void distance_line_line() {
-		fail("Implement");
+		fail( "Implement" );
 	}
 
 	@Test
 	public void distance_line_point() {
-		fail("Implement");
+		fail( "Implement" );
 	}
 }

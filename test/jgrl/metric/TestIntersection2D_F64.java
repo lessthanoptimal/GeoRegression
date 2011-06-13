@@ -19,7 +19,7 @@
 
 package jgrl.metric;
 
-import jgrl.autocode.JgrlConstants;
+import jgrl.misc.autocode.JgrlConstants;
 import jgrl.struct.line.LineParametric2D_F64;
 import jgrl.struct.line.LineSegment2D_F64;
 import jgrl.struct.point.Point2D_F64;
@@ -37,33 +37,33 @@ import static org.junit.Assert.assertTrue;
  * @author Peter Abeles
  */
 public class TestIntersection2D_F64 {
-	Random rand = new Random(234);
+	Random rand = new Random( 234 );
 
 
 	@Test
 	public void intersection_ls_to_ls() {
 		// check positive, none pathological cases
-		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 3), new Point2D_F64(2, 2));
-		checkIntersection(new LineSegment2D_F64(0, 2, 2, 0), new LineSegment2D_F64(0, 0, 2, 2), new Point2D_F64(1, 1));
+		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 2 ), new LineSegment2D_F64( 2, 0, 2, 3 ), new Point2D_F64( 2, 2 ) );
+		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 0 ), new LineSegment2D_F64( 0, 0, 2, 2 ), new Point2D_F64( 1, 1 ) );
 
 		// check boundary conditions
-		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 2), new Point2D_F64(0, 2));
-		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 2), new Point2D_F64(2, 2));
-		checkIntersection(new LineSegment2D_F64(1, 0, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), new Point2D_F64(1, 0));
+		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 2 ), new LineSegment2D_F64( 0, 0, 0, 2 ), new Point2D_F64( 0, 2 ) );
+		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 2 ), new LineSegment2D_F64( 2, 0, 2, 2 ), new Point2D_F64( 2, 2 ) );
+		checkIntersection( new LineSegment2D_F64( 1, 0, 1, 2 ), new LineSegment2D_F64( 0, 0, 2, 0 ), new Point2D_F64( 1, 0 ) );
 
 		// check negative
-		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 1.9), null);
-		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 1.9), null);
-		checkIntersection(new LineSegment2D_F64(1, 0.1, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), null);
+		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 2 ), new LineSegment2D_F64( 0, 0, 0, 1.9 ), null );
+		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 2 ), new LineSegment2D_F64( 2, 0, 2, 1.9 ), null );
+		checkIntersection( new LineSegment2D_F64( 1, 0.1, 1, 2 ), new LineSegment2D_F64( 0, 0, 2, 0 ), null );
 	}
 
-	public void checkIntersection(LineSegment2D_F64 a, LineSegment2D_F64 b, Point2D_F64 expected) {
-		Point2D_F64 found = Intersection2D_F64.intersection(a, b, null);
-		if (found == null)
-			assertTrue(expected == null);
+	public void checkIntersection( LineSegment2D_F64 a, LineSegment2D_F64 b, Point2D_F64 expected ) {
+		Point2D_F64 found = Intersection2D_F64.intersection( a, b, null );
+		if( found == null )
+			assertTrue( expected == null );
 		else {
-			assertEquals(found.getX(), expected.getX(), JgrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(found.getY(), expected.getY(), JgrlConstants.DOUBLE_TEST_TOL);
+			assertEquals( found.getX(), expected.getX(), JgrlConstants.DOUBLE_TEST_TOL );
+			assertEquals( found.getY(), expected.getY(), JgrlConstants.DOUBLE_TEST_TOL );
 		}
 
 	}
@@ -77,55 +77,55 @@ public class TestIntersection2D_F64 {
 	@Test
 	public void intersection_p_to_ls() {
 		LineParametric2D_F64 paraLine = new LineParametric2D_F64();
-		LineSegment2D_F64 target = new LineSegment2D_F64(-1, 1, 1, 1);
+		LineSegment2D_F64 target = new LineSegment2D_F64( -1, 1, 1, 1 );
 
 		Se2_F64 tran = new Se2_F64();
 
 		// rotate it in a circle to check more geometric configurations
-		for (int i = 0; i < 20; i++) {
+		for( int i = 0; i < 20; i++ ) {
 
-			tran.setTranslation(rand.nextGaussian(), rand.nextGaussian());
-			tran.setYaw((double) (2 * Math.PI * i / 20));
+			tran.setTranslation( rand.nextGaussian(), rand.nextGaussian() );
+			tran.setYaw( (double) ( 2 * Math.PI * i / 20 ) );
 
-			checkIntersection_p_to_ls(paraLine, target, tran);
+			checkIntersection_p_to_ls( paraLine, target, tran );
 		}
 	}
 
-	private void checkIntersection_p_to_ls(LineParametric2D_F64 paraLine,
-										   LineSegment2D_F64 target,
-										   Se2_F64 tran) {
+	private void checkIntersection_p_to_ls( LineParametric2D_F64 paraLine,
+											LineSegment2D_F64 target,
+											Se2_F64 tran ) {
 		// create a copy so the original isn't modified
 		paraLine = paraLine.copy();
 		target = target.copy();
 
 		// apply the transform to the two lines
-		paraLine.setPoint(SePointOps_F64.transform(tran, paraLine.getPoint(), null));
+		paraLine.setPoint( SePointOps_F64.transform( tran, paraLine.getPoint(), null ) );
 
-		target.setA(SePointOps_F64.transform(tran, target.getA(), null));
-		target.setB(SePointOps_F64.transform(tran, target.getB(), null));
+		target.setA( SePointOps_F64.transform( tran, target.getA(), null ) );
+		target.setB( SePointOps_F64.transform( tran, target.getB(), null ) );
 
 		// should hit it dead center
-		paraLine.setSlope(0, 1);
-		paraLine.setAngle(paraLine.getAngle() + tran.getYaw());
-		double dist = Intersection2D_F64.intersection(paraLine, target);
-		assertEquals(1, dist, JgrlConstants.DOUBLE_TEST_TOL);
+		paraLine.setSlope( 0, 1 );
+		paraLine.setAngle( paraLine.getAngle() + tran.getYaw() );
+		double dist = Intersection2D_F64.intersection( paraLine, target );
+		assertEquals( 1, dist, JgrlConstants.DOUBLE_TEST_TOL );
 
 		// should hit dead center, but negative
-		paraLine.setSlope(0, -1);
-		paraLine.setAngle(paraLine.getAngle() + tran.getYaw());
-		dist = Intersection2D_F64.intersection(paraLine, target);
-		assertEquals(-1, dist, JgrlConstants.DOUBLE_TEST_TOL);
+		paraLine.setSlope( 0, -1 );
+		paraLine.setAngle( paraLine.getAngle() + tran.getYaw() );
+		dist = Intersection2D_F64.intersection( paraLine, target );
+		assertEquals( -1, dist, JgrlConstants.DOUBLE_TEST_TOL );
 
 		// should miss it to the left
-		paraLine.setSlope(-1.1, 1);
-		paraLine.setAngle(paraLine.getAngle() + tran.getYaw());
-		dist = Intersection2D_F64.intersection(paraLine, target);
-		assertTrue(Double.isNaN(dist));
+		paraLine.setSlope( -1.1, 1 );
+		paraLine.setAngle( paraLine.getAngle() + tran.getYaw() );
+		dist = Intersection2D_F64.intersection( paraLine, target );
+		assertTrue( Double.isNaN( dist ) );
 
 		// should miss it to the right
-		paraLine.setSlope(1.1, 1);
-		paraLine.setAngle(paraLine.getAngle() + tran.getYaw());
-		dist = Intersection2D_F64.intersection(paraLine, target);
-		assertTrue(Double.isNaN(dist));
+		paraLine.setSlope( 1.1, 1 );
+		paraLine.setAngle( paraLine.getAngle() + tran.getYaw() );
+		dist = Intersection2D_F64.intersection( paraLine, target );
+		assertTrue( Double.isNaN( dist ) );
 	}
 }

@@ -19,8 +19,8 @@
 
 package jgrl.struct.point;
 
-import jgrl.autocode.JgrlConstants;
-import jgrl.test.GeometryUnitTest;
+import jgrl.misc.autocode.JgrlConstants;
+import jgrl.misc.test.GeometryUnitTest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 	public TestVector3D_F64() {
-		super(new Vector3D_F64());
+		super( new Vector3D_F64() );
 	}
 
 	@Test
@@ -40,20 +40,20 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 
 	@Test
 	public void dot() {
-		Vector3D_F64 a = new Vector3D_F64(1, 2, 3);
-		Vector3D_F64 b = new Vector3D_F64(3, 4, 5);
+		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
+		Vector3D_F64 b = new Vector3D_F64( 3, 4, 5 );
 
-		double found = a.dot(b);
-		assertEquals(26, found, 13 - 8);
+		double found = a.dot( b );
+		assertEquals( 26, found, 13 - 8 );
 	}
 
 	@Test
 	public void normalize() {
-		Vector3D_F64 a = new Vector3D_F64(1, 2, 3);
+		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
 		double n = a.norm();
 		a.normalize();
 
-		assertEquals(1.0, a.norm(), JgrlConstants.DOUBLE_TEST_TOL);
-		GeometryUnitTest.assertEquals(a, 1.0 / n, 2.0 / n, 3.0 / n, JgrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 1.0, a.norm(), JgrlConstants.DOUBLE_TEST_TOL );
+		GeometryUnitTest.assertEquals( a, 1.0 / n, 2.0 / n, 3.0 / n, JgrlConstants.DOUBLE_TEST_TOL );
 	}
 }

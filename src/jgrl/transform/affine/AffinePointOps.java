@@ -34,13 +34,13 @@ public class AffinePointOps {
 	 * Applies a 2D affine transform to the point and stores the results in another
 	 * variable.
 	 *
-	 * @param se The transform.
-	 * @param orig Original point being transformed. Not modified.
+	 * @param se	 The transform.
+	 * @param orig   Original point being transformed. Not modified.
 	 * @param result Where the results are stored.  Can be the same as orig. If null a new
-	 * instance is created. Modified.
+	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F32 transform( Affine2D_F32 se , Point2D_F32 orig , Point2D_F32 result ) {
+	public static Point2D_F32 transform( Affine2D_F32 se, Point2D_F32 orig, Point2D_F32 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F32();
@@ -50,8 +50,8 @@ public class AffinePointOps {
 		float x = orig.x;
 		float y = orig.y;
 
-		result.x = se.tx + se.a11*x + se.a12*y;
-		result.y = se.ty + se.a21*x + se.a22*y;
+		result.x = se.tx + se.a11 * x + se.a12 * y;
+		result.y = se.ty + se.a21 * x + se.a22 * y;
 
 		return result;
 	}
@@ -60,13 +60,13 @@ public class AffinePointOps {
 	 * Applies a 2D affine transform to the point and stores the results in another
 	 * variable.
 	 *
-	 * @param se The transform.
-	 * @param orig Original point being transformed. Not modified.
+	 * @param se	 The transform.
+	 * @param orig   Original point being transformed. Not modified.
 	 * @param result Where the results are stored.  Can be the same as orig. If null a new
-	 * instance is created. Modified.
+	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Affine2D_F64 se , Point2D_F64 orig , Point2D_F64 result ) {
+	public static Point2D_F64 transform( Affine2D_F64 se, Point2D_F64 orig, Point2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F64();
@@ -76,8 +76,8 @@ public class AffinePointOps {
 		double x = orig.x;
 		double y = orig.y;
 
-		result.x = se.tx + se.a11*x + se.a12*y;
-		result.y = se.ty + se.a21*x + se.a22*y;
+		result.x = se.tx + se.a11 * x + se.a12 * y;
+		result.y = se.ty + se.a21 * x + se.a22 * y;
 
 		return result;
 	}
@@ -86,21 +86,21 @@ public class AffinePointOps {
 	 * Applies a 2D affine transform to the point and stores the results in another
 	 * variable.
 	 *
-	 * @param se The transform.
-	 * @param x Original x-coordinate
-	 * @param y Original y-coordinate
+	 * @param se	 The transform.
+	 * @param x	  Original x-coordinate
+	 * @param y	  Original y-coordinate
 	 * @param result Where the results are stored.  Can be the same as orig. If null a new
-	 * instance is created. Modified.
+	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F32 transform( Affine2D_F32 se , float x , float y , Point2D_F32 result ) {
+	public static Point2D_F32 transform( Affine2D_F32 se, float x, float y, Point2D_F32 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F32();
 		}
 
-		result.x = se.tx + se.a11*x + se.a12*y;
-		result.y = se.ty + se.a21*x + se.a22*y;
+		result.x = se.tx + se.a11 * x + se.a12 * y;
+		result.y = se.ty + se.a21 * x + se.a22 * y;
 
 		return result;
 	}
@@ -109,21 +109,21 @@ public class AffinePointOps {
 	 * Applies a 2D affine transform to the point and stores the results in another
 	 * variable.
 	 *
-	 * @param se The transform.
-	 * @param x Original x-coordinate
-	 * @param y Original y-coordinate
+	 * @param se	 The transform.
+	 * @param x	  Original x-coordinate
+	 * @param y	  Original y-coordinate
 	 * @param result Where the results are stored.  Can be the same as orig. If null a new
-	 * instance is created. Modified.
+	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Affine2D_F64 se , double x , double y , Point2D_F64 result ) {
+	public static Point2D_F64 transform( Affine2D_F64 se, double x, double y, Point2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F64();
 		}
 
-		result.x = se.tx + se.a11*x + se.a12*y;
-		result.y = se.ty + se.a21*x + se.a22*y;
+		result.x = se.tx + se.a11 * x + se.a12 * y;
+		result.y = se.ty + se.a21 * x + se.a22 * y;
 
 		return result;
 	}

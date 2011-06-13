@@ -34,29 +34,29 @@ public class LineSegment2D_F32 {
 	public LineSegment2D_F32() {
 	}
 
-	public LineSegment2D_F32(Point2D_F32 a, Point2D_F32 b) {
-		set(a, b);
+	public LineSegment2D_F32( Point2D_F32 a, Point2D_F32 b ) {
+		set( a, b );
 	}
 
-	public LineSegment2D_F32(float x0, float y0, float x1, float y1) {
-		set(x0, y0, x1, y1);
+	public LineSegment2D_F32( float x0, float y0, float x1, float y1 ) {
+		set( x0, y0, x1, y1 );
 	}
 
-	public void set(Point2D_F32 a, Point2D_F32 b) {
-		this.a.set(a);
-		this.b.set(b);
+	public void set( Point2D_F32 a, Point2D_F32 b ) {
+		this.a.set( a );
+		this.b.set( b );
 	}
 
-	public void set(float x0, float y0, float x1, float y1) {
-		a.set(x0, y0);
-		b.set(x1, y1);
+	public void set( float x0, float y0, float x1, float y1 ) {
+		a.set( x0, y0 );
+		b.set( x1, y1 );
 	}
 
 	public Point2D_F32 getA() {
 		return a;
 	}
 
-	public void setA(Point2D_F32 a) {
+	public void setA( Point2D_F32 a ) {
 		this.a = a;
 	}
 
@@ -64,11 +64,11 @@ public class LineSegment2D_F32 {
 		return b;
 	}
 
-	public void setB(Point2D_F32 b) {
+	public void setB( Point2D_F32 b ) {
 		this.b = b;
 	}
 
 	public LineSegment2D_F32 copy() {
-		return new LineSegment2D_F32(a, b);
+		return new LineSegment2D_F32( a, b );
 	}
 }

@@ -35,8 +35,8 @@ public class TestAffine2D_F64 extends GenericInvertibleTransformTests_F64<Point2
 
 	@Override
 	public Point2D_F64 createRandomPoint() {
-		return new Point2D_F64((double) rand.nextGaussian() * 3,
-				(double) rand.nextGaussian() * 3);
+		return new Point2D_F64( (double) rand.nextGaussian() * 3,
+				(double) rand.nextGaussian() * 3 );
 	}
 
 	@Override
@@ -49,11 +49,11 @@ public class TestAffine2D_F64 extends GenericInvertibleTransformTests_F64<Point2
 		double tx = (double) rand.nextGaussian() * 3.0;
 		double ty = (double) rand.nextGaussian() * 3.0;
 
-		return new Affine2D_F64(a11, a12, a21, a22, tx, ty);
+		return new Affine2D_F64( a11, a12, a21, a22, tx, ty );
 	}
 
 	@Override
-	public Point2D_F64 apply(InvertibleTransform se, Point2D_F64 point, Point2D_F64 result) {
-		return AffinePointOps.transform((Affine2D_F64) se, point, result);
+	public Point2D_F64 apply( InvertibleTransform se, Point2D_F64 point, Point2D_F64 result ) {
+		return AffinePointOps.transform( (Affine2D_F64) se, point, result );
 	}
 }

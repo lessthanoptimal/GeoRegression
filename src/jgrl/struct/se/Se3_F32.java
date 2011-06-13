@@ -41,7 +41,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * Creates a new transform that does nothing.
 	 */
 	public Se3_F32() {
-		R = CommonOps.identity(3);
+		R = CommonOps.identity( 3 );
 		T = new Vector3D_F32();
 	}
 
@@ -51,8 +51,8 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * @param R Rotation matrix.
 	 * @param T Translation.
 	 */
-	public Se3_F32(DenseMatrix64F R, Vector3D_F32 T) {
-		this(R, T, false);
+	public Se3_F32( DenseMatrix64F R, Vector3D_F32 T ) {
+		this( R, T, false );
 	}
 
 	/**
@@ -63,8 +63,8 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * @param T	  Translation.
 	 * @param assign If a reference is saved (true) or a copy made (false).
 	 */
-	public Se3_F32(DenseMatrix64F R, Vector3D_F32 T, boolean assign) {
-		if (assign) {
+	public Se3_F32( DenseMatrix64F R, Vector3D_F32 T, boolean assign ) {
+		if( assign ) {
 			this.R = R;
 			this.T = T;
 		} else {
@@ -78,21 +78,21 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 *
 	 * @param se The transform that is being copied.
 	 */
-	public void set(Se3_F32 se) {
-		R.set(se.getR());
-		T.set(se.getT());
+	public void set( Se3_F32 se ) {
+		R.set( se.getR() );
+		T.set( se.getT() );
 	}
 
-	public void setRotation(DenseMatrix64F R) {
-		this.R.set(R);
+	public void setRotation( DenseMatrix64F R ) {
+		this.R.set( R );
 	}
 
-	public void setTranslation(Vector3D_F32 T) {
-		this.T.set(T);
+	public void setTranslation( Vector3D_F32 T ) {
+		this.T.set( T );
 	}
 
-	public void setTranslation(float x, float y, float z) {
-		this.T.set(x, y, z);
+	public void setTranslation( float x, float y, float z ) {
+		this.T.set( x, y, z );
 	}
 
 	public DenseMatrix64F getR() {
@@ -126,21 +126,21 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	}
 
 	@Override
-	public Se3_F32 concat(Se3_F32 second, Se3_F32 result) {
-		if (result == null)
+	public Se3_F32 concat( Se3_F32 second, Se3_F32 result ) {
+		if( result == null )
 			result = new Se3_F32();
 
-		CommonOps.mult(second.getR(), getR(), result.getR());
-		GeometryMath_F32.mult(second.getR(), getT(), result.getT());
-		GeometryMath_F32.add(second.getT(), result.getT(), result.getT());
+		CommonOps.mult( second.getR(), getR(), result.getR() );
+		GeometryMath_F32.mult( second.getR(), getT(), result.getT() );
+		GeometryMath_F32.add( second.getT(), result.getT(), result.getT() );
 
 		return result;
 	}
 
 	@Override
-	public Se3_F32 invert(Se3_F32 inverse) {
+	public Se3_F32 invert( Se3_F32 inverse ) {
 
-		if (inverse == null)
+		if( inverse == null )
 			inverse = new Se3_F32();
 
 		// To derive the inverse transform solve for P
@@ -148,30 +148,30 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		// P = R^T*P' - R^T*T
 
 		// -R^T*T
-		GeometryMath_F32.multTran(R, T, inverse.T);
-		GeometryMath_F32.changeSign(inverse.T);
+		GeometryMath_F32.multTran( R, T, inverse.T );
+		GeometryMath_F32.changeSign( inverse.T );
 
 		// R^T
-		CommonOps.transpose(R, inverse.R);
+		CommonOps.transpose( R, inverse.R );
 
 		return inverse;
 	}
 
 	@Override
 	public void reset() {
-		CommonOps.setIdentity(R);
-		T.set(0, 0, 0);
+		CommonOps.setIdentity( R );
+		T.set( 0, 0, 0 );
 	}
 
 	public Se3_F32 copy() {
 		Se3_F32 ret = new Se3_F32();
-		ret.set(this);
+		ret.set( this );
 
 		return ret;
 	}
 
 	public void print() {
-		System.out.println("SpecialEuclidean:");
+		System.out.println( "SpecialEuclidean:" );
 		R.print();
 		T.print();
 		System.out.println();

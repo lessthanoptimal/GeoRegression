@@ -44,9 +44,9 @@ public class SePointOps_F32 {
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F32 transform(Se2_F32 se, Point2D_F32 orig, Point2D_F32 result) {
+	public static Point2D_F32 transform( Se2_F32 se, Point2D_F32 orig, Point2D_F32 result ) {
 
-		if (result == null) {
+		if( result == null ) {
 			result = new Point2D_F32();
 		}
 
@@ -63,9 +63,9 @@ public class SePointOps_F32 {
 		return result;
 	}
 
-	public static Point2D_F32 transform(Se2_F32 se, float x, float y, Point2D_F32 result) {
+	public static Point2D_F32 transform( Se2_F32 se, float x, float y, Point2D_F32 result ) {
 
-		if (result == null) {
+		if( result == null ) {
 			result = new Point2D_F32();
 		}
 
@@ -78,9 +78,9 @@ public class SePointOps_F32 {
 		return result;
 	}
 
-	public static Point2D_F32 transformReverse(Se2_F32 se, Point2D_F32 orig, Point2D_F32 result) {
+	public static Point2D_F32 transformReverse( Se2_F32 se, Point2D_F32 orig, Point2D_F32 result ) {
 
-		if (result == null) {
+		if( result == null ) {
 			result = new Point2D_F32();
 		}
 
@@ -105,7 +105,7 @@ public class SePointOps_F32 {
 	 * @param points Array of points which are to be transformed.  Modified.
 	 * @param length The number of elements in the array that are to be processed.
 	 */
-	public static void transform(Se2_F32 se, Point2D_F32 points[], int length) {
+	public static void transform( Se2_F32 se, Point2D_F32 points[], int length ) {
 
 		float tranX = se.getX();
 		float tranY = se.getY();
@@ -113,7 +113,7 @@ public class SePointOps_F32 {
 		final float c = se.getCosineYaw();
 		final float s = se.getSineYaw();
 
-		for (int i = 0; i < length; i++) {
+		for( int i = 0; i < length; i++ ) {
 			Point2D_F32 pt = points[i];
 
 			float x = pt.x;
@@ -130,7 +130,7 @@ public class SePointOps_F32 {
 	 * @param se	 The transform.
 	 * @param points List of points which are to be transformed.  Modified.
 	 */
-	public static void transform(Se2_F32 se, List<Point2D_F32> points) {
+	public static void transform( Se2_F32 se, List<Point2D_F32> points ) {
 
 		float tranX = se.getX();
 		float tranY = se.getY();
@@ -138,7 +138,7 @@ public class SePointOps_F32 {
 		final float c = se.getCosineYaw();
 		final float s = se.getSineYaw();
 
-		for (Point2D_F32 pt : points) {
+		for( Point2D_F32 pt : points ) {
 			float x = pt.x;
 			float y = pt.y;
 
@@ -163,15 +163,15 @@ public class SePointOps_F32 {
 	 * @param tranPt Storage for transformed coordinate of the point. Point declared if null.  Modified.
 	 * @return Transformed point.
 	 */
-	public static Point3D_F32 transform(Se3_F32 se, Point3D_F32 origPt, Point3D_F32 tranPt) {
-		if (tranPt == null)
+	public static Point3D_F32 transform( Se3_F32 se, Point3D_F32 origPt, Point3D_F32 tranPt ) {
+		if( tranPt == null )
 			tranPt = new Point3D_F32();
 
 		DenseMatrix64F R = se.getR();
 		Vector3D_F32 T = se.getT();
 
-		GeometryMath_F32.rotate(R, origPt, tranPt, true);
-		GeometryMath_F32.add(tranPt, T, tranPt);
+		GeometryMath_F32.mult( R, origPt, tranPt );
+		GeometryMath_F32.add( tranPt, T, tranPt );
 
 		return tranPt;
 	}
@@ -191,15 +191,15 @@ public class SePointOps_F32 {
 	 * @param origPt Original coordinate of the point.
 	 * @param tranPt Transformed coordinate of the point.
 	 */
-	public static Point3D_F32 transformReverse(Se3_F32 se, Point3D_F32 origPt, Point3D_F32 tranPt) {
-		if (tranPt == null)
+	public static Point3D_F32 transformReverse( Se3_F32 se, Point3D_F32 origPt, Point3D_F32 tranPt ) {
+		if( tranPt == null )
 			tranPt = new Point3D_F32();
 
 		DenseMatrix64F R = se.getR();
 		Vector3D_F32 T = se.getT();
 
-		GeometryMath_F32.sub(origPt, T, tranPt);
-		GeometryMath_F32.rotate(R, tranPt, tranPt, false);
+		GeometryMath_F32.sub( origPt, T, tranPt );
+		GeometryMath_F32.multTran( R, tranPt, tranPt );
 
 		return tranPt;
 	}

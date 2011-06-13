@@ -27,30 +27,31 @@ import jgrl.struct.GeoTuple2D_F64;
 @SuppressWarnings({"unchecked"})
 public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 
-    public Vector2D_F64( double x , double y ) {
-        set(x,y);
-    }
+	public Vector2D_F64( double x, double y ) {
+		set( x, y );
+	}
 
-    public Vector2D_F64(){}
+	public Vector2D_F64() {
+	}
 
-    public Vector2D_F64( Vector2D_F64 pt ) {
-        set( pt.x , pt.y );
-    }
+	public Vector2D_F64( Vector2D_F64 pt ) {
+		set( pt.x, pt.y );
+	}
 
-    @Override
-    public Vector2D_F64 createNewInstance() {
-        return new Vector2D_F64();
-    }
+	@Override
+	public Vector2D_F64 createNewInstance() {
+		return new Vector2D_F64();
+	}
 
-    public void set( Vector2D_F64 orig ) {
-        _set(orig);
-    }
+	public void set( Vector2D_F64 orig ) {
+		_set( orig );
+	}
 
-    public Vector2D_F64 copy() {
-        return new Vector2D_F64(this);
-    }
+	public Vector2D_F64 copy() {
+		return new Vector2D_F64( this );
+	}
 
-    public String toString() {
-        return "V( "+x+" "+y+" )";
-    }
+	public String toString() {
+		return "V( " + x + " " + y + " )";
+	}
 }

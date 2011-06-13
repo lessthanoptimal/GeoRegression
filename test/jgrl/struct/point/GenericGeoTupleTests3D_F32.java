@@ -19,7 +19,7 @@
 
 package jgrl.struct.point;
 
-import jgrl.autocode.JgrlConstants;
+import jgrl.misc.autocode.JgrlConstants;
 import jgrl.struct.GeoTuple3D_F32;
 
 import static org.junit.Assert.*;
@@ -33,13 +33,13 @@ public class GenericGeoTupleTests3D_F32<T extends GeoTuple3D_F32> extends Generi
 
 	private T seed;
 
-	public GenericGeoTupleTests3D_F32(T seed) {
-		super(seed);
+	public GenericGeoTupleTests3D_F32( T seed ) {
+		super( seed );
 		this.seed = seed;
 	}
 
 	public void checkAll() {
-		super.checkAll(3);
+		super.checkAll( 3 );
 		checkGetAndSetAxis();
 		checkSetAxisAll();
 		isIdentical_3_float();
@@ -50,57 +50,57 @@ public class GenericGeoTupleTests3D_F32<T extends GeoTuple3D_F32> extends Generi
 	public void checkGetAndSetAxis() {
 		T a = (T) seed.createNewInstance();
 
-		assertEquals(0, a.getX(), JgrlConstants.FLOAT_TEST_TOL);
-		a.setX(1.5f);
-		assertEquals(1.5f, a.getX(), JgrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0, a.getY(), JgrlConstants.FLOAT_TEST_TOL);
-		a.setY(1.5f);
-		assertEquals(1.5f, a.getY(), JgrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0, a.getZ(), JgrlConstants.FLOAT_TEST_TOL);
-		a.setZ(1.5f);
-		assertEquals(1.5f, a.getZ(), JgrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 0, a.getX(), JgrlConstants.FLOAT_TEST_TOL );
+		a.setX( 1.5f );
+		assertEquals( 1.5f, a.getX(), JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 0, a.getY(), JgrlConstants.FLOAT_TEST_TOL );
+		a.setY( 1.5f );
+		assertEquals( 1.5f, a.getY(), JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 0, a.getZ(), JgrlConstants.FLOAT_TEST_TOL );
+		a.setZ( 1.5f );
+		assertEquals( 1.5f, a.getZ(), JgrlConstants.FLOAT_TEST_TOL );
 	}
 
 	public void checkSetAxisAll() {
 		T a = (T) seed.createNewInstance();
 
-		a.set(1.5f, 2.5f, 3.5f);
+		a.set( 1.5f, 2.5f, 3.5f );
 
-		assertEquals(1.5f, a.getX(), JgrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2.5f, a.getY(), JgrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3.5f, a.getZ(), JgrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 1.5f, a.getX(), JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 2.5f, a.getY(), JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 3.5f, a.getZ(), JgrlConstants.FLOAT_TEST_TOL );
 	}
 
 	public void isIdentical_3_float() {
 		T a = (T) seed.createNewInstance();
 
-		a.set(1, 2, 3);
+		a.set( 1, 2, 3 );
 
-		assertTrue(a.isIdentical(1, 2, 3, JgrlConstants.FLOAT_TEST_TOL));
+		assertTrue( a.isIdentical( 1, 2, 3, JgrlConstants.FLOAT_TEST_TOL ) );
 	}
 
 	public void isIdentical_tuple() {
 		T a = (T) seed.createNewInstance();
 
-		a.set(1, 2, 3);
+		a.set( 1, 2, 3 );
 
 		T b = (T) a.copy();
 
-		assertTrue(a.isIdentical(b, JgrlConstants.FLOAT_TEST_TOL));
+		assertTrue( a.isIdentical( b, JgrlConstants.FLOAT_TEST_TOL ) );
 	}
 
 	public void isNaN() {
 		T a = (T) seed.createNewInstance();
 
-		a.set(1, 2, 3);
+		a.set( 1, 2, 3 );
 
-		assertFalse(a.isNaN());
+		assertFalse( a.isNaN() );
 
-		a.set(1, 2, Float.NaN);
-		assertTrue(a.isNaN());
-		a.set(1, Float.NaN, 3);
-		assertTrue(a.isNaN());
-		a.set(Float.NaN, 1, 3);
-		assertTrue(a.isNaN());
+		a.set( 1, 2, Float.NaN );
+		assertTrue( a.isNaN() );
+		a.set( 1, Float.NaN, 3 );
+		assertTrue( a.isNaN() );
+		a.set( Float.NaN, 1, 3 );
+		assertTrue( a.isNaN() );
 	}
 }

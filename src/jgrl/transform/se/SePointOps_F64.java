@@ -44,9 +44,9 @@ public class SePointOps_F64 {
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform(Se2_F64 se, Point2D_F64 orig, Point2D_F64 result) {
+	public static Point2D_F64 transform( Se2_F64 se, Point2D_F64 orig, Point2D_F64 result ) {
 
-		if (result == null) {
+		if( result == null ) {
 			result = new Point2D_F64();
 		}
 
@@ -63,9 +63,9 @@ public class SePointOps_F64 {
 		return result;
 	}
 
-	public static Point2D_F64 transform(Se2_F64 se, double x, double y, Point2D_F64 result) {
+	public static Point2D_F64 transform( Se2_F64 se, double x, double y, Point2D_F64 result ) {
 
-		if (result == null) {
+		if( result == null ) {
 			result = new Point2D_F64();
 		}
 
@@ -78,9 +78,9 @@ public class SePointOps_F64 {
 		return result;
 	}
 
-	public static Point2D_F64 transformReverse(Se2_F64 se, Point2D_F64 orig, Point2D_F64 result) {
+	public static Point2D_F64 transformReverse( Se2_F64 se, Point2D_F64 orig, Point2D_F64 result ) {
 
-		if (result == null) {
+		if( result == null ) {
 			result = new Point2D_F64();
 		}
 
@@ -105,7 +105,7 @@ public class SePointOps_F64 {
 	 * @param points Array of points which are to be transformed.  Modified.
 	 * @param length The number of elements in the array that are to be processed.
 	 */
-	public static void transform(Se2_F64 se, Point2D_F64 points[], int length) {
+	public static void transform( Se2_F64 se, Point2D_F64 points[], int length ) {
 
 		double tranX = se.getX();
 		double tranY = se.getY();
@@ -113,7 +113,7 @@ public class SePointOps_F64 {
 		final double c = se.getCosineYaw();
 		final double s = se.getSineYaw();
 
-		for (int i = 0; i < length; i++) {
+		for( int i = 0; i < length; i++ ) {
 			Point2D_F64 pt = points[i];
 
 			double x = pt.x;
@@ -130,7 +130,7 @@ public class SePointOps_F64 {
 	 * @param se	 The transform.
 	 * @param points List of points which are to be transformed.  Modified.
 	 */
-	public static void transform(Se2_F64 se, List<Point2D_F64> points) {
+	public static void transform( Se2_F64 se, List<Point2D_F64> points ) {
 
 		double tranX = se.getX();
 		double tranY = se.getY();
@@ -138,7 +138,7 @@ public class SePointOps_F64 {
 		final double c = se.getCosineYaw();
 		final double s = se.getSineYaw();
 
-		for (Point2D_F64 pt : points) {
+		for( Point2D_F64 pt : points ) {
 			double x = pt.x;
 			double y = pt.y;
 
@@ -163,15 +163,15 @@ public class SePointOps_F64 {
 	 * @param tranPt Storage for transformed coordinate of the point. Point declared if null.  Modified.
 	 * @return Transformed point.
 	 */
-	public static Point3D_F64 transform(Se3_F64 se, Point3D_F64 origPt, Point3D_F64 tranPt) {
-		if (tranPt == null)
+	public static Point3D_F64 transform( Se3_F64 se, Point3D_F64 origPt, Point3D_F64 tranPt ) {
+		if( tranPt == null )
 			tranPt = new Point3D_F64();
 
 		DenseMatrix64F R = se.getR();
 		Vector3D_F64 T = se.getT();
 
-		GeometryMath_F64.rotate(R, origPt, tranPt, true);
-		GeometryMath_F64.add(tranPt, T, tranPt);
+		GeometryMath_F64.mult( R, origPt, tranPt );
+		GeometryMath_F64.add( tranPt, T, tranPt );
 
 		return tranPt;
 	}
@@ -191,15 +191,15 @@ public class SePointOps_F64 {
 	 * @param origPt Original coordinate of the point.
 	 * @param tranPt Transformed coordinate of the point.
 	 */
-	public static Point3D_F64 transformReverse(Se3_F64 se, Point3D_F64 origPt, Point3D_F64 tranPt) {
-		if (tranPt == null)
+	public static Point3D_F64 transformReverse( Se3_F64 se, Point3D_F64 origPt, Point3D_F64 tranPt ) {
+		if( tranPt == null )
 			tranPt = new Point3D_F64();
 
 		DenseMatrix64F R = se.getR();
 		Vector3D_F64 T = se.getT();
 
-		GeometryMath_F64.sub(origPt, T, tranPt);
-		GeometryMath_F64.rotate(R, tranPt, tranPt, false);
+		GeometryMath_F64.sub( origPt, T, tranPt );
+		GeometryMath_F64.multTran( R, tranPt, tranPt );
 
 		return tranPt;
 	}

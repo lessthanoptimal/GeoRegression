@@ -35,18 +35,18 @@ public class TestSe2_F64 extends GenericInvertibleTransformTests_F64<Point2D_F64
 
 	@Override
 	public Point2D_F64 createRandomPoint() {
-		return new Point2D_F64(rand.nextGaussian() * 3,
-				rand.nextGaussian() * 3);
+		return new Point2D_F64( rand.nextGaussian() * 3,
+				rand.nextGaussian() * 3 );
 	}
 
 	@Override
 	public SpecialEuclidean createRandomTransform() {
-		return new Se2_F64(rand.nextGaussian() * 3, rand.nextGaussian() * 3,
-				(rand.nextDouble() - 0.5) * 2.0 * Math.PI);
+		return new Se2_F64( rand.nextGaussian() * 3, rand.nextGaussian() * 3,
+				( rand.nextDouble() - 0.5 ) * 2.0 * Math.PI );
 	}
 
 	@Override
-	public Point2D_F64 apply(InvertibleTransform se, Point2D_F64 point, Point2D_F64 result) {
-		return SePointOps_F64.transform((Se2_F64) se, point, result);
+	public Point2D_F64 apply( InvertibleTransform se, Point2D_F64 point, Point2D_F64 result ) {
+		return SePointOps_F64.transform( (Se2_F64) se, point, result );
 	}
 }

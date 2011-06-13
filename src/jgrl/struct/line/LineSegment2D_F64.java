@@ -28,47 +28,47 @@ import jgrl.struct.point.Point2D_F64;
  * @author Peter Abeles
  */
 public class LineSegment2D_F64 {
-    public Point2D_F64 a = new Point2D_F64();
-    public Point2D_F64 b = new Point2D_F64();
+	public Point2D_F64 a = new Point2D_F64();
+	public Point2D_F64 b = new Point2D_F64();
 
-    public LineSegment2D_F64() {
-    }
+	public LineSegment2D_F64() {
+	}
 
-    public LineSegment2D_F64(Point2D_F64 a, Point2D_F64 b) {
-        set(a,b);
-    }
+	public LineSegment2D_F64( Point2D_F64 a, Point2D_F64 b ) {
+		set( a, b );
+	}
 
-    public LineSegment2D_F64(double x0 , double y0 , double x1 , double y1) {
-        set(x0,y0,x1,y1);
-    }
+	public LineSegment2D_F64( double x0, double y0, double x1, double y1 ) {
+		set( x0, y0, x1, y1 );
+	}
 
-    public void set( Point2D_F64 a , Point2D_F64 b ) {
-        this.a.set(a);
-        this.b.set(b);
-    }
+	public void set( Point2D_F64 a, Point2D_F64 b ) {
+		this.a.set( a );
+		this.b.set( b );
+	}
 
-    public void set( double x0 , double y0 , double x1 , double y1 ) {
-        a.set(x0,y0);
-        b.set(x1,y1);
-    }
+	public void set( double x0, double y0, double x1, double y1 ) {
+		a.set( x0, y0 );
+		b.set( x1, y1 );
+	}
 
-    public Point2D_F64 getA() {
-        return a;
-    }
+	public Point2D_F64 getA() {
+		return a;
+	}
 
-    public void setA(Point2D_F64 a) {
-        this.a = a;
-    }
+	public void setA( Point2D_F64 a ) {
+		this.a = a;
+	}
 
-    public Point2D_F64 getB() {
-        return b;
-    }
+	public Point2D_F64 getB() {
+		return b;
+	}
 
-    public void setB(Point2D_F64 b) {
-        this.b = b;
-    }
+	public void setB( Point2D_F64 b ) {
+		this.b = b;
+	}
 
-    public LineSegment2D_F64 copy() {
-        return new LineSegment2D_F64(a,b);
-    }
+	public LineSegment2D_F64 copy() {
+		return new LineSegment2D_F64( a, b );
+	}
 }

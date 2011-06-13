@@ -19,13 +19,13 @@
 
 package jgrl.fitting.se;
 
-import jgrl.autocode.JgrlConstants;
 import jgrl.geometry.RotationMatrixGenerator;
+import jgrl.geometry.UtilPoint3D_F32;
+import jgrl.misc.autocode.JgrlConstants;
+import jgrl.misc.test.GeometryUnitTest;
 import jgrl.struct.point.Point3D_F32;
-import jgrl.struct.point.UtilPoint3D_F32;
 import jgrl.struct.point.Vector3D_F32;
 import jgrl.struct.se.Se3_F32;
-import jgrl.test.GeometryUnitTest;
 import jgrl.transform.se.SePointOps_F32;
 import org.ejml.data.DenseMatrix64F;
 import org.junit.Test;
@@ -41,24 +41,24 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestMotionSe3PointCrossCovariance_F32 {
 
-	Random rand = new Random(434324);
+	Random rand = new Random( 434324 );
 
 	@Test
 	public void noiseless() {
-		DenseMatrix64F R = RotationMatrixGenerator.eulerXYZ(0.1f, -0.5f, 2.3f, null);
-		Vector3D_F32 T = new Vector3D_F32(5, 10, -6);
+		DenseMatrix64F R = RotationMatrixGenerator.eulerXYZ( 0.1f, -0.5f, 2.3f, null );
+		Vector3D_F32 T = new Vector3D_F32( 5, 10, -6 );
 
-		Se3_F32 tran = new Se3_F32(R, T);
+		Se3_F32 tran = new Se3_F32( R, T );
 
-		List<Point3D_F32> from = UtilPoint3D_F32.random(-10, 10, 30, rand);
+		List<Point3D_F32> from = UtilPoint3D_F32.random( -10, 10, 30, rand );
 		List<Point3D_F32> to = new ArrayList<Point3D_F32>();
-		for (Point3D_F32 p : from) {
-			to.add(SePointOps_F32.transform(tran, p, null));
+		for( Point3D_F32 p : from ) {
+			to.add( SePointOps_F32.transform( tran, p, null ) );
 		}
 
 		MotionSe3PointCrossCovariance_F32 alg = new MotionSe3PointCrossCovariance_F32();
 
-		assertTrue(alg.process(from, to));
+		assertTrue( alg.process( from, to ) );
 
 //        R.print();
 //        foundR.print();
@@ -67,18 +67,18 @@ public class TestMotionSe3PointCrossCovariance_F32 {
 
 		Se3_F32 tranFound = alg.getMotion();
 
-		checkTransform(from, to, tranFound, JgrlConstants.FLOAT_TEST_TOL);
+		checkTransform( from, to, tranFound, JgrlConstants.FLOAT_TEST_TOL );
 	}
 
-	public static void checkTransform(List<Point3D_F32> from, List<Point3D_F32> to, Se3_F32 tranFound, float tol) {
+	public static void checkTransform( List<Point3D_F32> from, List<Point3D_F32> to, Se3_F32 tranFound, float tol ) {
 		Point3D_F32 foundPt = new Point3D_F32();
-		for (int i = 0; i < from.size(); i++) {
+		for( int i = 0; i < from.size(); i++ ) {
 
-			Point3D_F32 p = from.get(i);
+			Point3D_F32 p = from.get( i );
 
-			SePointOps_F32.transform(tranFound, p, foundPt);
+			SePointOps_F32.transform( tranFound, p, foundPt );
 
-			GeometryUnitTest.assertEquals(to.get(i), foundPt, tol);
+			GeometryUnitTest.assertEquals( to.get( i ), foundPt, tol );
 		}
 	}
 

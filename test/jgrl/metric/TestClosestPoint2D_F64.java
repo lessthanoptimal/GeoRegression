@@ -19,7 +19,7 @@
 
 package jgrl.metric;
 
-import jgrl.autocode.JgrlConstants;
+import jgrl.misc.autocode.JgrlConstants;
 import jgrl.struct.line.LineParametric2D_F64;
 import jgrl.struct.point.Point2D_F64;
 import org.junit.Test;
@@ -34,20 +34,20 @@ public class TestClosestPoint2D_F64 {
 
 	@Test
 	public void closestPoint_parametric() {
-		LineParametric2D_F64 line = new LineParametric2D_F64(1, 2, -1, 1);
-		Point2D_F64 pt = new Point2D_F64(1, 0);
+		LineParametric2D_F64 line = new LineParametric2D_F64( 1, 2, -1, 1 );
+		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
-		Point2D_F64 found = ClosestPoint2D_F64.closestPoint(line, pt, null);
-		assertEquals(2, found.getX(), JgrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(1, found.getY(), JgrlConstants.DOUBLE_TEST_TOL);
+		Point2D_F64 found = ClosestPoint2D_F64.closestPoint( line, pt, null );
+		assertEquals( 2, found.getX(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1, found.getY(), JgrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
 	public void closestPointT_parametric() {
-		LineParametric2D_F64 line = new LineParametric2D_F64(1, 2, -1, 1);
-		Point2D_F64 pt = new Point2D_F64(1, 0);
+		LineParametric2D_F64 line = new LineParametric2D_F64( 1, 2, -1, 1 );
+		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
-		double found = ClosestPoint2D_F64.closestPointT(line, pt);
-		assertEquals(-1, found, JgrlConstants.DOUBLE_TEST_TOL);
+		double found = ClosestPoint2D_F64.closestPointT( line, pt );
+		assertEquals( -1, found, JgrlConstants.DOUBLE_TEST_TOL );
 	}
 }

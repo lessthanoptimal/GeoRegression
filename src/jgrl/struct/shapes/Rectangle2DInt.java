@@ -22,34 +22,32 @@ package jgrl.struct.shapes;
 /**
  * An axis aligned rectangle in 2D that is specified with integers
  */
-public class Rectangle2DInt 
-{
-    private int tl_x;
-    private int tl_y;
-    private int width;
-    private int height;
+public class Rectangle2DInt {
+	private int tl_x;
+	private int tl_y;
+	private int width;
+	private int height;
 
-    public Rectangle2DInt( int tl_x , int tl_y , int width , int height )
-    {
-        this.tl_x = tl_x;
-        this.tl_y = tl_y;
-        this.width = width;
-        this.height = height;
-    }
+	public Rectangle2DInt( int tl_x, int tl_y, int width, int height ) {
+		this.tl_x = tl_x;
+		this.tl_y = tl_y;
+		this.width = width;
+		this.height = height;
+	}
 
-    public final int getX() {
-        return tl_x;
-    }
+	public final int getX() {
+		return tl_x;
+	}
 
-    public final int getY() {
-        return tl_y;
-    }
+	public final int getY() {
+		return tl_y;
+	}
 
-    public final int getWidth() {
-        return width;
-    }
+	public final int getWidth() {
+		return width;
+	}
 
-    public final int getHeight() {
-        return height;
-    }
+	public final int getHeight() {
+		return height;
+	}
 }

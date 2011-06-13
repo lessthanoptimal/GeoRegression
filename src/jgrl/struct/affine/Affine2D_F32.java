@@ -32,7 +32,7 @@ public class Affine2D_F32 implements Affine<Affine2D_F32> {
 	// translational components
 	public float tx, ty;
 
-	public Affine2D_F32(float a11, float a12, float a21, float a22, float tx, float ty) {
+	public Affine2D_F32( float a11, float a12, float a21, float a22, float tx, float ty ) {
 		this.a11 = a11;
 		this.a12 = a12;
 		this.a21 = a21;
@@ -56,7 +56,7 @@ public class Affine2D_F32 implements Affine<Affine2D_F32> {
 	}
 
 	@Override
-	public void set(Affine2D_F32 target) {
+	public void set( Affine2D_F32 target ) {
 		this.a11 = target.a11;
 		this.a12 = target.a12;
 		this.a21 = target.a21;
@@ -66,7 +66,7 @@ public class Affine2D_F32 implements Affine<Affine2D_F32> {
 	}
 
 	@Override
-	public Affine2D_F32 concat(Affine2D_F32 second, Affine2D_F32 result) {
+	public Affine2D_F32 concat( Affine2D_F32 second, Affine2D_F32 result ) {
 
 		Affine2D_F32 ret = new Affine2D_F32();
 
@@ -82,7 +82,7 @@ public class Affine2D_F32 implements Affine<Affine2D_F32> {
 	}
 
 	@Override
-	public Affine2D_F32 invert(Affine2D_F32 inverse) {
+	public Affine2D_F32 invert( Affine2D_F32 inverse ) {
 		Affine2D_F32 inv = new Affine2D_F32();
 
 		float div = a11 * a22 - a12 * a21;
@@ -92,8 +92,8 @@ public class Affine2D_F32 implements Affine<Affine2D_F32> {
 		inv.a21 = -a21 / div;
 		inv.a22 = a11 / div;
 
-		inv.tx = -(inv.a11 * tx + inv.a12 * ty);
-		inv.ty = -(inv.a21 * tx + inv.a22 * ty);
+		inv.tx = -( inv.a11 * tx + inv.a12 * ty );
+		inv.ty = -( inv.a21 * tx + inv.a22 * ty );
 
 		return inv;
 	}

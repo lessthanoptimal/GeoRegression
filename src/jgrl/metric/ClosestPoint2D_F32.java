@@ -40,13 +40,13 @@ public class ClosestPoint2D_F32 {
 	 * @param storage Where the solution is stored.  If null a new instance is created. Modified.
 	 * @return Closest point on the line.
 	 */
-	public static Point2D_F32 closestPoint(LineParametric2D_F32 line,
-										   Point2D_F32 p,
-										   Point2D_F32 storage) {
-		if (storage == null)
+	public static Point2D_F32 closestPoint( LineParametric2D_F32 line,
+											Point2D_F32 p,
+											Point2D_F32 storage ) {
+		if( storage == null )
 			storage = new Point2D_F32();
 
-		float t = closestPointT(line, p);
+		float t = closestPointT( line, p );
 
 		storage.x = line.p.x + line.slope.x * t;
 		storage.y = line.p.y + line.slope.y * t;
@@ -64,9 +64,9 @@ public class ClosestPoint2D_F32 {
 	 * @param p	A point. Not modified.
 	 * @return Distance as a function of 't'
 	 */
-	public static float closestPointT(LineParametric2D_F32 line,
-									  Point2D_F32 p) {
-		float t = line.slope.x * (p.x - line.p.x) + line.slope.y * (p.y - line.p.y);
+	public static float closestPointT( LineParametric2D_F32 line,
+										Point2D_F32 p ) {
+		float t = line.slope.x * ( p.x - line.p.x ) + line.slope.y * ( p.y - line.p.y );
 		t /= line.slope.x * line.slope.x + line.slope.y * line.slope.y;
 
 		return t;

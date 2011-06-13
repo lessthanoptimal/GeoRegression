@@ -23,43 +23,44 @@ package jgrl.struct.point;
  * A point in 2D composed of shorts
  */
 public class Point2D_I16 {
-    public short x;
-    public short y;
+	public short x;
+	public short y;
 
-    public Point2D_I16( short x , short y ) {
-        this.x = x;
-        this.y = y;
-    }
+	public Point2D_I16( short x, short y ) {
+		this.x = x;
+		this.y = y;
+	}
 
-    public Point2D_I16(){}
+	public Point2D_I16() {
+	}
 
-    public void set( Point2D_I16 pt ) {
-        this.x = pt.x;
-        this.y = pt.y;
-    }
+	public void set( Point2D_I16 pt ) {
+		this.x = pt.x;
+		this.y = pt.y;
+	}
 
-    public void set( short x , short y ) {
-        this.x = x;
-        this.y = y;
-    }
+	public void set( short x, short y ) {
+		this.x = x;
+		this.y = y;
+	}
 
-    public void setX(short x) {
-        this.x = x;
-    }
+	public void setX( short x ) {
+		this.x = x;
+	}
 
-    public void setY(short y) {
-        this.y = y;
-    }
+	public void setY( short y ) {
+		this.y = y;
+	}
 
-    public final int getX() {
-        return x;
-    }
+	public final int getX() {
+		return x;
+	}
 
-    public final int getY() {
-        return y;
-    }
+	public final int getY() {
+		return y;
+	}
 
-    public Point2D_I16 copy() {
-        return new Point2D_I16(x,y);
-    }
+	public Point2D_I16 copy() {
+		return new Point2D_I16( x, y );
+	}
 }

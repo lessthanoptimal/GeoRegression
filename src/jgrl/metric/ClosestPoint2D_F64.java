@@ -30,48 +30,46 @@ import jgrl.struct.point.Point2D_F64;
  */
 public class ClosestPoint2D_F64 {
 
-    /**
-     * <p>
-     * Finds the closest point on 'line' to the specified point.
-     * </p>
-     *
-     * @param line Line along which the closest point is being found.
-     * @param p Point.
-     * @param storage Where the solution is stored.  If null a new instance is created. Modified.
-     * @return Closest point on the line.
-     */
-    public static Point2D_F64 closestPoint( LineParametric2D_F64 line  ,
-                                            Point2D_F64 p ,
-                                            Point2D_F64 storage )
-    {
-        if( storage == null )
-            storage = new Point2D_F64();
+	/**
+	 * <p>
+	 * Finds the closest point on 'line' to the specified point.
+	 * </p>
+	 *
+	 * @param line	Line along which the closest point is being found.
+	 * @param p	   Point.
+	 * @param storage Where the solution is stored.  If null a new instance is created. Modified.
+	 * @return Closest point on the line.
+	 */
+	public static Point2D_F64 closestPoint( LineParametric2D_F64 line,
+											Point2D_F64 p,
+											Point2D_F64 storage ) {
+		if( storage == null )
+			storage = new Point2D_F64();
 
-        double t = closestPointT(line,p);
+		double t = closestPointT( line, p );
 
-        storage.x = line.p.x + line.slope.x*t;
-        storage.y = line.p.y + line.slope.y*t;
+		storage.x = line.p.x + line.slope.x * t;
+		storage.y = line.p.y + line.slope.y * t;
 
-        return storage;
-    }
+		return storage;
+	}
 
-    /**
-     * <p>
-     * Computes the closest point along the line as a function of 't':<br>
-     * [x, y] = [x_0, y_0] + t·[slopeX, slopeY]
-     * </p>
-     *
-     * @param line The line along which the closest point is being found. Not modified.
-     * @param p A point. Not modified.
-     * @return Distance as a function of 't'
-     */
-    public static double closestPointT( LineParametric2D_F64 line  ,
-                                        Point2D_F64 p )
-    {
-        double t = line.slope.x*(p.x-line.p.x)+line.slope.y*(p.y-line.p.y);
-        t /= line.slope.x*line.slope.x + line.slope.y*line.slope.y;
+	/**
+	 * <p>
+	 * Computes the closest point along the line as a function of 't':<br>
+	 * [x, y] = [x_0, y_0] + t·[slopeX, slopeY]
+	 * </p>
+	 *
+	 * @param line The line along which the closest point is being found. Not modified.
+	 * @param p	A point. Not modified.
+	 * @return Distance as a function of 't'
+	 */
+	public static double closestPointT( LineParametric2D_F64 line,
+										Point2D_F64 p ) {
+		double t = line.slope.x * ( p.x - line.p.x ) + line.slope.y * ( p.y - line.p.y );
+		t /= line.slope.x * line.slope.x + line.slope.y * line.slope.y;
 
-        return t;
-    }
+		return t;
+	}
 
 }

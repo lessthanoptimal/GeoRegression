@@ -17,9 +17,10 @@
  * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jgrl.struct.point;
+package jgrl.geometry;
 
 import jgrl.struct.GeoTuple2D_F64;
+import jgrl.struct.point.Point2D_F64;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,35 +32,35 @@ import java.util.Random;
  */
 public class UtilPoint2D_F64 {
 
-	public static List<Point2D_F64> copy(List<Point2D_F64> pts) {
+	public static List<Point2D_F64> copy( List<Point2D_F64> pts ) {
 		List<Point2D_F64> ret = new ArrayList<Point2D_F64>();
 
-		for (Point2D_F64 p : pts) {
-			ret.add(p.copy());
+		for( Point2D_F64 p : pts ) {
+			ret.add( p.copy() );
 		}
 
 		return ret;
 	}
 
-	public static void noiseNormal_F64(List<Point2D_F64> pts, double sigma, Random rand) {
-		for (Point2D_F64 p : pts) {
+	public static void noiseNormal( List<Point2D_F64> pts, double sigma, Random rand ) {
+		for( Point2D_F64 p : pts ) {
 			p.x += rand.nextGaussian() * sigma;
 			p.y += rand.nextGaussian() * sigma;
 		}
 	}
 
-	public static double distance(double x0, double y0, double x1, double y1) {
+	public static double distance( double x0, double y0, double x1, double y1 ) {
 		double dx = x1 - x0;
 		double dy = y1 - y0;
 
-		return Math.sqrt(dx * dx + dy * dy);
+		return Math.sqrt( dx * dx + dy * dy );
 	}
 
-	public static Point2D_F64 mean(List<Point2D_F64> pts) {
+	public static Point2D_F64 mean( List<Point2D_F64> pts ) {
 		double x = 0;
 		double y = 0;
 
-		for (Point2D_F64 p : pts) {
+		for( Point2D_F64 p : pts ) {
 			x += p.getX();
 			y += p.getY();
 		}
@@ -67,26 +68,26 @@ public class UtilPoint2D_F64 {
 		x /= pts.size();
 		y /= pts.size();
 
-		return new Point2D_F64(x, y);
+		return new Point2D_F64( x, y );
 	}
 
-	public static List<Point2D_F64> random(double min, double max, int num, Random rand) {
+	public static List<Point2D_F64> random( double min, double max, int num, Random rand ) {
 		List<Point2D_F64> ret = new ArrayList<Point2D_F64>();
 
 		double d = max - min;
 
-		for (int i = 0; i < num; i++) {
+		for( int i = 0; i < num; i++ ) {
 			Point2D_F64 p = new Point2D_F64();
 			p.x = rand.nextDouble() * d + min;
 			p.y = rand.nextDouble() * d + min;
 
-			ret.add(p);
+			ret.add( p );
 		}
 
 		return ret;
 	}
 
-	public static boolean isEquals(GeoTuple2D_F64 a, GeoTuple2D_F64 b, double tol) {
-		return (Math.abs(a.x - b.x) <= tol && Math.abs(a.x - b.x) <= tol);
+	public static boolean isEquals( GeoTuple2D_F64 a, GeoTuple2D_F64 b, double tol ) {
+		return ( Math.abs( a.x - b.x ) <= tol && Math.abs( a.x - b.x ) <= tol );
 	}
 }

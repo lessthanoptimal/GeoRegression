@@ -35,25 +35,25 @@ public class TestAffine2D_F32 extends GenericInvertibleTransformTests_F32<Point2
 
 	@Override
 	public Point2D_F32 createRandomPoint() {
-		return new Point2D_F32((float) (float) rand.nextGaussian() * 3,
-				(float) (float) rand.nextGaussian() * 3);
+		return new Point2D_F32( (float) (float)rand.nextGaussian() * 3,
+				(float) (float)rand.nextGaussian() * 3 );
 	}
 
 	@Override
 	public Affine2D_F32 createRandomTransform() {
 
-		float a11 = (float) (float) rand.nextGaussian() * 3.0f;
-		float a12 = (float) (float) rand.nextGaussian() * 3.0f;
-		float a21 = (float) (float) rand.nextGaussian() * 3.0f;
-		float a22 = (float) (float) rand.nextGaussian() * 3.0f;
-		float tx = (float) (float) rand.nextGaussian() * 3.0f;
-		float ty = (float) (float) rand.nextGaussian() * 3.0f;
+		float a11 = (float) (float)rand.nextGaussian() * 3.0f;
+		float a12 = (float) (float)rand.nextGaussian() * 3.0f;
+		float a21 = (float) (float)rand.nextGaussian() * 3.0f;
+		float a22 = (float) (float)rand.nextGaussian() * 3.0f;
+		float tx = (float) (float)rand.nextGaussian() * 3.0f;
+		float ty = (float) (float)rand.nextGaussian() * 3.0f;
 
-		return new Affine2D_F32(a11, a12, a21, a22, tx, ty);
+		return new Affine2D_F32( a11, a12, a21, a22, tx, ty );
 	}
 
 	@Override
-	public Point2D_F32 apply(InvertibleTransform se, Point2D_F32 point, Point2D_F32 result) {
-		return AffinePointOps.transform((Affine2D_F32) se, point, result);
+	public Point2D_F32 apply( InvertibleTransform se, Point2D_F32 point, Point2D_F32 result ) {
+		return AffinePointOps.transform( (Affine2D_F32) se, point, result );
 	}
 }

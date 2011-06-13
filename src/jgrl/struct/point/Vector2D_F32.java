@@ -27,15 +27,15 @@ import jgrl.struct.GeoTuple2D_F32;
 @SuppressWarnings({"unchecked"})
 public class Vector2D_F32 extends GeoTuple2D_F32<Vector2D_F32> {
 
-	public Vector2D_F32(float x, float y) {
-		set(x, y);
+	public Vector2D_F32( float x, float y ) {
+		set( x, y );
 	}
 
 	public Vector2D_F32() {
 	}
 
-	public Vector2D_F32(Vector2D_F32 pt) {
-		set(pt.x, pt.y);
+	public Vector2D_F32( Vector2D_F32 pt ) {
+		set( pt.x, pt.y );
 	}
 
 	@Override
@@ -43,12 +43,12 @@ public class Vector2D_F32 extends GeoTuple2D_F32<Vector2D_F32> {
 		return new Vector2D_F32();
 	}
 
-	public void set(Vector2D_F32 orig) {
-		_set(orig);
+	public void set( Vector2D_F32 orig ) {
+		_set( orig );
 	}
 
 	public Vector2D_F32 copy() {
-		return new Vector2D_F32(this);
+		return new Vector2D_F32( this );
 	}
 
 	public String toString() {

@@ -34,70 +34,69 @@ import java.util.List;
  */
 public class InvertibleTransformSequence {
 
-    // the path
-    private List<Node> path = new ArrayList<Node>();
+	// the path
+	private List<Node> path = new ArrayList<Node>();
 
-    /**
-     * Adds the next transform in the sequence.
-     *
-     * @param forward Does the transform work in the forward or reverse direction.
-     * @param tran The transform.
-     */
-    public void addTransform( boolean forward , SpecialEuclidean tran ) {
-        path.add( new Node(tran,forward));    
-    }
+	/**
+	 * Adds the next transform in the sequence.
+	 *
+	 * @param forward Does the transform work in the forward or reverse direction.
+	 * @param tran	The transform.
+	 */
+	public void addTransform( boolean forward, SpecialEuclidean tran ) {
+		path.add( new Node( tran, forward ) );
+	}
 
-    /**
-     * Clears the sequence of transform.
-     */
-    public void clear() {
-        path.clear();
-    }
+	/**
+	 * Clears the sequence of transform.
+	 */
+	public void clear() {
+		path.clear();
+	}
 
-    @SuppressWarnings({"unchecked"})
-    public void computeTransform( SpecialEuclidean result ) {
+	@SuppressWarnings({"unchecked"})
+	public void computeTransform( SpecialEuclidean result ) {
 
-        if( path.size() == 0 )
-            return;
+		if( path.size() == 0 )
+			return;
 
-        InvertibleTransform inv = result.createInstance();
+		InvertibleTransform inv = result.createInstance();
 
-        InvertibleTransformSequence.Node n = path.get(0);
-        InvertibleTransform nodeTran = n.tran;
+		InvertibleTransformSequence.Node n = path.get( 0 );
+		InvertibleTransform nodeTran = n.tran;
 
-        if( n.forward ) {
-            result.set(nodeTran);
-        } else {
-            nodeTran.invert(result);
-        }
+		if( n.forward ) {
+			result.set( nodeTran );
+		} else {
+			nodeTran.invert( result );
+		}
 
-        for( int i = 1; i < path.size(); i++ ) {
-            n = path.get(i);
-            nodeTran = n.tran;
+		for( int i = 1; i < path.size(); i++ ) {
+			n = path.get( i );
+			nodeTran = n.tran;
 
-            if( n.forward ) {
-                result.concat(nodeTran,result);
-            } else {
-                nodeTran.invert(inv);
-                result.concat(inv,result);
-            }
-        }
-    }
+			if( n.forward ) {
+				result.concat( nodeTran, result );
+			} else {
+				nodeTran.invert( inv );
+				result.concat( inv, result );
+			}
+		}
+	}
 
-    public List<Node> getPath() {
-        return path;
-    }
+	public List<Node> getPath() {
+		return path;
+	}
 
-    public static class Node
-    {
-        // the transform
-        public InvertibleTransform tran;
-        // if the transform should be applied in the forward or reverse direction
-        public boolean forward;
+	public static class Node {
+		// the transform
+		public InvertibleTransform tran;
+		// if the transform should be applied in the forward or reverse direction
+		public boolean forward;
 
-        public Node(InvertibleTransform tran,  boolean forward) {
-            this.tran = tran;
-            this.forward = forward;
-        }
-    }
+		public Node( InvertibleTransform tran, boolean forward ) {
+			this.tran = tran;
+			this.forward = forward;
+		}
+	}
 }

@@ -27,15 +27,15 @@ import jgrl.struct.GeoTuple2D_F32;
 @SuppressWarnings({"unchecked"})
 public class Point2D_F32 extends GeoTuple2D_F32<Point2D_F32> {
 
-	public Point2D_F32(float x, float y) {
-		set(x, y);
+	public Point2D_F32( float x, float y ) {
+		set( x, y );
 	}
 
 	public Point2D_F32() {
 	}
 
-	public Point2D_F32(Point2D_F32 pt) {
-		set(pt.x, pt.y);
+	public Point2D_F32( Point2D_F32 pt ) {
+		set( pt.x, pt.y );
 	}
 
 	@Override
@@ -43,13 +43,13 @@ public class Point2D_F32 extends GeoTuple2D_F32<Point2D_F32> {
 		return new Point2D_F32();
 	}
 
-	public void set(Point2D_F32 orig) {
-		_set(orig);
+	public void set( Point2D_F32 orig ) {
+		_set( orig );
 	}
 
 	@Override
 	public Point2D_F32 copy() {
-		return new Point2D_F32(this);
+		return new Point2D_F32( this );
 	}
 
 	public String toString() {

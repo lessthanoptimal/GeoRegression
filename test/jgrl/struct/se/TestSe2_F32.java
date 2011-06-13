@@ -35,18 +35,18 @@ public class TestSe2_F32 extends GenericInvertibleTransformTests_F32<Point2D_F32
 
 	@Override
 	public Point2D_F32 createRandomPoint() {
-		return new Point2D_F32((float) rand.nextGaussian() * 3,
-				(float) rand.nextGaussian() * 3);
+		return new Point2D_F32( (float)rand.nextGaussian() * 3,
+				(float)rand.nextGaussian() * 3 );
 	}
 
 	@Override
 	public SpecialEuclidean createRandomTransform() {
-		return new Se2_F32((float) rand.nextGaussian() * 3, (float) rand.nextGaussian() * 3,
-				(rand.nextFloat() - 0.5f) * 2.0f * (float) Math.PI);
+		return new Se2_F32( (float)rand.nextGaussian() * 3, (float)rand.nextGaussian() * 3,
+				( rand.nextFloat() - 0.5f ) * 2.0f * (float)Math.PI );
 	}
 
 	@Override
-	public Point2D_F32 apply(InvertibleTransform se, Point2D_F32 point, Point2D_F32 result) {
-		return SePointOps_F32.transform((Se2_F32) se, point, result);
+	public Point2D_F32 apply( InvertibleTransform se, Point2D_F32 point, Point2D_F32 result ) {
+		return SePointOps_F32.transform( (Se2_F32) se, point, result );
 	}
 }

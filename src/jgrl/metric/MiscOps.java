@@ -28,11 +28,11 @@ import jgrl.struct.GeoTuple3D_F64;
  */
 public class MiscOps {
 
-	public static double dot(GeoTuple3D_F64 a, GeoTuple3D_F64 b) {
+	public static double dot( GeoTuple3D_F64 a, GeoTuple3D_F64 b ) {
 		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
 
-	public static float dot(GeoTuple3D_F32 a, GeoTuple3D_F32 b) {
+	public static float dot( GeoTuple3D_F32 a, GeoTuple3D_F32 b ) {
 		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
 }

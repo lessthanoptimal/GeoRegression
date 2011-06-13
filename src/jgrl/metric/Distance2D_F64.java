@@ -19,10 +19,10 @@
 
 package jgrl.metric;
 
+import jgrl.geometry.UtilPoint2D_F64;
 import jgrl.struct.line.LineParametric2D_F64;
 import jgrl.struct.line.LineSegment2D_F64;
 import jgrl.struct.point.Point2D_F64;
-import jgrl.struct.point.UtilPoint2D_F64;
 
 
 /**
@@ -43,9 +43,9 @@ public class Distance2D_F64 {
 	 * @param p	The point. Not modified.
 	 * @return Distance the closest point on the line is away from the point.
 	 */
-	public static double distance(LineParametric2D_F64 line,
-								  Point2D_F64 p) {
-		double t = ClosestPoint2D_F64.closestPointT(line, p);
+	public static double distance( LineParametric2D_F64 line,
+								   Point2D_F64 p ) {
+		double t = ClosestPoint2D_F64.closestPointT( line, p );
 
 		double a = line.slope.x * t + line.p.x;
 		double b = line.slope.y * t + line.p.y;
@@ -53,7 +53,7 @@ public class Distance2D_F64 {
 		double dx = p.x - a;
 		double dy = p.y - b;
 
-		return Math.sqrt(dx * dx + dy * dy);
+		return Math.sqrt( dx * dx + dy * dy );
 	}
 
 	/**
@@ -66,22 +66,22 @@ public class Distance2D_F64 {
 	 * @param p	The point. Not modified.
 	 * @return Distance the closest point on the line is away from the point.
 	 */
-	public static double distance(LineSegment2D_F64 line,
-								  Point2D_F64 p) {
+	public static double distance( LineSegment2D_F64 line,
+								   Point2D_F64 p ) {
 		double a = line.b.x - line.a.x;
 		double b = line.b.y - line.a.y;
 
-		double t = a * (p.x - line.a.x) + b * (p.y - line.a.y);
-		t /= (a * a + b * b);
+		double t = a * ( p.x - line.a.x ) + b * ( p.y - line.a.y );
+		t /= ( a * a + b * b );
 
 		// if the point of intersection is past the end points return the distance
 		// from the closest end point
-		if (t < 0) {
-			return UtilPoint2D_F64.distance(line.a.x, line.a.y, p.x, p.y);
-		} else if (t > 1.0)
-			return UtilPoint2D_F64.distance(line.a.x, line.b.y, p.x, p.y);
+		if( t < 0 ) {
+			return UtilPoint2D_F64.distance( line.a.x, line.a.y, p.x, p.y );
+		} else if( t > 1.0 )
+			return UtilPoint2D_F64.distance( line.a.x, line.b.y, p.x, p.y );
 
 		// return the distance of the closest point on the line
-		return UtilPoint2D_F64.distance(line.a.x + t * a, line.a.y + t * b, p.x, p.y);
+		return UtilPoint2D_F64.distance( line.a.x + t * a, line.a.y + t * b, p.x, p.y );
 	}
 }

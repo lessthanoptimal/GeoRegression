@@ -28,36 +28,36 @@ import jgrl.struct.GeoTuple3D_F32;
  */
 public class Vector3D_F32 extends GeoTuple3D_F32 {
 
-	public Vector3D_F32(float x, float y, float z) {
-		super(x, y, z);
+	public Vector3D_F32( float x, float y, float z ) {
+		super( x, y, z );
 	}
 
 	public Vector3D_F32() {
 	}
 
-	public Vector3D_F32(Point3D_F32 a, Point3D_F32 b) {
+	public Vector3D_F32( Point3D_F32 a, Point3D_F32 b ) {
 		x = b.getX() - a.getX();
 		y = b.getY() - a.getY();
 		z = b.getZ() - a.getZ();
 	}
 
-	public void set(Vector3D_F32 v) {
+	public void set( Vector3D_F32 v ) {
 		this.x = v.x;
 		this.y = v.y;
 		this.z = v.z;
 	}
 
-	public Vector3D_F32 times(float scalar) {
-		return new Vector3D_F32(x * scalar, y * scalar, z * scalar);
+	public Vector3D_F32 times( float scalar ) {
+		return new Vector3D_F32( x * scalar, y * scalar, z * scalar );
 	}
 
 	public Vector3D_F32 copy() {
-		return new Vector3D_F32(x, y, z);
+		return new Vector3D_F32( x, y, z );
 	}
 
-	public Vector3D_F32 cross(Vector3D_F32 b) {
+	public Vector3D_F32 cross( Vector3D_F32 b ) {
 		Vector3D_F32 c = new Vector3D_F32();
-		GeometryMath_F32.cross(this, b, c);
+		GeometryMath_F32.cross( this, b, c );
 
 		return c;
 	}
@@ -79,7 +79,7 @@ public class Vector3D_F32 extends GeoTuple3D_F32 {
 		z /= r;
 	}
 
-	public float dot(Vector3D_F32 a) {
+	public float dot( Vector3D_F32 a ) {
 		return x * a.x + y * a.y + z * a.z;
 	}
 }

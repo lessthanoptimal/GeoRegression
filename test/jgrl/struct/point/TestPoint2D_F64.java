@@ -26,12 +26,12 @@ import org.junit.Test;
  */
 public class TestPoint2D_F64 extends GenericGeoTupleTests_F64<Point2D_F64> {
 
-    public TestPoint2D_F64() {
-        super(new Point2D_F64());
-    }
+	public TestPoint2D_F64() {
+		super( new Point2D_F64() );
+	}
 
-    @Test
-    public void generic() {
-        checkAll(2);
-    }
+	@Test
+	public void generic() {
+		checkAll( 2 );
+	}
 }

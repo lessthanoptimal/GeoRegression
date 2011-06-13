@@ -19,7 +19,7 @@
 
 package jgrl.metric;
 
-import jgrl.autocode.JgrlConstants;
+import jgrl.misc.autocode.JgrlConstants;
 import jgrl.struct.line.LineParametric3D_F64;
 import jgrl.struct.point.Point3D_F64;
 import jgrl.struct.point.Vector3D_F64;
@@ -38,39 +38,39 @@ public class TestClosestPoint3D_F64 {
 	 */
 	@Test
 	public void closetPoint_line() {
-		Point3D_F64 a = new Point3D_F64(1, 1, 1);
-		Point3D_F64 b = new Point3D_F64(1.5, -2.5, 9);
-		Point3D_F64 c = new Point3D_F64(10.1, 6, -3);
+		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
+		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
+		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
 
 
-		Vector3D_F64 va = new Vector3D_F64(a, b);
-		Vector3D_F64 vc = new Vector3D_F64(c, b);
+		Vector3D_F64 va = new Vector3D_F64( a, b );
+		Vector3D_F64 vc = new Vector3D_F64( c, b );
 
-		LineParametric3D_F64 lineA = new LineParametric3D_F64(a, va);
-		LineParametric3D_F64 lineB = new LineParametric3D_F64(c, vc);
+		LineParametric3D_F64 lineA = new LineParametric3D_F64( a, va );
+		LineParametric3D_F64 lineB = new LineParametric3D_F64( c, vc );
 
-		Point3D_F64 foundB = ClosestPoint3D_F64.closetPoint(lineA, lineB, null);
+		Point3D_F64 foundB = ClosestPoint3D_F64.closetPoint( lineA, lineB, null );
 
-		assertTrue(b.isIdentical(foundB, JgrlConstants.DOUBLE_TEST_TOL));
+		assertTrue( b.isIdentical( foundB, JgrlConstants.DOUBLE_TEST_TOL ) );
 	}
 
 	@Test
 	public void closetPoint_point() {
-		Point3D_F64 a = new Point3D_F64(1, 1, 1);
-		Point3D_F64 b = new Point3D_F64(1.5, -2.5, 9);
-		Point3D_F64 c = new Point3D_F64(10.1, 6, -3);
+		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
+		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
+		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
 
-		Vector3D_F64 va = new Vector3D_F64(a, b);
+		Vector3D_F64 va = new Vector3D_F64( a, b );
 
-		LineParametric3D_F64 lineA = new LineParametric3D_F64(a, va);
+		LineParametric3D_F64 lineA = new LineParametric3D_F64( a, va );
 
-		Point3D_F64 foundB = ClosestPoint3D_F64.closetPoint(lineA, c, null);
+		Point3D_F64 foundB = ClosestPoint3D_F64.closetPoint( lineA, c, null );
 
-		Vector3D_F64 p = new Vector3D_F64(foundB, c);
+		Vector3D_F64 p = new Vector3D_F64( foundB, c );
 
 		// see if they are perpendicular and therefor c foundB is the closest point
-		double d = p.dot(va);
+		double d = p.dot( va );
 
-		assertEquals(0, d, JgrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 0, d, JgrlConstants.DOUBLE_TEST_TOL );
 	}
 }

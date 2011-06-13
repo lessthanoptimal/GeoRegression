@@ -17,9 +17,10 @@
  * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jgrl.struct.point;
+package jgrl.geometry;
 
 import jgrl.struct.GeoTuple2D_F32;
+import jgrl.struct.point.Point2D_F32;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,35 +32,35 @@ import java.util.Random;
  */
 public class UtilPoint2D_F32 {
 
-	public static List<Point2D_F32> copy(List<Point2D_F32> pts) {
+	public static List<Point2D_F32> copy( List<Point2D_F32> pts ) {
 		List<Point2D_F32> ret = new ArrayList<Point2D_F32>();
 
-		for (Point2D_F32 p : pts) {
-			ret.add(p.copy());
+		for( Point2D_F32 p : pts ) {
+			ret.add( p.copy() );
 		}
 
 		return ret;
 	}
 
-	public static void noiseNormal_F32(List<Point2D_F32> pts, float sigma, Random rand) {
-		for (Point2D_F32 p : pts) {
-			p.x += (float) rand.nextGaussian() * sigma;
-			p.y += (float) rand.nextGaussian() * sigma;
+	public static void noiseNormal( List<Point2D_F32> pts, float sigma, Random rand ) {
+		for( Point2D_F32 p : pts ) {
+			p.x += (float)rand.nextGaussian() * sigma;
+			p.y += (float)rand.nextGaussian() * sigma;
 		}
 	}
 
-	public static float distance(float x0, float y0, float x1, float y1) {
+	public static float distance( float x0, float y0, float x1, float y1 ) {
 		float dx = x1 - x0;
 		float dy = y1 - y0;
 
-		return (float) Math.sqrt(dx * dx + dy * dy);
+		return (float)Math.sqrt( dx * dx + dy * dy );
 	}
 
-	public static Point2D_F32 mean(List<Point2D_F32> pts) {
+	public static Point2D_F32 mean( List<Point2D_F32> pts ) {
 		float x = 0;
 		float y = 0;
 
-		for (Point2D_F32 p : pts) {
+		for( Point2D_F32 p : pts ) {
 			x += p.getX();
 			y += p.getY();
 		}
@@ -67,26 +68,26 @@ public class UtilPoint2D_F32 {
 		x /= pts.size();
 		y /= pts.size();
 
-		return new Point2D_F32(x, y);
+		return new Point2D_F32( x, y );
 	}
 
-	public static List<Point2D_F32> random(float min, float max, int num, Random rand) {
+	public static List<Point2D_F32> random( float min, float max, int num, Random rand ) {
 		List<Point2D_F32> ret = new ArrayList<Point2D_F32>();
 
 		float d = max - min;
 
-		for (int i = 0; i < num; i++) {
+		for( int i = 0; i < num; i++ ) {
 			Point2D_F32 p = new Point2D_F32();
 			p.x = rand.nextFloat() * d + min;
 			p.y = rand.nextFloat() * d + min;
 
-			ret.add(p);
+			ret.add( p );
 		}
 
 		return ret;
 	}
 
-	public static boolean isEquals(GeoTuple2D_F32 a, GeoTuple2D_F32 b, float tol) {
-		return (Math.abs(a.x - b.x) <= tol && (float) Math.abs(a.x - b.x) <= tol);
+	public static boolean isEquals( GeoTuple2D_F32 a, GeoTuple2D_F32 b, float tol ) {
+		return ( (float)Math.abs( a.x - b.x ) <= tol && (float)Math.abs( a.x - b.x ) <= tol );
 	}
 }

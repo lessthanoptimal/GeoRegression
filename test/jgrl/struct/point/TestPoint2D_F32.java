@@ -27,11 +27,11 @@ import org.junit.Test;
 public class TestPoint2D_F32 extends GenericGeoTupleTests_F32<Point2D_F32> {
 
 	public TestPoint2D_F32() {
-		super(new Point2D_F32());
+		super( new Point2D_F32() );
 	}
 
 	@Test
 	public void generic() {
-		checkAll(2);
+		checkAll( 2 );
 	}
 }

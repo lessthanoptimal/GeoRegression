@@ -30,7 +30,7 @@ public abstract class GeoTuple3D_F32<T extends GeoTuple3D_F32> extends GeoTuple_
 	public float y;
 	public float z;
 
-	public GeoTuple3D_F32(float x, float y, float z) {
+	public GeoTuple3D_F32( float x, float y, float z ) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -44,28 +44,28 @@ public abstract class GeoTuple3D_F32<T extends GeoTuple3D_F32> extends GeoTuple_
 		return 3;
 	}
 
-	protected void _set(GeoTuple3D_F32 a) {
+	protected void _set( GeoTuple3D_F32 a ) {
 		x = a.x;
 		y = a.y;
 		z = a.z;
 	}
 
-	public void set(float x, float y, float z) {
+	public void set( float x, float y, float z ) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-	public boolean isIdentical(float x, float y, float z) {
-		return (this.x == x && this.y == y && this.z == z);
+	public boolean isIdentical( float x, float y, float z ) {
+		return ( this.x == x && this.y == y && this.z == z );
 	}
 
-	public boolean isIdentical(float x, float y, float z, float tol) {
-		return ((float) Math.abs(this.x - x) <= tol && (float) Math.abs(this.y - y) <= tol && (float) Math.abs(this.z - z) <= tol);
+	public boolean isIdentical( float x, float y, float z, float tol ) {
+		return ( (float)Math.abs( this.x - x ) <= tol && (float)Math.abs( this.y - y ) <= tol && (float)Math.abs( this.z - z ) <= tol );
 	}
 
-	public boolean isIdentical(GeoTuple3D_F32 t, float tol) {
-		return ((float) Math.abs(this.x - t.x) <= tol && (float) Math.abs(this.y - t.y) <= tol && (float) Math.abs(this.z - t.z) <= tol);
+	public boolean isIdentical( GeoTuple3D_F32 t, float tol ) {
+		return ( (float)Math.abs( this.x - t.x ) <= tol && (float)Math.abs( this.y - t.y ) <= tol && (float)Math.abs( this.z - t.z ) <= tol );
 	}
 
 	public float getX() {
@@ -80,8 +80,8 @@ public abstract class GeoTuple3D_F32<T extends GeoTuple3D_F32> extends GeoTuple_
 		return z;
 	}
 
-	public float getIndex(int index) {
-		switch (index) {
+	public float getIndex( int index ) {
+		switch( index ) {
 			case 0:
 				return x;
 
@@ -92,12 +92,12 @@ public abstract class GeoTuple3D_F32<T extends GeoTuple3D_F32> extends GeoTuple_
 				return z;
 
 			default:
-				throw new IllegalArgumentException("Invalid index");
+				throw new IllegalArgumentException( "Invalid index" );
 		}
 	}
 
-	public void setIndex(int index, float value) {
-		switch (index) {
+	public void setIndex( int index, float value ) {
+		switch( index ) {
 			case 0:
 				x = value;
 				break;
@@ -111,12 +111,12 @@ public abstract class GeoTuple3D_F32<T extends GeoTuple3D_F32> extends GeoTuple_
 				break;
 
 			default:
-				throw new IllegalArgumentException("Invalid index");
+				throw new IllegalArgumentException( "Invalid index" );
 		}
 	}
 
 	public float norm() {
-		return (float) Math.sqrt(x * x + y * y + z * z);
+		return (float)Math.sqrt( x * x + y * y + z * z );
 	}
 
 	public float normSq() {
@@ -124,16 +124,16 @@ public abstract class GeoTuple3D_F32<T extends GeoTuple3D_F32> extends GeoTuple_
 	}
 
 	@Override
-	public float distance(GeoTuple3D_F32 t) {
+	public float distance( GeoTuple3D_F32 t ) {
 		float dx = t.x - x;
 		float dy = t.y - y;
 		float dz = t.z - z;
 
-		return (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+		return (float)Math.sqrt( dx * dx + dy * dy + dz * dz );
 	}
 
 	@Override
-	public float distance2(GeoTuple3D_F32 t) {
+	public float distance2( GeoTuple3D_F32 t ) {
 		float dx = t.x - x;
 		float dy = t.y - y;
 		float dz = t.z - z;
@@ -142,22 +142,22 @@ public abstract class GeoTuple3D_F32<T extends GeoTuple3D_F32> extends GeoTuple_
 	}
 
 	public void print() {
-		System.out.println(this);
+		System.out.println( this );
 	}
 
 	public boolean isNaN() {
-		return (Float.isNaN(x) || Float.isNaN(y) || Float.isNaN(z));
+		return ( Float.isNaN( x ) || Float.isNaN( y ) || Float.isNaN( z ) );
 	}
 
-	public void setX(float x) {
+	public void setX( float x ) {
 		this.x = x;
 	}
 
-	public void setY(float y) {
+	public void setY( float y ) {
 		this.y = y;
 	}
 
-	public void setZ(float z) {
+	public void setZ( float z ) {
 		this.z = z;
 	}
 }

@@ -25,5 +25,5 @@ import jgrl.struct.InvertibleTransform;
 /**
  * @author Peter Abeles
  */
-public interface Affine <T extends Affine> extends InvertibleTransform<T> {
+public interface Affine<T extends Affine> extends InvertibleTransform<T> {
 }

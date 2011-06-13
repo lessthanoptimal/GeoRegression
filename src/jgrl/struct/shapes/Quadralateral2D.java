@@ -26,8 +26,8 @@ import jgrl.struct.point.Point2D_F64;
  *
  */
 public class Quadralateral2D {
-    Point2D_F64 tl;
-    Point2D_F64 tr;
-    Point2D_F64 bl;
-    Point2D_F64 br;
+	Point2D_F64 tl;
+	Point2D_F64 tr;
+	Point2D_F64 bl;
+	Point2D_F64 br;
 }

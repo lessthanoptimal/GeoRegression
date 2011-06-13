@@ -26,21 +26,21 @@ package jgrl.struct;
  *
  * @author Peter Abeles
  */
-public abstract class GeoTuple <T extends GeoTuple> {
+public abstract class GeoTuple<T extends GeoTuple> {
 
-    /**
-     * The dimensionality of space the tuple is contained in and the number of values it has.
-     * @return Dimensionality of the object.
-     *
-     */
-    public abstract int getDimension();
+	/**
+	 * The dimensionality of space the tuple is contained in and the number of values it has.
+	 *
+	 * @return Dimensionality of the object.
+	 */
+	public abstract int getDimension();
 
-    /**
-     * <p>
-     * Creates a new tuple instance of the same type.
-     * </p>
-     * 
-     * @return new tuple instance.
-     */
-    public abstract T createNewInstance();
+	/**
+	 * <p>
+	 * Creates a new tuple instance of the same type.
+	 * </p>
+	 *
+	 * @return new tuple instance.
+	 */
+	public abstract T createNewInstance();
 }

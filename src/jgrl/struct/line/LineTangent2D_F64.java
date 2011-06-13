@@ -27,12 +27,12 @@ package jgrl.struct.line;
  * @author Peter Abeles
  */
 public class LineTangent2D_F64 {
-    /**
-     * Distance from the origin to the closest point on the line.
-     */
-    public double distance;
-    /**
-     * Angle in radians from the origin to the closest point on the line.
-     */
-    public double angle;
+	/**
+	 * Distance from the origin to the closest point on the line.
+	 */
+	public double distance;
+	/**
+	 * Angle in radians from the origin to the closest point on the line.
+	 */
+	public double angle;
 }

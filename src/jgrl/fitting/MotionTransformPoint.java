@@ -25,28 +25,29 @@ import jgrl.struct.InvertibleTransform;
 import java.util.List;
 
 /**
- * Interface for finding a transform which minimizes the difference between two sets of points.
+ * Interface for finding a transform that when applied to the 'from' points which minimize
+ * the difference between the corresponding point in the 'to' list.
  *
  * @author Peter Abeles
  */
 public interface MotionTransformPoint<T extends InvertibleTransform, P extends GeoTuple> {
 
-    /**
-     * Returns the found motion which minimizes the difference between the two sets of points.
-     *
-     * @return motion
-     */
-    public T getMotion();
+	/**
+	 * Returns the found motion which minimizes the difference between the two sets of points.
+	 *
+	 * @return motion
+	 */
+	public T getMotion();
 
-    /**
-     * Processes the sets of corresponding points to find the transformation which when applied
-     * to fromPts will minimize the difference form toPts.
-     *
-     * @param fromPts The points which are to be transformed.  Not modified.
-     * @param toPts The points that are being compared against. Not modified.
-	 * @return If the computation failed or not.
-     */
-    public boolean process( List<P> fromPts , List<P> toPts );
+	/**
+	 * Processes the sets of corresponding points and finds a transformation which when applied
+	 * to 'fromPts' will minimize the difference with the 'toPts'.
+	 *
+	 * @param fromPts The points which are to be transformed.  Not modified.
+	 * @param toPts   The points that are being compared against. Not modified.
+	 * @return true if the computation successfully produced a solution and false if not.
+	 */
+	public boolean process( List<P> fromPts, List<P> toPts );
 
 	/**
 	 * Minimum number of points required to compute a model.
