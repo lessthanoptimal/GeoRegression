@@ -237,6 +237,17 @@ public class GeometryMath_F64 {
 		return (T) mod;
 	}
 
+	/**
+	 * <p>
+	 * mod = M*pt<br>
+	 * where mod is a 2D point that has an implicit z=1.
+	 * </p>
+	 *
+	 * <p>
+	 * Multiplies the 3x3 matrix against the 3D point, and normalizes the 2D point output
+	 * by dividing the x and y values by the found z.
+	 * </p>
+	 */
 	public static GeoTuple2D_F64 mult( DenseMatrix64F M, GeoTuple3D_F64 pt, GeoTuple2D_F64 mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
@@ -255,6 +266,17 @@ public class GeometryMath_F64 {
 		return mod;
 	}
 
+	/**
+	 * <p>
+	 * mod = M*pt<br>
+	 * where pt has z=1 implicitly.
+	 * </p>
+	 *
+	 * <p>
+	 * Multiplies the 3x3 matrix against the 2D point, which has an implicit z=1 value, and the output is
+	 * a 3d point.
+	 * </p>
+	 */
 	public static GeoTuple3D_F64 mult( DenseMatrix64F M, GeoTuple2D_F64 pt, GeoTuple3D_F64 mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
@@ -301,6 +323,9 @@ public class GeometryMath_F64 {
 		return mod;
 	}
 
+	/**
+	 * mod = M<sup>T</sup>*pt
+	 */
 	public static <T extends GeoTuple3D_F64> T multTran( DenseMatrix64F M, T pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
@@ -320,6 +345,10 @@ public class GeometryMath_F64 {
 		return (T) mod;
 	}
 
+	/**
+	 * mod = M<sup>T</sup>*pt<br>
+	 * where pt.z = 1 implicitly.
+	 */
 	public static GeoTuple3D_F64 multTran( DenseMatrix64F M, GeoTuple2D_F64 pt, GeoTuple3D_F64 mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
@@ -336,27 +365,6 @@ public class GeometryMath_F64 {
 		mod.z = (double) ( M.get( 0, 2 ) * x + M.get( 1, 2 ) * y + M.get( 2, 2 ) );
 
 		return mod;
-	}
-
-	public static <T extends GeoTuple3D_F64> T mult( GeoTuple3D_F64 pt, DenseMatrix64F M, GeoTuple3D_F64 mod ) {
-		if( M.numRows != 3 || M.numCols != 3 )
-			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
-
-		return (T) multTran( M, pt, mod );
-	}
-
-	/**
-	 * @param pt  Homogeneous coordinate with the last element assumed to be 1 (x,y,1)
-	 * @param M
-	 * @param mod
-	 * @param <T>
-	 * @return
-	 */
-	public static <T extends GeoTuple3D_F64> T mult( GeoTuple2D_F64 pt, DenseMatrix64F M, GeoTuple3D_F64 mod ) {
-		if( M.numRows != 3 || M.numCols != 3 )
-			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
-
-		return (T) multTran( M, pt, mod );
 	}
 
 	/**

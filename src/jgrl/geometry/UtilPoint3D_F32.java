@@ -32,6 +32,10 @@ import java.util.Random;
 public class UtilPoint3D_F32 {
 
 
+	public static float norm( float x , float y , float z ) {
+		return (float)Math.sqrt(x*x + y*y + z*z);
+	}
+
 	public static List<Point3D_F32> copy( List<Point3D_F32> pts ) {
 		List<Point3D_F32> ret = new ArrayList<Point3D_F32>();
 

@@ -27,7 +27,7 @@ import jgrl.struct.point.Vector3D_F32;
  * 3D line parameterized using parametric equation:<br>
  * [x, y, z] = [x_0, y_0, z_0] + tÂ·[slopeX, slopeY, slopeZ]<br>
  * where t specifies the location along the line, (x_0,y_0,z_0) is an arbitrary point on the line,
- * and (slopeX,slopeY).
+ * and (slopeX,slopeY,slopeZ).
  * </p>
  */
 public class LineParametric3D_F32 {
@@ -86,6 +86,10 @@ public class LineParametric3D_F32 {
 		return p;
 	}
 
+	public Vector3D_F32 getSlope() {
+		return slope;
+	}
+
 	public final float getSlopeX() {
 		return slope.x;
 	}
@@ -94,11 +98,19 @@ public class LineParametric3D_F32 {
 		return slope.y;
 	}
 
+	public final float getSlopeZ() {
+		return slope.y;
+	}
+
 	public final float getX() {
 		return p.x;
 	}
 
 	public final float getY() {
+		return p.y;
+	}
+
+	public final float getZ() {
 		return p.y;
 	}
 

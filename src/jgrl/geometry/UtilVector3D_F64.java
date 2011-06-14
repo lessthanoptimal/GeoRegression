@@ -40,7 +40,7 @@ public class UtilVector3D_F64 {
 	 * @param rand random number generator
 	 * @return the new random vector
 	 */
-	public static Vector3D_F64 createRandom64( double min, double max, Random rand ) {
+	public static Vector3D_F64 createRandom( double min, double max, Random rand ) {
 		double range = max - min;
 
 		Vector3D_F64 a = new Vector3D_F64();

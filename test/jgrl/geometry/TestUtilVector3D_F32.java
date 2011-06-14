@@ -37,8 +37,8 @@ public class TestUtilVector3D_F32 {
 
 	@Test
 	public void isIdentical() {
-		Vector3D_F32 a = UtilVector3D_F32.createRandom64( -1, 1, rand );
-		Vector3D_F32 b = UtilVector3D_F32.createRandom64( -1, 1, rand );
+		Vector3D_F32 a = UtilVector3D_F32.createRandom( -1, 1, rand );
+		Vector3D_F32 b = UtilVector3D_F32.createRandom( -1, 1, rand );
 
 
 		// test positive

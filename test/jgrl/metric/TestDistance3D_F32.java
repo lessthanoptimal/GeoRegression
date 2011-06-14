@@ -19,9 +19,12 @@
 
 package jgrl.metric;
 
+import jgrl.misc.autocode.JgrlConstants;
+import jgrl.struct.line.LineParametric3D_F32;
+import jgrl.struct.point.Point3D_F32;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -31,11 +34,41 @@ public class TestDistance3D_F32 {
 
 	@Test
 	public void distance_line_line() {
-		fail( "Implement" );
+		// test intersection
+		LineParametric3D_F32 l0 = new LineParametric3D_F32(0,0,0,1,0,0);
+		LineParametric3D_F32 l1 = new LineParametric3D_F32(0,0,0,0,1,0);
+
+		assertEquals(0,Distance3D_F32.distance( l0,l1 ), JgrlConstants.FLOAT_TEST_TOL );
+
+		// test the lines separated over the z-axis
+		l0 = new LineParametric3D_F32(0,0,0,1,0,0);
+		l1 = new LineParametric3D_F32(0,0,2,0,1,0);
+
+		assertEquals(2,Distance3D_F32.distance( l0,l1 ), JgrlConstants.FLOAT_TEST_TOL );
+
+		// test parallel but no closest point
+		l0 = new LineParametric3D_F32(0,0,0,1,0,0);
+		l1 = new LineParametric3D_F32(0,0,2,1,0,0);
+
+		assertEquals(2,Distance3D_F32.distance( l0,l1 ), JgrlConstants.FLOAT_TEST_TOL );
+
+		// test identical lines
+		l0 = new LineParametric3D_F32(0,0,0,1,0,0);
+		l1 = new LineParametric3D_F32(0,0,0,1,0,0);
+
+		assertEquals(0,Distance3D_F32.distance( l0,l1 ), JgrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
 	public void distance_line_point() {
-		fail( "Implement" );
+		// a point above the line
+		LineParametric3D_F32 l = new LineParametric3D_F32(1,2,3,0,1,0);
+		Point3D_F32 p = new Point3D_F32( 3 , 2 , 3);
+
+		assertEquals(2,Distance3D_F32.distance( l,p ), JgrlConstants.FLOAT_TEST_TOL );
+
+		// a point on the line
+		l.getSlope().set( 1 , 0 , 0 );
+		assertEquals(0,Distance3D_F32.distance( l,p ), JgrlConstants.FLOAT_TEST_TOL );
 	}
 }

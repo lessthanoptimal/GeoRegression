@@ -28,7 +28,8 @@ import org.junit.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -170,10 +171,89 @@ public class TestGeometryMath_F32 {
 	}
 
 	@Test
-	public void mult() {
-		// todo all the variants
-		// todo update comments
-		fail("implement");
+	public void mult_3d_3d() {
+		Vector3D_F32 a = new Vector3D_F32( -1, 2, 3 );
+		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
+		Vector3D_F32 c = new Vector3D_F32();
+
+		GeometryMath_F32.mult( M , a , c );
+
+		assertEquals( 12 , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 24 , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 36 , c.getZ() , JgrlConstants.FLOAT_TEST_TOL );
+	}
+
+	@Test
+	public void mult_3d_2d() {
+		Vector3D_F32 a = new Vector3D_F32( -1, 2, 3 );
+		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
+		Vector2D_F32 c = new Vector2D_F32();
+
+		GeometryMath_F32.mult( M , a , c );
+
+		assertEquals( 12.0f/36.0f , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 24.0f/36.0f , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
+	}
+
+	@Test
+	public void mult_2d_3d() {
+		Vector3D_F32 a3 = new Vector3D_F32( -1, 2, 1 );
+		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
+		Vector3D_F32 expected = new Vector3D_F32();
+
+		GeometryMath_F32.mult( M , a3 , expected );
+
+		Vector2D_F32 a2 = new Vector2D_F32( -1, 2 );
+		Vector3D_F32 found = new Vector3D_F32();
+		GeometryMath_F32.mult( M , a2 , found );
+
+		assertEquals( expected.x , found.x , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected.y , found.y , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected.z , found.z , JgrlConstants.FLOAT_TEST_TOL );
+	}
+
+	@Test
+	public void mult_2d_2d() {
+		Vector3D_F32 a3 = new Vector3D_F32( -1, 2, 1 );
+		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
+		Vector3D_F32 expected = new Vector3D_F32();
+
+		GeometryMath_F32.mult( M , a3 , expected );
+
+		Vector2D_F32 a2 = new Vector2D_F32( -1, 2 );
+		Vector2D_F32 found = new Vector2D_F32();
+		GeometryMath_F32.mult( M , a2 , found );
+
+		float z = expected.z;
+
+		assertEquals( expected.x/z , found.x , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected.y/z , found.y , JgrlConstants.FLOAT_TEST_TOL );
+	}
+
+	@Test
+	public void multTran_3d_3d() {
+		Vector3D_F32 a = new Vector3D_F32( -1, 2, 3 );
+		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
+		Vector3D_F32 c = new Vector3D_F32();
+
+		GeometryMath_F32.multTran( M , a , c );
+
+		assertEquals( 28 , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 32 , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 36 , c.getZ() , JgrlConstants.FLOAT_TEST_TOL );
+	}
+
+	@Test
+	public void multTran_2d_3d() {
+		Vector2D_F32 a = new Vector2D_F32( -1, 2 );
+		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
+		Vector3D_F32 c = new Vector3D_F32();
+
+		GeometryMath_F32.multTran( M , a , c );
+
+		assertEquals( 14 , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 16 , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 18 , c.getZ() , JgrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test

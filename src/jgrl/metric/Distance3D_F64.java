@@ -19,6 +19,7 @@
 
 package jgrl.metric;
 
+import jgrl.geometry.UtilPoint3D_F64;
 import jgrl.struct.line.LineParametric3D_F64;
 import jgrl.struct.point.Point3D_F64;
 
@@ -28,24 +29,33 @@ import jgrl.struct.point.Point3D_F64;
  */
 public class Distance3D_F64 {
 	/**
-	 * Distance that two lines are apart from each other.
+	 * Distance of the closest point between two lines.  Parallel lines are correctly
+	 * handled.
+	 *
+	 * @param l0 First line. Not modified.
+	 * @param l1 Second line. Not modified.
+	 * @return Distance between the closest point on both lines.
 	 */
-	// todo should handle parallel lines
 	public static double distance( LineParametric3D_F64 l0,
 								   LineParametric3D_F64 l1 ) {
-		Point3D_F64 ret = new Point3D_F64();
-
-		ret.x = l0.p.x - l1.p.x;
-		ret.y = l0.p.y - l1.p.y;
-		ret.z = l0.p.z - l1.p.z;
+		double x = l0.p.x - l1.p.x;
+		double y = l0.p.y - l1.p.y;
+		double z = l0.p.z - l1.p.z;
 
 		// this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
-		double dv01v1 = MiscOps.dot( ret, l1.slope );
+		double dv01v1 = MiscOps.dot( x,y,z, l1.slope );
 		double dv1v0 = MiscOps.dot( l1.slope, l0.slope );
 		double dv1v1 = MiscOps.dot( l1.slope, l1.slope );
 
-		double t0 = dv01v1 * dv1v0 - MiscOps.dot( ret, l0.slope ) * dv1v1;
-		t0 /= MiscOps.dot( l0.slope, l0.slope ) * dv1v1 - dv1v0 * dv1v0;
+		double bottom = MiscOps.dot( l0.slope, l0.slope ) * dv1v1 - dv1v0 * dv1v0;
+		double t0;
+
+		if( bottom == 0 ) {
+			// handle parallel lines
+			t0 = 0;
+		} else {
+			t0 = (dv01v1 * dv1v0 - MiscOps.dot( x,y,z, l0.slope ) * dv1v1)/bottom;
+		}
 
 		// ( d1343 + mua d4321 ) / d4343
 		double t1 = ( dv01v1 + t0 * dv1v0 ) / dv1v1;
@@ -57,8 +67,24 @@ public class Distance3D_F64 {
 		return Math.sqrt( dx * dx + dy * dy + dz * dz );
 	}
 
+	/**
+	 * Distance from the point to the closest point on the line.
+	 *
+	 * @param l Line. Not modified.
+	 * @param p Point. Not modified.
+	 * @return distance.
+	 */
 	public static double distance( LineParametric3D_F64 l,
 								   Point3D_F64 p ) {
-		return 0;
+
+		double x = l.p.x - p.x;
+		double y = l.p.y - p.y;
+		double z = l.p.z - p.z;
+
+		double c = UtilPoint3D_F64.norm( x , y , z );
+
+		double b = MiscOps.dot(x,y,z,l.slope)/l.slope.norm();
+
+		return Math.sqrt(c*c-b*b);
 	}
 }
