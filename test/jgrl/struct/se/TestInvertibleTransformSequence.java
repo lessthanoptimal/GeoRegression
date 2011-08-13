@@ -1,20 +1,17 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright 2011 Peter Abeles
  *
- * This file is part of Java Geometric Regression Library (JGRL).
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- * JGRL is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3
- * of the License, or (at your option) any later version.
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * JGRL is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 
 package jgrl.struct.se;
@@ -30,6 +27,9 @@ import static org.junit.Assert.assertEquals;
 public class TestInvertibleTransformSequence {
 
 
+	/**
+	 * Test a sequence where it goes forward and backwards
+	 */
 	@Test
 	public void computeTransform() {
 		InvertibleTransformSequence path = new InvertibleTransformSequence();
@@ -42,5 +42,24 @@ public class TestInvertibleTransformSequence {
 
 		assertEquals( 3, found.getX(), JgrlConstants.DOUBLE_TEST_TOL );
 		assertEquals( 4, found.getY(), JgrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	/**
+	 * Test a sequence where it goes forward twice.  This exposed a bug
+	 * where a unique instances were not being passed in to concat().
+	 */
+	@Test
+	public void computeTransform2() {
+		InvertibleTransformSequence path = new InvertibleTransformSequence();
+
+		path.addTransform( true, new Se2_F64( 1, 2, Math.PI/2.0 ) );
+		path.addTransform( true, new Se2_F64( 4, 6, Math.PI/2.0 ) );
+
+		Se2_F64 found = new Se2_F64();
+		path.computeTransform( found );
+
+		assertEquals( 2, found.getX(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 7, found.getY(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( Math.PI, found.getYaw(), JgrlConstants.DOUBLE_TEST_TOL );
 	}
 }

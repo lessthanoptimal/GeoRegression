@@ -1,25 +1,23 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright 2011 Peter Abeles
  *
- * This file is part of Java Geometric Regression Library (JGRL).
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- * JGRL is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3
- * of the License, or (at your option) any later version.
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * JGRL is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 
 package jgrl.struct.se;
 
 import jgrl.geometry.RotationMatrixGenerator;
+import jgrl.struct.affine.Affine2D_F32;
 import jgrl.struct.point.Vector3D_F32;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
@@ -40,6 +38,21 @@ public class SpecialEuclideanOps_F32 {
 	public static void setToNoMotion( Se3_F32 se ) {
 		CommonOps.setIdentity( se.getR() );
 		se.getT().set( 0, 0, 0 );
+	}
+
+	public static Affine2D_F32 toAffine( Se2_F32 se , Affine2D_F32 ret ) {
+		if( ret == null ) {
+			ret = new Affine2D_F32();
+		}
+
+		ret.a11 = se.c;
+		ret.a12 = -se.s;
+		ret.a21 = se.s;
+		ret.a22 = se.c;
+		ret.tx = se.tran.x;
+		ret.ty = se.tran.y;
+		
+		return ret;
 	}
 
 	/**
