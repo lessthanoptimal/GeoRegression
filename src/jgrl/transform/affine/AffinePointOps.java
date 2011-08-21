@@ -1,20 +1,17 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright 2011 Peter Abeles
  *
- * This file is part of Java Geometric Regression Library (JGRL).
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- * JGRL is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3
- * of the License, or (at your option) any later version.
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * JGRL is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with JGRL.  If not, see <http://www.gnu.org/licenses/>.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 
 package jgrl.transform.affine;
@@ -23,12 +20,39 @@ import jgrl.struct.affine.Affine2D_F32;
 import jgrl.struct.affine.Affine2D_F64;
 import jgrl.struct.point.Point2D_F32;
 import jgrl.struct.point.Point2D_F64;
+import jgrl.struct.point.Vector2D_F32;
 
 
 /**
  * @author Peter Abeles
  */
 public class AffinePointOps {
+
+	/**
+	 * Applies a 2D affine transform to the point and stores the results in another
+	 * variable.
+	 *
+	 * @param se	 The transform.
+	 * @param orig   Original point being transformed. Not modified.
+	 * @param result Where the results are stored.  Can be the same as orig. If null a new
+	 *               instance is created. Modified.
+	 * @return Transformed point.
+	 */
+	public static Vector2D_F32 transform( Affine2D_F32 se, Vector2D_F32 orig, Vector2D_F32 result ) {
+
+		if( result == null ) {
+			result = new Vector2D_F32();
+		}
+
+		// copy the values so that no errors happen if orig and result are the same instance
+		float x = orig.x;
+		float y = orig.y;
+
+		result.x = se.a11 * x + se.a12 * y;
+		result.y = se.a21 * x + se.a22 * y;
+
+		return result;
+	}
 
 	/**
 	 * Applies a 2D affine transform to the point and stores the results in another
