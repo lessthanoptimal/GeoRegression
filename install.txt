@@ -1,0 +1,44 @@
+Geometric Regression Library (GeoRegression) is easy to build and install.  The easiest way to build the library is using the provided ant build scripts.  To use those the system must already have the following installed:
+
+Build Requirements:
+- Java Development Kit 1.6 or newer
+- Ant
+
+----------- Creating GeoRegression.jar -----------------
+
+To build the library from a command line do the following:
+
+1) Download source code.
+2) Change into the project directory.
+3) type (without quotes) "ant"
+4) A jar has been created and stored in build/jar/GeoRegression.jar
+5) Move the jar to the desired location
+
+After "ant" has been typed you should see the following:
+
+====================== BEGIN OUTPUT ================================
+
+Buildfile: /home/pja/projects/georegression/build.xml
+
+clean:
+
+compile:
+    [mkdir] Created dir: /home/pja/projects/georegression/build/classes
+    [javac] Compiling 88 source files to /home/pja/projects/georegression/build/classes
+
+jar:
+    [mkdir] Created dir: /home/pja/projects/georegression/build/jar
+      [jar] Building jar: /home/pja/projects/georegression/build/jar/GeoRegression.jar
+
+main:
+
+BUILD SUCCESSFUL
+Total time: 2 seconds
+
+======================  END OUTPUT  ================================
+
+------ Other Commands ----------
+
+1) "ant clean" to purge old compiled code
+1) "ant test" Compiles and runs unit tests
+2) "ant testreport" Creates html files summarizing unit test results in build/test/report/index.html

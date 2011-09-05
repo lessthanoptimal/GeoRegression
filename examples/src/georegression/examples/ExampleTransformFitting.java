@@ -17,16 +17,10 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.misc.autocode;
-
+package georegression.examples;
 
 /**
  * @author Peter Abeles
  */
-public class JgrlConstants {
-
-	public static String VERSION = "ALPHA";
-	public static float FLOAT_TEST_TOL = 1e-4f;
-	public static double DOUBLE_TEST_TOL = 1e-8f;
-
+public class ExampleTransformFitting {
 }
