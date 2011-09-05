@@ -20,7 +20,6 @@
 package georegression.struct.se;
 
 import georegression.geometry.RotationMatrixGenerator;
-import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.point.Vector3D_F32;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
@@ -41,21 +40,6 @@ public class SpecialEuclideanOps_F32 {
 	public static void setToNoMotion( Se3_F32 se ) {
 		CommonOps.setIdentity( se.getR() );
 		se.getT().set( 0, 0, 0 );
-	}
-
-	public static Affine2D_F32 toAffine( Se2_F32 se , Affine2D_F32 ret ) {
-		if( ret == null ) {
-			ret = new Affine2D_F32();
-		}
-
-		ret.a11 = se.c;
-		ret.a12 = -se.s;
-		ret.a21 = se.s;
-		ret.a22 = se.c;
-		ret.tx = se.tran.x;
-		ret.ty = se.tran.y;
-		
-		return ret;
 	}
 
 	/**

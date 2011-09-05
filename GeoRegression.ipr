@@ -182,7 +182,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$//GeoRegression.iml" filepath="$PROJECT_DIR$//GeoRegression.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Georegression.iml" filepath="$PROJECT_DIR$/Georegression.iml" />
       <module fileurl="file://$PROJECT_DIR$/../ejml/trunk/ejml.iml" filepath="$PROJECT_DIR$/../ejml/trunk/ejml.iml" />
     </modules>
   </component>
