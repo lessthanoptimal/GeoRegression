@@ -19,7 +19,7 @@
 
 package georegression.metric;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
@@ -51,7 +51,7 @@ public class TestClosestPoint3D_F64 {
 
 		Point3D_F64 foundB = ClosestPoint3D_F64.closetPoint( lineA, lineB, null );
 
-		assertTrue( b.isIdentical( foundB, JgrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( b.isIdentical( foundB, GrlConstants.DOUBLE_TEST_TOL ) );
 	}
 
 	@Test
@@ -71,6 +71,6 @@ public class TestClosestPoint3D_F64 {
 		// see if they are perpendicular and therefor c foundB is the closest point
 		double d = p.dot( va );
 
-		assertEquals( 0, d, JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, d, GrlConstants.DOUBLE_TEST_TOL );
 	}
 }

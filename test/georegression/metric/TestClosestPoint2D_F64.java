@@ -19,7 +19,7 @@
 
 package georegression.metric;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.junit.Test;
@@ -38,8 +38,8 @@ public class TestClosestPoint2D_F64 {
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
 		Point2D_F64 found = ClosestPoint2D_F64.closestPoint( line, pt, null );
-		assertEquals( 2, found.getX(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 1, found.getY(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 2, found.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
@@ -48,6 +48,6 @@ public class TestClosestPoint2D_F64 {
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
 		double found = ClosestPoint2D_F64.closestPointT( line, pt );
-		assertEquals( -1, found, JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -1, found, GrlConstants.DOUBLE_TEST_TOL );
 	}
 }

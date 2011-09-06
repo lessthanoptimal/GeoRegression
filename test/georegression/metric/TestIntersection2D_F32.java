@@ -19,7 +19,7 @@
 
 package georegression.metric;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
@@ -39,7 +39,6 @@ import static org.junit.Assert.assertTrue;
 public class TestIntersection2D_F32 {
 	Random rand = new Random( 234 );
 
-
 	@Test
 	public void intersection_ls_to_ls() {
 		// check positive, none pathological cases
@@ -55,6 +54,9 @@ public class TestIntersection2D_F32 {
 		checkIntersection( new LineSegment2D_F32( 0, 2, 2, 2 ), new LineSegment2D_F32( 0, 0, 0, 1.9f ), null );
 		checkIntersection( new LineSegment2D_F32( 0, 2, 2, 2 ), new LineSegment2D_F32( 2, 0, 2, 1.9f ), null );
 		checkIntersection( new LineSegment2D_F32( 1, 0.1f, 1, 2 ), new LineSegment2D_F32( 0, 0, 2, 0 ), null );
+
+		// check parallel intersection
+		checkIntersection( new LineSegment2D_F32( 0, 2, 0, 5 ), new LineSegment2D_F32( 0, 1, 0, 3 ), null );
 	}
 
 	public void checkIntersection( LineSegment2D_F32 a, LineSegment2D_F32 b, Point2D_F32 expected ) {
@@ -62,10 +64,9 @@ public class TestIntersection2D_F32 {
 		if( found == null )
 			assertTrue( expected == null );
 		else {
-			assertEquals( found.getX(), expected.getX(), JgrlConstants.FLOAT_TEST_TOL );
-			assertEquals( found.getY(), expected.getY(), JgrlConstants.FLOAT_TEST_TOL );
+			assertEquals( found.getX(), expected.getX(), GrlConstants.FLOAT_TEST_TOL );
+			assertEquals( found.getY(), expected.getY(), GrlConstants.FLOAT_TEST_TOL );
 		}
-
 	}
 
 
@@ -89,6 +90,11 @@ public class TestIntersection2D_F32 {
 
 			checkIntersection_p_to_ls( paraLine, target, tran );
 		}
+
+		// check parallel overlapping lines
+		paraLine.setPoint(-1,1);
+		paraLine.setSlope(2,0);
+		assertTrue( Float.isNaN( Intersection2D_F32.intersection(paraLine,target) ) );
 	}
 
 	private void checkIntersection_p_to_ls( LineParametric2D_F32 paraLine,
@@ -108,13 +114,13 @@ public class TestIntersection2D_F32 {
 		paraLine.setSlope( 0, 1 );
 		paraLine.setAngle( paraLine.getAngle() + tran.getYaw() );
 		float dist = Intersection2D_F32.intersection( paraLine, target );
-		assertEquals( 1, dist, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 1, dist, GrlConstants.FLOAT_TEST_TOL );
 
 		// should hit dead center, but negative
 		paraLine.setSlope( 0, -1 );
 		paraLine.setAngle( paraLine.getAngle() + tran.getYaw() );
 		dist = Intersection2D_F32.intersection( paraLine, target );
-		assertEquals( -1, dist, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( -1, dist, GrlConstants.FLOAT_TEST_TOL );
 
 		// should miss it to the left
 		paraLine.setSlope( -1.1f, 1 );

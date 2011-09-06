@@ -20,7 +20,7 @@
 package georegression.fitting.affine;
 
 import georegression.geometry.UtilPoint2D_F64;
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -57,7 +57,7 @@ public class TestMotionAffinePoint2D_F64 {
 
 		Affine2D_F64 tranFound = alg.getMotion();
 
-		checkTransform( from, to, tranFound, JgrlConstants.DOUBLE_TEST_TOL );
+		checkTransform( from, to, tranFound, GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	public static void checkTransform( List<Point2D_F64> from, List<Point2D_F64> to, Affine2D_F64 tranFound, double tol ) {

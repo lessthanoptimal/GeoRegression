@@ -19,7 +19,7 @@
 
 package georegression.struct;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
@@ -49,12 +49,12 @@ public abstract class GenericInvertibleTransformTests_F32<T extends GeoTuple_F32
 
 		// it should modify the point
 		apply( tran1, orig, before );
-		assertFalse( orig.isIdentical( before, JgrlConstants.FLOAT_TEST_TOL ) );
+		assertFalse( orig.isIdentical( before, GrlConstants.FLOAT_TEST_TOL ) );
 
 		// after reset it shouldn't modify the point
 		tran1.reset();
 		apply( tran1, orig, before );
-		assertTrue( orig.isIdentical( before, JgrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( orig.isIdentical( before, GrlConstants.FLOAT_TEST_TOL ) );
 	}
 
 	/**
@@ -74,12 +74,12 @@ public abstract class GenericInvertibleTransformTests_F32<T extends GeoTuple_F32
 
 		T found = apply( tran12, orig, null );
 
-		assertTrue( found.isIdentical( expected, JgrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( found.isIdentical( expected, GrlConstants.FLOAT_TEST_TOL ) );
 
 		// do the same, but providing a place for it to write the result
 		tran12 = tran1.concat( tran2, createRandomTransform() );
 		found = apply( tran12, orig, null );
-		assertTrue( found.isIdentical( expected, JgrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( found.isIdentical( expected, GrlConstants.FLOAT_TEST_TOL ) );
 
 	}
 
@@ -96,13 +96,13 @@ public abstract class GenericInvertibleTransformTests_F32<T extends GeoTuple_F32
 		InvertibleTransform aInv = a.invert( null );
 		T found = apply( aInv, tran, null );
 
-		assertTrue( found.isIdentical( orig, JgrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( found.isIdentical( orig, GrlConstants.FLOAT_TEST_TOL ) );
 
 		// do the same, but providing a place for it to write the result
 		aInv = a.invert( createRandomTransform() );
 
 		found = apply( aInv, tran, null );
 
-		assertTrue( found.isIdentical( orig, JgrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( found.isIdentical( orig, GrlConstants.FLOAT_TEST_TOL ) );
 	}
 }

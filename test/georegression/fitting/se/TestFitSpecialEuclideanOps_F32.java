@@ -23,7 +23,7 @@ import georegression.fitting.MotionTransformPoint;
 import georegression.geometry.RotationMatrixGenerator;
 import georegression.geometry.UtilPoint2D_F32;
 import georegression.geometry.UtilPoint3D_F32;
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
@@ -96,7 +96,7 @@ public class TestFitSpecialEuclideanOps_F32 {
 		Se3_F32 found = FitSpecialEuclideanOps_F32.fitPoints3D( from , to );
 
 		// the exact same algorithm should be called and they should produce the same results
-		assertTrue( MatrixFeatures.isIdentical( expected.getR() , found.getR() , JgrlConstants.FLOAT_TEST_TOL ));
-		assertTrue( expected.getT().isIdentical(found.getT() , JgrlConstants.FLOAT_TEST_TOL));
+		assertTrue( MatrixFeatures.isIdentical( expected.getR() , found.getR() , GrlConstants.FLOAT_TEST_TOL ));
+		assertTrue( expected.getT().isIdentical(found.getT() , GrlConstants.FLOAT_TEST_TOL));
 	}
 }

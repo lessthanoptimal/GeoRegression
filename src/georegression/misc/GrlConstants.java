@@ -17,10 +17,21 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.examples;
+package georegression.misc;
+
 
 /**
+ * Constants used throughout the library.
+ *
  * @author Peter Abeles
  */
-public class ExampleDistanceToLine {
+public class GrlConstants {
+
+	// identifies the library version
+	public static String VERSION = "ALPHA";
+
+	// standard tolerances used in unit tests
+	public static float FLOAT_TEST_TOL = 1e-4f;
+	public static double DOUBLE_TEST_TOL = 1e-8f;
+
 }

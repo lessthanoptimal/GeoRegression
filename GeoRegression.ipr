@@ -179,6 +179,13 @@
       </item>
     </group>
   </component>
+  <component name="ProjectDictionaryState">
+    <dictionary name="pja">
+      <words>
+        <w>parameterizations</w>
+      </words>
+    </dictionary>
+  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$//GeoRegression.iml" filepath="$PROJECT_DIR$//GeoRegression.iml" />

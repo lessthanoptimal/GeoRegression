@@ -35,6 +35,13 @@ public class Intersection2D_F32 {
 	// todo comment
 	// todo how are parallel lines handled?
 
+	/**
+	 * Finds the point of intersection between two lines.
+	 *
+	 * @param a Line.
+	 * @param b Line.
+	 * @return The location along 'target'.  If the lines do not intersect or have infinite intersections Float.NaN is returned.
+	 */
 	public static Point2D_F32 intersection( LineParametric2D_F32 a, LineParametric2D_F32 b ) {
 		float t_b = a.getSlopeX() * ( b.getY() - a.getY() ) - a.getSlopeY() * ( b.getX() - a.getX() );
 		float bottom = a.getSlopeY() * b.getSlopeX() - b.getSlopeY() * a.getSlopeX();
@@ -52,12 +59,11 @@ public class Intersection2D_F32 {
 
 	/**
 	 * Finds the point of intersection between two lines segments.
-	 * If there is no intersection it returns null.
 	 *
 	 * @param l_0 Line segment.
 	 * @param l_1 line segment.
 	 * @param ret storage for the point of intersection. If null a new point will be declared.
-	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect
+	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect or have infinite intersections.
 	 */
 	public static Point2D_F32 intersection( LineSegment2D_F32 l_0, LineSegment2D_F32 l_1,
 											Point2D_F32 ret ) {
@@ -103,7 +109,7 @@ public class Intersection2D_F32 {
 	 *
 	 * @param target A line whose location along which the point of intersection is being found.  Not modified.
 	 * @param l	  Line segment which is being tested for intersection. Not modified.
-	 * @return The location along 'target'.  If the lines do not intersect Float.NaN is returned.
+	 * @return The location along 'target'.  If the lines do not intersect or have infinite intersections Float.NaN is returned.
 	 */
 	public static float intersection( LineParametric2D_F32 target, LineSegment2D_F32 l ) {
 		float a1 = l.b.x - l.a.x;

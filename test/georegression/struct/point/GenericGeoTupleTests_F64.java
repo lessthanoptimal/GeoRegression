@@ -19,7 +19,7 @@
 
 package georegression.struct.point;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.GeoTuple_F64;
 
 import static junit.framework.Assert.assertEquals;
@@ -65,9 +65,9 @@ public class GenericGeoTupleTests_F64<T extends GeoTuple_F64> {
 		T a = (T) seed.createNewInstance();
 
 		for( int i = 0; i < a.getDimension(); i++ ) {
-			assertEquals( 0, a.getIndex( i ), JgrlConstants.DOUBLE_TEST_TOL );
+			assertEquals( 0, a.getIndex( i ), GrlConstants.DOUBLE_TEST_TOL );
 			a.setIndex( i, 2 );
-			assertEquals( 2, a.getIndex( i ), JgrlConstants.DOUBLE_TEST_TOL );
+			assertEquals( 2, a.getIndex( i ), GrlConstants.DOUBLE_TEST_TOL );
 		}
 	}
 
@@ -80,7 +80,7 @@ public class GenericGeoTupleTests_F64<T extends GeoTuple_F64> {
 		}
 
 		double expected = Math.sqrt( total );
-		assertEquals( expected, a.norm(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected, a.norm(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	public void checkNormSq() {
@@ -91,7 +91,7 @@ public class GenericGeoTupleTests_F64<T extends GeoTuple_F64> {
 			total += ( i + 1 ) * ( i + 1 );
 		}
 
-		assertEquals( total, a.normSq(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( total, a.normSq(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	public void checkCopy() {

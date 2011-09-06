@@ -19,7 +19,7 @@
 
 package georegression.struct.se;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -43,8 +43,8 @@ public class TestInvertibleTransformSequence {
 		Se2_F64 found = new Se2_F64();
 		path.computeTransform( found );
 
-		assertEquals( 3, found.getX(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 4, found.getY(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 3, found.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 4, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	/**
@@ -61,8 +61,8 @@ public class TestInvertibleTransformSequence {
 		Se2_F64 found = new Se2_F64();
 		path.computeTransform( found );
 
-		assertEquals( 2, found.getX(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 7, found.getY(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( Math.PI, found.getYaw(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 2, found.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 7, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( Math.PI, found.getYaw(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 }

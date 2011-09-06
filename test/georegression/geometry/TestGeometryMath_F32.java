@@ -19,7 +19,7 @@
 
 package georegression.geometry;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector2D_F32;
 import georegression.struct.point.Vector3D_F32;
 import org.ejml.data.DenseMatrix64F;
@@ -58,9 +58,9 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.mult( V, x, found1 );
 
-		assertEquals( found0.x, found1.x, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( found0.y, found1.y, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( found0.z, found1.z, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( found0.x, found1.x, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( found0.y, found1.y, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( found0.z, found1.z, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	/**
@@ -86,15 +86,15 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.cross( a, b, c );
 
-		assertEquals( 0, c.x, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 0, c.y, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 1, c.z, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 0, c.x, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 0, c.y, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 1, c.z, GrlConstants.FLOAT_TEST_TOL );
 
 		GeometryMath_F32.cross( b, a, c );
 
-		assertEquals( 0, c.x, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 0, c.y, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( -1, c.z, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 0, c.x, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 0, c.y, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( -1, c.z, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -105,9 +105,9 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.add( a , b , c );
 
-		assertEquals( 4 , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 3 , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 7 , c.getZ() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 4 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 3 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 7 , c.getZ() , GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -118,9 +118,9 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.add( 2, a , -1 , b , c );
 
-		assertEquals( -1 , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals(  3 , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals(  2 , c.getZ() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( -1 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(  3 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(  2 , c.getZ() , GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -132,9 +132,9 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.addMult( a , M , b , c );
 
-		assertEquals( 10 , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 11 , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 12 , c.getZ() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 10 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 11 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 12 , c.getZ() , GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -145,9 +145,9 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.sub( a , b , c );
 
-		assertEquals( -2 , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 1 , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( -1 , c.getZ() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( -2 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 1 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( -1 , c.getZ() , GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -166,8 +166,8 @@ public class TestGeometryMath_F32 {
 		float x = c*a.x - s*a.y;
 		float y = s*a.x + c*a.y;
 
-		assertEquals(x,b.x, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals(y,b.y, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals(x,b.x, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(y,b.y, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -178,9 +178,9 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.mult( M , a , c );
 
-		assertEquals( 12 , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 24 , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 36 , c.getZ() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 12 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 24 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 36 , c.getZ() , GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -191,8 +191,8 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.mult( M , a , c );
 
-		assertEquals( 12.0f/36.0f , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 24.0f/36.0f , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 12.0f/36.0f , c.getX() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 24.0f/36.0f , c.getY() , GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -207,9 +207,9 @@ public class TestGeometryMath_F32 {
 		Vector3D_F32 found = new Vector3D_F32();
 		GeometryMath_F32.mult( M , a2 , found );
 
-		assertEquals( expected.x , found.x , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( expected.y , found.y , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( expected.z , found.z , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected.x , found.x , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected.y , found.y , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected.z , found.z , GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -226,8 +226,8 @@ public class TestGeometryMath_F32 {
 
 		float z = expected.z;
 
-		assertEquals( expected.x/z , found.x , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( expected.y/z , found.y , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected.x/z , found.x , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected.y/z , found.y , GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -238,9 +238,9 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.multTran( M , a , c );
 
-		assertEquals( 28 , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 32 , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 36 , c.getZ() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 28 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 32 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 36 , c.getZ() , GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -251,9 +251,9 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.multTran( M , a , c );
 
-		assertEquals( 14 , c.getX() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 16 , c.getY() , JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 18 , c.getZ() , JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 14 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 16 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 18 , c.getZ() , GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -264,7 +264,7 @@ public class TestGeometryMath_F32 {
 
 		float found = GeometryMath_F32.innerProd( a, M, b );
 
-		assertEquals( 156, found, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 156, found, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -275,7 +275,7 @@ public class TestGeometryMath_F32 {
 
 		float found = GeometryMath_F32.innerProdTranM( a, M, b );
 
-		assertEquals( 126, found, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 126, found, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -286,7 +286,7 @@ public class TestGeometryMath_F32 {
 
 		float found = GeometryMath_F32.innerProd( a, M, b );
 
-		assertEquals( 13, found, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 13, found, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -295,7 +295,7 @@ public class TestGeometryMath_F32 {
 		Vector3D_F32 b = new Vector3D_F32( 4, 3, 2 );
 		float found = GeometryMath_F32.dot( a, b );
 
-		assertEquals( 8, found, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 8, found, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -303,9 +303,9 @@ public class TestGeometryMath_F32 {
 		Vector3D_F32 a = new Vector3D_F32( 1, -2, 3 );
 		GeometryMath_F32.scale( a, 2 );
 
-		assertEquals( 2, a.x, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( -4, a.y, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 6, a.z, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 2, a.x, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( -4, a.y, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 6, a.z, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
@@ -313,8 +313,8 @@ public class TestGeometryMath_F32 {
 		Vector3D_F32 a = new Vector3D_F32( 1, -2, 3 );
 		GeometryMath_F32.changeSign( a );
 
-		assertEquals( -1, a.x, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 2, a.y, JgrlConstants.FLOAT_TEST_TOL );
-		assertEquals( -3, a.z, JgrlConstants.FLOAT_TEST_TOL );
+		assertEquals( -1, a.x, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 2, a.y, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( -3, a.z, GrlConstants.FLOAT_TEST_TOL );
 	}
 }

@@ -21,7 +21,7 @@ package georegression.fitting.se;
 
 import georegression.geometry.RotationMatrixGenerator;
 import georegression.geometry.UtilPoint3D_F32;
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
@@ -67,7 +67,7 @@ public class TestMotionSe3PointCrossCovariance_F32 {
 
 		Se3_F32 tranFound = alg.getMotion();
 
-		checkTransform( from, to, tranFound, JgrlConstants.FLOAT_TEST_TOL );
+		checkTransform( from, to, tranFound, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	public static void checkTransform( List<Point3D_F32> from, List<Point3D_F32> to, Se3_F32 tranFound, float tol ) {

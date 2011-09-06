@@ -20,7 +20,7 @@
 package georegression.fitting.se;
 
 import georegression.geometry.UtilPoint2D_F32;
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.se.Se2_F32;
@@ -59,7 +59,7 @@ public class TestMotionSe2PointSVD_F32 {
 //        tranFound.getTranslation().print();
 //        tran.getTranslation().print();
 
-		checkTransform( from, to, tranFound, JgrlConstants.FLOAT_TEST_TOL );
+		checkTransform( from, to, tranFound, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	public static void checkTransform( List<Point2D_F32> from, List<Point2D_F32> to, Se2_F32 tranFound, float tol ) {

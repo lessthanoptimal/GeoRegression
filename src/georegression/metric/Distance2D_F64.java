@@ -27,10 +27,12 @@ import georegression.struct.point.Point2D_F64;
 
 /**
  * Functions related to finding the distance of one shape from another shape.  This is often
- * closely related to finding the {@link ClosestPoint3D_F64 closest point}/
+ * closely related to finding the {@link ClosestPoint3D_F64 closest point}.
  *
  * @author Peter Abeles
  */
+// TODO distance between two line segments, line lines
+	// handle parallel overlapping cases by returning zero
 public class Distance2D_F64 {
 
 

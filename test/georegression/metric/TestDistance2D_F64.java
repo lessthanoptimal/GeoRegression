@@ -20,7 +20,7 @@
 package georegression.metric;
 
 import georegression.geometry.UtilTrig_F64;
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -38,7 +38,7 @@ public class TestDistance2D_F64 {
 	public void distance_parametric_line() {
 		double found = Distance2D_F64.distance( new LineParametric2D_F64( -2, 0, 1, 1 ), new Point2D_F64( 2, 0 ) );
 		double expected = (double) UtilTrig_F64.distance( 0, 2, 2, 0 );
-		assertEquals( expected, found, JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
@@ -46,16 +46,16 @@ public class TestDistance2D_F64 {
 		// test inside the line
 		double found = Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( 2, 0 ) );
 		double expected = (double) UtilTrig_F64.distance( 0, 2, 2, 0 );
-		assertEquals( expected, found, JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
 
 		// test before the first end point
 		Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( -5, -5 ) );
 		UtilTrig_F64.distance( -2, 2, -5, -5 );
-		assertEquals( expected, found, JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
 
 		// test after the second end point
 		Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( 10, 0 ) );
 		UtilTrig_F64.distance( 3, 5, 10, 0 );
-		assertEquals( expected, found, JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
 	}
 }

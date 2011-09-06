@@ -19,7 +19,7 @@
 
 package georegression.geometry;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F64;
 import org.junit.Test;
 
@@ -42,10 +42,10 @@ public class TestUtilVector3D_F64 {
 
 
 		// test positive
-		assertTrue( UtilVector3D_F64.isIdentical( a, a.copy(), JgrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( UtilVector3D_F64.isIdentical( a, a.copy(), GrlConstants.DOUBLE_TEST_TOL ) );
 
 		// test negative
-		assertFalse( UtilVector3D_F64.isIdentical( a, b, JgrlConstants.DOUBLE_TEST_TOL ) );
+		assertFalse( UtilVector3D_F64.isIdentical( a, b, GrlConstants.DOUBLE_TEST_TOL ) );
 	}
 
 	@Test
@@ -54,6 +54,6 @@ public class TestUtilVector3D_F64 {
 
 		UtilVector3D_F64.normalize( a );
 
-		assertEquals( 1, a.norm(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1, a.norm(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 }

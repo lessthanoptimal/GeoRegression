@@ -19,7 +19,7 @@
 
 package georegression.struct.point;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.GeoTuple3D_F64;
 
 import static org.junit.Assert.*;
@@ -50,15 +50,15 @@ public class GenericGeoTupleTests3D_F64<T extends GeoTuple3D_F64> extends Generi
 	public void checkGetAndSetAxis() {
 		T a = (T) seed.createNewInstance();
 
-		assertEquals( 0, a.getX(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, a.getX(), GrlConstants.DOUBLE_TEST_TOL );
 		a.setX( 1.5 );
-		assertEquals( 1.5, a.getX(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 0, a.getY(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1.5, a.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, a.getY(), GrlConstants.DOUBLE_TEST_TOL );
 		a.setY( 1.5 );
-		assertEquals( 1.5, a.getY(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 0, a.getZ(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1.5, a.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, a.getZ(), GrlConstants.DOUBLE_TEST_TOL );
 		a.setZ( 1.5 );
-		assertEquals( 1.5, a.getZ(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1.5, a.getZ(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	public void checkSetAxisAll() {
@@ -66,9 +66,9 @@ public class GenericGeoTupleTests3D_F64<T extends GeoTuple3D_F64> extends Generi
 
 		a.set( 1.5, 2.5, 3.5 );
 
-		assertEquals( 1.5, a.getX(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 2.5, a.getY(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 3.5, a.getZ(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1.5, a.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 2.5, a.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 3.5, a.getZ(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	public void isIdentical_3_double() {
@@ -76,7 +76,7 @@ public class GenericGeoTupleTests3D_F64<T extends GeoTuple3D_F64> extends Generi
 
 		a.set( 1, 2, 3 );
 
-		assertTrue( a.isIdentical( 1, 2, 3, JgrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( a.isIdentical( 1, 2, 3, GrlConstants.DOUBLE_TEST_TOL ) );
 	}
 
 	public void isIdentical_tuple() {
@@ -86,7 +86,7 @@ public class GenericGeoTupleTests3D_F64<T extends GeoTuple3D_F64> extends Generi
 
 		T b = (T) a.copy();
 
-		assertTrue( a.isIdentical( b, JgrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( a.isIdentical( b, GrlConstants.DOUBLE_TEST_TOL ) );
 	}
 
 	public void isNaN() {

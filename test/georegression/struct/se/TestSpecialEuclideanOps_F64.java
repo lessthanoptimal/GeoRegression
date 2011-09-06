@@ -21,7 +21,7 @@ package georegression.struct.se;
 
 import georegression.geometry.GeometryMath_F64;
 import georegression.geometry.RotationMatrixGenerator;
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.transform.se.SePointOps_F64;
@@ -84,9 +84,9 @@ public class TestSpecialEuclideanOps_F64 {
 		DenseMatrix64F found = new DenseMatrix64F( 3, 1 );
 		CommonOps.mult( H, pt_m, found );
 
-		assertEquals( expected.x, found.get( 0, 0 ), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.y, found.get( 1, 0 ), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 1, found.get( 2, 0 ), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.x, found.get( 0, 0 ), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.y, found.get( 1, 0 ), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1, found.get( 2, 0 ), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
@@ -97,11 +97,11 @@ public class TestSpecialEuclideanOps_F64 {
 
 		Se3_F64 found = SpecialEuclideanOps_F64.toSe3_F64( H, null );
 
-		assertEquals( se.getX(), found.getX(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( se.getY(), found.getY(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( se.getZ(), found.getZ(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( se.getX(), found.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( se.getY(), found.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( se.getZ(), found.getZ(), GrlConstants.DOUBLE_TEST_TOL );
 
-		assertTrue( MatrixFeatures.isIdentical( se.getR(), found.getR(), JgrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( MatrixFeatures.isIdentical( se.getR(), found.getR(), GrlConstants.DOUBLE_TEST_TOL ) );
 	}
 
 	@Test
@@ -112,10 +112,10 @@ public class TestSpecialEuclideanOps_F64 {
 
 		Se2_F64 found = SpecialEuclideanOps_F64.toSe2( H, null );
 
-		assertEquals( se.getX(), found.getX(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( se.getY(), found.getY(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( se.getCosineYaw(), found.getCosineYaw(), JgrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( se.getSineYaw(), found.getSineYaw(), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( se.getX(), found.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( se.getY(), found.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( se.getCosineYaw(), found.getCosineYaw(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( se.getSineYaw(), found.getSineYaw(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
@@ -133,6 +133,6 @@ public class TestSpecialEuclideanOps_F64 {
 		found.y += -3;
 		found.z += 4.4;
 
-		assertTrue( found.isIdentical( expected, JgrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( found.isIdentical( expected, GrlConstants.DOUBLE_TEST_TOL ) );
 	}
 }

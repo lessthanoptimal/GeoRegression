@@ -19,7 +19,7 @@
 
 package georegression.struct.point;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import org.junit.Test;
 
@@ -53,7 +53,7 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 		double n = a.norm();
 		a.normalize();
 
-		assertEquals( 1.0, a.norm(), JgrlConstants.DOUBLE_TEST_TOL );
-		GeometryUnitTest.assertEquals( a, 1.0 / n, 2.0 / n, 3.0 / n, JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1.0, a.norm(), GrlConstants.DOUBLE_TEST_TOL );
+		GeometryUnitTest.assertEquals( a, 1.0 / n, 2.0 / n, 3.0 / n, GrlConstants.DOUBLE_TEST_TOL );
 	}
 }

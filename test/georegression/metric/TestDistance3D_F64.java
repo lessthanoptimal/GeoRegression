@@ -19,7 +19,7 @@
 
 package georegression.metric;
 
-import georegression.misc.autocode.JgrlConstants;
+import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.point.Point3D_F64;
 import org.junit.Test;
@@ -38,25 +38,25 @@ public class TestDistance3D_F64 {
 		LineParametric3D_F64 l0 = new LineParametric3D_F64(0,0,0,1,0,0);
 		LineParametric3D_F64 l1 = new LineParametric3D_F64(0,0,0,0,1,0);
 
-		assertEquals(0,Distance3D_F64.distance( l0,l1 ), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(0,Distance3D_F64.distance( l0,l1 ), GrlConstants.DOUBLE_TEST_TOL );
 
 		// test the lines separated over the z-axis
 		l0 = new LineParametric3D_F64(0,0,0,1,0,0);
 		l1 = new LineParametric3D_F64(0,0,2,0,1,0);
 
-		assertEquals(2,Distance3D_F64.distance( l0,l1 ), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(2,Distance3D_F64.distance( l0,l1 ), GrlConstants.DOUBLE_TEST_TOL );
 
 		// test parallel but no closest point
 		l0 = new LineParametric3D_F64(0,0,0,1,0,0);
 		l1 = new LineParametric3D_F64(0,0,2,1,0,0);
 
-		assertEquals(2,Distance3D_F64.distance( l0,l1 ), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(2,Distance3D_F64.distance( l0,l1 ), GrlConstants.DOUBLE_TEST_TOL );
 
 		// test identical lines
 		l0 = new LineParametric3D_F64(0,0,0,1,0,0);
 		l1 = new LineParametric3D_F64(0,0,0,1,0,0);
 
-		assertEquals(0,Distance3D_F64.distance( l0,l1 ), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(0,Distance3D_F64.distance( l0,l1 ), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
@@ -65,10 +65,10 @@ public class TestDistance3D_F64 {
 		LineParametric3D_F64 l = new LineParametric3D_F64(1,2,3,0,1,0);
 		Point3D_F64 p = new Point3D_F64( 3 , 2 , 3);
 
-		assertEquals(2,Distance3D_F64.distance( l,p ), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(2,Distance3D_F64.distance( l,p ), GrlConstants.DOUBLE_TEST_TOL );
 
 		// a point on the line
 		l.getSlope().set( 1 , 0 , 0 );
-		assertEquals(0,Distance3D_F64.distance( l,p ), JgrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(0,Distance3D_F64.distance( l,p ), GrlConstants.DOUBLE_TEST_TOL );
 	}
 }
