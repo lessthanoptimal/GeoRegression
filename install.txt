@@ -18,17 +18,17 @@ After "ant" has been typed you should see the following:
 
 ====================== BEGIN OUTPUT ================================
 
-Buildfile: /home/pja/projects/georegression/build.xml
+Buildfile: /path/to/georegression/build.xml
 
 clean:
 
 compile:
-    [mkdir] Created dir: /home/pja/projects/georegression/build/classes
-    [javac] Compiling 88 source files to /home/pja/projects/georegression/build/classes
+    [mkdir] Created dir: /path/to//georegression/build/classes
+    [javac] Compiling 88 source files to /path/to//georegression/build/classes
 
 jar:
-    [mkdir] Created dir: /home/pja/projects/georegression/build/jar
-      [jar] Building jar: /home/pja/projects/georegression/build/jar/GeoRegression.jar
+    [mkdir] Created dir: /path/to/georegression/build/jar
+      [jar] Building jar: /path/to/georegression/build/jar/GeoRegression.jar
 
 main:
 
