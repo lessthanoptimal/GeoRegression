@@ -22,5 +22,5 @@ package georegression.examples;
 /**
  * @author Peter Abeles
  */
-public class ExampleTransformSequence {
+public class ExampleTransformGraph {
 }
