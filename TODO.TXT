@@ -1,3 +1,5 @@
+- better name?  GRegression, GeomRegression, GeomR
+
 - distance between line segment, lines, and line + line segment.
 - line fitting for 2D and 3D points
 - polynomial
