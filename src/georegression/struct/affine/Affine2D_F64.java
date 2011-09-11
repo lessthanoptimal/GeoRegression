@@ -66,9 +66,10 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 	}
 
 	@Override
-	public Affine2D_F64 concat( Affine2D_F64 second, Affine2D_F64 result ) {
+	public Affine2D_F64 concat( Affine2D_F64 second, Affine2D_F64 ret ) {
 
-		Affine2D_F64 ret = new Affine2D_F64();
+		if( ret == null )
+			ret = new Affine2D_F64();
 
 		ret.a11 = second.a11 * a11 + second.a12 * a21;
 		ret.a12 = second.a11 * a12 + second.a12 * a22;

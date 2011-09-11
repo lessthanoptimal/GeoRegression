@@ -6,3 +6,5 @@
 
 - Should the difference between points and vectors be removed? algs seem to turn points into
 vectors on a whim.
+
+- Should homographies be included in the main library?  Very specific to computer vision.

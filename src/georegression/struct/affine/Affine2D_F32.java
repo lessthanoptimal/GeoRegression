@@ -66,9 +66,10 @@ public class Affine2D_F32 implements Affine<Affine2D_F32> {
 	}
 
 	@Override
-	public Affine2D_F32 concat( Affine2D_F32 second, Affine2D_F32 result ) {
+	public Affine2D_F32 concat( Affine2D_F32 second, Affine2D_F32 ret ) {
 
-		Affine2D_F32 ret = new Affine2D_F32();
+		if( ret == null )
+			ret = new Affine2D_F32();
 
 		ret.a11 = second.a11 * a11 + second.a12 * a21;
 		ret.a12 = second.a11 * a12 + second.a12 * a22;
