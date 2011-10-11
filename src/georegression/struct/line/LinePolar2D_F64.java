@@ -21,12 +21,21 @@ package georegression.struct.line;
 
 
 /**
+ * <p>
  * Defines a line in 2D space based upon the distance of its closest point to the origin
- * and the angle of a line from the origin to that point.
+ * and the angle of a line from the origin to that point.  Also referred to as the polar line
+ * equation.
+ * </p>
  *
+ * <p>
+ * Equation:<br>
+ * x*cos(&theta;) + y*sin(&theta;) = r<br>
+ * where r is the distance from the closest point on the line to the origin, and &theta; is
+ * an angle tangent to the line.
+ * </p>
  * @author Peter Abeles
  */
-public class LineTangent2D_F64 {
+public class LinePolar2D_F64 {
 	/**
 	 * Distance from the origin to the closest point on the line.
 	 */
