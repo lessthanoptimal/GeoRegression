@@ -42,6 +42,13 @@ public class TestDistance2D_F64 {
 	}
 
 	@Test
+	public void distanceSq_parametric_line() {
+		double found = Distance2D_F64.distanceSq( new LineParametric2D_F64( -2, 0, 1, 1 ), new Point2D_F64( 2, 0 ) );
+		double expected = (double) UtilTrig_F64.distanceSq( 0, 2, 2, 0 );
+		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	@Test
 	public void distance_line_segment() {
 		// test inside the line
 		double found = Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( 2, 0 ) );

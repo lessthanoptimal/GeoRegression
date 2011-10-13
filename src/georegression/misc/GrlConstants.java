@@ -27,6 +27,10 @@ package georegression.misc;
  */
 public class GrlConstants {
 
+	public static float F_PI = (float)Math.PI;
+	public static float F_PI2 = 2f*F_PI;
+	public static double PI2 = 2.0*Math.PI;
+
 	// identifies the library version
 	public static String VERSION = "ALPHA";
 

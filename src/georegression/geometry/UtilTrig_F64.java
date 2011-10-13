@@ -35,6 +35,13 @@ public class UtilTrig_F64 {
 		return Math.sqrt( dx * dx + dy * dy );
 	}
 
+	public static double distanceSq( double x0, double y0, double x1, double y1 ) {
+		double dx = x1 - x0;
+		double dy = y1 - y0;
+
+		return dx * dx + dy * dy;
+	}
+
 	public static Vector3D_F64 cross( Vector3D_F64 a, Vector3D_F64 b ) {
 		double x = a.getY() * b.getZ() - a.getZ() * b.getY();
 		double y = a.getZ() * b.getX() - a.getX() * b.getZ();

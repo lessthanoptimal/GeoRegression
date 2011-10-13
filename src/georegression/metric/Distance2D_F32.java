@@ -60,6 +60,29 @@ public class Distance2D_F32 {
 
 	/**
 	 * <p>
+	 * Returns the square of the distance to the closest point on the line segment from the provided line.
+	 * Using this function avoids the expensive square root computation.
+	 * </p>
+	 *
+	 * @param line A line segment. Not modified.
+	 * @param p	The point. Not modified.
+	 * @return Distance squared to the closest point on the line is away from the point.
+	 */
+	public static float distanceSq( LineParametric2D_F32 line,
+									Point2D_F32 p ) {
+		float t = ClosestPoint2D_F32.closestPointT( line, p );
+
+		float a = line.slope.x * t + line.p.x;
+		float b = line.slope.y * t + line.p.y;
+
+		float dx = p.x - a;
+		float dy = p.y - b;
+
+		return dx * dx + dy * dy;
+	}
+
+	/**
+	 * <p>
 	 * Returns the distance the closest point on a line segment is from the specified point.
 	 * The closest point is bounded to be along the line segment.
 	 * </p>

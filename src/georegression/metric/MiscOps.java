@@ -19,6 +19,8 @@
 
 package georegression.metric;
 
+import georegression.struct.GeoTuple2D_F32;
+import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.GeoTuple3D_F32;
 import georegression.struct.GeoTuple3D_F64;
 
@@ -42,5 +44,13 @@ public class MiscOps {
 
 	public static float dot( GeoTuple3D_F32 a, GeoTuple3D_F32 b ) {
 		return a.x * b.x + a.y * b.y + a.z * b.z;
+	}
+
+	public static double dot( GeoTuple2D_F64 a, GeoTuple2D_F64 b ) {
+		return a.x * b.x + a.y * b.y;
+	}
+
+	public static float dot( GeoTuple2D_F32 a, GeoTuple2D_F32 b ) {
+		return a.x * b.x + a.y * b.y;
 	}
 }

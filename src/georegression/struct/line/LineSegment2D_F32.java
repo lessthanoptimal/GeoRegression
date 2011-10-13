@@ -68,6 +68,22 @@ public class LineSegment2D_F32 {
 		this.b = b;
 	}
 
+	public float slopeX() {
+		return b.x-a.x;
+	}
+
+	public float slopeY() {
+		return b.y-a.y;
+	}
+
+	public float getLength() {
+		return a.distance(b);
+	}
+
+	public float getLength2() {
+		return a.distance2(b);
+	}
+
 	public LineSegment2D_F32 copy() {
 		return new LineSegment2D_F32( a, b );
 	}

@@ -35,6 +35,13 @@ public class UtilTrig_F32 {
 		return (float)Math.sqrt( dx * dx + dy * dy );
 	}
 
+	public static float distanceSq( float x0, float y0, float x1, float y1 ) {
+		float dx = x1 - x0;
+		float dy = y1 - y0;
+
+		return dx * dx + dy * dy;
+	}
+
 	public static Vector3D_F32 cross( Vector3D_F32 a, Vector3D_F32 b ) {
 		float x = a.getY() * b.getZ() - a.getZ() * b.getY();
 		float y = a.getZ() * b.getX() - a.getX() * b.getZ();

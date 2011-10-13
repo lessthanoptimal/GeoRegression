@@ -68,6 +68,22 @@ public class LineSegment2D_F64 {
 		this.b = b;
 	}
 
+	public double slopeX() {
+		return b.x-a.x;
+	}
+
+	public double slopeY() {
+		return b.y-a.y;
+	}
+
+	public double getLength() {
+		return a.distance(b);
+	}
+
+	public double getLength2() {
+		return a.distance2(b);
+	}
+
 	public LineSegment2D_F64 copy() {
 		return new LineSegment2D_F64( a, b );
 	}

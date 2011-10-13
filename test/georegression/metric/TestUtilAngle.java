@@ -29,6 +29,24 @@ import static org.junit.Assert.*;
 public class TestUtilAngle {
 
 	@Test
+	public void atanSafe() {
+		assertEquals(Math.PI/2.0,UtilAngle.atanSafe(0.0,0.0),1e-8);
+		assertEquals(Math.PI/2.0,UtilAngle.atanSafe(1.0,0.0),1e-8);
+		assertEquals(Math.PI/2.0,UtilAngle.atanSafe(-1.0,0.0),1e-8);
+		assertEquals(Math.atan(1),UtilAngle.atanSafe(1.0,1.0),1e-8);
+	}
+
+	@Test
+	public void toHalfCircle() {
+		assertEquals(0,UtilAngle.toHalfCircle(0),1e-8);
+		assertEquals(0.1,UtilAngle.toHalfCircle(0.1),1e-8);
+		assertEquals(1.9-Math.PI,UtilAngle.toHalfCircle(1.9),1e-8);
+		assertEquals(0,UtilAngle.toHalfCircle(Math.PI),1e-8);
+		assertEquals(0.1,UtilAngle.toHalfCircle(0.1-Math.PI),1e-8);
+		assertEquals(0.9,UtilAngle.toHalfCircle(0.9-Math.PI),1e-8);
+	}
+
+	@Test
 	public void isStandardDomain() {
 		assertTrue( UtilAngle.isStandardDomain( 0.1 ) );
 		assertTrue( UtilAngle.isStandardDomain( -0.1 ) );
@@ -69,5 +87,18 @@ public class TestUtilAngle {
 	@Test
 	public void testDist() {
 		fail("implement");
+	}
+
+	@Test
+	public void distHalf_F64() {
+		assertEquals(0,UtilAngle.distHalf(0,0),1e-8);
+		assertEquals(0,UtilAngle.distHalf(Math.PI/2,Math.PI/2),1e-8);
+		assertEquals(0,UtilAngle.distHalf(-Math.PI/2,-Math.PI/2),1e-8);
+		assertEquals(0,UtilAngle.distHalf(Math.PI/2,-Math.PI/2),1e-8);
+		assertEquals(0,UtilAngle.distHalf(-Math.PI/2,Math.PI/2),1e-8);
+
+		assertEquals(0.2,UtilAngle.distHalf(0.1,-0.1),1e-8);
+		assertEquals(Math.PI/2.0,UtilAngle.distHalf(0,Math.PI/2.0),1e-8);
+		assertEquals(Math.PI/2.0-0.1,UtilAngle.distHalf(-0.1,Math.PI/2.0),1e-8);
 	}
 }

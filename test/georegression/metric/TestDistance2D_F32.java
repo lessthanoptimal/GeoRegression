@@ -42,6 +42,13 @@ public class TestDistance2D_F32 {
 	}
 
 	@Test
+	public void distanceSq_parametric_line() {
+		float found = Distance2D_F32.distanceSq( new LineParametric2D_F32( -2, 0, 1, 1 ), new Point2D_F32( 2, 0 ) );
+		float expected = (float) UtilTrig_F32.distanceSq( 0, 2, 2, 0 );
+		assertEquals( expected, found, GrlConstants.FLOAT_TEST_TOL );
+	}
+
+	@Test
 	public void distance_line_segment() {
 		// test inside the line
 		float found = Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), new Point2D_F32( 2, 0 ) );
