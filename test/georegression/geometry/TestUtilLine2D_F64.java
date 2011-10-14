@@ -27,6 +27,7 @@ import georegression.struct.line.LineSegment2D_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * @author Peter Abeles
@@ -63,5 +64,25 @@ public class TestUtilLine2D_F64 {
 		assertEquals(para.p.y,0, GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(Math.abs(para.slope.x),5, GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(para.slope.y,0, GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void convert_parametric_polar() {
+		LineParametric2D_F64 para = new LineParametric2D_F64();
+		LinePolar2D_F64 polar = new LinePolar2D_F64();
+
+		para.slope.set(1,0);
+		para.setPoint(0,5);
+		UtilLine2D_F64.convert(para,polar);
+		assertEquals(polar.distance,5, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(polar.angle,Math.PI/2, GrlConstants.DOUBLE_TEST_TOL);
+
+		para.slope.set(1,-1);
+		para.setPoint(-5,-5);
+		UtilLine2D_F64.convert(para,polar);
+		assertEquals(polar.distance,-5*Math.sqrt(2), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(polar.angle,Math.PI/4, GrlConstants.DOUBLE_TEST_TOL);
+
+		fail("Don't think these tests are sufficient.  when it decides to go negative is probably not correct");
 	}
 }

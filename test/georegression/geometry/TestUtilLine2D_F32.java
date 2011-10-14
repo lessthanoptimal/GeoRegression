@@ -64,4 +64,22 @@ public class TestUtilLine2D_F32 {
 		assertEquals(Math.abs(para.slope.x),5, GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(para.slope.y,0, GrlConstants.FLOAT_TEST_TOL);
 	}
+
+	@Test
+	public void convert_parametric_polar() {
+		LineParametric2D_F32 para = new LineParametric2D_F32();
+		LinePolar2D_F32 polar = new LinePolar2D_F32();
+
+		para.slope.set(1,0);
+		para.setPoint(0,5);
+		UtilLine2D_F32.convert(para,polar);
+		assertEquals(polar.distance,5, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(polar.angle,Math.PI/2, GrlConstants.FLOAT_TEST_TOL);
+
+		para.slope.set(1,-1);
+		para.setPoint(-5,-5);
+		UtilLine2D_F32.convert(para,polar);
+		assertEquals(polar.distance,-5*Math.sqrt(2), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(polar.angle,Math.PI/4, GrlConstants.FLOAT_TEST_TOL);
+	}
 }

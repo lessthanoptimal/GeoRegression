@@ -20,9 +20,12 @@
 package georegression.geometry;
 
 
+import georegression.metric.Distance2D_F32;
+import georegression.metric.UtilAngle;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LinePolar2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
+import georegression.struct.point.Point2D_F32;
 
 /**
  * Various functions related to lines
@@ -66,6 +69,27 @@ public class UtilLine2D_F32 {
 
 		ret.p.set(src.a);
 		ret.slope.set(src.slopeX(),src.slopeY());
+
+		return ret;
+	}
+
+	/**
+	 * Converts a line from parametric to polar.
+	 *
+	 * @param src
+	 * @param ret
+	 * @return
+	 */
+	public static LinePolar2D_F32 convert( LineParametric2D_F32 src , LinePolar2D_F32 ret )
+	{
+		if( ret == null )
+			ret = new LinePolar2D_F32();
+
+		ret.angle = UtilAngle.atanSafe(-src.getSlopeX(),src.getSlopeY());
+		// todo there is bound to be a faster more efficient algorithm using trig
+		ret.distance = Distance2D_F32.distance(src,new Point2D_F32());
+		if( src.getSlopeY() < 0 )
+			ret.distance = -ret.distance;
 
 		return ret;
 	}
