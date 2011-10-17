@@ -104,7 +104,7 @@ public class Distance2D_F32 {
 		if( t < 0 ) {
 			return UtilPoint2D_F32.distance( line.a.x, line.a.y, p.x, p.y );
 		} else if( t > 1.0f )
-			return UtilPoint2D_F32.distance( line.a.x, line.b.y, p.x, p.y );
+			return UtilPoint2D_F32.distance( line.b.x, line.b.y, p.x, p.y );
 
 		// return the distance of the closest point on the line
 		return UtilPoint2D_F32.distance( line.a.x + t * a, line.a.y + t * b, p.x, p.y );

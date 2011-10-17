@@ -27,6 +27,7 @@ import georegression.struct.line.LineSegment2D_F32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * @author Peter Abeles
@@ -81,5 +82,7 @@ public class TestUtilLine2D_F32 {
 		UtilLine2D_F32.convert(para,polar);
 		assertEquals(polar.distance,-5*Math.sqrt(2), GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(polar.angle,Math.PI/4, GrlConstants.FLOAT_TEST_TOL);
+
+		fail("Don't think these tests are sufficient.  when it decides to go negative is probably not correct");
 	}
 }

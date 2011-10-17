@@ -44,4 +44,12 @@ public class LinePolar2D_F32 {
 	 * Angle in radians from the origin to the closest point on the line.
 	 */
 	public float angle;
+
+	public LinePolar2D_F32(float distance, float angle) {
+		this.distance = distance;
+		this.angle = angle;
+	}
+
+	public LinePolar2D_F32() {
+	}
 }

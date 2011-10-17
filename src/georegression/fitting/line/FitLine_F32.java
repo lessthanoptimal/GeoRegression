@@ -67,7 +67,7 @@ public class FitLine_F32 {
 			bottom += dy*dy - dx*dx;
 		}
 
-		ret.angle = (float) (float)Math.atan2(-2.0f*top , bottom)/2.0f;
+		ret.angle = (float)Math.atan2(-2.0f*top , bottom)/2.0f;
 		ret.distance = (float)( meanX*Math.cos(ret.angle) + meanY*Math.sin(ret.angle));
 
 		return ret;

@@ -56,13 +56,13 @@ public class TestDistance2D_F32 {
 		assertEquals( expected, found, GrlConstants.FLOAT_TEST_TOL );
 
 		// test before the first end point
-		Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), new Point2D_F32( -5, -5 ) );
-		UtilTrig_F32.distance( -2, 2, -5, -5 );
+		found = Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), new Point2D_F32( -5, -5 ) );
+		expected = UtilTrig_F32.distance( -2, 0, -5, -5 );
 		assertEquals( expected, found, GrlConstants.FLOAT_TEST_TOL );
 
 		// test after the second end point
-		Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), new Point2D_F32( 10, 0 ) );
-		UtilTrig_F32.distance( 3, 5, 10, 0 );
+		found = Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), new Point2D_F32( 10, 0 ) );
+		expected = UtilTrig_F32.distance( 3, 5, 10, 0 );
 		assertEquals( expected, found, GrlConstants.FLOAT_TEST_TOL );
 	}
 }
