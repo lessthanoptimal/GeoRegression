@@ -48,6 +48,18 @@ public class Homography2D_F64 implements Homography<Homography2D_F64>{
 		reset();
 	}
 
+	public void scale( double value ) {
+		a11 *= value;
+		a12 *= value;
+		a13 *= value;
+		a21 *= value;
+		a22 *= value;
+		a23 *= value;
+		a31 *= value;
+		a32 *= value;
+		a33 *= value;
+	}
+
 	@Override
 	public int getDimension() {
 		return 2;
