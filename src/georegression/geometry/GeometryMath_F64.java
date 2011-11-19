@@ -248,7 +248,7 @@ public class GeometryMath_F64 {
 	 * by dividing the x and y values by the found z.
 	 * </p>
 	 */
-	public static GeoTuple2D_F64 mult( DenseMatrix64F M, GeoTuple3D_F64 pt, GeoTuple2D_F64 mod ) {
+	public static <T extends GeoTuple2D_F64> T mult( DenseMatrix64F M, GeoTuple3D_F64 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -277,7 +277,7 @@ public class GeometryMath_F64 {
 	 * a 3d point.
 	 * </p>
 	 */
-	public static GeoTuple3D_F64 mult( DenseMatrix64F M, GeoTuple2D_F64 pt, GeoTuple3D_F64 mod ) {
+	public static <T extends GeoTuple3D_F64> T mult( DenseMatrix64F M, GeoTuple2D_F64 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -298,13 +298,14 @@ public class GeometryMath_F64 {
 	/**
 	 * pt and mod are assumed to be homogeneous coordinates (z=1).  M is multiplied by
 	 * [pt.x , pt.y , 1] and mod is computed by computing (x,y,z) then [x/z , y/z , 1].
+	 * 'pt' and 'mod' can be the same point.
 	 *
 	 * @param M
 	 * @param pt
 	 * @param mod
 	 * @return
 	 */
-	public static GeoTuple2D_F64 mult( DenseMatrix64F M, GeoTuple2D_F64 pt, GeoTuple2D_F64 mod ) {
+	public static <T extends GeoTuple2D_F64> T mult( DenseMatrix64F M, T pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -349,7 +350,7 @@ public class GeometryMath_F64 {
 	 * mod = M<sup>T</sup>*pt<br>
 	 * where pt.z = 1 implicitly.
 	 */
-	public static GeoTuple3D_F64 multTran( DenseMatrix64F M, GeoTuple2D_F64 pt, GeoTuple3D_F64 mod ) {
+	public static <T extends GeoTuple3D_F64> T multTran( DenseMatrix64F M, GeoTuple2D_F64 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
 
@@ -410,7 +411,7 @@ public class GeometryMath_F64 {
 
 	/**
 	 * <p>
-	 * Computes the inner matrix product: ret = a'*M*b'<br>
+	 * Computes the inner matrix product: ret = a'*M*b<br>
 	 * where ret is a scalar number. 'a' and 'b' are automatically converted into homogeneous
 	 * coordinates.
 	 * </p>
