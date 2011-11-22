@@ -216,25 +216,25 @@ public class GeometryMath_F32 {
 	 *
 	 * @param M
 	 * @param pt
-	 * @param mod
+	 * @param result Storage for output.  Can be the same instance as param 'pt'.  Modified.
 	 */
-	public static <T extends GeoTuple3D_F32> T mult( DenseMatrix64F M, T pt, T mod ) {
+	public static <T extends GeoTuple3D_F32> T mult( DenseMatrix64F M, T pt, T result ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
-		if( mod == null ) {
-			mod = (T) pt.createNewInstance();
+		if( result == null ) {
+			result = (T) pt.createNewInstance();
 		}
 
 		float x = pt.x;
 		float y = pt.y;
 		float z = pt.z;
 
-		mod.x = (float) ( M.get( 0, 0 ) * x + M.get( 0, 1 ) * y + M.get( 0, 2 ) * z );
-		mod.y = (float) ( M.get( 1, 0 ) * x + M.get( 1, 1 ) * y + M.get( 1, 2 ) * z );
-		mod.z = (float) ( M.get( 2, 0 ) * x + M.get( 2, 1 ) * y + M.get( 2, 2 ) * z );
+		result.x = (float) ( M.get( 0, 0 ) * x + M.get( 0, 1 ) * y + M.get( 0, 2 ) * z );
+		result.y = (float) ( M.get( 1, 0 ) * x + M.get( 1, 1 ) * y + M.get( 1, 2 ) * z );
+		result.z = (float) ( M.get( 2, 0 ) * x + M.get( 2, 1 ) * y + M.get( 2, 2 ) * z );
 
-		return (T) mod;
+		return (T) result;
 	}
 
 	/**

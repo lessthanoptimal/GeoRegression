@@ -37,11 +37,10 @@ public class TestClosestPoint3D_F64 {
 	 * Compute truth from 3 random points then see if the 3rd point is found again.
 	 */
 	@Test
-	public void closetPoint_line() {
+	public void closestPoint_line() {
 		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
 		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
 		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
-
 
 		Vector3D_F64 va = new Vector3D_F64( a, b );
 		Vector3D_F64 vc = new Vector3D_F64( c, b );
@@ -49,13 +48,36 @@ public class TestClosestPoint3D_F64 {
 		LineParametric3D_F64 lineA = new LineParametric3D_F64( a, va );
 		LineParametric3D_F64 lineB = new LineParametric3D_F64( c, vc );
 
-		Point3D_F64 foundB = ClosestPoint3D_F64.closetPoint( lineA, lineB, null );
+		Point3D_F64 foundB = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
 
 		assertTrue( b.isIdentical( foundB, GrlConstants.DOUBLE_TEST_TOL ) );
 	}
 
 	@Test
-	public void closetPoint_point() {
+	public void closestPoints_lines() {
+		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
+		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
+		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
+
+		Vector3D_F64 va = new Vector3D_F64( a, b );
+		Vector3D_F64 vc = new Vector3D_F64( c, b );
+		// normalize the vector so that the value 't' is euclidean distance
+		va.normalize();
+		vc.normalize();
+
+		LineParametric3D_F64 lineA = new LineParametric3D_F64( a, va );
+		LineParametric3D_F64 lineB = new LineParametric3D_F64( c, vc );
+
+		double param[] = new double[2];
+
+		assertTrue(ClosestPoint3D_F64.closestPoints(lineA, lineB, param));
+
+		assertEquals( a.distance(b) , param[0] , 1e-8 );
+		assertEquals( c.distance(b) , param[1] , 1e-8 );
+	}
+
+	@Test
+	public void closestPoint_point() {
 		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
 		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
 		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
@@ -64,7 +86,7 @@ public class TestClosestPoint3D_F64 {
 
 		LineParametric3D_F64 lineA = new LineParametric3D_F64( a, va );
 
-		Point3D_F64 foundB = ClosestPoint3D_F64.closetPoint( lineA, c, null );
+		Point3D_F64 foundB = ClosestPoint3D_F64.closestPoint(lineA, c, null);
 
 		Vector3D_F64 p = new Vector3D_F64( foundB, c );
 

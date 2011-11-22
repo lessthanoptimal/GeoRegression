@@ -39,9 +39,9 @@ public class ClosestPoint3D_F32 {
 	 * @param ret Point of intersection. If null a new point is declared. Modified.
 	 * @return Closest point between two lines.
 	 */
-	public static Point3D_F32 closetPoint( LineParametric3D_F32 l0,
+	public static Point3D_F32 closestPoint(LineParametric3D_F32 l0,
 										   LineParametric3D_F32 l1,
-										   Point3D_F32 ret ) {
+										   Point3D_F32 ret) {
 		if( ret == null ) {
 			ret = new Point3D_F32();
 		}
@@ -73,15 +73,54 @@ public class ClosestPoint3D_F32 {
 	}
 
 	/**
+	 * Finds the closest point on line lo to l1 and on l1 to l0.  The solution is returned in
+	 * 'param' as a value of 't' for each line.
+	 *
+	 * @param l0  first line. Not modified.
+	 * @param l1  second line. Not modified.
+	 * @param param  param[0] for line0 location and param[1] for line1 location.
+	 *
+	 * @return False if the lines are parallel or true if a solution was found.
+	 */
+	public static boolean closestPoints( LineParametric3D_F32 l0,
+										 LineParametric3D_F32 l1,
+										 float param[] )
+	{
+		float dX = l0.p.x - l1.p.x;
+		float dY = l0.p.y - l1.p.y;
+		float dZ = l0.p.z - l1.p.z;
+
+		// this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
+		float dv01v1 = MiscOps.dot( dX , dY , dZ, l1.slope );
+		float dv1v0 = MiscOps.dot( l1.slope, l0.slope );
+		float dv1v1 = MiscOps.dot( l1.slope, l1.slope );
+
+		float t0 = dv01v1 * dv1v0 - MiscOps.dot( dX , dY , dZ, l0.slope ) * dv1v1;
+		float bottom = MiscOps.dot( l0.slope, l0.slope ) * dv1v1 - dv1v0 * dv1v0;
+		if( bottom == 0 )
+			return false;
+
+		t0 /= bottom;
+
+		// ( d1343 + mua d4321 ) / d4343
+		float t1 = ( dv01v1 + t0 * dv1v0 ) / dv1v1;
+
+		param[0] = t0;
+		param[1] = t1;
+
+		return true;
+	}
+
+	/**
 	 * Finds the closest point on a line to the specified point.
 	 *
 	 * @param line Line on which the closest point is being found.  Not modified.
 	 * @param pt   The point whose closest point is being looked for.  Not modified.
 	 * @param ret  Storage for the solution.  If null is passed in a new point is created. Modified.
 	 */
-	public static Point3D_F32 closetPoint( LineParametric3D_F32 line,
+	public static Point3D_F32 closestPoint(LineParametric3D_F32 line,
 										   Point3D_F32 pt,
-										   Point3D_F32 ret ) {
+										   Point3D_F32 ret) {
 		if( ret == null ) {
 			ret = new Point3D_F32();
 		}
