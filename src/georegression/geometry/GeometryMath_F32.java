@@ -406,7 +406,33 @@ public class GeometryMath_F32 {
 		DenseMatrix64F m1 = new DenseMatrix64F( 3, 1, true, a.x, a.y, a.z );
 		DenseMatrix64F m2 = new DenseMatrix64F( 3, 1, true, b.x, b.y, b.z );
 
-		return (float) ( VectorVectorMult.innerProdTranA( m1, M, m2 ) );
+		return (float) ( VectorVectorMult.innerProdTranA(m1, M, m2) );
+	}
+
+	/**
+	 * Computes the outer product of two vectors:<br>
+	 * O = a*b<sup>T</sup>
+	 *
+	 * @param a 3D vector
+	 * @param b 3D vector
+	 * @param ret 3 x 3 matrix or null.
+	 * @return outer product of two 3d vectors
+	 */
+	public static DenseMatrix64F outerProd(Vector3D_F32 a, Vector3D_F32 b, DenseMatrix64F ret) {
+		if( ret == null )
+			ret = new DenseMatrix64F(3,3);
+
+		ret.data[0] = a.x*b.x;
+		ret.data[1] = a.x*b.y;
+		ret.data[2] = a.x*b.z;
+		ret.data[3] = a.y*b.x;
+		ret.data[4] = a.y*b.y;
+		ret.data[5] = a.y*b.z;
+		ret.data[6] = a.z*b.x;
+		ret.data[7] = a.z*b.y;
+		ret.data[8] = a.z*b.z;
+
+		return ret;
 	}
 
 	/**

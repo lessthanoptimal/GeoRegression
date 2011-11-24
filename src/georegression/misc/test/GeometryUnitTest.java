@@ -102,15 +102,19 @@ public class GeometryUnitTest {
 	}
 
 	public static void assertNotEquals( GeoTuple3D_F32 expected, GeoTuple3D_F32 found, double tol ) {
-		assertNotEquals( expected.getX(), found.getX(), tol, "x-axis is equal." );
-		assertNotEquals( expected.getY(), found.getY(), tol, "y-axis is equal." );
-		assertNotEquals( expected.getZ(), found.getZ(), tol, "z-axis is equal." );
+		if( Math.abs(expected.getX() - found.getX()) <= tol &&
+				Math.abs(expected.getY() - found.getY()) <= tol &&
+				Math.abs(expected.getZ() - found.getZ()) <= tol ) {
+			throw new RuntimeException("Points are equal to each other!");
+		}
 	}
 
 	public static void assertNotEquals( GeoTuple3D_F64 expected, GeoTuple3D_F64 found, double tol ) {
-		assertNotEquals( expected.getX(), found.getX(), tol, "x-axis is equal." );
-		assertNotEquals( expected.getY(), found.getY(), tol, "y-axis is equal." );
-		assertNotEquals( expected.getZ(), found.getZ(), tol, "z-axis is equal." );
+		if( Math.abs(expected.getX() - found.getX()) <= tol &&
+				Math.abs(expected.getY() - found.getY()) <= tol &&
+				Math.abs(expected.getZ() - found.getZ()) <= tol ) {
+			throw new RuntimeException("Points are equal to each other!");
+		}
 	}
 
 	public static void assertEquals( GeoTuple_F64 a, GeoTuple_F64 b, double tol ) {

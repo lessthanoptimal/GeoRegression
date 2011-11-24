@@ -290,6 +290,19 @@ public class TestGeometryMath_F32 {
 	}
 
 	@Test
+	public void outerProd_3D() {
+		Vector3D_F32 a = new Vector3D_F32( 2, -2 , 5);
+		Vector3D_F32 b = new Vector3D_F32( 4, 3 , 9);
+		DenseMatrix64F M = new DenseMatrix64F( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+
+		DenseMatrix64F expected = new DenseMatrix64F(3,3,true,8 , 6 ,18 , -8 ,-6,-18,20,15,45);
+
+		GeometryMath_F32.outerProd( a, b , M );
+
+		assertTrue( MatrixFeatures.isIdentical(expected,M,GrlConstants.FLOAT_TEST_TOL) );
+	}
+
+	@Test
 	public void dot() {
 		Vector3D_F32 a = new Vector3D_F32( 2, -2, 3 );
 		Vector3D_F32 b = new Vector3D_F32( 4, 3, 2 );
