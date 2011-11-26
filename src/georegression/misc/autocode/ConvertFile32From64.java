@@ -69,6 +69,8 @@ public class ConvertFile32From64 {
 	}
 
 	private void handleToken( String s ) {
+		// handle overrides where double should stay the same
+		s = s.replaceAll( "/\\*\\*/double", "FIXED_DOUBLE" );
 		s = s.replaceAll( "double", "float" );
 		s = s.replaceAll( "Double", "Float" );
 		s = s.replaceAll( "_F64", "_F32" );
@@ -76,6 +78,9 @@ public class ConvertFile32From64 {
 		s = replaceStartString( s, "Math.", "(float)Math." );
 		s = replaceStartString( s, "rand.nextGaussian", "(float)rand.nextGaussian" );
 		s = handleFloats( s );
+
+		// put the doubles back in
+		s = s.replaceAll( "FIXED_DOUBLE","/\\*\\*/double" );
 
 		out.print( s );
 	}

@@ -110,6 +110,24 @@ public class GeometryMath_F64 {
 
 	/**
 	 * <p>
+	 * Computes the cross product:<br>
+	 * <br>
+	 * c = a x b<br>
+	 * where 'a' is in homogeneous coordinates.
+	 * </p>
+	 *
+	 * @param a Homogeneous coordinates, z = 1 assumed. Not modified.
+	 * @param b Not modified.
+	 * @param c Modified.
+	 */
+	public static void cross( GeoTuple2D_F64 a, GeoTuple3D_F64 b, GeoTuple3D_F64 c ) {
+		c.x = a.y * b.z - b.y;
+		c.y = b.x - a.x * b.z;
+		c.z = a.x * b.y - a.y * b.x;
+	}
+
+	/**
+	 * <p>
 	 * Adds two points together.<br>
 	 * <br>
 	 * c = a + b
@@ -230,9 +248,9 @@ public class GeometryMath_F64 {
 		double y = pt.y;
 		double z = pt.z;
 
-		result.x = (double) ( M.get( 0, 0 ) * x + M.get( 0, 1 ) * y + M.get( 0, 2 ) * z );
-		result.y = (double) ( M.get( 1, 0 ) * x + M.get( 1, 1 ) * y + M.get( 1, 2 ) * z );
-		result.z = (double) ( M.get( 2, 0 ) * x + M.get( 2, 1 ) * y + M.get( 2, 2 ) * z );
+		result.x = (double) ( M.unsafe_get(0, 0) * x + M.unsafe_get(0, 1) * y + M.unsafe_get(0, 2) * z );
+		result.y = (double) ( M.unsafe_get(1, 0) * x + M.unsafe_get(1, 1) * y + M.unsafe_get(1, 2) * z );
+		result.z = (double) ( M.unsafe_get(2, 0) * x + M.unsafe_get(2, 1) * y + M.unsafe_get(2, 2) * z );
 
 		return (T) result;
 	}
@@ -256,9 +274,9 @@ public class GeometryMath_F64 {
 		double y = pt.y;
 		double z = pt.z;
 
-		mod.x = (double) ( M.get( 0, 0 ) * x + M.get( 0, 1 ) * y + M.get( 0, 2 ) * z );
-		mod.y = (double) ( M.get( 1, 0 ) * x + M.get( 1, 1 ) * y + M.get( 1, 2 ) * z );
-		z = (double) ( M.get( 2, 0 ) * x + M.get( 2, 1 ) * y + M.get( 2, 2 ) * z );
+		mod.x = (double) ( M.unsafe_get(0, 0) * x + M.unsafe_get(0, 1) * y + M.unsafe_get(0, 2) * z );
+		mod.y = (double) ( M.unsafe_get(1, 0) * x + M.unsafe_get(1, 1) * y + M.unsafe_get(1, 2) * z );
+		z = (double) ( M.unsafe_get(2, 0) * x + M.unsafe_get(2, 1) * y + M.unsafe_get(2, 2) * z );
 
 		mod.x /= z;
 		mod.y /= z;
@@ -288,9 +306,9 @@ public class GeometryMath_F64 {
 		double x = pt.x;
 		double y = pt.y;
 
-		mod.x = (double) ( M.get( 0, 0 ) * x + M.get( 0, 1 ) * y + M.get( 0, 2 ) );
-		mod.y = (double) ( M.get( 1, 0 ) * x + M.get( 1, 1 ) * y + M.get( 1, 2 ) );
-		mod.z = (double) ( M.get( 2, 0 ) * x + M.get( 2, 1 ) * y + M.get( 2, 2 ) );
+		mod.x = (double) ( M.unsafe_get(0, 0) * x + M.unsafe_get(0, 1) * y + M.unsafe_get(0, 2) );
+		mod.y = (double) ( M.unsafe_get(1, 0) * x + M.unsafe_get(1, 1) * y + M.unsafe_get(1, 2) );
+		mod.z = (double) ( M.unsafe_get(2, 0) * x + M.unsafe_get(2, 1) * y + M.unsafe_get(2, 2) );
 
 		return mod;
 	}
@@ -316,12 +334,52 @@ public class GeometryMath_F64 {
 		double x = pt.x;
 		double y = pt.y;
 
-		double modz = (double) ( M.get( 2, 0 ) * x + M.get( 2, 1 ) * y + M.get( 2, 2 ) );
+		double modz = (double) ( M.unsafe_get( 2, 0 ) * x + M.unsafe_get(2, 1) * y + M.unsafe_get(2, 2) );
 
-		mod.x = (double) ( ( M.get( 0, 0 ) * x + M.get( 0, 1 ) * y + M.get( 0, 2 ) ) / modz );
-		mod.y = (double) ( ( M.get( 1, 0 ) * x + M.get( 1, 1 ) * y + M.get( 1, 2 ) ) / modz );
+		mod.x = (double) ( ( M.unsafe_get(0, 0) * x + M.unsafe_get(0, 1) * y + M.unsafe_get(0, 2) ) / modz );
+		mod.y = (double) ( ( M.unsafe_get(1, 0) * x + M.unsafe_get(1, 1) * y + M.unsafe_get(1, 2) ) / modz );
 
 		return mod;
+	}
+
+	/**
+	 * <p>
+	 * Computes the following:<br>
+	 * result = cross(A)*M<br>
+	 * where M and result are 3x3 matrices, cross(A) is the cross product matrix of A.
+	 * </p>
+	 *
+	 * @param A Vector which will be converted into a cross product matrix.
+	 * @param M 3x3 matrix.
+	 * @param result Storage for results.  Can be null.
+	 * @return Results.
+	 */
+	public static <T extends GeoTuple2D_F64> DenseMatrix64F multCrossA( T A , DenseMatrix64F M, DenseMatrix64F result ) {
+		if( M.numRows != 3 || M.numCols != 3 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
+
+		if( result == null ) {
+			result = new DenseMatrix64F(3,3);
+		}
+
+		/**/double x = A.x;
+		/**/double y = A.y;
+
+		/**/double a11 = M.data[0]; /**/double a12 = M.data[1]; /**/double a13 = M.data[2];
+		/**/double a21 = M.data[3]; /**/double a22 = M.data[4]; /**/double a23 = M.data[5];
+		/**/double a31 = M.data[6]; /**/double a32 = M.data[7]; /**/double a33 = M.data[8];
+
+		result.data[0] = -a21 + a31*y;
+		result.data[1] = -a22 + a32*y;
+		result.data[2] = -a23 + a33*y;
+		result.data[3] = a11 - a31*x;
+		result.data[4] = a12 - a32*x;
+		result.data[5] = a13 - a33*x;
+		result.data[6] = -a11*y + a21*x;
+		result.data[7] = -a12*y + a22*x;
+		result.data[8] = -a13*y + a23*x;
+
+		return result;
 	}
 
 	/**

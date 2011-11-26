@@ -23,6 +23,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector2D_F32;
 import georegression.struct.point.Vector3D_F32;
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.ops.CommonOps;
 import org.ejml.ops.MatrixFeatures;
 import org.junit.Test;
 
@@ -79,7 +80,7 @@ public class TestGeometryMath_F32 {
 	}
 
 	@Test
-	public void cross() {
+	public void cross_3d_3d() {
 		Vector3D_F32 a = new Vector3D_F32( 1, 0, 0 );
 		Vector3D_F32 b = new Vector3D_F32( 0, 1, 0 );
 		Vector3D_F32 c = new Vector3D_F32();
@@ -87,14 +88,30 @@ public class TestGeometryMath_F32 {
 		GeometryMath_F32.cross( a, b, c );
 
 		assertEquals( 0, c.x, GrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 0, c.y, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(0, c.y, GrlConstants.FLOAT_TEST_TOL);
 		assertEquals( 1, c.z, GrlConstants.FLOAT_TEST_TOL );
 
-		GeometryMath_F32.cross( b, a, c );
+		GeometryMath_F32.cross(b, a, c);
 
 		assertEquals( 0, c.x, GrlConstants.FLOAT_TEST_TOL );
 		assertEquals( 0, c.y, GrlConstants.FLOAT_TEST_TOL );
 		assertEquals( -1, c.z, GrlConstants.FLOAT_TEST_TOL );
+	}
+
+	@Test
+	public void cross_2d_3d() {
+		Vector2D_F32 aa = new Vector2D_F32( 0.75f, 2 );
+		Vector3D_F32 a = new Vector3D_F32( 0.75f, 2, 1);
+		Vector3D_F32 b = new Vector3D_F32( 3, 0.1f, 4 );
+		Vector3D_F32 expected = new Vector3D_F32();
+		Vector3D_F32 found = new Vector3D_F32();
+
+		GeometryMath_F32.cross( a, b, expected );
+		GeometryMath_F32.cross( aa, b, found );
+
+		assertEquals( expected.x, found.x , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected.y, found.y , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(expected.z, found.z, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -103,7 +120,7 @@ public class TestGeometryMath_F32 {
 		Vector3D_F32 b = new Vector3D_F32( 3, 1, 4 );
 		Vector3D_F32 c = new Vector3D_F32();
 
-		GeometryMath_F32.add( a , b , c );
+		GeometryMath_F32.add(a, b, c);
 
 		assertEquals( 4 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
 		assertEquals( 3 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
@@ -130,7 +147,7 @@ public class TestGeometryMath_F32 {
 		Vector3D_F32 c = new Vector3D_F32();
 		DenseMatrix64F M = new DenseMatrix64F( 3,3,true,1,1,1,1,1,1,1,1,1);
 
-		GeometryMath_F32.addMult( a , M , b , c );
+		GeometryMath_F32.addMult(a, M, b, c);
 
 		assertEquals( 10 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
 		assertEquals( 11 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
@@ -143,7 +160,7 @@ public class TestGeometryMath_F32 {
 		Vector3D_F32 b = new Vector3D_F32( 3, 1, 4 );
 		Vector3D_F32 c = new Vector3D_F32();
 
-		GeometryMath_F32.sub( a , b , c );
+		GeometryMath_F32.sub(a, b, c);
 
 		assertEquals( -2 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
 		assertEquals( 1 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
@@ -157,7 +174,7 @@ public class TestGeometryMath_F32 {
 
 		Vector2D_F32 b = new Vector2D_F32();
 
-		GeometryMath_F32.rotate( theta,a,b);
+		GeometryMath_F32.rotate(theta, a, b);
 
 		float c = (float)Math.cos(theta);
 		float s = (float)Math.sin(theta);
@@ -176,7 +193,7 @@ public class TestGeometryMath_F32 {
 		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F32 c = new Vector3D_F32();
 
-		GeometryMath_F32.mult( M , a , c );
+		GeometryMath_F32.mult(M, a, c);
 
 		assertEquals( 12 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
 		assertEquals( 24 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
@@ -236,7 +253,7 @@ public class TestGeometryMath_F32 {
 		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F32 c = new Vector3D_F32();
 
-		GeometryMath_F32.multTran( M , a , c );
+		GeometryMath_F32.multTran(M, a, c);
 
 		assertEquals( 28 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
 		assertEquals( 32 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
@@ -254,6 +271,21 @@ public class TestGeometryMath_F32 {
 		assertEquals( 14 , c.getX() , GrlConstants.FLOAT_TEST_TOL );
 		assertEquals( 16 , c.getY() , GrlConstants.FLOAT_TEST_TOL );
 		assertEquals( 18 , c.getZ() , GrlConstants.FLOAT_TEST_TOL );
+	}
+
+	@Test
+	public void multCrossA_2d() {
+		Vector2D_F32 a = new Vector2D_F32( -1, 2 );
+		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
+
+		DenseMatrix64F a_hat = GeometryMath_F32.crossMatrix(a.x,a.y,1,null);
+
+		DenseMatrix64F expected = new DenseMatrix64F(3,3);
+		CommonOps.mult(a_hat, M, expected);
+
+		DenseMatrix64F found = GeometryMath_F32.multCrossA(a,M,null);
+
+		assertTrue(MatrixFeatures.isIdentical(expected, found, GrlConstants.FLOAT_TEST_TOL));
 	}
 
 	@Test

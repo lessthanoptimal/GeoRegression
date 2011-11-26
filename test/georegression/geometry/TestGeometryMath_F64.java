@@ -23,6 +23,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector2D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.ops.CommonOps;
 import org.ejml.ops.MatrixFeatures;
 import org.junit.Test;
 
@@ -79,7 +80,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void cross() {
+	public void cross_3d_3d() {
 		Vector3D_F64 a = new Vector3D_F64( 1, 0, 0 );
 		Vector3D_F64 b = new Vector3D_F64( 0, 1, 0 );
 		Vector3D_F64 c = new Vector3D_F64();
@@ -95,6 +96,22 @@ public class TestGeometryMath_F64 {
 		assertEquals( 0, c.x, GrlConstants.DOUBLE_TEST_TOL );
 		assertEquals( 0, c.y, GrlConstants.DOUBLE_TEST_TOL );
 		assertEquals( -1, c.z, GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	@Test
+	public void cross_2d_3d() {
+		Vector2D_F64 aa = new Vector2D_F64( 0.75, 2 );
+		Vector3D_F64 a = new Vector3D_F64( 0.75, 2, 1);
+		Vector3D_F64 b = new Vector3D_F64( 3, 0.1, 4 );
+		Vector3D_F64 expected = new Vector3D_F64();
+		Vector3D_F64 found = new Vector3D_F64();
+
+		GeometryMath_F64.cross( a, b, expected );
+		GeometryMath_F64.cross( aa, b, found );
+
+		assertEquals( expected.x, found.x , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.y, found.y , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.z, found.z , GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
@@ -254,6 +271,21 @@ public class TestGeometryMath_F64 {
 		assertEquals( 14 , c.getX() , GrlConstants.DOUBLE_TEST_TOL );
 		assertEquals( 16 , c.getY() , GrlConstants.DOUBLE_TEST_TOL );
 		assertEquals( 18 , c.getZ() , GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	@Test
+	public void multCrossA_2d() {
+		Vector2D_F64 a = new Vector2D_F64( -1, 2 );
+		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
+
+		DenseMatrix64F a_hat = GeometryMath_F64.crossMatrix(a.x,a.y,1,null);
+
+		DenseMatrix64F expected = new DenseMatrix64F(3,3);
+		CommonOps.mult(a_hat,M,expected);
+
+		DenseMatrix64F found = GeometryMath_F64.multCrossA(a,M,null);
+
+		assertTrue(MatrixFeatures.isIdentical(expected, found, GrlConstants.DOUBLE_TEST_TOL));
 	}
 
 	@Test
