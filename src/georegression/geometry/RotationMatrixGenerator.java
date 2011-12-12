@@ -48,9 +48,9 @@ public class RotationMatrixGenerator {
 	public static DenseMatrix64F rodriguesToMatrix( Rodrigues rodrigues, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
 
-		double x = rodrigues.unitAxisRoation.x;
-		double y = rodrigues.unitAxisRoation.y;
-		double z = rodrigues.unitAxisRoation.z;
+		double x = rodrigues.unitAxisRotation.x;
+		double y = rodrigues.unitAxisRotation.y;
+		double z = rodrigues.unitAxisRotation.z;
 
 		double c = Math.cos( rodrigues.theta );
 		double s = Math.sin( rodrigues.theta );
@@ -93,9 +93,9 @@ public class RotationMatrixGenerator {
 		quat.q1 = Math.cos( rodrigues.theta / 2.0 );
 		double s = Math.sin( rodrigues.theta / 2.0 );
 
-		quat.q2 = rodrigues.unitAxisRoation.x * s;
-		quat.q3 = rodrigues.unitAxisRoation.y * s;
-		quat.q4 = rodrigues.unitAxisRoation.z * s;
+		quat.q2 = rodrigues.unitAxisRotation.x * s;
+		quat.q3 = rodrigues.unitAxisRotation.y * s;
+		quat.q4 = rodrigues.unitAxisRotation.z * s;
 
 		return quat;
 	}
@@ -105,8 +105,8 @@ public class RotationMatrixGenerator {
 		if( rodrigues == null )
 			rodrigues = new Rodrigues();
 
-		rodrigues.unitAxisRoation.set( quat.q2, quat.q3, quat.q4 );
-		rodrigues.unitAxisRoation.normalize();
+		rodrigues.unitAxisRotation.set( quat.q2, quat.q3, quat.q4 );
+		rodrigues.unitAxisRotation.normalize();
 
 		rodrigues.theta = 2.0 * Math.acos( quat.q1 );
 
@@ -149,19 +149,19 @@ public class RotationMatrixGenerator {
 			rodrigues.theta = Math.acos( diagSum );
 			double bottom = 2.0 * Math.sin( rodrigues.theta );
 
-			rodrigues.unitAxisRoation.x = ( R.get( 2, 1 ) - R.get( 1, 2 ) ) / bottom;
-			rodrigues.unitAxisRoation.y = ( R.get( 0, 2 ) - R.get( 2, 0 ) ) / bottom;
-			rodrigues.unitAxisRoation.z = ( R.get( 1, 0 ) - R.get( 0, 1 ) ) / bottom;
+			rodrigues.unitAxisRotation.x = ( R.get( 2, 1 ) - R.get( 1, 2 ) ) / bottom;
+			rodrigues.unitAxisRotation.y = ( R.get( 0, 2 ) - R.get( 2, 0 ) ) / bottom;
+			rodrigues.unitAxisRotation.z = ( R.get( 1, 0 ) - R.get( 0, 1 ) ) / bottom;
 
 			// in extreme underflow situations the result can be unnormalized
-			rodrigues.unitAxisRoation.normalize();
+			rodrigues.unitAxisRotation.normalize();
 		} else if( diagSum == 1 ) {
 			rodrigues.theta = 0;
-			rodrigues.unitAxisRoation.set( 1, 0, 0 );
+			rodrigues.unitAxisRotation.set( 1, 0, 0 );
 		} else {
 			// it can either be + or - PI
 			rodrigues.theta = Math.PI;
-			rotationAxis( R, rodrigues.unitAxisRoation );
+			rotationAxis( R, rodrigues.unitAxisRotation);
 		}
 
 		return rodrigues;

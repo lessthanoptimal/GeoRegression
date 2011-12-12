@@ -105,7 +105,7 @@ public class TestRotationMatrixGenerator {
 		Rodrigues found = RotationMatrixGenerator.matrixToRodrigues( rod, null );
 
 		// if the lines are parallel the dot product will be 1 or -1
-		double dot = found.unitAxisRoation.dot( rodInput.unitAxisRoation );
+		double dot = found.unitAxisRotation.dot( rodInput.unitAxisRotation);
 		assertEquals( 1, Math.abs( dot ), 1e-8 );
 
 		// if the rotation vector is in the opposite direction then the found angle will be
@@ -123,7 +123,7 @@ public class TestRotationMatrixGenerator {
 		Rodrigues found = RotationMatrixGenerator.matrixToRodrigues( rod, null );
 
 		// if the lines are parallel the dot product will be 1 or -1
-		assertEquals( 1, Math.abs( found.unitAxisRoation.dot( expected.unitAxisRoation ) ), 1e-8 );
+		assertEquals( 1, Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), 1e-8 );
 
 		// if the rotation vector is in the opposite direction then the found angle will be
 		// the negative of the input.  both are equivalent

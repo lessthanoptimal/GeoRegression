@@ -23,36 +23,44 @@ import georegression.struct.point.Vector3D_F64;
 
 
 /**
- * Defines a 3D rotation based upon the axis of rotation ang the angle of rotation.
+ * <p>
+ * Defines a 3D rotation based upon the axis of rotation and the angle of rotation in SO(3).
+ * </p>
+ *
+ * <p>
+ * R(&theta;) = e<sup>w*&theta</sup><br>
+ * R(&theta;) = 1 + w*sin(&theta;) + w<sup>2</sup>*(1-cos(&theta;))<br>
+ * where &theta; is the angle of rotation, 'w' is a skew symmetric matrix around the axis of rotation.
+ * </p>
  *
  * @author Peter Abeles
  */
 public class Rodrigues {
 	// unit vector defining the axis of rotation
-	public Vector3D_F64 unitAxisRoation = new Vector3D_F64();
+	public Vector3D_F64 unitAxisRotation = new Vector3D_F64();
 	// the angle it is rotated by
 	public double theta;
 
 	public Rodrigues() {
 	}
 
-	public Rodrigues( double theta, Vector3D_F64 unitAxisRoation ) {
+	public Rodrigues( double theta, Vector3D_F64 unitAxisRotation) {
 		this.theta = theta;
-		this.unitAxisRoation.set( unitAxisRoation );
+		this.unitAxisRotation.set(unitAxisRotation);
 	}
 
 	public Rodrigues( double theta, double x, double y, double z ) {
 		this.theta = theta;
-		this.unitAxisRoation.set( x, y, z );
-		unitAxisRoation.normalize();
+		this.unitAxisRotation.set( x, y, z );
+		unitAxisRotation.normalize();
 	}
 
-	public Vector3D_F64 getUnitAxisRoation() {
-		return unitAxisRoation;
+	public Vector3D_F64 getUnitAxisRotation() {
+		return unitAxisRotation;
 	}
 
-	public void setUnitAxisRoation( Vector3D_F64 unitAxisRoation ) {
-		this.unitAxisRoation.set( unitAxisRoation );
+	public void setUnitAxisRotation(Vector3D_F64 unitAxisRotation) {
+		this.unitAxisRotation.set(unitAxisRotation);
 	}
 
 	public double getTheta() {
