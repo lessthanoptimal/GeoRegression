@@ -36,4 +36,21 @@ public class UtilHomography {
 
 		return ret;
 	}
+	
+	public static Homography2D_F32 convert( Homography2D_F64 m , Homography2D_F32 ret ) {
+		if( ret == null )
+			ret = new Homography2D_F32();
+		
+		ret.a11 = (float)m.a11;
+		ret.a12 = (float)m.a12;
+		ret.a13 = (float)m.a13;
+		ret.a21 = (float)m.a21;
+		ret.a22 = (float)m.a22;
+		ret.a23 = (float)m.a23;
+		ret.a31 = (float)m.a31;
+		ret.a32 = (float)m.a32;
+		ret.a33 = (float)m.a33;
+
+		return ret;
+	}
 }
