@@ -19,7 +19,9 @@
 
 package georegression.transform;
 
+import georegression.struct.InvertibleTransform;
 import georegression.struct.affine.Affine2D_F32;
+import georegression.struct.homo.Homography2D_F32;
 import georegression.struct.se.Se2_F32;
 
 
@@ -31,17 +33,84 @@ import georegression.struct.se.Se2_F32;
  */
 public class ConvertTransform_F32 {
 
-	public static Affine2D_F32 convert( Se2_F32 src , Affine2D_F32 dst ) {
-		if( dst == null )
-			dst = new Affine2D_F32();
-
-		dst.a11 = src.c;
-		dst.a12 = -src.s;
-		dst.a21 = src.s;
-		dst.a22 = src.c;
-		dst.tx = src.tran.x;
-		dst.ty = src.tran.y;
-
-		return dst;
+	public static <A extends InvertibleTransform, B extends InvertibleTransform>
+	B convert( A src , B dst ) 
+	{
+		if( src == null || dst == null )
+			throw new IllegalArgumentException("Both inputs must not be null");
+		
+		if( src instanceof Se2_F32 ) {
+			if( dst instanceof Affine2D_F32 ) {
+				return (B)convert((Se2_F32)src,(Affine2D_F32)dst);
+			} else if( dst instanceof Homography2D_F32 ) {
+				return (B)convert((Se2_F32)src,(Homography2D_F32)dst);
+			} else if( dst instanceof Se2_F32 ) {
+				dst.set(src);
+				return dst;
+			}
+		} else if( src instanceof Affine2D_F32 ) {
+			if( dst instanceof Homography2D_F32 ) {
+				return (B)convert((Affine2D_F32)src,(Homography2D_F32)dst);
+			} else if( dst instanceof Affine2D_F32 ) {
+				dst.set(src);
+				return dst;
+			}
+		} else if( src instanceof  Homography2D_F32 ) {
+			if( dst instanceof Homography2D_F32 ) {
+				dst.set(src);
+				return dst;
+			}
+		}
+		
+		throw new IllegalArgumentException("The specified transform is not supported: "+
+				src.getClass().getSimpleName()+" "+dst.getClass().getSimpleName());
 	}
+	
+    public static Affine2D_F32 convert( Se2_F32 src , Affine2D_F32 dst ) {
+        if( dst == null )
+            dst = new Affine2D_F32();
+
+        dst.a11 = src.c;
+        dst.a12 = -src.s;
+        dst.a21 = src.s;
+        dst.a22 = src.c;
+        dst.tx = src.tran.x;
+        dst.ty = src.tran.y;
+
+        return dst;
+    }
+
+    public static Homography2D_F32 convert( Se2_F32 src , Homography2D_F32 dst ) {
+        if( dst == null )
+            dst = new Homography2D_F32();
+
+        dst.a11 = src.c;
+        dst.a12 = -src.s;
+        dst.a13 = src.tran.x;
+        dst.a21 = src.s;
+        dst.a22 = src.c;
+        dst.a23 = src.tran.y;
+        dst.a31 = 0;
+        dst.a32 = 0;
+        dst.a33 = 1;
+
+        return dst;
+    }
+
+    public static Homography2D_F32 convert( Affine2D_F32 src , Homography2D_F32 dst ) {
+        if( dst == null )
+            dst = new Homography2D_F32();
+
+        dst.a11 = src.a11;
+        dst.a12 = src.a12;
+        dst.a13 = src.tx;
+        dst.a21 = src.a21;
+        dst.a22 = src.a22;
+        dst.a23 = src.ty;
+        dst.a31 = 0;
+        dst.a32 = 0;
+        dst.a33 = 1;
+
+        return dst;
+    }
 }

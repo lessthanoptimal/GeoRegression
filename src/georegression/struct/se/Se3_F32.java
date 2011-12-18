@@ -33,9 +33,9 @@ import org.ejml.ops.CommonOps;
  */
 public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	// rotation matrix
-	private DenseMatrix64F R;
+	public DenseMatrix64F R;
 	// translation vector
-	private Vector3D_F32 T;
+	public Vector3D_F32 T;
 
 	/**
 	 * Creates a new transform that does nothing.

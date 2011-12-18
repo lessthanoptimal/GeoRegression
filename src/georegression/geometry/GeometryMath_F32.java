@@ -314,14 +314,17 @@ public class GeometryMath_F32 {
 	}
 
 	/**
-	 * pt and mod are assumed to be homogeneous coordinates (z=1).  M is multiplied by
-	 * [pt.x , pt.y , 1] and mod is computed by computing (x,y,z) then [x/z , y/z , 1].
+	 * <p>
+	 * Computes mod =  M*pt, where both pt and mod are in homogeneous coordinates with z assumed to be
+	 * equal to 1, and M is a 3x3 matrix.
+	 * </p>
+	 * <p>
 	 * 'pt' and 'mod' can be the same point.
-	 *
-	 * @param M
-	 * @param pt
-	 * @param mod
-	 * @return
+	 * </p>
+	 * @param M  3x3 matrix
+	 * @param pt Homogeneous point with z=1
+	 * @param mod Storage for the computation.  If null a new point is declared.  Can be same instance as pt.
+	 * @return Result of computation.
 	 */
 	public static <T extends GeoTuple2D_F32> T mult( DenseMatrix64F M, T pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )

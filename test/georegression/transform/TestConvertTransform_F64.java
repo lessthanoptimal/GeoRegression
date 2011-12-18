@@ -19,6 +19,16 @@
 
 package georegression.transform;
 
+import georegression.misc.GrlConstants;
+import georegression.misc.test.GeometryUnitTest;
+import georegression.struct.affine.Affine2D_F64;
+import georegression.struct.homo.Homography2D_F64;
+import georegression.struct.point.Point2D_F64;
+import georegression.struct.se.Se2_F64;
+import georegression.struct.se.Se3_F64;
+import georegression.transform.affine.AffinePointOps;
+import georegression.transform.homo.HomographyPointOps;
+import georegression.transform.se.SePointOps_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.fail;
@@ -29,7 +39,38 @@ import static org.junit.Assert.fail;
  */
 public class TestConvertTransform_F64 {
 	@Test
-	public void stuff() {
-		fail("implement");
+	public void Se_To_Affine_2D() {
+		Se2_F64 a = new Se2_F64(2,3,0.5);
+		Affine2D_F64 b = ConvertTransform_F64.convert(a,new Affine2D_F64());
+
+		Point2D_F64 pt = new Point2D_F64(3,4);
+		Point2D_F64 expected = SePointOps_F64.transform(a,pt,null);
+		Point2D_F64 found = AffinePointOps.transform(b, pt, null);
+
+		GeometryUnitTest.assertEquals(expected,found, GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void Se_To_Homography_2D() {
+		Se2_F64 a = new Se2_F64(2,3,0.5);
+		Homography2D_F64 b = ConvertTransform_F64.convert(a,new Homography2D_F64());
+
+		Point2D_F64 pt = new Point2D_F64(3,4);
+		Point2D_F64 expected = SePointOps_F64.transform(a,pt,null);
+		Point2D_F64 found = HomographyPointOps.transform(b, pt, null);
+
+		GeometryUnitTest.assertEquals(expected, found, GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void Affine_To_Homography_2D() {
+		Affine2D_F64 a = new Affine2D_F64(1,2,3,4,5,6);
+		Homography2D_F64 b = ConvertTransform_F64.convert(a,new Homography2D_F64());
+
+		Point2D_F64 pt = new Point2D_F64(3,4);
+		Point2D_F64 expected = AffinePointOps.transform(a,pt,null);
+		Point2D_F64 found = HomographyPointOps.transform(b, pt, null);
+
+		GeometryUnitTest.assertEquals(expected, found, GrlConstants.DOUBLE_TEST_TOL);
 	}
 }
