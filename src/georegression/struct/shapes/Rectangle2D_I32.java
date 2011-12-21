@@ -23,10 +23,10 @@ package georegression.struct.shapes;
  * An axis aligned rectangle in 2D that is specified with integers
  */
 public class Rectangle2D_I32 {
-	private int tl_x;
-	private int tl_y;
-	private int width;
-	private int height;
+	public int tl_x;
+	public int tl_y;
+	public int width;
+	public int height;
 
 	public Rectangle2D_I32( int tl_x, int tl_y, int width, int height ) {
 		this.tl_x = tl_x;
