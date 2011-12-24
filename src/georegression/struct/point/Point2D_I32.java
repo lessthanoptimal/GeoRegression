@@ -60,6 +60,26 @@ public class Point2D_I32 {
 		return y;
 	}
 
+	/**
+	 * <p>
+	 * Returns the Euclidean distance squared from 'this' to 'a'.  No floating point
+	 * operations are used.
+	 * </p>
+	 *
+	 * <p>
+	 * d<sup>2</sup> =  (this.x-a.x)<sup>2</sup> + (this.y-a.y)<sup>2</sup>
+	 * </p>
+	 *
+	 * @param a Point that distance is computed from.
+	 * @return Euclidean distance squared.
+	 */
+	public int distance2( Point2D_I32 a ) {
+		int dx = x-a.x;
+		int dy = y-a.y;
+
+		return dx*dx + dy*dy;
+	}
+
 	public Point2D_I32 copy() {
 		return new Point2D_I32( this );
 	}
