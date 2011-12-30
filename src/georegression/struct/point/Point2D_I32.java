@@ -39,6 +39,11 @@ public class Point2D_I32 {
 	public Point2D_I32() {
 	}
 
+	public void set( Point2D_I32 v ) {
+		this.x = v.x;
+		this.y = v.y;
+	}
+
 	public void set( int x, int y ) {
 		this.x = x;
 		this.y = y;

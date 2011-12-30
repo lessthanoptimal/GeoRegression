@@ -41,6 +41,13 @@ public class LineSegment2D_F64 {
 	public LineSegment2D_F64( double x0, double y0, double x1, double y1 ) {
 		set( x0, y0, x1, y1 );
 	}
+	
+	public static LineSegment2D_F64 wrap( Point2D_F64 a , Point2D_F64 b ) {
+		LineSegment2D_F64 ret = new LineSegment2D_F64();
+		ret.a = a;
+		ret.b = b;
+		return ret;
+	}
 
 	public void set( Point2D_F64 a, Point2D_F64 b ) {
 		this.a.set( a );

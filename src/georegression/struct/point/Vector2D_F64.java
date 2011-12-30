@@ -51,6 +51,12 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 		return new Vector2D_F64( this );
 	}
 
+	public void normalize() {
+		double r = norm();
+		x /= r;
+		y /= r;
+	}
+
 	public String toString() {
 		return "V( " + x + " " + y + " )";
 	}
