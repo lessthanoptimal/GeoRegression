@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -62,55 +62,54 @@ public class ConvertTransform_F32 {
 			}
 		}
 		
-		throw new IllegalArgumentException("The specified transform is not supported: "+
-				src.getClass().getSimpleName()+" "+dst.getClass().getSimpleName());
+		throw new IllegalArgumentException("The specified transform is not supported");
 	}
 	
-    public static Affine2D_F32 convert( Se2_F32 src , Affine2D_F32 dst ) {
-        if( dst == null )
-            dst = new Affine2D_F32();
+	public static Affine2D_F32 convert( Se2_F32 src , Affine2D_F32 dst ) {
+		if( dst == null )
+			dst = new Affine2D_F32();
 
-        dst.a11 = src.c;
-        dst.a12 = -src.s;
-        dst.a21 = src.s;
-        dst.a22 = src.c;
-        dst.tx = src.tran.x;
-        dst.ty = src.tran.y;
+		dst.a11 = src.c;
+		dst.a12 = -src.s;
+		dst.a21 = src.s;
+		dst.a22 = src.c;
+		dst.tx = src.tran.x;
+		dst.ty = src.tran.y;
 
-        return dst;
-    }
+		return dst;
+	}
 
-    public static Homography2D_F32 convert( Se2_F32 src , Homography2D_F32 dst ) {
-        if( dst == null )
-            dst = new Homography2D_F32();
+	public static Homography2D_F32 convert( Se2_F32 src , Homography2D_F32 dst ) {
+		if( dst == null )
+			dst = new Homography2D_F32();
 
-        dst.a11 = src.c;
-        dst.a12 = -src.s;
-        dst.a13 = src.tran.x;
-        dst.a21 = src.s;
-        dst.a22 = src.c;
-        dst.a23 = src.tran.y;
-        dst.a31 = 0;
-        dst.a32 = 0;
-        dst.a33 = 1;
+		dst.a11 = src.c;
+		dst.a12 = -src.s;
+		dst.a13 = src.tran.x;
+		dst.a21 = src.s;
+		dst.a22 = src.c;
+		dst.a23 = src.tran.y;
+		dst.a31 = 0;
+		dst.a32 = 0;
+		dst.a33 = 1;
 
-        return dst;
-    }
+		return dst;
+	}
 
-    public static Homography2D_F32 convert( Affine2D_F32 src , Homography2D_F32 dst ) {
-        if( dst == null )
-            dst = new Homography2D_F32();
+	public static Homography2D_F32 convert( Affine2D_F32 src , Homography2D_F32 dst ) {
+		if( dst == null )
+			dst = new Homography2D_F32();
 
-        dst.a11 = src.a11;
-        dst.a12 = src.a12;
-        dst.a13 = src.tx;
-        dst.a21 = src.a21;
-        dst.a22 = src.a22;
-        dst.a23 = src.ty;
-        dst.a31 = 0;
-        dst.a32 = 0;
-        dst.a33 = 1;
+		dst.a11 = src.a11;
+		dst.a12 = src.a12;
+		dst.a13 = src.tx;
+		dst.a21 = src.a21;
+		dst.a22 = src.a22;
+		dst.a23 = src.ty;
+		dst.a31 = 0;
+		dst.a32 = 0;
+		dst.a33 = 1;
 
-        return dst;
-    }
+		return dst;
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -40,6 +40,13 @@ public class LineSegment2D_F32 {
 
 	public LineSegment2D_F32( float x0, float y0, float x1, float y1 ) {
 		set( x0, y0, x1, y1 );
+	}
+	
+	public static LineSegment2D_F32 wrap( Point2D_F32 a , Point2D_F32 b ) {
+		LineSegment2D_F32 ret = new LineSegment2D_F32();
+		ret.a = a;
+		ret.b = b;
+		return ret;
 	}
 
 	public void set( Point2D_F32 a, Point2D_F32 b ) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,15 +19,15 @@
 
 package georegression.struct.shapes;
 
-import georegression.struct.point.Point2D_F64;
+import georegression.struct.point.Point2D_F32;
 
 /**
  *
  *
  */
-public class Quadralateral2D {
-	Point2D_F64 tl;
-	Point2D_F64 tr;
-	Point2D_F64 bl;
-	Point2D_F64 br;
+public class Quadrilateral_F32 {
+	Point2D_F32 a;
+	Point2D_F32 b;
+	Point2D_F32 c;
+	Point2D_F32 d;
 }

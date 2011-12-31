@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -49,6 +49,12 @@ public class Vector2D_F32 extends GeoTuple2D_F32<Vector2D_F32> {
 
 	public Vector2D_F32 copy() {
 		return new Vector2D_F32( this );
+	}
+
+	public void normalize() {
+		float r = norm();
+		x /= r;
+		y /= r;
 	}
 
 	public String toString() {

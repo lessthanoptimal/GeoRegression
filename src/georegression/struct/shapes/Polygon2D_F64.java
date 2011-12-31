@@ -17,20 +17,25 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.metric;
+package georegression.struct.shapes;
 
-import org.junit.Test;
-
-import static org.junit.Assert.fail;
-
+import georegression.struct.point.Point2D_F64;
 
 /**
+ * Describes a polygon in 2D.
+ *
  * @author Peter Abeles
  */
-public class TestIntersection3D_F32 {
+public class Polygon2D_F64 {
 
-	@Test
-	public void asfdasdf() {
-		fail( "implement" );
+	// vertexes in the polygon
+	public Point2D_F64 vertexes[];
+
+	public Polygon2D_F64( int numVertexes ) {
+		vertexes = new Point2D_F64[numVertexes];
+
+		for( int i = 0; i < numVertexes; i++ ) {
+			vertexes[i] = new Point2D_F64();
+		}
 	}
 }

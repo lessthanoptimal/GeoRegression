@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,6 +22,7 @@ package georegression.metric;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.Polygon2D_F32;
 import georegression.struct.shapes.Rectangle2D_F32;
 
 
@@ -34,6 +35,31 @@ public class Intersection2D_F32 {
 
 	// todo comment
 	// todo how are parallel lines handled?
+
+	/**
+	 * Checks to see if the point is contained inside the convex polygon.  If the
+	 * point is an the polygon's perimeter it is considered to NOT be inside.
+	 *
+	 * @param polygon Convex polygon. Not modified.
+	 * @param pt Point. Not modified.
+	 * @return True if the point is contained inside the polygon.
+	 */
+	// Ported from internet code 12/2011
+	// http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+	public static boolean containConvex( Polygon2D_F32 polygon , Point2D_F32 pt )
+	{
+		final int N = polygon.vertexes.length;
+
+		boolean c = false;
+		for (int i = 0, j = N-1; i < N; j = i++) {
+			Point2D_F32 a = polygon.vertexes[i];
+			Point2D_F32 b = polygon.vertexes[j];
+			
+			if ( ((a.y>pt.y) != (b.y>pt.y)) && (pt.x < (b.x-a.x) * (pt.y-a.y) / (b.y-a.y) + a.x) )
+				c = !c;
+		}
+		return c;
+	}
 
 	/**
 	 * Finds the point of intersection between two lines.

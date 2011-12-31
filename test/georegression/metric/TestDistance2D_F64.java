@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,15 +36,15 @@ public class TestDistance2D_F64 {
 
 	@Test
 	public void distance_parametric_line() {
-		double found = Distance2D_F64.distance( new LineParametric2D_F64( -2, 0, 1, 1 ), new Point2D_F64( 2, 0 ) );
-		double expected = (double) UtilTrig_F64.distance( 0, 2, 2, 0 );
+		double found = Distance2D_F64.distance( new LineParametric2D_F64( -2, 0, 1, 1 ), new Point2D_F64( 4, -2 ) );
+		double expected = (double) UtilTrig_F64.distance( 0, 2, 4, -2 );
 		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
 	public void distanceSq_parametric_line() {
-		double found = Distance2D_F64.distanceSq( new LineParametric2D_F64( -2, 0, 1, 1 ), new Point2D_F64( 2, 0 ) );
-		double expected = (double) UtilTrig_F64.distanceSq( 0, 2, 2, 0 );
+		double found = Distance2D_F64.distanceSq( new LineParametric2D_F64( -2, 0, 1, 1 ), new Point2D_F64( 4, -2 ) );
+		double expected = (double) UtilTrig_F64.distanceSq( 0, 2, 4, -2);
 		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
 	}
 

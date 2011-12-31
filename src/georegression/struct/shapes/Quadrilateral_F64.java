@@ -17,20 +17,17 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.metric;
+package georegression.struct.shapes;
 
-import org.junit.Test;
-
-import static org.junit.Assert.fail;
-
+import georegression.struct.point.Point2D_F64;
 
 /**
- * @author Peter Abeles
+ *
+ *
  */
-public class TestIntersection3D_F32 {
-
-	@Test
-	public void asfdasdf() {
-		fail( "implement" );
-	}
+public class Quadrilateral_F64 {
+	Point2D_F64 a;
+	Point2D_F64 b;
+	Point2D_F64 c;
+	Point2D_F64 d;
 }

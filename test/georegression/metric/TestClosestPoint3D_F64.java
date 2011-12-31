@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -72,8 +72,8 @@ public class TestClosestPoint3D_F64 {
 
 		assertTrue(ClosestPoint3D_F64.closestPoints(lineA, lineB, param));
 
-		assertEquals( a.distance(b) , param[0] , 1e-8 );
-		assertEquals( c.distance(b) , param[1] , 1e-8 );
+		assertEquals( a.distance(b) , param[0] , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( c.distance(b) , param[1] , GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test

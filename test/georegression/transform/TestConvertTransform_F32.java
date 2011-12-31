@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,13 +25,10 @@ import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.homo.Homography2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.se.Se2_F32;
-import georegression.struct.se.Se3_F32;
 import georegression.transform.affine.AffinePointOps;
 import georegression.transform.homo.HomographyPointOps;
 import georegression.transform.se.SePointOps_F32;
 import org.junit.Test;
-
-import static org.junit.Assert.fail;
 
 
 /**

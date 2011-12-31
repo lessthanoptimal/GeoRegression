@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,13 +24,13 @@ import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se2_F64;
+import georegression.struct.shapes.Polygon2D_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.junit.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 /**
@@ -39,6 +39,33 @@ import static org.junit.Assert.assertTrue;
 public class TestIntersection2D_F64 {
 	Random rand = new Random( 234 );
 
+	@Test
+	public void containConvex() {
+		Polygon2D_F64 poly = new Polygon2D_F64(4);
+		poly.vertexes[0].set(-1,-1);
+		poly.vertexes[1].set(1, -1);
+		poly.vertexes[2].set(1, 1);
+		poly.vertexes[3].set(-1, 1);
+
+		Point2D_F64 online = new Point2D_F64(1,-1);
+		Point2D_F64 inside = new Point2D_F64(0.5,0.5);
+		Point2D_F64 outside = new Point2D_F64(1.5,0.5);
+
+		assertFalse(Intersection2D_F64.containConvex(poly,online));
+		assertTrue(Intersection2D_F64.containConvex(poly,inside));
+		assertFalse(Intersection2D_F64.containConvex(poly,outside));
+
+		// change the order of the vertexes
+		poly.vertexes[0].set(-1, 1);
+		poly.vertexes[1].set(1, 1);
+		poly.vertexes[2].set(1, -1);
+		poly.vertexes[3].set(-1,-1);
+
+		assertFalse(Intersection2D_F64.containConvex(poly,online));
+		assertTrue(Intersection2D_F64.containConvex(poly,inside));
+		assertFalse(Intersection2D_F64.containConvex(poly,outside));
+	}
+	
 	@Test
 	public void intersection_ls_to_ls() {
 		// check positive, none pathological cases

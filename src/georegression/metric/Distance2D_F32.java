@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -32,13 +32,14 @@ import georegression.struct.point.Point2D_F32;
  * @author Peter Abeles
  */
 // TODO distance between two line segments, line lines
-	// handle parallel overlapping cases by returning zero
+// handle parallel overlapping cases by returning zero
 public class Distance2D_F32 {
 
 
 	/**
 	 * <p>
 	 * Returns the distance of the closest point on the line segment from the provided line.
+	 * Does NOT assume the line's slope is normalized to one.
 	 * </p>
 	 *
 	 * @param line A line segment. Not modified.
@@ -47,15 +48,7 @@ public class Distance2D_F32 {
 	 */
 	public static float distance( LineParametric2D_F32 line,
 								   Point2D_F32 p ) {
-		float t = ClosestPoint2D_F32.closestPointT( line, p );
-
-		float a = line.slope.x * t + line.p.x;
-		float b = line.slope.y * t + line.p.y;
-
-		float dx = p.x - a;
-		float dy = p.y - b;
-
-		return (float)Math.sqrt( dx * dx + dy * dy );
+		return (float)Math.sqrt(distanceSq(line, p));
 	}
 
 	/**
@@ -69,7 +62,7 @@ public class Distance2D_F32 {
 	 * @return Distance squared to the closest point on the line is away from the point.
 	 */
 	public static float distanceSq( LineParametric2D_F32 line,
-									Point2D_F32 p ) {
+									 Point2D_F32 p ) {
 		float t = ClosestPoint2D_F32.closestPointT( line, p );
 
 		float a = line.slope.x * t + line.p.x;
