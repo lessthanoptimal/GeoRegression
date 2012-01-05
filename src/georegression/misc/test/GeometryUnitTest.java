@@ -21,6 +21,7 @@ package georegression.misc.test;
 
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.struct.*;
+import georegression.struct.point.Point2D_I32;
 import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
 
@@ -78,6 +79,16 @@ public class GeometryUnitTest {
 		assertEquals( expected.getY(), found.getY(), tol, "y-axis is not equals." );
 	}
 
+	public static void assertEquals( Point2D_I32 expected, Point2D_I32 found ) {
+		assertEquals(expected.getX(), found.getX(), "x-axis is not equal.");
+		assertEquals(expected.getY(), found.getY(), "y-axis is not equal.");
+	}
+
+	public static void assertEquals( int x , int y, Point2D_I32 found ) {
+		assertEquals(x, found.getX(), "x-axis is not equal.");
+		assertEquals(y, found.getY(), "y-axis is not equal.");
+	}
+
 	public static void assertNotEquals( GeoTuple2D_F64 expected, GeoTuple2D_F64 found, double tol ) {
 		assertNotEquals( expected.getX(), found.getX(), tol, "x-axis is equal." );
 		assertNotEquals( expected.getY(), found.getY(), tol, "y-axis is equal." );
@@ -124,6 +135,11 @@ public class GeometryUnitTest {
 		for( int i = 0; i < N; i++ ) {
 			assertEquals( a.getIndex( i ), b.getIndex( i ), tol, "Index " + i + " is not the same." );
 		}
+	}
+
+	public static void assertEquals( int valueA, int valueB, String message ) {
+		if( valueA != valueB)
+			throw new RuntimeException( message + " " + valueA + "  " + valueB );
 	}
 
 	public static void assertEquals( double valueA, double valueB, double tol, String message ) {
