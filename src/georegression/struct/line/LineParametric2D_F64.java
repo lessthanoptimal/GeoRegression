@@ -53,6 +53,11 @@ public class LineParametric2D_F64 {
 	public LineParametric2D_F64() {
 	}
 
+	public void set( LineParametric2D_F64 line ) {
+		this.p.set(line.p);
+		this.slope.set(line.slope);
+	}
+	
 	public void setPoint( Point2D_F64 pt ) {
 		this.p.set( pt );
 	}

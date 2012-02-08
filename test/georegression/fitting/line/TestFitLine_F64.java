@@ -57,4 +57,29 @@ public class TestFitLine_F64 {
 		assertEquals(r,found.distance, GrlConstants.DOUBLE_TEST_TOL);
 		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.DOUBLE_TEST_TOL);
 	}
+
+	@Test
+	public void polar_weighted() {
+
+		double weights[] = new double[20];
+		double r = 1.5;
+		double theta = 0.75;
+
+		List<Point2D_F64> pts = new ArrayList<Point2D_F64>();
+
+		for( int i = 0; i < 20; i++ ) {
+			Point2D_F64 p = new Point2D_F64();
+			p.x = i;
+			p.y = (double)( (r-p.x*Math.cos(theta))/Math.sin(theta));
+
+			weights[i] = 0.5;
+
+			pts.add(p);
+		}
+
+		LinePolar2D_F64 found = FitLine_F64.polar(pts,weights,null);
+
+		assertEquals(r,found.distance, GrlConstants.DOUBLE_TEST_TOL);
+		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.DOUBLE_TEST_TOL);
+	}
 }

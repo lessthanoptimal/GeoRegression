@@ -53,6 +53,11 @@ public class LineParametric2D_F32 {
 	public LineParametric2D_F32() {
 	}
 
+	public void set( LineParametric2D_F32 line ) {
+		this.p.set(line.p);
+		this.slope.set(line.slope);
+	}
+	
 	public void setPoint( Point2D_F32 pt ) {
 		this.p.set( pt );
 	}
