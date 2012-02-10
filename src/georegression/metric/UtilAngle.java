@@ -111,6 +111,36 @@ public class UtilAngle {
 	}
 
 	/**
+	 * Angular distance in radians to go from angA to angB in counter clock-wise direction.
+	 * The resulting angle will be from 0 to 2&pi;.
+	 *
+	 * @param angA First angle. -pi to pi
+	 * @param angB Second angle -pi to pi
+	 * @return An angle from 0 to 2 &pi;
+	 */
+	public static double distanceCCW( double angA, double angB ) {
+		if( angB > angA )
+			return angB-angA;
+		else
+			return GrlConstants.PI2 - (angA-angB);
+	}
+
+	/**
+	 * Angular distance in radians to go from angA to angB in clock-wise direction.
+	 * The resulting angle will be from 0 to 2&pi;.
+	 *
+	 * @param angA First angle. -pi to pi
+	 * @param angB Second angle   -pi to pi
+	 * @return An angle from 0 to 2 &pi;
+	 */
+	public static double distanceCW( double angA, double angB ) {
+		if( angA > angB )
+			return angA-angB;
+		else
+			return GrlConstants.PI2-(angB-angA);
+	}
+	
+	/**
 	 * <p>
 	 * Returns the difference between two angles and bounds the result between -pi and pi:<br>
 	 * result = angA - angB<br>

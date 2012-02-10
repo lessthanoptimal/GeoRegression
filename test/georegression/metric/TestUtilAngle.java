@@ -21,8 +21,7 @@ package georegression.metric;
 
 import org.junit.Test;
 
-import static georegression.metric.UtilAngle.bound;
-import static georegression.metric.UtilAngle.minus;
+import static georegression.metric.UtilAngle.*;
 import static java.lang.Math.PI;
 import static org.junit.Assert.*;
 
@@ -66,6 +65,18 @@ public class TestUtilAngle {
 		assertEquals( PI * 0.3, bound( PI * 8.3 ), 1e-5 );
 		assertEquals( PI * 0.3, bound( PI * 0.3 ), 1e-5 );
 		assertEquals( -PI * 0.9, bound( -PI * 0.9 ), 1e-5 );
+	}
+
+	@Test
+	public void testDistanceCCW() {
+		assertEquals( PI * 1.5, distanceCCW(-0.75 * PI, 0.75 * PI), 1e-5 );
+		assertEquals( PI * 0.5, distanceCCW( 0.75 * PI, -0.75 * PI), 1e-5 );
+	}
+
+	@Test
+	public void testDistanceCW() {
+		assertEquals( PI * 0.5, distanceCW(-0.75 * PI, 0.75 * PI), 1e-5 );
+		assertEquals( PI * 1.5, distanceCW(0.75 * PI, -0.75 * PI), 1e-5 );
 	}
 
 	@Test
