@@ -19,17 +19,100 @@
 
 package georegression.transform.homo;
 
+import georegression.geometry.GeometryMath_F32;
+import georegression.geometry.GeometryMath_F64;
+import georegression.struct.homo.Homography2D_F32;
+import georegression.struct.homo.Homography2D_F64;
+import georegression.struct.homo.UtilHomography;
+import georegression.struct.point.Point2D_F32;
+import georegression.struct.point.Point2D_F64;
+import org.ejml.data.DenseMatrix64F;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import java.util.Random;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**
  * @author Peter Abeles
  */
 public class TestHomographyPointOps {
+
+	DenseMatrix64F M = new DenseMatrix64F(3,3);
+	Homography2D_F64 tran_F64 = new Homography2D_F64();
+	Homography2D_F32 tran_F32 = new Homography2D_F32();
+
+	public TestHomographyPointOps() {
+		Random rand = new Random(234);
+		
+		tran_F64.a11 = rand.nextGaussian();
+		tran_F64.a12 = rand.nextGaussian();
+		tran_F64.a13 = rand.nextGaussian();
+		tran_F64.a21 = rand.nextGaussian();
+		tran_F64.a22 = rand.nextGaussian();
+		tran_F64.a23 = rand.nextGaussian();
+		tran_F64.a31 = rand.nextGaussian();
+		tran_F64.a32 = rand.nextGaussian();
+		tran_F64.a33 = rand.nextGaussian();
+
+		UtilHomography.convert(tran_F64,M);
+		UtilHomography.convert(tran_F64,tran_F32);
+	}
+
 	@Test
-	public void stuff() {
-		fail("implement");
+	public void transform_Point_F64() {
+		Point2D_F64 src = new Point2D_F64(1,2);
+		Point2D_F64 dst = new Point2D_F64();
+		Point2D_F64 expected = new Point2D_F64();
+
+		HomographyPointOps.transform(tran_F64,src,dst);
+
+		GeometryMath_F64.mult(M,src,expected);
+		
+		assertEquals(expected.x,dst.x,1e-8);
+		assertEquals(expected.y,dst.y,1e-8);
+	}
+
+	@Test
+	public void transform_DD_F64() {
+		Point2D_F64 src = new Point2D_F64(1,2);
+		Point2D_F64 dst = new Point2D_F64();
+		Point2D_F64 expected = new Point2D_F64();
+
+		HomographyPointOps.transform(tran_F64,1,2,dst);
+
+		GeometryMath_F64.mult(M,src,expected);
+
+		assertEquals(expected.x,dst.x,1e-8);
+		assertEquals(expected.y,dst.y,1e-8);
+	}
+
+	@Test
+	public void transform_Point_F32() {
+		Point2D_F32 src = new Point2D_F32(1,2);
+		Point2D_F32 dst = new Point2D_F32();
+		Point2D_F32 expected = new Point2D_F32();
+
+		HomographyPointOps.transform(tran_F32,src,dst);
+
+		GeometryMath_F32.mult(M, src, expected);
+
+		assertEquals(expected.x,dst.x,1e-4);
+		assertEquals(expected.y,dst.y,1e-4);
+	}
+
+	@Test
+	public void transform_FF_F32() {
+		Point2D_F32 src = new Point2D_F32(1,2);
+		Point2D_F32 dst = new Point2D_F32();
+		Point2D_F32 expected = new Point2D_F32();
+
+		HomographyPointOps.transform(tran_F32,1,2,dst);
+
+		GeometryMath_F32.mult(M, src, expected);
+
+		assertEquals(expected.x,dst.x,1e-4);
+		assertEquals(expected.y,dst.y,1e-4);
 	}
 }

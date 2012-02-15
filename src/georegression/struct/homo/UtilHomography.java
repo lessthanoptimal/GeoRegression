@@ -55,6 +55,33 @@ public class UtilHomography {
 
 		return ret;
 	}
+
+	/**
+	 * Converts a {@link Homography2D_F64} into a 3x3 matrix.
+	 *
+	 * @param m Homography
+	 * @param ret Storage for output.  If null then a new instance is created.
+	 * @return Equivalent matrix.
+	 */
+	public static DenseMatrix64F convert( Homography2D_F64 m , DenseMatrix64F ret ) {
+		if( ret == null ) {
+			ret = new DenseMatrix64F(3,3);
+		} else if( ret.numCols != 3 || ret.numRows != 3)
+			throw new IllegalArgumentException("Expected a 3 by 3 matrix.");
+
+
+		ret.unsafe_set(0,0,m.a11);
+		ret.unsafe_set(0,1,m.a12);
+		ret.unsafe_set(0,2,m.a13);
+		ret.unsafe_set(1,0,m.a21);
+		ret.unsafe_set(1,1,m.a22);
+		ret.unsafe_set(1,2,m.a23);
+		ret.unsafe_set(2,0,m.a31);
+		ret.unsafe_set(2,1,m.a32);
+		ret.unsafe_set(2,2,m.a33);
+
+		return ret;
+	}
 	
 	public static Homography2D_F32 convert( Homography2D_F64 m , Homography2D_F32 ret ) {
 		if( ret == null )

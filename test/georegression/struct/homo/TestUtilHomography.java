@@ -31,7 +31,7 @@ import static org.junit.Assert.assertTrue;
 public class TestUtilHomography {
 
 	@Test
-	public void convert_matrix() {
+	public void convert_matrix_F64() {
 		DenseMatrix64F a = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
 
 		Homography2D_F64 h = UtilHomography.convert(a,null);
@@ -48,10 +48,27 @@ public class TestUtilHomography {
 	}
 
 	@Test
+	public void convert_F64_matrix() {
+		Homography2D_F64 h = new Homography2D_F64(1,2,3,4,5,6,7,8,9);
+
+		DenseMatrix64F a = UtilHomography.convert(h,(DenseMatrix64F)null);
+
+		assertTrue(h.a11 == a.get(0,0));
+		assertTrue(h.a12 == a.get(0,1));
+		assertTrue(h.a13 == a.get(0,2));
+		assertTrue(h.a21 == a.get(1,0));
+		assertTrue(h.a22 == a.get(1,1));
+		assertTrue(h.a23 == a.get(1,2));
+		assertTrue(h.a31 == a.get(2,0));
+		assertTrue(h.a32 == a.get(2,1));
+		assertTrue(h.a33 == a.get(2,2));
+	}
+
+	@Test
 	public void convert_F64_F32() {
 		Homography2D_F64 a = new Homography2D_F64(1,2,3,4,5,6,7,8,9);
 
-		Homography2D_F32 h = UtilHomography.convert(a,null);
+		Homography2D_F32 h = UtilHomography.convert(a,(Homography2D_F32)null);
 
 		assertTrue(h.a11 == (float)a.a11);
 		assertTrue(h.a12 == (float)a.a12);
