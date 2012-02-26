@@ -39,7 +39,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestMotionSe3PointCrossCovariance_F64 {
+public class TestMotionSe3PointSVD_F64 {
 
 	Random rand = new Random( 434324 );
 
@@ -59,9 +59,10 @@ public class TestMotionSe3PointCrossCovariance_F64 {
 				to.add( SePointOps_F64.transform( tran, p, null ) );
 			}
 
-			MotionSe3PointCrossCovariance_F64 alg = new MotionSe3PointCrossCovariance_F64();
+			MotionSe3PointSVD_F64 alg = new MotionSe3PointSVD_F64();
 
 			assertTrue( alg.process( from, to ) );
+
 
 			Se3_F64 tranFound = alg.getMotion();
 
@@ -69,16 +70,13 @@ public class TestMotionSe3PointCrossCovariance_F64 {
 		}
 	}
 
-	/**
-	 * Put more thought into this problem.  Can it even be solved? is SVD less sensitive?
-	 * SVD worked on one problem while this did not
-	 */
+	// todo see comments in cross covariance
 	@Test
 	public void noiselessPlanar() {
 		for( int i = 0; i < 100; i++ ) {
 			DenseMatrix64F R = RotationMatrixGenerator.eulerXYZ( rand.nextGaussian(),
 					rand.nextGaussian(),rand.nextGaussian(), null );
-			Vector3D_F64 T = new Vector3D_F64( 1 + rand.nextGaussian(),
+			Vector3D_F64 T = new Vector3D_F64( rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian() );
 
 			Se3_F64 tran = new Se3_F64( R, T );
@@ -98,10 +96,10 @@ public class TestMotionSe3PointCrossCovariance_F64 {
 			checkTransform( from, to, tranFound, GrlConstants.DOUBLE_TEST_TOL );
 		}
 	}
-	
+
 	private List<Point3D_F64> createPlanar( int N ) {
 		List<Point3D_F64> ret = new ArrayList<Point3D_F64>();
-		
+
 		for( int i = 0; i < N; i++ )
 			ret.add( new Point3D_F64((double) (rand.nextGaussian()*2),(double)(rand.nextGaussian()*2),3));
 

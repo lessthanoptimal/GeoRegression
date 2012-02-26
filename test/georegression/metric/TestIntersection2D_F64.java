@@ -20,9 +20,11 @@
 package georegression.metric;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.transform.se.SePointOps_F64;
@@ -160,5 +162,30 @@ public class TestIntersection2D_F64 {
 		paraLine.setAngle( paraLine.getAngle() + tran.getYaw() );
 		dist = Intersection2D_F64.intersection( paraLine, target );
 		assertTrue( Double.isNaN( dist ) );
+	}
+
+	@Test
+	public void intersection_l_to_l_parametric() {
+		fail("implement");
+	}
+	
+	@Test
+	public void intersection_l_to_l_general() {
+		// check two arbitrary lines
+		LineGeneral2D_F64 a = new LineGeneral2D_F64(1,2,3);
+		LineGeneral2D_F64 b = new LineGeneral2D_F64(2,-1,0.5);
+
+		Point3D_F64 found = Intersection2D_F64.intersection(a,b,null);
+		assertEquals(0,a.A*found.x/found.z+a.B*found.y/found.z+a.C, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,a.A*found.x+a.B*found.y+a.C*found.z, GrlConstants.DOUBLE_TEST_TOL);
+
+		// give it two parallel lines
+		a = new LineGeneral2D_F64(1,2,3);
+		b = new LineGeneral2D_F64(1,2,0.5);
+
+		Intersection2D_F64.intersection(a,b,found);
+		assertEquals(0,found.z,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,a.A*found.x+a.B*found.y+a.C*found.z, GrlConstants.DOUBLE_TEST_TOL);
+
 	}
 }

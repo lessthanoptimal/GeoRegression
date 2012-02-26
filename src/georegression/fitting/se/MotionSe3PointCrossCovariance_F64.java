@@ -37,14 +37,14 @@ import java.util.List;
  * Finds the rigid body motion which minimizes the different between the two sets of associated points in 3D.  Computes
  * the quaternions directly in closed form.
  * </p>
- * <p/>
+
  * <p>
  * The mean square error function that is minimized is:<br>
  * f(q) = (1/N) sum( i=1:N , ||x_i - R(q_r)*p_i + q_t||<sup>2</sup> )<br>
  * where q is the transformation parameterized with q_r  quaternions and q_t translation, x is the set of 'to' points
  * and p is the set of 'from' points.
  * </p>
- * <p/>
+
  * <p>
  * The basic cross-covariance method sketch in Paul J. Besl and Neil D. McKay, "A Method for Registration of 3-D Shapes" IEEE
  * Transactions on Pattern Analysis and Machine Intelligence, Vol 14, No. 2, Feb. 1992, is implemented below.

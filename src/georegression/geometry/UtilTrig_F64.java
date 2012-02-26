@@ -19,6 +19,8 @@
 
 package georegression.geometry;
 
+import georegression.struct.GeoTuple2D_F64;
+import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.point.Vector3D_F64;
 
 /**
@@ -53,6 +55,14 @@ public class UtilTrig_F64 {
 	public static double dot( double vx_a, double vy_a,
 							  double vx_b, double vy_b ) {
 		return vx_a * vx_b + vy_a * vy_b;
+	}
+
+	public static double dot( GeoTuple2D_F64 a , GeoTuple2D_F64 b ) {
+		return a.x*b.x + a.y*b.y;
+	}
+
+	public static double dot( GeoTuple3D_F64 a , GeoTuple3D_F64 b ) {
+		return a.x*b.x + a.y*b.y + a.z*b.z;
 	}
 
 	public static double acuteAngle( double vx_a, double vy_a,

@@ -19,9 +19,11 @@
 
 package georegression.metric;
 
+import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.point.Point3D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 
@@ -128,6 +130,37 @@ public class Intersection2D_F64 {
 		return ret;
 	}
 
+
+	/**
+	 * <p>
+	 * Finds the intersection of two lines as a 2D point in homogeneous coordinates.  Because the
+	 * solution is found in homogeneous coordinates it can even handle parallel lines which "intersect
+	 * at infinity".
+	 * </p>
+	 * 
+	 * <p>
+	 * A 2D point in homogeneous coordinates is expressed as the triple (x,y,z), which can be converted
+	 * into the standard notation as x' = x/z and y'= y/z. If the lines are parallel and intersect at
+	 * infinity then z=0 and the above conversion will fail.
+	 * </p>
+	 * 
+	 * @param a Line
+	 * @param b Line
+	 * @param ret Storage for point of intersection.
+	 * @return Point of intersection represented in homogeneous coordinates.
+	 */
+	public static Point3D_F64 intersection( LineGeneral2D_F64 a , LineGeneral2D_F64 b , Point3D_F64 ret )
+	{
+		if( ret == null )
+			ret = new Point3D_F64();
+		
+		// compute the intersection as the cross product of 'a' and 'b'
+		ret.x = a.B * b.C - a.C * b.B;
+		ret.y = a.C * b.A - a.A * b.C;
+		ret.z = a.A * b.B - a.B * b.A;
+
+		return ret;
+	}
 	/**
 	 * Finds the point of intersection between a line and a line segment.  The point of intersection
 	 * is specified as the distance along the parametric line.  If no intersection is found then

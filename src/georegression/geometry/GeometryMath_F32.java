@@ -400,9 +400,9 @@ public class GeometryMath_F32 {
 		float y = pt.y;
 		float z = pt.z;
 
-		mod.x = (float) ( M.get( 0, 0 ) * x + M.get( 1, 0 ) * y + M.get( 2, 0 ) * z );
-		mod.y = (float) ( M.get( 0, 1 ) * x + M.get( 1, 1 ) * y + M.get( 2, 1 ) * z );
-		mod.z = (float) ( M.get( 0, 2 ) * x + M.get( 1, 2 ) * y + M.get( 2, 2 ) * z );
+		mod.x = (float) ( M.unsafe_get( 0, 0 ) * x + M.unsafe_get( 1, 0 ) * y + M.unsafe_get( 2, 0 ) * z );
+		mod.y = (float) ( M.unsafe_get( 0, 1 ) * x + M.unsafe_get( 1, 1 ) * y + M.unsafe_get( 2, 1 ) * z );
+		mod.z = (float) ( M.unsafe_get( 0, 2 ) * x + M.unsafe_get( 1, 2 ) * y + M.unsafe_get( 2, 2 ) * z );
 
 		return (T) mod;
 	}
@@ -422,9 +422,31 @@ public class GeometryMath_F32 {
 		float x = pt.x;
 		float y = pt.y;
 
-		mod.x = (float) ( M.get( 0, 0 ) * x + M.get( 1, 0 ) * y + M.get( 2, 0 ) );
-		mod.y = (float) ( M.get( 0, 1 ) * x + M.get( 1, 1 ) * y + M.get( 2, 1 ) );
-		mod.z = (float) ( M.get( 0, 2 ) * x + M.get( 1, 2 ) * y + M.get( 2, 2 ) );
+		mod.x = (float) ( M.unsafe_get(0, 0) * x + M.unsafe_get(1, 0) * y + M.unsafe_get( 2, 0 ) );
+		mod.y = (float) ( M.unsafe_get(0, 1) * x + M.unsafe_get(1, 1) * y + M.unsafe_get( 2, 1 ) );
+		mod.z = (float) ( M.unsafe_get(0, 2) * x + M.unsafe_get(1, 2) * y + M.unsafe_get( 2, 2 ) );
+
+		return mod;
+	}
+
+	/**
+	 * mod = M<sup>T</sup>*pt<br>
+	 * where pt.z = 1 implicitly.
+	 */
+	public static <T extends GeoTuple2D_F32> T multTran( DenseMatrix64F M, GeoTuple2D_F32 pt, T mod ) {
+		if( M.numRows != 3 || M.numCols != 3 )
+			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
+
+		if( mod == null ) {
+			throw new IllegalArgumentException( "Must provide an instance in mod" );
+		}
+
+		float x = pt.x;
+		float y = pt.y;
+
+		float modZ = (float) ( M.unsafe_get( 0, 2 ) * x + M.unsafe_get( 1, 2 ) * y + M.unsafe_get( 2, 2 ) );
+		mod.x = (float) ( M.unsafe_get( 0, 0 ) * x + M.unsafe_get( 1, 0 ) * y + M.unsafe_get( 2, 0 ) )/modZ;
+		mod.y = (float) ( M.unsafe_get( 0, 1 ) * x + M.unsafe_get( 1, 1 ) * y + M.unsafe_get( 2, 1 ) )/modZ;
 
 		return mod;
 	}

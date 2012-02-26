@@ -53,7 +53,7 @@ public class FitSpecialEuclideanOps_F32 {
 	 * @return {@link MotionTransformPoint}.
 	 */
 	public static MotionTransformPoint<Se3_F32, Point3D_F32> fitPoints3D() {
-		return new MotionSe3PointCrossCovariance_F32();
+		return new MotionSe3PointSVD_F32();
 	}
 
 	/**

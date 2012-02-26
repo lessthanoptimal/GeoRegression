@@ -21,6 +21,8 @@ package georegression.struct.homo;
 
 
 /**
+ * Describes a homography transform in 2D.
+ *
  * @author Peter Abeles
  */
 public class Homography2D_F64 implements Homography<Homography2D_F64>{
