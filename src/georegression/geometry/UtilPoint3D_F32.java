@@ -88,4 +88,23 @@ public class UtilPoint3D_F32 {
 
 		return mean;
 	}
+
+	public static Point3D_F32 mean( List<Point3D_F32> points , int num ) {
+		Point3D_F32 mean = new Point3D_F32();
+
+		float x = 0, y = 0, z = 0;
+
+		for( int i = 0; i < num; i++ ) {
+			Point3D_F32 p = points.get(i);
+			x += p.x;
+			y += p.y;
+			z += p.z;
+		}
+
+		mean.x = x / num;
+		mean.y = y / num;
+		mean.z = z / num;
+
+		return mean;
+	}
 }

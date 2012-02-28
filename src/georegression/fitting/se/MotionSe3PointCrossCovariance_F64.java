@@ -164,7 +164,6 @@ public class MotionSe3PointCrossCovariance_F64 implements MotionTransformPoint<S
 		quat.q4 = v_max.get( 3 );
 		quat.normalize();
 
-
 		RotationMatrixGenerator.quaternionToMatrix( quat, motion.getR() );
 	}
 

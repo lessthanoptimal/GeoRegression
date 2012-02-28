@@ -422,9 +422,9 @@ public class GeometryMath_F32 {
 		float x = pt.x;
 		float y = pt.y;
 
-		mod.x = (float) ( M.unsafe_get(0, 0) * x + M.unsafe_get(1, 0) * y + M.unsafe_get( 2, 0 ) );
-		mod.y = (float) ( M.unsafe_get(0, 1) * x + M.unsafe_get(1, 1) * y + M.unsafe_get( 2, 1 ) );
-		mod.z = (float) ( M.unsafe_get(0, 2) * x + M.unsafe_get(1, 2) * y + M.unsafe_get( 2, 2 ) );
+		mod.x = (float) ( M.unsafe_get( 0, 0 ) * x + M.unsafe_get( 1, 0 ) * y + M.unsafe_get( 2, 0 ) );
+		mod.y = (float) ( M.unsafe_get( 0, 1 ) * x + M.unsafe_get( 1, 1 ) * y + M.unsafe_get( 2, 1 ) );
+		mod.z = (float) ( M.unsafe_get( 0, 2 ) * x + M.unsafe_get( 1, 2 ) * y + M.unsafe_get( 2, 2 ) );
 
 		return mod;
 	}

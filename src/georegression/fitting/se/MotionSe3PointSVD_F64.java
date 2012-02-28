@@ -28,6 +28,7 @@ import org.ejml.alg.dense.decomposition.DecompositionFactory;
 import org.ejml.alg.dense.decomposition.SingularValueDecomposition;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
+import org.ejml.ops.SingularOps;
 
 import java.util.List;
 
@@ -100,14 +101,21 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 
 		if( !svd.decompose(Sigma) )
 			throw new RuntimeException("SVD failed!?");
-				
+
 		DenseMatrix64F U = svd.getU(false);
 		DenseMatrix64F V = svd.getV(false);
 
-		CommonOps.multTransB(U, V, motion.getR());
+		SingularOps.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
+		
+		if( CommonOps.det(U) < 0 ^ CommonOps.det(V) < 0 ) {
+			// swap sign of the column 2
+			// this only needs to happen if data is planar
+			V.data[2] = -V.data[2];
+			V.data[5] = -V.data[5];
+			V.data[8] = -V.data[8];
+		}
 
-		if( CommonOps.det(motion.getR()) < 0 )
-			CommonOps.scale(-1,motion.getR());
+		CommonOps.multTransB(U, V, motion.getR());
 
 		Point3D_F64 temp = new Point3D_F64();
 		GeometryMath_F64.mult(motion.getR(),meanFrom,temp);
