@@ -130,7 +130,6 @@ public class TestRotationMatrixGenerator {
 		assertEquals( expected.theta, found.theta, 1e-7 );
 	}
 
-
 	@Test
 	public void rotX() {
 		Point3D_F64 pt_y = new Point3D_F64( 0, 1.5, 0 );

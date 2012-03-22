@@ -39,17 +39,17 @@ public class Point2D_I16 {
 		this.y = pt.y;
 	}
 
-	public void set( short x, short y ) {
-		this.x = x;
-		this.y = y;
+	public void set( int x, int y ) {
+		this.x = (short)x;
+		this.y = (short)y;
 	}
 
-	public void setX( short x ) {
-		this.x = x;
+	public void setX( int x ) {
+		this.x = (short)x;
 	}
 
-	public void setY( short y ) {
-		this.y = y;
+	public void setY( int y ) {
+		this.y = (short)y;
 	}
 
 	public final int getX() {

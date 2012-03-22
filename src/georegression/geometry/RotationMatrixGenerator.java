@@ -56,15 +56,15 @@ public class RotationMatrixGenerator {
 		double s = Math.sin( rodrigues.theta );
 		double oc = 1.0 - c;
 
-		R.set( 0, 0, c + x * x * oc );
-		R.set( 0, 1, x * y * oc - z * s );
-		R.set( 0, 2, x * z * oc + y * s );
-		R.set( 1, 0, y * x * oc + z * s );
-		R.set( 1, 1, c + y * y * oc );
-		R.set( 1, 2, y * z * oc - x * s );
-		R.set( 2, 0, z * x * oc - y * s );
-		R.set( 2, 1, z * y * oc + x * s );
-		R.set( 2, 2, c + z * z * oc );
+		R.data[0] = c + x * x * oc;
+		R.data[1] = x * y * oc - z * s;
+		R.data[2] = x * z * oc + y * s;
+		R.data[3] = y * x * oc + z * s;
+		R.data[4] = c + y * y * oc;
+		R.data[5] = y * z * oc - x * s;
+		R.data[6] = z * x * oc - y * s;
+		R.data[7] = z * y * oc + x * s;
+		R.data[8] = c + z * z * oc;
 
 		return R;
 	}
@@ -144,7 +144,9 @@ public class RotationMatrixGenerator {
 
 		double diagSum = ( R.get( 0, 0 ) + R.get( 1, 1 ) + R.get( 2, 2 ) - 1.0 ) / 2.0;
 
-		if( Math.abs( diagSum ) < 1 ) {
+		double absDiagSum = Math.abs(diagSum);
+		
+		if( absDiagSum < 1 ) {
 			// if numerically stable use a faster technique
 			rodrigues.theta = Math.acos( diagSum );
 			double bottom = 2.0 * Math.sin( rodrigues.theta );
@@ -155,12 +157,16 @@ public class RotationMatrixGenerator {
 
 			// in extreme underflow situations the result can be unnormalized
 			rodrigues.unitAxisRotation.normalize();
-		} else if( diagSum == 1 ) {
+		} else if( absDiagSum == 1 ) {
 			rodrigues.theta = 0;
 			rodrigues.unitAxisRotation.set( 1, 0, 0 );
 		} else {
 			// it can either be + or - PI
-			rodrigues.theta = Math.PI;
+			if( diagSum > 1 )
+				rodrigues.theta = Math.PI;
+			else if( diagSum < -1 )
+				rodrigues.theta = -Math.PI;
+			
 			rotationAxis( R, rodrigues.unitAxisRotation);
 		}
 

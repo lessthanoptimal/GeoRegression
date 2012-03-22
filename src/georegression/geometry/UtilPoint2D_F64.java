@@ -56,6 +56,13 @@ public class UtilPoint2D_F64 {
 		return Math.sqrt( dx * dx + dy * dy );
 	}
 
+	public static double distanceSq( double x0, double y0, double x1, double y1 ) {
+		double dx = x1 - x0;
+		double dy = y1 - y0;
+
+		return dx * dx + dy * dy;
+	}
+
 	public static Point2D_F64 mean( List<Point2D_F64> pts ) {
 		double x = 0;
 		double y = 0;

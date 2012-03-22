@@ -70,4 +70,35 @@ public class Rodrigues {
 	public void setTheta( double theta ) {
 		this.theta = theta;
 	}
+
+	/**
+	 * Assign the Rodrigues coordinates using a 3 element vector.  Theta is the vector's
+	 * magnitude and the axis of rotation is the unit vector.
+	 *
+	 * @param x x-component of 3 vector
+	 * @param y y-component of 3 vector
+	 * @param z z-component of 3 vector
+	 */
+	public void setParamVector( double  x , double y , double z ) {
+		double ax = Math.abs(x);
+		double ay = Math.abs(y);
+		double az = Math.abs(z);
+
+		double max = Math.max(ax,ay);
+		max = Math.max(max,az);
+		
+		if( max == 0 ) {
+			theta = 0;
+			unitAxisRotation.set(1,0,0);
+		} else {
+			x /= max;
+			y /= max;
+			z /= max;
+			theta = Math.sqrt(x*x + y*y + z*z);
+			unitAxisRotation.x = x/theta;
+			unitAxisRotation.y = y/theta;
+			unitAxisRotation.z = z/theta;
+			theta *= max;
+		}
+	}
 }
