@@ -95,6 +95,14 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		this.T.set( x, y, z );
 	}
 
+	public void setR(DenseMatrix64F r) {
+		R = r;
+	}
+
+	public void setT(Vector3D_F64 t) {
+		T = t;
+	}
+
 	public DenseMatrix64F getR() {
 		return R;
 	}
