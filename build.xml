@@ -1,8 +1,8 @@
 <project name="GeoRegression" basedir="." default="main">
 
 
-    <property name="src.dir"     value="src"/>
-    <property name="test.dir"     value="test"/>
+    <property name="src.dir"     value="src/main/java"/>
+    <property name="test.dir"     value="src/test/java"/>
     <property name="lib.dir"     value="lib"/>
 
     <property name="build.dir"   value="build"/>
