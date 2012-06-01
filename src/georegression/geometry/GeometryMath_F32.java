@@ -501,7 +501,7 @@ public class GeometryMath_F32 {
 	 * @param ret 3 x 3 matrix or null.
 	 * @return outer product of two 3d vectors
 	 */
-	public static DenseMatrix64F outerProd(Vector3D_F32 a, Vector3D_F32 b, DenseMatrix64F ret) {
+	public static DenseMatrix64F outerProd(GeoTuple3D_F32 a, GeoTuple3D_F32 b, DenseMatrix64F ret) {
 		if( ret == null )
 			ret = new DenseMatrix64F(3,3);
 

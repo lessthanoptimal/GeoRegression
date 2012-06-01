@@ -22,7 +22,7 @@ package georegression.struct.homo;
 import georegression.struct.GenericInvertibleTransformTests_F32;
 import georegression.struct.InvertibleTransform;
 import georegression.struct.point.Point2D_F32;
-import georegression.transform.homo.HomographyPointOps;
+import georegression.transform.homo.HomographyPointOps_F32;
 
 import java.util.Random;
 
@@ -57,6 +57,6 @@ public class TestHomography2D_F32 extends GenericInvertibleTransformTests_F32<Po
 
 	@Override
 	public Point2D_F32 apply( InvertibleTransform se, Point2D_F32 point, Point2D_F32 result ) {
-		return HomographyPointOps.transform( (Homography2D_F32) se, point, result );
+		return HomographyPointOps_F32.transform((Homography2D_F32) se, point, result);
 	}
 }

@@ -56,6 +56,13 @@ public class UtilPoint2D_F32 {
 		return (float)Math.sqrt( dx * dx + dy * dy );
 	}
 
+	public static float distanceSq( float x0, float y0, float x1, float y1 ) {
+		float dx = x1 - x0;
+		float dy = y1 - y0;
+
+		return dx * dx + dy * dy;
+	}
+
 	public static Point2D_F32 mean( List<Point2D_F32> pts ) {
 		float x = 0;
 		float y = 0;

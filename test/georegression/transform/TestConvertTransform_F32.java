@@ -26,7 +26,7 @@ import georegression.struct.homo.Homography2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.se.Se2_F32;
 import georegression.transform.affine.AffinePointOps;
-import georegression.transform.homo.HomographyPointOps;
+import georegression.transform.homo.HomographyPointOps_F32;
 import georegression.transform.se.SePointOps_F32;
 import org.junit.Test;
 
@@ -54,7 +54,7 @@ public class TestConvertTransform_F32 {
 
 		Point2D_F32 pt = new Point2D_F32(3,4);
 		Point2D_F32 expected = SePointOps_F32.transform(a,pt,null);
-		Point2D_F32 found = HomographyPointOps.transform(b, pt, null);
+		Point2D_F32 found = HomographyPointOps_F32.transform(b, pt, null);
 
 		GeometryUnitTest.assertEquals(expected, found, GrlConstants.FLOAT_TEST_TOL);
 	}
@@ -66,7 +66,7 @@ public class TestConvertTransform_F32 {
 
 		Point2D_F32 pt = new Point2D_F32(3,4);
 		Point2D_F32 expected = AffinePointOps.transform(a,pt,null);
-		Point2D_F32 found = HomographyPointOps.transform(b, pt, null);
+		Point2D_F32 found = HomographyPointOps_F32.transform(b, pt, null);
 
 		GeometryUnitTest.assertEquals(expected, found, GrlConstants.FLOAT_TEST_TOL);
 	}

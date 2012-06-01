@@ -82,6 +82,23 @@ public class TestUtilHomography {
 	}
 
 	@Test
+	public void convert_F32_matrix() {
+		Homography2D_F32 h = new Homography2D_F32(1,2,3,4,5,6,7,8,9);
+
+		DenseMatrix64F a = UtilHomography.convert(h,(DenseMatrix64F)null);
+
+		assertTrue(h.a11 == a.get(0,0));
+		assertTrue(h.a12 == a.get(0,1));
+		assertTrue(h.a13 == a.get(0,2));
+		assertTrue(h.a21 == a.get(1,0));
+		assertTrue(h.a22 == a.get(1,1));
+		assertTrue(h.a23 == a.get(1,2));
+		assertTrue(h.a31 == a.get(2,0));
+		assertTrue(h.a32 == a.get(2,1));
+		assertTrue(h.a33 == a.get(2,2));
+	}
+
+	@Test
 	public void convert_F64_F32() {
 		Homography2D_F64 a = new Homography2D_F64(1,2,3,4,5,6,7,8,9);
 

@@ -19,16 +19,16 @@
 
 package georegression.transform.homo;
 
-import georegression.struct.homo.Homography2D_F32;
 import georegression.struct.homo.Homography2D_F64;
-import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point2D_F64;
 
 
 /**
+ * Applies homography transform to 2D points.
+ *
  * @author Peter Abeles
  */
-public class HomographyPointOps {
+public class HomographyPointOps_F64 {
 
 	/**
 	 * Applies a 2D homography transform to the point and stores the results in another
@@ -58,58 +58,6 @@ public class HomographyPointOps {
 		return result;
 	}
 
-	/**
-	 * Applies a 2D homography transform to the point and stores the results in another
-	 * variable.
-	 *
-	 * @param se	 The transform.
-	 * @param orig   Original point being transformed. Not modified.
-	 * @param result Where the results are stored.  Can be the same as orig. If null a new
-	 *               instance is created. Modified.
-	 * @return Transformed point.
-	 */
-	public static Point2D_F32 transform( Homography2D_F32 se, Point2D_F32 orig, Point2D_F32 result ) {
-
-		if( result == null ) {
-			result = new Point2D_F32();
-		}
-
-		// copy the values so that no errors happen if orig and result are the same instance
-		float x = orig.x;
-		float y = orig.y;
-
-		float z = se.a31 * x + se.a32 * y + se.a33;
-
-		result.x = (se.a11 * x + se.a12 * y + se.a13)/z;
-		result.y = (se.a21 * x + se.a22 * y + se.a23)/z;
-
-		return result;
-	}
-
-	/**
-	 * Applies a 2D homography transform to the point and stores the results in another
-	 * variable.
-	 *
-	 * @param se	 The transform.
-	 * @param x	  Original x-coordinate
-	 * @param y	  Original y-coordinate
-	 * @param result Where the results are stored.  Can be the same as orig. If null a new
-	 *               instance is created. Modified.
-	 * @return Transformed point.
-	 */
-	public static Point2D_F32 transform( Homography2D_F32 se, float x , float y , Point2D_F32 result ) {
-
-		if( result == null ) {
-			result = new Point2D_F32();
-		}
-
-		float z = se.a31 * x + se.a32 * y + se.a33;
-
-		result.x = (se.a11 * x + se.a12 * y + se.a13)/z;
-		result.y = (se.a21 * x + se.a22 * y + se.a23)/z;
-
-		return result;
-	}
 
 	/**
 	 * Applies a 2D homography transform to the point and stores the results in another
