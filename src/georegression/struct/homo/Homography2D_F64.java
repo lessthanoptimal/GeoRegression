@@ -46,6 +46,10 @@ public class Homography2D_F64 implements Homography<Homography2D_F64>{
 		this.a33 = a33;
 	}
 
+	public Homography2D_F64( Homography2D_F64 a ) {
+		set(a);
+	}
+
 	public Homography2D_F64() {
 		reset();
 	}
@@ -138,5 +142,9 @@ public class Homography2D_F64 implements Homography<Homography2D_F64>{
 	public void reset() {
 		a11 = a22 = a33 = 1;
 		a12 = a13 = a21 = a23 = a31 = a32 = 0;
+	}
+
+	public Homography2D_F64 copy() {
+		return new Homography2D_F64(this);
 	}
 }

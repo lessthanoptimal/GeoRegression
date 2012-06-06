@@ -153,4 +153,16 @@ public class UtilHomography {
 
 		return ret;
 	}
+
+	public static void scale( Homography2D_F64 h , double scale ) {
+		h.a11 *= scale;
+		h.a12 *= scale;
+		h.a13 *= scale;
+		h.a21 *= scale;
+		h.a22 *= scale;
+		h.a23 *= scale;
+		h.a31 *= scale;
+		h.a32 *= scale;
+		h.a33 *= scale;
+	}
 }
