@@ -23,11 +23,11 @@ import georegression.struct.point.Vector3D_F64;
 import georegression.struct.so.Quaternion;
 import georegression.struct.so.Rodrigues;
 import org.ejml.UtilEjml;
-import org.ejml.alg.dense.decomposition.DecompositionFactory;
-import org.ejml.alg.dense.decomposition.EigenDecomposition;
-import org.ejml.alg.dense.decomposition.SingularValueDecomposition;
 import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.DecompositionFactory;
+import org.ejml.factory.EigenDecomposition;
+import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
 
 
@@ -190,7 +190,7 @@ public class RotationMatrixGenerator {
 		if( ret == null )
 			ret = new Vector3D_F64();
 
-		EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig( R.numRows );
+		EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(R.numRows,true);
 
 		if( !eig.decompose( R ) )
 			throw new RuntimeException( "Decomposition failed" );
@@ -535,7 +535,8 @@ public class RotationMatrixGenerator {
 			R = new DenseMatrix64F( 3, 3 );
 		}
 
-		SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd( orig.numRows, orig.numCols );
+		SingularValueDecomposition<DenseMatrix64F> svd =
+				DecompositionFactory.svd( orig.numRows, orig.numCols ,true,true,false);
 
 		if( !svd.decompose( orig ) )
 			throw new RuntimeException( "SVD Failed" );

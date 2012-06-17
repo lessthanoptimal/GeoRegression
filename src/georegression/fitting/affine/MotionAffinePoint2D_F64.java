@@ -22,9 +22,9 @@ package georegression.fitting.affine;
 import georegression.fitting.MotionTransformPoint;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Point2D_F64;
-import org.ejml.alg.dense.linsol.LinearSolver;
-import org.ejml.alg.dense.linsol.LinearSolverFactory;
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.LinearSolver;
+import org.ejml.factory.LinearSolverFactory;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class MotionAffinePoint2D_F64 implements MotionTransformPoint<Affine2D_F6
 	Affine2D_F64 model = new Affine2D_F64();
 
 	public MotionAffinePoint2D_F64() {
-		solver = LinearSolverFactory.leastSquares( 100, 2 );
+		solver = LinearSolverFactory.leastSquares(100, 2);
 		x = new DenseMatrix64F( 3, 2 );
 		A = new DenseMatrix64F( 0, 3 );
 		y = new DenseMatrix64F( 0, 2 );

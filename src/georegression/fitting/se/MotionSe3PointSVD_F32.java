@@ -24,9 +24,9 @@ import georegression.geometry.GeometryMath_F32;
 import georegression.geometry.UtilPoint3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.se.Se3_F32;
-import org.ejml.alg.dense.decomposition.DecompositionFactory;
-import org.ejml.alg.dense.decomposition.SingularValueDecomposition;
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.DecompositionFactory;
+import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.SingularOps;
 
@@ -49,7 +49,7 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 	// rigid body motion
 	private Se3_F32 motion = new Se3_F32();
 
-	SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(3,3);
+	SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(3, 3,true,true,false);
 
 	@Override
 	public Se3_F32 getMotion() {
