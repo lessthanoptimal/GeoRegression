@@ -34,13 +34,13 @@ public class HomographyPointOps_F64 {
 	 * Applies a 2D homography transform to the point and stores the results in another
 	 * variable.
 	 *
-	 * @param se	 The transform.
+	 * @param H	 The transform.
 	 * @param orig   Original point being transformed. Not modified.
 	 * @param result Where the results are stored.  Can be the same as orig. If null a new
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Homography2D_F64 se, Point2D_F64 orig, Point2D_F64 result ) {
+	public static Point2D_F64 transform( Homography2D_F64 H, Point2D_F64 orig, Point2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F64();
@@ -50,10 +50,10 @@ public class HomographyPointOps_F64 {
 		double x = orig.x;
 		double y = orig.y;
 
-		double z = se.a31 * x + se.a32 * y + se.a33;
+		double z = H.a31 * x + H.a32 * y + H.a33;
 
-		result.x = (se.a11 * x + se.a12 * y + se.a13)/z;
-		result.y = (se.a21 * x + se.a22 * y + se.a23)/z;
+		result.x = (H.a11 * x + H.a12 * y + H.a13)/z;
+		result.y = (H.a21 * x + H.a22 * y + H.a23)/z;
 
 		return result;
 	}
@@ -63,23 +63,23 @@ public class HomographyPointOps_F64 {
 	 * Applies a 2D homography transform to the point and stores the results in another
 	 * variable.
 	 *
-	 * @param se	 The transform.
+	 * @param H	 The transform.
 	 * @param x	  Original x-coordinate
 	 * @param y	  Original y-coordinate
 	 * @param result Where the results are stored.  Can be the same as orig. If null a new
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Homography2D_F64 se, double x , double y , Point2D_F64 result ) {
+	public static Point2D_F64 transform( Homography2D_F64 H, double x , double y , Point2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F64();
 		}
 
-		double z = se.a31 * x + se.a32 * y + se.a33;
+		double z = H.a31 * x + H.a32 * y + H.a33;
 
-		result.x = (se.a11 * x + se.a12 * y + se.a13)/z;
-		result.y = (se.a21 * x + se.a22 * y + se.a23)/z;
+		result.x = (H.a11 * x + H.a12 * y + H.a13)/z;
+		result.y = (H.a21 * x + H.a22 * y + H.a23)/z;
 
 		return result;
 	}

@@ -96,8 +96,21 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDist() {
-		fail("implement");
+	public void testDist_F64() {
+		assertEquals(0,dist(0,0),1e-8);
+		assertEquals(0,dist(1,1),1e-8);
+		assertEquals(2,dist(-1,1),1e-8);
+		assertEquals(0,dist(-Math.PI,Math.PI),1e-8);
+		assertEquals(0.2,dist(-Math.PI+0.1,Math.PI-0.1),1e-8);
+	}
+
+	@Test
+	public void testDist_F32() {
+		assertEquals(0f,dist(0f,0f),1e-4f);
+		assertEquals(0f,dist(1f,1f),1e-4f);
+		assertEquals(2f,dist(-1f,1f),1e-4f);
+		assertEquals(0f,dist((float)-Math.PI,Math.PI),1e-5);
+		assertEquals(0.2f,dist((float)(-Math.PI+0.1),(float)(Math.PI-0.1)),1e-4);
 	}
 
 	@Test
