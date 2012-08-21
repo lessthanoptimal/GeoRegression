@@ -541,7 +541,7 @@ public class RotationMatrixGenerator {
 		if( !svd.decompose( orig ) )
 			throw new RuntimeException( "SVD Failed" );
 
-		CommonOps.mult( svd.getU( false ), svd.getV( true ), R );
+		CommonOps.mult( svd.getU( null,false ), svd.getV( null,true ), R );
 
 		// svd does not guarantee that U anv V have positive determinants.
 		double det = CommonOps.det( R );

@@ -63,4 +63,9 @@ public class Point2D_I16 {
 	public Point2D_I16 copy() {
 		return new Point2D_I16( x, y );
 	}
+
+	@Override
+	public String toString() {
+		return "Point2D_I16{ x= " + x +", y= " + y +'}';
+	}
 }

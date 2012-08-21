@@ -21,6 +21,7 @@ package georegression.struct.homo;
 
 
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.ops.CommonOps;
 
 /**
  * Various useful functions related to homographies.
@@ -136,7 +137,19 @@ public class UtilHomography {
 
 		return ret;
 	}
-	
+
+	public static Homography2D_F64 invert( Homography2D_F64 orig , Homography2D_F64 inverted ) {
+		if( inverted == null )
+			inverted = new Homography2D_F64();
+
+		DenseMatrix64F A = new DenseMatrix64F(3,3);
+		convert(orig,A);
+		CommonOps.invert(A);
+		convert(A,inverted);
+
+		return inverted;
+	}
+
 	public static Homography2D_F32 convert( Homography2D_F64 m , Homography2D_F32 ret ) {
 		if( ret == null )
 			ret = new Homography2D_F32();
