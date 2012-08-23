@@ -20,17 +20,15 @@
 package georegression.struct.homo;
 
 
+import georegression.struct.Matrix3x3_F32;
+
 /**
  * Describes a homography transform in 2D.
  *
  * @author Peter Abeles
  */
-public class Homography2D_F32 implements Homography<Homography2D_F32>{
+public class Homography2D_F32 extends Matrix3x3_F32 implements Homography<Homography2D_F32>{
 
-	// define the homography using a row major matrix.
-	public float a11,a12,a13;
-	public float a21,a22,a23;
-	public float a31,a32,a33;
 
 	public Homography2D_F32(float a11, float a12, float a13,
 							float a21, float a22, float a23,
@@ -54,17 +52,6 @@ public class Homography2D_F32 implements Homography<Homography2D_F32>{
 		reset();
 	}
 
-	public void scale( float value ) {
-		a11 *= value;
-		a12 *= value;
-		a13 *= value;
-		a21 *= value;
-		a22 *= value;
-		a23 *= value;
-		a31 *= value;
-		a32 *= value;
-		a33 *= value;
-	}
 
 	@Override
 	public int getDimension() {
@@ -78,15 +65,7 @@ public class Homography2D_F32 implements Homography<Homography2D_F32>{
 
 	@Override
 	public void set(Homography2D_F32 target) {
-		a11 = target.a11;
-		a12 = target.a12;
-		a13 = target.a13;
-		a21 = target.a21;
-		a22 = target.a22;
-		a23 = target.a23;
-		a31 = target.a31;
-		a32 = target.a32;
-		a33 = target.a33;
+		super.set(target);
 	}
 
 	@Override
