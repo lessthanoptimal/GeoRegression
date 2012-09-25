@@ -27,10 +27,11 @@ import org.ejml.data.DenseMatrix64F;
 
 
 /**
- * Math operations that can be applied to geometric primatives.
+ * Math operations that can be applied to geometric primitives.
  *
  * @author Peter Abeles
  */
+// TODO rename to PerspectiveMath?
 // todo separate off fucntions that are in homogeneous coordinates into their own class?
 //      alternatively indicate by the function name?
 // todo make sure all functions have unit tests

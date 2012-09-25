@@ -65,6 +65,12 @@ public class UtilTrig_F64 {
 		return a.x*b.x + a.y*b.y + a.z*b.z;
 	}
 
+	public static double acuteAngle( GeoTuple3D_F64 a , GeoTuple3D_F64 b ) {
+		double dot = a.x*b.x + a.y*b.y + a.z*b.z;
+		double bottom = a.norm()*b.norm();
+		return Math.acos(dot/bottom);
+	}
+
 	public static double acuteAngle( double vx_a, double vy_a,
 									 double vx_b, double vy_b ) {
 		double r_a = Math.sqrt( vx_a * vx_a + vy_a * vy_a );
