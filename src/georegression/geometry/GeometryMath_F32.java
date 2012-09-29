@@ -21,16 +21,16 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple2D_F32;
 import georegression.struct.GeoTuple3D_F32;
-import georegression.struct.point.Vector3D_F32;
 import org.ejml.alg.dense.mult.VectorVectorMult;
 import org.ejml.data.DenseMatrix64F;
 
 
 /**
- * Math operations that can be applied to geometric primatives.
+ * Math operations that can be applied to geometric primitives.
  *
  * @author Peter Abeles
  */
+// TODO rename to PerspectiveMath?
 // todo separate off fucntions that are in homogeneous coordinates into their own class?
 //      alternatively indicate by the function name?
 // todo make sure all functions have unit tests
@@ -577,7 +577,7 @@ public class GeometryMath_F32 {
 	 *
 	 * @param t Vector whose sign is being changed.  Modified.
 	 */
-	public static void changeSign( Vector3D_F32 t ) {
+	public static void changeSign( GeoTuple3D_F32 t ) {
 		t.x = -t.x;
 		t.y = -t.y;
 		t.z = -t.z;

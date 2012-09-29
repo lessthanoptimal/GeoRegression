@@ -78,4 +78,16 @@ public class UtilTrig_F64 {
 
 		return Math.acos( ( vx_a * vx_b + vy_a * vy_b ) / ( r_a * r_b ) );
 	}
+
+	/**
+	 * Normalizes the point such that the Frobenius norm is 1.
+	 *
+	 * @param p
+	 */
+	public static void normalize( GeoTuple3D_F64 p ) {
+		double n = p.norm();
+		p.x /= n;
+		p.y /= n;
+		p.z /= n;
+	}
 }

@@ -21,7 +21,6 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.GeoTuple3D_F64;
-import georegression.struct.point.Vector3D_F64;
 import org.ejml.alg.dense.mult.VectorVectorMult;
 import org.ejml.data.DenseMatrix64F;
 
@@ -578,7 +577,7 @@ public class GeometryMath_F64 {
 	 *
 	 * @param t Vector whose sign is being changed.  Modified.
 	 */
-	public static void changeSign( Vector3D_F64 t ) {
+	public static void changeSign( GeoTuple3D_F64 t ) {
 		t.x = -t.x;
 		t.y = -t.y;
 		t.z = -t.z;

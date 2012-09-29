@@ -65,11 +65,29 @@ public class UtilTrig_F32 {
 		return a.x*b.x + a.y*b.y + a.z*b.z;
 	}
 
+	public static float acuteAngle( GeoTuple3D_F32 a , GeoTuple3D_F32 b ) {
+		float dot = a.x*b.x + a.y*b.y + a.z*b.z;
+		float bottom = a.norm()*b.norm();
+		return (float)Math.acos(dot/bottom);
+	}
+
 	public static float acuteAngle( float vx_a, float vy_a,
 									 float vx_b, float vy_b ) {
 		float r_a = (float)Math.sqrt( vx_a * vx_a + vy_a * vy_a );
 		float r_b = (float)Math.sqrt( vx_b * vx_b + vy_b * vy_b );
 
 		return (float)Math.acos( ( vx_a * vx_b + vy_a * vy_b ) / ( r_a * r_b ) );
+	}
+
+	/**
+	 * Normalizes the point such that the Frobenius norm is 1.
+	 *
+	 * @param p
+	 */
+	public static void normalize( GeoTuple3D_F32 p ) {
+		float n = p.norm();
+		p.x /= n;
+		p.y /= n;
+		p.z /= n;
 	}
 }
