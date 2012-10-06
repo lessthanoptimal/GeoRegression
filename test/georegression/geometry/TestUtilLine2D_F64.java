@@ -21,9 +21,11 @@ package georegression.geometry;
 
 
 import georegression.misc.GrlConstants;
+import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LinePolar2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
+import georegression.struct.point.Point2D_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -84,5 +86,45 @@ public class TestUtilLine2D_F64 {
 		assertEquals(polar.angle,Math.PI/4, GrlConstants.DOUBLE_TEST_TOL);
 
 		fail("Don't think these tests are sufficient.  when it decides to go negative is probably not correct");
+	}
+
+	@Test
+	public void convert_parametric_general() {
+		LineParametric2D_F64 para = new LineParametric2D_F64();
+		LineGeneral2D_F64 general = new LineGeneral2D_F64();
+
+		para.slope.set(1,0.5);
+		para.p.set(0.75,0.34);
+
+		// pick a point on the line
+		Point2D_F64 p = new Point2D_F64(para.p.x + para.slope.x*2,para.p.y + para.slope.y*2);
+
+		// convert to general notation
+		UtilLine2D_F64.convert(para,general);
+
+		// test the basic properties of this line equation
+		double val = general.A*p.x + general.B*p.y + general.C;
+
+		assertEquals(0,val,1e-8);
+	}
+
+	@Test
+	public void convert_general_parametric() {
+		LineGeneral2D_F64 general = new LineGeneral2D_F64();
+		LineParametric2D_F64 para = new LineParametric2D_F64();
+
+		// pick some arbitrary line
+		general.set(1,2,3);
+
+		// convert to parametric notation
+		UtilLine2D_F64.convert(general,para);
+
+		// pick a point on the parametric line
+		Point2D_F64 p = new Point2D_F64(para.p.x + para.slope.x*2,para.p.y + para.slope.y*2);
+
+		// See if that same point is on the general equation
+		double val = general.A*p.x + general.B*p.y + general.C;
+
+		assertEquals(0,val,1e-8);
 	}
 }

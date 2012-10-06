@@ -20,6 +20,7 @@
 package georegression.metric;
 
 import georegression.geometry.UtilPoint2D_F64;
+import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -81,7 +82,7 @@ public class Distance2D_F64 {
 	 * </p>
 	 *
 	 * @param line A line segment. Not modified.
-	 * @param p	The point. Not modified.
+	 * @param p The point. Not modified.
 	 * @return Distance the closest point on the line is away from the point.
 	 */
 	public static double distance( LineSegment2D_F64 line,
@@ -101,5 +102,18 @@ public class Distance2D_F64 {
 
 		// return the distance of the closest point on the line
 		return UtilPoint2D_F64.distance( line.a.x + t * a, line.a.y + t * b, p.x, p.y );
+	}
+
+	/**
+	 * <p>
+	 * Returns the distance the closest point the line is from the specified point.
+	 * </p>
+	 *
+	 * @param line A line. Not modified.
+	 * @param p The point. Not modified.
+	 * @return Distance of the closest point on the line to the specified point.
+	 */
+	public static double distance( LineGeneral2D_F64 line , Point2D_F64 p ) {
+		return (double) (Math.abs(line.A*p.x + line.B*p.y + line.C) / Math.sqrt( line.A*line.A + line.B*line.B ));
 	}
 }

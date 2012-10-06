@@ -19,8 +19,10 @@
 
 package georegression.metric;
 
+import georegression.geometry.UtilLine2D_F64;
 import georegression.geometry.UtilTrig_F64;
 import georegression.misc.GrlConstants;
+import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -64,5 +66,17 @@ public class TestDistance2D_F64 {
 		found = Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( 10, 0 ) );
 		expected = UtilTrig_F64.distance( 3, 5, 10, 0 );
 		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	@Test
+	public void distance_general_line() {
+		// easier to cherry pick points in parametric notation
+		LineParametric2D_F64 parametric = new LineParametric2D_F64( -2, 0, 1, 1 );
+		// convert into general format
+		LineGeneral2D_F64 general = UtilLine2D_F64.convert(parametric,(LineGeneral2D_F64)null);
+
+		double found = Distance2D_F64.distance( general , new Point2D_F64( 4, -2 ) );
+		double expected = (double) UtilTrig_F64.distance( 0, 2, 4, -2 );
+		assertEquals(expected, found, GrlConstants.DOUBLE_TEST_TOL);
 	}
 }

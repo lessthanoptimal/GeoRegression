@@ -22,6 +22,7 @@ package georegression.geometry;
 
 import georegression.metric.Distance2D_F64;
 import georegression.metric.UtilAngle;
+import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LinePolar2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
@@ -90,6 +91,55 @@ public class UtilLine2D_F64 {
 		ret.distance = Distance2D_F64.distance(src,new Point2D_F64());
 		if( src.getSlopeY() < 0 )
 			ret.distance = -ret.distance;
+
+		return ret;
+	}
+
+	/**
+	 * Converts a line from parametric to general
+	 *
+	 * @param src
+	 * @param ret
+	 * @return
+	 */
+	public static LineGeneral2D_F64 convert( LineParametric2D_F64 src , LineGeneral2D_F64 ret ) {
+		if( ret == null ) {
+			ret = new LineGeneral2D_F64();
+		}
+
+		double x1 = src.p.x + src.slope.x;
+		double y1 = src.p.y + src.slope.y;
+
+		ret.A = (src.p.y - y1);
+		ret.B = (x1 - src.p.x);
+		ret.C = src.p.x*y1 - x1*src.p.y;
+
+		return ret;
+	}
+
+	/**
+	 * Converts a line from general to parametric
+	 *
+	 * @param src
+	 * @param ret
+	 * @return
+	 */
+	public static LineParametric2D_F64 convert( LineGeneral2D_F64 src ,  LineParametric2D_F64 ret ) {
+		if( ret == null ) {
+			ret = new LineParametric2D_F64();
+		}
+
+		ret.slope.x = src.B;
+		ret.slope.y = -src.A;
+
+		// find a point on the line
+		if( Math.abs(src.B) > Math.abs(src.A) ) {
+			ret.p.y = -src.C/src.B;
+			ret.p.x = 0;
+		} else {
+			ret.p.x = -src.C/src.A;
+			ret.p.y = 0;
+		}
 
 		return ret;
 	}
