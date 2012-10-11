@@ -114,6 +114,6 @@ public class Distance2D_F32 {
 	 * @return Distance of the closest point on the line to the specified point.
 	 */
 	public static float distance( LineGeneral2D_F32 line , Point2D_F32 p ) {
-		return (float) (Math.abs(line.A*p.x + line.B*p.y + line.C) / (float)Math.sqrt( line.A*line.A + line.B*line.B ));
+		return (Math.abs(line.A*p.x + line.B*p.y + line.C) / (float)Math.sqrt( line.A*line.A + line.B*line.B ));
 	}
 }

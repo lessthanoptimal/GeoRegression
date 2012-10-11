@@ -23,6 +23,7 @@ package georegression.struct.line;
  * <p>
  * Represents the line using three parameters such that any point on the line obeys the
  * following formula,, A*x + B*y + C = 0.  Any 2D line can be represented using this notation.
+ * This formulation is also known as standard and implicit.
  * </p>
  *
  * @author Peter Abeles
@@ -35,9 +36,7 @@ public class LineGeneral2D_F32 {
 	public float A,B,C;
 
 	public LineGeneral2D_F32(float a, float b, float c) {
-		A = a;
-		B = b;
-		C = c;
+		set(a,b,c);
 	}
 
 	public LineGeneral2D_F32() {
@@ -53,5 +52,11 @@ public class LineGeneral2D_F32 {
 
 	public float getC() {
 		return C;
+	}
+
+	public void set(float a, float b, float c) {
+		this.A = a;
+		this.B = b;
+		this.C = c;
 	}
 }

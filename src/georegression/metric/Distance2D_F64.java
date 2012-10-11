@@ -114,6 +114,6 @@ public class Distance2D_F64 {
 	 * @return Distance of the closest point on the line to the specified point.
 	 */
 	public static double distance( LineGeneral2D_F64 line , Point2D_F64 p ) {
-		return (double) (Math.abs(line.A*p.x + line.B*p.y + line.C) / Math.sqrt( line.A*line.A + line.B*line.B ));
+		return (Math.abs(line.A*p.x + line.B*p.y + line.C) / Math.sqrt( line.A*line.A + line.B*line.B ));
 	}
 }
