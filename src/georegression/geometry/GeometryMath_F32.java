@@ -295,13 +295,9 @@ public class GeometryMath_F32 {
 	 * a 3d point.
 	 * </p>
 	 */
-	public static <T extends GeoTuple3D_F32> T mult( DenseMatrix64F M, GeoTuple2D_F32 pt, T mod ) {
+	public static void mult( DenseMatrix64F M, GeoTuple2D_F32 pt, GeoTuple3D_F32 mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
-
-		if( mod == null ) {
-			throw new IllegalArgumentException( "Must provide an instance in mod" );
-		}
 
 		float x = pt.x;
 		float y = pt.y;
@@ -309,8 +305,6 @@ public class GeometryMath_F32 {
 		mod.x = (float) ( M.unsafe_get(0, 0) * x + M.unsafe_get(0, 1) * y + M.unsafe_get(0, 2) );
 		mod.y = (float) ( M.unsafe_get(1, 0) * x + M.unsafe_get(1, 1) * y + M.unsafe_get(1, 2) );
 		mod.z = (float) ( M.unsafe_get(2, 0) * x + M.unsafe_get(2, 1) * y + M.unsafe_get(2, 2) );
-
-		return mod;
 	}
 
 	/**

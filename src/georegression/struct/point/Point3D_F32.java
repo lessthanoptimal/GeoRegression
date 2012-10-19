@@ -49,6 +49,15 @@ public class Point3D_F32 extends GeoTuple3D_F32 {
 		return new Point3D_F32( x + a.getX(), y + a.getY(), z + a.getZ() );
 	}
 
+	/**
+	 * Converts the point into a vector.
+	 *
+	 * @return Vector with the same (x,y,z) values.
+	 */
+	public Vector3D_F32 toVector() {
+		return new Vector3D_F32(x,y,z);
+	}
+
 	@Override
 	public Point3D_F32 copy() {
 		return new Point3D_F32( x, y, z );
