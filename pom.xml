@@ -61,8 +61,8 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git://github.com/lessthanoptimal/GeoRegression.git</connection>
-    <!--developerConnection> SOMETHING HERE</developerConnection-->
+    <connection>scm:git://github.com/lessthanoptimal/GeoRegression.git</connection>
+    <developerConnection>scm:git@github.com:lessthanoptimal/GeoRegression.git</developerConnection>
     <tag>HEAD</tag>
     <url>https://github.com/lessthanoptimal/GeoRegression</url>
   </scm>
