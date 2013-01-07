@@ -126,4 +126,10 @@ public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homogr
 	public Homography2D_F64 copy() {
 		return new Homography2D_F64(this);
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+String.format("[ %5.2e %5.2e %5.2e ; %5.2e %5.2e %5.2e ; %5.2e %5.2e %5.2e ]",
+				a11,a12,a13,a21,a22,a31, a31,a32,a33);
+	}
 }

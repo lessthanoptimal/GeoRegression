@@ -105,4 +105,14 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 		a12 = a21 = 0;
 		tx = ty = 0;
 	}
+
+	public Affine2D_F64 copy() {
+		return new Affine2D_F64(a11,a12,a21,a22,tx,ty);
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+String.format("[ %5.2e %5.2e %5.2e ; %5.2e %5.2e %5.2e ]",
+				a11,a12,tx,a21,a22,ty);
+	}
 }
