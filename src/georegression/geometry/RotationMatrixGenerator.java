@@ -151,23 +151,21 @@ public class RotationMatrixGenerator {
 			rodrigues.theta = Math.acos( diagSum );
 			double bottom = 2.0 * Math.sin( rodrigues.theta );
 
+			// in cases where bottom is close to zero that means theta is also close to zero and the vector
+			// doesn't matter that much
 			rodrigues.unitAxisRotation.x = ( R.get( 2, 1 ) - R.get( 1, 2 ) ) / bottom;
 			rodrigues.unitAxisRotation.y = ( R.get( 0, 2 ) - R.get( 2, 0 ) ) / bottom;
 			rodrigues.unitAxisRotation.z = ( R.get( 1, 0 ) - R.get( 0, 1 ) ) / bottom;
 
 			// in extreme underflow situations the result can be unnormalized
 			rodrigues.unitAxisRotation.normalize();
-		} else if( absDiagSum == 1 ) {
+
+			// In theory this might be more stable
+			// rotationAxis( R, rodrigues.unitAxisRotation);
+		} else {
+			// the largest sum of diagonal elements is 3, thus if absDiagSum is more than 1 it must be rounding error
 			rodrigues.theta = 0;
 			rodrigues.unitAxisRotation.set( 1, 0, 0 );
-		} else {
-			// it can either be + or - PI
-			if( diagSum > 1 )
-				rodrigues.theta = Math.PI;
-			else if( diagSum < -1 )
-				rodrigues.theta = -Math.PI;
-			
-			rotationAxis( R, rodrigues.unitAxisRotation);
 		}
 
 		return rodrigues;
