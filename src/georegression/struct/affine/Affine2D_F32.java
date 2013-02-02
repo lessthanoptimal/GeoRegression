@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2013, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -104,5 +104,15 @@ public class Affine2D_F32 implements Affine<Affine2D_F32> {
 		a11 = a22 = 1;
 		a12 = a21 = 0;
 		tx = ty = 0;
+	}
+
+	public Affine2D_F32 copy() {
+		return new Affine2D_F32(a11,a12,a21,a22,tx,ty);
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+String.format("[ %5.2fe %5.2fe %5.2fe ; %5.2fe %5.2fe %5.2fe ]",
+				a11,a12,tx,a21,a22,ty);
 	}
 }

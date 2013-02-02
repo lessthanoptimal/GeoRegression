@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2011-2013, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -125,5 +125,11 @@ public class Homography2D_F32 extends Matrix3x3_F32 implements Homography<Homogr
 
 	public Homography2D_F32 copy() {
 		return new Homography2D_F32(this);
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+String.format("[ %5.2fe %5.2fe %5.2fe ; %5.2fe %5.2fe %5.2fe ; %5.2fe %5.2fe %5.2fe ]",
+				a11,a12,a13,a21,a22,a31, a31,a32,a33);
 	}
 }

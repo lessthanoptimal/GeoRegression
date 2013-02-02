@@ -17,43 +17,29 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.geometry;
+package georegression.metric;
 
-import georegression.misc.GrlConstants;
-import georegression.struct.point.Vector3D_F64;
+import georegression.struct.point.Point2D_F64;
 import org.junit.Test;
 
-import java.util.Random;
-
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Peter Abeles
  */
-public class TestUtilVector3D_F64 {
-
-	Random rand = new Random( 23423 );
+public class TestArea2D_F64 {
 
 	@Test
-	public void isIdentical() {
-		Vector3D_F64 a = UtilVector3D_F64.createRandom( -1, 1, rand );
-		Vector3D_F64 b = UtilVector3D_F64.createRandom( -1, 1, rand );
+	public void triangle() {
+		Point2D_F64 a = new Point2D_F64(0,0);
+		Point2D_F64 b = new Point2D_F64(5,0);
+		Point2D_F64 c = new Point2D_F64(0,3);
 
+		double expected = 0.5*5*3;
 
-		// test positive
-		assertTrue( UtilVector3D_F64.isIdentical( a, a.copy(), GrlConstants.DOUBLE_TEST_TOL ) );
+		double found = Area2D_F64.triangle(a,b,c);
 
-		// test negative
-		assertFalse( UtilVector3D_F64.isIdentical( a, b, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertEquals(expected,found,1e-8);
 	}
 
-	@Test
-	public void normalize() {
-		Vector3D_F64 a = new Vector3D_F64( 3, 3, 4 );
-
-		UtilVector3D_F64.normalize( a );
-
-		assertEquals( 1, a.norm(), GrlConstants.DOUBLE_TEST_TOL );
-	}
 }

@@ -17,43 +17,28 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.geometry;
+package georegression.metric;
 
-import georegression.misc.GrlConstants;
-import georegression.struct.point.Vector3D_F64;
-import org.junit.Test;
-
-import java.util.Random;
-
-import static org.junit.Assert.*;
-
+import georegression.struct.point.Point2D_F64;
 
 /**
  * @author Peter Abeles
  */
-public class TestUtilVector3D_F64 {
+public class Area2D_F64 {
 
-	Random rand = new Random( 23423 );
+	/**
+	 * Computes the area of an arbitrary triangle from 3-vertices.
+	 *
+	 * area = | a.x*(b.y - c.y) + b.x*(c.y - a.y) + c.x*(a.y - b.y) | / 2
+	 *
+	 * @param a Corner point 1
+	 * @param b Corner point 2
+	 * @param c Corner point 3
+	 * @return area
+	 */
+	public static double triangle( Point2D_F64 a, Point2D_F64 b, Point2D_F64  c ) {
+		double inner = a.x*(b.y - c.y) + b.x*(c.y - a.y) + c.x*(a.y - b.y);
 
-	@Test
-	public void isIdentical() {
-		Vector3D_F64 a = UtilVector3D_F64.createRandom( -1, 1, rand );
-		Vector3D_F64 b = UtilVector3D_F64.createRandom( -1, 1, rand );
-
-
-		// test positive
-		assertTrue( UtilVector3D_F64.isIdentical( a, a.copy(), GrlConstants.DOUBLE_TEST_TOL ) );
-
-		// test negative
-		assertFalse( UtilVector3D_F64.isIdentical( a, b, GrlConstants.DOUBLE_TEST_TOL ) );
-	}
-
-	@Test
-	public void normalize() {
-		Vector3D_F64 a = new Vector3D_F64( 3, 3, 4 );
-
-		UtilVector3D_F64.normalize( a );
-
-		assertEquals( 1, a.norm(), GrlConstants.DOUBLE_TEST_TOL );
+		return Math.abs(inner/2.0);
 	}
 }
