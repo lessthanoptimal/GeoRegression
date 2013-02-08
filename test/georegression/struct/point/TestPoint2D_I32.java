@@ -19,6 +19,7 @@
 
 package georegression.struct.point;
 
+import georegression.misc.GrlConstants;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -34,6 +35,14 @@ public class TestPoint2D_I32 {
 		Point2D_I32 b = new Point2D_I32(3,5);
 
 		assertEquals(4+9,a.distance2(b));
+	}
+
+	@Test
+	public void distance() {
+		Point2D_I32 a = new Point2D_I32(1,2);
+		Point2D_I32 b = new Point2D_I32(3,5);
+
+		assertEquals(Math.sqrt(2*2 + 3*3),a.distance(b), GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 	@Test

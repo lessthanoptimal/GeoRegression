@@ -65,6 +65,13 @@ public class Point2D_I32 {
 		return y;
 	}
 
+	public double distance( Point2D_I32 a ) {
+		int dx = x-a.x;
+		int dy = y-a.y;
+
+		return Math.sqrt(dx*dx + dy*dy);
+	}
+
 	/**
 	 * <p>
 	 * Returns the Euclidean distance squared from 'this' to 'a'.  No floating point
