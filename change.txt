@@ -1,6 +1,15 @@
+---------------------------------------------
+Date    : 2013-02-16
+Version : 0.2
 
 - Added metric.Area2D
   * Area of arbitrary triangle
+
+---------------------------------------------
+Date    : 2012-11-27
+Version : 0.1
+
+First versioned release and added to maven
 
 --------------------------
 
