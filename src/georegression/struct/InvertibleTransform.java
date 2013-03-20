@@ -19,6 +19,8 @@
 
 package georegression.struct;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * Any transform which has an unique inverse. T(u) = v and u = T<sup>-1</sup>(v).
@@ -37,7 +39,7 @@ package georegression.struct;
  *
  * @author Peter Abeles
  */
-public interface InvertibleTransform<T extends InvertibleTransform> {
+public interface InvertibleTransform<T extends InvertibleTransform> extends Serializable {
 
 	/**
 	 * Returns the dimension of the space which this transform operates on.

@@ -19,6 +19,8 @@
 
 package georegression.struct;
 
+import java.io.Serializable;
+
 /**
  * Describes geometric objects that are composed of N double values.  Where N is the dimension
  * of space the object is contained in.  Points and vectors are two examples of a GeoTuple.  Each
@@ -26,7 +28,7 @@ package georegression.struct;
  *
  * @author Peter Abeles
  */
-public abstract class GeoTuple<T extends GeoTuple> {
+public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
 
 	/**
 	 * The dimensionality of space the tuple is contained in and the number of values it has.
