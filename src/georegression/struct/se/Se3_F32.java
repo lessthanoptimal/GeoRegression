@@ -32,6 +32,10 @@ import org.ejml.ops.CommonOps;
  * @author Peter Abeles
  */
 public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
+
+	// serialization version
+	public static final long serialVersionUID = 1L;
+
 	// rotation matrix
 	public DenseMatrix64F R;
 	// translation vector

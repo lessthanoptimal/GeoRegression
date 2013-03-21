@@ -32,6 +32,20 @@ import java.util.Random;
 public class UtilPoint3D_F32 {
 
 
+	public static float distance( float x0 , float y0 , float z0 ,
+								   float x1 , float y1 , float z1) {
+		return norm(x1-x0,y1-y0,z1-z0);
+	}
+
+	public static float distanceSq( float x0 , float y0 , float z0 ,
+								   float x1 , float y1 , float z1) {
+		float dx = x1-x0;
+		float dy = y1-y0;
+		float dz = z1-z0;
+
+		return dx*dx + dy*dy + dz*dz;
+	}
+
 	public static float norm( float x , float y , float z ) {
 		return (float)Math.sqrt(x*x + y*y + z*z);
 	}
