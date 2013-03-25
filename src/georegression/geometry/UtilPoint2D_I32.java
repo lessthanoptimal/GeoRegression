@@ -34,10 +34,24 @@ public class UtilPoint2D_I32 {
 		return Math.sqrt( dx * dx + dy * dy );
 	}
 
+	public static int distanceSq( Point2D_I32 a , Point2D_I32 b ) {
+		int dx = b.x - a.x;
+		int dy = b.y - a.y;
+
+		return dx * dx + dy * dy;
+	}
+
 	public static double distance( int x0, int y0, int x1, int y1 ) {
 		int dx = x1 - x0;
 		int dy = y1 - y0;
 
 		return Math.sqrt( dx * dx + dy * dy );
+	}
+
+	public static int distanceSq( int x0, int y0, int x1, int y1 ) {
+		int dx = x1 - x0;
+		int dy = y1 - y0;
+
+		return dx * dx + dy * dy;
 	}
 }
