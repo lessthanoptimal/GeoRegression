@@ -6,6 +6,7 @@ Version : 0.3
   * Added distance() and distanceSq()
 - UtilPoint2D_I32
   * distanceSq()
+- Added Circle2D
 
 ---------------------------------------------
 Date    : 2013-02-16
