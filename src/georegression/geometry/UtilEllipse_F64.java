@@ -24,14 +24,20 @@ import georegression.struct.shapes.EllipseQuadratic_F64;
 import georegression.struct.shapes.EllipseRotated_F64;
 
 /**
+ * Functions for extracting information from ellipses and converting between different ellipse formats.
+ *
  * @author Peter Abeles
  */
 public class UtilEllipse_F64 {
 
 	/**
+	 * <p>
 	 * Convert from quadratic to rotated formats.  Equations taken from [1].
+	 * </p>
 	 *
-	 * [1] http://mathworld.wolfram.com/Ellipse.html March 2013.
+	 * <p>
+	 * [1] David Eberly "Information About Ellipses", Geometric Tools, LLC 2011
+	 * </p>
 	 *
 	 * @param input Input in quadratic format.
 	 * @param output (Optional) Storage for converted format.  Can be null.
@@ -41,56 +47,32 @@ public class UtilEllipse_F64 {
 		if( output == null )
 			output = new EllipseRotated_F64();
 
-		double a=input.a;
-		double b=input.b;
-		double c=input.c;
-		double d=input.d;
-		double f=input.e;
-		double g=input.f;
+		double a11 = input.a;
+		double a12 = input.b;
+		double a22 = input.c;
+		double b1  = 2*input.d;
+		double b2  = 2*input.e;
+		double c = input.f;
 
-		if( a == c ) {
-			// handle special case when it's a circle
-
-			return output;
-		}
-
-		double bb_ac = b*b-a*c;
-		double bottom_inner = Math.sqrt((a-c)*(a-c) + 4*b*b);
-
-		double top = 2.0*(a*f*f + c*d*d + g*b*b - 2*b*d*f - a*c*g);
-		double bottom = bb_ac*(bottom_inner - (a+c));
-
-		output.a = Math.sqrt(top/bottom);
-
-		bottom = bb_ac*( -bottom_inner - (a+c));
-
-		output.b = Math.sqrt(top/bottom);
-
-		output.center.x = (c*d - b*f)/bb_ac;
-		output.center.y = (c*f - b*d)/bb_ac;
-
-		double a11 = a;
-		double a12 = b;
-		double a22 = c;
-		double b1 = d;
-		double b2 = input.e;
 		output.center.x = (a22*b1-a12*b2)/(2*(a12*a12 - a11*a22));
 		output.center.y = (a11*b2-a12*b1)/(2*(a12*a12 - a11*a22));
 
+		double k1 = output.center.x;
+		double k2 = output.center.y;
 
-		if( b == 0 ) {
-			if( a < c ) {
-				output.phi = 0;
-			} else {
-				output.phi = Math.PI/2.0;
-			}
-		} else {
-			if( a < c ) {
-				output.phi = 0.5/Math.atan((a-c)/(2*b));
-			} else {
-				output.phi = Math.PI/2.0 + 0.5/Math.atan((a-c)/(2*b));
-			}
-		}
+		double mu = 1.0/(a11*k1*k1 + 2*a12*k1*k2 + a22*k2*k2 - c);
+		double m11 = mu*a11;
+		double m12 = mu*a12;
+		double m22 = mu*a22;
+
+		double inner = Math.sqrt((m11-m22)*(m11-m22) + 4*m12*m12);
+		double l1 = ((m11+m22) + inner)/2.0;
+		double l2 = ((m11+m22) - inner)/2.0;
+
+		output.b = 1/Math.sqrt(l1);
+		output.a = 1/Math.sqrt(l2);
+
+		output.phi = Math.atan2(-2*a12,a22-a11)/2.0;
 
 		return output;
 	}
@@ -123,21 +105,34 @@ public class UtilEllipse_F64 {
 		double y02 = y0*y0;
 
 		output.a = cphi2/a2 + sphi2/b2;
-		output.b = 2*sphi*cphi/a2 - 2*sphi*cphi/b2;
+		output.b = sphi*cphi/a2 - sphi*cphi/b2;
 		output.c = sphi2/a2 + cphi2/b2;
-		output.d = -2*x0*sphi2/b2 + 2*y0*sphi*cphi/b2 - 2*x0*cphi2/a2 - 2*y0*sphi*cphi/a2;
-		output.e = -2*x0*sphi*cphi/a2 - 2*y0*sphi2/a2 + 2*x0*sphi*cphi/b2 - 2*y0*cphi2/b2;
-		output.f = x02*cphi2/a2 + x02*sphi2/b2 + y02*sphi2/a2 + y02*cphi2/b2
-				+ 2*x0*y0*sphi*cphi/a2 - 2*x0*y0*sphi*cphi/b2 - 1;
-
+		output.d = -x0*cphi2/a2 - y0*sphi*cphi/a2 - x0*sphi2/b2 + y0*sphi*cphi/b2;
+		output.e = -x0*sphi*cphi/a2 - y0*sphi2/a2 + x0*sphi*cphi/b2 - y0*cphi2/b2;
+		output.f = x02*cphi2/a2 + 2*x0*y0*sphi*cphi/a2 + y02*sphi2/a2 +
+				x02*sphi2/b2 - 2*x0*y0*sphi*cphi/b2 + y02*cphi2/b2 - 1;
 
 		return output;
 	}
 
+	/**
+	 * Computes the value of the quadratic ellipse function at point (x,y)
+	 * @param x x-coordinate
+	 * @param y y-coordinate
+	 * @param ellipse Ellipse equation being evaluated.
+	 * @return value of ellipse equation at point (x,y)
+	 */
 	public static double evaluate( double x , double y , EllipseQuadratic_F64 ellipse ) {
-		return ellipse.a*x*x + ellipse.b*x*y +ellipse.c*y*y + ellipse.d*x + ellipse.e*y + ellipse.f;
+		return ellipse.a*x*x + 2*ellipse.b*x*y + ellipse.c*y*y + 2*ellipse.d*x + 2*ellipse.e*y + ellipse.f;
 	}
 
+	/**
+	 * Computes the value of the quadratic ellipse function at point (x,y)
+	 * @param x x-coordinate
+	 * @param y y-coordinate
+	 * @param ellipse Ellipse equation being evaluated.
+	 * @return value of ellipse equation at point (x,y)
+	 */
 	public static double evaluate( double x , double y , EllipseRotated_F64 ellipse ) {
 
 		double cphi = Math.cos(ellipse.phi);
@@ -148,11 +143,19 @@ public class UtilEllipse_F64 {
 
 
 		double left = (x*cphi + y*sphi);
-		double right = (x*sphi - y*cphi);
+		double right = (-x*sphi + y*cphi);
 
-		return (left*left)/(ellipse.a*ellipse.a) +  (right*right)/(ellipse.b*ellipse.b);
+		return (left*left)/(ellipse.a*ellipse.a) + (right*right)/(ellipse.b*ellipse.b);
 	}
 
+	/**
+	 * Computes the point on the ellipse at location 't'.
+	 *
+	 * @param t An angle in radians from 0 to 2*PI
+	 * @param ellipse Ellipse
+	 * @param output (Optional) point on the ellipse .  Can be null.
+	 * @return Point on the ellipse
+	 */
 	public static Point2D_F64 computePoint( double t , EllipseRotated_F64 ellipse , Point2D_F64 output ) {
 		if( output == null )
 			output = new Point2D_F64();

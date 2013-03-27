@@ -24,7 +24,7 @@ import georegression.struct.point.Point2D_F64;
 /**
  * <p>
  * An ellipse described using its center, semi-axes, and orientation.<br>
- * (x'*cos(phi) + y'*sin(phi))^2/a^2 + (x'*sin(phi) - y'*cos(phi))^2/b_2 = 1<br>
+ * (x'*cos(phi) + y'*sin(phi))^2/a^2 + (-x'*sin(phi) + y'*cos(phi))^2/b_2 = 1<br>
  * x' = x-x_0, y' = y-y_0<br>
  * where (x_0,y_0) is the center, (a,b) are major and minor axises, and phi is it's orientation.
  * </p>

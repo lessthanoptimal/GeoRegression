@@ -22,8 +22,8 @@ package georegression.struct.shapes;
 /**
  * <p>
  * In general quadratic form, an ellipse is described by 6-coefficients:<br>
- * F(x,y) = a*x^2 + b*x*y + c*y^2 + d*x + e*y + f = 0<br>
- * b^2 - 4*ac < 0<br>
+ * F(x,y) = a*x^2 + 2*b*x*y + c*y^2 + 2*d*x + 2*e*y + f = 0<br>
+ * a*c - b*b > 0<br>
  * where [a,b,c,d,e,f] are the coefficients and [x,y] is the coordinate of a point on the ellipse.
  * </p>
  *
@@ -49,5 +49,13 @@ public class EllipseQuadratic_F64 {
 	}
 
 	public EllipseQuadratic_F64() {
+	}
+
+	/**
+	 * Checks to see if the parameters define an ellipse using the a*c - b*b > 0 constraint.
+	 * @return true if it's an ellipse or false if not
+	 */
+	public boolean isEllipse() {
+		return a*c - b*b > 0;
 	}
 }

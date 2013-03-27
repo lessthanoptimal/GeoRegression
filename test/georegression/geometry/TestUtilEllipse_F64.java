@@ -34,7 +34,20 @@ public class TestUtilEllipse_F64 {
 
 	@Test
 	public void convert_back_forth() {
-		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0.2);
+		convert_back_forth(0,0,4.5,3,0);
+		convert_back_forth(1,2,4.5,3,0);
+		convert_back_forth(0,0,4.5,3,Math.PI/4);
+		convert_back_forth(0,0,4.5,3,0.1);
+		convert_back_forth(-2,1.5,4.5,3,-0.1);
+
+		convert_back_forth(1,2,3,1.5,0);
+
+		// see if it can handle a circle
+		convert_back_forth(0,0,3,3,0);
+	}
+
+	public void convert_back_forth( double x0 , double y0, double a, double b, double phi ) {
+		EllipseRotated_F64 rotated = new EllipseRotated_F64(x0,y0,a,b,phi);
 		EllipseQuadratic_F64 quad = new EllipseQuadratic_F64();
 		EllipseRotated_F64 found = new EllipseRotated_F64();
 
@@ -64,11 +77,11 @@ public class TestUtilEllipse_F64 {
 	}
 
 	/**
-	 * Evaluate computePoint by computs points around the ellipse and seeing if they
+	 * Tests computePoint and evaluate(rotated) by computes points around the ellipse and seeing if they
 	 * meet the expected results.
 	 */
 	@Test
-	public void computePoint() {
+	public void computePoint_evaluate_rotated() {
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0.2);
 
 		for( int i = 0; i < 100; i++ ) {
@@ -76,6 +89,20 @@ public class TestUtilEllipse_F64 {
 			Point2D_F64 p = UtilEllipse_F64.computePoint(t,rotated,null);
 			double eval = UtilEllipse_F64.evaluate(p.x,p.y,rotated);
 			assertEquals(1,eval, GrlConstants.DOUBLE_TEST_TOL);
+		}
+	}
+
+	@Test
+	public void computePoint_evaluate_quadratic() {
+		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0.2);
+		EllipseQuadratic_F64 quad = new EllipseQuadratic_F64();
+		UtilEllipse_F64.convert(rotated,quad);
+
+		for( int i = 0; i < 100; i++ ) {
+			double t = Math.PI*2*i/100.0;
+			Point2D_F64 p = UtilEllipse_F64.computePoint(t,rotated,null);
+			double eval = UtilEllipse_F64.evaluate(p.x,p.y,quad);
+			assertEquals(0,eval, GrlConstants.DOUBLE_TEST_TOL);
 		}
 	}
 

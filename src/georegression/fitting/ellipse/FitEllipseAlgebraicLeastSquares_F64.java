@@ -35,8 +35,13 @@ import java.util.List;
  * Fits an ellipse to a set of points in "closed form" by minimizing algebraic least-squares error.  The method used is
  * described in [1] and is a repartitioning of the solution describe in [2], with the aim of improving numerical
  * stability.  The found ellipse is described using 6 coefficients, as is shown below.
- * F(x,y) = a*x^2 + b*x*y + c*y^2 + d*x + e*y + f = 0 and b^2 - 4*ac < 0
+ * F(x,y) = a*x^2 + 2*b*x*y + c*y^2 + 2*d*x + 2*e*y + f = 0 and b^2 - 4*ac < 0
  * <p>
+ *
+ * <p>
+ * One peculiarity of this algorithm is that it's less stable when perfect data is provided.  This instability became
+ * evident when constructing unit tests and some of them failed.  Tests on the original Matlab code also failed.
+ * </p>
  *
  * <ul>
  * <li>[1] Radim Halir and Jan Flusser, "Numerically Stable Direct Least Squares Fitting Of Ellipses" 1998</li>
@@ -49,28 +54,28 @@ import java.util.List;
 public class FitEllipseAlgebraicLeastSquares_F64 {
 
 	// qudratic part of design matrix
-	DenseMatrix64F D1 = new DenseMatrix64F(3,1);
+	private DenseMatrix64F D1 = new DenseMatrix64F(3,1);
 	// linear part of design matrix
-	DenseMatrix64F D2 = new DenseMatrix64F(3,1);
+	private DenseMatrix64F D2 = new DenseMatrix64F(3,1);
 
 	// quadratic part of scatter matrix
-	DenseMatrix64F S1 = new DenseMatrix64F(3,3);
+	private DenseMatrix64F S1 = new DenseMatrix64F(3,3);
 	// combined part of scatter matrix
-	DenseMatrix64F S2 = new DenseMatrix64F(3,3);
+	private DenseMatrix64F S2 = new DenseMatrix64F(3,3);
 	//linear part of scatter matrix
-	DenseMatrix64F S3 = new DenseMatrix64F(3,3);
+	private DenseMatrix64F S3 = new DenseMatrix64F(3,3);
 	// Reduced scatter matrix
-	DenseMatrix64F M = new DenseMatrix64F(3,3);
+	private DenseMatrix64F M = new DenseMatrix64F(3,3);
 
 	// storage for intermediate steps
-	DenseMatrix64F T = new DenseMatrix64F(3,3);
-	DenseMatrix64F Ta1 = new DenseMatrix64F(3,1);
-	DenseMatrix64F S2_tran = new DenseMatrix64F(3,3);
+	private DenseMatrix64F T = new DenseMatrix64F(3,3);
+	private DenseMatrix64F Ta1 = new DenseMatrix64F(3,1);
+	private DenseMatrix64F S2_tran = new DenseMatrix64F(3,3);
 
-	LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(3);
-	EigenDecomposition<DenseMatrix64F> eigen = DecompositionFactory.eig(3,true,false);
+	private LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(3);
+	private EigenDecomposition<DenseMatrix64F> eigen = DecompositionFactory.eig(3,true,false);
 
-	EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
+	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
 
 	public boolean process( List<Point2D_F64> points ) {
 		int N = points.size();
@@ -91,39 +96,40 @@ public class FitEllipseAlgebraicLeastSquares_F64 {
 		}
 
 		// Compute scatter matrix
-		CommonOps.multTransA(D1,D1,S1);   // S1 = D1'*D1
+		CommonOps.multTransA(D1, D1, S1); // S1 = D1'*D1
 		CommonOps.multTransA(D1, D2, S2); // S2 = D1'*D2
-		CommonOps.multTransA(D2,D2,S3);   // S3 = D2'*D2
+		CommonOps.multTransA(D2, D2, S3); // S3 = D2'*D2
 
 		// for getting a2 from a1
 		// T = -inv(S3)*S2'
-		CommonOps.transpose(S2,S2_tran);
 		if( !solver.setA(S3) )
 			return false;
 
-		solver.solve(S2_tran,T);
-		CommonOps.changeSign(T);
+		CommonOps.transpose(S2,S2_tran);
+		CommonOps.changeSign(S2_tran);
+		solver.solve(S2_tran, T);
 
 		// Compute reduced scatter matrix
 		// M = S1 + S2*T
 		CommonOps.mult(S2, T, M);
-		CommonOps.add(M,S2,M);
+		CommonOps.add(M,S1,M);
+
 
 		// Premultiply by inv(C1). inverse of constraint matrix
-		for( int row = 0; row < 3; row++ ) {
-			double m0 = M.unsafe_get(row,0);
-			double m1 = M.unsafe_get(row, 1);
-			double m2 = M.unsafe_get(row,2);
+		for( int col = 0; col < 3; col++ ) {
+			double m0 = M.unsafe_get(0, col);
+			double m1 = M.unsafe_get(1, col);
+			double m2 = M.unsafe_get(2, col);
 
-			M.unsafe_set(row,0,  m2 / 2);
-			M.unsafe_set(row,1, -m1);
-			M.unsafe_set(row,2,  m0 / 2);
+			M.unsafe_set(0,col,  m2 / 2);
+			M.unsafe_set(1,col,  -m1);
+			M.unsafe_set(2,col,  m0 / 2);
 		}
 
 		if( !eigen.decompose(M) )
 			return false;
 
-		DenseMatrix64F a1 =selectBestEigenVector();
+		DenseMatrix64F a1 = selectBestEigenVector();
 		if( a1 == null )
 			return false;
 
@@ -131,34 +137,34 @@ public class FitEllipseAlgebraicLeastSquares_F64 {
 		CommonOps.mult(T,a1,Ta1);
 
 		ellipse.a = a1.data[0];
-		ellipse.b = a1.data[1];
+		ellipse.b = a1.data[1]/2;
 		ellipse.c = a1.data[2];
-		ellipse.d = Ta1.data[0];
-		ellipse.e = Ta1.data[1];
+		ellipse.d = Ta1.data[0]/2;
+		ellipse.e = Ta1.data[1]/2;
 		ellipse.f = Ta1.data[2];
 
 		return true;
 	}
 
 	private DenseMatrix64F selectBestEigenVector() {
-		DenseMatrix64F v1 = eigen.getEigenVector(0);
-		DenseMatrix64F v2 = eigen.getEigenVector(1);
-		DenseMatrix64F v3 = eigen.getEigenVector(2);
 
-		// evaluate a'*C*a
-		double cond1 = 4*v1.get(0)*v1.get(2) - v1.get(1)*v1.get(1);
-		double cond2 = 4*v2.get(0)*v2.get(2) - v2.get(1)*v2.get(1);
-		double cond3 = 4*v3.get(0)*v3.get(2) - v3.get(1)*v3.get(1);
+		int bestIndex = -1;
+		double bestCond = Double.MAX_VALUE;
 
+		for( int i = 0; i < 3; i++ ) {
+			DenseMatrix64F v = eigen.getEigenVector(i);
 
-		if( cond1 > 0 )
-			return v1;
-		if( cond2 > 0 )
-			return v2;
-		if( cond3 > 0 )
-			return v3;
+			// evaluate a'*C*a = 1
+			double cond = 4*v.get(0)*v.get(2) - v.get(1)*v.get(1);
+			double condError = (cond - 1)*(cond - 1);
 
-		return null;
+			if( cond > 0 && condError < bestCond ) {
+				bestCond = condError;
+				bestIndex = i;
+			}
+		}
+
+		return eigen.getEigenVector(bestIndex);
 	}
 
 	public EllipseQuadratic_F64 getEllipse() {
