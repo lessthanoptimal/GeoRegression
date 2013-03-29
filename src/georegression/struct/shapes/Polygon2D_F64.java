@@ -38,4 +38,8 @@ public class Polygon2D_F64 {
 			vertexes[i] = new Point2D_F64();
 		}
 	}
+
+   public int size() {
+      return vertexes.length;
+   }
 }

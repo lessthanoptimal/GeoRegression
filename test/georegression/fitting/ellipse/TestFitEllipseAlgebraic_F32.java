@@ -19,11 +19,11 @@
 
 package georegression.fitting.ellipse;
 
-import georegression.geometry.UtilEllipse_F64;
+import georegression.geometry.UtilEllipse_F32;
 import georegression.misc.GrlConstants;
-import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseQuadratic_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
+import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.EllipseQuadratic_F32;
+import georegression.struct.shapes.EllipseRotated_F32;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestFitEllipseAlgebraicLeastSquares_F64 {
+public class TestFitEllipseAlgebraic_F32 {
 
 	Random rand = new Random(234);
 
@@ -51,37 +51,37 @@ public class TestFitEllipseAlgebraicLeastSquares_F64 {
 	 */
 	@Test
 	public void checkEllipse() {
-		checkEllipse(0,0,3,1.5,0);
-		checkEllipse(1,2,3,1.5,0);
-		checkEllipse(1,2,3,1.5,0.25);
+		checkEllipse(0,0,3,1.5f,0);
+		checkEllipse(1,2,3,1.5f,0);
+		checkEllipse(1,2,3,1.5f,0.25f);
 	}
 
-	public void checkEllipse( double x0 , double y0, double a, double b, double phi ) {
-		EllipseRotated_F64 rotated = new EllipseRotated_F64(x0,y0,a,b,phi);
+	public void checkEllipse( float x0 , float y0, float a, float b, float phi ) {
+		EllipseRotated_F32 rotated = new EllipseRotated_F32(x0,y0,a,b,phi);
 
-		List<Point2D_F64> points = new ArrayList<Point2D_F64>();
+		List<Point2D_F32> points = new ArrayList<Point2D_F32>();
 		for( int i = 0; i < 20; i++ ) {
-			double theta = 2.0*Math.PI*i/20;
-			points.add(UtilEllipse_F64.computePoint(theta, rotated, null));
+			float theta = 2.0f*(float)Math.PI*i/20;
+			points.add(UtilEllipse_F32.computePoint(theta, rotated, null));
 //			System.out.println(points.get(i).x+" "+points.get(i).y);
 		}
 
-		EllipseQuadratic_F64 expected = UtilEllipse_F64.convert(rotated,null);
+		EllipseQuadratic_F32 expected = UtilEllipse_F32.convert(rotated,null);
 
-		FitEllipseAlgebraicLeastSquares_F64 alg = new FitEllipseAlgebraicLeastSquares_F64();
+		FitEllipseAlgebraic_F32 alg = new FitEllipseAlgebraic_F32();
 		assertTrue(alg.process(points));
 
-		EllipseQuadratic_F64 found = alg.getEllipse();
+		EllipseQuadratic_F32 found = alg.getEllipse();
 
 		normalize(expected);
 		normalize(found);
 
-		assertEquals(expected.a,found.a, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.b,found.b, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.c,found.c, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.d,found.d, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.e,found.e, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.f,found.f, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected.a,found.a, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.b,found.b, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.c,found.c, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.d,found.d, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.e,found.e, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.f,found.f, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	/**
@@ -94,17 +94,17 @@ public class TestFitEllipseAlgebraicLeastSquares_F64 {
 	public void checkRandom() {
 //		for( int i = 0; i < 100; i++ ) {
 //			System.out.println("i = "+i);
-//			double x0 = (rand.nextDouble()-0.5)*2;
-//			double y0 = (rand.nextDouble()-0.5)*2;
-//			double b = rand.nextDouble();
-//			double a = b+rand.nextDouble()*2+0.1;
-//			double theta = (rand.nextDouble()-0.5)*Math.PI;
+//			float x0 = (rand.nextFloat()-0.5f)*2;
+//			float y0 = (rand.nextFloat()-0.5f)*2;
+//			float b = rand.nextFloat();
+//			float a = b+rand.nextFloat()*2+0.1f;
+//			float theta = (rand.nextFloat()-0.5f)*Math.PI;
 //
 //			checkEllipse(x0,y0,a,b,theta);
 //		}
 	}
 
-	private void normalize( EllipseQuadratic_F64 ellipse )  {
+	private void normalize( EllipseQuadratic_F32 ellipse )  {
 		ellipse.a /= ellipse.f;
 		ellipse.b /= ellipse.f;
 		ellipse.c /= ellipse.f;

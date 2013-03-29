@@ -45,7 +45,7 @@ public class EllipseRotated_F64 {
 	 */
 	public double b;
 	/**
-	 * counter clockwise angle of rotation from x-axis to the major axis
+	 * counter clockwise angle of rotation from x-axis to the major axis.  Standard range is from -PI/2 to PI/2
 	 */
 	public double phi;
 

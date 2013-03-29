@@ -51,7 +51,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class FitEllipseAlgebraicLeastSquares_F64 {
+public class FitEllipseAlgebraic_F64 {
 
 	// qudratic part of design matrix
 	private DenseMatrix64F D1 = new DenseMatrix64F(3,1);
@@ -117,9 +117,9 @@ public class FitEllipseAlgebraicLeastSquares_F64 {
 
 		// Premultiply by inv(C1). inverse of constraint matrix
 		for( int col = 0; col < 3; col++ ) {
-			double m0 = M.unsafe_get(0, col);
-			double m1 = M.unsafe_get(1, col);
-			double m2 = M.unsafe_get(2, col);
+			/**/double m0 = M.unsafe_get(0, col);
+			/**/double m1 = M.unsafe_get(1, col);
+			/**/double m2 = M.unsafe_get(2, col);
 
 			M.unsafe_set(0,col,  m2 / 2);
 			M.unsafe_set(1,col,  -m1);
@@ -136,12 +136,12 @@ public class FitEllipseAlgebraicLeastSquares_F64 {
 		// ellipse coefficients
 		CommonOps.mult(T,a1,Ta1);
 
-		ellipse.a = a1.data[0];
-		ellipse.b = a1.data[1]/2;
-		ellipse.c = a1.data[2];
-		ellipse.d = Ta1.data[0]/2;
-		ellipse.e = Ta1.data[1]/2;
-		ellipse.f = Ta1.data[2];
+		ellipse.a = (double)a1.data[0];
+		ellipse.b = (double)(a1.data[1]/2);
+		ellipse.c = (double)a1.data[2];
+		ellipse.d = (double)(Ta1.data[0]/2);
+		ellipse.e = (double)(Ta1.data[1]/2);
+		ellipse.f = (double)Ta1.data[2];
 
 		return true;
 	}
@@ -151,11 +151,14 @@ public class FitEllipseAlgebraicLeastSquares_F64 {
 		int bestIndex = -1;
 		double bestCond = Double.MAX_VALUE;
 
-		for( int i = 0; i < 3; i++ ) {
+		for( int i = 0; i < eigen.getNumberOfEigenvalues(); i++ ) {
 			DenseMatrix64F v = eigen.getEigenVector(i);
 
+			if( v == null ) // TODO WTF?!?!
+				continue;
+
 			// evaluate a'*C*a = 1
-			double cond = 4*v.get(0)*v.get(2) - v.get(1)*v.get(1);
+			double cond = (double)(4*v.get(0)*v.get(2) - v.get(1)*v.get(1));
 			double condError = (cond - 1)*(cond - 1);
 
 			if( cond > 0 && condError < bestCond ) {
@@ -163,6 +166,9 @@ public class FitEllipseAlgebraicLeastSquares_F64 {
 				bestIndex = i;
 			}
 		}
+
+		if( bestIndex == -1 )
+			return null;
 
 		return eigen.getEigenVector(bestIndex);
 	}

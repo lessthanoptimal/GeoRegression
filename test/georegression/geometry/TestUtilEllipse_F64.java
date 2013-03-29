@@ -25,6 +25,8 @@ import georegression.struct.shapes.EllipseQuadratic_F64;
 import georegression.struct.shapes.EllipseRotated_F64;
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -32,11 +34,13 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestUtilEllipse_F64 {
 
+	Random rand = new Random(234);
+
 	@Test
 	public void convert_back_forth() {
 		convert_back_forth(0,0,4.5,3,0);
 		convert_back_forth(1,2,4.5,3,0);
-		convert_back_forth(0,0,4.5,3,Math.PI/4);
+		convert_back_forth(0,0,4.5,3,(double)Math.PI/4);
 		convert_back_forth(0,0,4.5,3,0.1);
 		convert_back_forth(-2,1.5,4.5,3,-0.1);
 
@@ -44,6 +48,20 @@ public class TestUtilEllipse_F64 {
 
 		// see if it can handle a circle
 		convert_back_forth(0,0,3,3,0);
+	}
+
+	@Test
+	public void convert_back_forth_random() {
+
+		for( int i = 0; i < 100; i++ ) {
+			double x = (rand.nextDouble()-0.5)*2;
+			double y = (rand.nextDouble()-0.5)*2;
+			double theta = (rand.nextDouble()-0.5)*(double)Math.PI;
+			double b = rand.nextDouble()*2+0.1;
+			double a = b+rand.nextDouble();
+
+			convert_back_forth(x,y,a,b,theta);
+		}
 	}
 
 	public void convert_back_forth( double x0 , double y0, double a, double b, double phi ) {

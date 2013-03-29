@@ -19,27 +19,23 @@
 
 package georegression.struct.shapes;
 
-import georegression.struct.point.Point2D_F32;
+import georegression.struct.point.Point2D_I32;
 
 /**
  * Describes a polygon in 2D.
  *
  * @author Peter Abeles
  */
-public class Polygon2D_F32 {
+public class Polygon2D_I32 {
 
 	// vertexes in the polygon
-	public Point2D_F32 vertexes[];
+	public Point2D_I32 vertexes[];
 
-	public Polygon2D_F32( int numVertexes ) {
-		vertexes = new Point2D_F32[numVertexes];
+	public Polygon2D_I32(int numVertexes) {
+		vertexes = new Point2D_I32[numVertexes];
 
 		for( int i = 0; i < numVertexes; i++ ) {
-			vertexes[i] = new Point2D_F32();
+			vertexes[i] = new Point2D_I32();
 		}
 	}
-
-   public int size() {
-      return vertexes.length;
-   }
 }

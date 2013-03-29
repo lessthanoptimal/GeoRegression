@@ -19,9 +19,11 @@
 
 package georegression.metric;
 
+import georegression.fitting.ellipse.ClosestPointEllipse_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.EllipseRotated_F32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -47,7 +49,24 @@ public class TestClosestPoint2D_F32 {
 		LineParametric2D_F32 line = new LineParametric2D_F32( 1, 2, -1, 1 );
 		Point2D_F32 pt = new Point2D_F32( 1, 0 );
 
-		float found = ClosestPoint2D_F32.closestPointT( line, pt );
+		float found = ClosestPoint2D_F32.closestPointT(line, pt);
 		assertEquals( -1, found, GrlConstants.FLOAT_TEST_TOL );
+	}
+
+	@Test
+	public void closestPoint_ellipse() {
+		EllipseRotated_F32 ellipse = new EllipseRotated_F32(1,2,3,2,0.1f);
+
+		Point2D_F32 p = new Point2D_F32(6,7);
+
+		Point2D_F32 found = ClosestPoint2D_F32.closestPoint(ellipse, p);
+
+		// compare to a known algorithm
+		ClosestPointEllipse_F32 alg = new ClosestPointEllipse_F32( GrlConstants.FLOAT_TEST_TOL , 100 );
+		alg.setEllipse(ellipse);
+		alg.process(p);
+
+		assertEquals(alg.getClosest().x,found.x,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(alg.getClosest().y,found.y,GrlConstants.FLOAT_TEST_TOL);
 	}
 }
