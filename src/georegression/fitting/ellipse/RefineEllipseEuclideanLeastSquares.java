@@ -78,6 +78,22 @@ public class RefineEllipseEuclideanLeastSquares {
 		this(FactoryOptimization.leastSquaresLM(1e-3, true));
 	}
 
+	public void setFtol(double ftol) {
+		this.ftol = ftol;
+	}
+
+	public void setGtol(double gtol) {
+		this.gtol = gtol;
+	}
+
+	public void setMaxIterations(int maxIterations) {
+		this.maxIterations = maxIterations;
+	}
+
+	public UnconstrainedLeastSquares getOptimizer() {
+		return optimizer;
+	}
+
 	public boolean refine( EllipseRotated_F64 initial , List<Point2D_F64> points ) {
 		this.points = points;
 
@@ -121,6 +137,10 @@ public class RefineEllipseEuclideanLeastSquares {
 
 	public EllipseRotated_F64 getFound() {
 		return found;
+	}
+
+	public double getFitError() {
+		return optimizer.getFunctionValue();
 	}
 
 	protected Error createError() {

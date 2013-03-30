@@ -43,7 +43,7 @@ public class ClosestPointEllipseAngle_F32 {
 	float ce;
 	float se;
 
-	// optimal value of paramiterization
+	// optimal value of parameterization
 	float theta;
 
 	public ClosestPointEllipseAngle_F32(float tol, int maxIterations) {

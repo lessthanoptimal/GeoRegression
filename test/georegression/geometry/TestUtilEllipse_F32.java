@@ -103,10 +103,10 @@ public class TestUtilEllipse_F32 {
 		Point2D_F32 p = UtilEllipse_F32.computePoint(0.45f,rotated,null);
 
 		float eval = UtilEllipse_F32.evaluate(p.x,p.y,rotated);
-		assertEquals(1, eval, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,eval, GrlConstants.FLOAT_TEST_TOL);
 
 		EllipseQuadratic_F32 quad = new EllipseQuadratic_F32();
-		UtilEllipse_F32.convert(rotated, quad);
+		UtilEllipse_F32.convert(rotated,quad);
 		eval = UtilEllipse_F32.evaluate(p.x,p.y,quad);
 		assertEquals(0,eval, GrlConstants.FLOAT_TEST_TOL);
 	}
@@ -148,7 +148,7 @@ public class TestUtilEllipse_F32 {
 		for( int i = 0; i <= 100; i++ ) {
 			float t = (float)Math.PI*2*i/100.0f - (float)Math.PI;
 			Point2D_F32 p = UtilEllipse_F32.computePoint(t,rotated,null);
-			float found = UtilEllipse_F32.computeAngle(p, rotated);
+			float found = UtilEllipse_F32.computeAngle(p,rotated);
 //			System.out.println(t+" "+found);
 			assertTrue(UtilAngle.dist(t, found) <= GrlConstants.FLOAT_TEST_TOL);
 		}

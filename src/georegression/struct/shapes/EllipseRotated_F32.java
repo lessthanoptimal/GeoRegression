@@ -19,7 +19,7 @@
 
 package georegression.struct.shapes;
 
-import georegression.struct.point.Point2D_F64;
+import georegression.struct.point.Point2D_F32;
 
 /**
  * <p>
@@ -31,78 +31,78 @@ import georegression.struct.point.Point2D_F64;
  *
  * @author Peter Abeles
  */
-public class EllipseRotated_F64 {
+public class EllipseRotated_F32 {
 	/**
 	 * Center of the ellipse
 	 */
-	public Point2D_F64 center = new Point2D_F64();
+	public Point2D_F32 center = new Point2D_F32();
 	/**
 	 * semi major-axis
 	 */
-	public double a;
+	public float a;
 	/**
 	 * semi minor-axis
 	 */
-	public double b;
+	public float b;
 	/**
 	 * counter clockwise angle of rotation from x-axis to the major axis.  Standard range is from -PI/2 to PI/2
 	 */
-	public double phi;
+	public float phi;
 
-	public EllipseRotated_F64(Point2D_F64 center, double a, double b, double phi) {
+	public EllipseRotated_F32(Point2D_F32 center, float a, float b, float phi) {
 		this.center.set(center);
 		this.a = a;
 		this.b = b;
 		this.phi = phi;
 	}
 
-	public EllipseRotated_F64( double x0 , double y0, double a, double b, double phi) {
+	public EllipseRotated_F32( float x0 , float y0, float a, float b, float phi) {
 		set(x0,y0,a,b,phi);
 	}
 
-	public EllipseRotated_F64() {
+	public EllipseRotated_F32() {
 	}
 
-	public Point2D_F64 getCenter() {
+	public Point2D_F32 getCenter() {
 		return center;
 	}
 
-	public void setCenter(Point2D_F64 center) {
+	public void setCenter(Point2D_F32 center) {
 		this.center.set(center);
 	}
 
-	public double getA() {
+	public float getA() {
 		return a;
 	}
 
-	public void setA(double a) {
+	public void setA(float a) {
 		this.a = a;
 	}
 
-	public double getB() {
+	public float getB() {
 		return b;
 	}
 
-	public void setB(double b) {
+	public void setB(float b) {
 		this.b = b;
 	}
 
-	public double getPhi() {
+	public float getPhi() {
 		return phi;
 	}
 
-	public void setPhi(double phi) {
+	public void setPhi(float phi) {
 		this.phi = phi;
 	}
 
-	public void set( double x0 , double y0, double a, double b, double phi) {
+	public void set( float x0 , float y0, float a, float b, float phi) {
 		this.center.set(x0,y0);
 		this.a = a;
 		this.b = b;
 		this.phi = phi;
 	}
 
-	public void set(EllipseRotated_F64 ellipse ) {
+	public void set(EllipseRotated_F32 ellipse ) {
 		this.center.set( ellipse.center );
 		this.a = ellipse.a;
 		this.b = ellipse.b;
