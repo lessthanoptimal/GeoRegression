@@ -7,6 +7,13 @@ Version : 0.3
 - UtilPoint2D_I32
   * distanceSq()
 - Added Circle2D
+- Added Ellipse
+- Various ellipse related algorithm
+  * Algebraic best fit to points
+  * Euclidean best fit to points 
+  * Euclidean distance from points
+- Added dependency to DDogleg library
+
 
 ---------------------------------------------
 Date    : 2013-02-16

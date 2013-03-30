@@ -19,6 +19,7 @@
 
 package georegression.geometry;
 
+import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.EllipseQuadratic_F32;
@@ -28,6 +29,7 @@ import org.junit.Test;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -45,6 +47,7 @@ public class TestUtilEllipse_F32 {
 		convert_back_forth(-2,1.5f,4.5f,3,-0.1f);
 
 		convert_back_forth(1,2,3,1.5f,0);
+		convert_back_forth(1,2,3,1.5f,1.5f);
 
 		// see if it can handle a circle
 		convert_back_forth(0,0,3,3,0);
@@ -65,11 +68,25 @@ public class TestUtilEllipse_F32 {
 	}
 
 	public void convert_back_forth( float x0 , float y0, float a, float b, float phi ) {
+		// should be scale invariant
+		convert_back_forth(x0,y0,a,b,phi,1);
+		convert_back_forth(x0,y0,a,b,phi,-1);
+	}
+
+	public void convert_back_forth( float x0 , float y0, float a, float b, float phi , float scale ) {
 		EllipseRotated_F32 rotated = new EllipseRotated_F32(x0,y0,a,b,phi);
 		EllipseQuadratic_F32 quad = new EllipseQuadratic_F32();
 		EllipseRotated_F32 found = new EllipseRotated_F32();
 
 		UtilEllipse_F32.convert(rotated,quad);
+
+		quad.a *= scale;
+		quad.b *= scale;
+		quad.c *= scale;
+		quad.d *= scale;
+		quad.e *= scale;
+		quad.f *= scale;
+
 		UtilEllipse_F32.convert(quad,found);
 
 		assertEquals(rotated.center.x,found.center.x, GrlConstants.FLOAT_TEST_TOL);
@@ -86,10 +103,10 @@ public class TestUtilEllipse_F32 {
 		Point2D_F32 p = UtilEllipse_F32.computePoint(0.45f,rotated,null);
 
 		float eval = UtilEllipse_F32.evaluate(p.x,p.y,rotated);
-		assertEquals(1,eval, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, eval, GrlConstants.FLOAT_TEST_TOL);
 
 		EllipseQuadratic_F32 quad = new EllipseQuadratic_F32();
-		UtilEllipse_F32.convert(rotated,quad);
+		UtilEllipse_F32.convert(rotated, quad);
 		eval = UtilEllipse_F32.evaluate(p.x,p.y,quad);
 		assertEquals(0,eval, GrlConstants.FLOAT_TEST_TOL);
 	}
@@ -121,6 +138,19 @@ public class TestUtilEllipse_F32 {
 			Point2D_F32 p = UtilEllipse_F32.computePoint(t,rotated,null);
 			float eval = UtilEllipse_F32.evaluate(p.x,p.y,quad);
 			assertEquals(0,eval, GrlConstants.FLOAT_TEST_TOL);
+		}
+	}
+
+	@Test
+	public void computeAngle() {
+		EllipseRotated_F32 rotated = new EllipseRotated_F32(1,2,4.5f,3,0.2f);
+
+		for( int i = 0; i <= 100; i++ ) {
+			float t = (float)Math.PI*2*i/100.0f - (float)Math.PI;
+			Point2D_F32 p = UtilEllipse_F32.computePoint(t,rotated,null);
+			float found = UtilEllipse_F32.computeAngle(p, rotated);
+//			System.out.println(t+" "+found);
+			assertTrue(UtilAngle.dist(t, found) <= GrlConstants.FLOAT_TEST_TOL);
 		}
 	}
 

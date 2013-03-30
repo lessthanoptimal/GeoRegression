@@ -51,7 +51,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class FitEllipseAlgebraic_F64 {
+public class FitEllipseAlgebraic {
 
 	// qudratic part of design matrix
 	private DenseMatrix64F D1 = new DenseMatrix64F(3,1);

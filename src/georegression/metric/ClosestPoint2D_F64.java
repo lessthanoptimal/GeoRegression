@@ -19,7 +19,7 @@
 
 package georegression.metric;
 
-import georegression.fitting.ellipse.ClosestPointEllipse_F64;
+import georegression.fitting.ellipse.ClosestPointEllipseAngle_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -79,14 +79,14 @@ public class ClosestPoint2D_F64 {
 	 * Computes the closest point on an ellipse to the provided point.  If there are multiple solutions then one
 	 * is arbitrarily chosen.
 	 *
-	 * NOTE: When optimizing consider calling {@link ClosestPointEllipse_F64} directly instead.
+	 * NOTE: When optimizing consider calling {@link georegression.fitting.ellipse.ClosestPointEllipseAngle_F64} directly instead.
 	 *
 	 * @param ellipse Ellipse
 	 * @param p Point
 	 * @return Closest point on the ellipse
 	 */
 	public static Point2D_F64 closestPoint( EllipseRotated_F64 ellipse , Point2D_F64 p ) {
-		ClosestPointEllipse_F64 alg = new ClosestPointEllipse_F64(GrlConstants.DOUBLE_TEST_TOL,30);
+		ClosestPointEllipseAngle_F64 alg = new ClosestPointEllipseAngle_F64(GrlConstants.DOUBLE_TEST_TOL,30);
 		alg.setEllipse(ellipse);
 		alg.process(p);
 		return alg.getClosest();

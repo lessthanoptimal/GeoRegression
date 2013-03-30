@@ -19,7 +19,7 @@
 
 package georegression.metric;
 
-import georegression.fitting.ellipse.ClosestPointEllipse_F64;
+import georegression.fitting.ellipse.ClosestPointEllipseAngle_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -62,7 +62,7 @@ public class TestClosestPoint2D_F64 {
 		Point2D_F64 found = ClosestPoint2D_F64.closestPoint(ellipse,p);
 
 		// compare to a known algorithm
-		ClosestPointEllipse_F64 alg = new ClosestPointEllipse_F64( GrlConstants.DOUBLE_TEST_TOL , 100 );
+		ClosestPointEllipseAngle_F64 alg = new ClosestPointEllipseAngle_F64( GrlConstants.DOUBLE_TEST_TOL , 100 );
 		alg.setEllipse(ellipse);
 		alg.process(p);
 

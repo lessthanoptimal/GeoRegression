@@ -19,6 +19,7 @@
 
 package georegression.geometry;
 
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.EllipseQuadratic_F32;
 import georegression.struct.shapes.EllipseRotated_F32;
@@ -72,7 +73,23 @@ public class UtilEllipse_F32 {
 		output.b = 1/(float)Math.sqrt(l1);
 		output.a = 1/(float)Math.sqrt(l2);
 
-		output.phi = (float)Math.atan2(-2*a12,a22-a11)/2.0f;
+		// direction of minor axis
+		float dx,dy;
+		if( m11 >= m22 ) {
+			dx = l1-m22;
+			dy = m12;
+		} else {
+			dx = m12;
+			dy = l1-m11;
+		}
+
+		// direction of major axis
+		output.phi = (float)Math.atan2(-dx,dy);
+		if( output.phi < -GrlConstants.F_PId2 ) {
+			output.phi += (float)Math.PI;
+		} else if( output.phi > GrlConstants.F_PId2 ) {
+			output.phi -= (float)Math.PI;
+		}
 
 		return output;
 	}
@@ -104,6 +121,7 @@ public class UtilEllipse_F32 {
 		float x02 = x0*x0;
 		float y02 = y0*y0;
 
+		// TODO simplfy using more trig identities
 		output.a = cphi2/a2 + sphi2/b2;
 		output.b = sphi*cphi/a2 - sphi*cphi/b2;
 		output.c = sphi2/a2 + cphi2/b2;
@@ -116,7 +134,9 @@ public class UtilEllipse_F32 {
 	}
 
 	/**
-	 * Computes the value of the quadratic ellipse function at point (x,y)
+	 * Computes the value of the quadratic ellipse function at point (x,y). Should equal 0 if the point
+	 * is along the ellipse.
+	 *
 	 * @param x x-coordinate
 	 * @param y y-coordinate
 	 * @param ellipse Ellipse equation being evaluated.
@@ -127,7 +147,8 @@ public class UtilEllipse_F32 {
 	}
 
 	/**
-	 * Computes the value of the quadratic ellipse function at point (x,y)
+	 * Computes the value of the quadratic ellipse function at point (x,y).  Should equal 1 if the point is on the
+	 * ellipse.
 	 * @param x x-coordinate
 	 * @param y y-coordinate
 	 * @param ellipse Ellipse equation being evaluated.
@@ -169,5 +190,26 @@ public class UtilEllipse_F32 {
 		output.y = ellipse.center.y + ellipse.a*ct*sphi + ellipse.b*st*cphi;
 
 		return output;
+	}
+
+	/**
+	 * Computes the value of 't' used to specify a point's location
+	 *
+	 * @param p Point on the ellipse
+	 * @param ellipse Ellipse
+	 * @return Angle from -pi to pi
+	 */
+	public static float computeAngle( Point2D_F32 p , EllipseRotated_F32 ellipse ) {
+		// put point into ellipse's reference frame
+		float ce = (float)Math.cos(ellipse.phi);
+		float se = (float)Math.sin(ellipse.phi);
+
+		float xc = p.x - ellipse.center.x;
+		float yc = p.y - ellipse.center.y;
+
+		float x =  ce*xc + se*yc;
+		float y = -se*xc + ce*yc;
+
+		return (float)Math.atan2( y/ellipse.b , x/ellipse.a );
 	}
 }

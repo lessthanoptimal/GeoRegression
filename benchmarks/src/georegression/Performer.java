@@ -17,27 +17,14 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.misc;
-
+package georegression;
 
 /**
- * Constants used throughout the library.
- *
  * @author Peter Abeles
  */
-public class GrlConstants {
+public interface Performer {
 
-	public static float F_PI = (float)Math.PI;
-	public static float F_PI2 = (float)(2.0*Math.PI);
-	public static float F_PId2 = (float)(Math.PI/2.0);
-	public static double PI2 = 2.0*Math.PI;
-	public static double PId2 = Math.PI/2.0;
+    public void process();
 
-	// identifies the library version
-	public static String VERSION = "ALPHA";
-
-	// standard tolerances used in unit tests
-	public static float FLOAT_TEST_TOL = 1e-4f;
-	public static double DOUBLE_TEST_TOL = 1e-8f;
-
+    public String getName();
 }

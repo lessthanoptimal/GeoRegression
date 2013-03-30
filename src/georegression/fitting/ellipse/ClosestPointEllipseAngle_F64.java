@@ -29,7 +29,7 @@ import georegression.struct.shapes.EllipseRotated_F64;
  *
  * @author Peter Abeles
  */
-public class ClosestPointEllipse_F64 {
+public class ClosestPointEllipseAngle_F64 {
 
 	// tolerance to test for solution.  Must be this close to zero
 	double tol;
@@ -43,10 +43,10 @@ public class ClosestPointEllipse_F64 {
 	double ce;
 	double se;
 
-	// optimal value of paramiterization
+	// optimal value of parameterization
 	double theta;
 
-	public ClosestPointEllipse_F64(double tol, int maxIterations) {
+	public ClosestPointEllipseAngle_F64(double tol, int maxIterations) {
 		this.tol = tol;
 		this.maxIterations = maxIterations;
 	}
@@ -71,7 +71,8 @@ public class ClosestPointEllipse_F64 {
 		double a2_m_b2 = ellipse.a*ellipse.a - ellipse.b*ellipse.b;
 
 		// use Newton's Method to find the solution
-		for( int i = 0; i < maxIterations; i++ ) {
+		int i = 0;
+		for(; i < maxIterations; i++ ) {
 			double c = Math.cos(theta);
 			double s = Math.sin(theta);
 

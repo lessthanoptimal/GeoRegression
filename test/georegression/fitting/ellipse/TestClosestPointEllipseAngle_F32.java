@@ -33,7 +33,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestClosestPointEllipse_F32 {
+public class TestClosestPointEllipseAngle_F32 {
 
 	Random rand = new Random(234);
 
@@ -55,14 +55,14 @@ public class TestClosestPointEllipse_F32 {
 			float x = (rand.nextFloat()-0.5f)*10;
 			float y = (rand.nextFloat()-0.5f)*10;
 
-			checkSolution(x0,y0,b,a,phi,x,y);
+			checkSolution(x0,y0,a,b,phi,x,y);
 		}
 	}
 
 	public void checkSolution( float x0 , float y0, float a, float b, float phi , float x , float y ) {
 		EllipseRotated_F32 ellipse = new EllipseRotated_F32(x0,y0,a,b,phi);
 
-		ClosestPointEllipse_F32 alg = new ClosestPointEllipse_F32(GrlConstants.FLOAT_TEST_TOL,200);
+		ClosestPointEllipseAngle_F32 alg = new ClosestPointEllipseAngle_F32(GrlConstants.FLOAT_TEST_TOL,200);
 
 		Point2D_F32 p = new Point2D_F32(x,y);
 		alg.setEllipse(ellipse);
