@@ -27,6 +27,7 @@ import org.ejml.factory.EigenDecomposition;
 import org.ejml.factory.LinearSolver;
 import org.ejml.factory.LinearSolverFactory;
 import org.ejml.ops.CommonOps;
+import org.ejml.ops.MatrixFeatures;
 
 import java.util.List;
 
@@ -114,12 +115,11 @@ public class FitEllipseAlgebraic {
 		CommonOps.mult(S2, T, M);
 		CommonOps.add(M,S1,M);
 
-
 		// Premultiply by inv(C1). inverse of constraint matrix
 		for( int col = 0; col < 3; col++ ) {
-			/**/double m0 = M.unsafe_get(0, col);
-			/**/double m1 = M.unsafe_get(1, col);
-			/**/double m2 = M.unsafe_get(2, col);
+			double m0 = M.unsafe_get(0, col);
+			double m1 = M.unsafe_get(1, col);
+			double m2 = M.unsafe_get(2, col);
 
 			M.unsafe_set(0,col,  m2 / 2);
 			M.unsafe_set(1,col,  -m1);
@@ -136,12 +136,12 @@ public class FitEllipseAlgebraic {
 		// ellipse coefficients
 		CommonOps.mult(T,a1,Ta1);
 
-		ellipse.a = (double)a1.data[0];
-		ellipse.b = (double)(a1.data[1]/2);
-		ellipse.c = (double)a1.data[2];
-		ellipse.d = (double)(Ta1.data[0]/2);
-		ellipse.e = (double)(Ta1.data[1]/2);
-		ellipse.f = (double)Ta1.data[2];
+		ellipse.a = a1.data[0];
+		ellipse.b = a1.data[1]/2;
+		ellipse.c = a1.data[2];
+		ellipse.d = Ta1.data[0]/2;
+		ellipse.e = Ta1.data[1]/2;
+		ellipse.f = Ta1.data[2];
 
 		return true;
 	}
@@ -158,7 +158,7 @@ public class FitEllipseAlgebraic {
 				continue;
 
 			// evaluate a'*C*a = 1
-			double cond = (double)(4*v.get(0)*v.get(2) - v.get(1)*v.get(1));
+			double cond = 4*v.get(0)*v.get(2) - v.get(1)*v.get(1);
 			double condError = (cond - 1)*(cond - 1);
 
 			if( cond > 0 && condError < bestCond ) {
