@@ -85,9 +85,9 @@ public class UtilEllipse_F32 {
 
 		// direction of major axis
 		output.phi = (float)Math.atan2(-dx,dy);
-		if( output.phi < -GrlConstants.F_PId2 ) {
+		if( output.phi < -GrlConstants.PId2 ) {
 			output.phi += (float)Math.PI;
-		} else if( output.phi > GrlConstants.F_PId2 ) {
+		} else if( output.phi > GrlConstants.PId2 ) {
 			output.phi -= (float)Math.PI;
 		}
 

@@ -67,6 +67,43 @@ public class TestIntersection2D_F32 {
 		assertTrue(Intersection2D_F32.containConvex(poly,inside));
 		assertFalse(Intersection2D_F32.containConvex(poly,outside));
 	}
+
+	@Test
+	public void containConcave_rectangle() {
+		Polygon2D_F32 poly = new Polygon2D_F32(4);
+		poly.vertexes[0].set(-1,-1);
+		poly.vertexes[1].set(1, -1);
+		poly.vertexes[2].set(1, 1);
+		poly.vertexes[3].set(-1, 1);
+
+		assertTrue(Intersection2D_F32.containConcave(poly, new Point2D_F32(0,0)));
+
+		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(2,0)));
+		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(-2,0)));
+		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(0,2)));
+		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(0,-2)));
+	}
+
+	@Test
+	public void containConcave_concave() {
+		Polygon2D_F32 poly = new Polygon2D_F32(5);
+		poly.vertexes[0].set(-1,-1);
+		poly.vertexes[1].set( 0, 0);
+		poly.vertexes[2].set(1, -1);
+		poly.vertexes[3].set(1, 1);
+		poly.vertexes[4].set(-1, 1);
+
+		assertTrue(Intersection2D_F32.containConcave(poly, new Point2D_F32(0,0.5f)));
+		assertTrue(Intersection2D_F32.containConcave(poly, new Point2D_F32(-0.75f,-0.25f)));
+		assertTrue(Intersection2D_F32.containConcave(poly, new Point2D_F32(0.75f,-0.25f)));
+
+		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(0,-0.5f)));
+
+		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(2,0)));
+		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(-2,0)));
+		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(0,2)));
+		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(0,-2)));
+	}
 	
 	@Test
 	public void intersection_ls_to_ls() {

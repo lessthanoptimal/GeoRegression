@@ -1,5 +1,7 @@
+YEAR-MONTH-DAY
+
 ---------------------------------------------
-Date    : 2013
+Date    : 2013-04-11
 Version : 0.3
 
 - UtilPoint3D_F64
@@ -12,6 +14,7 @@ Version : 0.3
   * Algebraic best fit to points
   * Euclidean best fit to points 
   * Euclidean distance from points
+- Intersection2D_F64.containConcave() tests to see if a point is contained in a concave polygon
 - Added dependency to DDogleg library
 
 

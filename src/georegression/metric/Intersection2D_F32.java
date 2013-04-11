@@ -63,6 +63,43 @@ public class Intersection2D_F32 {
 		return c;
 	}
 
+	public static boolean containConcave( Polygon2D_F32 polygon , Point2D_F32 pt )
+	{
+		final int N = polygon.vertexes.length;
+
+		int left=0;
+		int right=0;
+		for (int i = 0; i < N-1; i++) {
+			Point2D_F32 a = polygon.vertexes[i];
+			Point2D_F32 b = polygon.vertexes[i+1];
+
+			if( (pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y) ) {
+				// location of line segment along x-axis at y = pt.y
+				float x = b.y==a.y ? pt.x : (pt.y-a.y)*(b.x-a.x)/(b.y-a.y) + a.x;
+
+				if( x <= pt.x )
+					left++;
+				else if( x > pt.x )
+					right++;
+			}
+		}
+
+		Point2D_F32 a = polygon.vertexes[N-1];
+		Point2D_F32 b = polygon.vertexes[0];
+
+		if( (pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y) ) {
+			// location of line segment along x-axis at y = pt.y
+			float x = b.y==a.y ? pt.x : (pt.y-pt.y)*(b.x-a.x)/(b.y-a.y) + a.x;
+
+			if( x <= pt.x )
+				left++;
+			else if( x > pt.x )
+				right++;
+		}
+
+		return (left % 2 == 1 && right % 2 == 1);
+	}
+
 	/**
 	 * Finds the point of intersection between two lines.
 	 *
