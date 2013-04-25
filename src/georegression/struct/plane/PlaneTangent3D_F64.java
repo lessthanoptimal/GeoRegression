@@ -17,46 +17,23 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.struct.line;
+package georegression.struct.plane;
+
+import georegression.struct.point.Point3D_F64;
 
 /**
- * <p>
- * Represents the line using three parameters such that any point on the line obeys the
- * following formula, A*x + B*y + C = 0.  Any 2D line can be represented using this notation.
- * This formulation is also known as standard and implicit.
- * </p>
+ * Specifies a plane using the closest point on the plane to the origin.  This can also be viewed as specifying
+ * vector which is tangent to the plane with a magnitude equal to the distance of the closest point. This formulation
+ * cannot describe a plane which intersects with the origin.
  *
  * @author Peter Abeles
  */
-public class LineGeneral2D_F32 {
+public class PlaneTangent3D_F64 extends Point3D_F64 {
 
-	/**
-	 * Coefficients which define the line.
-	 */
-	public float A,B,C;
-
-	public LineGeneral2D_F32(float a, float b, float c) {
-		set(a,b,c);
+	public PlaneTangent3D_F64(double x, double y, double z) {
+		super(x, y, z);
 	}
 
-	public LineGeneral2D_F32() {
-	}
-
-	public float getA() {
-		return A;
-	}
-
-	public float getB() {
-		return B;
-	}
-
-	public float getC() {
-		return C;
-	}
-
-	public void set(float a, float b, float c) {
-		this.A = a;
-		this.B = b;
-		this.C = c;
+	public PlaneTangent3D_F64() {
 	}
 }

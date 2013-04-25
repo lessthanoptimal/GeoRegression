@@ -32,9 +32,10 @@ public class HomographyPointOps_F32 {
 
 	/**
 	 * Applies a 2D homography transform to the point and stores the results in another
-	 * variable.
+	 * variable. b = H*a, where 'a' is the input/orig point, 'b' is the output/result point, and 'H'
+	 * is a homography from a to b.
 	 *
-	 * @param H	 The transform.
+	 * @param H Homography transform
 	 * @param orig   Original point being transformed. Not modified.
 	 * @param result Where the results are stored.  Can be the same as orig. If null a new
 	 *               instance is created. Modified.
@@ -61,11 +62,12 @@ public class HomographyPointOps_F32 {
 
 	/**
 	 * Applies a 2D homography transform to the point and stores the results in another
-	 * variable.
+	 * variable.  b = H*a, where 'a' is the input/orig point, 'b' is the output/result point, and 'H'
+	 * is a homography from a to b.
 	 *
-	 * @param H	 The transform.
-	 * @param x	  Original x-coordinate
-	 * @param y	  Original y-coordinate
+	 * @param H Homography transform
+	 * @param x  Original x-coordinate
+	 * @param y  Original y-coordinate
 	 * @param result Where the results are stored.  Can be the same as orig. If null a new
 	 *               instance is created. Modified.
 	 * @return Transformed point.

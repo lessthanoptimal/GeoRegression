@@ -1,6 +1,14 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2013
+Version : 0.4
+
+- Adding support for 3D planes
+  * converting between different formulations
+  * intersection of lines and planes
+
+---------------------------------------------
 Date    : 2013-04-11
 Version : 0.3
 

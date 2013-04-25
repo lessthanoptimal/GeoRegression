@@ -20,8 +20,41 @@
 package georegression.metric;
 
 
+import georegression.struct.line.LineParametric3D_F64;
+import georegression.struct.plane.PlaneNormal3D_F64;
+import georegression.struct.point.Point3D_F64;
+
 /**
  * @author Peter Abeles
  */
 public class Intersection3D_F64 {
+
+	/**
+	 * Finds the intersection of a line and a plane.  Returns true if they intersect at a unique point or false if
+	 * there is no intersection or an infinite number of intersections.
+	 *
+	 * @param plane Plane
+	 * @param line Line
+	 * @return True if the intersection is at a unique point.  If false then no intersection or infinite.
+	 */
+	public static boolean intersect( PlaneNormal3D_F64 plane , LineParametric3D_F64 line , Point3D_F64 intersection ) {
+		double dx = plane.p.x - line.p.x;
+		double dy = plane.p.y - line.p.y;
+		double dz = plane.p.z - line.p.z;
+
+		double top = dx*plane.n.x + dy*plane.n.y + dz*plane.n.z;
+		double bottom = line.slope.dot(plane.n);
+
+		if( bottom == 0 )
+			return false;
+
+		double d = top/bottom;
+
+		intersection.x = line.p.x + d*line.slope.x;
+		intersection.y = line.p.y + d*line.slope.y;
+		intersection.z = line.p.z + d*line.slope.z;
+
+		return true;
+	}
+
 }

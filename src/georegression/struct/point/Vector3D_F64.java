@@ -47,6 +47,17 @@ public class Vector3D_F64 extends GeoTuple3D_F64 {
 		this.z = v.z;
 	}
 
+
+	/**
+	 * In-place scalar multiplication
+	 * @param scalar value that it is multiplied by
+	 */
+	public void ip_times( double scalar ) {
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
+	}
+
 	public Vector3D_F64 times( double scalar ) {
 		return new Vector3D_F64( x * scalar, y * scalar, z * scalar );
 	}

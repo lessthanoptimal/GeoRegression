@@ -178,4 +178,14 @@ public class UtilHomography {
 		h.a32 *= scale;
 		h.a33 *= scale;
 	}
+
+   public static void print(Homography2D_F64 h)
+   {
+      for( int y = 0; y < 3; y++ ) {
+         for( int x = 0; x < 3; x++ ) {
+            System.out.printf("%8.1e ",h.get(x,y));
+         }
+         System.out.println();
+      }
+   }
 }

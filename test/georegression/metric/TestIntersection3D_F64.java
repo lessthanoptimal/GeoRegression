@@ -19,9 +19,14 @@
 
 package georegression.metric;
 
+import georegression.misc.GrlConstants;
+import georegression.struct.line.LineParametric3D_F64;
+import georegression.struct.plane.PlaneNormal3D_F64;
+import georegression.struct.point.Point3D_F64;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -30,7 +35,16 @@ import static org.junit.Assert.fail;
 public class TestIntersection3D_F64 {
 
 	@Test
-	public void asfdasdf() {
-		fail( "implement" );
+	public void intersect_planenorm_linepara() {
+		// simple case with a known solution
+		PlaneNormal3D_F64 plane = new PlaneNormal3D_F64(2,1,0,2,0,0);
+		LineParametric3D_F64 line = new LineParametric3D_F64(0,0,0,3,0,0);
+
+		Point3D_F64 found = new Point3D_F64();
+		assertTrue(Intersection3D_F64.intersect(plane, line, found));
+
+		assertEquals(2,found.x, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,found.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,found.z, GrlConstants.DOUBLE_TEST_TOL);
 	}
 }

@@ -17,46 +17,46 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.struct.line;
+package georegression.struct.plane;
 
 /**
  * <p>
- * Represents the line using three parameters such that any point on the line obeys the
- * following formula, A*x + B*y + C = 0.  Any 2D line can be represented using this notation.
- * This formulation is also known as standard and implicit.
+ * Represents the line using four parameters such that any point on the planes obeys the
+ * following formula, A*x + B*y + C*z = D.  Any 3D plane can be represented using this notation.
+ * This formulation is also known as scalar.
  * </p>
  *
  * @author Peter Abeles
  */
-public class LineGeneral2D_F32 {
-
+public class PlaneGeneral3D_F64 {
 	/**
-	 * Coefficients which define the line.
+	 * Coefficients which define the plane.
 	 */
-	public float A,B,C;
+	public double A,B,C,D;
 
-	public LineGeneral2D_F32(float a, float b, float c) {
-		set(a,b,c);
+	public PlaneGeneral3D_F64(double a, double b, double c, double d) {
+		set(a,b,c,d);
 	}
 
-	public LineGeneral2D_F32() {
+	public PlaneGeneral3D_F64() {
 	}
 
-	public float getA() {
+	public double getA() {
 		return A;
 	}
 
-	public float getB() {
+	public double getB() {
 		return B;
 	}
 
-	public float getC() {
+	public double getC() {
 		return C;
 	}
 
-	public void set(float a, float b, float c) {
+	public void set(double a, double b, double c, double d) {
 		this.A = a;
 		this.B = b;
 		this.C = c;
+		this.D = d;
 	}
 }

@@ -22,7 +22,7 @@ package georegression.struct.line;
 /**
  * <p>
  * Represents the line using three parameters such that any point on the line obeys the
- * following formula,, A*x + B*y + C = 0.  Any 2D line can be represented using this notation.
+ * following formula, A*x + B*y + C = 0.  Any 2D line can be represented using this notation.
  * This formulation is also known as standard and implicit.
  * </p>
  *
