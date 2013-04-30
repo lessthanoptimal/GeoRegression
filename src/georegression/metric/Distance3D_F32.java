@@ -21,6 +21,7 @@ package georegression.metric;
 
 import georegression.geometry.UtilPoint3D_F32;
 import georegression.struct.line.LineParametric3D_F32;
+import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.point.Point3D_F32;
 
 
@@ -86,5 +87,19 @@ public class Distance3D_F32 {
 		float b = MiscOps.dot(x,y,z,l.slope)/l.slope.norm();
 
 		return (float)Math.sqrt(c*c-b*b);
+	}
+
+	/**
+	 * Distance between a plane and a point. A signed distance is returned, where a positive value is returned if
+	 * the point is on the same side of the plane as the normal and the opposite if it's on the other.
+	 *
+	 * @param plane The plane
+	 * @param point The point
+	 * @return Signed distance
+	 */
+	public static float distance( PlaneGeneral3D_F32 plane , Point3D_F32 point ) {
+		float top = plane.A*point.x + plane.B*point.y + plane.C*point.z - plane.D;
+
+		return top / (float)Math.sqrt( plane.A*plane.A + plane.B*plane.B + plane.C*plane.C);
 	}
 }

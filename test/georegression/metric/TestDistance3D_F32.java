@@ -19,9 +19,13 @@
 
 package georegression.metric;
 
+import georegression.geometry.UtilPlane3D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F32;
+import georegression.struct.plane.PlaneGeneral3D_F32;
+import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
+import georegression.struct.point.Vector3D_F32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -70,5 +74,31 @@ public class TestDistance3D_F32 {
 		// a point on the line
 		l.getSlope().set( 1 , 0 , 0 );
 		assertEquals(0,Distance3D_F32.distance( l,p ), GrlConstants.FLOAT_TEST_TOL );
+	}
+
+
+	@Test
+	public void distance_plane_point() {
+		PlaneNormal3D_F32 n = new PlaneNormal3D_F32(3,4,-5,3,4,-5);
+		PlaneGeneral3D_F32 g = UtilPlane3D_F32.convert(n, null);
+
+		// distance from origin
+		float expected = (float)Math.sqrt(3*3 + 4*4 + 5*5);
+		float found = Distance3D_F32.distance(g,new Point3D_F32(0,0,0));
+		assertEquals(-expected,found, GrlConstants.FLOAT_TEST_TOL);
+
+		// on the plane
+		found = Distance3D_F32.distance(g,new Point3D_F32(3,4,-5));
+		assertEquals(0,found, GrlConstants.FLOAT_TEST_TOL);
+
+		// move it away from the plane
+		Vector3D_F32 v = n.n;
+		v.normalize();
+		found = Distance3D_F32.distance(g,new Point3D_F32(v.x,v.y,v.z));
+		assertEquals(-(expected-1),found, GrlConstants.FLOAT_TEST_TOL);
+
+		// make it to the other side and see if the sign changes
+		found = Distance3D_F32.distance(g,new Point3D_F32(v.x+3,v.y+4,v.z-5));
+		assertEquals(1,found, GrlConstants.FLOAT_TEST_TOL);
 	}
 }

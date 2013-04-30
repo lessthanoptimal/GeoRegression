@@ -112,6 +112,29 @@ public class GeometryMath_F64 {
 	 * <p>
 	 * Computes the cross product:<br>
 	 * <br>
+	 * c = a x b
+	 * </p>
+	 *
+	 * @param a_x x-coordinate of a
+	 * @param a_y y-coordinate of a
+	 * @param a_z z-coordinate of a
+	 * @param b_x x-coordinate of b
+	 * @param b_y y-coordinate of b
+	 * @param b_z z-coordinate of b
+	 * @param c Modified.
+	 */
+	public static void cross( double a_x, double a_y , double a_z ,
+							  double b_x, double b_y , double b_z,
+							  GeoTuple3D_F64 c ) {
+		c.x = a_y * b_z - a_z * b_y;
+		c.y = a_z * b_x - a_x * b_z;
+		c.z = a_x * b_y - a_y * b_x;
+	}
+
+	/**
+	 * <p>
+	 * Computes the cross product:<br>
+	 * <br>
 	 * c = a x b<br>
 	 * where 'a' is in homogeneous coordinates.
 	 * </p>
@@ -123,6 +146,23 @@ public class GeometryMath_F64 {
 	public static void cross( GeoTuple2D_F64 a, GeoTuple3D_F64 b, GeoTuple3D_F64 c ) {
 		c.x = a.y * b.z - b.y;
 		c.y = b.x - a.x * b.z;
+		c.z = a.x * b.y - a.y * b.x;
+	}
+
+	/**
+	 * <p>
+	 * Computes the cross product:<br>
+	 * <br>
+	 * c = a x b
+	 * </p>
+	 *
+	 * @param a Homogeneous coordinates, z = 1 assumed. Not modified.
+	 * @param b Homogeneous coordinates, z = 1 assumed. Not modified.
+	 * @param c Modified.
+	 */
+	public static void cross( GeoTuple2D_F64 a, GeoTuple2D_F64 b, GeoTuple3D_F64 c ) {
+		c.x = a.y * 1   -       b.y;
+		c.y =       b.x - a.x;
 		c.z = a.x * b.y - a.y * b.x;
 	}
 
@@ -346,12 +386,12 @@ public class GeometryMath_F64 {
 	 * where M and result are 3x3 matrices, cross(A) is the cross product matrix of A.
 	 * </p>
 	 *
-	 * @param A Vector which will be converted into a cross product matrix.
+	 * @param A 2D homogenous coordinate (implicit z = 1) that is internally converted into cross product matrix.
 	 * @param M 3x3 matrix.
 	 * @param result Storage for results.  Can be null.
 	 * @return Results.
 	 */
-	public static <T extends GeoTuple2D_F64> DenseMatrix64F multCrossA( T A , DenseMatrix64F M, DenseMatrix64F result ) {
+	public static DenseMatrix64F multCrossA( GeoTuple2D_F64 A , DenseMatrix64F M, DenseMatrix64F result ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -372,6 +412,47 @@ public class GeometryMath_F64 {
 		result.data[3] = a11 - a31*x;
 		result.data[4] = a12 - a32*x;
 		result.data[5] = a13 - a33*x;
+		result.data[6] = -a11*y + a21*x;
+		result.data[7] = -a12*y + a22*x;
+		result.data[8] = -a13*y + a23*x;
+
+		return result;
+	}
+
+	/**
+	 * <p>
+	 * Computes the following:<br>
+	 * result = cross(A)*M<br>
+	 * where M and result are 3x3 matrices, cross(A) is the cross product matrix of A.
+	 * </p>
+	 *
+	 * @param A 3D coordinate that is internally converted into cross product matrix.
+	 * @param M 3x3 matrix.
+	 * @param result Storage for results.  Can be null.
+	 * @return Results.
+	 */
+	public static DenseMatrix64F multCrossA( GeoTuple3D_F64 A , DenseMatrix64F M, DenseMatrix64F result ) {
+		if( M.numRows != 3 || M.numCols != 3 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
+
+		if( result == null ) {
+			result = new DenseMatrix64F(3,3);
+		}
+
+		/**/double x = A.x;
+		/**/double y = A.y;
+		/**/double z = A.z;
+
+		/**/double a11 = M.data[0]; /**/double a12 = M.data[1]; /**/double a13 = M.data[2];
+		/**/double a21 = M.data[3]; /**/double a22 = M.data[4]; /**/double a23 = M.data[5];
+		/**/double a31 = M.data[6]; /**/double a32 = M.data[7]; /**/double a33 = M.data[8];
+
+		result.data[0] = -a21*z + a31*y;
+		result.data[1] = -a22*z + a32*y;
+		result.data[2] = -a23*z + a33*y;
+		result.data[3] =  a11*z - a31*x;
+		result.data[4] =  a12*z - a32*x;
+		result.data[5] =  a13*z - a33*x;
 		result.data[6] = -a11*y + a21*x;
 		result.data[7] = -a12*y + a22*x;
 		result.data[8] = -a13*y + a23*x;
@@ -513,6 +594,33 @@ public class GeometryMath_F64 {
 	}
 
 	/**
+	 * Adds the outer product of two vectors onto a matrix:<br>
+	 * ret = A + scalar*a*b<sup>T</sup>
+	 *
+	 * @param A 3x3 matrix
+	 * @param b 3D vector
+	 * @param c 3D vector
+	 * @param ret 3 x 3 matrix or null.
+	 * @return outer product of two 3d vectors
+	 */
+	public static DenseMatrix64F addOuterProd(DenseMatrix64F A , double scalar , GeoTuple3D_F64 b, GeoTuple3D_F64 c, DenseMatrix64F ret) {
+		if( ret == null )
+			ret = new DenseMatrix64F(3,3);
+
+		ret.data[0] = A.data[0] + scalar*b.x*c.x;
+		ret.data[1] = A.data[1] + scalar*b.x*c.y;
+		ret.data[2] = A.data[2] + scalar*b.x*c.z;
+		ret.data[3] = A.data[3] + scalar*b.y*c.x;
+		ret.data[4] = A.data[4] + scalar*b.y*c.y;
+		ret.data[5] = A.data[5] + scalar*b.y*c.z;
+		ret.data[6] = A.data[6] + scalar*b.z*c.x;
+		ret.data[7] = A.data[7] + scalar*b.z*c.y;
+		ret.data[8] = A.data[8] + scalar*b.z*c.z;
+
+		return ret;
+	}
+
+	/**
 	 * <p>
 	 * Computes the inner matrix product: ret = a'*M*b<br>
 	 * where ret is a scalar number. 'a' and 'b' are automatically converted into homogeneous
@@ -575,5 +683,38 @@ public class GeometryMath_F64 {
 		t.x = -t.x;
 		t.y = -t.y;
 		t.z = -t.z;
+	}
+
+	/**
+	 * Converts a GeoTuple3D_F64 into DenseMatrix64F
+	 *
+	 * @param in Input vector
+	 * @param out Output matrix.  If null a new matrix will be declared
+	 * @return Converted matrix
+	 */
+	public static DenseMatrix64F toMatrix(GeoTuple3D_F64 in, DenseMatrix64F out) {
+		if( out == null )
+			out = new DenseMatrix64F(3,1);
+		else if( out.getNumElements() != 3 )
+			throw new IllegalArgumentException("Vector with 3 elements expected");
+
+		out.data[0] = in.x;
+		out.data[1] = in.y;
+		out.data[2] = in.z;
+
+		return out;
+	}
+
+	/**
+	 * Converts a DenseMatrix64F into  GeoTuple3D_F64
+	 *
+	 * @param in Input matrix
+	 * @param out Output vector.
+	 */
+	public static void toTuple3D(DenseMatrix64F in, GeoTuple3D_F64 out) {
+
+		out.x = (double)in.get(0);
+		out.y = (double)in.get(1);
+		out.z = (double)in.get(2);
 	}
 }

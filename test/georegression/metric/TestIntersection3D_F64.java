@@ -19,8 +19,10 @@
 
 package georegression.metric;
 
+import georegression.geometry.UtilPlane3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
+import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
 import org.junit.Test;
@@ -46,5 +48,44 @@ public class TestIntersection3D_F64 {
 		assertEquals(2,found.x, GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(0,found.y, GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(0,found.z, GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void intersect_planegen_linepara() {
+		// simple case with a known solution
+		PlaneNormal3D_F64 plane = new PlaneNormal3D_F64(2,1,0,2,0,0);
+		LineParametric3D_F64 line = new LineParametric3D_F64(0,0,0,3,0,0);
+		PlaneGeneral3D_F64 general = UtilPlane3D_F64.convert(plane,(PlaneGeneral3D_F64)null);
+
+		Point3D_F64 found = new Point3D_F64();
+		assertTrue(Intersection3D_F64.intersect(general, line, found));
+
+		assertEquals(2,found.x, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,found.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,found.z, GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void intersect_plane_plane() {
+		PlaneGeneral3D_F64 a = new PlaneGeneral3D_F64(3,-4,0.5,6);
+		PlaneGeneral3D_F64 b = new PlaneGeneral3D_F64(1.5,0.95,-4,-2);
+
+		LineParametric3D_F64 line = new LineParametric3D_F64();
+
+		Intersection3D_F64.intersect(a,b,line);
+
+		// see if the origin of the line lies on both planes
+		assertEquals(0, UtilPlane3D_F64.evaluate(a,line.p), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, UtilPlane3D_F64.evaluate(b,line.p), GrlConstants.DOUBLE_TEST_TOL);
+
+		// now try another point on the line
+		double x = line.p.x + line.slope.x;
+		double y = line.p.y + line.slope.y;
+		double z = line.p.z + line.slope.z;
+		Point3D_F64 p = new Point3D_F64(x,y,z);
+
+		assertEquals(0, UtilPlane3D_F64.evaluate(a,p), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, UtilPlane3D_F64.evaluate(b,p), GrlConstants.DOUBLE_TEST_TOL);
+
 	}
 }

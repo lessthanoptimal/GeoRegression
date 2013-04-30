@@ -26,6 +26,15 @@ package georegression.struct.plane;
  * This formulation is also known as scalar.
  * </p>
  *
+ * <p>
+ * If in Hessian normal form, then (A,B,C) is the unit normal, and D is distance of the plane from the origin.  The
+ * sign of D determines the side on the plane on which the origin is located.
+ * </p>
+ *
+ * <p>
+ * NOTE: The normal of the plane is the vector (A,B,C)
+ * </p>
+ *
  * @author Peter Abeles
  */
 public class PlaneGeneral3D_F32 {
@@ -53,10 +62,30 @@ public class PlaneGeneral3D_F32 {
 		return C;
 	}
 
+	public float getD() {
+		return D;
+	}
+
 	public void set(float a, float b, float c, float d) {
 		this.A = a;
 		this.B = b;
 		this.C = c;
 		this.D = d;
+	}
+
+	public void setA(float a) {
+		A = a;
+	}
+
+	public void setB(float b) {
+		B = b;
+	}
+
+	public void setC(float c) {
+		C = c;
+	}
+
+	public void setD(float d) {
+		D = d;
 	}
 }

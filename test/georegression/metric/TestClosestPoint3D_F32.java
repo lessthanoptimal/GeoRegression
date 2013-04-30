@@ -19,8 +19,11 @@
 
 package georegression.metric;
 
+import georegression.geometry.UtilPlane3D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F32;
+import georegression.struct.plane.PlaneGeneral3D_F32;
+import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import org.junit.Test;
@@ -94,5 +97,32 @@ public class TestClosestPoint3D_F32 {
 		float d = p.dot( va );
 
 		assertEquals( 0, d, GrlConstants.FLOAT_TEST_TOL );
+	}
+
+	@Test
+	public void closestPoint_plane_point() {
+		Point3D_F32 found;
+
+		PlaneNormal3D_F32 n = new PlaneNormal3D_F32(3,4,-5,3,4,-5);
+		PlaneGeneral3D_F32 g = UtilPlane3D_F32.convert(n, null);
+
+		found = ClosestPoint3D_F32.closestPoint(g,new Point3D_F32(0,0,0),null);
+		assertEquals(3,found.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,found.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-5,found.z, GrlConstants.FLOAT_TEST_TOL);
+
+		// move it closer, but the point shouldn't change
+		Vector3D_F32 v = n.n;
+		v.normalize();
+		found = ClosestPoint3D_F32.closestPoint(g,new Point3D_F32(v.x,v.y,v.z),null);
+		assertEquals(3,found.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,found.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-5,found.z, GrlConstants.FLOAT_TEST_TOL);
+
+		// other side of normal
+		found = ClosestPoint3D_F32.closestPoint(g,new Point3D_F32(3+v.x,4+v.y,v.z-5),null);
+		assertEquals(3,found.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,found.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-5,found.z, GrlConstants.FLOAT_TEST_TOL);
 	}
 }

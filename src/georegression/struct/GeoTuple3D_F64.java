@@ -123,6 +123,16 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		return x * x + y * y + z * z;
 	}
 
+	/**
+	 * Multiplies each coordinate by the specified number
+	 * @param value scale factor
+	 */
+	public void scale( double value ) {
+		x *= value;
+		y *= value;
+		z *= value;
+	}
+
 	@Override
 	public double distance( GeoTuple3D_F64 t ) {
 		double dx = t.x - x;

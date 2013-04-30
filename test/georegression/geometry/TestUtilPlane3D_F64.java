@@ -79,6 +79,18 @@ public class TestUtilPlane3D_F64 {
 		}
 	}
 
+	@Test
+	public void hessianNormalForm() {
+		PlaneGeneral3D_F64 a = new PlaneGeneral3D_F64(2,-3,4,5);
+		double n = Math.sqrt(2*2 + 3*3 + 4*4);
+
+		UtilPlane3D_F64.hessianNormalForm(a);
+
+		assertEquals(2/n,a.A, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(-3/n,a.B, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(4/n,a.C, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(5/n,a.D, GrlConstants.DOUBLE_TEST_TOL);
+	}
 
 	@Test
 	public void evaluate_general() {

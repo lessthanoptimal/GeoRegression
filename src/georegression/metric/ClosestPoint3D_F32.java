@@ -20,6 +20,7 @@
 package georegression.metric;
 
 import georegression.struct.line.LineParametric3D_F32;
+import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 
@@ -136,6 +137,29 @@ public class ClosestPoint3D_F32 {
 		ret.z = line.p.z + d * line.slope.z / n;
 
 		return ret;
+	}
+
+	/**
+	 * Finds the closest point on the plane to the specified point.
+	 *
+	 * @param plane The plane
+	 * @param point The point
+	 * @param found (Optional) Storage for the closest point.  If null a new point is declared internally.
+	 * @return The closest point
+	 */
+	public static Point3D_F32 closestPoint( PlaneGeneral3D_F32 plane , Point3D_F32 point , Point3D_F32 found ) {
+		if( found == null )
+			found = new Point3D_F32();
+
+		float top = plane.A*point.x + plane.B*point.y + plane.C*point.z - plane.D;
+
+		float n2 = plane.A*plane.A + plane.B*plane.B + plane.C*plane.C;
+
+		found.x = point.x - plane.A*top/n2;
+		found.y = point.y - plane.B*top/n2;
+		found.z = point.z - plane.C*top/n2;
+
+		return found;
 	}
 
 }

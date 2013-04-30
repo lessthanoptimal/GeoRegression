@@ -7,6 +7,8 @@ Version : 0.4
 - Adding support for 3D planes
   * converting between different formulations
   * intersection of lines and planes
+  * intersection of two planes
+  * closest point and distance to point
 
 ---------------------------------------------
 Date    : 2013-04-11

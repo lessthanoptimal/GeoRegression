@@ -19,9 +19,13 @@
 
 package georegression.metric;
 
+import georegression.geometry.UtilPlane3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
+import georegression.struct.plane.PlaneGeneral3D_F64;
+import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Vector3D_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -70,5 +74,31 @@ public class TestDistance3D_F64 {
 		// a point on the line
 		l.getSlope().set( 1 , 0 , 0 );
 		assertEquals(0,Distance3D_F64.distance( l,p ), GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+
+	@Test
+	public void distance_plane_point() {
+		PlaneNormal3D_F64 n = new PlaneNormal3D_F64(3,4,-5,3,4,-5);
+		PlaneGeneral3D_F64 g = UtilPlane3D_F64.convert(n, null);
+
+		// distance from origin
+		double expected = Math.sqrt(3*3 + 4*4 + 5*5);
+		double found = Distance3D_F64.distance(g,new Point3D_F64(0,0,0));
+		assertEquals(-expected,found, GrlConstants.DOUBLE_TEST_TOL);
+
+		// on the plane
+		found = Distance3D_F64.distance(g,new Point3D_F64(3,4,-5));
+		assertEquals(0,found, GrlConstants.DOUBLE_TEST_TOL);
+
+		// move it away from the plane
+		Vector3D_F64 v = n.n;
+		v.normalize();
+		found = Distance3D_F64.distance(g,new Point3D_F64(v.x,v.y,v.z));
+		assertEquals(-(expected-1),found, GrlConstants.DOUBLE_TEST_TOL);
+
+		// make it to the other side and see if the sign changes
+		found = Distance3D_F64.distance(g,new Point3D_F64(v.x+3,v.y+4,v.z-5));
+		assertEquals(1,found, GrlConstants.DOUBLE_TEST_TOL);
 	}
 }

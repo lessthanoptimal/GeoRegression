@@ -47,7 +47,7 @@ public class UtilPlane3D_F32 {
 		output.A = n.x;
 		output.B = n.y;
 		output.C = n.z;
-		output.D = -(n.x*p.x + n.y*p.y + n.z*p.z);
+		output.D = n.x*p.x + n.y*p.y + n.z*p.z;
 
 		return output;
 	}
@@ -74,6 +74,20 @@ public class UtilPlane3D_F32 {
 	}
 
 	/**
+	 * Converts the plane into Hessian normal form.   This is done by dividing each coefficient by the
+	 * Euclidean norm of (A,B,C).
+	 *
+	 * @param plane The input plane.  Modified.
+	 */
+	public static void hessianNormalForm( PlaneGeneral3D_F32 plane ) {
+		float n = (float)Math.sqrt(plane.A*plane.A + plane.B*plane.B + plane.C*plane.C);
+		plane.A /= n;
+		plane.B /= n;
+		plane.C /= n;
+		plane.D /= n;
+	}
+
+	/**
 	 * Applies the plane's definition to test to see if a point is one the plane
 	 *
 	 * @param plane Equation of the plane
@@ -81,7 +95,7 @@ public class UtilPlane3D_F32 {
 	 * @return zero if the point is one the plane.
 	 */
 	public static float evaluate( PlaneGeneral3D_F32 plane , Point3D_F32 point ) {
-		return plane.A*point.x + plane.B*point.y + plane.C*point.z + plane.D;
+		return plane.A*point.x + plane.B*point.y + plane.C*point.z - plane.D;
 	}
 
 	/**
