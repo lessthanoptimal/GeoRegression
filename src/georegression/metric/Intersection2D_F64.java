@@ -101,13 +101,14 @@ public class Intersection2D_F64 {
 	}
 
 	/**
-	 * Finds the point of intersection between two lines.
+	 * Finds the point of intersection between two lines and returns the point.
 	 *
 	 * @param a Line.
 	 * @param b Line.
-	 * @return The location along 'target'.  If the lines do not intersect or have infinite intersections Double.NaN is returned.
+	 * @param ret storage for the point of intersection. If null a new point will be declared.
+	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect or have infinite intersections.
 	 */
-	public static Point2D_F64 intersection( LineParametric2D_F64 a, LineParametric2D_F64 b ) {
+	public static Point2D_F64 intersection( LineParametric2D_F64 a, LineParametric2D_F64 b , Point2D_F64 ret ) {
 		double t_b = a.getSlopeX() * ( b.getY() - a.getY() ) - a.getSlopeY() * ( b.getX() - a.getX() );
 		double bottom = a.getSlopeY() * b.getSlopeX() - b.getSlopeY() * a.getSlopeX();
 
@@ -119,7 +120,28 @@ public class Intersection2D_F64 {
 		double x = b.getSlopeX() * t_b + b.getX();
 		double y = b.getSlopeY() * t_b + b.getY();
 
-		return new Point2D_F64( x, y );
+		if( ret == null )
+			ret = new Point2D_F64();
+		ret.set(x,y);
+		return ret;
+	}
+
+	/**
+	 * Finds the point of intersection between two lines.  The point of intersection is specified as a point along
+	 * the parametric line 'a'.  (x,y) = (x_0,y_0) + t*(slope_x,slope_y), where 't' is the location returned.
+	 *
+	 * @param a Line.
+	 * @param b Line.
+	 * @return The location along 'target'.  If the lines do not intersect or have infinite intersections Double.NaN is returned.
+	 */
+	public static double intersection( LineParametric2D_F64 a, LineParametric2D_F64 b ) {
+		double t_a = b.getSlopeX() * ( a.getY() - b.getY() ) - b.getSlopeY() * ( a.getX() - b.getX() );
+		double bottom = b.getSlopeY() * a.getSlopeX() - a.getSlopeY() * b.getSlopeX();
+
+		if( bottom == 0 )
+			return Double.NaN;
+
+		return t_a/bottom;
 	}
 
 	/**
@@ -166,7 +188,6 @@ public class Intersection2D_F64 {
 
 		return ret;
 	}
-
 
 	/**
 	 * <p>

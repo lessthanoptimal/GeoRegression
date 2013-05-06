@@ -36,10 +36,7 @@ public class Quaternion {
 	}
 
 	public Quaternion( double q1, double q2, double q3, double q4 ) {
-		this.q1 = q1;
-		this.q2 = q2;
-		this.q3 = q3;
-		this.q4 = q4;
+		set(q1,q2,q3,q4);
 	}
 
 	public void set( Quaternion quaternion ) {
@@ -47,6 +44,13 @@ public class Quaternion {
 		this.q2 = quaternion.q2;
 		this.q3 = quaternion.q3;
 		this.q4 = quaternion.q4;
+	}
+
+	public void set( double q1, double q2, double q3, double q4 ) {
+		this.q1 = q1;
+		this.q2 = q2;
+		this.q3 = q3;
+		this.q4 = q4;
 	}
 
 	/**

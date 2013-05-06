@@ -101,13 +101,14 @@ public class Intersection2D_F32 {
 	}
 
 	/**
-	 * Finds the point of intersection between two lines.
+	 * Finds the point of intersection between two lines and returns the point.
 	 *
 	 * @param a Line.
 	 * @param b Line.
-	 * @return The location along 'target'.  If the lines do not intersect or have infinite intersections Float.NaN is returned.
+	 * @param ret storage for the point of intersection. If null a new point will be declared.
+	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect or have infinite intersections.
 	 */
-	public static Point2D_F32 intersection( LineParametric2D_F32 a, LineParametric2D_F32 b ) {
+	public static Point2D_F32 intersection( LineParametric2D_F32 a, LineParametric2D_F32 b , Point2D_F32 ret ) {
 		float t_b = a.getSlopeX() * ( b.getY() - a.getY() ) - a.getSlopeY() * ( b.getX() - a.getX() );
 		float bottom = a.getSlopeY() * b.getSlopeX() - b.getSlopeY() * a.getSlopeX();
 
@@ -119,7 +120,28 @@ public class Intersection2D_F32 {
 		float x = b.getSlopeX() * t_b + b.getX();
 		float y = b.getSlopeY() * t_b + b.getY();
 
-		return new Point2D_F32( x, y );
+		if( ret == null )
+			ret = new Point2D_F32();
+		ret.set(x,y);
+		return ret;
+	}
+
+	/**
+	 * Finds the point of intersection between two lines.  The point of intersection is specified as a point along
+	 * the parametric line 'a'.  (x,y) = (x_0,y_0) + t*(slope_x,slope_y), where 't' is the location returned.
+	 *
+	 * @param a Line.
+	 * @param b Line.
+	 * @return The location along 'target'.  If the lines do not intersect or have infinite intersections Float.NaN is returned.
+	 */
+	public static float intersection( LineParametric2D_F32 a, LineParametric2D_F32 b ) {
+		float t_a = b.getSlopeX() * ( a.getY() - b.getY() ) - b.getSlopeY() * ( a.getX() - b.getX() );
+		float bottom = b.getSlopeY() * a.getSlopeX() - a.getSlopeY() * b.getSlopeX();
+
+		if( bottom == 0 )
+			return Float.NaN;
+
+		return t_a/bottom;
 	}
 
 	/**
@@ -166,7 +188,6 @@ public class Intersection2D_F32 {
 
 		return ret;
 	}
-
 
 	/**
 	 * <p>

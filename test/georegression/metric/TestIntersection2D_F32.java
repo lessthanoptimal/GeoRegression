@@ -202,8 +202,34 @@ public class TestIntersection2D_F32 {
 	}
 
 	@Test
-	public void intersection_l_to_l_parametric() {
-		fail("implement");
+	public void intersection_l_to_l_parametric_pt() {
+		LineParametric2D_F32 a = new LineParametric2D_F32(2,3,1,0);
+		LineParametric2D_F32 b = new LineParametric2D_F32(-2,-4,0,1);
+
+		Point2D_F32 found = Intersection2D_F32.intersection(a,b,null);
+		assertEquals( -2, found.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3, found.y, GrlConstants.FLOAT_TEST_TOL);
+
+		LineParametric2D_F32 c = new LineParametric2D_F32(-8,2,0,1);
+
+		assertTrue(null == Intersection2D_F32.intersection(b,c,null));
+	}
+
+	@Test
+	public void intersection_l_to_l_parametric_t() {
+		LineParametric2D_F32 a = new LineParametric2D_F32(2,3,1,0);
+		LineParametric2D_F32 b = new LineParametric2D_F32(-2,-4,0,1);
+
+		float t = Intersection2D_F32.intersection(a,b);
+
+		Point2D_F32 found = new Point2D_F32(2+t,3);
+
+		assertEquals( -2, found.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3, found.y, GrlConstants.FLOAT_TEST_TOL);
+
+		LineParametric2D_F32 c = new LineParametric2D_F32(-8,2,0,1);
+
+		assertTrue(Float.isNaN(Intersection2D_F32.intersection(b, c)));
 	}
 	
 	@Test

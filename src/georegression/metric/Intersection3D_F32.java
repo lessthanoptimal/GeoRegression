@@ -92,11 +92,15 @@ public class Intersection3D_F32 {
 	 * @param a Plane
 	 * @param b Plane
 	 * @param line (Output) Intersection.
+	 * @return true if they intersect ata line or false if not
 	 */
-	public static void intersect( PlaneGeneral3D_F32 a , PlaneGeneral3D_F32 b , LineParametric3D_F32 line ) {
+	public static boolean intersect( PlaneGeneral3D_F32 a , PlaneGeneral3D_F32 b , LineParametric3D_F32 line ) {
 
 		// Line's slope is the cross product of the two normal vectors
 		GeometryMath_F32.cross(a.A,a.B,a.C,b.A,b.B,b.C,line.slope);
+
+		if( line.slope.normSq() == 0 )
+			return false;
 
 		// Closest point on plane 'a' to origin (0,0,0)
 		float n2 = a.A*a.A + a.B*a.B + a.C*a.C;
@@ -120,6 +124,8 @@ public class Intersection3D_F32 {
 		line.p.x = closestX + d*slopeX;
 		line.p.y = closestY + d*slopeY;
 		line.p.z = closestZ + d*slopeZ;
+
+		return true;
 	}
 
 }
