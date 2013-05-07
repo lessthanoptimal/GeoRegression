@@ -64,8 +64,8 @@ public class MotionSe2PointSVD_F64 implements MotionTransformPoint<Se2_F64, Poin
 			throw new IllegalArgumentException( "There must be a 1 to 1 correspondence between the two sets of points" );
 
 		// find the mean of both sets of points
-		Point2D_F64 meanFrom = UtilPoint2D_F64.mean( fromPts );
-		Point2D_F64 meanTo = UtilPoint2D_F64.mean( toPts );
+		Point2D_F64 meanFrom = UtilPoint2D_F64.mean( fromPts , null );
+		Point2D_F64 meanTo = UtilPoint2D_F64.mean( toPts , null );
 
 		final int N = fromPts.size();
 

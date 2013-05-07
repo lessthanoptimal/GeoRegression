@@ -21,6 +21,8 @@ package georegression.geometry;
 
 import georegression.struct.point.Point2D_I32;
 
+import java.util.List;
+
 /**
  *
  *
@@ -53,5 +55,33 @@ public class UtilPoint2D_I32 {
 		int dy = y1 - y0;
 
 		return dx * dx + dy * dy;
+	}
+
+	/**
+	 * Finds the point which has the mean location of all the points in the list. This is also known
+	 * as the centroid.
+	 *
+	 * @param list List of points
+	 * @param mean Storage for mean point.  If null then a new instance will be declared
+	 * @return The found mean
+	 */
+	public static Point2D_I32 mean(List<Point2D_I32> list, Point2D_I32 mean) {
+		if( mean == null )
+			mean = new Point2D_I32();
+
+		int sumX = 0, sumY = 0;
+		int N = list.size();
+
+		for( int i = 0; i < N; i++ ) {
+			Point2D_I32 p = list.get(i);
+
+			sumX += p.x;
+			sumY += p.y;
+		}
+
+		mean.x = sumX/N;
+		mean.y = sumY/N;
+
+		return mean;
 	}
 }
