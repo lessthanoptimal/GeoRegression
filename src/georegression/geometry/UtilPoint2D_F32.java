@@ -63,19 +63,31 @@ public class UtilPoint2D_F32 {
 		return dx * dx + dy * dy;
 	}
 
-	public static Point2D_F32 mean( List<Point2D_F32> pts ) {
+	/**
+	 * Finds the point which has the mean location of all the points in the list. This is also known
+	 * as the centroid.
+	 *
+	 * @param list List of points
+	 * @param mean Storage for mean point.  If null then a new instance will be declared
+	 * @return The found mean
+	 */
+	public static Point2D_F32 mean( List<Point2D_F32> list , Point2D_F32 mean ) {
+		if( mean == null )
+			mean = new Point2D_F32();
+
 		float x = 0;
 		float y = 0;
 
-		for( Point2D_F32 p : pts ) {
+		for( Point2D_F32 p : list ) {
 			x += p.getX();
 			y += p.getY();
 		}
 
-		x /= pts.size();
-		y /= pts.size();
+		x /= list.size();
+		y /= list.size();
 
-		return new Point2D_F32( x, y );
+		mean.set(x, y);
+		return mean;
 	}
 
 	public static List<Point2D_F32> random( float min, float max, int num, Random rand ) {

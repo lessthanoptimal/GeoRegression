@@ -9,6 +9,7 @@ Version : 0.4
   * intersection of lines and planes
   * intersection of two planes
   * closest point and distance to point
+- Added ConvertStructureDataType for converting between 64bit and 32bit data structures and the reverse
 
 ---------------------------------------------
 Date    : 2013-04-11

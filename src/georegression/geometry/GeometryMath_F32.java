@@ -461,7 +461,9 @@ public class GeometryMath_F32 {
 	}
 
 	/**
-	 * mod = M<sup>T</sup>*pt
+	 * mod = M<sup>T</sup>*pt.  Both pt and mod can be the same instance.
+	 *
+	 *
 	 */
 	public static <T extends GeoTuple3D_F32> T multTran( DenseMatrix64F M, T pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
