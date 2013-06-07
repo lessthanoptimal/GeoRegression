@@ -223,6 +223,26 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
+	public void rotate_2d_c_s() {
+		Vector2D_F64 a = new Vector2D_F64( 1, 2 );
+		double theta = 0.6;
+
+		Vector2D_F64 b = new Vector2D_F64();
+
+		double c = Math.cos(theta);
+		double s = Math.sin(theta);
+
+		GeometryMath_F64.rotate( c,s,a,b);
+
+
+		double x = c*a.x - s*a.y;
+		double y = s*a.x + c*a.y;
+
+		assertEquals(x,b.x, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(y,b.y, GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	@Test
 	public void mult_3d_3d() {
 		Vector3D_F64 a = new Vector3D_F64( -1, 2, 3 );
 		DenseMatrix64F M = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);

@@ -58,18 +58,20 @@ public class LineParametric3D_F64 {
 		this.p.set( pt );
 	}
 
-	public void setPoint( double x, double y ) {
+	public void setPoint( double x, double y , double z ) {
 		this.p.x = x;
 		this.p.y = y;
+		this.p.z = z;
 	}
 
 	public void setSlope( Vector3D_F64 slope ) {
 		this.slope.set( slope );
 	}
 
-	public void setSlope( double slopeX, double slopeY ) {
+	public void setSlope( double slopeX, double slopeY , double slopeZ ) {
 		this.slope.x = slopeX;
 		this.slope.y = slopeY;
+		this.slope.z = slopeZ;
 	}
 
 	/**

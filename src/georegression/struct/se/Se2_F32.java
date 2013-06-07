@@ -37,14 +37,14 @@ import georegression.struct.point.Vector2D_F32;
 public class Se2_F32 implements SpecialEuclidean<Se2_F32> {
 
 	// the translational component
-	public Vector2D_F32 tran = new Vector2D_F32();
+	public Vector2D_F32 T = new Vector2D_F32();
 
 	// rotational component parameterized for speed
 	public float c; // cos(yaw)
 	public float s; // sin(yaw)
 
-	public Se2_F32( GeoTuple2D_F32 tran, float yaw ) {
-		this( tran.getX(), tran.getY(), yaw );
+	public Se2_F32( GeoTuple2D_F32 T, float yaw ) {
+		this( T.getX(), T.getY(), yaw );
 	}
 
 	public Se2_F32( float x, float y, float yaw ) {
@@ -59,49 +59,49 @@ public class Se2_F32 implements SpecialEuclidean<Se2_F32> {
 	}
 
 	public void set( float x, float y, float yaw ) {
-		this.tran.set( x, y );
+		this.T.set(x, y);
 		this.c = (float)Math.cos( yaw );
 		this.s = (float)Math.sin( yaw );
 	}
 
 	public void set( float x, float y, float cosYaw, float sinYaw ) {
-		this.tran.set( x, y );
+		this.T.set(x, y);
 		this.c = cosYaw;
 		this.s = sinYaw;
 	}
 
 	public void set( Se2_F32 target ) {
-		this.tran.set( target.tran );
+		this.T.set(target.T);
 		this.c = target.c;
 		this.s = target.s;
 	}
 
 	public float getX() {
-		return tran.getX();
+		return T.getX();
 	}
 
 	public void setX( float x ) {
-		tran.setX( x );
+		T.setX(x);
 	}
 
 	public float getY() {
-		return tran.getY();
+		return T.getY();
 	}
 
 	public void setY( float y ) {
-		tran.setY( y );
+		T.setY(y);
 	}
 
 	public Vector2D_F32 getTranslation() {
-		return tran;
+		return T;
 	}
 
 	public void setTranslation( Vector2D_F32 tran ) {
-		this.tran = tran;
+		this.T = tran;
 	}
 
 	public void setTranslation( float x, float y ) {
-		this.tran.set( x, y );
+		this.T.set(x, y);
 	}
 
 	public float getYaw() {
@@ -138,8 +138,8 @@ public class Se2_F32 implements SpecialEuclidean<Se2_F32> {
 
 		result.setYaw( getYaw() + second.getYaw() );
 
-		result.tran.x = second.tran.x + second.c * tran.x - second.s * tran.y;
-		result.tran.y = second.tran.y + second.s * tran.x + second.c * tran.y;
+		result.T.x = second.T.x + second.c * T.x - second.s * T.y;
+		result.T.y = second.T.y + second.s * T.x + second.c * T.y;
 
 		return result;
 	}
@@ -149,13 +149,13 @@ public class Se2_F32 implements SpecialEuclidean<Se2_F32> {
 		if( inverse == null )
 			inverse = new Se2_F32();
 
-		float x = -tran.x;
-		float y = -tran.y;
+		float x = -T.x;
+		float y = -T.y;
 
 		inverse.s = -s;
 		inverse.c = c;
-		inverse.tran.x = c * x + s * y;
-		inverse.tran.y = -s * x + c * y;
+		inverse.T.x = c * x + s * y;
+		inverse.T.y = -s * x + c * y;
 
 		return inverse;
 	}
@@ -164,14 +164,14 @@ public class Se2_F32 implements SpecialEuclidean<Se2_F32> {
 	public void reset() {
 		c = 1;
 		s = 0;
-		tran.set( 0, 0 );
+		T.set(0, 0);
 	}
 
 	public Se2_F32 copy() {
-		return new Se2_F32( tran.x, tran.y, c, s );
+		return new Se2_F32( T.x, T.y, c, s );
 	}
 
 	public String toString() {
-		return "Se2( x = " + tran.x + " y = " + tran.y + " yaw = " + getYaw() + " )";
+		return "Se2( x = " + T.x + " y = " + T.y + " yaw = " + getYaw() + " )";
 	}
 }

@@ -73,8 +73,8 @@ public class ConvertTransform_F32 {
 		dst.a12 = -src.s;
 		dst.a21 = src.s;
 		dst.a22 = src.c;
-		dst.tx = src.tran.x;
-		dst.ty = src.tran.y;
+		dst.tx = src.T.x;
+		dst.ty = src.T.y;
 
 		return dst;
 	}
@@ -85,10 +85,10 @@ public class ConvertTransform_F32 {
 
 		dst.a11 = src.c;
 		dst.a12 = -src.s;
-		dst.a13 = src.tran.x;
+		dst.a13 = src.T.x;
 		dst.a21 = src.s;
 		dst.a22 = src.c;
-		dst.a23 = src.tran.y;
+		dst.a23 = src.T.y;
 		dst.a31 = 0;
 		dst.a32 = 0;
 		dst.a33 = 1;
