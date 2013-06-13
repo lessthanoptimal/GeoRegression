@@ -267,6 +267,23 @@ public class GeometryMath_F32 {
 	}
 
 	/**
+	 * Rotates a 2D point by the specified angle.
+	 *
+	 * @param c Cosine of theta
+	 * @param s Sine of theta
+	 * @param pt
+	 * @param solution where the solution is written to.  Can be the same point as 'pt'.
+	 */
+	public static void rotate( float c , float s, GeoTuple2D_F32 pt, GeoTuple2D_F32 solution ) {
+
+		float x = pt.x;
+		float y = pt.y;
+
+		solution.x = c * x - s * y;
+		solution.y = s * x + c * y;
+	}
+
+	/**
 	 * mod = M*pt
 	 * <p>
 	 * pt and mod can be the same reference.

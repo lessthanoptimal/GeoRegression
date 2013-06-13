@@ -48,14 +48,18 @@ public class Se2_F32 implements SpecialEuclidean<Se2_F32> {
 	}
 
 	public Se2_F32( float x, float y, float yaw ) {
-		set( x, y, yaw );
+		set(x, y, yaw);
 	}
 
 	public Se2_F32( float x, float y, float cosYaw, float sinYaw ) {
 		set( x, y, cosYaw, sinYaw );
 	}
 
+	/**
+	 * Constructor which initializes it to no transform
+	 */
 	public Se2_F32() {
+		c=1.0f;
 	}
 
 	public void set( float x, float y, float yaw ) {
@@ -173,5 +177,9 @@ public class Se2_F32 implements SpecialEuclidean<Se2_F32> {
 
 	public String toString() {
 		return "Se2( x = " + T.x + " y = " + T.y + " yaw = " + getYaw() + " )";
+	}
+
+	public void print() {
+		System.out.println(this);
 	}
 }

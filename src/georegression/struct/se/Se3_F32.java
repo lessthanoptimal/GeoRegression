@@ -164,7 +164,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		GeometryMath_F32.changeSign( inverse.T );
 
 		// R^T
-		CommonOps.transpose( R, inverse.R );
+		CommonOps.transpose(R, inverse.R);
 
 		return inverse;
 	}
@@ -182,10 +182,14 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		return ret;
 	}
 
+	public String toString() {
+		String ret = "Se3_F32: T = "+T.toString()+"\n";
+		ret += R;
+
+		return ret+"\n";
+	}
+
 	public void print() {
-		System.out.println( "SpecialEuclidean:" );
-		R.print();
-		T.print();
-		System.out.println();
+		System.out.println(this);
 	}
 }

@@ -55,7 +55,11 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 		set( x, y, cosYaw, sinYaw );
 	}
 
+	/**
+	 * Constructor which initializes it to no transform
+	 */
 	public Se2_F64() {
+		c=1.0;
 	}
 
 	public void set( double x, double y, double yaw ) {
@@ -173,5 +177,9 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 
 	public String toString() {
 		return "Se2( x = " + T.x + " y = " + T.y + " yaw = " + getYaw() + " )";
+	}
+
+	public void print() {
+		System.out.println(this);
 	}
 }

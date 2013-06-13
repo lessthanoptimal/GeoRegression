@@ -182,10 +182,14 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		return ret;
 	}
 
+	public String toString() {
+		String ret = "Se3_F64: T = "+T.toString()+"\n";
+		ret += R;
+
+		return ret+"\n";
+	}
+
 	public void print() {
-		System.out.println( "SpecialEuclidean:" );
-		R.print();
-		T.print();
-		System.out.println();
+		System.out.println(this);
 	}
 }

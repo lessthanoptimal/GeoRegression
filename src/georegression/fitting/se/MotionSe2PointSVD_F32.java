@@ -31,7 +31,7 @@ import java.util.List;
 
 /**
  * <p>
- * Finds the rigid body motion which minimizes the different between the two sets of associated points in 3D.  The
+ * Finds the rigid body motion which minimizes the different between the two sets of associated points in 2D.  The
  * rotation is computed from the SVD of a cross correlation matrix.
  * </p>
  * <p/>
@@ -53,6 +53,9 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 
 	Se2_F32 motion = new Se2_F32();
 
+	Point2D_F32 meanFrom = new Point2D_F32();
+	Point2D_F32 meanTo = new Point2D_F32();
+
 	@Override
 	public Se2_F32 getMotion() {
 		return motion;
@@ -64,8 +67,8 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 			throw new IllegalArgumentException( "There must be a 1 to 1 correspondence between the two sets of points" );
 
 		// find the mean of both sets of points
-		Point2D_F32 meanFrom = UtilPoint2D_F32.mean( fromPts , null );
-		Point2D_F32 meanTo = UtilPoint2D_F32.mean( toPts , null );
+		UtilPoint2D_F32.mean( fromPts , meanFrom );
+		UtilPoint2D_F32.mean( toPts , meanTo );
 
 		final int N = fromPts.size();
 
