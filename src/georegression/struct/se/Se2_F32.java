@@ -48,7 +48,7 @@ public class Se2_F32 implements SpecialEuclidean<Se2_F32> {
 	}
 
 	public Se2_F32( float x, float y, float yaw ) {
-		set(x, y, yaw);
+		set( x, y, yaw );
 	}
 
 	public Se2_F32( float x, float y, float cosYaw, float sinYaw ) {

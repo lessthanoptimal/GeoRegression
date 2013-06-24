@@ -35,7 +35,7 @@
 
     <target name="compile">
         <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" debug="true">
             <classpath refid="project.classpath"/>
         </javac>
     </target>
@@ -115,7 +115,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 </script>
 <br>
-<b>Copyright &copy; 2011-2012 Peter Abeles</b>
+<b>Copyright &copy; 2011-2013 Peter Abeles</b>
 ]]>
 </bottom>
  
@@ -133,8 +133,9 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
                 sourcepathref="source.classpath" >
 
             <doctitle><![CDATA[<h1>Geometric Regression Library API Specification</h1>]]></doctitle>
-            <bottom><![CDATA[<i>Copyright &#169; 2011-2012 Peter Abeles All Rights Reserved.</i>]]></bottom>
+            <bottom><![CDATA[<i>Copyright &#169; 2011-2013 Peter Abeles All Rights Reserved.</i>]]></bottom>
         </javadoc>
+        <jar compress="true" destfile="docs/javadoc.jar" basedir="docs/api" />
     </target>
 
     <target name="clean-build" depends="clean,jar"/>

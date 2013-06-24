@@ -1,7 +1,7 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2013
+Date    : 2013-06-24
 Version : 0.4
 
 - Adding support for 3D planes
@@ -11,6 +11,7 @@ Version : 0.4
   * closest point and distance to point
 - Added ConvertStructureDataType for converting between 64bit and 32bit data structures and the reverse
 - Renamed Se2.tran to Se2.T for consistency with Se3
+- Fixed incorrect no constructor initialization in Se2
 
 ---------------------------------------------
 Date    : 2013-04-11

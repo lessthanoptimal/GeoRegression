@@ -164,7 +164,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		GeometryMath_F32.changeSign( inverse.T );
 
 		// R^T
-		CommonOps.transpose(R, inverse.R);
+		CommonOps.transpose( R, inverse.R );
 
 		return inverse;
 	}
