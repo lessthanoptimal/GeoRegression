@@ -21,24 +21,30 @@ package georegression.struct.shapes;
 
 /**
  * <p>
- * Describes a 2D rectangle aligned along the coordinate system's axes.
- * </p>
- * <p/>
- * <p>
- * The "top left" point of the rectangle is defined by tl_x and tl_y.  The remaining
- * three corners are found by adding width and/or height to that point.
+ * An axis aligned rectangle in 2D that is specified by its top-left (tl_x,tl_y) corner, width, and height.  The three
+ * other corners are (tl_x + width,tl_y), (tl_x,tl_y + height), (tl_x + width,tl_y + height).
  * </p>
  *
  * @author Peter Abeles
  */
 public class Rectangle2D_F64 {
 
-	// width and height of the rectangle
-	public double width;
-	public double height;
-	// location of the r
+	/**
+	 * Top-left corner x-axis
+	 */
 	public double tl_x;
+	/**
+	 * Top-left corner y-axis
+	 */
 	public double tl_y;
+	/**
+	 * Rectangle's width
+	 */
+	public double width;
+	/**
+	 * Rectangle's height
+	 */
+	public double height;
 
 	public Rectangle2D_F64() {
 	}

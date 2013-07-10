@@ -20,12 +20,25 @@
 package georegression.struct.shapes;
 
 /**
- * An axis aligned rectangle in 2D that is specified with integers
+ * An axis aligned rectangle in 2D that is specified by its top-left (tl_x,tl_y) corner, width, and height.  The three
+ * other corners are (tl_x + width,tl_y), (tl_x,tl_y + height), (tl_x + width,tl_y + height).
  */
 public class Rectangle2D_I32 {
+	/**
+	 * Top-left corner x-axis
+	 */
 	public int tl_x;
+	/**
+	 * Top-left corner y-axis
+	 */
 	public int tl_y;
+	/**
+	 * Rectangle's width
+	 */
 	public int width;
+	/**
+	 * Rectangle's height
+	 */
 	public int height;
 
 	public Rectangle2D_I32( int tl_x, int tl_y, int width, int height ) {
