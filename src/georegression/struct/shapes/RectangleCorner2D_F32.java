@@ -23,82 +23,82 @@ package georegression.struct.shapes;
  * An axis aligned rectangle in 2D that is specified by its top-left (x0,y0) corner, and bottom-right (x1,y1) corner.
  * x0 <= x1 and y0 <= y1.  (x1,y1) is exclusive and not contained in the rectangle.
  */
-public class RectangleCorner2D_I32 {
+public class RectangleCorner2D_F32 {
 	/**
 	 * Top-left corner
 	 */
-	public int x0,y0;
+	public float x0,y0;
 	/**
 	 * Bottom-right corner
 	 */
-	public int x1,y1;
+	public float x1,y1;
 
-	public RectangleCorner2D_I32(int x0, int y0, int x1, int y1) {
+	public RectangleCorner2D_F32(float x0, float y0, float x1, float y1) {
 		set(x0,y0,x1,y1);
 	}
 
-	public RectangleCorner2D_I32( RectangleCorner2D_I32 orig ) {
+	public RectangleCorner2D_F32(RectangleCorner2D_F32 orig) {
 		set(orig);
 	}
 
-	public void set( RectangleCorner2D_I32 orig ) {
+	public void set( RectangleCorner2D_F32 orig ) {
 		this.x0 = orig.x0;
 		this.y0 = orig.y0;
 		this.x1 = orig.x1;
 		this.y1 = orig.y1;
 	}
 
-	public void set(int x0, int y0, int x1, int y1) {
+	public void set(float x0, float y0, float x1, float y1) {
 		this.x0 = x0;
 		this.y0 = y0;
 		this.x1 = x1;
 		this.y1 = y1;
 	}
 
-	public RectangleCorner2D_I32() {
+	public RectangleCorner2D_F32() {
 	}
 
-	public int getWidth() {
+	public float getWidth() {
 		return x1-x0;
 	}
 
-	public int getHeight() {
+	public float getHeight() {
 		return y1-y0;
 	}
 
-	public int area() {
+	public float area() {
 		return (y1-y0)*(x1-x0);
 	}
 
-	public int getX0() {
+	public float getX0() {
 		return x0;
 	}
 
-	public void setX0(int x0) {
+	public void setX0(float x0) {
 		this.x0 = x0;
 	}
 
-	public int getY0() {
+	public float getY0() {
 		return y0;
 	}
 
-	public void setY0(int y0) {
+	public void setY0(float y0) {
 		this.y0 = y0;
 	}
 
-	public int getX1() {
+	public float getX1() {
 		return x1;
 	}
 
-	public void setX1(int x1) {
+	public void setX1(float x1) {
 		this.x1 = x1;
 	}
 
-	public int getY1() {
+	public float getY1() {
 		return y1;
 	}
 
-	public void setY1(int y1) {
+	public void setY1(float y1) {
 		this.y1 = y1;
 	}
 

@@ -27,6 +27,7 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.shapes.Polygon2D_F64;
+import georegression.struct.shapes.RectangleCorner2D_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.junit.Test;
 
@@ -249,6 +250,80 @@ public class TestIntersection2D_F64 {
 		Intersection2D_F64.intersection(a,b,found);
 		assertEquals(0,found.z,GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(0,a.A*found.x+a.B*found.y+a.C*found.z, GrlConstants.DOUBLE_TEST_TOL);
+	}
 
+	@Test
+	public void intersects_rect_corners() {
+		// check several positive cases
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,0,100,120),true);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(10,12,99,119),true);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(50,50,200,200),true);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(-10,-10,10,10),true);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(90,-10,105,1),true);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(90,5,105,105),true);
+
+		// negative cases
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(200,200,300,305),false);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(-200,-200,-10,-10),false);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,-20,100,-5),false);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,125,100,130),false);
+
+		// edge cases
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,0,0,0),false);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(100,120,100,120),false);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(-10,0,0,120),false);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(100,0,105,120),false);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,-10,100,0),false);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,120,100,125),false);
+	}
+
+	private void check( RectangleCorner2D_F64 a , RectangleCorner2D_F64 b , boolean expected ) {
+		assertTrue(expected==Intersection2D_F64.intersects(a,b));
+	}
+
+	@Test
+	public void intersection_rect_corners() {
+		// check several positive cases
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,0,100,120),
+				new RectangleCorner2D_F64(0,0,100,120));
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(10,12,99,119),
+				new RectangleCorner2D_F64(10,12,99,119));
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(50,50,200,200),
+				new RectangleCorner2D_F64(50,50,100,120));
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(-10,-10,10,10),
+				new RectangleCorner2D_F64(0,0,10,10));
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(90,-10,105,1),
+				new RectangleCorner2D_F64(90,0,100,1));
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(90,5,105,105),
+				new RectangleCorner2D_F64(90,5,100,105));
+
+		// negative cases
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(200,200,300,305),null);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(-200,-200,-10,-10),null);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,-20,100,-5),null);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,125,100,130),null);
+
+		// edge cases
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,0,0,0),null);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(100,120,100,120),null);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(-10,0,0,120),null);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(100,0,105,120),null);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,-10,100,0),null);
+		check( new RectangleCorner2D_F64(0,0,100,120),new RectangleCorner2D_F64(0,120,100,125),null);
+	}
+
+	private void check( RectangleCorner2D_F64 a , RectangleCorner2D_F64 b , RectangleCorner2D_F64 expected ) {
+		if( expected == null ) {
+			assertFalse(Intersection2D_F64.intersection(a, b, null));
+			return;
+		}
+
+		RectangleCorner2D_F64 found = new RectangleCorner2D_F64();
+		assertTrue(Intersection2D_F64.intersection(a, b, found));
+
+		assertEquals(expected.x0,found.x0,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected.x1,found.x1,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected.y0,found.y0,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected.y1,found.y1,GrlConstants.DOUBLE_TEST_TOL);
 	}
 }

@@ -23,82 +23,82 @@ package georegression.struct.shapes;
  * An axis aligned rectangle in 2D that is specified by its top-left (x0,y0) corner, and bottom-right (x1,y1) corner.
  * x0 <= x1 and y0 <= y1.  (x1,y1) is exclusive and not contained in the rectangle.
  */
-public class RectangleCorner2D_I32 {
+public class RectangleCorner2D_F64 {
 	/**
 	 * Top-left corner
 	 */
-	public int x0,y0;
+	public double x0,y0;
 	/**
 	 * Bottom-right corner
 	 */
-	public int x1,y1;
+	public double x1,y1;
 
-	public RectangleCorner2D_I32(int x0, int y0, int x1, int y1) {
+	public RectangleCorner2D_F64(double x0, double y0, double x1, double y1) {
 		set(x0,y0,x1,y1);
 	}
 
-	public RectangleCorner2D_I32( RectangleCorner2D_I32 orig ) {
+	public RectangleCorner2D_F64(RectangleCorner2D_F64 orig) {
 		set(orig);
 	}
 
-	public void set( RectangleCorner2D_I32 orig ) {
+	public void set( RectangleCorner2D_F64 orig ) {
 		this.x0 = orig.x0;
 		this.y0 = orig.y0;
 		this.x1 = orig.x1;
 		this.y1 = orig.y1;
 	}
 
-	public void set(int x0, int y0, int x1, int y1) {
+	public void set(double x0, double y0, double x1, double y1) {
 		this.x0 = x0;
 		this.y0 = y0;
 		this.x1 = x1;
 		this.y1 = y1;
 	}
 
-	public RectangleCorner2D_I32() {
+	public RectangleCorner2D_F64() {
 	}
 
-	public int getWidth() {
+	public double getWidth() {
 		return x1-x0;
 	}
 
-	public int getHeight() {
+	public double getHeight() {
 		return y1-y0;
 	}
 
-	public int area() {
+	public double area() {
 		return (y1-y0)*(x1-x0);
 	}
 
-	public int getX0() {
+	public double getX0() {
 		return x0;
 	}
 
-	public void setX0(int x0) {
+	public void setX0(double x0) {
 		this.x0 = x0;
 	}
 
-	public int getY0() {
+	public double getY0() {
 		return y0;
 	}
 
-	public void setY0(int y0) {
+	public void setY0(double y0) {
 		this.y0 = y0;
 	}
 
-	public int getX1() {
+	public double getX1() {
 		return x1;
 	}
 
-	public void setX1(int x1) {
+	public void setX1(double x1) {
 		this.x1 = x1;
 	}
 
-	public int getY1() {
+	public double getY1() {
 		return y1;
 	}
 
-	public void setY1(int y1) {
+	public void setY1(double y1) {
 		this.y1 = y1;
 	}
 

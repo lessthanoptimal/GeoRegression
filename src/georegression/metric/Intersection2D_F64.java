@@ -26,6 +26,7 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
+import georegression.struct.shapes.RectangleCorner2D_F64;
 
 
 /**
@@ -290,5 +291,36 @@ public class Intersection2D_F64 {
 
 
 		return new Rectangle2D_F64( tl_x, tl_y, w, h );
+	}
+
+	/**
+	 * Checks to see if the two rectangles intersect each other
+	 *
+	 * @param a Rectangle
+	 * @param b Rectangle
+	 * @return true if intersection
+	 */
+	public static boolean intersects( RectangleCorner2D_F64 a , RectangleCorner2D_F64 b ) {
+		return( a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0 );
+	}
+
+	/**
+	 * Finds the intersection between two rectangles.  If the rectangles don't intersect then false is returned.
+	 *
+	 * @param a Rectangle
+	 * @param b Rectangle
+	 * @param result Storage for the found intersection
+	 * @return true if intersection
+	 */
+	public static boolean intersection( RectangleCorner2D_F64 a , RectangleCorner2D_F64 b , RectangleCorner2D_F64 result ) {
+		if( !intersects(a,b) )
+			return false;
+
+		result.x0 = Math.max(a.x0,b.x0);
+		result.x1 = Math.min(a.x1, b.x1);
+		result.y0 = Math.max(a.y0,b.y0);
+		result.y1 = Math.min(a.y1,b.y1);
+
+		return true;
 	}
 }
