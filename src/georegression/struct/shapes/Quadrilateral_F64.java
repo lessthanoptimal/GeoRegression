@@ -91,4 +91,11 @@ public class Quadrilateral_F64 {
 	public void setD(Point2D_F64 d) {
 		this.d = d;
 	}
+
+	public void set(Quadrilateral_F64 quad) {
+		this.a.set(quad.a);
+		this.b.set(quad.b);
+		this.c.set(quad.c);
+		this.d.set(quad.d);
+	}
 }
