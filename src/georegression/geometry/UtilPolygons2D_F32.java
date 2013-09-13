@@ -19,15 +19,15 @@
 
 package georegression.geometry;
 
-import georegression.struct.shapes.Quadrilateral_F64;
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.Quadrilateral_F32;
+import georegression.struct.shapes.RectangleCorner2D_F32;
 
 /**
  * Various functions related to polygons.
  *
  * @author Peter Abeles
  */
-public class UtilPolygons2D_F64 {
+public class UtilPolygons2D_F32 {
 
 	/**
 	 * Converts a rectangle into a quadrilateral
@@ -35,7 +35,7 @@ public class UtilPolygons2D_F64 {
 	 * @param input Rectangle.
 	 * @param output Quadrilateral.  Modified.
 	 */
-	public static void convert( RectangleCorner2D_F64 input , Quadrilateral_F64 output ) {
+	public static void convert( RectangleCorner2D_F32 input , Quadrilateral_F32 output ) {
 		output.a.x = input.x0;
 		output.a.y = input.y0;
 
@@ -55,22 +55,22 @@ public class UtilPolygons2D_F64 {
 	 * @param quad (Input) Quadrilateral
 	 * @param rectangle (Output) Minimum area rectangle
 	 */
-	public static void bounding( Quadrilateral_F64 quad , RectangleCorner2D_F64 rectangle ) {
+	public static void bounding( Quadrilateral_F32 quad , RectangleCorner2D_F32 rectangle ) {
 
-		rectangle.x0 = Math.min(quad.a.x,quad.b.x);
-		rectangle.x0 = Math.min(rectangle.x0,quad.c.x);
-		rectangle.x0 = Math.min(rectangle.x0,quad.d.x);
+		rectangle.x0 = (float)Math.min(quad.a.x,quad.b.x);
+		rectangle.x0 = (float)Math.min(rectangle.x0,quad.c.x);
+		rectangle.x0 = (float)Math.min(rectangle.x0,quad.d.x);
 
-		rectangle.y0 = Math.min(quad.a.y,quad.b.y);
-		rectangle.y0 = Math.min(rectangle.y0,quad.c.y);
-		rectangle.y0 = Math.min(rectangle.y0,quad.d.y);
+		rectangle.y0 = (float)Math.min(quad.a.y,quad.b.y);
+		rectangle.y0 = (float)Math.min(rectangle.y0,quad.c.y);
+		rectangle.y0 = (float)Math.min(rectangle.y0,quad.d.y);
 
-		rectangle.x1 = Math.max(quad.a.x,quad.b.x);
-		rectangle.x1 = Math.max(rectangle.x1,quad.c.x);
-		rectangle.x1 = Math.max(rectangle.x1,quad.d.x);
+		rectangle.x1 = (float)Math.max(quad.a.x,quad.b.x);
+		rectangle.x1 = (float)Math.max(rectangle.x1,quad.c.x);
+		rectangle.x1 = (float)Math.max(rectangle.x1,quad.d.x);
 
-		rectangle.y1 = Math.max(quad.a.y,quad.b.y);
-		rectangle.y1 = Math.max(rectangle.y1,quad.c.y);
-		rectangle.y1 = Math.max(rectangle.y1,quad.d.y);
+		rectangle.y1 = (float)Math.max(quad.a.y,quad.b.y);
+		rectangle.y1 = (float)Math.max(rectangle.y1,quad.c.y);
+		rectangle.y1 = (float)Math.max(rectangle.y1,quad.d.y);
 	}
 }

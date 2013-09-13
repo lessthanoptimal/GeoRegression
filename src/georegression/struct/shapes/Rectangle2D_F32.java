@@ -114,4 +114,15 @@ public class Rectangle2D_F32 {
 	public void setY( float y ) {
 		this.tl_y = y;
 	}
+
+	/**
+	 * Sets this rectangle to be equal to the passed in rectangle.
+	 * @param r Rectangle which this is to be set equal to
+	 */
+	public void set(Rectangle2D_I32 r) {
+		this.tl_x = r.tl_x;
+		this.tl_y = r.tl_y;
+		this.width = r.width;
+		this.height = r.height;
+	}
 }

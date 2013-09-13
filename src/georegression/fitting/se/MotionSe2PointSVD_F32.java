@@ -116,7 +116,7 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 			R = V.mult( U.transpose() );
 			float det = (float) R.determinant();
 			if( det < 0 ) {
-				System.out.println( "Crap" );
+				throw new RuntimeException( "Crap" );
 			}
 		}
 

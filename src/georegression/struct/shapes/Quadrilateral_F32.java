@@ -22,12 +22,80 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point2D_F32;
 
 /**
- *
+ * A polygon with 4 vertices, a,b,c, and d.  The vertices are in order sequential order of a,b,c,d.
  *
  */
 public class Quadrilateral_F32 {
-	Point2D_F32 a;
-	Point2D_F32 b;
-	Point2D_F32 c;
-	Point2D_F32 d;
+	public Point2D_F32 a;
+	public Point2D_F32 b;
+	public Point2D_F32 c;
+	public Point2D_F32 d;
+
+	public Quadrilateral_F32() {
+		a = new Point2D_F32();
+		b = new Point2D_F32();
+		c = new Point2D_F32();
+		d = new Point2D_F32();
+	}
+
+	public Quadrilateral_F32( float x0, float y0 , float x1, float y1 ,
+							  float x2, float y2 , float x3, float y3 ) {
+		a = new Point2D_F32(x0,y0);
+		b = new Point2D_F32(x1,y1);
+		c = new Point2D_F32(x2,y2);
+		d = new Point2D_F32(x3,y3);
+	}
+
+	public Quadrilateral_F32(Point2D_F32 a, Point2D_F32 b, Point2D_F32 c, Point2D_F32 d, boolean copy ) {
+		if( copy ) {
+			this.a.set(a);
+			this.b.set(b);
+			this.c.set(c);
+			this.d.set(d);
+		} else {
+			this.a = a;
+			this.b = b;
+			this.c = c;
+			this.d = d;
+		}
+	}
+
+	public Point2D_F32 getA() {
+		return a;
+	}
+
+	public void setA(Point2D_F32 a) {
+		this.a = a;
+	}
+
+	public Point2D_F32 getB() {
+		return b;
+	}
+
+	public void setB(Point2D_F32 b) {
+		this.b = b;
+	}
+
+	public Point2D_F32 getC() {
+		return c;
+	}
+
+	public void setC(Point2D_F32 c) {
+		this.c = c;
+	}
+
+	public Point2D_F32 getD() {
+		return d;
+	}
+
+	public void setD(Point2D_F32 d) {
+		this.d = d;
+	}
+
+	public void set(Quadrilateral_F32 quad) {
+		this.a.set(quad.a);
+		this.b.set(quad.b);
+		this.c.set(quad.c);
+		this.d.set(quad.d);
+	}
 }

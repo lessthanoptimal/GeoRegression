@@ -41,6 +41,9 @@ public class Rectangle2D_I32 {
 	 */
 	public int height;
 
+	public Rectangle2D_I32() {
+	}
+
 	public Rectangle2D_I32( int tl_x, int tl_y, int width, int height ) {
 		this.tl_x = tl_x;
 		this.tl_y = tl_y;
@@ -48,19 +51,73 @@ public class Rectangle2D_I32 {
 		this.height = height;
 	}
 
-	public final int getX() {
-		return tl_x;
+	/**
+	 * Sets the top left point
+	 *
+	 * @param x
+	 * @param y
+	 */
+	public void setPoint( int x, int y ) {
+		this.tl_x = x;
+		this.tl_y = y;
 	}
 
-	public final int getY() {
-		return tl_y;
-	}
-
-	public final int getWidth() {
+	public int getWidth() {
 		return width;
 	}
 
-	public final int getHeight() {
+	public void setWidth( int width ) {
+		this.width = width;
+	}
+
+	public int getHeight() {
 		return height;
+	}
+
+	public void setHeight( int height ) {
+		this.height = height;
+	}
+
+	/**
+	 * @return top left x-coordinate
+	 */
+	public int getX() {
+		return tl_x;
+	}
+
+	/**
+	 * Sets the top left x-coordinate
+	 *
+	 * @param x top left x-coordinate
+	 */
+	public void setX( int x ) {
+		this.tl_x = x;
+	}
+
+	/**
+	 * @return top left y-coordinate
+	 */
+	public int getY() {
+		return tl_y;
+	}
+
+	/**
+	 * Sets the top left y-coordinate
+	 *
+	 * @param y top left y-coordinate
+	 */
+	public void setY( int y ) {
+		this.tl_y = y;
+	}
+
+	/**
+	 * Sets this rectangle to be equal to the passed in rectangle.
+	 * @param r Rectangle which this is to be set equal to
+	 */
+	public void set(Rectangle2D_I32 r) {
+		this.tl_x = r.tl_x;
+		this.tl_y = r.tl_y;
+		this.width = r.width;
+		this.height = r.height;
 	}
 }

@@ -1,5 +1,14 @@
 YEAR-MONTH-DAY
 
+
+---------------------------------------------
+Date    : 2013
+Version : 0.5
+
+- Added FitPlane3D
+- Flushed out Quadrilateral
+- Added functions to Rectangle2D
+
 ---------------------------------------------
 Date    : 2013-06-24
 Version : 0.4
