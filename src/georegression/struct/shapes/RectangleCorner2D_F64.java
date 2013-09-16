@@ -103,6 +103,6 @@ public class RectangleCorner2D_F64 {
 	}
 
 	public String toString() {
-		return "RectangleCorner2D_I32( "+x0+" "+y0+" "+x1+" "+y1+" )";
+		return getClass().getSimpleName()+"( "+x0+" "+y0+" "+x1+" "+y1+" )";
 	}
 }

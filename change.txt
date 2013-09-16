@@ -8,6 +8,8 @@ Version : 0.5
 - Added FitPlane3D
 - Flushed out Quadrilateral
 - Added functions to Rectangle2D
+- Added Cube3D
+- Added Intersection3D.contain(cube,point)
 
 ---------------------------------------------
 Date    : 2013-06-24
