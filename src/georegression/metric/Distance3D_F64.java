@@ -23,6 +23,7 @@ import georegression.geometry.UtilPoint3D_F64;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.shapes.Sphere3D_F64;
 
 
 /**
@@ -101,5 +102,19 @@ public class Distance3D_F64 {
 		double top = plane.A*point.x + plane.B*point.y + plane.C*point.z - plane.D;
 
 		return top / Math.sqrt( plane.A*plane.A + plane.B*plane.B + plane.C*plane.C);
+	}
+
+	/**
+	 * Returns the signed distance a point is from the sphere's surface.  If the point is outside of the sphere
+	 * it's distance will be positive.  If it is inside it will be negative.
+	 *
+	 * @param sphere The sphere
+	 * @param point The point
+	 * @return Signed distance
+	 */
+	public static double distance( Sphere3D_F64 sphere , Point3D_F64 point ) {
+
+		double r = point.distance(sphere.center);
+		return r-sphere.radius;
 	}
 }

@@ -20,6 +20,7 @@
 package georegression.struct.se;
 
 import georegression.geometry.RotationMatrixGenerator;
+import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
@@ -40,6 +41,27 @@ public class SpecialEuclideanOps_F64 {
 	public static void setToNoMotion( Se3_F64 se ) {
 		CommonOps.setIdentity( se.getR() );
 		se.getT().set( 0, 0, 0 );
+	}
+
+	/**
+	 * Converts {@link Se2_F64} into {@link Affine2D_F64}.
+	 * @param se (Input) Se2
+	 * @param affine (Output) Equivalent affine.  If null a new object will be declared.
+	 * @return Equivalent affine.
+	 */
+	public static Affine2D_F64 toAffine( Se2_F64 se , Affine2D_F64 affine ) {
+		if( affine == null )
+			affine = new Affine2D_F64();
+
+		affine.a11 = se.c;
+		affine.a12 = -se.s;
+		affine.a21 = se.s;
+		affine.a22 = se.c;
+
+		affine.tx = se.T.x;
+		affine.ty = se.T.y;
+
+		return affine;
 	}
 
 	/**

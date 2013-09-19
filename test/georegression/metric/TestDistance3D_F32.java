@@ -26,6 +26,7 @@ import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
+import georegression.struct.shapes.Sphere3D_F32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -100,5 +101,19 @@ public class TestDistance3D_F32 {
 		// make it to the other side and see if the sign changes
 		found = Distance3D_F32.distance(g,new Point3D_F32(v.x+3,v.y+4,v.z-5));
 		assertEquals(1,found, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void distance_sphere_point() {
+
+		Sphere3D_F32 sphere = new Sphere3D_F32(2,3,4,4.5f);
+		Point3D_F32 outside = new Point3D_F32(-3,4,-6.7f);
+		Point3D_F32 inside = new Point3D_F32(-1,2,2);
+
+		float ro = sphere.center.distance(outside);
+		float ri = sphere.center.distance(inside);
+
+		assertEquals(ro-4.5f,Distance3D_F32.distance(sphere,outside), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(ri-4.5f,Distance3D_F32.distance(sphere,inside), GrlConstants.FLOAT_TEST_TOL);
 	}
 }

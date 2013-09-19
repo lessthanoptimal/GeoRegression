@@ -22,15 +22,18 @@ package georegression.struct.se;
 import georegression.geometry.GeometryMath_F32;
 import georegression.geometry.RotationMatrixGenerator;
 import georegression.misc.GrlConstants;
+import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
+import georegression.transform.affine.AffinePointOps;
 import georegression.transform.se.SePointOps_F32;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.MatrixFeatures;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -40,7 +43,18 @@ public class TestSpecialEuclideanOps_F32 {
 
 	@Test
 	public void toAffine_2D() {
-		fail("implement");
+		Se2_F32 se = new Se2_F32(1.5f,-3.4f,0.5f);
+		Affine2D_F32 affine = SpecialEuclideanOps_F32.toAffine(se,null);
+
+		Point2D_F32 original = new Point2D_F32(-1.5f,2.3f);
+		Point2D_F32 found = new Point2D_F32();
+		Point2D_F32 expected = new Point2D_F32();
+
+		SePointOps_F32.transform(se,original,expected);
+		AffinePointOps.transform(affine, original, found);
+
+		assertEquals(expected.x,found.x,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.y, found.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
