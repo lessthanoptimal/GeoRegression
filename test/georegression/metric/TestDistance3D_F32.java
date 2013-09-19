@@ -26,10 +26,12 @@ import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
+import georegression.struct.shapes.Cylinder3D_F32;
 import georegression.struct.shapes.Sphere3D_F32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -113,7 +115,27 @@ public class TestDistance3D_F32 {
 		float ro = sphere.center.distance(outside);
 		float ri = sphere.center.distance(inside);
 
+		assertTrue(ro > 4.5f);
+		assertTrue(ri<4.5f);
+
 		assertEquals(ro-4.5f,Distance3D_F32.distance(sphere,outside), GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(ri-4.5f,Distance3D_F32.distance(sphere,inside), GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void distance_cylinder_point() {
+
+		Cylinder3D_F32 cylinder = new Cylinder3D_F32(1,2,3,0,0,2,3.5f);
+		Point3D_F32 outside = new Point3D_F32(1,10,0);
+		Point3D_F32 inside = new Point3D_F32(1,4,3);
+
+		float ro = Distance3D_F32.distance(cylinder.line,outside);
+		float ri = Distance3D_F32.distance(cylinder.line,inside);
+
+		assertTrue(ro>3.5f);
+		assertTrue(ri<3.5f);
+
+		assertEquals(ro-3.5f,Distance3D_F32.distance(cylinder,outside), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(ri-3.5f,Distance3D_F32.distance(cylinder,inside), GrlConstants.FLOAT_TEST_TOL);
 	}
 }

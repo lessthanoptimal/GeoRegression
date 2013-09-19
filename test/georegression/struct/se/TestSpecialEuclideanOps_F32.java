@@ -54,7 +54,7 @@ public class TestSpecialEuclideanOps_F32 {
 		AffinePointOps.transform(affine, original, found);
 
 		assertEquals(expected.x,found.x,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(expected.y, found.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.y,found.y,GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test

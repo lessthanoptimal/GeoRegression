@@ -79,6 +79,6 @@ public class Sphere3D_F32 {
 	}
 
 	public String toString() {
-		return getClass().getSimpleName()+"Center( "+center.x+" "+center.y+" "+center.z+" ) radius "+radius+" )";
+		return getClass().getSimpleName()+" Center( "+center.x+" "+center.y+" "+center.z+" ) radius "+radius+" )";
 	}
 }

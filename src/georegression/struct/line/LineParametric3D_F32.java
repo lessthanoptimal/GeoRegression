@@ -34,24 +34,45 @@ public class LineParametric3D_F32 {
 	/**
 	 * A point on the line
 	 */
-	public Point3D_F32 p = new Point3D_F32();
+	public Point3D_F32 p;
 	/**
 	 * The line's slope
 	 */
-	public Vector3D_F32 slope = new Vector3D_F32();
+	public Vector3D_F32 slope;
 
 	public LineParametric3D_F32( float x_0, float y_0, float z_0,
 								 float slopeX, float slopeY, float slopeZ ) {
+		this();
 		p.set( x_0, y_0, z_0 );
 		slope.set( slopeX, slopeY, slopeZ );
 	}
 
 	public LineParametric3D_F32( Point3D_F32 p, Vector3D_F32 slope ) {
-		setPoint( p );
-		setSlope( slope );
+		this();
+		setPoint(p);
+		setSlope(slope);
 	}
 
 	public LineParametric3D_F32() {
+		p = new Point3D_F32();
+		slope = new Vector3D_F32();
+	}
+
+	public LineParametric3D_F32( LineParametric3D_F32 l ) {
+		this();
+		this.p.set(l.p);
+		this.slope.set(l.slope);
+	}
+
+	/**
+	 * Should it declare the point and slope
+	 * @param declare true means to declares the data otherwise they are left as null
+	 */
+	public LineParametric3D_F32( boolean declare ) {
+		if( declare ) {
+			p = new Point3D_F32();
+			slope = new Vector3D_F32();
+		}
 	}
 
 	public void setPoint( Point3D_F32 pt ) {
@@ -116,7 +137,22 @@ public class LineParametric3D_F32 {
 		return p.y;
 	}
 
+	public void set( float x_0, float y_0, float z_0,
+					 float slopeX, float slopeY, float slopeZ ) {
+		p.set( x_0, y_0, z_0 );
+		slope.set( slopeX, slopeY, slopeZ );
+	}
+
+	public void set( LineParametric3D_F32 o ) {
+		this.p.set(o.p);
+		this.slope.set(o.slope);
+	}
+
 	public LineParametric3D_F32 copy() {
 		return new LineParametric3D_F32( p, slope );
+	}
+
+	public String toString() {
+		return getClass().getSimpleName()+" P( "+p.x+" "+p.y+" "+p.z+" ) Slope( "+slope.x+" "+slope.y+" "+slope.z+" )";
 	}
 }

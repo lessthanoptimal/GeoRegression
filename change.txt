@@ -9,6 +9,8 @@ Version : 0.5
 - Flushed out Quadrilateral
 - Added functions to Rectangle2D
 - Added Cube3D
+- Added Sphere3D
+- Added Cylinder3D
 - Added Intersection3D.contain(cube,point)
 
 ---------------------------------------------

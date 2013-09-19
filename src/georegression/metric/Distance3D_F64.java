@@ -23,6 +23,7 @@ import georegression.geometry.UtilPoint3D_F64;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.shapes.Cylinder3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
 
 
@@ -116,5 +117,20 @@ public class Distance3D_F64 {
 
 		double r = point.distance(sphere.center);
 		return r-sphere.radius;
+	}
+
+	/**
+	 * Returns the signed distance a point is from the cylinder's surface.  If the point is outside of the cylinder
+	 * it's distance will be positive.  If it is inside it will be negative.
+	 *
+	 * @param cylinder The cylinder
+	 * @param point The point
+	 * @return Signed distance
+	 */
+	public static double distance( Cylinder3D_F64 cylinder, Point3D_F64 point ) {
+
+		double r = Distance3D_F64.distance(cylinder.line,point);
+
+		return r - cylinder.radius;
 	}
 }
