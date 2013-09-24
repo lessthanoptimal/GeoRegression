@@ -79,6 +79,20 @@ public class TestDistance3D_F64 {
 		assertEquals(0,Distance3D_F64.distance( l,p ), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
+	/**
+	 * The distance is zero here, but due to round off error it is a negative number, which can cause
+	 * sqrt to blow up
+	 */
+	@Test
+	public void distance_line_point_NegativeZero() {
+		LineParametric3D_F64 line =
+				new LineParametric3D_F64( 1.2182178902359924 , -0.39089105488200365 , 2.945445527441002 ,
+						0.8728715609439697 , 0.4364357804719848 , -0.21821789023599247 );
+		Point3D_F64 p = new Point3D_F64( 1.0 ,-0.5 ,3.0 );
+
+		assertEquals(0,Distance3D_F64.distance(line,p),1e-8);
+	}
+
 
 	@Test
 	public void distance_plane_point() {

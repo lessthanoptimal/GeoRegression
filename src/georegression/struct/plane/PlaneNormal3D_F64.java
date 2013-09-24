@@ -34,6 +34,10 @@ public class PlaneNormal3D_F64 {
 	/** The plane's normal */
 	public Vector3D_F64 n = new Vector3D_F64();
 
+	public PlaneNormal3D_F64(PlaneNormal3D_F64 o) {
+		set(o);
+	}
+
 	public PlaneNormal3D_F64(Point3D_F64 point, Vector3D_F64 normal) {
 		set(point,normal);
 	}
@@ -57,6 +61,11 @@ public class PlaneNormal3D_F64 {
 	public void set( Point3D_F64 point, Vector3D_F64 normal ) {
 		this.p.set(point);
 		this.n.set(normal);
+	}
+
+	public void set( PlaneNormal3D_F64 o ) {
+		this.p.set(o.p);
+		this.n.set(o.n);
 	}
 
 	public void setP(Point3D_F64 p) {

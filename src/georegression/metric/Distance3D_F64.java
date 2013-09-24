@@ -67,7 +67,12 @@ public class Distance3D_F64 {
 		double dy = ( l0.p.y + t0 * l0.slope.y ) - ( l1.p.y + t1 * l1.slope.y );
 		double dz = ( l0.p.z + t0 * l0.slope.z ) - ( l1.p.z + t1 * l1.slope.z );
 
-		return Math.sqrt( dx * dx + dy * dy + dz * dz );
+		// round off error can make distanceSq go negative when it is very close to zero
+		double distanceSq = dx * dx + dy * dy + dz * dz;
+		if( distanceSq < 0 )
+			return 0;
+		else
+			return Math.sqrt( distanceSq );
 	}
 
 	/**
@@ -88,7 +93,14 @@ public class Distance3D_F64 {
 
 		double b = MiscOps.dot(x,y,z,l.slope)/l.slope.norm();
 
-		return Math.sqrt(c*c-b*b);
+		double distanceSq = c*c-b*b;
+
+		// round off error can make distanceSq go negative when it is very close to zero
+		if( distanceSq < 0 ) {
+			return 0;
+		} else {
+			return Math.sqrt(distanceSq);
+		}
 	}
 
 	/**

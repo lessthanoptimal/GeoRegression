@@ -34,6 +34,10 @@ public class PlaneNormal3D_F32 {
 	/** The plane's normal */
 	public Vector3D_F32 n = new Vector3D_F32();
 
+	public PlaneNormal3D_F32(PlaneNormal3D_F32 o) {
+		set(o);
+	}
+
 	public PlaneNormal3D_F32(Point3D_F32 point, Vector3D_F32 normal) {
 		set(point,normal);
 	}
@@ -57,6 +61,11 @@ public class PlaneNormal3D_F32 {
 	public void set( Point3D_F32 point, Vector3D_F32 normal ) {
 		this.p.set(point);
 		this.n.set(normal);
+	}
+
+	public void set( PlaneNormal3D_F32 o ) {
+		this.p.set(o.p);
+		this.n.set(o.n);
 	}
 
 	public void setP(Point3D_F32 p) {

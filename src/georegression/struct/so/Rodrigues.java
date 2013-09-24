@@ -44,11 +44,25 @@ public class Rodrigues {
 	public Rodrigues() {
 	}
 
+	/**
+	 * Constructor which specifies the transform.
+	 *
+	 * @param theta Angle of rotation
+	 * @param unitAxisRotation  Axis of rotation   Must be normalized to 1.
+	 */
 	public Rodrigues( double theta, Vector3D_F64 unitAxisRotation) {
 		this.theta = theta;
 		this.unitAxisRotation.set(unitAxisRotation);
 	}
 
+	/**
+	 * Constructor which specifies the transform using an unnormalized rotation axis.
+	 *
+	 * @param theta Angle of rotation
+	 * @param x Axis of rotation. x-component.
+	 * @param y Axis of rotation. y-component.
+	 * @param z Axis of rotation. z-component.
+	 */
 	public Rodrigues( double theta, double x, double y, double z ) {
 		this.theta = theta;
 		this.unitAxisRotation.set( x, y, z );

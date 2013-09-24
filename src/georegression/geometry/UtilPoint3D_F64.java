@@ -20,6 +20,7 @@
 package georegression.geometry;
 
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.shapes.Cube3D_F64;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,5 +121,38 @@ public class UtilPoint3D_F64 {
 		mean.z = z / num;
 
 		return mean;
+	}
+
+	/**
+	 * Finds the minimal volume {#link Cube3D_F64} which contains all the points.
+	 *
+	 * @param points Input: List of points.
+	 * @param bounding Output: Bounding cube
+	 */
+	public static void boundingCube(List<Point3D_F64> points , Cube3D_F64 bounding) {
+		double minX=Double.MAX_VALUE,maxX=-Double.MAX_VALUE;
+		double minY=Double.MAX_VALUE,maxY=-Double.MAX_VALUE;
+		double minZ=Double.MAX_VALUE,maxZ=-Double.MAX_VALUE;
+
+		for( int i = 0; i < points.size(); i++ ) {
+			Point3D_F64 p = points.get(i);
+			if( p.x < minX )
+				minX = p.x;
+			if( p.x > maxX )
+				maxX = p.x;
+			if( p.y < minY )
+				minY = p.y;
+			if( p.y > maxY )
+				maxY = p.y;
+			if( p.z < minZ )
+				minZ = p.z;
+			if( p.z > maxZ )
+				maxZ = p.z;
+		}
+
+		bounding.p.set(minX,minY,minZ);
+		bounding.lengthX = maxX-minX;
+		bounding.lengthY = maxY-minY;
+		bounding.lengthZ = maxZ-minZ;
 	}
 }

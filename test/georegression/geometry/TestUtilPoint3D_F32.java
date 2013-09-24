@@ -20,7 +20,12 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.point.Point3D_F32;
+import georegression.struct.shapes.Cube3D_F32;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,5 +43,22 @@ public class TestUtilPoint3D_F32 {
 	public void distanceSq() {
 		float found = UtilPoint3D_F32.distanceSq(1, 2, 3, 4, -3, -4);
 		assertEquals(83, found, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void boundingCube() {
+		List<Point3D_F32> list = new ArrayList<Point3D_F32>();
+
+		list.add( new Point3D_F32(1,1,1));
+		list.add( new Point3D_F32(2,3,1));
+		list.add( new Point3D_F32(1.5f,2,5));
+
+		Cube3D_F32 cube = new Cube3D_F32();
+		UtilPoint3D_F32.boundingCube(list,cube);
+
+		assertEquals(0,cube.getP().distance(list.get(0)),1e-8);
+		assertEquals(1,cube.lengthX,1e-8);
+		assertEquals(2,cube.lengthY,1e-8);
+		assertEquals(4,cube.lengthZ,1e-8);
 	}
 }

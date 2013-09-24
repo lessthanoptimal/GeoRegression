@@ -67,7 +67,12 @@ public class Distance3D_F32 {
 		float dy = ( l0.p.y + t0 * l0.slope.y ) - ( l1.p.y + t1 * l1.slope.y );
 		float dz = ( l0.p.z + t0 * l0.slope.z ) - ( l1.p.z + t1 * l1.slope.z );
 
-		return (float)Math.sqrt( dx * dx + dy * dy + dz * dz );
+		// round off error can make distanceSq go negative when it is very close to zero
+		float distanceSq = dx * dx + dy * dy + dz * dz;
+		if( distanceSq < 0 )
+			return 0;
+		else
+			return (float)Math.sqrt( distanceSq );
 	}
 
 	/**
@@ -88,7 +93,14 @@ public class Distance3D_F32 {
 
 		float b = MiscOps.dot(x,y,z,l.slope)/l.slope.norm();
 
-		return (float)Math.sqrt(c*c-b*b);
+		float distanceSq = c*c-b*b;
+
+		// round off error can make distanceSq go negative when it is very close to zero
+		if( distanceSq < 0 ) {
+			return 0;
+		} else {
+			return (float)Math.sqrt(distanceSq);
+		}
 	}
 
 	/**

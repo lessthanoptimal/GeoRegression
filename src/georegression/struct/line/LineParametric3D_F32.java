@@ -49,8 +49,8 @@ public class LineParametric3D_F32 {
 
 	public LineParametric3D_F32( Point3D_F32 p, Vector3D_F32 slope ) {
 		this();
-		setPoint(p);
-		setSlope(slope);
+		setPoint( p );
+		setSlope( slope );
 	}
 
 	public LineParametric3D_F32() {

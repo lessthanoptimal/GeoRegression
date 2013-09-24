@@ -20,6 +20,7 @@
 package georegression.geometry;
 
 import georegression.struct.point.Point3D_F32;
+import georegression.struct.shapes.Cube3D_F32;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,5 +121,38 @@ public class UtilPoint3D_F32 {
 		mean.z = z / num;
 
 		return mean;
+	}
+
+	/**
+	 * Finds the minimal volume {#link Cube3D_F32} which contains all the points.
+	 *
+	 * @param points Input: List of points.
+	 * @param bounding Output: Bounding cube
+	 */
+	public static void boundingCube(List<Point3D_F32> points , Cube3D_F32 bounding) {
+		float minX=Float.MAX_VALUE,maxX=-Float.MAX_VALUE;
+		float minY=Float.MAX_VALUE,maxY=-Float.MAX_VALUE;
+		float minZ=Float.MAX_VALUE,maxZ=-Float.MAX_VALUE;
+
+		for( int i = 0; i < points.size(); i++ ) {
+			Point3D_F32 p = points.get(i);
+			if( p.x < minX )
+				minX = p.x;
+			if( p.x > maxX )
+				maxX = p.x;
+			if( p.y < minY )
+				minY = p.y;
+			if( p.y > maxY )
+				maxY = p.y;
+			if( p.z < minZ )
+				minZ = p.z;
+			if( p.z > maxZ )
+				maxZ = p.z;
+		}
+
+		bounding.p.set(minX,minY,minZ);
+		bounding.lengthX = maxX-minX;
+		bounding.lengthY = maxY-minY;
+		bounding.lengthZ = maxZ-minZ;
 	}
 }
