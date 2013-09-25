@@ -151,6 +151,6 @@ public class UtilPoint3D_F32 {
 		}
 
 		bounding.p0.set(minX,minY,minZ);
-		bounding.p1.set(maxX,maxY,maxZ);
+		bounding.p1.set(maxX, maxY, maxZ);
 	}
 }

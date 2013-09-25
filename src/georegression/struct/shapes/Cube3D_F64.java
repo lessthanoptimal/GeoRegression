@@ -61,6 +61,18 @@ public class Cube3D_F64 {
 		return (p1.x-p0.x)*(p1.y-p0.y)*(p1.z-p0.z);
 	}
 
+	public double getLengthX() {
+		return p1.x-p0.x;
+	}
+
+	public double getLengthY() {
+		return p1.y-p0.y;
+	}
+
+	public double getLengthZ() {
+		return p1.z-p0.z;
+	}
+
 	public Point3D_F64 getP0() {
 		return p0;
 	}

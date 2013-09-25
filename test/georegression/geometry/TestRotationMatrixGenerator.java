@@ -21,8 +21,8 @@ package georegression.geometry;
 
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.point.Point3D_F64;
-import georegression.struct.so.Quaternion;
-import georegression.struct.so.Rodrigues;
+import georegression.struct.so.Quaternion_F64;
+import georegression.struct.so.Rodrigues_F64;
 import org.ejml.UtilEjml;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
@@ -43,14 +43,19 @@ public class TestRotationMatrixGenerator {
 	Random rand = new Random( 234234 );
 
 	@Test
-	public void rodriguesToMatrix() {
+	public void rodriguesF64_to_Matrix() {
 		DenseMatrix64F rotZ = RotationMatrixGenerator.rotZ( 0.5, null );
 
-		Rodrigues r = new Rodrigues( 0.5, 0, 0, 1 );
+		Rodrigues_F64 r = new Rodrigues_F64( 0.5, 0, 0, 1 );
 
 		DenseMatrix64F rod = RotationMatrixGenerator.rodriguesToMatrix( r, null );
 
 		assertTrue( MatrixFeatures.isIdentical( rotZ, rod, 1e-8 ) );
+	}
+
+	@Test
+	public void rodriguesF32_to_Matrix() {
+		fail("implement");
 	}
 
 	@Test
@@ -94,18 +99,18 @@ public class TestRotationMatrixGenerator {
 //
 //		// test known pathological cases
 //		checkMatrixToRodrigues( new Rodrigues( 0, 1, 1, 1 ), new Rodrigues( 0, 1, 0, 0 ) );
-		checkMatrixToRodrigues( new Rodrigues( 1e-4, 1, 1, 1 ), new Rodrigues( 1e-4, 1, 0, 0 ) );
+		checkMatrixToRodrigues( new Rodrigues_F64( 1e-4, 1, 1, 1 ), new Rodrigues_F64( 1e-4, 1, 0, 0 ) );
 //		checkMatrixToRodrigues( new Rodrigues( Math.PI/2, 1, 1, 1 ), new Rodrigues( Math.PI/2, 1, 1, 1 ) );
 //		checkMatrixToRodrigues( new Rodrigues( Math.PI, 1, 1, 1 ), new Rodrigues( Math.PI, 1, 1, 1 ) );
 //		checkMatrixToRodrigues( new Rodrigues( -Math.PI, 1, 1, 1 ), new Rodrigues( Math.PI, 1, 1, 1 ) );
 	}
 
-	private void checkMatrixToRodrigues( Rodrigues rodInput ) {
+	private void checkMatrixToRodrigues( Rodrigues_F64 rodInput ) {
 		// create the matrix using rodrigues
 		DenseMatrix64F rod = RotationMatrixGenerator.rodriguesToMatrix( rodInput, null );
 
 		// see if the vectors are the same
-		Rodrigues found = RotationMatrixGenerator.matrixToRodrigues( rod, null );
+		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( rod, null );
 
 		// if the lines are parallel the dot product will be 1 or -1
 		double dot = found.unitAxisRotation.dot( rodInput.unitAxisRotation);
@@ -116,14 +121,14 @@ public class TestRotationMatrixGenerator {
 		assertEquals( rodInput.theta * dot, found.theta, 1e-8 );
 	}
 
-	private void checkMatrixToRodrigues( Rodrigues input,
-										 Rodrigues expected ) {
+	private void checkMatrixToRodrigues( Rodrigues_F64 input,
+										 Rodrigues_F64 expected ) {
 
 		// create the matrix using rodrigues
 		DenseMatrix64F rod = RotationMatrixGenerator.rodriguesToMatrix( input, null );
 
 		// see if the vectors are the same
-		Rodrigues found = RotationMatrixGenerator.matrixToRodrigues( rod, null );
+		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( rod, null );
 
 		// if the lines are parallel the dot product will be 1 or -1
 		assertEquals( 1, Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), 1e-8 );
@@ -143,7 +148,7 @@ public class TestRotationMatrixGenerator {
 						"5.42066400000000000000e-14 1.00000000000000040000e+00 2.46136444559397200000e-13 \n" +
 						"3.16267800000000000000e-13 -2.46191955710628460000e-13 1.00000000000000040000e+00", 3);
 
-		Rodrigues found = RotationMatrixGenerator.matrixToRodrigues( R, null );
+		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( R, null );
 
 		assertEquals(0,found.getTheta(),1e-8);
 	}
@@ -155,7 +160,7 @@ public class TestRotationMatrixGenerator {
 						"5.42066400000000000000e-14 0.99999999999999000000e+00 2.46136444559397200000e-13 \n" +
 						"3.16267800000000000000e-13 -2.46191955710628460000e-13 0.99999999999999000000e+00", 3);
 
-		Rodrigues found = RotationMatrixGenerator.matrixToRodrigues( R, null );
+		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( R, null );
 
 		assertEquals(0,found.getTheta(),1e-8);
 	}
@@ -297,9 +302,9 @@ public class TestRotationMatrixGenerator {
 	 * where 'a' is the angle of rotation, u is the unit axis of rotation.
 	 */
 	@Test
-	public void quaternionToMatrix() {
+	public void quaternionToMatrix_F64() {
 		// rotate around z-axis 90 degrees
-		Quaternion q = RotationMatrixGenerator.rodriguesToQuaternion( new Rodrigues( Math.PI / 2.0, 0, 0, 1 ), null );
+		Quaternion_F64 q = RotationMatrixGenerator.rodriguesToQuaternion( new Rodrigues_F64( Math.PI / 2.0, 0, 0, 1 ), null );
 
 		DenseMatrix64F R = RotationMatrixGenerator.quaternionToMatrix( q, null );
 
@@ -309,7 +314,7 @@ public class TestRotationMatrixGenerator {
 
 
 		// rotate around y-axis 90 degrees
-		q = RotationMatrixGenerator.rodriguesToQuaternion( new Rodrigues( Math.PI / 2.0, 0, 1, 0 ), null );
+		q = RotationMatrixGenerator.rodriguesToQuaternion( new Rodrigues_F64( Math.PI / 2.0, 0, 1, 0 ), null );
 		q.normalize();
 
 		R = RotationMatrixGenerator.quaternionToMatrix( q, R );
@@ -317,5 +322,10 @@ public class TestRotationMatrixGenerator {
 		p.set( 1, 0, 0 );
 		GeometryMath_F64.mult( R, p, p );
 		GeometryUnitTest.assertEquals( p, 0, 0, -1, 1e-8 );
+	}
+
+	@Test
+	public void quaternionToMatrix_F32() {
+		fail("implement");
 	}
 }

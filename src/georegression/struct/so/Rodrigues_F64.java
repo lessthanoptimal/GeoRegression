@@ -35,13 +35,13 @@ import georegression.struct.point.Vector3D_F64;
  *
  * @author Peter Abeles
  */
-public class Rodrigues {
+public class Rodrigues_F64 {
 	// unit vector defining the axis of rotation
 	public Vector3D_F64 unitAxisRotation = new Vector3D_F64();
 	// the angle it is rotated by
 	public double theta;
 
-	public Rodrigues() {
+	public Rodrigues_F64() {
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Rodrigues {
 	 * @param theta Angle of rotation
 	 * @param unitAxisRotation  Axis of rotation   Must be normalized to 1.
 	 */
-	public Rodrigues( double theta, Vector3D_F64 unitAxisRotation) {
+	public Rodrigues_F64(double theta, Vector3D_F64 unitAxisRotation) {
 		this.theta = theta;
 		this.unitAxisRotation.set(unitAxisRotation);
 	}
@@ -63,7 +63,7 @@ public class Rodrigues {
 	 * @param y Axis of rotation. y-component.
 	 * @param z Axis of rotation. z-component.
 	 */
-	public Rodrigues( double theta, double x, double y, double z ) {
+	public Rodrigues_F64(double theta, double x, double y, double z) {
 		this.theta = theta;
 		this.unitAxisRotation.set( x, y, z );
 		unitAxisRotation.normalize();

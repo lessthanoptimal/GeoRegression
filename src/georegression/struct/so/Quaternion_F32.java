@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2011-2013, Peter Abeles. All Rights Reserved.
- *  
+ *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
  * GeoRegression is free software: you can redistribute it and/or modify
@@ -19,30 +19,49 @@
 
 package georegression.struct.so;
 
-import georegression.misc.GrlConstants;
-import georegression.struct.point.Vector3D_F64;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
+ * Specifies a 3D rotation using a unit quaternion.
+ *
  * @author Peter Abeles
  */
-public class TestRodrigues {
+public class Quaternion_F32 {
+	public float q1;
+	public float q2;
+	public float q3;
+	public float q4;
 
-	@Test
-	public void setParamVector() {
-		Vector3D_F64 v = new Vector3D_F64(1,2,3);
-		double theta = v.norm();
-		v.normalize();
+	public Quaternion_F32() {
+		q1 = 1;
+	}
 
-		Rodrigues a = new Rodrigues(theta,v.x,v.y,v.z);
-		Rodrigues b = new Rodrigues();
-		b.setParamVector(v.x*theta,v.y*theta,v.z*theta);
-		
-		assertEquals(a.theta,b.theta, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(a.unitAxisRotation.x,b.unitAxisRotation.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(a.unitAxisRotation.y,b.unitAxisRotation.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(a.unitAxisRotation.z,b.unitAxisRotation.z, GrlConstants.DOUBLE_TEST_TOL);
+	public Quaternion_F32(float q1, float q2, float q3, float q4) {
+		set(q1,q2,q3,q4);
+	}
+
+	public void set( Quaternion_F32 quaternion ) {
+		this.q1 = quaternion.q1;
+		this.q2 = quaternion.q2;
+		this.q3 = quaternion.q3;
+		this.q4 = quaternion.q4;
+	}
+
+	public void set( float q1, float q2, float q3, float q4 ) {
+		this.q1 = q1;
+		this.q2 = q2;
+		this.q3 = q3;
+		this.q4 = q4;
+	}
+
+	/**
+	 * Normalizes the elements to one
+	 */
+	public void normalize() {
+		float n = (float)Math.sqrt( q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4 );
+
+		q1 /= n;
+		q2 /= n;
+		q3 /= n;
+		q4 /= n;
 	}
 }

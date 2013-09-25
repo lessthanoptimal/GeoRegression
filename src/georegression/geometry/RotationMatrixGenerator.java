@@ -20,8 +20,10 @@
 package georegression.geometry;
 
 import georegression.struct.point.Vector3D_F64;
-import georegression.struct.so.Quaternion;
-import georegression.struct.so.Rodrigues;
+import georegression.struct.so.Quaternion_F32;
+import georegression.struct.so.Quaternion_F64;
+import georegression.struct.so.Rodrigues_F32;
+import georegression.struct.so.Rodrigues_F64;
 import org.ejml.UtilEjml;
 import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
@@ -39,13 +41,44 @@ import org.ejml.ops.CommonOps;
 public class RotationMatrixGenerator {
 
 	/**
-	 * Converts {@link georegression.struct.so.Rodrigues} into a rotation matrix.
+	 * Converts {@link georegression.struct.so.Rodrigues_F64} into a rotation matrix.
 	 *
 	 * @param rodrigues rotation defined using rotation axis angle notation.
 	 * @param R		 where the results will be stored.  If null a new matrix is declared/
 	 * @return rotation matrix.
 	 */
-	public static DenseMatrix64F rodriguesToMatrix( Rodrigues rodrigues, DenseMatrix64F R ) {
+	public static DenseMatrix64F rodriguesToMatrix( Rodrigues_F64 rodrigues, DenseMatrix64F R ) {
+		R = checkDeclare3x3( R );
+
+		double x = rodrigues.unitAxisRotation.x;
+		double y = rodrigues.unitAxisRotation.y;
+		double z = rodrigues.unitAxisRotation.z;
+
+		double c = Math.cos( rodrigues.theta );
+		double s = Math.sin( rodrigues.theta );
+		double oc = 1.0 - c;
+
+		R.data[0] = c + x * x * oc;
+		R.data[1] = x * y * oc - z * s;
+		R.data[2] = x * z * oc + y * s;
+		R.data[3] = y * x * oc + z * s;
+		R.data[4] = c + y * y * oc;
+		R.data[5] = y * z * oc - x * s;
+		R.data[6] = z * x * oc - y * s;
+		R.data[7] = z * y * oc + x * s;
+		R.data[8] = c + z * z * oc;
+
+		return R;
+	}
+
+	/**
+	 * Converts {@link georegression.struct.so.Rodrigues_F32} into a rotation matrix.
+	 *
+	 * @param rodrigues rotation defined using rotation axis angle notation.
+	 * @param R		 where the results will be stored.  If null a new matrix is declared/
+	 * @return rotation matrix.
+	 */
+	public static DenseMatrix64F rodriguesToMatrix( Rodrigues_F32 rodrigues, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
 
 		double x = rodrigues.unitAxisRotation.x;
@@ -71,7 +104,7 @@ public class RotationMatrixGenerator {
 
 	/**
 	 * <p>
-	 * Converts {@link Rodrigues} into {@link georegression.struct.so.Quaternion}.
+	 * Converts {@link georegression.struct.so.Rodrigues_F64} into {@link georegression.struct.so.Quaternion_F64}.
 	 * </p>
 	 * <p/>
 	 * <p>
@@ -84,10 +117,10 @@ public class RotationMatrixGenerator {
 	 * @param quat	  Storage for quaternion coordinate.  If null a new quaternion is created. Modified.
 	 * @return quaternion coordinate.
 	 */
-	public static Quaternion rodriguesToQuaternion( Rodrigues rodrigues,
-													Quaternion quat ) {
+	public static Quaternion_F64 rodriguesToQuaternion( Rodrigues_F64 rodrigues,
+													Quaternion_F64 quat ) {
 		if( quat == null )
-			quat = new Quaternion();
+			quat = new Quaternion_F64();
 
 
 		quat.q1 = Math.cos( rodrigues.theta / 2.0 );
@@ -100,10 +133,10 @@ public class RotationMatrixGenerator {
 		return quat;
 	}
 
-	public static Quaternion quaternionToRodrigues( Quaternion quat,
-													Rodrigues rodrigues ) {
+	public static Quaternion_F64 quaternionToRodrigues( Quaternion_F64 quat,
+													Rodrigues_F64 rodrigues ) {
 		if( rodrigues == null )
-			rodrigues = new Rodrigues();
+			rodrigues = new Rodrigues_F64();
 
 		rodrigues.unitAxisRotation.set( quat.q2, quat.q3, quat.q4 );
 		rodrigues.unitAxisRotation.normalize();
@@ -120,24 +153,24 @@ public class RotationMatrixGenerator {
 	 * @param quat storage for quaternion.  If null a new class will be declared.
 	 * @return quaternion representation of the rotation matrix.
 	 */
-	public static Quaternion matrixToQuaternion( DenseMatrix64F R, Quaternion quat ) {
+	public static Quaternion_F64 matrixToQuaternion( DenseMatrix64F R, Quaternion_F64 quat ) {
 		// first get rodrigues
-		Rodrigues r = matrixToRodrigues( R, null );
+		Rodrigues_F64 r = matrixToRodrigues( R, null );
 
 		// then convert to quaternions
 		return rodriguesToQuaternion( r, quat );
 	}
 
 	/**
-	 * Converts a rotation matrix into {@link georegression.struct.so.Rodrigues}.
+	 * Converts a rotation matrix into {@link georegression.struct.so.Rodrigues_F64}.
 	 *
 	 * @param R		 Rotation matrix.
 	 * @param rodrigues Storage used for solution.  If null a new instance is declared.
 	 * @return The found axis and rotation angle.
 	 */
-	public static Rodrigues matrixToRodrigues( DenseMatrix64F R, Rodrigues rodrigues ) {
+	public static Rodrigues_F64 matrixToRodrigues( DenseMatrix64F R, Rodrigues_F64 rodrigues ) {
 		if( rodrigues == null ) {
-			rodrigues = new Rodrigues();
+			rodrigues = new Rodrigues_F64();
 		}
 		// parts of this are from wikipedia
 		// http://en.wikipedia.org/wiki/Rotation_representation_%28mathematics%29#Rotation_matrix_.E2.86.94_Euler_axis.2Fangle
@@ -556,7 +589,7 @@ public class RotationMatrixGenerator {
 	 * @param euler Euler coordinates encoded as [yaw, roll, pitch].
 	 * @param quat  Quaternion
 	 */
-	public static void eulerToQuaternions( double euler[], Quaternion quat ) {
+	public static void eulerToQuaternions( double euler[], Quaternion_F64 quat ) {
 
 		double yaw = euler[0];
 		double roll = euler[1];
@@ -601,7 +634,41 @@ public class RotationMatrixGenerator {
 	 * @param quat unit quaternion.
 	 * @param R	Storage for rotation matrix.  If null a new matrix is created. Modified.
 	 */
-	public static DenseMatrix64F quaternionToMatrix( Quaternion quat, DenseMatrix64F R ) {
+	public static DenseMatrix64F quaternionToMatrix( Quaternion_F64 quat, DenseMatrix64F R ) {
+		R = checkDeclare3x3( R );
+
+		final double q0 = quat.q1;
+		final double q1 = quat.q2;
+		final double q2 = quat.q3;
+		final double q3 = quat.q4;
+
+		R.set( 0, 0, q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3 );
+		R.set( 0, 1, 2.0 * ( q1 * q2 - q0 * q3 ) );
+		R.set( 0, 2, 2.0 * ( q1 * q3 + q0 * q2 ) );
+
+		R.set( 1, 0, 2.0 * ( q1 * q2 + q0 * q3 ) );
+		R.set( 1, 1, q0 * q0 - q1 * q1 + q2 * q2 - q3 * q3 );
+		R.set( 1, 2, 2.0 * ( q2 * q3 - q0 * q1 ) );
+
+		R.set( 2, 0, 2.0 * ( q1 * q3 - q0 * q2 ) );
+		R.set( 2, 1, 2.0 * ( q2 * q3 + q0 * q1 ) );
+		R.set( 2, 2, q0 * q0 - q1 * q1 - q2 * q2 + q3 * q3 );
+
+		return R;
+	}
+
+	/**
+	 * Converts a quaternion into a rotation matrix.
+	 * <p/>
+	 * <p>
+	 * Equations is taken from: Paul J. Besl and Neil D. McKay, "A Method for Registration of 3-D Shapes" IEEE
+	 * Transactions on Pattern Analysis and Machine Intelligence, Vol 14, No. 2, Feb. 1992
+	 * </p>
+	 *
+	 * @param quat unit quaternion.
+	 * @param R	Storage for rotation matrix.  If null a new matrix is created. Modified.
+	 */
+	public static DenseMatrix64F quaternionToMatrix( Quaternion_F32 quat, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
 
 		final double q0 = quat.q1;

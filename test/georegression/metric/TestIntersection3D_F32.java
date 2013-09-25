@@ -25,6 +25,7 @@ import georegression.struct.line.LineParametric3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
+import georegression.struct.shapes.Cube3D_F32;
 import georegression.struct.shapes.CubeLength3D_F32;
 import org.junit.Test;
 
@@ -90,7 +91,7 @@ public class TestIntersection3D_F32 {
 	}
 
 	@Test
-	public void contained_cube_point() {
+	public void contained_cubeLength_point() {
 		CubeLength3D_F32 cube = new CubeLength3D_F32(2,3,4,1,1.5f,2.5f);
 
 		// point clearly inside the code
@@ -103,6 +104,21 @@ public class TestIntersection3D_F32 {
 		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2+1, 3.1f, 4.1f)));
 		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2.1f, 3+1.5f, 4.1f)));
 		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2.1f, 3.1f, 4+2.5f)));
+	}
 
+	@Test
+	public void contained_cube_point() {
+		Cube3D_F32 cube = new Cube3D_F32(2,3,4,3,4.5f,6.5f);
+
+		// point clearly inside the code
+		assertTrue(Intersection3D_F32.contained(cube,new Point3D_F32(2.1f,3.1f,4.1f)));
+		// point way outside
+		assertFalse(Intersection3D_F32.contained(cube,new Point3D_F32(-2,9,8)));
+
+		// test edge cases
+		assertTrue(Intersection3D_F32.contained(cube,new Point3D_F32(2,3,4)));
+		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2+1, 3.1f, 4.1f)));
+		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2.1f, 3+1.5f, 4.1f)));
+		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2.1f, 3.1f, 4+2.5f)));
 	}
 }

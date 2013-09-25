@@ -5,13 +5,17 @@ YEAR-MONTH-DAY
 Date    : 2013
 Version : 0.5
 
-- Added FitPlane3D
 - Flushed out Quadrilateral
 - Added functions to Rectangle2D
 - Added Cube3D
 - Added Sphere3D
 - Added Cylinder3D
 - Added Intersection3D.contain(cube,point)
+- Least squares fitting
+  * Plane3D
+  * Sphere3D
+  * Cylinder3D
+- Made F64 and F32 variants of Rodrigues and Quaternion
 
 ---------------------------------------------
 Date    : 2013-06-24

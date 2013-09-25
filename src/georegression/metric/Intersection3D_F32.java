@@ -25,6 +25,7 @@ import georegression.struct.line.LineParametric3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
+import georegression.struct.shapes.Cube3D_F32;
 import georegression.struct.shapes.CubeLength3D_F32;
 
 /**
@@ -143,6 +144,22 @@ public class Intersection3D_F32 {
 		return( cube.p.x <= point.x && point.x < cube.p.x + cube.lengthX &&
 				cube.p.y <= point.y && point.y < cube.p.y + cube.lengthY &&
 				cube.p.z <= point.z && point.z < cube.p.z + cube.lengthZ );
+	}
+
+	/**
+	 * Returns true if the point is contained inside the cube. The point is considered to be inside the cube
+	 * if the following test passes for each dimension.  cube.x <= point.x < cube.x + cube.lengthX
+	 *
+	 *
+	 * @param cube Cube
+	 * @param point Point which is tested to see if it is inside the cube
+	 * @return true for inside and false for not
+	 */
+	public static boolean contained( Cube3D_F32 cube , Point3D_F32 point ) {
+
+		return( cube.p0.x <= point.x && point.x < cube.p1.x &&
+				cube.p0.y <= point.y && point.y < cube.p1.y &&
+				cube.p0.z <= point.z && point.z < cube.p1.z );
 	}
 
 }

@@ -26,7 +26,7 @@ import georegression.geometry.UtilPoint3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
-import georegression.struct.so.Quaternion;
+import georegression.struct.so.Quaternion_F32;
 import org.ejml.simple.SimpleEVD;
 import org.ejml.simple.SimpleMatrix;
 
@@ -61,7 +61,7 @@ public class MotionSe3PointCrossCovariance_F32 implements MotionTransformPoint<S
 	private Se3_F32 motion = new Se3_F32();
 
 	// temporarily stores the quaternion
-	private Quaternion quat = new Quaternion();
+	private Quaternion_F32 quat = new Quaternion_F32();
 
 	public float[] getParam() {
 		return param;
@@ -158,10 +158,10 @@ public class MotionSe3PointCrossCovariance_F32 implements MotionTransformPoint<S
 
 		SimpleMatrix v_max = evd.getEigenVector( indexMax );
 
-		quat.q1 = v_max.get( 0 );
-		quat.q2 = v_max.get( 1 );
-		quat.q3 = v_max.get( 2 );
-		quat.q4 = v_max.get( 3 );
+		quat.q1 = (float) v_max.get( 0 );
+		quat.q2 = (float) v_max.get( 1 );
+		quat.q3 = (float) v_max.get( 2 );
+		quat.q4 = (float) v_max.get( 3 );
 		quat.normalize();
 
 		RotationMatrixGenerator.quaternionToMatrix( quat, motion.getR() );

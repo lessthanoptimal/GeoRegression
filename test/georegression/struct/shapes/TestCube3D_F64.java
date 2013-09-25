@@ -89,4 +89,25 @@ public class TestCube3D_F64 {
 		assertEquals(expected,cube.area(),GrlConstants.DOUBLE_TEST_TOL);
 	}
 
+	@Test
+	public void getLengthX() {
+		Cube3D_F64 cube = new Cube3D_F64(1,2,3,4,6,8);
+
+		assertEquals(3,cube.getLengthX(),GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void getLengthY() {
+		Cube3D_F64 cube = new Cube3D_F64(1,2,3,4,6,8);
+
+		assertEquals(4,cube.getLengthY(),GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void getLengthZ() {
+		Cube3D_F64 cube = new Cube3D_F64(1,2,3,4,6,8);
+
+		assertEquals(5,cube.getLengthZ(),GrlConstants.DOUBLE_TEST_TOL);
+	}
+
 }

@@ -120,6 +120,8 @@ public class Distance3D_F64 {
 	/**
 	 * Returns the signed distance a point is from the sphere's surface.  If the point is outside of the sphere
 	 * it's distance will be positive.  If it is inside it will be negative.
+	 * <p></p>
+	 * distance = ||sphere.center - point|| - r
 	 *
 	 * @param sphere The sphere
 	 * @param point The point
