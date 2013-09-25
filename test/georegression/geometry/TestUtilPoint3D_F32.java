@@ -56,9 +56,7 @@ public class TestUtilPoint3D_F32 {
 		Cube3D_F32 cube = new Cube3D_F32();
 		UtilPoint3D_F32.boundingCube(list,cube);
 
-		assertEquals(0,cube.getP().distance(list.get(0)),1e-8);
-		assertEquals(1,cube.lengthX,1e-8);
-		assertEquals(2,cube.lengthY,1e-8);
-		assertEquals(4,cube.lengthZ,1e-8);
+		assertEquals(0,cube.getP0().distance(list.get(0)),1e-8);
+		assertEquals(0,cube.getP1().distance(new Point3D_F32(2,3,5)),1e-8);
 	}
 }

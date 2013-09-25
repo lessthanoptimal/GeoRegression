@@ -22,25 +22,23 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point3D_F32;
 
 /**
- * An axis aligned cube in 3D that is specified by a point (x0,y0,z0), and its lengthX, lengthY, and lengthZ.
- * The point 'p' is the point which is closest to the corner.  The corner which is farthest away from 'p'
- * is (x0+lengthX , y0+lengthY, z0+lengthZ)
+ * An axis aligned cube in 3D that is specified by two points, p0 and p1.  Point p0 is less than point p1,
+ * p0.x <= p1.x, p0.y <= p1.y, p0.z <= p1.z.
  */
 public class Cube3D_F32 {
-	/**
-	 * Point which defines the corner closest to the origin
-	 */
-	public Point3D_F32 p = new Point3D_F32();
-	/**
-	 * The length of each size along their respective axises
-	 */
-	public float lengthX,lengthY,lengthZ;
 
-	public Cube3D_F32(float x0, float y0, float z0, float lengthX, float lengthY, float lengthZ) {
-		this.p.set(x0,y0,z0);
-		this.lengthX = lengthX;
-		this.lengthY = lengthY;
-		this.lengthZ = lengthZ;
+	/**
+	 * The lesser point
+	 */
+	public Point3D_F32 p0 = new Point3D_F32();
+	/**
+	 * The greater point
+	 */
+	public Point3D_F32 p1 = new Point3D_F32();
+
+	public Cube3D_F32(float x0, float y0, float z0, float x1, float y1, float z1 ) {
+		this.p0.set(x0, y0, z0);
+		this.p1.set(x1, y1, z1);
 	}
 
 	public Cube3D_F32(Cube3D_F32 orig) {
@@ -48,56 +46,38 @@ public class Cube3D_F32 {
 	}
 
 	public void set( Cube3D_F32 orig ) {
-		set(orig.p.x,orig.p.y,orig.p.z,orig.lengthX,orig.lengthY,orig.lengthZ);
+		set(orig.p0.x,orig.p0.y,orig.p0.z,orig.p1.x,orig.p1.y,orig.p1.z);
 	}
 
 	public Cube3D_F32() {
 	}
 
-	public void set(float x0, float y0, float z0, float lengthX, float lengthY, float lengthZ) {
-		this.p.set(x0,y0,z0);
-		this.lengthX = lengthX;
-		this.lengthY = lengthY;
-		this.lengthZ = lengthZ;
+	public void set(float x0, float y0, float z0, float x1, float y1, float z1 ) {
+		this.p0.set(x0, y0, z0);
+		this.p1.set(x1, y1, z1);
 	}
 
 	public float area() {
-		return lengthX*lengthY*lengthZ;
+		return (p1.x-p0.x)*(p1.y-p0.y)*(p1.z-p0.z);
 	}
 
-	public Point3D_F32 getP() {
-		return p;
+	public Point3D_F32 getP0() {
+		return p0;
 	}
 
-	public float getLengthX() {
-		return lengthX;
+	public void setP1(Point3D_F32 p1) {
+		this.p1.set(p1);
 	}
 
-	public float getLengthY() {
-		return lengthY;
+	public Point3D_F32 getP1() {
+		return p1;
 	}
 
-	public float getLengthZ() {
-		return lengthZ;
-	}
-
-	public void setP(Point3D_F32 p) {
-		this.p.set(p);
-	}
-
-	public void setLengthX(float lengthX) {
-		this.lengthX = lengthX;
-	}
-
-	public void setLengthY(float lengthY) {
-		this.lengthY = lengthY;
-	}
-
-	public void setLengthZ(float lengthZ) {
-		this.lengthZ = lengthZ;
+	public void setP0(Point3D_F32 p0) {
+		this.p0.set(p0);
 	}
 
 	public String toString() {
-		return getClass().getSimpleName()+"P( "+p.x+" "+p.y+" "+p.z+" ) sides ( "+lengthX+" , "+lengthY+" , "+lengthZ+" )";
+		return getClass().getSimpleName()+"P1( "+ p0.x+" "+ p0.y+" "+ p0.z+" ) P1( "+ p0.x+" "+ p0.y+" "+ p0.z+" )";
 	}
 }

@@ -22,25 +22,23 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point3D_F64;
 
 /**
- * An axis aligned cube in 3D that is specified by a point (x0,y0,z0), and its lengthX, lengthY, and lengthZ.
- * The point 'p' is the point which is closest to the corner.  The corner which is farthest away from 'p'
- * is (x0+lengthX , y0+lengthY, z0+lengthZ)
+ * An axis aligned cube in 3D that is specified by two points, p0 and p1.  Point p0 is less than point p1,
+ * p0.x <= p1.x, p0.y <= p1.y, p0.z <= p1.z.
  */
 public class Cube3D_F64 {
-	/**
-	 * Point which defines the corner closest to the origin
-	 */
-	public Point3D_F64 p = new Point3D_F64();
-	/**
-	 * The length of each size along their respective axises
-	 */
-	public double lengthX,lengthY,lengthZ;
 
-	public Cube3D_F64(double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ) {
-		this.p.set(x0,y0,z0);
-		this.lengthX = lengthX;
-		this.lengthY = lengthY;
-		this.lengthZ = lengthZ;
+	/**
+	 * The lesser point
+	 */
+	public Point3D_F64 p0 = new Point3D_F64();
+	/**
+	 * The greater point
+	 */
+	public Point3D_F64 p1 = new Point3D_F64();
+
+	public Cube3D_F64(double x0, double y0, double z0, double x1, double y1, double z1 ) {
+		this.p0.set(x0, y0, z0);
+		this.p1.set(x1, y1, z1);
 	}
 
 	public Cube3D_F64(Cube3D_F64 orig) {
@@ -48,56 +46,38 @@ public class Cube3D_F64 {
 	}
 
 	public void set( Cube3D_F64 orig ) {
-		set(orig.p.x,orig.p.y,orig.p.z,orig.lengthX,orig.lengthY,orig.lengthZ);
+		set(orig.p0.x,orig.p0.y,orig.p0.z,orig.p1.x,orig.p1.y,orig.p1.z);
 	}
 
 	public Cube3D_F64() {
 	}
 
-	public void set(double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ) {
-		this.p.set(x0,y0,z0);
-		this.lengthX = lengthX;
-		this.lengthY = lengthY;
-		this.lengthZ = lengthZ;
+	public void set(double x0, double y0, double z0, double x1, double y1, double z1 ) {
+		this.p0.set(x0, y0, z0);
+		this.p1.set(x1, y1, z1);
 	}
 
 	public double area() {
-		return lengthX*lengthY*lengthZ;
+		return (p1.x-p0.x)*(p1.y-p0.y)*(p1.z-p0.z);
 	}
 
-	public Point3D_F64 getP() {
-		return p;
+	public Point3D_F64 getP0() {
+		return p0;
 	}
 
-	public double getLengthX() {
-		return lengthX;
+	public void setP1(Point3D_F64 p1) {
+		this.p1.set(p1);
 	}
 
-	public double getLengthY() {
-		return lengthY;
+	public Point3D_F64 getP1() {
+		return p1;
 	}
 
-	public double getLengthZ() {
-		return lengthZ;
-	}
-
-	public void setP(Point3D_F64 p) {
-		this.p.set(p);
-	}
-
-	public void setLengthX(double lengthX) {
-		this.lengthX = lengthX;
-	}
-
-	public void setLengthY(double lengthY) {
-		this.lengthY = lengthY;
-	}
-
-	public void setLengthZ(double lengthZ) {
-		this.lengthZ = lengthZ;
+	public void setP0(Point3D_F64 p0) {
+		this.p0.set(p0);
 	}
 
 	public String toString() {
-		return getClass().getSimpleName()+"P( "+p.x+" "+p.y+" "+p.z+" ) sides ( "+lengthX+" , "+lengthY+" , "+lengthZ+" )";
+		return getClass().getSimpleName()+"P1( "+ p0.x+" "+ p0.y+" "+ p0.z+" ) P1( "+ p0.x+" "+ p0.y+" "+ p0.z+" )";
 	}
 }

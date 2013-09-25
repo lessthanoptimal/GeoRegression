@@ -34,24 +34,24 @@ public class TestCube3D_F32 {
 		Cube3D_F32 cubeA = new Cube3D_F32(1,2,3,4,5,6);
 		Cube3D_F32 cube = new Cube3D_F32(cubeA);
 
-		assertEquals(1,cube.p.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,cube.p.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,cube.p.z, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(4,cube.lengthX, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,cube.lengthY, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6,cube.lengthZ, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,cube.p0.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,cube.p0.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3,cube.p0.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,cube.p1.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,cube.p1.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(6,cube.p1.z, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
 	public void constructor_floats() {
 		Cube3D_F32 cube = new Cube3D_F32(1,2,3,4,5,6);
 
-		assertEquals(1,cube.p.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,cube.p.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,cube.p.z, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(4,cube.lengthX, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,cube.lengthY, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6, cube.lengthZ, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,cube.p0.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,cube.p0.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3,cube.p0.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,cube.p1.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,cube.p1.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(6,cube.p1.z, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -59,12 +59,12 @@ public class TestCube3D_F32 {
 		Cube3D_F32 cube = new Cube3D_F32();
 		cube.set(1,2,3,4,5,6);
 
-		assertEquals(1, cube.p.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,cube.p.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,cube.p.z, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(4,cube.lengthX, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,cube.lengthY, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6, cube.lengthZ, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,cube.p0.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,cube.p0.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3,cube.p0.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,cube.p1.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,cube.p1.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(6,cube.p1.z, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -73,12 +73,20 @@ public class TestCube3D_F32 {
 		Cube3D_F32 cube = new Cube3D_F32();
 		cube.set(cubeA);
 
-		assertEquals(1,cube.p.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,cube.p.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,cube.p.z, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(4,cube.lengthX, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,cube.lengthY, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6, cube.lengthZ, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,cube.p0.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,cube.p0.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3,cube.p0.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,cube.p1.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,cube.p1.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(6,cube.p1.z, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void area() {
+		Cube3D_F32 cube = new Cube3D_F32(1,2,3,4,5,6);
+
+		float expected = 3*3*3;
+		assertEquals(expected,cube.area(),GrlConstants.FLOAT_TEST_TOL);
 	}
 
 }

@@ -25,7 +25,7 @@ import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
-import georegression.struct.shapes.Cube3D_F64;
+import georegression.struct.shapes.CubeLength3D_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -91,7 +91,7 @@ public class TestIntersection3D_F64 {
 
 	@Test
 	public void contained_cube_point() {
-		Cube3D_F64 cube = new Cube3D_F64(2,3,4,1,1.5,2.5);
+		CubeLength3D_F64 cube = new CubeLength3D_F64(2,3,4,1,1.5,2.5);
 
 		// point clearly inside the code
 		assertTrue(Intersection3D_F64.contained(cube,new Point3D_F64(2.1,3.1,4.1)));
