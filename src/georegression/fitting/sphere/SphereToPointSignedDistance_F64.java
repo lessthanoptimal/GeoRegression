@@ -29,13 +29,8 @@ import java.util.List;
 /**
  * Computes the signed Euclidean distance between a sphere and a set of points, see
  * {@link Distance3D_F64#distance(georegression.struct.shapes.Sphere3D_F64, georegression.struct.point.Point3D_F64)}.
- * The sphere is encoded in the input as follows:<br>
- * <pre>
- * sphere.center.x = input[0];
- * sphere.center.y = input[1];
- * sphere.center.z = input[2];
- * sphere.radius = input[3];
- * </pre>
+ *
+ * See {@link georegression.fitting.sphere.CodecSphere3D_F64} for how the model is parametrized.
  * For use in least-squares non-linear minimization.
  *
  * @author Peter Abeles
@@ -47,6 +42,9 @@ public class SphereToPointSignedDistance_F64 implements FunctionNtoM {
 
 	// points whose distance from the sphere is being computed
 	private List<Point3D_F64> points;
+
+	// used to convert double[] into shape parameters
+	private CodecSphere3D_F64 codec = new CodecSphere3D_F64();
 
 	public void setPoints(List<Point3D_F64> points) {
 		this.points = points;
@@ -64,10 +62,7 @@ public class SphereToPointSignedDistance_F64 implements FunctionNtoM {
 
 	@Override
 	public void process( /**/double[] input, /**/double[] output) {
-		sphere.center.x = (double) input[0];
-		sphere.center.y = (double) input[1];
-		sphere.center.z = (double) input[2];
-		sphere.radius = (double) input[3];
+		codec.decode(input,sphere);
 
 		for( int i = 0; i < points.size(); i++ ) {
 			output[i] = Distance3D_F64.distance(sphere,points.get(i));

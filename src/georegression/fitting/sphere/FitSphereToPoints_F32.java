@@ -51,6 +51,9 @@ public class FitSphereToPoints_F32 implements ModelFitter<Sphere3D_F32,Point3D_F
 	private /**/double ftol;
 	private /**/double gtol;
 
+	// used to convert float[] into shape parameters
+	private CodecSphere3D_F32 codec = new CodecSphere3D_F32();
+
 	/**
 	 * Constructor which provides access to all tuning parameters
 	 *
@@ -83,28 +86,20 @@ public class FitSphereToPoints_F32 implements ModelFitter<Sphere3D_F32,Point3D_F
 	@Override
 	public boolean fitModel(List<Point3D_F32> dataSet, Sphere3D_F32 initial, Sphere3D_F32 found) {
 
-		param[0] = (float) initial.center.x;
-		param[1] = (float) initial.center.y;
-		param[2] = (float) initial.center.z;
-		param[3] = (float) initial.radius;
+		codec.encode(initial,param);
 
 		function.setPoints(dataSet);
 		jacobian.setPoints(dataSet);
 
 		optimizer.setFunction(function,jacobian);
-		optimizer.initialize(param,ftol,gtol);
+		optimizer.initialize(param, ftol, gtol);
 
 		for( int i = 0; i < maxIterations; i++ ) {
 			if( optimizer.iterate() )
 				break;
 		}
 
-		/**/double paramOptimized[] = optimizer.getParameters();
-
-		found.center.x = (float) paramOptimized[0];
-		found.center.y = (float) paramOptimized[1];
-		found.center.z = (float) paramOptimized[2];
-		found.radius = (float) paramOptimized[3];
+		codec.decode(optimizer.getParameters(),found);
 
 		return true;
 	}

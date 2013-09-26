@@ -51,6 +51,9 @@ public class FitCylinderToPoints_F32 implements ModelFitter<Cylinder3D_F32,Point
 	private /**/double ftol;
 	private /**/double gtol;
 
+	// used to convert float[] into shape parameters
+	private CodecCylinder3D_F32 codec = new CodecCylinder3D_F32();
+
 	/**
 	 * Constructor which provides access to all tuning parameters
 	 *
@@ -83,13 +86,7 @@ public class FitCylinderToPoints_F32 implements ModelFitter<Cylinder3D_F32,Point
 	@Override
 	public boolean fitModel(List<Point3D_F32> dataSet, Cylinder3D_F32 initial, Cylinder3D_F32 found) {
 
-		param[0] = (float) initial.line.p.x;
-		param[1] = (float) initial.line.p.y;
-		param[2] = (float) initial.line.p.z;
-		param[3] = (float) initial.line.slope.x;
-		param[4] = (float) initial.line.slope.y;
-		param[5] = (float) initial.line.slope.z;
-		param[6] = (float) initial.radius;
+		codec.encode(initial,param);
 
 		function.setPoints(dataSet);
 		jacobian.setPoints(dataSet);
@@ -102,15 +99,7 @@ public class FitCylinderToPoints_F32 implements ModelFitter<Cylinder3D_F32,Point
 				break;
 		}
 
-		/**/double paramOptimized[] = optimizer.getParameters();
-
-		found.line.p.x = (float) paramOptimized[0];
-		found.line.p.y = (float) paramOptimized[1];
-		found.line.p.z = (float) paramOptimized[2];
-		found.line.slope.x = (float) paramOptimized[3];
-		found.line.slope.y = (float) paramOptimized[4];
-		found.line.slope.z = (float) paramOptimized[5];
-		found.radius = (float) paramOptimized[6];
+		codec.decode(optimizer.getParameters(), found);
 
 		return true;
 	}

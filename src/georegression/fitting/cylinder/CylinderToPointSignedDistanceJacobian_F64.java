@@ -39,6 +39,9 @@ public class CylinderToPointSignedDistanceJacobian_F64 implements FunctionNtoMxN
 	// points whose distance from the sphere is being computed
 	private List<Point3D_F64> points;
 
+	// used to convert double[] into shape parameters
+	private CodecCylinder3D_F64 codec = new CodecCylinder3D_F64();
+
 	public void setPoints(List<Point3D_F64> points) {
 		this.points = points;
 	}
@@ -55,13 +58,7 @@ public class CylinderToPointSignedDistanceJacobian_F64 implements FunctionNtoMxN
 
 	@Override
 	public void process( /**/double[] input, /**/double[] output) {
-		cylinder.line.p.x = (double) input[0];
-		cylinder.line.p.y = (double) input[1];
-		cylinder.line.p.z = (double) input[2];
-		cylinder.line.slope.x = (double) input[3];
-		cylinder.line.slope.y = (double) input[4];
-		cylinder.line.slope.z = (double) input[5];
-		cylinder.radius = (double) input[6];
+		codec.decode(input,cylinder);
 
 		Point3D_F64 cp = cylinder.line.p;
 		Vector3D_F64 cs = cylinder.line.slope;

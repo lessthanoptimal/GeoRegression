@@ -40,6 +40,9 @@ public class SphereToPointSignedDistanceJacobian_F64 implements FunctionNtoMxN {
 	// points whose distance from the sphere is being computed
 	private List<Point3D_F64> points;
 
+	// used to convert double[] into shape parameters
+	private CodecSphere3D_F64 codec = new CodecSphere3D_F64();
+
 	public void setPoints(List<Point3D_F64> points) {
 		this.points = points;
 	}
@@ -56,10 +59,7 @@ public class SphereToPointSignedDistanceJacobian_F64 implements FunctionNtoMxN {
 
 	@Override
 	public void process( /**/double[] input, /**/double[] output) {
-		sphere.center.x = (double) input[0];
-		sphere.center.y = (double) input[1];
-		sphere.center.z = (double) input[2];
-		sphere.radius = (double) input[3];
+		codec.decode(input,sphere);
 
 		int index = 0;
 		for( int i = 0; i < points.size(); i++ ) {

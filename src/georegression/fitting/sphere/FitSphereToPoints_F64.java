@@ -51,6 +51,9 @@ public class FitSphereToPoints_F64 implements ModelFitter<Sphere3D_F64,Point3D_F
 	private /**/double ftol;
 	private /**/double gtol;
 
+	// used to convert double[] into shape parameters
+	private CodecSphere3D_F64 codec = new CodecSphere3D_F64();
+
 	/**
 	 * Constructor which provides access to all tuning parameters
 	 *
@@ -83,10 +86,7 @@ public class FitSphereToPoints_F64 implements ModelFitter<Sphere3D_F64,Point3D_F
 	@Override
 	public boolean fitModel(List<Point3D_F64> dataSet, Sphere3D_F64 initial, Sphere3D_F64 found) {
 
-		param[0] = (double) initial.center.x;
-		param[1] = (double) initial.center.y;
-		param[2] = (double) initial.center.z;
-		param[3] = (double) initial.radius;
+		codec.encode(initial,param);
 
 		function.setPoints(dataSet);
 		jacobian.setPoints(dataSet);
@@ -99,12 +99,7 @@ public class FitSphereToPoints_F64 implements ModelFitter<Sphere3D_F64,Point3D_F
 				break;
 		}
 
-		/**/double paramOptimized[] = optimizer.getParameters();
-
-		found.center.x = (double) paramOptimized[0];
-		found.center.y = (double) paramOptimized[1];
-		found.center.z = (double) paramOptimized[2];
-		found.radius = (double) paramOptimized[3];
+		codec.decode(optimizer.getParameters(),found);
 
 		return true;
 	}

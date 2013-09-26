@@ -31,17 +31,8 @@ import java.util.List;
 /**
  * Computes the signed Euclidean distance between a cylinder and a set of points, see
  * {@link Distance3D_F32#distance(georegression.struct.shapes.Cylinder3D_F32, georegression.struct.point.Point3D_F32)}.
- * The cylinder is encoded in the input as follows:<br>
- * <pre>
- * cylinder.line.p.x = (float) input[0];
- * cylinder.line.p.y = (float) input[1];
- * cylinder.line.p.z = (float) input[2];
- * cylinder.line.slope.x = (float) input[3];
- * cylinder.line.slope.y = (float) input[4];
- * cylinder.line.slope.z = (float) input[5];
- * cylinder.radius = (float) input[6];
- * </pre>
- * For use in least-squares non-linear minimization.
+ *
+ * See {@link CodecCylinder3D_F32} for how the model is parametrized.
  *
  * @author Peter Abeles
  */
@@ -51,6 +42,9 @@ public class CylinderToPointSignedDistance_F32 implements FunctionNtoM {
 
 	// points whose distance from the sphere is being computed
 	private List<Point3D_F32> points;
+
+	// used to convert float[] into shape parameters
+	private CodecCylinder3D_F32 codec = new CodecCylinder3D_F32();
 
 	public void setPoints(List<Point3D_F32> points) {
 		this.points = points;
@@ -68,13 +62,7 @@ public class CylinderToPointSignedDistance_F32 implements FunctionNtoM {
 
 	@Override
 	public void process( /**/double[] input, /**/double[] output) {
-		cylinder.line.p.x = (float) input[0];
-		cylinder.line.p.y = (float) input[1];
-		cylinder.line.p.z = (float) input[2];
-		cylinder.line.slope.x = (float) input[3];
-		cylinder.line.slope.y = (float) input[4];
-		cylinder.line.slope.z = (float) input[5];
-		cylinder.radius = (float) input[6];
+		codec.decode(input,cylinder);
 
 		Point3D_F32 cp = cylinder.line.p;
 		Vector3D_F32 cs = cylinder.line.slope;
