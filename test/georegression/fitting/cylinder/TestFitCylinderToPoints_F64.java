@@ -1,0 +1,141 @@
+/*
+ * Copyright (c) 2011-2013, Peter Abeles. All Rights Reserved.
+ *
+ * This file is part of Geometric Regression Library (GeoRegression).
+ *
+ * GeoRegression is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * GeoRegression is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package georegression.fitting.cylinder;
+
+import georegression.geometry.GeometryMath_F64;
+import georegression.geometry.RotationMatrixGenerator;
+import georegression.metric.Distance3D_F64;
+import georegression.misc.GrlConstants;
+import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Vector3D_F64;
+import georegression.struct.shapes.Cylinder3D_F64;
+import georegression.struct.so.Rodrigues_F64;
+import org.ejml.data.DenseMatrix64F;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+/**
+ * @author Peter Abeles
+ */
+public class TestFitCylinderToPoints_F64 {
+
+	Random rand = new Random(234);
+
+	@Test
+	public void perfectModel() {
+
+		Cylinder3D_F64 cylinder = new Cylinder3D_F64(1,2,3,0,0,1,2.5);
+
+		List<Point3D_F64> points = new ArrayList<Point3D_F64>();
+		for( int i = 0; i < 50; i++ ) {
+
+			double H = (rand.nextDouble()-0.5)*4.0;
+			double theta = rand.nextDouble()*GrlConstants.PI2;
+
+			points.add(createPt(cylinder,H,theta));
+		}
+
+		FitCylinderToPoints_F64 alg = new FitCylinderToPoints_F64(200);
+
+		Cylinder3D_F64 found = new Cylinder3D_F64();
+		alg.fitModel(points, cylinder, found);
+
+		checkEquivalent(cylinder,found);
+	}
+
+	@Test
+	public void perfectWithBadInitialModel() {
+		Cylinder3D_F64 cylinder = new Cylinder3D_F64(1,2,3,0,0,1,2.5);
+
+		List<Point3D_F64> points = new ArrayList<Point3D_F64>();
+		for( int i = 0; i < 50; i++ ) {
+
+			double H = (rand.nextDouble()-0.5)*4.0;
+			double theta = rand.nextDouble()*GrlConstants.PI2;
+
+			points.add(createPt(cylinder,H,theta));
+		}
+
+		FitCylinderToPoints_F64 alg = new FitCylinderToPoints_F64(200);
+
+		// make the initial model a bit off
+		Cylinder3D_F64 initial = new Cylinder3D_F64(0.95,2.1,3.05,0.05,-0.001,1.05,2.6);
+		Cylinder3D_F64 found = new Cylinder3D_F64();
+		alg.fitModel(points, initial, found);
+
+		checkEquivalent(cylinder, found);
+	}
+
+	public static void checkEquivalent( Cylinder3D_F64 a , Cylinder3D_F64 b ) {
+		assertEquals(a.radius,b.radius,GrlConstants.DOUBLE_TEST_TOL);
+
+		// the points should be on the other line
+		assertEquals(0, Distance3D_F64.distance(a.line, b.line.p),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, Distance3D_F64.distance(b.line,a.line.p),GrlConstants.DOUBLE_TEST_TOL);
+
+		// slopes should be the same
+		double dot = a.line.slope.dot(b.line.slope);
+		double tmp = dot / (a.line.slope.norm()*b.line.slope.norm());
+		double angle;
+		if( tmp > 1.0 )
+			angle = 0;
+		else if( tmp < -1.0 )
+			angle = Math.PI;
+		else
+			angle = Math.acos( tmp );
+		assertTrue( Math.abs(angle) < GrlConstants.DOUBLE_TEST_TOL ||
+				Math.abs(angle-Math.PI) < GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	public static Point3D_F64 createPt( Cylinder3D_F64 cylinder , double h , double theta ) {
+		Point3D_F64 p = new Point3D_F64();
+		p.x = cylinder.radius*(double)Math.cos(theta);
+		p.y = cylinder.radius*(double)Math.sin(theta);
+		p.z = h;
+
+		Vector3D_F64 axisZ = new Vector3D_F64(0,0,1);
+		Vector3D_F64 cross = axisZ.cross(cylinder.line.slope);
+		if( Math.abs(cross.norm()) < GrlConstants.DOUBLE_TEST_TOL  ) {
+			cross.set(0,0,1);
+		} else {
+			cross.normalize();
+		}
+
+		double angle = axisZ.dot(cylinder.line.slope);
+		angle = Math.acos( angle / (cylinder.line.slope.norm()));
+
+		Rodrigues_F64 rod = new Rodrigues_F64(angle,cross);
+		DenseMatrix64F R = RotationMatrixGenerator.rodriguesToMatrix(rod, null);
+
+		GeometryMath_F64.mult(R, p, p);
+		p.x += cylinder.line.p.x;
+		p.y += cylinder.line.p.y;
+		p.z += cylinder.line.p.z;
+
+		return p;
+	}
+
+}

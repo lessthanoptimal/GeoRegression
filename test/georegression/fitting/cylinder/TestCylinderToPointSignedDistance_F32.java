@@ -17,53 +17,61 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.fitting.sphere;
+package georegression.fitting.cylinder;
 
+import georegression.metric.Distance3D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F32;
-import org.ddogleg.optimization.JacobianChecker;
+import georegression.struct.shapes.Cylinder3D_F32;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Peter Abeles
  */
-public class TestSphereToPointSignedDistanceJacobian_F32 {
+public class TestCylinderToPointSignedDistance_F32 {
 
 	@Test
-	public void compareToNumerical() {
+	public void compareToDistance() {
 
-		SphereToPointSignedDistance_F32 function = new SphereToPointSignedDistance_F32();
-		SphereToPointSignedDistanceJacobian_F32 jacobian = new SphereToPointSignedDistanceJacobian_F32();
+		Cylinder3D_F32 cylinder = new Cylinder3D_F32(1,2,3,0,0,1,3);
 
-		// sphere
-		/**/double param[] = new /**/double[]{1,2,3,4};
+		CylinderToPointSignedDistance_F32 alg = new CylinderToPointSignedDistance_F32();
+
+		/**/double param[] = new /**/double[7];
+		param[0] = cylinder.line.p.x;
+		param[1] = cylinder.line.p.y;
+		param[2] = cylinder.line.p.z;
+		param[3] = cylinder.line.slope.x;
+		param[4] = cylinder.line.slope.y;
+		param[5] = cylinder.line.slope.z;
+		param[6] = cylinder.radius;
 
 		List<Point3D_F32> points = new ArrayList<Point3D_F32>();
 
 		// inside, should be negative
-		points.add(new Point3D_F32(1.1f,1.95f,7.2f));
+		points.add(new Point3D_F32(3,2,3));
 		// outside, should be positive
-		points.add(new Point3D_F32(0.96f,-2.1f,3.001f));
-		points.add(new Point3D_F32(5.2f,2.05f,3.1f));
+		points.add(new Point3D_F32(6,2,3));
 
-		function.setPoints(points);
-		jacobian.setPoints(points);
+		/**/double output[] = new /**/double[ points.size() ];
 
-//		JacobianChecker.jacobianPrint(function, jacobian, param, 100.0f*GrlConstants.FLOAT_TEST_TOL,
-//				GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(JacobianChecker.jacobian(function, jacobian, param, 100.0f * GrlConstants.FLOAT_TEST_TOL,
-				GrlConstants.FLOAT_TEST_TOL));
+		alg.setPoints(points);
+		alg.process(param,output);
+
+		for( int i = 0; i < points.size(); i++ ) {
+			float expected = Distance3D_F32.distance(cylinder, points.get(i));
+			assertEquals(expected,(float) output[i], GrlConstants.FLOAT_TEST_TOL);
+		}
 	}
 
 	@Test
 	public void getN_and_getM() {
-		SphereToPointSignedDistanceJacobian_F32 alg = new SphereToPointSignedDistanceJacobian_F32();
+		CylinderToPointSignedDistance_F32 alg = new CylinderToPointSignedDistance_F32();
 
 		List<Point3D_F32> points = new ArrayList<Point3D_F32>();
 		points.add(new Point3D_F32(1,2,3.5f));
@@ -72,7 +80,8 @@ public class TestSphereToPointSignedDistanceJacobian_F32 {
 
 		alg.setPoints(points);
 
-		assertEquals(4,alg.getN());
-		assertEquals(points.size(),alg.getM());
+		assertEquals(7,alg.getN());
+		assertEquals(points.size(), alg.getM());
 	}
+
 }

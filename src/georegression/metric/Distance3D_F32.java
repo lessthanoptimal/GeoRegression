@@ -19,7 +19,6 @@
 
 package georegression.metric;
 
-import georegression.geometry.UtilPoint3D_F32;
 import georegression.struct.line.LineParametric3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.point.Point3D_F32;
@@ -89,11 +88,14 @@ public class Distance3D_F32 {
 		float y = l.p.y - p.y;
 		float z = l.p.z - p.z;
 
-		float c = UtilPoint3D_F32.norm( x , y , z );
+		float cc = x*x + y*y + z*z;
 
+		// could avoid a square root here by computing b*b directory
+		// however that is most likely more prone to numerical overflow since the numerator will need to be squared
+		// before division can reduce its "power"
 		float b = MiscOps.dot(x,y,z,l.slope)/l.slope.norm();
 
-		float distanceSq = c*c-b*b;
+		float distanceSq = cc-b*b;
 
 		// round off error can make distanceSq go negative when it is very close to zero
 		if( distanceSq < 0 ) {

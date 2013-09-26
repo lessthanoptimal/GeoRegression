@@ -17,8 +17,9 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.fitting.sphere;
+package georegression.fitting.cylinder;
 
+import georegression.fitting.sphere.SphereToPointSignedDistanceJacobian_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F32;
 import org.ddogleg.optimization.JacobianChecker;
@@ -33,23 +34,23 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestSphereToPointSignedDistanceJacobian_F32 {
+public class TestCylinderToPointSignedDistanceJacobian_F32 {
 
 	@Test
 	public void compareToNumerical() {
 
-		SphereToPointSignedDistance_F32 function = new SphereToPointSignedDistance_F32();
-		SphereToPointSignedDistanceJacobian_F32 jacobian = new SphereToPointSignedDistanceJacobian_F32();
+		CylinderToPointSignedDistance_F32 function = new CylinderToPointSignedDistance_F32();
+		CylinderToPointSignedDistanceJacobian_F32 jacobian = new CylinderToPointSignedDistanceJacobian_F32();
 
 		// sphere
-		/**/double param[] = new /**/double[]{1,2,3,4};
+		/**/double param[] = new /**/double[]{1,2,3,0,0,2,4};
 
 		List<Point3D_F32> points = new ArrayList<Point3D_F32>();
 
 		// inside, should be negative
-		points.add(new Point3D_F32(1.1f,1.95f,7.2f));
+		points.add(new Point3D_F32(1.1f,1.95f,4.2f));
 		// outside, should be positive
-		points.add(new Point3D_F32(0.96f,-2.1f,3.001f));
+		points.add(new Point3D_F32(0.96f,-2.2f,3.001f));
 		points.add(new Point3D_F32(5.2f,2.05f,3.1f));
 
 		function.setPoints(points);
@@ -73,6 +74,7 @@ public class TestSphereToPointSignedDistanceJacobian_F32 {
 		alg.setPoints(points);
 
 		assertEquals(4,alg.getN());
-		assertEquals(points.size(),alg.getM());
+		assertEquals(points.size(), alg.getM());
 	}
+
 }

@@ -17,10 +17,11 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.fitting.sphere;
+package georegression.fitting.cylinder;
 
+import georegression.fitting.sphere.SphereToPointSignedDistanceJacobian_F64;
 import georegression.misc.GrlConstants;
-import georegression.struct.point.Point3D_F32;
+import georegression.struct.point.Point3D_F64;
 import org.ddogleg.optimization.JacobianChecker;
 import org.junit.Test;
 
@@ -33,46 +34,47 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestSphereToPointSignedDistanceJacobian_F32 {
+public class TestCylinderToPointSignedDistanceJacobian_F64 {
 
 	@Test
 	public void compareToNumerical() {
 
-		SphereToPointSignedDistance_F32 function = new SphereToPointSignedDistance_F32();
-		SphereToPointSignedDistanceJacobian_F32 jacobian = new SphereToPointSignedDistanceJacobian_F32();
+		CylinderToPointSignedDistance_F64 function = new CylinderToPointSignedDistance_F64();
+		CylinderToPointSignedDistanceJacobian_F64 jacobian = new CylinderToPointSignedDistanceJacobian_F64();
 
 		// sphere
-		/**/double param[] = new /**/double[]{1,2,3,4};
+		/**/double param[] = new /**/double[]{1,2,3,0,0,2,4};
 
-		List<Point3D_F32> points = new ArrayList<Point3D_F32>();
+		List<Point3D_F64> points = new ArrayList<Point3D_F64>();
 
 		// inside, should be negative
-		points.add(new Point3D_F32(1.1f,1.95f,7.2f));
+		points.add(new Point3D_F64(1.1,1.95,4.2));
 		// outside, should be positive
-		points.add(new Point3D_F32(0.96f,-2.1f,3.001f));
-		points.add(new Point3D_F32(5.2f,2.05f,3.1f));
+		points.add(new Point3D_F64(0.96,-2.2,3.001));
+		points.add(new Point3D_F64(5.2,2.05,3.1));
 
 		function.setPoints(points);
 		jacobian.setPoints(points);
 
-//		JacobianChecker.jacobianPrint(function, jacobian, param, 100.0f*GrlConstants.FLOAT_TEST_TOL,
-//				GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(JacobianChecker.jacobian(function, jacobian, param, 100.0f * GrlConstants.FLOAT_TEST_TOL,
-				GrlConstants.FLOAT_TEST_TOL));
+//		JacobianChecker.jacobianPrint(function, jacobian, param, 100.0*GrlConstants.DOUBLE_TEST_TOL,
+//				GrlConstants.DOUBLE_TEST_TOL);
+		assertTrue(JacobianChecker.jacobian(function, jacobian, param, 100.0 * GrlConstants.DOUBLE_TEST_TOL,
+				GrlConstants.DOUBLE_TEST_TOL));
 	}
 
 	@Test
 	public void getN_and_getM() {
-		SphereToPointSignedDistanceJacobian_F32 alg = new SphereToPointSignedDistanceJacobian_F32();
+		SphereToPointSignedDistanceJacobian_F64 alg = new SphereToPointSignedDistanceJacobian_F64();
 
-		List<Point3D_F32> points = new ArrayList<Point3D_F32>();
-		points.add(new Point3D_F32(1,2,3.5f));
-		points.add(new Point3D_F32(1,2,3.5f));
-		points.add(new Point3D_F32(1,2,3.5f));
+		List<Point3D_F64> points = new ArrayList<Point3D_F64>();
+		points.add(new Point3D_F64(1,2,3.5));
+		points.add(new Point3D_F64(1,2,3.5));
+		points.add(new Point3D_F64(1,2,3.5));
 
 		alg.setPoints(points);
 
 		assertEquals(4,alg.getN());
-		assertEquals(points.size(),alg.getM());
+		assertEquals(points.size(), alg.getM());
 	}
+
 }
