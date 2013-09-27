@@ -92,7 +92,7 @@ public class FitSphereToPoints_F32 implements ModelFitter<Sphere3D_F32,Point3D_F
 		jacobian.setPoints(dataSet);
 
 		optimizer.setFunction(function,jacobian);
-		optimizer.initialize(param, ftol, gtol);
+		optimizer.initialize(param,ftol,gtol);
 
 		for( int i = 0; i < maxIterations; i++ ) {
 			if( optimizer.iterate() )
