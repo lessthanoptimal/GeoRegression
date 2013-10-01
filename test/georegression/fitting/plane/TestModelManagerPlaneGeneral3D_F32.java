@@ -50,7 +50,7 @@ public class TestModelManagerPlaneGeneral3D_F32 {
 		assertEquals(model.A,found.A, GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(model.B,found.B, GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(model.C,found.C, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.D, found.D, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(model.D,found.D, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 }

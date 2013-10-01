@@ -17,10 +17,11 @@
  * License along with GeoRegression.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package georegression.fitting.cylinder;
+package georegression.fitting.se;
 
 import georegression.misc.GrlConstants;
-import georegression.struct.shapes.Cylinder3D_F32;
+import georegression.struct.se.Se3_F64;
+import org.ejml.ops.MatrixFeatures;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -29,33 +30,31 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestModelManagerCylinder3D_F32 {
+public class TestModelManagerSe3_F64 {
 
 	@Test
 	public void createModelInstance() {
-		ModelManagerCylinder3D_F32 alg = new ModelManagerCylinder3D_F32();
+		ModelManagerSe3_F64 alg = new ModelManagerSe3_F64();
 
-		assertTrue( alg.createModelInstance() != null);
+		assertTrue(alg.createModelInstance() != null);
 	}
 
 	@Test
 	public void copyModel() {
-		ModelManagerCylinder3D_F32 alg = new ModelManagerCylinder3D_F32();
+		ModelManagerSe3_F64 alg = new ModelManagerSe3_F64();
 
-		Cylinder3D_F32 model = new Cylinder3D_F32(1,2,3,4,5,6,7);
-		Cylinder3D_F32 found = new Cylinder3D_F32();
+		Se3_F64 model = new Se3_F64();
+		Se3_F64 found = new Se3_F64();
+
+		model.T.set(1,2,3);
+		model.getR().set(3,3,true,1,2,3,4,5,6,7,8,9);
 
 		alg.copyModel(model,found);
 
-		assertEquals(model.line.p.x, found.line.p.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.line.p.y,found.line.p.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.line.p.z,found.line.p.z, GrlConstants.FLOAT_TEST_TOL);
-
-		assertEquals(model.line.slope.x,found.line.slope.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.line.slope.y,found.line.slope.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.line.slope.z,found.line.slope.z, GrlConstants.FLOAT_TEST_TOL);
-
-		assertEquals(model.radius,found.radius, GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(MatrixFeatures.isEquals(model.getR(),found.getR()));
+		assertEquals(model.T.x,found.T.x,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.T.y,found.T.y,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.T.z,found.T.z,GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 }
