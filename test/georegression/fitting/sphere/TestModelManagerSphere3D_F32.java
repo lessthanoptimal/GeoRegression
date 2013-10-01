@@ -19,9 +19,12 @@
 
 package georegression.fitting.sphere;
 
+import georegression.misc.GrlConstants;
+import georegression.struct.shapes.Sphere3D_F32;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -29,8 +32,26 @@ import static org.junit.Assert.fail;
 public class TestModelManagerSphere3D_F32 {
 
 	@Test
-	public void stuff() {
-		fail("Implement");
+	public void createModelInstance() {
+		ModelManagerSphere3D_F32 alg = new ModelManagerSphere3D_F32();
+
+		assertTrue( alg.createModelInstance() != null);
+	}
+
+	@Test
+	public void copyModel() {
+		ModelManagerSphere3D_F32 alg = new ModelManagerSphere3D_F32();
+
+		Sphere3D_F32 model = new Sphere3D_F32(1,2,3,4);
+		Sphere3D_F32 found = new Sphere3D_F32();
+
+		alg.copyModel(model,found);
+
+		assertEquals(model.center.x,found.center.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(model.center.y,found.center.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(model.center.z,found.center.z, GrlConstants.FLOAT_TEST_TOL);
+
+		assertEquals(model.radius, found.radius, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 }

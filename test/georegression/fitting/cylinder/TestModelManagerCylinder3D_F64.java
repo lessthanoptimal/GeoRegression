@@ -19,9 +19,12 @@
 
 package georegression.fitting.cylinder;
 
+import georegression.misc.GrlConstants;
+import georegression.struct.shapes.Cylinder3D_F64;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -29,8 +32,30 @@ import static org.junit.Assert.fail;
 public class TestModelManagerCylinder3D_F64 {
 
 	@Test
-	public void stuff() {
-		fail("Implement");
+	public void createModelInstance() {
+		ModelManagerCylinder3D_F64 alg = new ModelManagerCylinder3D_F64();
+
+		assertTrue( alg.createModelInstance() != null);
+	}
+
+	@Test
+	public void copyModel() {
+		ModelManagerCylinder3D_F64 alg = new ModelManagerCylinder3D_F64();
+
+		Cylinder3D_F64 model = new Cylinder3D_F64(1,2,3,4,5,6,7);
+		Cylinder3D_F64 found = new Cylinder3D_F64();
+
+		alg.copyModel(model,found);
+
+		assertEquals(model.line.p.x, found.line.p.x, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.line.p.y,found.line.p.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.line.p.z,found.line.p.z, GrlConstants.DOUBLE_TEST_TOL);
+
+		assertEquals(model.line.slope.x,found.line.slope.x, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.line.slope.y,found.line.slope.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.line.slope.z,found.line.slope.z, GrlConstants.DOUBLE_TEST_TOL);
+
+		assertEquals(model.radius,found.radius, GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 }

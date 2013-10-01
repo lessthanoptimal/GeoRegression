@@ -19,9 +19,12 @@
 
 package georegression.fitting.plane;
 
+import georegression.misc.GrlConstants;
+import georegression.struct.plane.PlaneGeneral3D_F64;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -29,8 +32,25 @@ import static org.junit.Assert.fail;
 public class TestModelManagerPlaneGeneral3D_F64 {
 
 	@Test
-	public void stuff() {
-		fail("Implement");
+	public void createModelInstance() {
+		ModelManagerPlaneGeneral3D_F64 alg = new ModelManagerPlaneGeneral3D_F64();
+
+		assertTrue( alg.createModelInstance() != null);
+	}
+
+	@Test
+	public void copyModel() {
+		ModelManagerPlaneGeneral3D_F64 alg = new ModelManagerPlaneGeneral3D_F64();
+
+		PlaneGeneral3D_F64 model = new PlaneGeneral3D_F64(1,2,3,4);
+		PlaneGeneral3D_F64 found = new PlaneGeneral3D_F64();
+
+		alg.copyModel(model,found);
+
+		assertEquals(model.A,found.A, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.B,found.B, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.C,found.C, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.D,found.D, GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 }
