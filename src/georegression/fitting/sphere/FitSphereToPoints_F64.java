@@ -79,11 +79,6 @@ public class FitSphereToPoints_F64 implements ModelFitter<Sphere3D_F64,Point3D_F
 	}
 
 	@Override
-	public Sphere3D_F64 createModelInstance() {
-		return new Sphere3D_F64();
-	}
-
-	@Override
 	public boolean fitModel(List<Point3D_F64> dataSet, Sphere3D_F64 initial, Sphere3D_F64 found) {
 
 		codec.encode(initial,param);

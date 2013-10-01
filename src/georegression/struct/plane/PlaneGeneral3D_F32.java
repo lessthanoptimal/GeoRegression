@@ -43,6 +43,10 @@ public class PlaneGeneral3D_F32 {
 	 */
 	public float A,B,C,D;
 
+	public PlaneGeneral3D_F32( PlaneGeneral3D_F32 src ) {
+		set(src);
+	}
+
 	public PlaneGeneral3D_F32(float a, float b, float c, float d) {
 		set(a,b,c,d);
 	}
@@ -71,6 +75,13 @@ public class PlaneGeneral3D_F32 {
 		this.B = b;
 		this.C = c;
 		this.D = d;
+	}
+
+	public void set( PlaneGeneral3D_F32 src ) {
+		this.A = src.A;
+		this.B = src.B;
+		this.C = src.C;
+		this.D = src.D;
 	}
 
 	public void setA(float a) {

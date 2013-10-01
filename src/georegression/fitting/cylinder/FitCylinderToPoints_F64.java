@@ -79,11 +79,6 @@ public class FitCylinderToPoints_F64 implements ModelFitter<Cylinder3D_F64,Point
 	}
 
 	@Override
-	public Cylinder3D_F64 createModelInstance() {
-		return new Cylinder3D_F64();
-	}
-
-	@Override
 	public boolean fitModel(List<Point3D_F64> dataSet, Cylinder3D_F64 initial, Cylinder3D_F64 found) {
 
 		codec.encode(initial,param);

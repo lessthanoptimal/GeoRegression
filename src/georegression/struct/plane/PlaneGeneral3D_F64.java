@@ -43,6 +43,10 @@ public class PlaneGeneral3D_F64 {
 	 */
 	public double A,B,C,D;
 
+	public PlaneGeneral3D_F64( PlaneGeneral3D_F64 src ) {
+		set(src);
+	}
+
 	public PlaneGeneral3D_F64(double a, double b, double c, double d) {
 		set(a,b,c,d);
 	}
@@ -71,6 +75,13 @@ public class PlaneGeneral3D_F64 {
 		this.B = b;
 		this.C = c;
 		this.D = d;
+	}
+
+	public void set( PlaneGeneral3D_F64 src ) {
+		this.A = src.A;
+		this.B = src.B;
+		this.C = src.C;
+		this.D = src.D;
 	}
 
 	public void setA(double a) {
