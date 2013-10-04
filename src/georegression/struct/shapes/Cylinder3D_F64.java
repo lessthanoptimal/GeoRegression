@@ -20,6 +20,8 @@
 package georegression.struct.shapes;
 
 import georegression.struct.line.LineParametric3D_F64;
+import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Vector3D_F64;
 
 /**
  * Defines a cylinder in 3D space using a point and vector, which defines a line, and a radius around the line.
@@ -82,6 +84,9 @@ public class Cylinder3D_F64 {
 
 
 	public String toString() {
-		return getClass().getSimpleName()+" Axis "+line+" radius "+radius;
+		Point3D_F64 p = line.p;
+		Vector3D_F64 slope = line.slope;
+
+		return getClass().getSimpleName()+" P( "+p.x+" "+p.y+" "+p.z+" ) Slope( "+slope.x+" "+slope.y+" "+slope.z+" ) radius "+radius;
 	}
 }

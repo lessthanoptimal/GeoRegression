@@ -40,7 +40,7 @@ public class TestUtilPoint2D_F32 {
 	public void mean() {
 		List<Point2D_F32> list = new ArrayList<Point2D_F32>();
 
-		int X=0,Y=0;
+		float X=0,Y=0;
 		for( int i = 0; i < 20; i++ ) {
 			Point2D_F32 p = new Point2D_F32();
 			X += p.x = rand.nextFloat()*100-50;

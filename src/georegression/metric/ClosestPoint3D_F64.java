@@ -22,7 +22,6 @@ package georegression.metric;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.point.Point3D_F64;
-import georegression.struct.point.Vector3D_F64;
 
 
 /**
@@ -126,11 +125,13 @@ public class ClosestPoint3D_F64 {
 			ret = new Point3D_F64();
 		}
 
-		Vector3D_F64 ab = new Vector3D_F64( line.p, pt );
+		double dx = pt.x - line.p.x;
+		double dy = pt.y - line.p.y;
+		double dz = pt.z - line.p.z;
 
 		double n = line.slope.norm();
 
-		double d = line.slope.dot( ab ) / n;
+		double d = (line.slope.x*dx + line.slope.y*dy + line.slope.z*dz) / n;
 
 		ret.x = line.p.x + d * line.slope.x / n;
 		ret.y = line.p.y + d * line.slope.y / n;

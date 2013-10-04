@@ -99,4 +99,8 @@ public class PlaneGeneral3D_F32 {
 	public void setD(float d) {
 		D = d;
 	}
+
+	public String toString() {
+		return getClass().getSimpleName()+"( A = "+A+" B = "+B+" C = "+C+" D = "+D+" )";
+	}
 }

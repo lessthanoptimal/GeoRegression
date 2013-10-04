@@ -40,7 +40,7 @@ public class TestUtilPoint2D_F64 {
 	public void mean() {
 		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
 
-		int X=0,Y=0;
+		double X=0,Y=0;
 		for( int i = 0; i < 20; i++ ) {
 			Point2D_F64 p = new Point2D_F64();
 			X += p.x = rand.nextDouble()*100-50;

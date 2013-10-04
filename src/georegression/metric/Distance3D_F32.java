@@ -90,7 +90,7 @@ public class Distance3D_F32 {
 
 		float cc = x*x + y*y + z*z;
 
-		// could avoid a square root here by computing b*b directory
+		// could avoid a square root here by computing b*b directly
 		// however that is most likely more prone to numerical overflow since the numerator will need to be squared
 		// before division can reduce its "power"
 		float b = MiscOps.dot(x,y,z,l.slope)/l.slope.norm();
