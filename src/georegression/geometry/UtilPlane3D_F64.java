@@ -112,4 +112,51 @@ public class UtilPlane3D_F64 {
 
 		return plane.n.x*dx + plane.n.y*dy + plane.n.z*dz;
 	}
+
+	/**
+	 * Returns true if the two plane equations are equal to within tolerance.  Planes are converted into
+	 * generalized format and normalized to take in account scale ambiguity.
+	 *
+	 * @param a plane
+	 * @param b plane
+	 * @param tol Tolerance for equality
+	 * @return true if equals and false if not
+	 */
+	public static boolean equals( PlaneNormal3D_F64 a , PlaneNormal3D_F64 b , double tol ) {
+		PlaneGeneral3D_F64 genA = UtilPlane3D_F64.convert(a,null);
+		PlaneGeneral3D_F64 genB = UtilPlane3D_F64.convert(b,null);
+
+		double normA = Math.sqrt(genA.A*genA.A + genA.B*genA.B + genA.C*genA.C + genA.D*genA.D);
+		double normB = Math.sqrt(genB.A*genB.A + genB.B*genB.B + genB.C*genB.C + genB.D*genB.D);
+
+		genA.A /= normA; genA.B /= normA; genA.C /= normA; genA.D /= normA;
+		genB.A /= normB; genB.B /= normB; genB.C /= normB; genB.D /= normB;
+
+		// handle the sign ambiguity by checking both directions.  This is actualy a bit trickier than it would
+		// see at first glance.  might be a better way
+		int numMatch0 = 0;
+
+		if( Math.abs(genA.A - genB.A) <= tol )
+			numMatch0++;
+		if( Math.abs(genA.B - genB.B) <= tol )
+			numMatch0++;
+		if( Math.abs(genA.C - genB.C) <= tol )
+			numMatch0++;
+		if( Math.abs(genA.D - genB.D) <= tol )
+			numMatch0++;
+
+		if( numMatch0 == 4 )
+			return true;
+
+		if( Math.abs(genA.A + genB.A) > tol )
+			return false;
+		if( Math.abs(genA.B + genB.B) > tol )
+			return false;
+		if( Math.abs(genA.C + genB.C) > tol )
+			return false;
+		if( Math.abs(genA.D + genB.D) > tol )
+			return false;
+
+		return true;
+	}
 }

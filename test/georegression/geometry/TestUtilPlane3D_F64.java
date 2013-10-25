@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * @author Peter Abeles
@@ -121,6 +121,41 @@ public class TestUtilPlane3D_F64 {
 		for( Point3D_F64 p : points ) {
 			double found = UtilPlane3D_F64.evaluate(input,p);
 			assertEquals(0,found, GrlConstants.DOUBLE_TEST_TOL);
+		}
+	}
+
+	@Test
+	public void equals_planeNorm() {
+
+		for( int i = 0; i < 100; i++ ) {
+			PlaneNormal3D_F64 a = new PlaneNormal3D_F64(
+					(double)rand.nextGaussian(),(double)rand.nextGaussian(),(double)rand.nextGaussian(),
+					(double)rand.nextGaussian(),(double)rand.nextGaussian(),(double)rand.nextGaussian());
+			PlaneNormal3D_F64 b = new PlaneNormal3D_F64(a);
+
+			b.p.x +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
+			b.p.y +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
+			b.p.z +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
+			b.n.x +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
+			b.n.y +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
+			b.n.z +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
+
+			// change scaling
+			double scale = rand.nextGaussian()*2;
+			b.n.x *= scale;
+			b.n.y *= scale;
+			b.n.z *= scale;
+
+			assertTrue(UtilPlane3D_F64.equals(a, b, GrlConstants.DOUBLE_TEST_TOL*50));
+
+			b.p.x +=(rand.nextDouble()-0.5);
+			b.p.y +=(rand.nextDouble()-0.5);
+			b.p.z +=(rand.nextDouble()-0.5);
+			b.n.x +=(rand.nextDouble()-0.5);
+			b.n.y +=(rand.nextDouble()-0.5);
+			b.n.z +=(rand.nextDouble()-0.5);
+
+			assertFalse(UtilPlane3D_F64.equals(a, b, GrlConstants.DOUBLE_TEST_TOL*50));
 		}
 	}
 

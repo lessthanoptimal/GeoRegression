@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * @author Peter Abeles
@@ -121,6 +121,41 @@ public class TestUtilPlane3D_F32 {
 		for( Point3D_F32 p : points ) {
 			float found = UtilPlane3D_F32.evaluate(input,p);
 			assertEquals(0,found, GrlConstants.FLOAT_TEST_TOL);
+		}
+	}
+
+	@Test
+	public void equals_planeNorm() {
+
+		for( int i = 0; i < 100; i++ ) {
+			PlaneNormal3D_F32 a = new PlaneNormal3D_F32(
+					(float)rand.nextGaussian(),(float)rand.nextGaussian(),(float)rand.nextGaussian(),
+					(float)rand.nextGaussian(),(float)rand.nextGaussian(),(float)rand.nextGaussian());
+			PlaneNormal3D_F32 b = new PlaneNormal3D_F32(a);
+
+			b.p.x +=(rand.nextFloat()-0.5f)*GrlConstants.FLOAT_TEST_TOL;
+			b.p.y +=(rand.nextFloat()-0.5f)*GrlConstants.FLOAT_TEST_TOL;
+			b.p.z +=(rand.nextFloat()-0.5f)*GrlConstants.FLOAT_TEST_TOL;
+			b.n.x +=(rand.nextFloat()-0.5f)*GrlConstants.FLOAT_TEST_TOL;
+			b.n.y +=(rand.nextFloat()-0.5f)*GrlConstants.FLOAT_TEST_TOL;
+			b.n.z +=(rand.nextFloat()-0.5f)*GrlConstants.FLOAT_TEST_TOL;
+
+			// change scaling
+			float scale = (float)rand.nextGaussian()*2;
+			b.n.x *= scale;
+			b.n.y *= scale;
+			b.n.z *= scale;
+
+			assertTrue(UtilPlane3D_F32.equals(a, b, GrlConstants.FLOAT_TEST_TOL*50));
+
+			b.p.x +=(rand.nextFloat()-0.5f);
+			b.p.y +=(rand.nextFloat()-0.5f);
+			b.p.z +=(rand.nextFloat()-0.5f);
+			b.n.x +=(rand.nextFloat()-0.5f);
+			b.n.y +=(rand.nextFloat()-0.5f);
+			b.n.z +=(rand.nextFloat()-0.5f);
+
+			assertFalse(UtilPlane3D_F32.equals(a, b, GrlConstants.FLOAT_TEST_TOL*50));
 		}
 	}
 
