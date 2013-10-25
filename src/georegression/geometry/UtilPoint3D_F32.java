@@ -86,8 +86,16 @@ public class UtilPoint3D_F32 {
 		return ret;
 	}
 
-	public static Point3D_F32 mean( List<Point3D_F32> points ) {
-		Point3D_F32 mean = new Point3D_F32();
+	/**
+	 * Computes the mean of the list of points.
+	 *
+	 * @param points List of points
+	 * @param mean (Optional) storage for the mean.  Can be null
+	 * @return Mean
+	 */
+	public static Point3D_F32 mean( List<Point3D_F32> points , Point3D_F32 mean ) {
+      if( mean == null )
+         mean = new Point3D_F32();
 
 		float x = 0, y = 0, z = 0;
 
@@ -104,8 +112,17 @@ public class UtilPoint3D_F32 {
 		return mean;
 	}
 
-	public static Point3D_F32 mean( List<Point3D_F32> points , int num ) {
-		Point3D_F32 mean = new Point3D_F32();
+	/**
+	 * Computes the mean of the list of points up to element num.
+	 *
+	 * @param points List of points
+	 * @param num use points up to num, exclusive.
+	 * @param mean (Optional) storage for the mean.  Can be null
+	 * @return Mean
+	 */
+	public static Point3D_F32 mean( List<Point3D_F32> points , int num , Point3D_F32 mean ) {
+		if( mean == null )
+			mean = new Point3D_F32();
 
 		float x = 0, y = 0, z = 0;
 

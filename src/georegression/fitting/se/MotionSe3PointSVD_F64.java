@@ -62,8 +62,8 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 			throw new IllegalArgumentException( "There must be a 1 to 1 correspondence between the two sets of points" );
 
 		// find the mean of both sets of points
-		Point3D_F64 meanFrom = UtilPoint3D_F64.mean( fromPts );
-		Point3D_F64 meanTo = UtilPoint3D_F64.mean( toPts );
+		Point3D_F64 meanFrom = UtilPoint3D_F64.mean( fromPts , null );
+		Point3D_F64 meanTo = UtilPoint3D_F64.mean( toPts , null );
 
 		final int N = fromPts.size();
 

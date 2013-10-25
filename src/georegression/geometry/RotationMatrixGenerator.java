@@ -261,7 +261,7 @@ public class RotationMatrixGenerator {
 	 * {@link #matrixToRodrigues}.  Not sure if there is any advantage.
 	 * </p>
 	 *
-	 * @param R			  Rotation matrix. Not modified.
+	 * @param R Rotation matrix. Not modified.
 	 * @param axisOfRotation Axis of rotation of the provided rotation matrix. Not modified.
 	 * @return angle of rotation -&pi; &le; &theta; &le; &pi;
 	 */
