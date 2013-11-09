@@ -38,6 +38,14 @@ public class Quadrilateral_F32 {
 		d = new Point2D_F32();
 	}
 
+	public Quadrilateral_F32( Quadrilateral_F32 quad ) {
+		this();
+		a.set(quad.a);
+		b.set(quad.b);
+		c.set(quad.c);
+		d.set(quad.d);
+	}
+
 	public Quadrilateral_F32( float x0, float y0 , float x1, float y1 ,
 							  float x2, float y2 , float x3, float y3 ) {
 		a = new Point2D_F32(x0,y0);
@@ -46,12 +54,16 @@ public class Quadrilateral_F32 {
 		d = new Point2D_F32(x3,y3);
 	}
 
+	public Quadrilateral_F32(Point2D_F32 a, Point2D_F32 b, Point2D_F32 c, Point2D_F32 d ) {
+		this(a,b,c,d,true);
+	}
+
 	public Quadrilateral_F32(Point2D_F32 a, Point2D_F32 b, Point2D_F32 c, Point2D_F32 d, boolean copy ) {
 		if( copy ) {
-			this.a.set(a);
-			this.b.set(b);
-			this.c.set(c);
-			this.d.set(d);
+			this.a = new Point2D_F32(a);
+			this.b = new Point2D_F32(b);
+			this.c = new Point2D_F32(c);
+			this.d = new Point2D_F32(d);
 		} else {
 			this.a = a;
 			this.b = b;
@@ -97,5 +109,9 @@ public class Quadrilateral_F32 {
 		this.b.set(quad.b);
 		this.c.set(quad.c);
 		this.d.set(quad.d);
+	}
+
+	public Quadrilateral_F32 copy() {
+		return new Quadrilateral_F32(this);
 	}
 }

@@ -53,6 +53,35 @@ public class UtilPlane3D_F64 {
 	}
 
 	/**
+	 * <p>
+	 * Converts a plane in general form into normal form.  The point on the plane in normal form will be the
+	 * closest point to the origin.
+	 * </p>
+	 *
+	 * <p>NOTE: The normal is not normalized.</p>
+	 *
+	 * @param input Plane in general form.
+	 * @param output (Optional) Storage for output plane in normal form. If null a new instance will be declared.
+	 * @return The plane in normal form.
+	 */
+	public static PlaneNormal3D_F64 convert( PlaneGeneral3D_F64 input , PlaneNormal3D_F64 output ) {
+
+		if( output == null )
+			output = new PlaneNormal3D_F64();
+
+		double top = -input.D;
+		double n2 = input.A*input.A + input.B*input.B + input.C*input.C;
+
+		output.p.x = -input.A*top/n2;
+		output.p.y = -input.B*top/n2;
+		output.p.z = -input.C*top/n2;
+
+		output.n.set(input.A,input.B,input.C);
+
+		return output;
+	}
+
+	/**
 	 * Converts a plane in tangent form into a plane in normal form
 	 *
 	 * @param input Plane in tangent form.

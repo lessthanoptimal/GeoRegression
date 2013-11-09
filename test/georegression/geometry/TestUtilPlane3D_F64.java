@@ -57,6 +57,19 @@ public class TestUtilPlane3D_F64 {
 	}
 
 	@Test
+	public void convert_general_norm() {
+		PlaneGeneral3D_F64 general = new PlaneGeneral3D_F64(1,2,3,4);
+
+		PlaneNormal3D_F64 foundPlane = UtilPlane3D_F64.convert(general,null);
+		List<Point3D_F64> points = randPointOnPlane(foundPlane,10);
+
+		for( Point3D_F64 p : points ) {
+			double found = UtilPlane3D_F64.evaluate(general,p);
+			assertEquals(0,found, GrlConstants.DOUBLE_TEST_TOL);
+		}
+	}
+
+	@Test
 	public void convert_tangent_norm() {
 		PlaneNormal3D_F64 original = new PlaneNormal3D_F64();
 		original.n.set(1,0,0);

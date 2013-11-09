@@ -38,6 +38,14 @@ public class Quadrilateral_F64 {
 		d = new Point2D_F64();
 	}
 
+	public Quadrilateral_F64( Quadrilateral_F64 quad ) {
+		this();
+		a.set(quad.a);
+		b.set(quad.b);
+		c.set(quad.c);
+		d.set(quad.d);
+	}
+
 	public Quadrilateral_F64( double x0, double y0 , double x1, double y1 ,
 							  double x2, double y2 , double x3, double y3 ) {
 		a = new Point2D_F64(x0,y0);
@@ -46,12 +54,16 @@ public class Quadrilateral_F64 {
 		d = new Point2D_F64(x3,y3);
 	}
 
+	public Quadrilateral_F64(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d ) {
+		this(a,b,c,d,true);
+	}
+
 	public Quadrilateral_F64(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, boolean copy ) {
 		if( copy ) {
-			this.a.set(a);
-			this.b.set(b);
-			this.c.set(c);
-			this.d.set(d);
+			this.a = new Point2D_F64(a);
+			this.b = new Point2D_F64(b);
+			this.c = new Point2D_F64(c);
+			this.d = new Point2D_F64(d);
 		} else {
 			this.a = a;
 			this.b = b;
@@ -97,5 +109,9 @@ public class Quadrilateral_F64 {
 		this.b.set(quad.b);
 		this.c.set(quad.c);
 		this.d.set(quad.d);
+	}
+
+	public Quadrilateral_F64 copy() {
+		return new Quadrilateral_F64(this);
 	}
 }
