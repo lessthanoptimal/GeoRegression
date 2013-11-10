@@ -539,7 +539,12 @@ public class RotationMatrixGenerator {
 			rotZ = Math.atan2( m21 / cosRotY, m11 / cosRotY );
 
 		}
-		return new double[]{rotX, rotY, rotZ};
+
+		euler[0] = rotX;
+		euler[1] = rotY;
+		euler[2] = rotZ;
+
+		return euler;
 	}
 
 	/**
