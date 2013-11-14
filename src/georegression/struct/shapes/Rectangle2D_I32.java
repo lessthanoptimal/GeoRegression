@@ -51,6 +51,13 @@ public class Rectangle2D_I32 {
 		this.height = height;
 	}
 
+	public void set( int tl_x, int tl_y, int width, int height ) {
+		this.tl_x = tl_x;
+		this.tl_y = tl_y;
+		this.width = width;
+		this.height = height;
+	}
+
 	/**
 	 * Sets the top left point
 	 *
