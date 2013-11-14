@@ -503,7 +503,10 @@ public class RotationMatrixGenerator {
 	 * See Internet PDF "Computing Euler angles from a rotation matrix" by Gregory G. Slabaugh.
 	 * </p>
 	 */
-	public static double[] matrixToEulerXYZ( DenseMatrix64F M ) {
+	public static double[] matrixToEulerXYZ( DenseMatrix64F M , double euler[] ) {
+      if( euler == null )
+         euler = new double[3];
+
 		double m31 = M.get( 2, 0 );
 
 		double rotX, rotY, rotZ;
@@ -536,7 +539,12 @@ public class RotationMatrixGenerator {
 			rotZ = Math.atan2( m21 / cosRotY, m11 / cosRotY );
 
 		}
-		return new double[]{rotX, rotY, rotZ};
+
+		euler[0] = rotX;
+		euler[1] = rotY;
+		euler[2] = rotZ;
+
+		return euler;
 	}
 
 	/**
@@ -618,9 +626,9 @@ public class RotationMatrixGenerator {
 		quat.q4 = ccs - ssc;
 	}
 
-	public static void quaternionsToEuler( double euler[], double quat[] ) {
+	public static double[] quaternionsToEuler( Quaternion_F64 quaternion, double euler[] ) {
 
-
+      return null;
 	}
 
 	/**

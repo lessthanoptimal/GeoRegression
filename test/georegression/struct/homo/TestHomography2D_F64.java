@@ -31,7 +31,7 @@ import java.util.Random;
  */
 public class TestHomography2D_F64 extends GenericInvertibleTransformTests_F64<Point2D_F64> {
 
-	Random rand = new Random();
+	Random rand = new Random(23423);
 
 	@Override
 	public Point2D_F64 createRandomPoint() {

@@ -245,21 +245,21 @@ public class TestRotationMatrixGenerator {
 	public void matrixToEulerXYZ() {
 		// test case one
 		DenseMatrix64F A = RotationMatrixGenerator.eulerXYZ( 0.1, -0.5, -0.96, null );
-		double[] euler = RotationMatrixGenerator.matrixToEulerXYZ( A );
+		double[] euler = RotationMatrixGenerator.matrixToEulerXYZ( A , null );
 		DenseMatrix64F B = RotationMatrixGenerator.eulerXYZ( euler[0], euler[1], euler[2], null );
 
 		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
 
 		// now try a pathological case
 		A = RotationMatrixGenerator.eulerXYZ( 0.1, -0.5, 0, null );
-		euler = RotationMatrixGenerator.matrixToEulerXYZ( A );
+		euler = RotationMatrixGenerator.matrixToEulerXYZ( A , null );
 		B = RotationMatrixGenerator.eulerXYZ( euler[0], euler[1], euler[2], null );
 
 		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
 
 		// try all zeros
 		A = RotationMatrixGenerator.eulerXYZ( 0, 0, 0, null );
-		euler = RotationMatrixGenerator.matrixToEulerXYZ( A );
+		euler = RotationMatrixGenerator.matrixToEulerXYZ( A , null );
 		B = RotationMatrixGenerator.eulerXYZ( euler[0], euler[1], euler[2], null );
 
 		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
