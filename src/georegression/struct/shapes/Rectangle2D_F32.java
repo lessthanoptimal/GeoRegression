@@ -125,4 +125,11 @@ public class Rectangle2D_F32 {
 		this.width = r.width;
 		this.height = r.height;
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+"{" +
+				"tl=[ " + tl_x + " , " + tl_y +
+				"], width=" + width + ", height=" + height + '}';
+	}
 }
