@@ -10,6 +10,7 @@ Version : 0.5
 - Added Cube3D
 - Added Sphere3D
 - Added Cylinder3D
+- Added LineSegment3D
 - Added Intersection3D.contain(cube,point)
 - Least squares fitting
   * Plane3D

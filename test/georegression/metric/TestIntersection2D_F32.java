@@ -122,7 +122,7 @@ public class TestIntersection2D_F32 {
 		checkIntersection( new LineSegment2D_F32( 0, 2, 2, 2 ), new LineSegment2D_F32( 2, 0, 2, 1.9f ), null );
 		checkIntersection( new LineSegment2D_F32( 1, 0.1f, 1, 2 ), new LineSegment2D_F32( 0, 0, 2, 0 ), null );
 
-		// check parallel intersection
+		// check parallel closestPoint
 		checkIntersection( new LineSegment2D_F32( 0, 2, 0, 5 ), new LineSegment2D_F32( 0, 1, 0, 3 ), null );
 	}
 

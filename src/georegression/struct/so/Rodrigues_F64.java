@@ -115,4 +115,11 @@ public class Rodrigues_F64 {
 			theta *= max;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+
+				" v{ "+unitAxisRotation.x+" , "+unitAxisRotation.x+" , "+unitAxisRotation.x+" } theta = "+
+				theta;
+	}
 }

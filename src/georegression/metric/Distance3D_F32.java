@@ -20,6 +20,7 @@
 package georegression.metric;
 
 import georegression.struct.line.LineParametric3D_F32;
+import georegression.struct.line.LineSegment3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.shapes.Cylinder3D_F32;
@@ -96,6 +97,46 @@ public class Distance3D_F32 {
 		float b = MiscOps.dot(x,y,z,l.slope)/l.slope.norm();
 
 		float distanceSq = cc-b*b;
+
+		// round off error can make distanceSq go negative when it is very close to zero
+		if( distanceSq < 0 ) {
+			return 0;
+		} else {
+			return (float)Math.sqrt(distanceSq);
+		}
+	}
+
+	/**
+	 * Distance from the point to the closest point on the line segment.
+	 *
+	 * @param l Line. Not modified.
+	 * @param p Point. Not modified.
+	 * @return distance.
+	 */
+	public static float distance( LineSegment3D_F32 l,
+								   Point3D_F32 p ) {
+
+		float dx = p.x - l.a.x;
+		float dy = p.y - l.a.y;
+		float dz = p.z - l.a.z;
+
+		float cc = dx*dx + dy*dy + dz*dz;
+
+		float slope_x = l.b.x - l.a.x;
+		float slope_y = l.b.y - l.a.y;
+		float slope_z = l.b.z - l.a.z;
+
+		float n = (float) (float)Math.sqrt(slope_x*slope_x + slope_y*slope_y + slope_z*slope_z);
+
+		float d = (slope_x*dx + slope_y*dy + slope_z*dz) / n;
+
+		// check end points
+		if( d <= 0 )
+			return p.distance(l.a);
+		else if( d >= 1 )
+			return p.distance(l.b);
+
+		float distanceSq = cc-d*d;
 
 		// round off error can make distanceSq go negative when it is very close to zero
 		if( distanceSq < 0 ) {

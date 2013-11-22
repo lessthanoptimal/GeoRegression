@@ -498,10 +498,9 @@ public class RotationMatrixGenerator {
 	 * <p>
 	 * Given a rotation matrix it will compute the XYZ euler angles.
 	 * </p>
-	 * <p/>
 	 * <p>
 	 * See Internet PDF "Computing Euler angles from a rotation matrix" by Gregory G. Slabaugh.
-	 * </p>
+	 * </p>                                                                                                                                                                      ose
 	 */
 	public static double[] matrixToEulerXYZ( DenseMatrix64F M , double euler[] ) {
       if( euler == null )

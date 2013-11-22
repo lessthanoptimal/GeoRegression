@@ -20,6 +20,7 @@
 package georegression.metric;
 
 import georegression.struct.line.LineParametric3D_F32;
+import georegression.struct.line.LineSegment3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
@@ -32,12 +33,12 @@ import georegression.struct.point.Point3D_F32;
  */
 public class ClosestPoint3D_F32 {
 	/**
-	 * Returns the point which is closest to the intersection of the two lines in 3D.  If the
+	 * Returns the point which minimizes the distance between the two lines in 3D.  If the
 	 * two lines are parallel the result is undefined.
 	 *
 	 * @param l0  first line. Not modified.
 	 * @param l1  second line. Not modified.
-	 * @param ret Point of intersection. If null a new point is declared. Modified.
+	 * @param ret (Optional) Storage for the closest point. If null a new point is declared. Modified.
 	 * @return Closest point between two lines.
 	 */
 	public static Point3D_F32 closestPoint(LineParametric3D_F32 l0,
@@ -74,18 +75,23 @@ public class ClosestPoint3D_F32 {
 	}
 
 	/**
+	 * <p>
 	 * Finds the closest point on line lo to l1 and on l1 to l0.  The solution is returned in
 	 * 'param' as a value of 't' for each line.
-	 *
+	 * </p>
+	 * <p>
+	 * point on l0 = l0.a + param[0]*l0.slope<br>
+	 * point on l1 = l1.a + param[1]*l1.slope
+	 * </p>
 	 * @param l0  first line. Not modified.
 	 * @param l1  second line. Not modified.
 	 * @param param  param[0] for line0 location and param[1] for line1 location.
 	 *
 	 * @return False if the lines are parallel or true if a solution was found.
 	 */
-	public static boolean closestPoints( LineParametric3D_F32 l0,
-										 LineParametric3D_F32 l1,
-										 float param[] )
+	public static boolean closestPoints(LineParametric3D_F32 l0,
+										LineParametric3D_F32 l1,
+										float param[])
 	{
 		float dX = l0.p.x - l1.p.x;
 		float dY = l0.p.y - l1.p.y;
@@ -192,4 +198,107 @@ public class ClosestPoint3D_F32 {
 		return found;
 	}
 
+	/**
+	 * Finds the closest point on a line segment to the specified point.
+	 *
+	 * @param line Line on which the closest point is being found.  Not modified.
+	 * @param pt   The point whose closest point is being looked for.  Not modified.
+	 * @param ret  (Optional) Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
+	 */
+	public static Point3D_F32 closestPoint(LineSegment3D_F32 line,
+										   Point3D_F32 pt,
+										   Point3D_F32 ret) {
+		if( ret == null ) {
+			ret = new Point3D_F32();
+		}
+
+		float dx = pt.x - line.a.x;
+		float dy = pt.y - line.a.y;
+		float dz = pt.z - line.a.z;
+
+		float slope_x = line.b.x - line.a.x;
+		float slope_y = line.b.y - line.a.y;
+		float slope_z = line.b.z - line.a.z;
+
+		float n = (float) (float)Math.sqrt(slope_x*slope_x + slope_y*slope_y + slope_z*slope_z);
+
+		float d = (slope_x*dx + slope_y*dy + slope_z*dz) / n;
+
+		// if it is past the end points just return one of the end points
+		if( d <= 0 ) {
+			ret.set(line.a);
+		} else if( d >= 1 ) {
+			ret.set(line.b);
+		} else {
+			ret.x = line.a.x + d * slope_x / n;
+			ret.y = line.a.y + d * slope_y / n;
+			ret.z = line.a.z + d * slope_z / n;
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Find the point which minimizes its distance from the two line segments.
+	 *
+	 * @param l0 First line.  Not modified.
+	 * @param l1 Second line.  Not modified.
+	 * @param ret (Optional) Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
+	 */
+	public static Point3D_F32 closestPoint( LineSegment3D_F32 l0 , LineSegment3D_F32 l1 , Point3D_F32 ret ) {
+		if( ret == null ) {
+			ret = new Point3D_F32();
+		}
+
+		ret.x = l0.a.x - l1.a.x;
+		ret.y = l0.a.y - l1.a.y;
+		ret.z = l0.a.z - l1.a.z;
+
+		float slope0_x = l0.b.x - l0.a.x;
+		float slope0_y = l0.b.y - l0.a.y;
+		float slope0_z = l0.b.z - l0.a.z;
+
+		float slope1_x = l1.b.x - l1.a.x;
+		float slope1_y = l1.b.y - l1.a.y;
+		float slope1_z = l1.b.z - l1.a.z;
+
+		// normalize the slopes for easier math
+		float n0 = (float) (float)Math.sqrt(slope0_x*slope0_x + slope0_y*slope0_y + slope0_z*slope0_z);
+		float n1 = (float) (float)Math.sqrt(slope1_x*slope1_x + slope1_y*slope1_y + slope1_z*slope1_z);
+
+		slope0_x /= n0; slope0_y /= n0; slope0_z /= n0;
+		slope1_x /= n1; slope1_y /= n1; slope1_z /= n1;
+
+		// this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
+		float dv01v1 = ret.x*slope1_x +  ret.y*slope1_y +  ret.z*slope1_z;
+		float dv01v0 = ret.x*slope0_x +  ret.y*slope0_y +  ret.z*slope0_z;
+		float dv1v0 = slope1_x*slope0_x + slope1_y*slope0_y + slope1_z*slope0_z;
+
+		float t0 = dv01v1 * dv1v0 - dv01v0;
+		float bottom = 1 - dv1v0 * dv1v0;
+		if( bottom == 0 )
+			return null;
+
+		t0 /= bottom;
+
+		// restrict it to be on the line
+		if( t0 < 0 )
+			return closestPoint(l1,l0.a,ret);
+		if( t0 > 1 )
+			return closestPoint(l1,l0.b,ret);
+
+		// ( d1343 + mua d4321 ) / d4343
+		float t1 = ( dv01v1 + t0 * dv1v0 );
+
+		if( t1 < 0 )
+			return closestPoint(l0,l1.a,ret);
+		if( t1 > 1 )
+			return closestPoint(l0,l1.b,ret);
+
+		ret.x = (float) 0.5f * ( ( l0.a.x + t0 * slope0_x ) + ( l1.a.x + t1 * slope1_x ) );
+		ret.y = (float) 0.5f * ( ( l0.a.y + t0 * slope0_y ) + ( l1.a.y + t1 * slope1_y ) );
+		ret.z = (float) 0.5f * ( ( l0.a.z + t0 * slope0_z ) + ( l1.a.z + t1 * slope1_z ) );
+
+		return ret;
+	}
 }

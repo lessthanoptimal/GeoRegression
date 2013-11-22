@@ -22,6 +22,7 @@ package georegression.metric;
 import georegression.geometry.UtilPlane3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
+import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
@@ -41,7 +42,7 @@ public class TestDistance3D_F64 {
 
 	@Test
 	public void distance_line_line() {
-		// test intersection
+		// test closestPoint
 		LineParametric3D_F64 l0 = new LineParametric3D_F64(0,0,0,1,0,0);
 		LineParametric3D_F64 l1 = new LineParametric3D_F64(0,0,0,0,1,0);
 
@@ -77,6 +78,26 @@ public class TestDistance3D_F64 {
 		// a point on the line
 		l.getSlope().set( 1 , 0 , 0 );
 		assertEquals(0,Distance3D_F64.distance( l,p ), GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	@Test
+	public void distance_lineseg_point() {
+		// a point above the line
+		LineSegment3D_F64 l = new LineSegment3D_F64(1,2,3,1,3,3);
+		Point3D_F64 p = new Point3D_F64( 3 , 2 , 3);
+
+		assertEquals(2,Distance3D_F64.distance( l,p ), GrlConstants.DOUBLE_TEST_TOL );
+
+		// a point on the line
+		p.set(1,2.5,3);
+		assertEquals(0,Distance3D_F64.distance( l,p ), GrlConstants.DOUBLE_TEST_TOL );
+
+		// point past l.a
+		p.set(3,-1,3);
+		assertEquals( p.distance(l.a) , Distance3D_F64.distance( l,p ), GrlConstants.DOUBLE_TEST_TOL );
+		// point past l.b
+		p.set(3,5,3);
+		assertEquals( p.distance(l.b) , Distance3D_F64.distance( l,p ), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	/**

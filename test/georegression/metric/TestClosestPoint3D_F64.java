@@ -19,9 +19,11 @@
 
 package georegression.metric;
 
+import georegression.geometry.UtilLine3D_F64;
 import georegression.geometry.UtilPlane3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
+import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
@@ -54,6 +56,13 @@ public class TestClosestPoint3D_F64 {
 		Point3D_F64 foundB = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
 
 		assertTrue( b.isIdentical( foundB, GrlConstants.DOUBLE_TEST_TOL ) );
+		checkIsClosest(foundB,lineA,lineB);
+
+		// check two arbitrary lines
+		lineA = new LineParametric3D_F64( 2,3,-4,-9,3,6.7 );
+		lineB = new LineParametric3D_F64( -0.4,0,1.2,-3.4,4,-5 );
+		foundB = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
+		checkIsClosest(foundB,lineA,lineB);
 	}
 
 	@Test
@@ -150,5 +159,104 @@ public class TestClosestPoint3D_F64 {
 		assertEquals(3,found.x, GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(4,found.y, GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(-5,found.z, GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void closestPoint_lineSeg_pt() {
+		// closest point is on the line
+		LineSegment3D_F64 lineA = new LineSegment3D_F64(2,3,4,7,8,9);
+		checkIsClosest(lineA,new Point3D_F64(2,3.5,3.5));
+
+		// closest point is past a
+		checkIsClosest(lineA,new Point3D_F64(1,1.95,3));
+
+		// closest point is past b
+		checkIsClosest(lineA, new Point3D_F64(8, 9, 10.1));
+	}
+
+	@Test
+	public void closestPoint_lineSeg_lineSeg() {
+		Point3D_F64 found;
+
+		LineSegment3D_F64 lineA = new LineSegment3D_F64(2,3,4,7,8,9);
+		LineSegment3D_F64 lineB = new LineSegment3D_F64(2,3,6,-3,8,1);
+
+		// intersects in the middle
+		found = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
+		checkIsClosest(found,lineA,lineB);
+
+		lineA.set(-10,0,0,10,0,0);
+		// misses start of lineA
+		lineB.set(-100,0,20,-100,0,-20);
+		found = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
+		checkIsClosest(found, lineA, lineB);
+		// misses end of lineA
+		lineB.set(100,0,20,100,0,-20);
+		found = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
+		checkIsClosest(found, lineA, lineB);
+		// same but for line B
+		checkIsClosest(found, lineB, lineA);
+		lineB.set(-100,0,20,-100,0,-20);
+		found = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
+		checkIsClosest(found, lineB, lineA);
+	}
+
+	private void checkIsClosest( LineSegment3D_F64 line ,  Point3D_F64 target  ) {
+
+		Point3D_F64 pointOnLine = ClosestPoint3D_F64.closestPoint(line,target,null);
+
+		LineParametric3D_F64 para = UtilLine3D_F64.convert(line,null);
+
+		double t = UtilLine3D_F64.computeT(para,pointOnLine);
+
+		double t0 = t - Math.sqrt(GrlConstants.DOUBLE_TEST_TOL);
+		double t1 = t + Math.sqrt(GrlConstants.DOUBLE_TEST_TOL);
+
+		if( t0 < 0 ) t0 = 0;
+		if( t1 > 1 ) t1 = 1;
+
+		Point3D_F64 work0 = para.getPointOnLine(t0);
+		Point3D_F64 work1 = para.getPointOnLine(t1);
+
+		double dist = pointOnLine.distance(target);
+		double dist0 = work0.distance(target);
+		double dist1 = work1.distance(target);
+
+		assertTrue( dist <= dist0 );
+		assertTrue( dist <= dist1 );
+	}
+
+	private void checkIsClosest( Point3D_F64 pt , LineSegment3D_F64 lineA , LineSegment3D_F64 lineB ) {
+		double found = Distance3D_F64.distance(lineA,pt)+Distance3D_F64.distance(lineB,pt);
+
+		Point3D_F64 work = pt.copy();
+
+		for( int i = 0; i < 3; i++ ) {
+			double orig = work.getIndex(i);
+			work.setIndex(i, orig + Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
+			double d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
+			assertTrue(found+" "+d,found < d);
+			work.setIndex(i, orig - Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
+			d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
+			assertTrue(found + " " + d, found < d);
+			work.setIndex(i,orig);
+		}
+	}
+
+	private void checkIsClosest( Point3D_F64 pt , LineParametric3D_F64 lineA , LineParametric3D_F64 lineB ) {
+		double found = Distance3D_F64.distance(lineA,pt)+Distance3D_F64.distance(lineB,pt);
+
+		Point3D_F64 work = pt.copy();
+
+		for( int i = 0; i < 3; i++ ) {
+			double orig = work.getIndex(i);
+			work.setIndex(i,orig + Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
+			double d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
+			assertTrue(found+" "+d,found < d);
+			work.setIndex(i,orig - Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
+			d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
+			assertTrue(found+" "+d,found < d);
+			work.setIndex(i,orig);
+		}
 	}
 }
