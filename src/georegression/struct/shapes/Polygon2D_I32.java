@@ -20,6 +20,7 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point2D_I32;
+import org.ddogleg.struct.FastQueue;
 
 /**
  * Describes a polygon in 2D.
@@ -29,13 +30,20 @@ import georegression.struct.point.Point2D_I32;
 public class Polygon2D_I32 {
 
 	// vertexes in the polygon
-	public Point2D_I32 vertexes[];
+	public FastQueue<Point2D_I32> vertexes;
 
-	public Polygon2D_I32(int numVertexes) {
-		vertexes = new Point2D_I32[numVertexes];
+	public Polygon2D_I32( int numVertexes ) {
+		vertexes = new FastQueue<Point2D_I32>(Point2D_I32.class,true);
 
-		for( int i = 0; i < numVertexes; i++ ) {
-			vertexes[i] = new Point2D_I32();
-		}
+		vertexes.growArray(numVertexes);
+		vertexes.size = numVertexes;
+	}
+
+	public Polygon2D_I32() {
+		vertexes = new FastQueue<Point2D_I32>(Point2D_I32.class,true);
+	}
+
+	public int size() {
+		return vertexes.size();
 	}
 }

@@ -19,6 +19,8 @@
 
 package georegression.metric;
 
+import georegression.struct.point.Point2D_I32;
+import georegression.struct.shapes.Polygon2D_I32;
 import georegression.struct.shapes.RectangleCorner2D_I32;
 import org.junit.Test;
 
@@ -28,6 +30,73 @@ import static org.junit.Assert.*;
  * @author Peter Abeles
  */
 public class TestIntersection2D_I32 {
+
+	@Test
+	public void containConvex() {
+		Polygon2D_I32 poly = new Polygon2D_I32(4);
+		poly.vertexes.data[0].set(-10,-10);
+		poly.vertexes.data[1].set(10, -10);
+		poly.vertexes.data[2].set(10, 10);
+		poly.vertexes.data[3].set(-10, 10);
+
+		Point2D_I32 online = new Point2D_I32(10,-10);
+		Point2D_I32 inside = new Point2D_I32(5,5);
+		Point2D_I32 outside = new Point2D_I32(15,5);
+
+		assertFalse(Intersection2D_I32.containConvex(poly,online));
+		assertTrue(Intersection2D_I32.containConvex(poly,inside));
+		assertFalse(Intersection2D_I32.containConvex(poly,outside));
+
+		// change the order of the vertexes
+		poly.vertexes.data[0].set(-10, 10);
+		poly.vertexes.data[1].set(10, 10);
+		poly.vertexes.data[2].set(10, -10);
+		poly.vertexes.data[3].set(-10,-10);
+
+		assertFalse(Intersection2D_I32.containConvex(poly,online));
+		assertTrue(Intersection2D_I32.containConvex(poly,inside));
+		assertFalse(Intersection2D_I32.containConvex(poly,outside));
+	}
+
+	@Test
+	public void containConcave_rectangle() {
+		Polygon2D_I32 poly = new Polygon2D_I32(4);
+		poly.vertexes.data[0].set(-1,-1);
+		poly.vertexes.data[1].set(1, -1);
+		poly.vertexes.data[2].set(1, 1);
+		poly.vertexes.data[3].set(-1, 1);
+
+		assertTrue(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,0)));
+
+		// perimeter cases intentionally not handled here
+
+		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(2,0)));
+		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(-2,0)));
+		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,2)));
+		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,-2)));
+	}
+
+	@Test
+	public void containConcave_concave() {
+		Polygon2D_I32 poly = new Polygon2D_I32(5);
+		poly.vertexes.data[0].set(-10,-10);
+		poly.vertexes.data[1].set( 0, 0);
+		poly.vertexes.data[2].set(10, -10);
+		poly.vertexes.data[3].set(10, 10);
+		poly.vertexes.data[4].set(-10, 10);
+
+		assertTrue(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,5)));
+		assertTrue(Intersection2D_I32.containConcave(poly, new Point2D_I32(-7,-2)));
+		assertTrue(Intersection2D_I32.containConcave(poly, new Point2D_I32(7,-2)));
+
+		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,-5)));
+
+		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(20,0)));
+		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(-20,0)));
+		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,20)));
+		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,-20)));
+	}
+	
 	@Test
 	public void intersects_rect_corners() {
 		// check several positive cases

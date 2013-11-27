@@ -51,12 +51,12 @@ public class Intersection2D_F32 {
 	// http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
 	public static boolean containConvex( Polygon2D_F32 polygon , Point2D_F32 pt )
 	{
-		final int N = polygon.vertexes.length;
+		final int N = polygon.size();
 
 		boolean c = false;
 		for (int i = 0, j = N-1; i < N; j = i++) {
-			Point2D_F32 a = polygon.vertexes[i];
-			Point2D_F32 b = polygon.vertexes[j];
+			Point2D_F32 a = polygon.vertexes.data[i];
+			Point2D_F32 b = polygon.vertexes.data[j];
 			
 			if ( ((a.y>pt.y) != (b.y>pt.y)) && (pt.x < (b.x-a.x) * (pt.y-a.y) / (b.y-a.y) + a.x) )
 				c = !c;
@@ -66,13 +66,13 @@ public class Intersection2D_F32 {
 
 	public static boolean containConcave( Polygon2D_F32 polygon , Point2D_F32 pt )
 	{
-		final int N = polygon.vertexes.length;
+		final int N = polygon.vertexes.size();
 
 		int left=0;
 		int right=0;
 		for (int i = 0; i < N-1; i++) {
-			Point2D_F32 a = polygon.vertexes[i];
-			Point2D_F32 b = polygon.vertexes[i+1];
+			Point2D_F32 a = polygon.vertexes.data[i];
+			Point2D_F32 b = polygon.vertexes.data[i+1];
 
 			if( (pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y) ) {
 				// location of line segment along x-axis at y = pt.y
@@ -85,8 +85,8 @@ public class Intersection2D_F32 {
 			}
 		}
 
-		Point2D_F32 a = polygon.vertexes[N-1];
-		Point2D_F32 b = polygon.vertexes[0];
+		Point2D_F32 a = polygon.vertexes.data[N-1];
+		Point2D_F32 b = polygon.vertexes.data[0];
 
 		if( (pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y) ) {
 			// location of line segment along x-axis at y = pt.y

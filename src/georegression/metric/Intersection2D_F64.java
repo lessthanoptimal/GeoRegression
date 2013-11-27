@@ -51,12 +51,12 @@ public class Intersection2D_F64 {
 	// http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
 	public static boolean containConvex( Polygon2D_F64 polygon , Point2D_F64 pt )
 	{
-		final int N = polygon.vertexes.length;
+		final int N = polygon.size();
 
 		boolean c = false;
 		for (int i = 0, j = N-1; i < N; j = i++) {
-			Point2D_F64 a = polygon.vertexes[i];
-			Point2D_F64 b = polygon.vertexes[j];
+			Point2D_F64 a = polygon.vertexes.data[i];
+			Point2D_F64 b = polygon.vertexes.data[j];
 			
 			if ( ((a.y>pt.y) != (b.y>pt.y)) && (pt.x < (b.x-a.x) * (pt.y-a.y) / (b.y-a.y) + a.x) )
 				c = !c;
@@ -64,15 +64,24 @@ public class Intersection2D_F64 {
 		return c;
 	}
 
+	/**
+	 * Checks to see if the point is contained inside the concave polygon.
+	 *
+	 * NOTE: Points which lie along the perimeter may or may not be considered as inside
+	 *
+	 * @param polygon Convex polygon. Not modified.
+	 * @param pt Point. Not modified.
+	 * @return True if the point is contained inside the polygon.
+	 */
 	public static boolean containConcave( Polygon2D_F64 polygon , Point2D_F64 pt )
 	{
-		final int N = polygon.vertexes.length;
+		final int N = polygon.size();
 
 		int left=0;
 		int right=0;
 		for (int i = 0; i < N-1; i++) {
-			Point2D_F64 a = polygon.vertexes[i];
-			Point2D_F64 b = polygon.vertexes[i+1];
+			Point2D_F64 a = polygon.vertexes.data[i];
+			Point2D_F64 b = polygon.vertexes.data[i+1];
 
 			if( (pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y) ) {
 				// location of line segment along x-axis at y = pt.y
@@ -85,8 +94,8 @@ public class Intersection2D_F64 {
 			}
 		}
 
-		Point2D_F64 a = polygon.vertexes[N-1];
-		Point2D_F64 b = polygon.vertexes[0];
+		Point2D_F64 a = polygon.vertexes.data[N-1];
+		Point2D_F64 b = polygon.vertexes.data[0];
 
 		if( (pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y) ) {
 			// location of line segment along x-axis at y = pt.y
