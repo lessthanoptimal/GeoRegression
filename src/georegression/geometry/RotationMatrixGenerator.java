@@ -106,42 +106,42 @@ public class RotationMatrixGenerator {
 	 * <p>
 	 * Converts {@link georegression.struct.so.Rodrigues_F64} into {@link georegression.struct.so.Quaternion_F64}.
 	 * </p>
-	 * <p/>
-	 * <p>
-	 * Quaternion coordinates are defined as:<br>
-	 * q = cos(a/2) + u*sin(a/2)<br>
-	 * where 'a' is the angle of rotation, u is the unit axis of rotation.
-	 * </p>
 	 *
 	 * @param rodrigues The angle of rotation around the rotation axis.
 	 * @param quat	  Storage for quaternion coordinate.  If null a new quaternion is created. Modified.
 	 * @return quaternion coordinate.
 	 */
 	public static Quaternion_F64 rodriguesToQuaternion( Rodrigues_F64 rodrigues,
-													Quaternion_F64 quat ) {
+														Quaternion_F64 quat ) {
 		if( quat == null )
 			quat = new Quaternion_F64();
 
 
-		quat.q1 = Math.cos( rodrigues.theta / 2.0 );
+		quat.w = Math.cos( rodrigues.theta / 2.0 );
 		double s = Math.sin( rodrigues.theta / 2.0 );
 
-		quat.q2 = rodrigues.unitAxisRotation.x * s;
-		quat.q3 = rodrigues.unitAxisRotation.y * s;
-		quat.q4 = rodrigues.unitAxisRotation.z * s;
+		quat.x = rodrigues.unitAxisRotation.x * s;
+		quat.y = rodrigues.unitAxisRotation.y * s;
+		quat.z = rodrigues.unitAxisRotation.z * s;
 
 		return quat;
 	}
 
+	/**
+	 * Converts {@link Quaternion_F64} into {@link Rodrigues_F64}.
+	 * @param quat (Input) quaternion
+	 * @param rodrigues (Optional) Storage for rodrigues coodinate.  If null a new instance is created.
+	 * @return rodrigues
+	 */
 	public static Quaternion_F64 quaternionToRodrigues( Quaternion_F64 quat,
-													Rodrigues_F64 rodrigues ) {
+														Rodrigues_F64 rodrigues ) {
 		if( rodrigues == null )
 			rodrigues = new Rodrigues_F64();
 
-		rodrigues.unitAxisRotation.set( quat.q2, quat.q3, quat.q4 );
+		rodrigues.unitAxisRotation.set( quat.x, quat.y, quat.z);
 		rodrigues.unitAxisRotation.normalize();
 
-		rodrigues.theta = 2.0 * Math.acos( quat.q1 );
+		rodrigues.theta = 2.0 * Math.acos( quat.w);
 
 		return quat;
 	}
@@ -619,10 +619,10 @@ public class RotationMatrixGenerator {
 		double csc = cr * sp * cy;
 		double scs = sr * cp * sy;
 
-		quat.q1 = ccc + sss;
-		quat.q2 = scc - css;
-		quat.q3 = csc + scs;
-		quat.q4 = ccs - ssc;
+		quat.w = ccc + sss;
+		quat.x = scc - css;
+		quat.y = csc + scs;
+		quat.z = ccs - ssc;
 	}
 
 	public static double[] quaternionsToEuler( Quaternion_F64 quaternion, double euler[] ) {
@@ -644,10 +644,10 @@ public class RotationMatrixGenerator {
 	public static DenseMatrix64F quaternionToMatrix( Quaternion_F64 quat, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
 
-		final double q0 = quat.q1;
-		final double q1 = quat.q2;
-		final double q2 = quat.q3;
-		final double q3 = quat.q4;
+		final double q0 = quat.w;
+		final double q1 = quat.x;
+		final double q2 = quat.y;
+		final double q3 = quat.z;
 
 		R.set( 0, 0, q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3 );
 		R.set( 0, 1, 2.0 * ( q1 * q2 - q0 * q3 ) );
@@ -678,10 +678,10 @@ public class RotationMatrixGenerator {
 	public static DenseMatrix64F quaternionToMatrix( Quaternion_F32 quat, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
 
-		final double q0 = quat.q1;
-		final double q1 = quat.q2;
-		final double q2 = quat.q3;
-		final double q3 = quat.q4;
+		final double q0 = quat.w;
+		final double q1 = quat.x;
+		final double q2 = quat.y;
+		final double q3 = quat.z;
 
 		R.set( 0, 0, q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3 );
 		R.set( 0, 1, 2.0 * ( q1 * q2 - q0 * q3 ) );

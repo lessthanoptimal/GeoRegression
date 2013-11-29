@@ -21,47 +21,64 @@ package georegression.struct.so;
 
 
 /**
- * Specifies a 3D rotation using a unit quaternion.
+ * <p>
+ * Specifies a 3D rotation using a quaternion.
+ * </p>
+ *
+ * <p>
+ * If the quaternion is a unit quaternion then the following is true:<br>
+ * q = cos(theta/2) + u*sin(theta/2)<br>
+ * where 'theta' is the angle of rotation, u=(x,y,z) is the unit axis of rotation.
+ * </p>
  *
  * @author Peter Abeles
  */
 public class Quaternion_F32 {
-	public float q1;
-	public float q2;
-	public float q3;
-	public float q4;
+	/**
+	 * Describes the angle of rotation.  See above for how it is encoded.
+	 */
+	public float w;
+	/**
+	 * Axis of rotation
+	 */
+	public float x,y,z;
 
 	public Quaternion_F32() {
-		q1 = 1;
+		w = 1;
 	}
 
-	public Quaternion_F32(float q1, float q2, float q3, float q4) {
-		set(q1,q2,q3,q4);
+	public Quaternion_F32(float w, float x, float y, float z) {
+		set(w, x, y, z);
 	}
 
 	public void set( Quaternion_F32 quaternion ) {
-		this.q1 = quaternion.q1;
-		this.q2 = quaternion.q2;
-		this.q3 = quaternion.q3;
-		this.q4 = quaternion.q4;
+		this.w = quaternion.w;
+		this.x = quaternion.x;
+		this.y = quaternion.y;
+		this.z = quaternion.z;
 	}
 
-	public void set( float q1, float q2, float q3, float q4 ) {
-		this.q1 = q1;
-		this.q2 = q2;
-		this.q3 = q3;
-		this.q4 = q4;
+	public void set( float w, float x, float y, float z ) {
+		this.w = w;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 
 	/**
-	 * Normalizes the elements to one
+	 * Converts the quaternion into a unit quaternion.
 	 */
 	public void normalize() {
-		float n = (float)Math.sqrt( q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4 );
+		float n = (float)Math.sqrt( w * w + x * x + y * y + z * z);
 
-		q1 /= n;
-		q2 /= n;
-		q3 /= n;
-		q4 /= n;
+		w /= n;
+		x /= n;
+		y /= n;
+		z /= n;
 	}
+
+   @Override
+   public String toString() {
+      return getClass().getSimpleName()+"{ w = "+ w +" axis( "+ x +" "+ y +" "+ z +") }";
+   }
 }

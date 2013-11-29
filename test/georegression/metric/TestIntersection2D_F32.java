@@ -79,6 +79,8 @@ public class TestIntersection2D_F32 {
 
 		assertTrue(Intersection2D_F32.containConcave(poly, new Point2D_F32(0,0)));
 
+		// perimeter cases intentionally not handled here
+
 		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(2,0)));
 		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(-2,0)));
 		assertFalse(Intersection2D_F32.containConcave(poly, new Point2D_F32(0,2)));
