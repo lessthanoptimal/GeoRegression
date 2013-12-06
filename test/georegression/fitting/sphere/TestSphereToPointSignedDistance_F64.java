@@ -77,8 +77,8 @@ public class TestSphereToPointSignedDistance_F64 {
 
 		alg.setPoints(points);
 
-		assertEquals(4,alg.getN());
-		assertEquals(points.size(),alg.getM());
+		assertEquals(4,alg.getInputsN());
+		assertEquals(points.size(),alg.getOutputsM());
 	}
 
 }
