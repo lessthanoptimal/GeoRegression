@@ -64,9 +64,18 @@ public class Intersection2D_F32 {
 		return c;
 	}
 
+	/**
+	 * Checks to see if the point is contained inside the concave polygon.
+	 *
+	 * NOTE: Points which lie along the perimeter may or may not be considered as inside
+	 *
+	 * @param polygon Convex polygon. Not modified.
+	 * @param pt Point. Not modified.
+	 * @return True if the point is contained inside the polygon.
+	 */
 	public static boolean containConcave( Polygon2D_F32 polygon , Point2D_F32 pt )
 	{
-		final int N = polygon.vertexes.size();
+		final int N = polygon.size();
 
 		int left=0;
 		int right=0;

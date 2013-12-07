@@ -171,7 +171,7 @@ public class TestClosestPoint3D_F32 {
 		checkIsClosest(lineA,new Point3D_F32(1,1.95f,3));
 
 		// closest point is past b
-		checkIsClosest(lineA,new Point3D_F32(8,9,10.1f));
+		checkIsClosest(lineA, new Point3D_F32(8, 9, 10.1f));
 	}
 
 	@Test

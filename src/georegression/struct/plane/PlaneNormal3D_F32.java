@@ -79,4 +79,8 @@ public class PlaneNormal3D_F32 {
 	public void setN(Vector3D_F32 n) {
 		this.n.set(n);
 	}
+
+	public String toString() {
+		return getClass().getSimpleName()+"[ p( "+p.x+" "+p.y+" "+p.z+" ) , n( "+n.x+" "+n.y+" "+n.z+" ) ]";
+	}
 }

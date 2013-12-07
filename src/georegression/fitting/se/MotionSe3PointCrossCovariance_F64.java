@@ -158,10 +158,10 @@ public class MotionSe3PointCrossCovariance_F64 implements MotionTransformPoint<S
 
 		SimpleMatrix v_max = evd.getEigenVector( indexMax );
 
-		quat.q1 = (double) v_max.get( 0 );
-		quat.q2 = (double) v_max.get( 1 );
-		quat.q3 = (double) v_max.get( 2 );
-		quat.q4 = (double) v_max.get( 3 );
+		quat.w = (double) v_max.get( 0 );
+		quat.x = (double) v_max.get( 1 );
+		quat.y = (double) v_max.get( 2 );
+		quat.z = (double) v_max.get( 3 );
 		quat.normalize();
 
 		RotationMatrixGenerator.quaternionToMatrix( quat, motion.getR() );
