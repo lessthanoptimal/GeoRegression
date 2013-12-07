@@ -80,8 +80,8 @@ public class TestCylinderToPointSignedDistance_F32 {
 
 		alg.setPoints(points);
 
-		assertEquals(7,alg.getInputsN());
-		assertEquals(points.size(), alg.getOutputsM());
+		assertEquals(7,alg.getNumOfInputsN());
+		assertEquals(points.size(), alg.getNumOfOutputsM());
 	}
 
 }

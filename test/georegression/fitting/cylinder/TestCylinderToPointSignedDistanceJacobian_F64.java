@@ -73,8 +73,8 @@ public class TestCylinderToPointSignedDistanceJacobian_F64 {
 
 		alg.setPoints(points);
 
-		assertEquals(4,alg.getInputsN());
-		assertEquals(points.size(), alg.getOutputsM());
+		assertEquals(4,alg.getNumOfInputsN());
+		assertEquals(points.size(), alg.getNumOfOutputsM());
 	}
 
 }

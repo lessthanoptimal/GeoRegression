@@ -51,12 +51,12 @@ public class SphereToPointSignedDistance_F64 implements FunctionNtoM {
 	}
 
 	@Override
-	public int getInputsN() {
+	public int getNumOfInputsN() {
 		return 4;
 	}
 
 	@Override
-	public int getOutputsM() {
+	public int getNumOfOutputsM() {
 		return points.size();
 	}
 

@@ -48,12 +48,12 @@ public class SphereToPointSignedDistanceJacobian_F32 implements FunctionNtoMxN {
 	}
 
 	@Override
-	public int getInputsN() {
+	public int getNumOfInputsN() {
 		return 4;
 	}
 
 	@Override
-	public int getOutputsM() {
+	public int getNumOfOutputsM() {
 		return points.size();
 	}
 
