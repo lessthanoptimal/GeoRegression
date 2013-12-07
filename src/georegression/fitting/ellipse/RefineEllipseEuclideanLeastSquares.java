@@ -157,12 +157,12 @@ public class RefineEllipseEuclideanLeastSquares {
 	public class Error implements FunctionNtoM {
 
 		@Override
-		public int getN() {
+		public int getInputsN() {
 			return 5 + points.size();
 		}
 
 		@Override
-		public int getM() {
+		public int getOutputsM() {
 			return 2*points.size();
 		}
 
@@ -197,12 +197,12 @@ public class RefineEllipseEuclideanLeastSquares {
 	public class Jacobian implements FunctionNtoMxN {
 
 		@Override
-		public int getN() {
+		public int getInputsN() {
 			return 5 + points.size();
 		}
 
 		@Override
-		public int getM() {
+		public int getOutputsM() {
 			return 2*points.size();
 		}
 
@@ -215,8 +215,8 @@ public class RefineEllipseEuclideanLeastSquares {
 			double cp = Math.cos(phi);
 			double sp = Math.sin(phi);
 
-			int M = getM();
-			int N = getN();
+			int M = getOutputsM();
+			int N = getInputsN();
 
 			int total = M*N;
 			for( int i = 0; i < total; i++ )
