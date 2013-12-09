@@ -45,6 +45,14 @@
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}"/>
     </target>
 
+    <!-- Creates a jar file with the project's source code -->
+    <target name="srcjar">
+      <mkdir dir="${jar.dir}"/>
+      <jar destfile="${jar.dir}/${ant.project.name}-src.jar">
+	<fileset dir="${src.dir}" includes="**/*.java"/>
+      </jar>
+    </target>
+
     <target name="test" depends="jar">
         <mkdir dir="${testbuild.dir}"/>
         <mkdir dir="${testreport.dir}"/>
