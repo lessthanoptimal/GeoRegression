@@ -26,7 +26,9 @@ import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 
 /**
- * This example demonstrates how to metric values which describe the related to lines and points.
+ * This example demonstrates how classes inside of the metric package metric can be used to compute
+ * values which describe the relationship between to lines and points. The relationship between other
+ * shapes can also be done using the same classes.
  *
  * @author Peter Abeles
  */
