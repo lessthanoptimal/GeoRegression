@@ -22,8 +22,8 @@ import georegression.fitting.MotionTransformPoint;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.point.Point2D_F32;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.LinearSolver;
 import org.ejml.factory.LinearSolverFactory;
+import org.ejml.interfaces.linsol.LinearSolver;
 
 import java.util.List;
 

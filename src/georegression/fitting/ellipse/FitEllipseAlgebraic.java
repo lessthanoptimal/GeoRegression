@@ -22,9 +22,9 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.EllipseQuadratic_F64;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
-import org.ejml.factory.EigenDecomposition;
-import org.ejml.factory.LinearSolver;
 import org.ejml.factory.LinearSolverFactory;
+import org.ejml.interfaces.decomposition.EigenDecomposition;
+import org.ejml.interfaces.linsol.LinearSolver;
 import org.ejml.ops.CommonOps;
 
 import java.util.List;

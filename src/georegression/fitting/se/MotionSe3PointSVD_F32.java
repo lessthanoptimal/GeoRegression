@@ -25,7 +25,7 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.se.Se3_F32;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
-import org.ejml.factory.SingularValueDecomposition;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.SingularOps;
 

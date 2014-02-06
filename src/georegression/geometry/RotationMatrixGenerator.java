@@ -27,8 +27,8 @@ import org.ejml.UtilEjml;
 import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
-import org.ejml.factory.EigenDecomposition;
-import org.ejml.factory.SingularValueDecomposition;
+import org.ejml.interfaces.decomposition.EigenDecomposition;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
 
 
