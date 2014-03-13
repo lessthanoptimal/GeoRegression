@@ -45,6 +45,9 @@ public class ConvertFile32From64 {
 		StringBuffer s = new StringBuffer( 1024 );
 		boolean prevChar = false;
 
+		// copyright is a special case and don't wont it turning Apache 2.0 info 2.0f
+		copyTheCopyRight(s);
+
 		while( ( n = in.read() ) != -1 ) {
 			if( Character.isWhitespace( (char) n ) ) {
 				if( prevChar ) {
@@ -65,6 +68,24 @@ public class ConvertFile32From64 {
 
 		out.close();
 		in.close();
+	}
+
+	private void copyTheCopyRight( StringBuffer s ) throws IOException {
+		int n;
+
+		while( ( n = in.read() ) != -1 ) {
+			char c = (char)n;
+			s.append( c );
+
+			if( c == '\n') {
+				out.print( s );
+				boolean finished = s.length() == 4 && s.charAt(2) == '/';
+				s.delete(0, s.length());
+				if( finished )
+					return;
+			}
+
+		}
 	}
 
 	private void handleToken( String s ) {

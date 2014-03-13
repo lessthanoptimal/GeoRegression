@@ -45,18 +45,33 @@ public class ClosestPointEllipseAngle_F64 {
 	// optimal value of parameterization
 	double theta;
 
+	/**
+	 * Specifies convergence criteria
+	 *
+	 * @param tol Convergence tolerance.  Try 1e-8
+	 * @param maxIterations Maximum number of iterations.  Try 100
+	 */
 	public ClosestPointEllipseAngle_F64(double tol, int maxIterations) {
 		this.tol = tol;
 		this.maxIterations = maxIterations;
 	}
 
+	/**
+	 * Specifies the ellipse which point distance is going to be found from
+	 * @param ellipse Ellipse description
+	 */
 	public void setEllipse( EllipseRotated_F64 ellipse ) {
 		this.ellipse = ellipse;
 		ce = Math.cos(ellipse.phi);
 		se = Math.sin(ellipse.phi);
 	}
 
-	public boolean process( Point2D_F64 point ) {
+	/**
+	 * Find the closest point on the ellipse to the specified point.  To get the solution call {@link #getClosest()}
+	 *
+	 * @param point Point which it is being fit to
+	 */
+	public void process( Point2D_F64 point ) {
 		// put point into ellipse's coordinate system
 		double xc = point.x - ellipse.center.x;
 		double yc = point.y - ellipse.center.y;
@@ -91,8 +106,6 @@ public class ClosestPointEllipseAngle_F64 {
 		// put back into original coordinate system
 		closest.x = ce*x - se*y + ellipse.center.x;
 		closest.y = se*x + ce*y + ellipse.center.y;
-
-		return true;
 	}
 
 	public Point2D_F64 getClosest() {
