@@ -171,6 +171,10 @@ public class TestClosestPoint3D_F32 {
 
 		// closest point is past b
 		checkIsClosest(lineA, new Point3D_F32(8, 9, 10.1f));
+
+		// this was a bug
+		lineA = new LineSegment3D_F32(0,0,0,0,2,0);
+		checkIsClosest(lineA, new Point3D_F32(0,1.5f,0));
 	}
 
 	@Test
@@ -198,6 +202,23 @@ public class TestClosestPoint3D_F32 {
 		lineB.set(-100,0,20,-100,0,-20);
 		found = ClosestPoint3D_F32.closestPoint(lineA, lineB, null);
 		checkIsClosest(found, lineB, lineA);
+	}
+
+	@Test
+	public void closestPoint_triangle_point() {
+		Point3D_F32 P0 = new Point3D_F32(0,0,0);
+		Point3D_F32 P1 = new Point3D_F32(0,2,0);
+		Point3D_F32 P2 = new Point3D_F32(1,1,0);
+
+		Point3D_F32 P = new Point3D_F32(0.2f,0.5f,2);
+
+		Point3D_F32 found = new Point3D_F32();
+
+		ClosestPoint3D_F32.closestPoint(P0,P1,P2,P,found);
+
+		assertEquals(0.2f,found.x,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.5f,found.y,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,found.z,GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	private void checkIsClosest( LineSegment3D_F32 line ,  Point3D_F32 target  ) {

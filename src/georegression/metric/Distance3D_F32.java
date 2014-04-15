@@ -18,6 +18,7 @@
 
 package georegression.metric;
 
+import georegression.metric.alg.DistancePointTriangle3D_F32;
 import georegression.struct.line.LineParametric3D_F32;
 import georegression.struct.line.LineSegment3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
@@ -132,7 +133,7 @@ public class Distance3D_F32 {
 		// check end points
 		if( d <= 0 )
 			return p.distance(l.a);
-		else if( d >= 1 )
+		else if( d >= n )
 			return p.distance(l.b);
 
 		float distanceSq = cc-d*d;
@@ -188,5 +189,29 @@ public class Distance3D_F32 {
 		float r = Distance3D_F32.distance(cylinder.line,point);
 
 		return r - cylinder.radius;
+	}
+
+	/**
+	 * Signed distance from a 3D point to 3D triangle.   The sign indicates which side of the triangle the point
+	 * is on.  See {@link georegression.metric.alg.DistancePointTriangle3D_F32} for the details.
+	 *
+	 * @param vertexA Vertex in a 3D triangle.
+	 * @param vertexB Vertex in a 3D triangle.
+	 * @param vertexC Vertex in a 3D triangle.
+	 * @param point Point for which the closest point on the triangle is found
+	 * @return The closest point
+	 */
+	public static float distance( Point3D_F32 vertexA, Point3D_F32 vertexB, Point3D_F32 vertexC, Point3D_F32 point ) {
+
+		DistancePointTriangle3D_F32 alg = new DistancePointTriangle3D_F32();
+		alg.setTriangle(vertexA,vertexB,vertexC);
+
+		Point3D_F32 cp = new Point3D_F32();
+
+		alg.closestPoint(point,cp);
+
+		float d = point.distance(cp);
+
+		return alg.sign(point)*d;
 	}
 }

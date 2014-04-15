@@ -18,6 +18,7 @@
 
 package georegression.metric;
 
+import georegression.metric.alg.DistancePointTriangle3D_F64;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
@@ -132,7 +133,7 @@ public class Distance3D_F64 {
 		// check end points
 		if( d <= 0 )
 			return p.distance(l.a);
-		else if( d >= 1 )
+		else if( d >= n )
 			return p.distance(l.b);
 
 		double distanceSq = cc-d*d;
@@ -188,5 +189,29 @@ public class Distance3D_F64 {
 		double r = Distance3D_F64.distance(cylinder.line,point);
 
 		return r - cylinder.radius;
+	}
+
+	/**
+	 * Signed distance from a 3D point to 3D triangle.   The sign indicates which side of the triangle the point
+	 * is on.  See {@link georegression.metric.alg.DistancePointTriangle3D_F64} for the details.
+	 *
+	 * @param vertexA Vertex in a 3D triangle.
+	 * @param vertexB Vertex in a 3D triangle.
+	 * @param vertexC Vertex in a 3D triangle.
+	 * @param point Point for which the closest point on the triangle is found
+	 * @return The closest point
+	 */
+	public static double distance( Point3D_F64 vertexA, Point3D_F64 vertexB, Point3D_F64 vertexC, Point3D_F64 point ) {
+
+		DistancePointTriangle3D_F64 alg = new DistancePointTriangle3D_F64();
+		alg.setTriangle(vertexA,vertexB,vertexC);
+
+		Point3D_F64 cp = new Point3D_F64();
+
+		alg.closestPoint(point,cp);
+
+		double d = point.distance(cp);
+
+		return alg.sign(point)*d;
 	}
 }

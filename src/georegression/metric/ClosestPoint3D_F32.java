@@ -18,6 +18,7 @@
 
 package georegression.metric;
 
+import georegression.metric.alg.DistancePointTriangle3D_F32;
 import georegression.struct.line.LineParametric3D_F32;
 import georegression.struct.line.LineSegment3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
@@ -226,7 +227,7 @@ public class ClosestPoint3D_F32 {
 		// if it is past the end points just return one of the end points
 		if( d <= 0 ) {
 			ret.set(line.a);
-		} else if( d >= 1 ) {
+		} else if( d >= n ) {
 			ret.set(line.b);
 		} else {
 			ret.x = line.a.x + d * slope_x / n;
@@ -297,6 +298,33 @@ public class ClosestPoint3D_F32 {
 		ret.x = (float) 0.5f * ( ( l0.a.x + t0 * slope0_x ) + ( l1.a.x + t1 * slope1_x ) );
 		ret.y = (float) 0.5f * ( ( l0.a.y + t0 * slope0_y ) + ( l1.a.y + t1 * slope1_y ) );
 		ret.z = (float) 0.5f * ( ( l0.a.z + t0 * slope0_z ) + ( l1.a.z + t1 * slope1_z ) );
+
+		return ret;
+	}
+
+	/**
+	 * Closest point from a 3D triangle to a point.
+	 *
+	 * @see DistancePointTriangle3D_F32
+	 *
+	 * @param vertexA Vertex in a 3D triangle.
+	 * @param vertexB Vertex in a 3D triangle.
+	 * @param vertexC Vertex in a 3D triangle.
+	 * @param point Point for which the closest point on the triangle is found
+	 * @param ret (Optional) Storage for the solution.  If null is passed in a new point is created. Modified.
+	 * @return The closest point
+	 */
+	public static Point3D_F32 closestPoint( Point3D_F32 vertexA, Point3D_F32 vertexB, Point3D_F32 vertexC,
+											Point3D_F32 point , Point3D_F32 ret) {
+
+		if( ret == null ) {
+			ret = new Point3D_F32();
+		}
+
+		DistancePointTriangle3D_F32 alg = new DistancePointTriangle3D_F32();
+		alg.setTriangle(vertexA,vertexB,vertexC);
+
+		alg.closestPoint(point,ret);
 
 		return ret;
 	}

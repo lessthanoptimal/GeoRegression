@@ -5,6 +5,8 @@ Date    : 2014
 Version : 0.6
 
 - Auto code generator ignores the copyright notice.
+- Closest point and distance from a 3D triangle and a point
+- Fixed bug in distance and closest point from a point to a 3D line segment
 
 ---------------------------------------------
 Date    : 2013-12-26

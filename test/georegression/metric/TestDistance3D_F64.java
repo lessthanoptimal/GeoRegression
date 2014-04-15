@@ -97,6 +97,10 @@ public class TestDistance3D_F64 {
 		// point past l.b
 		p.set(3,5,3);
 		assertEquals( p.distance(l.b) , Distance3D_F64.distance( l,p ), GrlConstants.DOUBLE_TEST_TOL );
+
+		// this was a bug
+		l = new LineSegment3D_F64(0,0,0,0,2,0);
+		assertEquals( 0 , Distance3D_F64.distance( l,new Point3D_F64(0,1.5,0) ), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	/**
@@ -171,5 +175,20 @@ public class TestDistance3D_F64 {
 
 		assertEquals(ro-3.5,Distance3D_F64.distance(cylinder,outside), GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(ri-3.5,Distance3D_F64.distance(cylinder,inside), GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void distance_triangle_point() {
+		Point3D_F64 P0 = new Point3D_F64(0,0,0);
+		Point3D_F64 P1 = new Point3D_F64(0,2,0);
+		Point3D_F64 P2 = new Point3D_F64(1,1,0);
+
+		double found = Distance3D_F64.distance(P0,P1,P2,new Point3D_F64(0.2,0.5,2));
+
+		assertEquals(2,found,GrlConstants.DOUBLE_TEST_TOL);
+
+		found = Distance3D_F64.distance(P0,P1,P2,new Point3D_F64(0.2,0.5,-2));
+
+		assertEquals(-2,found,GrlConstants.DOUBLE_TEST_TOL);
 	}
 }

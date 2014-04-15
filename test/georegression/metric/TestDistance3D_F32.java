@@ -97,6 +97,10 @@ public class TestDistance3D_F32 {
 		// point past l.b
 		p.set(3,5,3);
 		assertEquals( p.distance(l.b) , Distance3D_F32.distance( l,p ), GrlConstants.FLOAT_TEST_TOL );
+
+		// this was a bug
+		l = new LineSegment3D_F32(0,0,0,0,2,0);
+		assertEquals( 0 , Distance3D_F32.distance( l,new Point3D_F32(0,1.5f,0) ), GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	/**
@@ -149,7 +153,7 @@ public class TestDistance3D_F32 {
 		float ro = sphere.center.distance(outside);
 		float ri = sphere.center.distance(inside);
 
-		assertTrue(ro>4.5f);
+		assertTrue(ro > 4.5f);
 		assertTrue(ri<4.5f);
 
 		assertEquals(ro-4.5f,Distance3D_F32.distance(sphere,outside), GrlConstants.FLOAT_TEST_TOL);
@@ -171,5 +175,20 @@ public class TestDistance3D_F32 {
 
 		assertEquals(ro-3.5f,Distance3D_F32.distance(cylinder,outside), GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(ri-3.5f,Distance3D_F32.distance(cylinder,inside), GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void distance_triangle_point() {
+		Point3D_F32 P0 = new Point3D_F32(0,0,0);
+		Point3D_F32 P1 = new Point3D_F32(0,2,0);
+		Point3D_F32 P2 = new Point3D_F32(1,1,0);
+
+		float found = Distance3D_F32.distance(P0,P1,P2,new Point3D_F32(0.2f,0.5f,2));
+
+		assertEquals(2,found,GrlConstants.FLOAT_TEST_TOL);
+
+		found = Distance3D_F32.distance(P0,P1,P2,new Point3D_F32(0.2f,0.5f,-2));
+
+		assertEquals(-2,found,GrlConstants.FLOAT_TEST_TOL);
 	}
 }
