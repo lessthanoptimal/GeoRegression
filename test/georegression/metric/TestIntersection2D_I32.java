@@ -20,6 +20,7 @@ package georegression.metric;
 
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_I32;
+import georegression.struct.shapes.Rectangle2D_I32;
 import georegression.struct.shapes.RectangleCorner2D_I32;
 import org.junit.Test;
 
@@ -169,5 +170,18 @@ public class TestIntersection2D_I32 {
 		assertEquals(expected.x1,found.x1);
 		assertEquals(expected.y0,found.y0);
 		assertEquals(expected.y1,found.y1);
+	}
+
+	@Test
+	public void contains_rect_pt() {
+		Rectangle2D_I32 rect = new Rectangle2D_I32(-10,-5,5,10);
+
+		assertTrue(Intersection2D_I32.contains(rect,-10,-5));
+		assertTrue(Intersection2D_I32.contains(rect,-6,4));
+
+		assertFalse(Intersection2D_I32.contains(rect,-11,-5));
+		assertFalse(Intersection2D_I32.contains(rect,-10,-6));
+		assertFalse(Intersection2D_I32.contains(rect,-5,4));
+		assertFalse(Intersection2D_I32.contains(rect,-6,5));
 	}
 }

@@ -26,6 +26,7 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.shapes.Polygon2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleCorner2D_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.junit.Test;
@@ -326,5 +327,23 @@ public class TestIntersection2D_F64 {
 		assertEquals(expected.x1,found.x1,GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(expected.y0,found.y0,GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(expected.y1,found.y1,GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void contains_rect_pt() {
+		Rectangle2D_F64 rect = new Rectangle2D_F64(-10,-5,5,10);
+
+		assertTrue(Intersection2D_F64.contains(rect,-10,-5));
+		assertTrue(Intersection2D_F64.contains(rect,-6,4));
+		assertTrue(Intersection2D_F64.contains(rect,-9.9,-4.99));
+		assertTrue(Intersection2D_F64.contains(rect,-6.001,4.99));
+
+		assertTrue(Intersection2D_F64.contains(rect,-5.99,4));
+		assertTrue(Intersection2D_F64.contains(rect,-10,4.001));
+
+		assertFalse(Intersection2D_F64.contains(rect,-11,-5));
+		assertFalse(Intersection2D_F64.contains(rect,-10,-6));
+		assertFalse(Intersection2D_F64.contains(rect,-5,4));
+		assertFalse(Intersection2D_F64.contains(rect,-6,5));
 	}
 }

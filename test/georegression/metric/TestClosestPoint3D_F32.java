@@ -174,7 +174,7 @@ public class TestClosestPoint3D_F32 {
 
 		// this was a bug
 		lineA = new LineSegment3D_F32(0,0,0,0,2,0);
-		checkIsClosest(lineA, new Point3D_F32(0,1.5f,0));
+		checkIsClosest(lineA, new Point3D_F32(0, 1.5f, 0));
 	}
 
 	@Test
@@ -255,10 +255,10 @@ public class TestClosestPoint3D_F32 {
 			float orig = work.getIndex(i);
 			work.setIndex(i, orig + (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL));
 			float d = Distance3D_F32.distance(lineA,work)+Distance3D_F32.distance(lineB,work);
-			assertTrue(found+" "+d,found < d);
+			assertTrue(found+" "+d,found < d+10*GrlConstants.FLOAT_TEST_TOL);
 			work.setIndex(i, orig - (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL));
 			d = Distance3D_F32.distance(lineA,work)+Distance3D_F32.distance(lineB,work);
-			assertTrue(found + " " + d, found < d);
+			assertTrue(found + " " + d, found <=d+10*GrlConstants.FLOAT_TEST_TOL);
 			work.setIndex(i,orig);
 		}
 	}
@@ -272,10 +272,10 @@ public class TestClosestPoint3D_F32 {
 			float orig = work.getIndex(i);
 			work.setIndex(i,orig + (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL));
 			float d = Distance3D_F32.distance(lineA,work)+Distance3D_F32.distance(lineB,work);
-			assertTrue(found+" "+d,found < d);
+			assertTrue(found+" "+d,found <= d+10*GrlConstants.FLOAT_TEST_TOL);
 			work.setIndex(i,orig - (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL));
 			d = Distance3D_F32.distance(lineA,work)+Distance3D_F32.distance(lineB,work);
-			assertTrue(found+" "+d,found < d);
+			assertTrue(found+" "+d,found <= d+10*GrlConstants.FLOAT_TEST_TOL);
 			work.setIndex(i,orig);
 		}
 	}

@@ -84,7 +84,7 @@ public class TestClosestPoint3D_F64 {
 		assertTrue(ClosestPoint3D_F64.closestPoints(lineA, lineB, param));
 
 		assertEquals( a.distance(b) , param[0] , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( c.distance(b) , param[1] , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(c.distance(b), param[1], GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 	@Test
@@ -167,7 +167,7 @@ public class TestClosestPoint3D_F64 {
 		checkIsClosest(lineA,new Point3D_F64(2,3.5,3.5));
 
 		// closest point is past a
-		checkIsClosest(lineA,new Point3D_F64(1,1.95,3));
+		checkIsClosest(lineA, new Point3D_F64(1, 1.95, 3));
 
 		// closest point is past b
 		checkIsClosest(lineA, new Point3D_F64(8, 9, 10.1));
@@ -255,10 +255,10 @@ public class TestClosestPoint3D_F64 {
 			double orig = work.getIndex(i);
 			work.setIndex(i, orig + Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
 			double d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found+" "+d,found < d);
+			assertTrue(found+" "+d,found < d+10*GrlConstants.DOUBLE_TEST_TOL);
 			work.setIndex(i, orig - Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
 			d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found + " " + d, found < d);
+			assertTrue(found + " " + d, found <=d+10*GrlConstants.DOUBLE_TEST_TOL);
 			work.setIndex(i,orig);
 		}
 	}
@@ -272,10 +272,10 @@ public class TestClosestPoint3D_F64 {
 			double orig = work.getIndex(i);
 			work.setIndex(i,orig + Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
 			double d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found+" "+d,found < d);
+			assertTrue(found+" "+d,found <= d+10*GrlConstants.DOUBLE_TEST_TOL);
 			work.setIndex(i,orig - Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
 			d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found+" "+d,found < d);
+			assertTrue(found+" "+d,found <= d+10*GrlConstants.DOUBLE_TEST_TOL);
 			work.setIndex(i,orig);
 		}
 	}

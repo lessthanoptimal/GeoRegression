@@ -20,6 +20,7 @@ package georegression.metric;
 
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_I32;
+import georegression.struct.shapes.Rectangle2D_I32;
 import georegression.struct.shapes.RectangleCorner2D_I32;
 
 /**
@@ -128,6 +129,21 @@ public class Intersection2D_I32 {
 		}
 
 		return (left % 2 == 1 && right % 2 == 1);
+	}
+
+	/**
+	 * True if the point is contained inside the rectangle
+	 *
+	 * @param a Rectangle
+	 * @param x x-coordinate of point
+	 * @param y y-coordinate of point
+	 * @return true if the point is inside and false it is not
+	 */
+	public static boolean contains( Rectangle2D_I32 a, int x, int y ) {
+		if( a.getX() <= x && a.getX() + a.getWidth() > x ) {
+			return a.getY() <= y && a.getY() + a.getHeight() > y;
+		}
+		return false;
 	}
 
 }

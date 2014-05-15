@@ -153,7 +153,7 @@ public class TestDistance3D_F32 {
 		float ro = sphere.center.distance(outside);
 		float ri = sphere.center.distance(inside);
 
-		assertTrue(ro > 4.5f);
+		assertTrue(ro>4.5f);
 		assertTrue(ri<4.5f);
 
 		assertEquals(ro-4.5f,Distance3D_F32.distance(sphere,outside), GrlConstants.FLOAT_TEST_TOL);

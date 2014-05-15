@@ -26,6 +26,7 @@ import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.se.Se2_F32;
 import georegression.struct.shapes.Polygon2D_F32;
+import georegression.struct.shapes.Rectangle2D_F32;
 import georegression.struct.shapes.RectangleCorner2D_F32;
 import georegression.transform.se.SePointOps_F32;
 import org.junit.Test;
@@ -259,8 +260,8 @@ public class TestIntersection2D_F32 {
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(0,0,100,120),true);
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(10,12,99,119),true);
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(50,50,200,200),true);
-		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(-10,-10,10,10),true);
-		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(90,-10,105,1),true);
+		check(new RectangleCorner2D_F32(0, 0, 100, 120), new RectangleCorner2D_F32(-10, -10, 10, 10), true);
+		check(new RectangleCorner2D_F32(0, 0, 100, 120), new RectangleCorner2D_F32(90, -10, 105, 1), true);
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(90,5,105,105),true);
 
 		// negative cases
@@ -273,9 +274,9 @@ public class TestIntersection2D_F32 {
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(0,0,0,0),false);
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(100,120,100,120),false);
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(-10,0,0,120),false);
-		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(100,0,105,120),false);
-		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(0,-10,100,0),false);
-		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(0,120,100,125),false);
+		check(new RectangleCorner2D_F32(0, 0, 100, 120), new RectangleCorner2D_F32(100, 0, 105, 120), false);
+		check(new RectangleCorner2D_F32(0, 0, 100, 120), new RectangleCorner2D_F32(0, -10, 100, 0), false);
+		check(new RectangleCorner2D_F32(0, 0, 100, 120), new RectangleCorner2D_F32(0, 120, 100, 125), false);
 	}
 
 	private void check( RectangleCorner2D_F32 a , RectangleCorner2D_F32 b , boolean expected ) {
@@ -326,5 +327,23 @@ public class TestIntersection2D_F32 {
 		assertEquals(expected.x1,found.x1,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(expected.y0,found.y0,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(expected.y1,found.y1,GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void contains_rect_pt() {
+		Rectangle2D_F32 rect = new Rectangle2D_F32(-10,-5,5,10);
+
+		assertTrue(Intersection2D_F32.contains(rect,-10,-5));
+		assertTrue(Intersection2D_F32.contains(rect,-6,4));
+		assertTrue(Intersection2D_F32.contains(rect,-9.9f,-4.99f));
+		assertTrue(Intersection2D_F32.contains(rect,-6.001f,4.99f));
+
+		assertTrue(Intersection2D_F32.contains(rect,-5.99f,4));
+		assertTrue(Intersection2D_F32.contains(rect, -10, 4.001f));
+
+		assertFalse(Intersection2D_F32.contains(rect, -11, -5));
+		assertFalse(Intersection2D_F32.contains(rect, -10, -6));
+		assertFalse(Intersection2D_F32.contains(rect, -5, 4));
+		assertFalse(Intersection2D_F32.contains(rect, -6, 5));
 	}
 }
