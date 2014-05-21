@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.struct.se;
+package georegression.transform;
 
 import georegression.struct.InvertibleTransform;
 
@@ -31,10 +31,10 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class InvertibleTransformSequence {
+public class InvertibleTransformSequence<T extends InvertibleTransform> {
 
 	// the path
-	private List<Node> path = new ArrayList<Node>();
+	private List<Node<T>> path = new ArrayList<Node<T>>();
 
 	/**
 	 * Adds the next transform in the sequence.
@@ -42,8 +42,8 @@ public class InvertibleTransformSequence {
 	 * @param forward Does the transform work in the forward or reverse direction.
 	 * @param tran	The transform.
 	 */
-	public void addTransform( boolean forward, SpecialEuclidean tran ) {
-		path.add( new Node( tran, forward ) );
+	public void addTransform( boolean forward, T tran ) {
+		path.add( new Node<T>( tran, forward ) );
 	}
 
 	/**
@@ -54,17 +54,17 @@ public class InvertibleTransformSequence {
 	}
 
 	@SuppressWarnings({"unchecked"})
-	public void computeTransform( SpecialEuclidean result ) {
+	public void computeTransform( T result ) {
 
 		if( path.size() == 0 )
 			return;
 
-		InvertibleTransform tmp0 = result.createInstance();
-		InvertibleTransform tmp1 = result.createInstance();
-		InvertibleTransform inv = result.createInstance();
+		T tmp0 = (T)result.createInstance();
+		T tmp1 = (T)result.createInstance();
+		T inv = (T)result.createInstance();
 
-		InvertibleTransformSequence.Node n = path.get( 0 );
-		InvertibleTransform nodeTran = n.tran;
+		Node<T> n = path.get( 0 );
+		T nodeTran = (T)n.tran;
 
 		if( n.forward ) {
 			tmp0.set( nodeTran );
@@ -82,24 +82,24 @@ public class InvertibleTransformSequence {
 				nodeTran.invert( inv );
 				tmp0.concat( inv, tmp1 );
 			}
-			InvertibleTransform swap = tmp0;
+			T swap = tmp0;
 			tmp0 = tmp1;
 			tmp1 = swap;
 		}
 		result.set(tmp0);
 	}
 
-	public List<Node> getPath() {
+	public List<Node<T>> getPath() {
 		return path;
 	}
 
-	public static class Node {
+	public static class Node<T extends InvertibleTransform> {
 		// the transform
-		public InvertibleTransform tran;
+		public T tran;
 		// if the transform should be applied in the forward or reverse direction
 		public boolean forward;
 
-		public Node( InvertibleTransform tran, boolean forward ) {
+		public Node( T tran, boolean forward ) {
 			this.tran = tran;
 			this.forward = forward;
 		}

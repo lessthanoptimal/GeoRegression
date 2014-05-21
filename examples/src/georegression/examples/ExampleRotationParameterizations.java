@@ -18,8 +18,33 @@
 
 package georegression.examples;
 
+import georegression.geometry.RotationMatrixGenerator;
+import georegression.struct.so.Quaternion_F64;
+import georegression.struct.so.Rodrigues_F64;
+import org.ejml.data.DenseMatrix64F;
+
 /**
+ * Simple example of how to convert a rotation matrix into equivalent formats.
+ *
  * @author Peter Abeles
  */
 public class ExampleRotationParameterizations {
+	public static void main(String[] args) {
+
+		// Euler to rotation matrix
+		DenseMatrix64F R = RotationMatrixGenerator.eulerXYZ(0.5,-1,-0.45,null);
+
+		// matrix to Rodrigues
+		Rodrigues_F64 rod = RotationMatrixGenerator.matrixToRodrigues(R,null);
+
+		// Rodrigues to Quaternion
+		Quaternion_F64 quat = RotationMatrixGenerator.rodriguesToQuaternion(rod,null);
+
+		// Quaternion to Rotation Matrix
+		DenseMatrix64F T = RotationMatrixGenerator.quaternionToMatrix(quat,null);
+
+		// see if you get the same answer
+		R.print();
+		T.print();
+	}
 }

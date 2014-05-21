@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-package georegression.struct.se;
+package georegression.transform;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.se.Se2_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +35,7 @@ public class TestInvertibleTransformSequence {
 	 */
 	@Test
 	public void computeTransform() {
-		InvertibleTransformSequence path = new InvertibleTransformSequence();
+		InvertibleTransformSequence<Se2_F64> path = new InvertibleTransformSequence<Se2_F64>();
 
 		path.addTransform( false, new Se2_F64( 1, 2, 0 ) );
 		path.addTransform( true, new Se2_F64( 4, 6, 0 ) );
@@ -52,7 +53,7 @@ public class TestInvertibleTransformSequence {
 	 */
 	@Test
 	public void computeTransform2() {
-		InvertibleTransformSequence path = new InvertibleTransformSequence();
+		InvertibleTransformSequence<Se2_F64> path = new InvertibleTransformSequence<Se2_F64>();
 
 		path.addTransform( true, new Se2_F64( 1, 2, Math.PI/2.0 ) );
 		path.addTransform( true, new Se2_F64( 4, 6, Math.PI/2.0 ) );
