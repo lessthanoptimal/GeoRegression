@@ -20,6 +20,8 @@ package georegression.struct.shapes;
 
 import georegression.struct.point.Point2D_F32;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * An ellipse described using its center, semi-axes, and orientation.<br>
@@ -30,7 +32,7 @@ import georegression.struct.point.Point2D_F32;
  *
  * @author Peter Abeles
  */
-public class EllipseRotated_F32 {
+public class EllipseRotated_F32 implements Serializable {
 	/**
 	 * Center of the ellipse
 	 */

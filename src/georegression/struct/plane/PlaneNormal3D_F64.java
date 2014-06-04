@@ -21,13 +21,15 @@ package georegression.struct.plane;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 
+import java.io.Serializable;
+
 /**
  * Defines a plane using a point on the plane and the plane's normal.  N*(x-p0) = 0, where N is the plane's
  * normal, p0 is a point on the plane, and 'x' is another point on the plane.
  *
  * @author Peter Abeles
  */
-public class PlaneNormal3D_F64 {
+public class PlaneNormal3D_F64 implements Serializable {
 	/** An arbitrary point in the plane */
 	public Point3D_F64 p = new Point3D_F64();
 	/** The plane's normal */

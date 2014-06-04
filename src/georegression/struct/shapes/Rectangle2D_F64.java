@@ -18,6 +18,8 @@
 
 package georegression.struct.shapes;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * An axis aligned rectangle in 2D that is specified by its top-left (tl_x,tl_y) corner, width, and height.  The three
@@ -26,7 +28,7 @@ package georegression.struct.shapes;
  *
  * @author Peter Abeles
  */
-public class Rectangle2D_F64 {
+public class Rectangle2D_F64 implements Serializable {
 
 	/**
 	 * Top-left corner x-axis

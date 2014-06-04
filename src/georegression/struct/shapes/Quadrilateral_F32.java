@@ -20,11 +20,13 @@ package georegression.struct.shapes;
 
 import georegression.struct.point.Point2D_F32;
 
+import java.io.Serializable;
+
 /**
  * A polygon with 4 vertices, a,b,c, and d.  The vertices are in order sequential order of a,b,c,d.
  *
  */
-public class Quadrilateral_F32 {
+public class Quadrilateral_F32 implements Serializable {
 	public Point2D_F32 a;
 	public Point2D_F32 b;
 	public Point2D_F32 c;

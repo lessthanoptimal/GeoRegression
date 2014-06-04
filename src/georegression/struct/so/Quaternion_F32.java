@@ -19,6 +19,8 @@
 package georegression.struct.so;
 
 
+import java.io.Serializable;
+
 /**
  * <p>
  * Specifies a 3D rotation using a quaternion.
@@ -32,7 +34,7 @@ package georegression.struct.so;
  *
  * @author Peter Abeles
  */
-public class Quaternion_F32 {
+public class Quaternion_F32 implements Serializable {
 	/**
 	 * Describes the angle of rotation.  See above for how it is encoded.
 	 */

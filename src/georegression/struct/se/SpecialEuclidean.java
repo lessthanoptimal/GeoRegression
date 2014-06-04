@@ -20,6 +20,8 @@ package georegression.struct.se;
 
 import georegression.struct.InvertibleTransform;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * Special Euclidean or rigid body motion is a transform that preserves the norm and cross product
@@ -35,7 +37,7 @@ import georegression.struct.InvertibleTransform;
  *
  * @author Peter Abeles
  */
-public interface SpecialEuclidean<T extends SpecialEuclidean> extends InvertibleTransform<T> {
+public interface SpecialEuclidean<T extends SpecialEuclidean> extends InvertibleTransform<T> , Serializable {
 
 
 }

@@ -18,11 +18,13 @@
 
 package georegression.struct.shapes;
 
+import java.io.Serializable;
+
 /**
  * An axis aligned rectangle in 2D that is specified by its top-left (x0,y0) corner, and bottom-right (x1,y1) corner.
  * x0 <= x1 and y0 <= y1.  (x1,y1) is exclusive and not contained in the rectangle.
  */
-public class RectangleCorner2D_F64 {
+public class RectangleCorner2D_F64 implements Serializable {
 	/**
 	 * Top-left corner
 	 */

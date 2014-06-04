@@ -8,6 +8,8 @@ Version : 0.6
 - Closest point and distance from a 3D triangle and a point
 - Fixed bug in distance and closest point from a point to a 3D line segment
 - Made InvertibleTransformSequence generic and moved to transform package
+- Made more structures implement Serializable so that they might be a Java Bean
+  * Haven't rigorously checked to see if they truly are
 
 ---------------------------------------------
 Date    : 2013-12-26

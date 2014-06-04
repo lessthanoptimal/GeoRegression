@@ -22,12 +22,14 @@ import georegression.struct.line.LineParametric3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 
+import java.io.Serializable;
+
 /**
  * Defines a cylinder in 3D space using a point and vector, which defines a line, and a radius around the line.
  *
  * @author Peter Abeles
  */
-public class Cylinder3D_F32 {
+public class Cylinder3D_F32 implements Serializable {
 	/**
 	 * Line which defines the cylinder's axis
 	 */

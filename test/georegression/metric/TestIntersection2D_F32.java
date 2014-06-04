@@ -260,8 +260,8 @@ public class TestIntersection2D_F32 {
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(0,0,100,120),true);
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(10,12,99,119),true);
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(50,50,200,200),true);
-		check(new RectangleCorner2D_F32(0, 0, 100, 120), new RectangleCorner2D_F32(-10, -10, 10, 10), true);
-		check(new RectangleCorner2D_F32(0, 0, 100, 120), new RectangleCorner2D_F32(90, -10, 105, 1), true);
+		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(-10,-10,10,10),true);
+		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(90,-10,105,1),true);
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(90,5,105,105),true);
 
 		// negative cases
@@ -274,9 +274,9 @@ public class TestIntersection2D_F32 {
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(0,0,0,0),false);
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(100,120,100,120),false);
 		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(-10,0,0,120),false);
-		check(new RectangleCorner2D_F32(0, 0, 100, 120), new RectangleCorner2D_F32(100, 0, 105, 120), false);
-		check(new RectangleCorner2D_F32(0, 0, 100, 120), new RectangleCorner2D_F32(0, -10, 100, 0), false);
-		check(new RectangleCorner2D_F32(0, 0, 100, 120), new RectangleCorner2D_F32(0, 120, 100, 125), false);
+		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(100,0,105,120),false);
+		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(0,-10,100,0),false);
+		check( new RectangleCorner2D_F32(0,0,100,120),new RectangleCorner2D_F32(0,120,100,125),false);
 	}
 
 	private void check( RectangleCorner2D_F32 a , RectangleCorner2D_F32 b , boolean expected ) {
@@ -339,11 +339,11 @@ public class TestIntersection2D_F32 {
 		assertTrue(Intersection2D_F32.contains(rect,-6.001f,4.99f));
 
 		assertTrue(Intersection2D_F32.contains(rect,-5.99f,4));
-		assertTrue(Intersection2D_F32.contains(rect, -10, 4.001f));
+		assertTrue(Intersection2D_F32.contains(rect,-10,4.001f));
 
-		assertFalse(Intersection2D_F32.contains(rect, -11, -5));
-		assertFalse(Intersection2D_F32.contains(rect, -10, -6));
-		assertFalse(Intersection2D_F32.contains(rect, -5, 4));
-		assertFalse(Intersection2D_F32.contains(rect, -6, 5));
+		assertFalse(Intersection2D_F32.contains(rect,-11,-5));
+		assertFalse(Intersection2D_F32.contains(rect,-10,-6));
+		assertFalse(Intersection2D_F32.contains(rect,-5,4));
+		assertFalse(Intersection2D_F32.contains(rect,-6,5));
 	}
 }

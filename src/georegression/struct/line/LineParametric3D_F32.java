@@ -21,6 +21,8 @@ package georegression.struct.line;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 3D line parameterized using parametric equation:<br>
@@ -29,7 +31,7 @@ import georegression.struct.point.Vector3D_F32;
  * and (slopeX,slopeY,slopeZ).
  * </p>
  */
-public class LineParametric3D_F32 {
+public class LineParametric3D_F32 implements Serializable {
 	/**
 	 * A point on the line
 	 */
@@ -145,6 +147,14 @@ public class LineParametric3D_F32 {
 	public void set( LineParametric3D_F32 o ) {
 		this.p.set(o.p);
 		this.slope.set(o.slope);
+	}
+
+	public Point3D_F32 getP() {
+		return p;
+	}
+
+	public void setP(Point3D_F32 p) {
+		this.p = p;
 	}
 
 	public LineParametric3D_F32 copy() {

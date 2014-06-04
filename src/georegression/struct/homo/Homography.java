@@ -20,9 +20,11 @@ package georegression.struct.homo;
 
 import georegression.struct.InvertibleTransform;
 
+import java.io.Serializable;
+
 
 /**
  * @author Peter Abeles
  */
-public interface Homography<T extends Homography> extends InvertibleTransform<T> {
+public interface Homography<T extends Homography> extends InvertibleTransform<T> , Serializable {
 }

@@ -18,6 +18,8 @@
 
 package georegression.struct.plane;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * Represents the line using four parameters such that any point on the planes obeys the
@@ -36,7 +38,7 @@ package georegression.struct.plane;
  *
  * @author Peter Abeles
  */
-public class PlaneGeneral3D_F64 {
+public class PlaneGeneral3D_F64 implements Serializable {
 	/**
 	 * Coefficients which define the plane.
 	 */

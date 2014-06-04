@@ -20,6 +20,8 @@ package georegression.struct.so;
 
 import georegression.struct.point.Vector3D_F32;
 
+import java.io.Serializable;
+
 
 /**
  * <p>
@@ -34,7 +36,7 @@ import georegression.struct.point.Vector3D_F32;
  *
  * @author Peter Abeles
  */
-public class Rodrigues_F32 {
+public class Rodrigues_F32 implements Serializable {
 	// unit vector defining the axis of rotation
 	public Vector3D_F32 unitAxisRotation = new Vector3D_F32();
 	// the angle it is rotated by

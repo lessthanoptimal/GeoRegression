@@ -84,7 +84,7 @@ public class TestClosestPoint3D_F32 {
 		assertTrue(ClosestPoint3D_F32.closestPoints(lineA, lineB, param));
 
 		assertEquals( a.distance(b) , param[0] , GrlConstants.FLOAT_TEST_TOL );
-		assertEquals( c.distance(b) , param[1] , GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(c.distance(b), param[1], GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -167,7 +167,7 @@ public class TestClosestPoint3D_F32 {
 		checkIsClosest(lineA,new Point3D_F32(2,3.5f,3.5f));
 
 		// closest point is past a
-		checkIsClosest(lineA,new Point3D_F32(1,1.95f,3));
+		checkIsClosest(lineA, new Point3D_F32(1, 1.95f, 3));
 
 		// closest point is past b
 		checkIsClosest(lineA, new Point3D_F32(8, 9, 10.1f));

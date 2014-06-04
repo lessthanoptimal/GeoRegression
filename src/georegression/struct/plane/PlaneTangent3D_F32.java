@@ -20,6 +20,8 @@ package georegression.struct.plane;
 
 import georegression.struct.point.Point3D_F32;
 
+import java.io.Serializable;
+
 /**
  * Specifies a plane using the closest point on the plane to the origin.  This can also be viewed as specifying
  * vector which is tangent to the plane with a magnitude equal to the distance of the closest point. This formulation
@@ -27,7 +29,7 @@ import georegression.struct.point.Point3D_F32;
  *
  * @author Peter Abeles
  */
-public class PlaneTangent3D_F32 extends Point3D_F32 {
+public class PlaneTangent3D_F32 extends Point3D_F32 implements Serializable {
 
 	public PlaneTangent3D_F32(float x, float y, float z) {
 		super(x, y, z);

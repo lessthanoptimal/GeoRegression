@@ -20,11 +20,13 @@ package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F32;
 
+import java.io.Serializable;
+
 /**
  * An axis aligned cube in 3D that is specified by two points, p0 and p1.  Point p0 is less than point p1,
  * p0.x <= p1.x, p0.y <= p1.y, p0.z <= p1.z.
  */
-public class Cube3D_F32 {
+public class Cube3D_F32 implements Serializable {
 
 	/**
 	 * The lesser point

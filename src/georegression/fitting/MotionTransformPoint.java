@@ -24,7 +24,7 @@ import georegression.struct.InvertibleTransform;
 import java.util.List;
 
 /**
- * Interface for finding a transform that when applied to the 'from' points which minimize
+ * Interface for finding a transform that when applied to the 'from' points will minimize
  * the difference between the corresponding point in the 'to' list.
  *
  * @author Peter Abeles
@@ -32,7 +32,7 @@ import java.util.List;
 public interface MotionTransformPoint<T extends InvertibleTransform, P extends GeoTuple> {
 
 	/**
-	 * Returns the found motion which minimizes the difference between the two sets of points.
+	 * Returns the estimated motion from the 'from' coordinate system into the 'to' coordinate system.
 	 *
 	 * @return motion
 	 */

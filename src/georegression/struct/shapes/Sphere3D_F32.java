@@ -20,12 +20,14 @@ package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F32;
 
+import java.io.Serializable;
+
 /**
  * Defines a sphere in 3D space using a center point and radius.
  *
  * @author Peter Abeles
  */
-public class Sphere3D_F32 {
+public class Sphere3D_F32 implements Serializable {
 	/**
 	 * Center point of the sphere
 	 */

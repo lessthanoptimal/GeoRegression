@@ -18,6 +18,8 @@
 
 package georegression.struct.shapes;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * In general quadratic form, an ellipse is described by 6-coefficients:<br>
@@ -32,7 +34,7 @@ package georegression.struct.shapes;
  *
  * @author Peter Abeles
  */
-public class EllipseQuadratic_F32 {
+public class EllipseQuadratic_F32 implements Serializable {
 	/**
 	 * coefficients
 	 */

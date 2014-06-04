@@ -18,6 +18,8 @@
 
 package georegression.struct.line;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * Represents the line using three parameters such that any point on the line obeys the
@@ -27,7 +29,7 @@ package georegression.struct.line;
  *
  * @author Peter Abeles
  */
-public class LineGeneral2D_F64 {
+public class LineGeneral2D_F64 implements Serializable {
 
 	/**
 	 * Coefficients which define the line.
@@ -57,5 +59,17 @@ public class LineGeneral2D_F64 {
 		this.A = a;
 		this.B = b;
 		this.C = c;
+	}
+
+	public void setA(double a) {
+		A = a;
+	}
+
+	public void setB(double b) {
+		B = b;
+	}
+
+	public void setC(double c) {
+		C = c;
 	}
 }

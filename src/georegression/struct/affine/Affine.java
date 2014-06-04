@@ -20,9 +20,11 @@ package georegression.struct.affine;
 
 import georegression.struct.InvertibleTransform;
 
+import java.io.Serializable;
+
 
 /**
  * @author Peter Abeles
  */
-public interface Affine<T extends Affine> extends InvertibleTransform<T> {
+public interface Affine<T extends Affine> extends InvertibleTransform<T> , Serializable {
 }

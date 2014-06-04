@@ -19,6 +19,8 @@
 package georegression.struct.line;
 
 
+import java.io.Serializable;
+
 /**
  * <p>
  * Defines a line in 2D space based upon the distance of its closest point to the origin
@@ -34,7 +36,7 @@ package georegression.struct.line;
  * </p>
  * @author Peter Abeles
  */
-public class LinePolar2D_F32 {
+public class LinePolar2D_F32 implements Serializable{
 	/**
 	 * Distance from the origin to the closest point on the line.
 	 */
@@ -50,5 +52,21 @@ public class LinePolar2D_F32 {
 	}
 
 	public LinePolar2D_F32() {
+	}
+
+	public float getDistance() {
+		return distance;
+	}
+
+	public void setDistance(float distance) {
+		this.distance = distance;
+	}
+
+	public float getAngle() {
+		return angle;
+	}
+
+	public void setAngle(float angle) {
+		this.angle = angle;
 	}
 }

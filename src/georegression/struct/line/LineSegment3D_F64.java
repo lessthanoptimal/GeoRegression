@@ -20,13 +20,15 @@ package georegression.struct.line;
 
 import georegression.struct.point.Point3D_F64;
 
+import java.io.Serializable;
+
 
 /**
  * Defines a line segment by its two end points.
  *
  * @author Peter Abeles
  */
-public class LineSegment3D_F64 {
+public class LineSegment3D_F64 implements Serializable {
 	public Point3D_F64 a = new Point3D_F64();
 	public Point3D_F64 b = new Point3D_F64();
 

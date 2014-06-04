@@ -21,6 +21,8 @@ package georegression.struct.line;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Vector2D_F32;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 2D line parameterized using parametric equation:<br>
@@ -29,7 +31,7 @@ import georegression.struct.point.Vector2D_F32;
  * and (slopeX,slopeY).
  * </p>
  */
-public class LineParametric2D_F32 {
+public class LineParametric2D_F32 implements Serializable {
 	/**
 	 * A point on the line
 	 */
@@ -116,6 +118,18 @@ public class LineParametric2D_F32 {
 
 	public final float getY() {
 		return p.y;
+	}
+
+	public Point2D_F32 getP() {
+		return p;
+	}
+
+	public void setP(Point2D_F32 p) {
+		this.p = p;
+	}
+
+	public Vector2D_F32 getSlope() {
+		return slope;
 	}
 
 	public LineParametric2D_F32 copy() {

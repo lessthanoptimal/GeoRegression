@@ -21,12 +21,14 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point2D_I32;
 import org.ddogleg.struct.FastQueue;
 
+import java.io.Serializable;
+
 /**
  * Describes a polygon in 2D.
  *
  * @author Peter Abeles
  */
-public class Polygon2D_I32 {
+public class Polygon2D_I32 implements Serializable  {
 
 	// vertexes in the polygon
 	public FastQueue<Point2D_I32> vertexes;

@@ -20,13 +20,15 @@ package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F64;
 
+import java.io.Serializable;
+
 /**
  * Specifies a Cylinder in 3D space which is bounded along the axis.  The axis line is specified using two points,
  * where the points are its end points.
  *
  * @author Peter Abeles
  */
-public class CylinderBounded3D_F64 {
+public class CylinderBounded3D_F64 implements Serializable {
 	/**
 	 * End points of the cylinder
 	 */
