@@ -10,6 +10,8 @@ Version : 0.6
 - Made InvertibleTransformSequence generic and moved to transform package
 - Made more structures implement Serializable so that they might be a Java Bean
   * Haven't rigorously checked to see if they truly are
+- Fixed bug in UtilLine2D_F64.convert( Parametric , Polar )
+- Split up AffinePointOps into 32 and 64
 
 ---------------------------------------------
 Date    : 2013-12-26

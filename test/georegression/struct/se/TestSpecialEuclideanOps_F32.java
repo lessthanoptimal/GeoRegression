@@ -24,7 +24,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
-import georegression.transform.affine.AffinePointOps;
+import georegression.transform.affine.AffinePointOps_F32;
 import georegression.transform.se.SePointOps_F32;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
@@ -50,7 +50,7 @@ public class TestSpecialEuclideanOps_F32 {
 		Point2D_F32 expected = new Point2D_F32();
 
 		SePointOps_F32.transform(se,original,expected);
-		AffinePointOps.transform(affine, original, found);
+		AffinePointOps_F32.transform(affine, original, found);
 
 		assertEquals(expected.x,found.x,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(expected.y,found.y,GrlConstants.FLOAT_TEST_TOL);

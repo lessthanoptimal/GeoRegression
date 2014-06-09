@@ -69,4 +69,8 @@ public class LinePolar2D_F32 implements Serializable{
 	public void setAngle(float angle) {
 		this.angle = angle;
 	}
+
+	public String toString() {
+		return getClass().getSimpleName()+"{ d = "+distance+" angle = "+angle+" }";
+	}
 }

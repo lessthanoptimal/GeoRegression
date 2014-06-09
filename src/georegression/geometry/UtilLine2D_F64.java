@@ -19,8 +19,7 @@
 package georegression.geometry;
 
 
-import georegression.metric.Distance2D_F64;
-import georegression.metric.UtilAngle;
+import georegression.metric.ClosestPoint2D_F64;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LinePolar2D_F64;
@@ -85,11 +84,13 @@ public class UtilLine2D_F64 {
 		if( ret == null )
 			ret = new LinePolar2D_F64();
 
-		ret.angle = UtilAngle.atanSafe(-src.getSlopeX(),src.getSlopeY());
-		// todo there is bound to be a faster more efficient algorithm using trig
-		ret.distance = Distance2D_F64.distance(src,new Point2D_F64());
-		if( src.getSlopeY() < 0 )
-			ret.distance = -ret.distance;
+		double t = ClosestPoint2D_F64.closestPointT(src, new Point2D_F64());
+
+		double cpX = src.slope.x * t + src.p.x;
+		double cpY = src.slope.y * t + src.p.y;
+
+		ret.angle = Math.atan2(cpY,cpX);
+		ret.distance = Math.sqrt(cpX*cpX + cpY*cpY);
 
 		return ret;
 	}

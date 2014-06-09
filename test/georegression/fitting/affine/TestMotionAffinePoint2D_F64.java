@@ -23,7 +23,7 @@ import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.transform.affine.AffinePointOps;
+import georegression.transform.affine.AffinePointOps_F64;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class TestMotionAffinePoint2D_F64 {
 		List<Point2D_F64> from = UtilPoint2D_F64.random( -10, 10, 30, rand );
 		List<Point2D_F64> to = new ArrayList<Point2D_F64>();
 		for( Point2D_F64 p : from ) {
-			to.add( AffinePointOps.transform( tran, p, null ) );
+			to.add( AffinePointOps_F64.transform(tran, p, null) );
 		}
 
 		MotionAffinePoint2D_F64 alg = new MotionAffinePoint2D_F64();
@@ -65,7 +65,7 @@ public class TestMotionAffinePoint2D_F64 {
 
 			Point2D_F64 p = from.get( i );
 
-			AffinePointOps.transform( tranFound, p, foundPt );
+			AffinePointOps_F64.transform(tranFound, p, foundPt);
 
 			GeometryUnitTest.assertEquals( to.get( i ), foundPt, tol );
 		}

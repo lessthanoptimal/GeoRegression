@@ -19,16 +19,14 @@
 package georegression.transform.affine;
 
 import georegression.struct.affine.Affine2D_F32;
-import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Point2D_F32;
-import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F32;
 
 
 /**
  * @author Peter Abeles
  */
-public class AffinePointOps {
+public class AffinePointOps_F32 {
 
 	/**
 	 * Applies a 2D affine transform to the point and stores the results in another
@@ -87,32 +85,6 @@ public class AffinePointOps {
 	 * variable.
 	 *
 	 * @param se	 The transform.
-	 * @param orig   Original point being transformed. Not modified.
-	 * @param result Where the results are stored.  Can be the same as orig. If null a new
-	 *               instance is created. Modified.
-	 * @return Transformed point.
-	 */
-	public static Point2D_F64 transform( Affine2D_F64 se, Point2D_F64 orig, Point2D_F64 result ) {
-
-		if( result == null ) {
-			result = new Point2D_F64();
-		}
-
-		// copy the values so that no errors happen if orig and result are the same instance
-		double x = orig.x;
-		double y = orig.y;
-
-		result.x = se.tx + se.a11 * x + se.a12 * y;
-		result.y = se.ty + se.a21 * x + se.a22 * y;
-
-		return result;
-	}
-
-	/**
-	 * Applies a 2D affine transform to the point and stores the results in another
-	 * variable.
-	 *
-	 * @param se	 The transform.
 	 * @param x	  Original x-coordinate
 	 * @param y	  Original y-coordinate
 	 * @param result Where the results are stored.  Can be the same as orig. If null a new
@@ -123,29 +95,6 @@ public class AffinePointOps {
 
 		if( result == null ) {
 			result = new Point2D_F32();
-		}
-
-		result.x = se.tx + se.a11 * x + se.a12 * y;
-		result.y = se.ty + se.a21 * x + se.a22 * y;
-
-		return result;
-	}
-
-	/**
-	 * Applies a 2D affine transform to the point and stores the results in another
-	 * variable.
-	 *
-	 * @param se	 The transform.
-	 * @param x	  Original x-coordinate
-	 * @param y	  Original y-coordinate
-	 * @param result Where the results are stored.  Can be the same as orig. If null a new
-	 *               instance is created. Modified.
-	 * @return Transformed point.
-	 */
-	public static Point2D_F64 transform( Affine2D_F64 se, double x, double y, Point2D_F64 result ) {
-
-		if( result == null ) {
-			result = new Point2D_F64();
 		}
 
 		result.x = se.tx + se.a11 * x + se.a12 * y;

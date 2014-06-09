@@ -21,7 +21,7 @@ package georegression.struct.affine;
 import georegression.struct.GenericInvertibleTransformTests_F64;
 import georegression.struct.InvertibleTransform;
 import georegression.struct.point.Point2D_F64;
-import georegression.transform.affine.AffinePointOps;
+import georegression.transform.affine.AffinePointOps_F64;
 
 import java.util.Random;
 
@@ -53,6 +53,6 @@ public class TestAffine2D_F64 extends GenericInvertibleTransformTests_F64<Point2
 
 	@Override
 	public Point2D_F64 apply( InvertibleTransform se, Point2D_F64 point, Point2D_F64 result ) {
-		return AffinePointOps.transform( (Affine2D_F64) se, point, result );
+		return AffinePointOps_F64.transform((Affine2D_F64) se, point, result);
 	}
 }

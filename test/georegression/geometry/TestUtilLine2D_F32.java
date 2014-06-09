@@ -19,6 +19,7 @@
 package georegression.geometry;
 
 
+import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
@@ -27,29 +28,16 @@ import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * @author Peter Abeles
  */
 public class TestUtilLine2D_F32 {
 
-	@Test
-	public void convert_polar_parametric() {
-		LinePolar2D_F32 polar = new LinePolar2D_F32();
-		LineParametric2D_F32 para = new LineParametric2D_F32();
-
-		polar.distance = 5;
-		polar.angle = (float)Math.PI/2;
-
-		UtilLine2D_F32.convert(polar,para);
-
-		assertEquals(para.p.x,0, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(para.p.y,5, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(Math.abs(para.slope.x),1, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(para.slope.y,0, GrlConstants.FLOAT_TEST_TOL);
-	}
+	Random rand = new Random(234234);
 
 	@Test
 	public void convert_segment_parametric() {
@@ -68,6 +56,22 @@ public class TestUtilLine2D_F32 {
 	}
 
 	@Test
+	public void convert_polar_parametric() {
+		LinePolar2D_F32 polar = new LinePolar2D_F32();
+		LineParametric2D_F32 para = new LineParametric2D_F32();
+
+		polar.distance = 5;
+		polar.angle = (float)Math.PI/2;
+
+		UtilLine2D_F32.convert(polar,para);
+
+		assertEquals(para.p.x,0, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(para.p.y,5, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(Math.abs(para.slope.x),1, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(para.slope.y,0, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
 	public void convert_parametric_polar() {
 		LineParametric2D_F32 para = new LineParametric2D_F32();
 		LinePolar2D_F32 polar = new LinePolar2D_F32();
@@ -81,10 +85,36 @@ public class TestUtilLine2D_F32 {
 		para.slope.set(1,-1);
 		para.setPoint(-5,-5);
 		UtilLine2D_F32.convert(para,polar);
-		assertEquals(polar.distance,-5*Math.sqrt(2), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(polar.angle,Math.PI/4, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(polar.distance,5*Math.sqrt(2), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(polar.angle,-Math.PI+Math.PI/4, GrlConstants.FLOAT_TEST_TOL);
+	}
 
-		fail("Don't think these tests are sufficient.  when it decides to go negative is probably not correct");
+	@Test
+	public void convert_BackAndForth_parametric_polar() {
+		LineParametric2D_F32 para = new LineParametric2D_F32();
+		LinePolar2D_F32 polar = new LinePolar2D_F32();
+		LinePolar2D_F32 found = new LinePolar2D_F32();
+
+		for (int i = 0; i < 100; i++) {
+			polar.distance = (rand.nextFloat() - 0.5f) * 3;
+			polar.angle = 2.0f*(rand.nextFloat() - 0.5f) * (float)Math.PI;
+
+			UtilLine2D_F32.convert(polar, para);
+			UtilLine2D_F32.convert(para, found);
+
+			normalize(polar);
+			normalize(found);
+
+			assertEquals(polar.angle,found.angle,GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(polar.distance,found.distance,GrlConstants.FLOAT_TEST_TOL);
+		}
+	}
+
+	private void normalize( LinePolar2D_F32 l ) {
+		if( l.distance < 0 ) {
+			l.distance = -l.distance;
+			l.angle = (float) UtilAngle.bound(l.angle+Math.PI);
+		}
 	}
 
 	@Test
