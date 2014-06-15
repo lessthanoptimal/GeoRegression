@@ -92,9 +92,12 @@
                 version="true"
                 use="true"
                 windowtitle="Geometric Regression Library"
-	        sourcepathref="source.classpath">
+                sourcepathref="source.classpath">
 
-	    <header><![CDATA[
+            <link offline="false" href="http://ddogleg.org/javadoc/" packagelistloc="package-list" />
+            <link offline="false" href="http://ejml.org/javadoc/" packagelistloc="package-list" />
+
+            <header><![CDATA[
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-0419821832107208";
 /* boofcv javadoc banner */
@@ -107,25 +110,22 @@ google_ad_height = 60;
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 ]]>
-</header>
-<doctitle><![CDATA[<h1>Geometric Regression Library API Specification</h1>]]></doctitle>
-            <bottom><![CDATA[<script type="text/javascript">
+            </header>
+            <doctitle><![CDATA[<h1>Geometric Regression Library API Specification</h1>]]></doctitle>
+            <bottom><![CDATA[<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-10413214-4']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+  ga('create', 'UA-10413214-4', 'georegression.org');
+  ga('send', 'pageview');
 
 </script>
 <br>
-<b>Copyright &copy; 2011-2013 Peter Abeles</b>
+<b>Copyright &copy; 2011-2014 Peter Abeles</b>
 ]]>
-</bottom>
+            </bottom>
  
         </javadoc>
     </target>
@@ -140,8 +140,11 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
                 windowtitle="Geometric Regression Library"
                 sourcepathref="source.classpath" >
 
+            <link offline="false" href="http://ddogleg.org/javadoc/" packagelistloc="package-list" />
+            <link offline="false" href="http://ejml.org/javadoc/" packagelistloc="package-list" />
+
             <doctitle><![CDATA[<h1>Geometric Regression Library API Specification</h1>]]></doctitle>
-            <bottom><![CDATA[<i>Copyright &#169; 2011-2013 Peter Abeles All Rights Reserved.</i>]]></bottom>
+            <bottom><![CDATA[<i>Copyright &#169; 2011-2014 Peter Abeles All Rights Reserved.</i>]]></bottom>
         </javadoc>
         <jar compress="true" destfile="docs/javadoc.jar" basedir="docs/api" />
     </target>
