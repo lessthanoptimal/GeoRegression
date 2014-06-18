@@ -96,6 +96,7 @@
 
             <link offline="false" href="http://ddogleg.org/javadoc/" packagelistloc="package-list" />
             <link offline="false" href="http://ejml.org/javadoc/" packagelistloc="package-list" />
+            <link offline="false" href="http://docs.oracle.com/javase/6/docs/api/" packagelistloc="package-list" />
 
             <header><![CDATA[
 <script type="text/javascript"><!--
@@ -142,6 +143,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
             <link offline="false" href="http://ddogleg.org/javadoc/" packagelistloc="package-list" />
             <link offline="false" href="http://ejml.org/javadoc/" packagelistloc="package-list" />
+            <link offline="false" href="http://docs.oracle.com/javase/6/docs/api/" packagelistloc="package-list" />
 
             <doctitle><![CDATA[<h1>Geometric Regression Library API Specification</h1>]]></doctitle>
             <bottom><![CDATA[<i>Copyright &#169; 2011-2014 Peter Abeles All Rights Reserved.</i>]]></bottom>
