@@ -1,6 +1,12 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2014
+Version : 0.7
+
+- Switch build system over to Gradle
+
+---------------------------------------------
 Date    : 2014-06-18
 Version : 0.6
 

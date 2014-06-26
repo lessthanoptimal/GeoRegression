@@ -1,0 +1,133 @@
+
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'java'
+apply plugin: 'osgi'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = 'org.georegression'
+version = '0.7-SNAPSHOT'
+project.archivesBaseName = 'georegression'
+
+sourceCompatibility = 1.6
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven {
+        url = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'resources/src'
+        }
+    }
+
+    test {
+        java {
+            srcDir 'examples/src'
+            srcDir 'test'
+            srcDir 'generate'
+            srcDir 'benchmark'
+        }
+        resources {
+            srcDir 'resources/test'
+        }
+    }
+}
+
+dependencies {
+    compile group: 'com.googlecode.efficient-java-matrix-library', name: 'ejml', version: '0.25'
+    compile group: 'org.ddogleg', name: 'ddogleg', version: '0.5'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+jar {
+    manifest { // the manifest of the default jar is of type OsgiManifest
+        instruction 'Bundle-Vendor', 'GeoRegression'
+        instruction 'Bundle-DocURL', 'http://georegression.org'
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+// if Maven central isn't setup in gradle.properties skip all of this
+if( project.hasProperty('ossrhUsername') ) {
+    signing {
+        sign configurations.archives
+    }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                pom.project {
+                    name 'BoofCV'
+                    packaging 'pom'
+                    // optionally artifactId can be defined here
+                    description 'GeoRegression is a free Java based geometry library for scientific computing in fields such as robotics and computer vision with a focus on 2D/3D space.'
+                    url 'http://georegression.org'
+
+                    scm {
+                        connection 'scm:git:git@github.com:lessthanoptimal/ddogleg.git'
+                        developerConnection 'scm:git:git@github.com:lessthanoptimal/ddogleg.git'
+                        url 'https://github.com/lessthanoptimal/GeoRegression'
+                    }
+
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'pabeles'
+                            name 'Peter Abeles'
+                            email 'peter.abeles@gmail.com'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+idea {
+    project {
+        jdkName = '1.6 (64bit)'
+        languageLevel = '1.6'
+    }
+}
+
