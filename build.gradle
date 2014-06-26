@@ -58,6 +58,14 @@ jar {
     }
 }
 
+javadoc {
+    configure(options) {
+        links = [ 'http://docs.oracle.com/javase/7/docs/api/',
+                  'http://ejml.org/javadoc/',
+                  'http://ddogleg.org/javadoc/']
+    }
+}
+
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
     from javadoc
@@ -120,6 +128,35 @@ if( project.hasProperty('ossrhUsername') ) {
                     }
                 }
             }
+        }
+    }
+}
+
+// Creates a directory with all the compiled BoofCV jars and the dependencies for main
+task createLibraryDirectory( dependsOn: ['jar','sourcesJar'] ) << {
+
+    ext.listExternal = files(project.configurations.compile)
+    ext.listInternal = files(project.tasks.jar.archivePath)
+    ext.listSource = files(project.tasks.sourcesJar.archivePath)
+
+    ext.listExternal = ext.listExternal - ext.listInternal
+
+    file('libraries').deleteDir()
+    file('libraries').mkdir()
+
+    copy {
+        from ext.listExternal
+        into 'libraries'
+    }
+
+    copy {
+        from ext.listInternal
+        from ext.listSource
+        into 'libraries'
+
+        // append on BoofCV so it's clear which jars are part of BoofCV and which are not
+        rename { String fileName ->
+            "GeoRegression-" + fileName
         }
     }
 }
