@@ -68,7 +68,7 @@ public class ExampleTransformFitting {
 		if(!estimator.process(fromPts,toPts))
 			throw new RuntimeException("Estimation of Se3 failed");
 
-		Se3_F64 found = estimator.getMotion();
+		Se3_F64 found = estimator.getTransformSrcToDst();
 
 		// Print out the results and see how it compares to ground truth
 		actual.print();

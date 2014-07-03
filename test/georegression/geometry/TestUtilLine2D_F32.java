@@ -105,7 +105,7 @@ public class TestUtilLine2D_F32 {
 			normalize(polar);
 			normalize(found);
 
-			assertEquals(polar.angle,found.angle,GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(polar.angle, found.angle, GrlConstants.FLOAT_TEST_TOL);
 			assertEquals(polar.distance,found.distance,GrlConstants.FLOAT_TEST_TOL);
 		}
 	}

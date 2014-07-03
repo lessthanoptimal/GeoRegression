@@ -54,20 +54,20 @@ public abstract class GeneralMotionSe3Tests_F32 {
 
 			Se3_F32 tran = new Se3_F32( R, T );
 
-			List<Point3D_F32> from = UtilPoint3D_F32.random(-10, 10, 30, rand);
-			List<Point3D_F32> to = new ArrayList<Point3D_F32>();
-			for( Point3D_F32 p : from ) {
-				to.add( SePointOps_F32.transform(tran, p, null) );
+			List<Point3D_F32> src = UtilPoint3D_F32.random(-10, 10, 30, rand);
+			List<Point3D_F32> dst = new ArrayList<Point3D_F32>();
+			for( Point3D_F32 p : src ) {
+				dst.add(SePointOps_F32.transform(tran, p, null));
 			}
 
 			MotionTransformPoint<Se3_F32, Point3D_F32> alg = createAlg();
 
-			assertTrue( alg.process( from, to ) );
+			assertTrue( alg.process( src, dst ) );
 
 
-			Se3_F32 tranFound = alg.getMotion();
+			Se3_F32 foundSrcToDst = alg.getTransformSrcToDst();
 
-			checkTransform( from, to, tranFound, GrlConstants.FLOAT_TEST_TOL );
+			checkTransform( src, dst, foundSrcToDst, GrlConstants.FLOAT_TEST_TOL );
 		}
 	}
 
@@ -91,7 +91,7 @@ public abstract class GeneralMotionSe3Tests_F32 {
 
 			assertTrue( alg.process( from, to ) );
 
-			Se3_F32 tranFound = alg.getMotion();
+			Se3_F32 tranFound = alg.getTransformSrcToDst();
 			
 			R.print();
 			tranFound.getR().print();
@@ -109,15 +109,12 @@ public abstract class GeneralMotionSe3Tests_F32 {
 		return ret;
 	}
 
-	public static void checkTransform( List<Point3D_F32> from, List<Point3D_F32> to, Se3_F32 tranFound, float tol ) {
+	public static void checkTransform( List<Point3D_F32> src, List<Point3D_F32> dst, Se3_F32 foundSrcToDst, float tol ) {
 		Point3D_F32 foundPt = new Point3D_F32();
-		for( int i = 0; i < from.size(); i++ ) {
-
-			Point3D_F32 p = from.get( i );
-
-			SePointOps_F32.transform( tranFound, p, foundPt );
-
-			GeometryUnitTest.assertEquals(to.get(i), foundPt, tol);
+		for( int i = 0; i < src.size(); i++ ) {
+			Point3D_F32 p = src.get( i );
+			SePointOps_F32.transform( foundSrcToDst, p, foundPt );
+			GeometryUnitTest.assertEquals(dst.get(i), foundPt, tol);
 		}
 	}
 }

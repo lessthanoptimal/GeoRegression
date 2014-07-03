@@ -24,8 +24,8 @@ import georegression.struct.InvertibleTransform;
 import java.util.List;
 
 /**
- * Interface for finding a transform that when applied to the 'from' points will minimize
- * the difference between the corresponding point in the 'to' list.
+ * Interface for finding a transform that when applied to the 'src' points will minimize
+ * the difference between the corresponding point in the 'dst' list.
  *
  * @author Peter Abeles
  */
@@ -36,17 +36,17 @@ public interface MotionTransformPoint<T extends InvertibleTransform, P extends G
 	 *
 	 * @return motion
 	 */
-	public T getMotion();
+	public T getTransformSrcToDst();
 
 	/**
 	 * Processes the sets of corresponding points and finds a transformation which when applied
-	 * to 'fromPts' will minimize the difference with the 'toPts'.
+	 * to 'srcPts' will minimize the difference with the 'dstPts'.
 	 *
-	 * @param fromPts The points which are to be transformed.  Not modified.
-	 * @param toPts   The points that are being compared against. Not modified.
+	 * @param srcPts The points which are to be transformed.  Not modified.
+	 * @param dstPts The points that are being compared against. Not modified.
 	 * @return true if the computation successfully produced a solution and false if not.
 	 */
-	public boolean process( List<P> fromPts, List<P> toPts );
+	public boolean process( List<P> srcPts, List<P> dstPts );
 
 	/**
 	 * Minimum number of points required to compute a model.

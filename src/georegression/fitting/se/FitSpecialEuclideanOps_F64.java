@@ -68,7 +68,7 @@ public class FitSpecialEuclideanOps_F64 {
 
 		alg.process( from, to );
 
-		return alg.getMotion();
+		return alg.getTransformSrcToDst();
 	}
 
 	/**
@@ -84,6 +84,6 @@ public class FitSpecialEuclideanOps_F64 {
 
 		alg.process( from, to );
 
-		return alg.getMotion();
+		return alg.getTransformSrcToDst();
 	}
 }

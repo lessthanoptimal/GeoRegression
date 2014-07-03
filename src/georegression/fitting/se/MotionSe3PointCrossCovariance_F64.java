@@ -67,20 +67,20 @@ public class MotionSe3PointCrossCovariance_F64 implements MotionTransformPoint<S
 	}
 
 	@Override
-	public Se3_F64 getMotion() {
+	public Se3_F64 getTransformSrcToDst() {
 		return motion;
 	}
 
 	@Override
-	public boolean process( List<Point3D_F64> fromPts, List<Point3D_F64> toPts ) {
-		if( fromPts.size() != toPts.size() )
+	public boolean process( List<Point3D_F64> srcPts, List<Point3D_F64> dstPts) {
+		if( srcPts.size() != dstPts.size() )
 			throw new IllegalArgumentException( "There must be a 1 to 1 correspondence between the two sets of points" );
 
 		// find the mean of both sets of points
-		Point3D_F64 meanFrom = UtilPoint3D_F64.mean( fromPts , null );
-		Point3D_F64 meanTo = UtilPoint3D_F64.mean( toPts , null );
+		Point3D_F64 meanFrom = UtilPoint3D_F64.mean(srcPts, null );
+		Point3D_F64 meanTo = UtilPoint3D_F64.mean(dstPts, null );
 
-		final int N = fromPts.size();
+		final int N = srcPts.size();
 
 		// compute the cross-covariance matrix Sigma of the two sets of points
 		// Sigma = (1/N)*sum(i=1:N,[p*x^T]) + mu_p*mu_x^T
@@ -95,8 +95,8 @@ public class MotionSe3PointCrossCovariance_F64 implements MotionTransformPoint<S
 		double m31 = meanFrom.z * meanTo.x, m32 = meanFrom.z * meanTo.y, m33 = meanFrom.z * meanTo.z;
 
 		for( int i = 0; i < N; i++ ) {
-			Point3D_F64 f = fromPts.get( i );
-			Point3D_F64 t = toPts.get( i );
+			Point3D_F64 f = srcPts.get( i );
+			Point3D_F64 t = dstPts.get( i );
 
 			s11 += f.x * t.x;
 			s12 += f.x * t.y;

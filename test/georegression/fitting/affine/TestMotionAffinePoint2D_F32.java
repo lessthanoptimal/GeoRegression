@@ -54,7 +54,7 @@ public class TestMotionAffinePoint2D_F32 {
 
 		assertTrue( alg.process( from, to ) );
 
-		Affine2D_F32 tranFound = alg.getMotion();
+		Affine2D_F32 tranFound = alg.getTransformSrcToDst();
 
 		checkTransform( from, to, tranFound, GrlConstants.FLOAT_TEST_TOL );
 	}

@@ -56,20 +56,20 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 	Point2D_F32 meanTo = new Point2D_F32();
 
 	@Override
-	public Se2_F32 getMotion() {
+	public Se2_F32 getTransformSrcToDst() {
 		return motion;
 	}
 
 	@Override
-	public boolean process( List<Point2D_F32> fromPts, List<Point2D_F32> toPts ) {
-		if( fromPts.size() != toPts.size() )
+	public boolean process( List<Point2D_F32> srcPts, List<Point2D_F32> dstPts) {
+		if( srcPts.size() != dstPts.size() )
 			throw new IllegalArgumentException( "There must be a 1 to 1 correspondence between the two sets of points" );
 
 		// find the mean of both sets of points
-		UtilPoint2D_F32.mean( fromPts , meanFrom );
-		UtilPoint2D_F32.mean( toPts , meanTo );
+		UtilPoint2D_F32.mean(srcPts, meanFrom );
+		UtilPoint2D_F32.mean(dstPts, meanTo );
 
-		final int N = fromPts.size();
+		final int N = srcPts.size();
 
 		// compute the cross-covariance matrix Sigma of the two sets of points
 		// Sigma = (1/N)*sum(i=1:N,[p*x^T]) + mu_p*mu_x^T
@@ -82,8 +82,8 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 		float m21 = meanFrom.y * meanTo.x, m22 = meanFrom.y * meanTo.y;
 
 		for( int i = 0; i < N; i++ ) {
-			Point2D_F32 f = fromPts.get( i );
-			Point2D_F32 t = toPts.get( i );
+			Point2D_F32 f = srcPts.get( i );
+			Point2D_F32 t = dstPts.get( i );
 
 			s11 += f.x * t.x;
 			s12 += f.x * t.y;

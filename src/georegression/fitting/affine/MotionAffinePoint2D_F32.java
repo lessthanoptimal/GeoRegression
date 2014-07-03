@@ -51,7 +51,7 @@ public class MotionAffinePoint2D_F32 implements MotionTransformPoint<Affine2D_F3
 	}
 
 	@Override
-	public Affine2D_F32 getMotion() {
+	public Affine2D_F32 getTransformSrcToDst() {
 		return model;
 	}
 
@@ -59,11 +59,11 @@ public class MotionAffinePoint2D_F32 implements MotionTransformPoint<Affine2D_F3
 	 *  @inheritdoc
 	 */
 	@Override
-	public boolean process( List<Point2D_F32> fromPts, List<Point2D_F32> toPts ) {
+	public boolean process( List<Point2D_F32> srcPts, List<Point2D_F32> dstPts) {
 		// grow or shrink the matrix sizes
-		int N = fromPts.size();
+		int N = srcPts.size();
 
-		if( N != toPts.size() ) {
+		if( N != dstPts.size() ) {
 			throw new IllegalArgumentException( "From and to lists must be the same size" );
 		} else if( N < 3 ) {
 			throw new IllegalArgumentException( "Must be at least 3 points" );
@@ -82,8 +82,8 @@ public class MotionAffinePoint2D_F32 implements MotionTransformPoint<Affine2D_F3
 
 		// put the data into the matrices
 		for( int i = 0; i < N; i++ ) {
-			Point2D_F32 pt2 = fromPts.get( i );
-			Point2D_F32 pt1 = toPts.get( i );
+			Point2D_F32 pt2 = srcPts.get( i );
+			Point2D_F32 pt1 = dstPts.get( i );
 
 
 			A.set( i, 0, pt2.x );

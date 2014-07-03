@@ -64,7 +64,7 @@ public class TestFitSpecialEuclideanOps_F32 {
 		MotionTransformPoint<Se2_F32, Point2D_F32> alg = FitSpecialEuclideanOps_F32.fitPoints2D();
 		assertTrue( alg.process( from , to ) );
 
-		Se2_F32 expected = alg.getMotion();
+		Se2_F32 expected = alg.getTransformSrcToDst();
 		Se2_F32 found = FitSpecialEuclideanOps_F32.fitPoints2D( from , to );
 
 		// the exact same algorithm should be called and they should produce the same results
@@ -91,7 +91,7 @@ public class TestFitSpecialEuclideanOps_F32 {
 		MotionTransformPoint<Se3_F32, Point3D_F32> alg = FitSpecialEuclideanOps_F32.fitPoints3D();
 		assertTrue( alg.process( from , to ) );
 
-		Se3_F32 expected = alg.getMotion();
+		Se3_F32 expected = alg.getTransformSrcToDst();
 		Se3_F32 found = FitSpecialEuclideanOps_F32.fitPoints3D( from , to );
 
 		// the exact same algorithm should be called and they should produce the same results

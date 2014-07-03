@@ -43,33 +43,33 @@ public class TestMotionSe2PointSVD_F64 {
 	public void noiseless() {
 		Se2_F64 tran = new Se2_F64( 2, -4, 0.93 );
 
-		List<Point2D_F64> from = UtilPoint2D_F64.random( -10, 10, 30, rand );
-		List<Point2D_F64> to = new ArrayList<Point2D_F64>();
-		for( Point2D_F64 p : from ) {
-			to.add( SePointOps_F64.transform( tran, p, null ) );
+		List<Point2D_F64> src = UtilPoint2D_F64.random( -10, 10, 30, rand );
+		List<Point2D_F64> dst = new ArrayList<Point2D_F64>();
+		for( Point2D_F64 p : src ) {
+			dst.add(SePointOps_F64.transform(tran, p, null));
 		}
 
 		MotionSe2PointSVD_F64 alg = new MotionSe2PointSVD_F64();
 
-		assertTrue( alg.process( from, to ) );
+		assertTrue( alg.process( src, dst ) );
 
-		Se2_F64 tranFound = alg.getMotion();
+		Se2_F64 foundSrcToDst = alg.getTransformSrcToDst();
 
 //        tranFound.getTranslation().print();
 //        tran.getTranslation().print();
 
-		checkTransform( from, to, tranFound, GrlConstants.DOUBLE_TEST_TOL );
+		checkTransform( src, dst, foundSrcToDst, GrlConstants.DOUBLE_TEST_TOL );
 	}
 
-	public static void checkTransform( List<Point2D_F64> from, List<Point2D_F64> to, Se2_F64 tranFound, double tol ) {
+	public static void checkTransform( List<Point2D_F64> src, List<Point2D_F64> dst, Se2_F64 foundSrcToDst, double tol ) {
 		Point2D_F64 foundPt = new Point2D_F64();
-		for( int i = 0; i < from.size(); i++ ) {
+		for( int i = 0; i < src.size(); i++ ) {
 
-			Point2D_F64 p = from.get( i );
+			Point2D_F64 p = src.get( i );
 
-			SePointOps_F64.transform( tranFound, p, foundPt );
+			SePointOps_F64.transform( foundSrcToDst, p, foundPt );
 
-			GeometryUnitTest.assertEquals( to.get( i ), foundPt, tol );
+			GeometryUnitTest.assertEquals( dst.get( i ), foundPt, tol );
 		}
 	}
 }

@@ -51,20 +51,20 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 	SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(3, 3,true,true,false);
 
 	@Override
-	public Se3_F64 getMotion() {
+	public Se3_F64 getTransformSrcToDst() {
 		return motion;
 	}
 
 	@Override
-	public boolean process( List<Point3D_F64> fromPts, List<Point3D_F64> toPts ) {
-		if( fromPts.size() != toPts.size() )
+	public boolean process( List<Point3D_F64> srcPts, List<Point3D_F64> dstPts) {
+		if( srcPts.size() != dstPts.size() )
 			throw new IllegalArgumentException( "There must be a 1 to 1 correspondence between the two sets of points" );
 
 		// find the mean of both sets of points
-		Point3D_F64 meanFrom = UtilPoint3D_F64.mean( fromPts , null );
-		Point3D_F64 meanTo = UtilPoint3D_F64.mean( toPts , null );
+		Point3D_F64 meanSrc = UtilPoint3D_F64.mean(srcPts, null );
+		Point3D_F64 meanDst = UtilPoint3D_F64.mean(dstPts, null );
 
-		final int N = fromPts.size();
+		final int N = srcPts.size();
 
 		// compute the cross-covariance matrix Sigma of the two sets of points
 		// Sigma = (1/N)*sum(i=1:N,[p*x^T]) + mu_p*mu_x^T
@@ -74,16 +74,16 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 		double s31 = 0, s32 = 0, s33 = 0;
 
 		for( int i = 0; i < N; i++ ) {
-			Point3D_F64 f = fromPts.get( i );
-			Point3D_F64 t = toPts.get( i );
+			Point3D_F64 f = srcPts.get( i );
+			Point3D_F64 t = dstPts.get( i );
 
-			double dfx = f.x - meanFrom.x;
-			double dfy = f.y - meanFrom.y;
-			double dfz = f.z - meanFrom.z;
+			double dfx = f.x - meanSrc.x;
+			double dfy = f.y - meanSrc.y;
+			double dfz = f.z - meanSrc.z;
 
-			double dtx = t.x - meanTo.x;
-			double dty = t.y - meanTo.y;
-			double dtz = t.z - meanTo.z;
+			double dtx = t.x - meanDst.x;
+			double dty = t.y - meanDst.y;
+			double dtz = t.z - meanDst.z;
 
 			s11 += dtx*dfx;
 			s12 += dtx*dfy;
@@ -117,9 +117,9 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 		CommonOps.multTransB(U, V, motion.getR());
 
 		Point3D_F64 temp = new Point3D_F64();
-		GeometryMath_F64.mult(motion.getR(),meanFrom,temp);
+		GeometryMath_F64.mult(motion.getR(),meanSrc,temp);
 
-		motion.getT().set(meanTo.x - temp.x,meanTo.y - temp.y,meanTo.z - temp.z);
+		motion.getT().set(meanDst.x - temp.x,meanDst.y - temp.y,meanDst.z - temp.z);
 
 		return true;
 	}
