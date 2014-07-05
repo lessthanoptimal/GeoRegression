@@ -44,4 +44,11 @@ public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
 	 * @return new tuple instance.
 	 */
 	public abstract T createNewInstance();
+
+	/**
+	 * Generic copy routine.  It is recommended that this be overridden with a faster implementation.
+	 *
+	 * @return An exact copy of this GeoTuple.
+	 */
+	public abstract T copy();
 }

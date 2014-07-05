@@ -18,10 +18,12 @@
 
 package georegression.struct.point;
 
+import georegression.struct.GeoTuple;
+
 /**
  * An integer 2D point
  */
-public class Point2D_I32 {
+public class Point2D_I32 extends GeoTuple<Point2D_I32> {
 	public int x;
 	public int y;
 
@@ -101,5 +103,15 @@ public class Point2D_I32 {
 				"x=" + x +
 				", y=" + y +
 				'}';
+	}
+
+	@Override
+	public int getDimension() {
+		return 2;
+	}
+
+	@Override
+	public Point2D_I32 createNewInstance() {
+		return new Point2D_I32();
 	}
 }

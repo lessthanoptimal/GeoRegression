@@ -120,4 +120,59 @@ public class TestIntersection3D_F64 {
 		assertFalse(Intersection3D_F64.contained(cube, new Point3D_F64(2.1, 3+1.5, 4.1)));
 		assertFalse(Intersection3D_F64.contained(cube, new Point3D_F64(2.1, 3.1, 4+2.5)));
 	}
+
+	@Test
+	public void contained_cube_cube() {
+		Cube3D_F64 cube = new Cube3D_F64(2,3,4,3,4.5,6.5);
+
+		// identical
+		assertTrue(Intersection3D_F64.contained(cube,new Cube3D_F64(2,3,4,3,4.5,6.5)));
+		// smaller
+		assertTrue(Intersection3D_F64.contained(cube,new Cube3D_F64(2.1,3.1,4.1,2.9,4.4,6.4)));
+
+		// partial x-axis
+		assertFalse(Intersection3D_F64.contained(cube,new Cube3D_F64(1.9,3,4,3,4.5,6.5)));
+		assertFalse(Intersection3D_F64.contained(cube,new Cube3D_F64(2,3,4,3.1,4.5,6.5)));
+		// partial y-axis
+		assertFalse(Intersection3D_F64.contained(cube,new Cube3D_F64(2,2.9,4,3,4.5,6.5)));
+		assertFalse(Intersection3D_F64.contained(cube,new Cube3D_F64(2,3,4,3,4.6,6.5)));
+		// partial z-axis
+		assertFalse(Intersection3D_F64.contained(cube,new Cube3D_F64(2,3,3.9,3,4.5,6.5)));
+		assertFalse(Intersection3D_F64.contained(cube,new Cube3D_F64(2,3,4,3,4.5,6.6)));
+	}
+
+	@Test
+	public void intersect_cube_cube() {
+		Cube3D_F64 cube = new Cube3D_F64(2,3,4,3,4.5,6.5);
+
+		// identical
+		assertTrue(Intersection3D_F64.contained(cube,new Cube3D_F64(2,3,4,3,4.5,6.5)));
+		// outside
+		assertFalse(Intersection3D_F64.contained(cube,new Cube3D_F64(10,10,10,12,12,12)));
+		assertFalse(Intersection3D_F64.contained(cube,new Cube3D_F64(10,3,4, 12,4.5,6.5)));
+		assertFalse(Intersection3D_F64.contained(cube,new Cube3D_F64(2,10,4, 3,12,6.5)));
+		assertFalse(Intersection3D_F64.contained(cube,new Cube3D_F64(2,3,10, 3,4.5,12)));
+
+		// assume the 1D tests are sufficient.  the above tests do check to see if each axis is handled
+		// individually
+	}
+
+	@Test
+	public void intersect_1d() {
+		// identical
+		assertTrue(Intersection3D_F64.intersect(0,0,1,1));
+		// bigger
+		assertTrue(Intersection3D_F64.intersect(0,-1,1,2));
+		assertTrue(Intersection3D_F64.intersect(-1,0,2,1));
+		// shifted
+		assertTrue(Intersection3D_F64.intersect(0,0.1,1,1.1));
+		assertTrue(Intersection3D_F64.intersect(0,-0.1,1,0.9));
+		assertTrue(Intersection3D_F64.intersect(0.1,0,1.1,1));
+		assertTrue(Intersection3D_F64.intersect(-0.1,0,0.9,1));
+		// graze
+		assertFalse(Intersection3D_F64.intersect(0,1,1,2));
+		assertFalse(Intersection3D_F64.intersect(1,0,2,1));
+		// outside
+		assertFalse(Intersection3D_F64.intersect(0,2,1,3));
+	}
 }

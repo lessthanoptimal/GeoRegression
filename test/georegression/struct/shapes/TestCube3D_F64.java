@@ -19,6 +19,7 @@
 package georegression.struct.shapes;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.point.Point3D_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -107,6 +108,15 @@ public class TestCube3D_F64 {
 		Cube3D_F64 cube = new Cube3D_F64(1,2,3,4,6,8);
 
 		assertEquals(5,cube.getLengthZ(),GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void center() {
+		Point3D_F64 center = new Cube3D_F64(1,2,3,4,5,6).center(null);
+
+		assertEquals(2.5,center.x,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(3.5,center.y,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(4.5,center.z,GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 }

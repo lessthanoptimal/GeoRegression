@@ -6,6 +6,9 @@ Version : 0.7
 
 - Switch build system over to Gradle
 - Cleared up which direction found transforms are going in MotionTransformPoint
+- Shapes added
+  * Point3D_I32
+  * Cube3D_I32
 
 ---------------------------------------------
 Date    : 2014-06-18
