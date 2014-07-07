@@ -86,24 +86,47 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		T.set( se.getT() );
 	}
 
+	/**
+	 * Sets the rotation to R.
+	 *
+	 * @param R New rotation.
+	 */
 	public void setRotation( DenseMatrix64F R ) {
 		this.R.set( R );
 	}
 
+	/**
+	 * Sets the translation to T
+	 * @param T New translation
+	 */
 	public void setTranslation( Vector3D_F32 T ) {
 		this.T.set( T );
 	}
 
+	/**
+	 * Sets the translation to (x,y,z)
+	 * @param x x component of translation
+	 * @param y y component of translation
+	 * @param z z component of translation
+	 */
 	public void setTranslation( float x, float y, float z ) {
 		this.T.set( x, y, z );
 	}
 
-	public void setR(DenseMatrix64F r) {
-		R = r;
+	/**
+	 * Returns the rotation matrix
+	 * @return rotation matrix
+	 */
+	public DenseMatrix64F getRotation() {
+		return R;
 	}
 
-	public void setT(Vector3D_F32 t) {
-		T = t;
+	/**
+	 * Returns the translation vector
+	 * @return translation vector
+	 */
+	public Vector3D_F32 getTranslation() {
+		return T;
 	}
 
 	public DenseMatrix64F getR() {

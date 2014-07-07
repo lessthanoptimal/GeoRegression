@@ -132,7 +132,7 @@ if( project.hasProperty('ossrhUsername') ) {
     }
 }
 
-// Creates a directory with all the compiled BoofCV jars and the dependencies for main
+// Creates a directory with all the compiled jars and the dependencies
 task createLibraryDirectory( dependsOn: ['jar','sourcesJar'] ) << {
 
     ext.listExternal = files(project.configurations.compile)
@@ -153,11 +153,6 @@ task createLibraryDirectory( dependsOn: ['jar','sourcesJar'] ) << {
         from ext.listInternal
         from ext.listSource
         into 'libraries'
-
-        // append on BoofCV so it's clear which jars are part of BoofCV and which are not
-        rename { String fileName ->
-            "GeoRegression-" + fileName
-        }
     }
 }
 

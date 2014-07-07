@@ -9,6 +9,9 @@ Version : 0.7
 - Shapes added
   * Point3D_I32
   * Cube3D_I32
+- Se3
+  * added setTranslation() and setRotation() to make it more user friendly.
+  * removed setT() and setR() so that serialization doesn't get messed up.
 
 ---------------------------------------------
 Date    : 2014-06-18
