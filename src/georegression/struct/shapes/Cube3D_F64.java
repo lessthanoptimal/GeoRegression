@@ -105,6 +105,6 @@ public class Cube3D_F64 implements Serializable {
 	}
 
 	public String toString() {
-		return getClass().getSimpleName()+"P0( "+ p0.x+" "+ p0.y+" "+ p0.z+" ) P1( "+ p1.x+" "+ p1.y+" "+ p1.z+" )";
+		return getClass().getSimpleName()+"{ P0( "+ p0.x+" "+ p0.y+" "+ p0.z+" ) P1( "+ p1.x+" "+ p1.y+" "+ p1.z+" ) }";
 	}
 }

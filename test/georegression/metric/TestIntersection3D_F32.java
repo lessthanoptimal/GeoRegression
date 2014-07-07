@@ -120,4 +120,59 @@ public class TestIntersection3D_F32 {
 		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2.1f, 3+1.5f, 4.1f)));
 		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2.1f, 3.1f, 4+2.5f)));
 	}
+
+	@Test
+	public void contained_cube_cube() {
+		Cube3D_F32 cube = new Cube3D_F32(2,3,4,3,4.5f,6.5f);
+
+		// identical
+		assertTrue(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,4,3,4.5f,6.5f)));
+		// smaller
+		assertTrue(Intersection3D_F32.contained(cube,new Cube3D_F32(2.1f,3.1f,4.1f,2.9f,4.4f,6.4f)));
+
+		// partial x-axis
+		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(1.9f,3,4,3,4.5f,6.5f)));
+		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,4,3.1f,4.5f,6.5f)));
+		// partial y-axis
+		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,2.9f,4,3,4.5f,6.5f)));
+		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,4,3,4.6f,6.5f)));
+		// partial z-axis
+		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,3.9f,3,4.5f,6.5f)));
+		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,4,3,4.5f,6.6f)));
+	}
+
+	@Test
+	public void intersect_cube_cube() {
+		Cube3D_F32 cube = new Cube3D_F32(2,3,4,3,4.5f,6.5f);
+
+		// identical
+		assertTrue(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,4,3,4.5f,6.5f)));
+		// outside
+		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(10,10,10,12,12,12)));
+		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(10,3,4, 12,4.5f,6.5f)));
+		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,10,4, 3,12,6.5f)));
+		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,10, 3,4.5f,12)));
+
+		// assume the 1D tests are sufficient.  the above tests do check to see if each axis is handled
+		// individually
+	}
+
+	@Test
+	public void intersect_1d() {
+		// identical
+		assertTrue(Intersection3D_F32.intersect(0,0,1,1));
+		// bigger
+		assertTrue(Intersection3D_F32.intersect(0,-1,1,2));
+		assertTrue(Intersection3D_F32.intersect(-1,0,2,1));
+		// shifted
+		assertTrue(Intersection3D_F32.intersect(0,0.1f,1,1.1f));
+		assertTrue(Intersection3D_F32.intersect(0,-0.1f,1,0.9f));
+		assertTrue(Intersection3D_F32.intersect(0.1f,0,1.1f,1));
+		assertTrue(Intersection3D_F32.intersect(-0.1f,0,0.9f,1));
+		// graze
+		assertFalse(Intersection3D_F32.intersect(0,1,1,2));
+		assertFalse(Intersection3D_F32.intersect(1,0,2,1));
+		// outside
+		assertFalse(Intersection3D_F32.intersect(0,2,1,3));
+	}
 }

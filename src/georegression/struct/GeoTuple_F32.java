@@ -51,10 +51,11 @@ public abstract class GeoTuple_F32<T extends GeoTuple_F32> extends GeoTuple<T> {
 	}
 
 	/**
-	 * Generic copy routine.  It is recommended that this be overriden with a faster implementation.
+	 * Generic copy routine.  It is recommended that this be overridden with a faster implementation.
 	 *
 	 * @return An exact copy of this GeoTuple.
 	 */
+	@Override
 	public T copy() {
 		T ret = createNewInstance();
 

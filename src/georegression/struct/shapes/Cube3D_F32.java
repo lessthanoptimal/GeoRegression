@@ -90,7 +90,21 @@ public class Cube3D_F32 implements Serializable {
 		this.p0.set(p0);
 	}
 
+	/**
+	 * Computes and return the center of the cube.
+	 * @param storage Optional storage for the center.  If null a new instance will be created and returned.
+	 * @return The cube's center point
+	 */
+	public Point3D_F32 center( Point3D_F32 storage ) {
+		if( storage == null )
+			storage = new Point3D_F32();
+		storage.x = (p0.x + p1.x)/2.0f;
+		storage.y = (p0.y + p1.y)/2.0f;
+		storage.z = (p0.z + p1.z)/2.0f;
+		return storage;
+	}
+
 	public String toString() {
-		return getClass().getSimpleName()+"P1( "+ p0.x+" "+ p0.y+" "+ p0.z+" ) P1( "+ p0.x+" "+ p0.y+" "+ p0.z+" )";
+		return getClass().getSimpleName()+"{ P0( "+ p0.x+" "+ p0.y+" "+ p0.z+" ) P1( "+ p1.x+" "+ p1.y+" "+ p1.z+" ) }";
 	}
 }
