@@ -20,7 +20,7 @@ package georegression.geometry;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F32;
-import georegression.struct.shapes.Cube3D_F32;
+import georegression.struct.shapes.Box3D_F32;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -45,15 +45,15 @@ public class TestUtilPoint3D_F32 {
 	}
 
 	@Test
-	public void boundingCube() {
+	public void boundingBox() {
 		List<Point3D_F32> list = new ArrayList<Point3D_F32>();
 
 		list.add( new Point3D_F32(1,1,1));
 		list.add( new Point3D_F32(2,3,1));
 		list.add( new Point3D_F32(1.5f,2,5));
 
-		Cube3D_F32 cube = new Cube3D_F32();
-		UtilPoint3D_F32.boundingCube(list,cube);
+		Box3D_F32 cube = new Box3D_F32();
+		UtilPoint3D_F32.boundingBox(list, cube);
 
 		assertEquals(0,cube.getP0().distance(list.get(0)),1e-8);
 		assertEquals(0,cube.getP1().distance(new Point3D_F32(2,3,5)),1e-8);

@@ -24,8 +24,8 @@ import georegression.struct.line.LineParametric3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
-import georegression.struct.shapes.Cube3D_F32;
-import georegression.struct.shapes.CubeLength3D_F32;
+import georegression.struct.shapes.Box3D_F32;
+import georegression.struct.shapes.BoxLength3D_F32;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -90,68 +90,68 @@ public class TestIntersection3D_F32 {
 	}
 
 	@Test
-	public void contained_cubeLength_point() {
-		CubeLength3D_F32 cube = new CubeLength3D_F32(2,3,4,1,1.5f,2.5f);
+	public void contained_boxLength_point() {
+		BoxLength3D_F32 box = new BoxLength3D_F32(2,3,4,1,1.5f,2.5f);
 
 		// point clearly inside the code
-		assertTrue(Intersection3D_F32.contained(cube,new Point3D_F32(2.1f,3.1f,4.1f)));
+		assertTrue(Intersection3D_F32.contained(box,new Point3D_F32(2.1f,3.1f,4.1f)));
 		// point way outside
-		assertFalse(Intersection3D_F32.contained(cube,new Point3D_F32(-2,9,8)));
+		assertFalse(Intersection3D_F32.contained(box,new Point3D_F32(-2,9,8)));
 
 		// test edge cases
-		assertTrue(Intersection3D_F32.contained(cube,new Point3D_F32(2,3,4)));
-		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2+1, 3.1f, 4.1f)));
-		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2.1f, 3+1.5f, 4.1f)));
-		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2.1f, 3.1f, 4+2.5f)));
+		assertTrue(Intersection3D_F32.contained(box,new Point3D_F32(2,3,4)));
+		assertFalse(Intersection3D_F32.contained(box, new Point3D_F32(2+1, 3.1f, 4.1f)));
+		assertFalse(Intersection3D_F32.contained(box, new Point3D_F32(2.1f, 3+1.5f, 4.1f)));
+		assertFalse(Intersection3D_F32.contained(box, new Point3D_F32(2.1f, 3.1f, 4+2.5f)));
 	}
 
 	@Test
-	public void contained_cube_point() {
-		Cube3D_F32 cube = new Cube3D_F32(2,3,4,3,4.5f,6.5f);
+	public void contained_box_point() {
+		Box3D_F32 box = new Box3D_F32(2,3,4,3,4.5f,6.5f);
 
 		// point clearly inside the code
-		assertTrue(Intersection3D_F32.contained(cube,new Point3D_F32(2.1f,3.1f,4.1f)));
+		assertTrue(Intersection3D_F32.contained(box,new Point3D_F32(2.1f,3.1f,4.1f)));
 		// point way outside
-		assertFalse(Intersection3D_F32.contained(cube,new Point3D_F32(-2,9,8)));
+		assertFalse(Intersection3D_F32.contained(box,new Point3D_F32(-2,9,8)));
 
 		// test edge cases
-		assertTrue(Intersection3D_F32.contained(cube,new Point3D_F32(2,3,4)));
-		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2+1, 3.1f, 4.1f)));
-		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2.1f, 3+1.5f, 4.1f)));
-		assertFalse(Intersection3D_F32.contained(cube, new Point3D_F32(2.1f, 3.1f, 4+2.5f)));
+		assertTrue(Intersection3D_F32.contained(box,new Point3D_F32(2,3,4)));
+		assertFalse(Intersection3D_F32.contained(box, new Point3D_F32(2+1, 3.1f, 4.1f)));
+		assertFalse(Intersection3D_F32.contained(box, new Point3D_F32(2.1f, 3+1.5f, 4.1f)));
+		assertFalse(Intersection3D_F32.contained(box, new Point3D_F32(2.1f, 3.1f, 4+2.5f)));
 	}
 
 	@Test
-	public void contained_cube_cube() {
-		Cube3D_F32 cube = new Cube3D_F32(2,3,4,3,4.5f,6.5f);
+	public void contained_box_box() {
+		Box3D_F32 box = new Box3D_F32(2,3,4,3,4.5f,6.5f);
 
 		// identical
-		assertTrue(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,4,3,4.5f,6.5f)));
+		assertTrue(Intersection3D_F32.contained(box,new Box3D_F32(2,3,4,3,4.5f,6.5f)));
 		// smaller
-		assertTrue(Intersection3D_F32.contained(cube,new Cube3D_F32(2.1f,3.1f,4.1f,2.9f,4.4f,6.4f)));
+		assertTrue(Intersection3D_F32.contained(box,new Box3D_F32(2.1f,3.1f,4.1f,2.9f,4.4f,6.4f)));
 
 		// partial x-axis
-		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(1.9f,3,4,3,4.5f,6.5f)));
-		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,4,3.1f,4.5f,6.5f)));
+		assertFalse(Intersection3D_F32.contained(box,new Box3D_F32(1.9f,3,4,3,4.5f,6.5f)));
+		assertFalse(Intersection3D_F32.contained(box,new Box3D_F32(2,3,4,3.1f,4.5f,6.5f)));
 		// partial y-axis
-		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,2.9f,4,3,4.5f,6.5f)));
-		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,4,3,4.6f,6.5f)));
+		assertFalse(Intersection3D_F32.contained(box,new Box3D_F32(2,2.9f,4,3,4.5f,6.5f)));
+		assertFalse(Intersection3D_F32.contained(box,new Box3D_F32(2,3,4,3,4.6f,6.5f)));
 		// partial z-axis
-		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,3.9f,3,4.5f,6.5f)));
-		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,4,3,4.5f,6.6f)));
+		assertFalse(Intersection3D_F32.contained(box,new Box3D_F32(2,3,3.9f,3,4.5f,6.5f)));
+		assertFalse(Intersection3D_F32.contained(box,new Box3D_F32(2,3,4,3,4.5f,6.6f)));
 	}
 
 	@Test
-	public void intersect_cube_cube() {
-		Cube3D_F32 cube = new Cube3D_F32(2,3,4,3,4.5f,6.5f);
+	public void intersect_box_box() {
+		Box3D_F32 box = new Box3D_F32(2,3,4,3,4.5f,6.5f);
 
 		// identical
-		assertTrue(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,4,3,4.5f,6.5f)));
+		assertTrue(Intersection3D_F32.contained(box,new Box3D_F32(2,3,4,3,4.5f,6.5f)));
 		// outside
-		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(10,10,10,12,12,12)));
-		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(10,3,4, 12,4.5f,6.5f)));
-		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,10,4, 3,12,6.5f)));
-		assertFalse(Intersection3D_F32.contained(cube,new Cube3D_F32(2,3,10, 3,4.5f,12)));
+		assertFalse(Intersection3D_F32.contained(box,new Box3D_F32(10,10,10,12,12,12)));
+		assertFalse(Intersection3D_F32.contained(box,new Box3D_F32(10,3,4, 12,4.5f,6.5f)));
+		assertFalse(Intersection3D_F32.contained(box,new Box3D_F32(2,10,4, 3,12,6.5f)));
+		assertFalse(Intersection3D_F32.contained(box,new Box3D_F32(2,3,10, 3,4.5f,12)));
 
 		// assume the 1D tests are sufficient.  the above tests do check to see if each axis is handled
 		// individually

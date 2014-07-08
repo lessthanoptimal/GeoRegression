@@ -23,11 +23,11 @@ import georegression.struct.point.Point3D_F32;
 import java.io.Serializable;
 
 /**
- * An axis aligned cube in 3D that is specified by a point (x0,y0,z0), and its lengthX, lengthY, and lengthZ.
+ * An axis aligned box in 3D that is specified by a point (x0,y0,z0), and its lengthX, lengthY, and lengthZ.
  * The point 'p' is the point which is closest to the corner.  The corner which is farthest away from 'p'
  * is (x0+lengthX , y0+lengthY, z0+lengthZ)
  */
-public class CubeLength3D_F32 implements Serializable {
+public class BoxLength3D_F32 implements Serializable {
 	/**
 	 * Point which defines the corner closest to the origin  TODO this is incorrect
 	 */
@@ -37,22 +37,22 @@ public class CubeLength3D_F32 implements Serializable {
 	 */
 	public float lengthX,lengthY,lengthZ;
 
-	public CubeLength3D_F32(float x0, float y0, float z0, float lengthX, float lengthY, float lengthZ) {
+	public BoxLength3D_F32(float x0, float y0, float z0, float lengthX, float lengthY, float lengthZ) {
 		this.p.set(x0,y0,z0);
 		this.lengthX = lengthX;
 		this.lengthY = lengthY;
 		this.lengthZ = lengthZ;
 	}
 
-	public CubeLength3D_F32(CubeLength3D_F32 orig) {
+	public BoxLength3D_F32(BoxLength3D_F32 orig) {
 		set(orig);
 	}
 
-	public void set( CubeLength3D_F32 orig ) {
+	public void set( BoxLength3D_F32 orig ) {
 		set(orig.p.x,orig.p.y,orig.p.z,orig.lengthX,orig.lengthY,orig.lengthZ);
 	}
 
-	public CubeLength3D_F32() {
+	public BoxLength3D_F32() {
 	}
 
 	public void set(float x0, float y0, float z0, float lengthX, float lengthY, float lengthZ) {

@@ -1,52 +1,70 @@
+/*
+ * Copyright (C) 2011-2014, Peter Abeles. All Rights Reserved.
+ *
+ * This file is part of Geometric Regression Library (GeoRegression).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package georegression.metric;
 
 import georegression.struct.point.Point3D_I32;
-import georegression.struct.shapes.Cube3D_I32;
+import georegression.struct.shapes.Box3D_I32;
 
 /**
  * @author Peter Abeles
  */
 public class Intersection3D_I32 {
 	/**
-	 * Returns true if the point is contained inside the cube. The point is considered to be inside the cube
-	 * if the following test passes for each dimension.  cube.p0.x <= point.x < cube.p1.x + cube.lengthX
+	 * Returns true if the point is contained inside the box. The point is considered to be inside the box
+	 * if the following test passes for each dimension.  box.p0.x <= point.x < box.p1.x + box.lengthX
 	 *
-	 * @param cube Cube
-	 * @param point Point which is tested to see if it is inside the cube
+	 * @param box Box
+	 * @param point Point which is tested to see if it is inside the box
 	 * @return true for inside and false for not
 	 */
-	public static boolean contained( Cube3D_I32 cube , Point3D_I32 point ) {
+	public static boolean contained( Box3D_I32 box , Point3D_I32 point ) {
 
-		return( cube.p0.x <= point.x && point.x < cube.p1.x &&
-				cube.p0.y <= point.y && point.y < cube.p1.y &&
-				cube.p0.z <= point.z && point.z < cube.p1.z );
+		return( box.p0.x <= point.x && point.x < box.p1.x &&
+				box.p0.y <= point.y && point.y < box.p1.y &&
+				box.p0.z <= point.z && point.z < box.p1.z );
 	}
 
 	/**
-	 * Returns true if cubeB is contained inside of or is identical to cubeA.
+	 * Returns true if boxB is contained inside of or is identical to boxA.
 	 *
-	 * @param cubeA Cube
-	 * @param cubeB Cube which is being tested to see if it is inside of cubeA
+	 * @param boxA Box
+	 * @param boxB Box which is being tested to see if it is inside of boxA
 	 * @return true if inside/identical or false if outside
 	 */
-	public static boolean contained( Cube3D_I32 cubeA , Cube3D_I32 cubeB ) {
-		return( cubeA.p0.x <= cubeB.p0.x && cubeA.p1.x >= cubeB.p1.x &&
-				cubeA.p0.y <= cubeB.p0.y && cubeA.p1.y >= cubeB.p1.y &&
-				cubeA.p0.z <= cubeB.p0.z && cubeA.p1.z >= cubeB.p1.z );
+	public static boolean contained( Box3D_I32 boxA , Box3D_I32 boxB ) {
+		return( boxA.p0.x <= boxB.p0.x && boxA.p1.x >= boxB.p1.x &&
+				boxA.p0.y <= boxB.p0.y && boxA.p1.y >= boxB.p1.y &&
+				boxA.p0.z <= boxB.p0.z && boxA.p1.z >= boxB.p1.z );
 	}
 
 	/**
-	 * Returns true if the two cubes intersect each other. p0 is inclusive and p1 is exclusive.
+	 * Returns true if the two boxs intersect each other. p0 is inclusive and p1 is exclusive.
 	 * So if the p0 edge and p1 edge overlap perfectly there is no intersection.
 	 *
-	 * @param cubeA Cube
-	 * @param cubeB Cube
+	 * @param boxA Box
+	 * @param boxB Box
 	 * @return true for intersection and false if no intersection
 	 */
-	public static boolean intersect( Cube3D_I32 cubeA , Cube3D_I32 cubeB ) {
-		return( intersect(cubeA.p0.x , cubeB.p0.x , cubeA.p1.x , cubeB.p1.x ) &&
-				intersect(cubeA.p0.y , cubeB.p0.y , cubeA.p1.y , cubeB.p1.y ) &&
-				intersect(cubeA.p0.z , cubeB.p0.z , cubeA.p1.z , cubeB.p1.z ) );
+	public static boolean intersect( Box3D_I32 boxA , Box3D_I32 boxB ) {
+		return( intersect(boxA.p0.x , boxB.p0.x , boxA.p1.x , boxB.p1.x ) &&
+				intersect(boxA.p0.y , boxB.p0.y , boxA.p1.y , boxB.p1.y ) &&
+				intersect(boxA.p0.z , boxB.p0.z , boxA.p1.z , boxB.p1.z ) );
 	}
 
 	protected static boolean intersect( int a0 , int b0 , int a1, int b1 ) {

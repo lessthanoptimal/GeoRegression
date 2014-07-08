@@ -18,75 +18,75 @@
 
 package georegression.struct.shapes;
 
-import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Point3D_F32;
 
 import java.io.Serializable;
 
 /**
- * An axis aligned cube in 3D that is specified by two points, p0 and p1.  Point p0 is less than point p1,
+ * An axis aligned box in 3D that is specified by two points, p0 and p1.  Point p0 is less than point p1,
  * p0.x <= p1.x, p0.y <= p1.y, p0.z <= p1.z.
  */
-public class Cube3D_F64 implements Serializable {
+public class Box3D_F32 implements Serializable {
 
 	/**
 	 * The lesser point
 	 */
-	public Point3D_F64 p0 = new Point3D_F64();
+	public Point3D_F32 p0 = new Point3D_F32();
 	/**
 	 * The greater point
 	 */
-	public Point3D_F64 p1 = new Point3D_F64();
+	public Point3D_F32 p1 = new Point3D_F32();
 
-	public Cube3D_F64(double x0, double y0, double z0, double x1, double y1, double z1 ) {
+	public Box3D_F32(float x0, float y0, float z0, float x1, float y1, float z1) {
 		this.p0.set(x0, y0, z0);
 		this.p1.set(x1, y1, z1);
 	}
 
-	public Cube3D_F64(Cube3D_F64 orig) {
+	public Box3D_F32(Box3D_F32 orig) {
 		set(orig);
 	}
 
-	public void set( Cube3D_F64 orig ) {
+	public void set( Box3D_F32 orig ) {
 		set(orig.p0.x,orig.p0.y,orig.p0.z,orig.p1.x,orig.p1.y,orig.p1.z);
 	}
 
-	public Cube3D_F64() {
+	public Box3D_F32() {
 	}
 
-	public void set(double x0, double y0, double z0, double x1, double y1, double z1 ) {
+	public void set(float x0, float y0, float z0, float x1, float y1, float z1 ) {
 		this.p0.set(x0, y0, z0);
 		this.p1.set(x1, y1, z1);
 	}
 
-	public double area() {
+	public float area() {
 		return (p1.x-p0.x)*(p1.y-p0.y)*(p1.z-p0.z);
 	}
 
-	public double getLengthX() {
+	public float getLengthX() {
 		return p1.x-p0.x;
 	}
 
-	public double getLengthY() {
+	public float getLengthY() {
 		return p1.y-p0.y;
 	}
 
-	public double getLengthZ() {
+	public float getLengthZ() {
 		return p1.z-p0.z;
 	}
 
-	public Point3D_F64 getP0() {
+	public Point3D_F32 getP0() {
 		return p0;
 	}
 
-	public void setP1(Point3D_F64 p1) {
+	public void setP1(Point3D_F32 p1) {
 		this.p1.set(p1);
 	}
 
-	public Point3D_F64 getP1() {
+	public Point3D_F32 getP1() {
 		return p1;
 	}
 
-	public void setP0(Point3D_F64 p0) {
+	public void setP0(Point3D_F32 p0) {
 		this.p0.set(p0);
 	}
 
@@ -95,12 +95,12 @@ public class Cube3D_F64 implements Serializable {
 	 * @param storage Optional storage for the center.  If null a new instance will be created and returned.
 	 * @return The cube's center point
 	 */
-	public Point3D_F64 center( Point3D_F64 storage ) {
+	public Point3D_F32 center( Point3D_F32 storage ) {
 		if( storage == null )
-			storage = new Point3D_F64();
-		storage.x = (p0.x + p1.x)/2.0;
-		storage.y = (p0.y + p1.y)/2.0;
-		storage.z = (p0.z + p1.z)/2.0;
+			storage = new Point3D_F32();
+		storage.x = (p0.x + p1.x)/2.0f;
+		storage.y = (p0.y + p1.y)/2.0f;
+		storage.z = (p0.z + p1.z)/2.0f;
 		return storage;
 	}
 

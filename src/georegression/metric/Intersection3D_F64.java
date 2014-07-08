@@ -24,8 +24,8 @@ import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
-import georegression.struct.shapes.Cube3D_F64;
-import georegression.struct.shapes.CubeLength3D_F64;
+import georegression.struct.shapes.Box3D_F64;
+import georegression.struct.shapes.BoxLength3D_F64;
 
 /**
  * @author Peter Abeles
@@ -130,60 +130,60 @@ public class Intersection3D_F64 {
 	}
 
 	/**
-	 * Returns true if the point is contained inside the cube. The point is considered to be inside the cube
-	 * if the following test passes for each dimension.  cube.x <= point.x < cube.x + cube.lengthX
+	 * Returns true if the point is contained inside the box. The point is considered to be inside the box
+	 * if the following test passes for each dimension.  box.x <= point.x < box.x + box.lengthX
 	 *
-	 * @param cube Cube
-	 * @param point Point which is tested to see if it is inside the cube
+	 * @param box Box
+	 * @param point Point which is tested to see if it is inside the box
 	 * @return true for inside and false for not
 	 */
-	public static boolean contained( CubeLength3D_F64 cube , Point3D_F64 point ) {
+	public static boolean contained( BoxLength3D_F64 box , Point3D_F64 point ) {
 
-		return( cube.p.x <= point.x && point.x < cube.p.x + cube.lengthX &&
-				cube.p.y <= point.y && point.y < cube.p.y + cube.lengthY &&
-				cube.p.z <= point.z && point.z < cube.p.z + cube.lengthZ );
+		return( box.p.x <= point.x && point.x < box.p.x + box.lengthX &&
+				box.p.y <= point.y && point.y < box.p.y + box.lengthY &&
+				box.p.z <= point.z && point.z < box.p.z + box.lengthZ );
 	}
 
 	/**
-	 * Returns true if the point is contained inside the cube. The point is considered to be inside the cube
-	 * if the following test passes for each dimension.  cube.p0.x <= point.x < cube.p1.x
+	 * Returns true if the point is contained inside the box. The point is considered to be inside the box
+	 * if the following test passes for each dimension.  box.p0.x <= point.x < box.p1.x
 	 *
-	 * @param cube Cube
-	 * @param point Point which is tested to see if it is inside the cube
+	 * @param box Box
+	 * @param point Point which is tested to see if it is inside the box
 	 * @return true for inside and false for not
 	 */
-	public static boolean contained( Cube3D_F64 cube , Point3D_F64 point ) {
+	public static boolean contained( Box3D_F64 box , Point3D_F64 point ) {
 
-		return( cube.p0.x <= point.x && point.x < cube.p1.x &&
-				cube.p0.y <= point.y && point.y < cube.p1.y &&
-				cube.p0.z <= point.z && point.z < cube.p1.z );
+		return( box.p0.x <= point.x && point.x < box.p1.x &&
+				box.p0.y <= point.y && point.y < box.p1.y &&
+				box.p0.z <= point.z && point.z < box.p1.z );
 	}
 
 	/**
-	 * Returns true if cubeB is contained inside of or is identical to cubeA.
+	 * Returns true if boxB is contained inside of or is identical to boxA.
 	 *
-	 * @param cubeA Cube
-	 * @param cubeB Cube which is being tested to see if it is inside of cubeA
+	 * @param boxA Box
+	 * @param boxB Box which is being tested to see if it is inside of boxA
 	 * @return true if inside/identical or false if outside
 	 */
-	public static boolean contained( Cube3D_F64 cubeA , Cube3D_F64 cubeB ) {
-		return( cubeA.p0.x <= cubeB.p0.x && cubeA.p1.x >= cubeB.p1.x &&
-				cubeA.p0.y <= cubeB.p0.y && cubeA.p1.y >= cubeB.p1.y &&
-				cubeA.p0.z <= cubeB.p0.z && cubeA.p1.z >= cubeB.p1.z );
+	public static boolean contained( Box3D_F64 boxA , Box3D_F64 boxB ) {
+		return( boxA.p0.x <= boxB.p0.x && boxA.p1.x >= boxB.p1.x &&
+				boxA.p0.y <= boxB.p0.y && boxA.p1.y >= boxB.p1.y &&
+				boxA.p0.z <= boxB.p0.z && boxA.p1.z >= boxB.p1.z );
 	}
 
 	/**
-	 * Returns true if the two cubes intersect each other. p0 is inclusive and p1 is exclusive.
+	 * Returns true if the two boxs intersect each other. p0 is inclusive and p1 is exclusive.
 	 * So if the p0 edge and p1 edge overlap perfectly there is no intersection.
 	 *
-	 * @param cubeA Cube
-	 * @param cubeB Cube
+	 * @param boxA Box
+	 * @param boxB Box
 	 * @return true for intersection and false if no intersection
 	 */
-	public static boolean intersect( Cube3D_F64 cubeA , Cube3D_F64 cubeB ) {
-		return( intersect(cubeA.p0.x , cubeB.p0.x , cubeA.p1.x , cubeB.p1.x ) &&
-				intersect(cubeA.p0.y , cubeB.p0.y , cubeA.p1.y , cubeB.p1.y ) &&
-				intersect(cubeA.p0.z , cubeB.p0.z , cubeA.p1.z , cubeB.p1.z ) );
+	public static boolean intersect( Box3D_F64 boxA , Box3D_F64 boxB ) {
+		return( intersect(boxA.p0.x , boxB.p0.x , boxA.p1.x , boxB.p1.x ) &&
+				intersect(boxA.p0.y , boxB.p0.y , boxA.p1.y , boxB.p1.y ) &&
+				intersect(boxA.p0.z , boxB.p0.z , boxA.p1.z , boxB.p1.z ) );
 	}
 
 	protected static boolean intersect( double a0 , double b0 , double a1, double b1 ) {
