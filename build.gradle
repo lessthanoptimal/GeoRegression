@@ -100,7 +100,7 @@ if( project.hasProperty('ossrhUsername') ) {
                 }
 
                 pom.project {
-                    name 'BoofCV'
+                    name 'GeoRegression'
                     packaging 'pom'
                     // optionally artifactId can be defined here
                     description 'GeoRegression is a free Java based geometry library for scientific computing in fields such as robotics and computer vision with a focus on 2D/3D space.'
