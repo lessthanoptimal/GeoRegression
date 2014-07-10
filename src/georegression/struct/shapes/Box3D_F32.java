@@ -23,17 +23,17 @@ import georegression.struct.point.Point3D_F32;
 import java.io.Serializable;
 
 /**
- * An axis aligned box in 3D that is specified by two points, p0 and p1.  Point p0 is less than point p1,
- * p0.x <= p1.x, p0.y <= p1.y, p0.z <= p1.z.
+ * An axis aligned box in 3D that is specified by two points, p0 and p1, the lower and upper extents of the box.
+ * Point p0 is less or equal to point p1, 0.x <= p1.x, p0.y <= p1.y, p0.z <= p1.z.
  */
 public class Box3D_F32 implements Serializable {
 
 	/**
-	 * The lesser point
+	 * The lower point/extent.
 	 */
 	public Point3D_F32 p0 = new Point3D_F32();
 	/**
-	 * The greater point
+	 * The upper point/extent
 	 */
 	public Point3D_F32 p1 = new Point3D_F32();
 
@@ -58,22 +58,42 @@ public class Box3D_F32 implements Serializable {
 		this.p1.set(x1, y1, z1);
 	}
 
+	/**
+	 * The box's area.  area = lengthX*lengthY*lengthZ
+	 *
+	 * @return area
+	 */
 	public float area() {
 		return (p1.x-p0.x)*(p1.y-p0.y)*(p1.z-p0.z);
 	}
 
+	/**
+	 * Length of the box along the x-axis
+	 * @return length
+	 */
 	public float getLengthX() {
 		return p1.x-p0.x;
 	}
 
+	/**
+	 * Length of the box along the y-axis
+	 * @return length
+	 */
 	public float getLengthY() {
 		return p1.y-p0.y;
 	}
 
+	/**
+	 * Length of the box along the z-axis
+	 * @return length
+	 */
 	public float getLengthZ() {
 		return p1.z-p0.z;
 	}
 
+	/**
+	 * Returns the lower point/extend
+	 */
 	public Point3D_F32 getP0() {
 		return p0;
 	}
@@ -82,6 +102,9 @@ public class Box3D_F32 implements Serializable {
 		this.p1.set(p1);
 	}
 
+	/**
+	 * Returns the upper point/extend
+	 */
 	public Point3D_F32 getP1() {
 		return p1;
 	}

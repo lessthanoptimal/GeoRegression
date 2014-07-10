@@ -23,13 +23,13 @@ import georegression.struct.point.Point3D_F64;
 import java.io.Serializable;
 
 /**
- * An axis aligned box in 3D that is specified by a point (x0,y0,z0), and its lengthX, lengthY, and lengthZ.
- * The point 'p' is the point which is closest to the corner.  The corner which is farthest away from 'p'
- * is (x0+lengthX , y0+lengthY, z0+lengthZ)
+ * An axis aligned box in 3D that is specified by a point p=(x0,y0,z0), and its lengthX, lengthY, and lengthZ.
+ * The point 'p' has the lowest values and is also known as the lower extent..  The corner which is farthest away from 'p'
+ * is (x0+lengthX , y0+lengthY, z0+lengthZ), the upper extent.
  */
 public class BoxLength3D_F64 implements Serializable {
 	/**
-	 * Point which defines the corner closest to the origin  TODO this is incorrect
+	 * Point on the box with the lowest values.  The lower extent.
 	 */
 	public Point3D_F64 p = new Point3D_F64();
 	/**
