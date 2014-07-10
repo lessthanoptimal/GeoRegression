@@ -21,6 +21,7 @@ package georegression.metric;
 import georegression.fitting.ellipse.ClosestPointEllipseAngle_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric2D_F64;
+import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.EllipseRotated_F64;
 import org.junit.Test;
@@ -50,6 +51,27 @@ public class TestClosestPoint2D_F64 {
 
 		double found = ClosestPoint2D_F64.closestPointT( line, pt );
 		assertEquals( -1, found, GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	@Test
+	public void closestPoint_LS() {
+		LineSegment2D_F64 ls; Point2D_F64 found;
+		// test middle
+		ls = new LineSegment2D_F64(1,2,4,5);
+		found = ClosestPoint2D_F64.closestPoint(ls,new Point2D_F64(2-0.1,3+0.1),null);
+		assertEquals(2,found.x,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(3,found.y,GrlConstants.DOUBLE_TEST_TOL);
+
+
+		// test before a
+		found = ClosestPoint2D_F64.closestPoint(ls,new Point2D_F64(0,0),null);
+		assertEquals(1,found.x,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2,found.y,GrlConstants.DOUBLE_TEST_TOL);
+
+		// test after b
+		found = ClosestPoint2D_F64.closestPoint(ls,new Point2D_F64(10,20),null);
+		assertEquals(4,found.x,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(5,found.y,GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 	@Test

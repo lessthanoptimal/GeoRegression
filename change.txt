@@ -13,6 +13,8 @@ Version : 0.7
 - Se3
   * added setTranslation() and setRotation() to make it more user friendly.
   * removed setT() and setR() so that serialization doesn't get messed up.
+- ClosestPoint
+  * added 2D line segment to point
 
 ---------------------------------------------
 Date    : 2014-06-18

@@ -21,6 +21,7 @@ package georegression.metric;
 import georegression.fitting.ellipse.ClosestPointEllipseAngle_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric2D_F32;
+import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.EllipseRotated_F32;
 
@@ -39,21 +40,21 @@ public class ClosestPoint2D_F32 {
 	 *
 	 * @param line	Line along which the closest point is being found.
 	 * @param p	   Point.
-	 * @param storage Where the solution is stored.  If null a new instance is created. Modified.
+	 * @param output Where the solution is stored.  If null a new instance is created. Modified.
 	 * @return Closest point on the line.
 	 */
 	public static Point2D_F32 closestPoint( LineParametric2D_F32 line,
 											Point2D_F32 p,
-											Point2D_F32 storage ) {
-		if( storage == null )
-			storage = new Point2D_F32();
+											Point2D_F32 output ) {
+		if( output == null )
+			output = new Point2D_F32();
 
 		float t = closestPointT( line, p );
 
-		storage.x = line.p.x + line.slope.x * t;
-		storage.y = line.p.y + line.slope.y * t;
+		output.x = line.p.x + line.slope.x * t;
+		output.y = line.p.y + line.slope.y * t;
 
-		return storage;
+		return output;
 	}
 
 	/**
@@ -72,6 +73,38 @@ public class ClosestPoint2D_F32 {
 		t /= line.slope.x * line.slope.x + line.slope.y * line.slope.y;
 
 		return t;
+	}
+
+	/**
+	 * Finds the closest point on the line segment to the provided point 'p'.
+	 *
+	 * @param line Line segment
+	 * @param p Point`
+	 * @param output Optional storage for the closet point on the line to p.  If null a new instance is created.
+	 * @return Closest point on the line to the point
+	 */
+	public static Point2D_F32 closestPoint( LineSegment2D_F32 line,
+											Point2D_F32 p,
+											Point2D_F32 output ) {
+
+		if( output == null )
+			output = new Point2D_F32();
+
+		float slopeX = line.b.x - line.a.x;
+		float slopeY = line.b.y - line.a.y;
+
+		float t = slopeX * ( p.x - line.a.x ) + slopeY * ( p.y - line.a.y );
+		t /= slopeX*slopeX + slopeY*slopeY;
+
+		if( t < 0 )
+			t = 0;
+		else if( t > 1 )
+			t = 1;
+
+		output.x = line.a.x + slopeX * t;
+		output.y = line.a.y + slopeY * t;
+
+		return output;
 	}
 
 	/**
