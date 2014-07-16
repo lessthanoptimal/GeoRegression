@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.shapes.Quadrilateral_F32;
+import georegression.struct.shapes.Rectangle2D_I32;
 import georegression.struct.shapes.RectangleCorner2D_F32;
 import org.junit.Test;
 
@@ -45,6 +46,24 @@ public class TestUtilPolygons2D_F32 {
 		assertEquals( 6,q.c.y, GrlConstants.FLOAT_TEST_TOL);
 		assertEquals( 1,q.d.x, GrlConstants.FLOAT_TEST_TOL);
 		assertEquals( 6,q.d.y, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void convert_rectwh_quad() {
+		Rectangle2D_I32 rect = new Rectangle2D_I32(1,2,5,6);
+
+		Quadrilateral_F32 q = new Quadrilateral_F32();
+
+		UtilPolygons2D_F32.convert(rect,q);
+
+		assertEquals( 1,q.a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 2,q.a.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 5,q.b.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 2,q.b.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 5,q.c.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 7,q.c.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 1,q.d.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 7,q.d.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test

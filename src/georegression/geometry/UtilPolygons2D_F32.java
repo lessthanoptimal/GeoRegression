@@ -19,6 +19,7 @@
 package georegression.geometry;
 
 import georegression.struct.shapes.Quadrilateral_F32;
+import georegression.struct.shapes.Rectangle2D_I32;
 import georegression.struct.shapes.RectangleCorner2D_F32;
 
 /**
@@ -46,6 +47,26 @@ public class UtilPolygons2D_F32 {
 
 		output.d.x = input.x0;
 		output.d.y = input.y1;
+	}
+
+	/**
+	 * Converts a rectangle into a quadrilateral
+	 *
+	 * @param input Rectangle.
+	 * @param output Quadrilateral.  Modified.
+	 */
+	public static void convert( Rectangle2D_I32 input , Quadrilateral_F32 output ) {
+		output.a.x = input.x0;
+		output.a.y = input.y0;
+
+		output.b.x = input.x0+input.width-1;
+		output.b.y = input.y0;
+
+		output.c.x = input.x0+input.width-1;
+		output.c.y = input.y0+input.height-1;
+
+		output.d.x = input.x0;
+		output.d.y = input.y0+input.height-1;
 	}
 
 	/**

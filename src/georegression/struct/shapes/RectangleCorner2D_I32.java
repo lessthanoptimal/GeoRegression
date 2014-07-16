@@ -19,16 +19,16 @@
 package georegression.struct.shapes;
 
 /**
- * An axis aligned rectangle in 2D that is specified by its top-left (x0,y0) corner, and bottom-right (x1,y1) corner.
+ * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), and upper extent (x1,y1).
  * x0 <= x1 and y0 <= y1.  (x1,y1) is exclusive and not contained in the rectangle.
  */
 public class RectangleCorner2D_I32 {
 	/**
-	 * Top-left corner
+	 * Lower extent
 	 */
 	public int x0,y0;
 	/**
-	 * Bottom-right corner
+	 * Upper extent
 	 */
 	public int x1,y1;
 

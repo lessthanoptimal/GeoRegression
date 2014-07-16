@@ -28,6 +28,8 @@ Version : 0.6
   * Haven't rigorously checked to see if they truly are
 - Fixed bug in UtilLine2D_F64.convert( Parametric , Polar )
 - Split up AffinePointOps into 32 and 64
+- Rectangle
+  * Removed image processing notation for top-left corner.  Replaced with lower-extend and upper-extent
 
 ---------------------------------------------
 Date    : 2013-12-26

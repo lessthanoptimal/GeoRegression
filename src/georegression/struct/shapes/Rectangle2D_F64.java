@@ -22,8 +22,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * An axis aligned rectangle in 2D that is specified by its top-left (tl_x,tl_y) corner, width, and height.  The three
- * other corners are (tl_x + width,tl_y), (tl_x,tl_y + height), (tl_x + width,tl_y + height).
+ * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), width, and height.  The three
+ * other corners are (x0 + width,y0), (x0,y0 + height), (x0 + width,y0 + height).
  * </p>
  *
  * @author Peter Abeles
@@ -31,13 +31,13 @@ import java.io.Serializable;
 public class Rectangle2D_F64 implements Serializable {
 
 	/**
-	 * Top-left corner x-axis
+	 * Lower extent x-axis
 	 */
-	public double tl_x;
+	public double x0;
 	/**
-	 * Top-left corner y-axis
+	 * Lower extent y-axis
 	 */
-	public double tl_y;
+	public double y0;
 	/**
 	 * Rectangle's width
 	 */
@@ -50,22 +50,22 @@ public class Rectangle2D_F64 implements Serializable {
 	public Rectangle2D_F64() {
 	}
 
-	public Rectangle2D_F64( double tl_x, double tl_y, double width, double height ) {
+	public Rectangle2D_F64( double x0, double y0, double width, double height ) {
 		this.width = width;
 		this.height = height;
-		this.tl_x = tl_x;
-		this.tl_y = tl_y;
+		this.x0 = x0;
+		this.y0 = y0;
 	}
 
 	/**
-	 * Sets the top left point
+	 * Sets lower extent
 	 *
-	 * @param x
-	 * @param y
+	 * @param x x-coordinate
+	 * @param y y-coordinate
 	 */
-	public void setPoint( double x, double y ) {
-		this.tl_x = x;
-		this.tl_y = y;
+	public void setLowerExtent( double x, double y ) {
+		this.x0 = x;
+		this.y0 = y;
 	}
 
 	public double getWidth() {
@@ -85,35 +85,35 @@ public class Rectangle2D_F64 implements Serializable {
 	}
 
 	/**
-	 * @return top left x-coordinate
+	 * @return Lower-extent x-coordinate
 	 */
 	public double getX() {
-		return tl_x;
+		return x0;
 	}
 
 	/**
-	 * Sets the top left x-coordinate
+	 * Sets the lower-extent x-coordinate
 	 *
-	 * @param x top left x-coordinate
+	 * @param x Lower-extent x-coordinate
 	 */
 	public void setX( double x ) {
-		this.tl_x = x;
+		this.x0 = x;
 	}
 
 	/**
-	 * @return top left y-coordinate
+	 * @return Lower-extent y-coordinate
 	 */
 	public double getY() {
-		return tl_y;
+		return y0;
 	}
 
 	/**
-	 * Sets the top left y-coordinate
+	 * Sets the lower-extent y-coordinate
 	 *
-	 * @param y top left y-coordinate
+	 * @param y Lower-extent y-coordinate
 	 */
 	public void setY( double y ) {
-		this.tl_y = y;
+		this.y0 = y;
 	}
 
 	/**
@@ -121,8 +121,8 @@ public class Rectangle2D_F64 implements Serializable {
 	 * @param r Rectangle which this is to be set equal to
 	 */
 	public void set(Rectangle2D_I32 r) {
-		this.tl_x = r.tl_x;
-		this.tl_y = r.tl_y;
+		this.x0 = r.x0;
+		this.y0 = r.y0;
 		this.width = r.width;
 		this.height = r.height;
 	}
@@ -130,7 +130,7 @@ public class Rectangle2D_F64 implements Serializable {
 	@Override
 	public String toString() {
 		return getClass().getSimpleName()+"{" +
-				"tl=[ " + tl_x + " , " + tl_y +
+				"p=[ " + x0 + " , " + y0 +
 				"], width=" + width + ", height=" + height + '}';
 	}
 }

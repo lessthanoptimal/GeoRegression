@@ -21,18 +21,18 @@ package georegression.struct.shapes;
 import java.io.Serializable;
 
 /**
- * An axis aligned rectangle in 2D that is specified by its top-left (tl_x,tl_y) corner, width, and height.  The three
- * other corners are (tl_x + width,tl_y), (tl_x,tl_y + height), (tl_x + width,tl_y + height).
+ * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), width, and height.  The three
+ * other corners are (x0 + width-1,y0), (x0,y0 + height-1), (x0 + width-1,y0 + height-1).
  */
 public class Rectangle2D_I32 implements Serializable {
 	/**
-	 * Top-left corner x-axis
+	 * Lower extent x-axis
 	 */
-	public int tl_x;
+	public int x0;
 	/**
-	 * Top-left corner y-axis
+	 * Lower extent y-axis
 	 */
-	public int tl_y;
+	public int y0;
 	/**
 	 * Rectangle's width
 	 */
@@ -45,29 +45,29 @@ public class Rectangle2D_I32 implements Serializable {
 	public Rectangle2D_I32() {
 	}
 
-	public Rectangle2D_I32( int tl_x, int tl_y, int width, int height ) {
-		this.tl_x = tl_x;
-		this.tl_y = tl_y;
+	public Rectangle2D_I32( int x0, int y0, int width, int height ) {
+		this.x0 = x0;
+		this.y0 = y0;
 		this.width = width;
 		this.height = height;
 	}
 
 	public void set( int tl_x, int tl_y, int width, int height ) {
-		this.tl_x = tl_x;
-		this.tl_y = tl_y;
+		this.x0 = tl_x;
+		this.y0 = tl_y;
 		this.width = width;
 		this.height = height;
 	}
 
 	/**
-	 * Sets the top left point
+	 * Sets lower extent
 	 *
-	 * @param x
-	 * @param y
+	 * @param x x-coordinate
+	 * @param y y-coordinate
 	 */
-	public void setPoint( int x, int y ) {
-		this.tl_x = x;
-		this.tl_y = y;
+	public void setLowerExtent(int x, int y) {
+		this.x0 = x;
+		this.y0 = y;
 	}
 
 	public int getWidth() {
@@ -87,35 +87,35 @@ public class Rectangle2D_I32 implements Serializable {
 	}
 
 	/**
-	 * @return top left x-coordinate
+	 * @return Lower-extent x-coordinate
 	 */
 	public int getX() {
-		return tl_x;
+		return x0;
 	}
 
 	/**
-	 * Sets the top left x-coordinate
+	 * Sets the Lower-extent x-coordinate
 	 *
-	 * @param x top left x-coordinate
+	 * @param x Lower-extentx-coordinate
 	 */
 	public void setX( int x ) {
-		this.tl_x = x;
+		this.x0 = x;
 	}
 
 	/**
-	 * @return top left y-coordinate
+	 * @return Lower-extent y-coordinate
 	 */
 	public int getY() {
-		return tl_y;
+		return y0;
 	}
 
 	/**
-	 * Sets the top left y-coordinate
+	 * Sets the Lower-extenty-coordinate
 	 *
-	 * @param y top left y-coordinate
+	 * @param y Lower-extent y-coordinate
 	 */
 	public void setY( int y ) {
-		this.tl_y = y;
+		this.y0 = y;
 	}
 
 	/**
@@ -123,9 +123,16 @@ public class Rectangle2D_I32 implements Serializable {
 	 * @param r Rectangle which this is to be set equal to
 	 */
 	public void set(Rectangle2D_I32 r) {
-		this.tl_x = r.tl_x;
-		this.tl_y = r.tl_y;
+		this.x0 = r.x0;
+		this.y0 = r.y0;
 		this.width = r.width;
 		this.height = r.height;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+"{" +
+				"p=[ " + x0 + " , " + y0 +
+				"], width=" + width + ", height=" + height + '}';
 	}
 }
