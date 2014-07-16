@@ -25,7 +25,7 @@ import georegression.struct.GeoTuple3D_F64;
  * Spacial vector in 3D
  *
  */
-public class Vector3D_F64 extends GeoTuple3D_F64 {
+public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 
 	public Vector3D_F64( GeoTuple3D_F64 orig ) {
 		this(orig.x,orig.y,orig.z);

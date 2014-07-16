@@ -25,7 +25,7 @@ import georegression.struct.GeoTuple3D_F32;
  *
  */
 @SuppressWarnings({"unchecked"})
-public class Point3D_F32 extends GeoTuple3D_F32 {
+public class Point3D_F32 extends GeoTuple3D_F32<Point3D_F32> {
 
 	public Point3D_F32( GeoTuple3D_F32 pt ) {
 		super( pt.x, pt.y, pt.z );

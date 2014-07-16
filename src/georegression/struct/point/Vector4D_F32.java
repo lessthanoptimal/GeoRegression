@@ -21,10 +21,9 @@ package georegression.struct.point;
 import georegression.struct.GeoTuple4D_F32;
 
 /**
- *
- *
+ * Vector in 4D space
  */
-public class Vector4D_F32 extends GeoTuple4D_F32 {
+public class Vector4D_F32 extends GeoTuple4D_F32<Vector4D_F32> {
 
 	public Vector4D_F32(float x, float y, float z , float w ) {
 		super( x, y, z , w );
