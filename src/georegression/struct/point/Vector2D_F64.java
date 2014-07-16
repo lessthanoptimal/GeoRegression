@@ -21,10 +21,14 @@ package georegression.struct.point;
 import georegression.struct.GeoTuple2D_F64;
 
 /**
- * A vector in 2D composed of double
+ * Spacial vector in 2D
  */
 @SuppressWarnings({"unchecked"})
 public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
+
+	public Vector2D_F64( GeoTuple2D_F64 orig ) {
+		this(orig.x,orig.y);
+	}
 
 	public Vector2D_F64( double x, double y ) {
 		set( x, y );

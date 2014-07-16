@@ -15,6 +15,7 @@ Version : 0.7
   * removed setT() and setR() so that serialization doesn't get messed up.
 - ClosestPoint
   * added 2D line segment to point
+- Added default plus and times operators to GeoTuple2D and GeoTuple3D
 
 ---------------------------------------------
 Date    : 2014-06-18

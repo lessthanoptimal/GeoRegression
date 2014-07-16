@@ -18,16 +18,23 @@
 
 package georegression.struct.point;
 
+import georegression.struct.GeoTuple;
+
 /**
  * A point in 2D composed of shorts
  */
-public class Point2D_I16 {
+public class Point2D_I16 extends GeoTuple<Point2D_I16> {
 	public short x;
 	public short y;
 
 	public Point2D_I16( short x, short y ) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public Point2D_I16( Point2D_I16 orig ) {
+		this.x = orig.x;
+		this.y = orig.y;
 	}
 
 	public Point2D_I16() {
@@ -57,6 +64,16 @@ public class Point2D_I16 {
 
 	public final int getY() {
 		return y;
+	}
+
+	@Override
+	public int getDimension() {
+		return 2;
+	}
+
+	@Override
+	public Point2D_I16 createNewInstance() {
+		return new Point2D_I16();
 	}
 
 	public Point2D_I16 copy() {

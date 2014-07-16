@@ -22,10 +22,14 @@ import georegression.geometry.GeometryMath_F64;
 import georegression.struct.GeoTuple3D_F64;
 
 /**
- *
+ * Spacial vector in 3D
  *
  */
 public class Vector3D_F64 extends GeoTuple3D_F64 {
+
+	public Vector3D_F64( GeoTuple3D_F64 orig ) {
+		this(orig.x,orig.y,orig.z);
+	}
 
 	public Vector3D_F64( double x, double y, double z ) {
 		super( x, y, z );
@@ -44,21 +48,6 @@ public class Vector3D_F64 extends GeoTuple3D_F64 {
 		this.x = v.x;
 		this.y = v.y;
 		this.z = v.z;
-	}
-
-
-	/**
-	 * In-place scalar multiplication
-	 * @param scalar value that it is multiplied by
-	 */
-	public void ip_times( double scalar ) {
-		x *= scalar;
-		y *= scalar;
-		z *= scalar;
-	}
-
-	public Vector3D_F64 times( double scalar ) {
-		return new Vector3D_F64( x * scalar, y * scalar, z * scalar );
 	}
 
 	public Vector3D_F64 copy() {

@@ -27,7 +27,7 @@ import georegression.struct.GeoTuple3D_F32;
 @SuppressWarnings({"unchecked"})
 public class Point3D_F32 extends GeoTuple3D_F32 {
 
-	public Point3D_F32( Point3D_F32 pt ) {
+	public Point3D_F32( GeoTuple3D_F32 pt ) {
 		super( pt.x, pt.y, pt.z );
 	}
 
@@ -36,16 +36,6 @@ public class Point3D_F32 extends GeoTuple3D_F32 {
 	}
 
 	public Point3D_F32() {
-	}
-
-	public Point3D_F32 plus( Vector3D_F32 a ) {
-		return new Point3D_F32( x + a.getX(), y + a.getY(), z + a.getZ() );
-	}
-
-	// todo remove this?  Makes no sense mathematically
-
-	public Point3D_F32 plus( Point3D_F32 a ) {
-		return new Point3D_F32( x + a.getX(), y + a.getY(), z + a.getZ() );
 	}
 
 	/**

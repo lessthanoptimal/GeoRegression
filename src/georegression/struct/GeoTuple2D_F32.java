@@ -74,6 +74,53 @@ public abstract class GeoTuple2D_F32<T extends GeoTuple2D_F32> extends GeoTuple_
 		return y;
 	}
 
+	/**
+	 * <p>In-place addition</p>
+	 *
+	 * this.x = this.x + a.x;
+	 *
+	 * @param a value which is to be added
+	 */
+	public void plusIP( GeoTuple2D_F32 a ) {
+		x += a.x;
+		y += a.y;
+	}
+
+	/**
+	 * <p>Addition</p>
+	 *
+	 * ret.x = this.x + a.x;
+	 *
+	 * @param a value which is to be added
+	 */
+	public T plus( GeoTuple2D_F32 a ) {
+		T ret = createNewInstance();
+		ret.x = x + a.x;
+		ret.y = y + a.y;
+		return ret;
+	}
+
+	/**
+	 * In-place scalar multiplication
+	 * @param scalar value that it is multiplied by
+	 */
+	public void timesIP( float scalar ) {
+		x *= scalar;
+		y *= scalar;
+	}
+
+	/**
+	 * Scalar multiplication
+	 * @param scalar value which is it multiplied by
+	 * @return new matrix which is the original scaled
+	 */
+	public T times( float scalar ) {
+		T ret = createNewInstance();
+		ret.x = x*scalar;
+		ret.y = y*scalar;
+		return ret;
+	}
+
 	@Override
 	public float distance( T t ) {
 		float dx = t.x - x;

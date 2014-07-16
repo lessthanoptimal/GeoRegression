@@ -18,10 +18,7 @@
 
 package georegression.struct.point;
 
-import georegression.misc.GrlConstants;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -29,35 +26,11 @@ import static org.junit.Assert.assertEquals;
 public class TestPoint3D_F32 extends GenericGeoTupleTests3D_F32<Point3D_F32> {
 
 	public TestPoint3D_F32() {
-		super( new Point3D_F32() );
+		super(new Point3D_F32());
 	}
 
 	@Test
 	public void generic() {
 		checkAll();
-	}
-
-	@Test
-	public void plus_pt() {
-		Point3D_F32 a = new Point3D_F32( 1, 2, 3 );
-		Point3D_F32 b = new Point3D_F32( 1, 2, 3 );
-
-		Point3D_F32 c = a.plus( b );
-
-		assertEquals( 2, c.getX(), GrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 4, c.getY(), GrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 6, c.getZ(), GrlConstants.FLOAT_TEST_TOL );
-	}
-
-	@Test
-	public void plus_v() {
-		Point3D_F32 a = new Point3D_F32( 1, 2, 3 );
-		Vector3D_F32 b = new Vector3D_F32( 1, 2, 3 );
-
-		Point3D_F32 c = a.plus( b );
-
-		assertEquals( 2, c.getX(), GrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 4, c.getY(), GrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 6, c.getZ(), GrlConstants.FLOAT_TEST_TOL );
 	}
 }
