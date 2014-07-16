@@ -26,7 +26,7 @@ import org.junit.Test;
 public class TestPoint3D_F32 extends GenericGeoTupleTests3D_F32<Point3D_F32> {
 
 	public TestPoint3D_F32() {
-		super(new Point3D_F32());
+		super( new Point3D_F32() );
 	}
 
 	@Test

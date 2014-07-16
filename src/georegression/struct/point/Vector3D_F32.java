@@ -28,7 +28,7 @@ import georegression.struct.GeoTuple3D_F32;
 public class Vector3D_F32 extends GeoTuple3D_F32 {
 
 	public Vector3D_F32( GeoTuple3D_F32 orig ) {
-		this(orig.x, orig.y, orig.z);
+		this(orig.x,orig.y,orig.z);
 	}
 
 	public Vector3D_F32( float x, float y, float z ) {

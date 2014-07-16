@@ -110,6 +110,15 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 	}
 
 	/**
+	 * In-place scalar multiplication
+	 * @param scalar value that it is multiplied by
+	 */
+	public void scale( double scalar ) {
+		x *= scalar;
+		y *= scalar;
+	}
+
+	/**
 	 * Scalar multiplication
 	 * @param scalar value which is it multiplied by
 	 * @return new matrix which is the original scaled

@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Peter Abeles
  */
-public class TestGeoTuple3D_F64 {
+public class TestGeoTuple3D_F32 {
 	@Test
 	public void plusIP() {
 		Dummy a = new Dummy(1,2,3);
@@ -34,9 +34,9 @@ public class TestGeoTuple3D_F64 {
 
 		a.plusIP(b);
 
-		assertEquals(5,a.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(7,a.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(9, a.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(5,a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(7,a.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(9, a.z, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -46,57 +46,57 @@ public class TestGeoTuple3D_F64 {
 
 		Dummy c = a.plus(b);
 
-		assertEquals(1,a.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2,a.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3,a.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1,a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,a.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3,a.z, GrlConstants.FLOAT_TEST_TOL);
 
-		assertEquals(5,c.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(7,c.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(9,c.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(5,c.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(7,c.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(9,c.z, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
 	public void timesIP() {
 		Dummy a = new Dummy(1,2,3);
 
-		a.timesIP(2.5);
+		a.timesIP(2.5f);
 
-		assertEquals(2.5,a.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,a.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(7.5,a.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2.5f,a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,a.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(7.5f,a.z, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
 	public void scale() {
 		Dummy a = new Dummy(1,2,3);
 
-		a.scale(2.5);
+		a.scale(2.5f);
 
-		assertEquals(2.5,a.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,a.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(7.5,a.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2.5f,a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,a.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(7.5f,a.z, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
 	public void times() {
 		Dummy a = new Dummy(1,2,3);
 
-		Dummy b = a.times(2.5);
+		Dummy b = a.times(2.5f);
 
-		assertEquals(1,a.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2,a.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3,a.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1,a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,a.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3,a.z, GrlConstants.FLOAT_TEST_TOL);
 
-		assertEquals(2.5,b.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,b.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(7.5, b.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2.5f,b.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,b.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(7.5f, b.z, GrlConstants.FLOAT_TEST_TOL);
 	}
 
-	public static class Dummy extends GeoTuple3D_F64<Dummy> {
+	public static class Dummy extends GeoTuple3D_F32<Dummy> {
 		public Dummy() {
 		}
 
-		public Dummy(double x, double y, double z) {
+		public Dummy(float x, float y, float z) {
 			super(x, y, z);
 		}
 

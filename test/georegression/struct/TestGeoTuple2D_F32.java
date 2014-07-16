@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Peter Abeles
  */
-public class TestGeoTuple2D_F64 {
+public class TestGeoTuple2D_F32 {
 	@Test
 	public void plusIP() {
 		Dummy a = new Dummy(1,2);
@@ -34,8 +34,8 @@ public class TestGeoTuple2D_F64 {
 
 		a.plusIP(b);
 
-		assertEquals(5,a.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(7,a.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(5,a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(7,a.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -45,51 +45,51 @@ public class TestGeoTuple2D_F64 {
 
 		Dummy c = a.plus(b);
 
-		assertEquals(1,a.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2,a.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1,a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,a.y, GrlConstants.FLOAT_TEST_TOL);
 
-		assertEquals(5,c.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(7,c.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(5,c.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(7,c.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
 	public void timesIP() {
 		Dummy a = new Dummy(1,2);
 
-		a.timesIP(2.5);
+		a.timesIP(2.5f);
 
-		assertEquals(2.5,a.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,a.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2.5f,a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,a.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
 	public void scale() {
 		Dummy a = new Dummy(1,2);
 
-		a.scale(2.5);
+		a.scale(2.5f);
 
-		assertEquals(2.5,a.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,a.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2.5f,a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,a.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
 	public void times() {
 		Dummy a = new Dummy(1,2);
 
-		Dummy b = a.times(2.5);
+		Dummy b = a.times(2.5f);
 
-		assertEquals(1,a.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2,a.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1,a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,a.y, GrlConstants.FLOAT_TEST_TOL);
 
-		assertEquals(2.5,b.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,b.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2.5f,b.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,b.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
-	public static class Dummy extends GeoTuple2D_F64<Dummy> {
+	public static class Dummy extends GeoTuple2D_F32<Dummy> {
 		public Dummy() {
 		}
 
-		public Dummy(double x, double y) {
+		public Dummy(float x, float y) {
 			super(x, y);
 		}
 
