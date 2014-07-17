@@ -25,6 +25,7 @@ import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.shapes.Cylinder3D_F32;
 import georegression.struct.shapes.Sphere3D_F32;
+import georegression.struct.shapes.Triangle3D_F32;
 
 
 /**
@@ -195,16 +196,14 @@ public class Distance3D_F32 {
 	 * Signed distance from a 3D point to 3D triangle.   The sign indicates which side of the triangle the point
 	 * is on.  See {@link georegression.metric.alg.DistancePointTriangle3D_F32} for the details.
 	 *
-	 * @param vertexA Vertex in a 3D triangle.
-	 * @param vertexB Vertex in a 3D triangle.
-	 * @param vertexC Vertex in a 3D triangle.
+	 * @param triangle 3D triangle
 	 * @param point Point for which the closest point on the triangle is found
 	 * @return The closest point
 	 */
-	public static float distance( Point3D_F32 vertexA, Point3D_F32 vertexB, Point3D_F32 vertexC, Point3D_F32 point ) {
+	public static float distance( Triangle3D_F32 triangle, Point3D_F32 point ) {
 
 		DistancePointTriangle3D_F32 alg = new DistancePointTriangle3D_F32();
-		alg.setTriangle(vertexA,vertexB,vertexC);
+		alg.setTriangle(triangle.v0,triangle.v1,triangle.v2);
 
 		Point3D_F32 cp = new Point3D_F32();
 

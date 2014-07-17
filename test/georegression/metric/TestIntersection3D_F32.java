@@ -117,8 +117,8 @@ public class TestIntersection3D_F32 {
 		assertEquals(0,p.distance(new Point3D_F32(2,0.5f,0)),GrlConstants.FLOAT_TEST_TOL);
 
 		// infinite intersections
-		ls.set(0,0,0,  4,0,0);
-		assertEquals(2,Intersection3D_F32.intersection(triangle,ls,p));
+		ls.set(0, 0, 0, 4, 0, 0);
+		assertEquals(2,Intersection3D_F32.intersection(triangle, ls, p));
 	}
 
 	@Test

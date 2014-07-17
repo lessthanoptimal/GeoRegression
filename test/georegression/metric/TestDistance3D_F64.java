@@ -28,6 +28,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.shapes.Cylinder3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
+import georegression.struct.shapes.Triangle3D_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -179,15 +180,13 @@ public class TestDistance3D_F64 {
 
 	@Test
 	public void distance_triangle_point() {
-		Point3D_F64 P0 = new Point3D_F64(0,0,0);
-		Point3D_F64 P1 = new Point3D_F64(0,2,0);
-		Point3D_F64 P2 = new Point3D_F64(1,1,0);
+		Triangle3D_F64 triangle = new Triangle3D_F64(0,0,0,  0,2,0,  1,1,0);
 
-		double found = Distance3D_F64.distance(P0,P1,P2,new Point3D_F64(0.2,0.5,2));
+		double found = Distance3D_F64.distance(triangle,new Point3D_F64(0.2,0.5,2));
 
 		assertEquals(2,found,GrlConstants.DOUBLE_TEST_TOL);
 
-		found = Distance3D_F64.distance(P0,P1,P2,new Point3D_F64(0.2,0.5,-2));
+		found = Distance3D_F64.distance(triangle,new Point3D_F64(0.2,0.5,-2));
 
 		assertEquals(-2,found,GrlConstants.DOUBLE_TEST_TOL);
 	}

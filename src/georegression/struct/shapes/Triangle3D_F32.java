@@ -90,4 +90,8 @@ public class Triangle3D_F32 implements Serializable {
 	public void setV2(Point3D_F32 v2) {
 		this.v2 = v2;
 	}
+
+	public Triangle3D_F32 copy() {
+		return new Triangle3D_F32(this);
+	}
 }
