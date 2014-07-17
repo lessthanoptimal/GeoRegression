@@ -21,11 +21,13 @@ package georegression.metric;
 import georegression.geometry.UtilPlane3D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F32;
+import georegression.struct.line.LineSegment3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.shapes.Box3D_F32;
 import georegression.struct.shapes.BoxLength3D_F32;
+import georegression.struct.shapes.Triangle3D_F32;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -87,6 +89,36 @@ public class TestIntersection3D_F32 {
 		assertEquals(0, UtilPlane3D_F32.evaluate(a,p), GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(0, UtilPlane3D_F32.evaluate(b,p), GrlConstants.FLOAT_TEST_TOL);
 
+	}
+
+	@Test
+	public void intersection_triangle_ls() {
+		LineSegment3D_F32 ls = new LineSegment3D_F32();
+		Point3D_F32 p = new Point3D_F32();
+
+		// degenerate triangle
+		Triangle3D_F32 triangle = new Triangle3D_F32(1,1,1,2,2,2,3,3,3);
+		assertEquals(-1,Intersection3D_F32.intersection(triangle,ls,p));
+
+		// no intersection
+		triangle.set(1,0,0,  3,0,0,  3,2,0);
+		ls.set(0,0,0,  0,0,10); // completely miss
+		assertEquals(0, Intersection3D_F32.intersection(triangle, ls, p));
+		ls.set(0,0,0,  0,0,10); // hits the plain but not the triangle
+		assertEquals(0, Intersection3D_F32.intersection(triangle, ls, p));
+		ls.set(2,0.5f,-1,  2,0.5f,-0.5f); // would hit, but is too short
+		assertEquals(0, Intersection3D_F32.intersection(triangle, ls, p));
+		ls.set(2,0.5f,-0.5f,  2,0.5f,-1); // would hit, but is too short
+		assertEquals(0,Intersection3D_F32.intersection(triangle,ls,p));
+
+		// unique intersection
+		ls.set(2,0.5f,1,  2,0.5f,-1);
+		assertEquals(1,Intersection3D_F32.intersection(triangle,ls,p));
+		assertEquals(0,p.distance(new Point3D_F32(2,0.5f,0)),GrlConstants.FLOAT_TEST_TOL);
+
+		// infinite intersections
+		ls.set(0,0,0,  4,0,0);
+		assertEquals(2,Intersection3D_F32.intersection(triangle,ls,p));
 	}
 
 	@Test

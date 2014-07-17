@@ -50,8 +50,30 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 		this.z = v.z;
 	}
 
+	/**
+	 * In-place minus operation. this = a - b.
+	 *
+	 * @param a Point
+	 * @param b Point
+	 */
+	public void minus( Point3D_F64 a , Point3D_F64 b ) {
+		x = a.x - b.x;
+		y = a.y - b.y;
+		z = a.z - b.z;
+	}
+
 	public Vector3D_F64 copy() {
 		return new Vector3D_F64( x, y, z );
+	}
+
+	/**
+	 * In-place cross product operation.  this = a cross b
+	 *
+	 * @param a Vector
+	 * @param b Vector
+	 */
+	public void cross( Vector3D_F64 a, Vector3D_F64 b ) {
+		GeometryMath_F64.cross( a, b, this );
 	}
 
 	public Vector3D_F64 cross( Vector3D_F64 b ) {

@@ -46,7 +46,7 @@ sourceSets {
 
 dependencies {
     compile group: 'com.googlecode.efficient-java-matrix-library', name: 'ejml', version: '0.25'
-    compile group: 'org.ddogleg', name: 'ddogleg', version: '0.5'
+    compile group: 'org.ddogleg', name: 'ddogleg', version: '0.6-SNAPSHOT'
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }

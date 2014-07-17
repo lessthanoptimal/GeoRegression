@@ -39,4 +39,7 @@ public class GrlConstants {
 	public static float FLOAT_TEST_TOL = 1e-4f;
 	public static double DOUBLE_TEST_TOL = 1e-8f;
 
+	public static double F_EPS = 1.19e-17;
+	public static double EPS = 2.22e-16;
+
 }

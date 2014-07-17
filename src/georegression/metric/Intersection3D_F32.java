@@ -20,12 +20,16 @@ package georegression.metric;
 
 
 import georegression.geometry.GeometryMath_F32;
+import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F32;
+import georegression.struct.line.LineSegment3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
+import georegression.struct.point.Vector3D_F32;
 import georegression.struct.shapes.Box3D_F32;
 import georegression.struct.shapes.BoxLength3D_F32;
+import georegression.struct.shapes.Triangle3D_F32;
 
 /**
  * @author Peter Abeles
@@ -127,6 +131,104 @@ public class Intersection3D_F32 {
 		line.p.z = closestZ + d*slopeZ;
 
 		return true;
+	}
+
+	/**
+	 * <p>Finds the intersection between a 3D triangle and a line-segment.  Code ported from [1].</p>
+	 *
+	 * <p>
+	 * [1] http://geomalgorithms.com/a06-_intersect-2.html
+	 * </p>
+	 *
+	 * @param T Triangle in 3D space
+	 * @param R Line segment in 3D space.
+	 * @param output Storage for the intersection, if there is one
+	 * @return -1 = triangle is degenerate (a segment or point)
+	 *          0 =  disjoint (no intersect)
+	 *          1 =  intersect in unique point I1
+	 *          2 =  are in the same plane
+	 **/
+	public static int intersection( Triangle3D_F32 T , LineSegment3D_F32 R , Point3D_F32 output ) {
+		return intersection(T,R,output,
+				new Vector3D_F32(),new Vector3D_F32(),new Vector3D_F32(),new Vector3D_F32(),new Vector3D_F32());
+	}
+
+	/**
+	 * <p>Finds the intersection between a 3D triangle and a line-segment.  Code ported from [1].  Internal
+	 * working variables are provided in this interface to reduce memory creation/destruction.</p>
+	 *
+	 * <p>
+	 * [1] http://geomalgorithms.com/a06-_intersect-2.html
+	 * </p>
+	 *
+	 * @param T Triangle in 3D space
+	 * @param R Line segment in 3D space.
+	 * @param output Storage for the intersection, if there is one
+	 * @param u   (internal use) triangle vectors
+	 * @param v   (internal use) triangle vectors
+	 * @param n   (internal use) triangle vectors
+	 * @param dir (internal use) ray vector
+	 * @param w0  (internal use) ray vector
+	 * @return -1 = triangle is degenerate (a segment or point)
+	 *          0 =  disjoint (no intersect)
+	 *          1 =  intersect in unique point I1
+	 *          2 =  are in the same plane
+	 **/
+	public static int intersection( Triangle3D_F32 T , LineSegment3D_F32 R , Point3D_F32 output ,
+									Vector3D_F32 u , Vector3D_F32 v , Vector3D_F32 n,
+									Vector3D_F32 dir , Vector3D_F32 w0 ) {
+		float r, a, b;              // params to calc ray-plane intersect
+
+		// get triangle edge vectors and plane normal
+		u.minus(T.v1,T.v0);   // NOTE: these could be precomputed
+		v.minus(T.v2,T.v0);
+		n.cross(u,v);
+
+		if ( n.normSq() == 0 )        // triangle is degenerate
+			return -1;                  // do not deal with this case
+
+		dir.minus(R.b,R.a);             // ray direction vector
+		w0.minus(R.a,T.v0);
+		a = -n.dot(w0);
+		b = n.dot(dir);
+		if (Math.abs(b) < GrlConstants.F_EPS) { // ray is  parallel to triangle plane
+			if (a == 0)                       // ray lies in triangle plane
+				return 2;
+			else return 0;                    // ray disjoint from plane
+		}
+
+		// get intersect point of ray with triangle plane
+		r = a / b;
+		if (r < 0.0f)                    // ray goes away from triangle
+			return 0;                   // => no intersect
+		else if( r > 1.0f )              // is past the end of the line segment
+			return 0;
+
+		// intersect point of ray and plane
+		output.x = R.a.x + r*dir.x;
+		output.y = R.a.y + r*dir.y;
+		output.z = R.a.z + r*dir.z;
+
+		// is I inside T?
+		float uu, uv, vv, wu, wv, D;
+		uu = u.dot(u);
+		uv = u.dot(v);
+		vv = v.dot(v);
+		w0.minus(output,T.v0);
+		wu = w0.dot(u);
+		wv = w0.dot(v);
+		D = uv * uv - uu * vv;
+
+		// get and test parametric coords
+		float s, t;
+		s = (uv * wv - vv * wu) / D;
+		if (s < 0.0f || s > 1.0f)        // I is outside T
+			return 0;
+		t = (uv * wu - uu * wv) / D;
+		if (t < 0.0f || (s + t) > 1.0f)  // I is outside T
+			return 0;
+
+		return 1;                      // I is in T
 	}
 
 	/**

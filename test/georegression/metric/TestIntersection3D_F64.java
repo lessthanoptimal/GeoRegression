@@ -21,11 +21,13 @@ package georegression.metric;
 import georegression.geometry.UtilPlane3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
+import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.shapes.Box3D_F64;
 import georegression.struct.shapes.BoxLength3D_F64;
+import georegression.struct.shapes.Triangle3D_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -87,6 +89,36 @@ public class TestIntersection3D_F64 {
 		assertEquals(0, UtilPlane3D_F64.evaluate(a,p), GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(0, UtilPlane3D_F64.evaluate(b,p), GrlConstants.DOUBLE_TEST_TOL);
 
+	}
+
+	@Test
+	public void intersection_triangle_ls() {
+		LineSegment3D_F64 ls = new LineSegment3D_F64();
+		Point3D_F64 p = new Point3D_F64();
+
+		// degenerate triangle
+		Triangle3D_F64 triangle = new Triangle3D_F64(1,1,1,2,2,2,3,3,3);
+		assertEquals(-1,Intersection3D_F64.intersection(triangle,ls,p));
+
+		// no intersection
+		triangle.set(1,0,0,  3,0,0,  3,2,0);
+		ls.set(0,0,0,  0,0,10); // completely miss
+		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
+		ls.set(0,0,0,  0,0,10); // hits the plain but not the triangle
+		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
+		ls.set(2,0.5,-1,  2,0.5,-0.5); // would hit, but is too short
+		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
+		ls.set(2,0.5,-0.5,  2,0.5,-1); // would hit, but is too short
+		assertEquals(0,Intersection3D_F64.intersection(triangle,ls,p));
+
+		// unique intersection
+		ls.set(2,0.5,1,  2,0.5,-1);
+		assertEquals(1,Intersection3D_F64.intersection(triangle,ls,p));
+		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.DOUBLE_TEST_TOL);
+
+		// infinite intersections
+		ls.set(0, 0, 0, 4, 0, 0);
+		assertEquals(2,Intersection3D_F64.intersection(triangle, ls, p));
 	}
 
 	@Test

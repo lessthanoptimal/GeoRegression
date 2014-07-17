@@ -50,8 +50,30 @@ public class Vector3D_F32 extends GeoTuple3D_F32<Vector3D_F32> {
 		this.z = v.z;
 	}
 
+	/**
+	 * In-place minus operation. this = a - b.
+	 *
+	 * @param a Point
+	 * @param b Point
+	 */
+	public void minus( Point3D_F32 a , Point3D_F32 b ) {
+		x = a.x - b.x;
+		y = a.y - b.y;
+		z = a.z - b.z;
+	}
+
 	public Vector3D_F32 copy() {
 		return new Vector3D_F32( x, y, z );
+	}
+
+	/**
+	 * In-place cross product operation.  this = a cross b
+	 *
+	 * @param a Vector
+	 * @param b Vector
+	 */
+	public void cross( Vector3D_F32 a, Vector3D_F32 b ) {
+		GeometryMath_F32.cross( a, b, this );
 	}
 
 	public Vector3D_F32 cross( Vector3D_F32 b ) {

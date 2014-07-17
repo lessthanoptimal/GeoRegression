@@ -8,13 +8,19 @@ Version : 0.7
 - Cleared up which direction found transforms are going in MotionTransformPoint
 - Shapes added
   * Point3D_I32
-  * Cube3D_I32
-  * Renamed cube to box.  cube is too specific
+  * Box3D_I32
+  * Renamed Cube_F* to Box_F*.  cube is too specific
+  * Triangle3D_F*
 - Se3
   * added setTranslation() and setRotation() to make it more user friendly.
   * removed setT() and setR() so that serialization doesn't get messed up.
+- Vectors and Points
+  * Added cross and minus inline to vector
+  * Added default addition and multiplication Tuple3D and Tuple2D
 - ClosestPoint
   * added 2D line segment to point
+- Intersection
+  * added 3D triangle and line segment
 - Added default plus and times operators to GeoTuple2D and GeoTuple3D
 
 ---------------------------------------------

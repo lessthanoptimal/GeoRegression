@@ -23,6 +23,7 @@ import georegression.misc.test.GeometryUnitTest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * @author Peter Abeles
@@ -44,6 +45,21 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 
 		float found = a.dot( b );
 		assertEquals( 26, found, 13 - 8 );
+	}
+
+	@Test
+	public void minus_a_b() {
+		fail("Implement");
+	}
+
+	@Test
+	public void cross_a_b() {
+		fail("Implement");
+	}
+
+	@Test
+	public void cross_b() {
+		fail("Implement");
 	}
 
 	@Test
