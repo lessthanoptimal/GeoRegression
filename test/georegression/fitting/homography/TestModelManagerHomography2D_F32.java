@@ -19,7 +19,7 @@
 package georegression.fitting.homography;
 
 import georegression.misc.GrlConstants;
-import georegression.struct.homo.Homography2D_F32;
+import georegression.struct.homography.Homography2D_F32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

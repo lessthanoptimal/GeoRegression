@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-package georegression.transform.homo;
+package georegression.transform.homography;
 
 import georegression.geometry.GeometryMath_F32;
 import georegression.misc.GrlConstants;
-import georegression.struct.homo.Homography2D_F32;
-import georegression.struct.homo.UtilHomography;
+import georegression.struct.homography.Homography2D_F32;
+import georegression.struct.homography.UtilHomography;
 import georegression.struct.point.Point2D_F32;
 import org.ejml.data.DenseMatrix64F;
 import org.junit.Test;

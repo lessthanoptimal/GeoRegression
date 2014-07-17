@@ -21,11 +21,11 @@ package georegression.transform;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.affine.Affine2D_F64;
-import georegression.struct.homo.Homography2D_F64;
+import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.transform.affine.AffinePointOps_F64;
-import georegression.transform.homo.HomographyPointOps_F64;
+import georegression.transform.homography.HomographyPointOps_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.junit.Test;
 

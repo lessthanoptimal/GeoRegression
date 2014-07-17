@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.struct.homo;
+package georegression.struct.homography;
 
 
 import org.ejml.data.DenseMatrix64F;

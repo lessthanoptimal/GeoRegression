@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Quaternion_F64;
@@ -154,7 +155,7 @@ public class RotationMatrixGenerator {
 	 */
 	public static Quaternion_F64 matrixToQuaternion( DenseMatrix64F R, Quaternion_F64 quat ) {
 		// first get rodrigues
-		Rodrigues_F64 r = matrixToRodrigues( R, null );
+		Rodrigues_F64 r = matrixToRodrigues( R, (Rodrigues_F64)null );
 
 		// then convert to quaternions
 		return rodriguesToQuaternion( r, quat );
@@ -188,6 +189,49 @@ public class RotationMatrixGenerator {
 			rodrigues.unitAxisRotation.x = ( R.get( 2, 1 ) - R.get( 1, 2 ) ) / bottom;
 			rodrigues.unitAxisRotation.y = ( R.get( 0, 2 ) - R.get( 2, 0 ) ) / bottom;
 			rodrigues.unitAxisRotation.z = ( R.get( 1, 0 ) - R.get( 0, 1 ) ) / bottom;
+
+			// in extreme underflow situations the result can be unnormalized
+			rodrigues.unitAxisRotation.normalize();
+
+			// In theory this might be more stable
+			// rotationAxis( R, rodrigues.unitAxisRotation);
+		} else {
+			// the largest sum of diagonal elements is 3, thus if absDiagSum is more than 1 it must be rounding error
+			rodrigues.theta = 0;
+			rodrigues.unitAxisRotation.set( 1, 0, 0 );
+		}
+
+		return rodrigues;
+	}
+
+	/**
+	 * Converts a rotation matrix into {@link georegression.struct.so.Rodrigues_F64}.
+	 *
+	 * @param R		 Rotation matrix.
+	 * @param rodrigues Storage used for solution.  If null a new instance is declared.
+	 * @return The found axis and rotation angle.
+	 */
+	public static Rodrigues_F32 matrixToRodrigues( DenseMatrix64F R, Rodrigues_F32 rodrigues ) {
+		if( rodrigues == null ) {
+			rodrigues = new Rodrigues_F32();
+		}
+		// parts of this are from wikipedia
+		// http://en.wikipedia.org/wiki/Rotation_representation_%28mathematics%29#Rotation_matrix_.E2.86.94_Euler_axis.2Fangle
+
+		double diagSum = ( R.get( 0, 0 ) + R.get( 1, 1 ) + R.get( 2, 2 ) - 1.0 ) / 2.0;
+
+		double absDiagSum = Math.abs(diagSum);
+
+		if( absDiagSum < 1 ) {
+			// if numerically stable use a faster technique
+			rodrigues.theta = (float)Math.acos( diagSum );
+			double bottom = 2.0 * Math.sin( rodrigues.theta );
+
+			// in cases where bottom is close to zero that means theta is also close to zero and the vector
+			// doesn't matter that much
+			rodrigues.unitAxisRotation.x = (float)(( R.get( 2, 1 ) - R.get( 1, 2 ) ) / bottom);
+			rodrigues.unitAxisRotation.y = (float)(( R.get( 0, 2 ) - R.get( 2, 0 ) ) / bottom);
+			rodrigues.unitAxisRotation.z = (float)(( R.get( 1, 0 ) - R.get( 0, 1 ) ) / bottom);
 
 			// in extreme underflow situations the result can be unnormalized
 			rodrigues.unitAxisRotation.normalize();
@@ -541,6 +585,58 @@ public class RotationMatrixGenerator {
 		euler[0] = rotX;
 		euler[1] = rotY;
 		euler[2] = rotZ;
+
+		return euler;
+	}
+
+	/**
+	 * <p>
+	 * Given a rotation matrix it will compute the XYZ euler angles.
+	 * </p>
+	 * <p>
+	 * See Internet PDF "Computing Euler angles from a rotation matrix" by Gregory G. Slabaugh.
+	 * </p>                                                                                                                                                                      ose
+	 */
+	public static float[] matrixToEulerXYZ( DenseMatrix64F M , float euler[] ) {
+		if( euler == null )
+			euler = new float[3];
+
+		double m31 = M.get( 2, 0 );
+
+		double rotX, rotY, rotZ;
+
+
+		if( Math.abs( Math.abs( m31 ) - 1 ) < GrlConstants.EPS) {
+			double m12 = M.get( 0, 1 );
+			double m13 = M.get( 0, 2 );
+
+			rotZ = 0;
+			double gamma = Math.atan2( m12, m13 );
+
+			if( m31 < 0 ) {
+				rotY = Math.PI / 2.0;
+				rotX = rotZ + gamma;
+			} else {
+				rotY = -Math.PI / 2.0;
+				rotX = -rotZ + gamma;
+			}
+		} else {
+			double m32 = M.get( 2, 1 );
+			double m33 = M.get( 2, 2 );
+
+			double m21 = M.get( 1, 0 );
+			double m11 = M.get( 0, 0 );
+
+			rotY = -Math.asin( m31 );
+			double cosRotY = Math.cos( rotY );
+			rotX = Math.atan2( m32 / cosRotY, m33 / cosRotY );
+			rotZ = Math.atan2( m21 / cosRotY, m11 / cosRotY );
+
+		}
+
+		euler[0] = (float)rotX;
+		euler[1] = (float)rotY;
+		euler[2] = (float)rotZ;
 
 		return euler;
 	}

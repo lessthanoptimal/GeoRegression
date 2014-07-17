@@ -25,12 +25,27 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
+import georegression.struct.se.Se3_F32;
+import georegression.struct.se.Se3_F64;
+import org.ejml.ops.MatrixFeatures;
 
 
 /**
  * @author Peter Abeles
  */
 public class GeometryUnitTest {
+
+	public static void assertEquals( Se3_F64 expected, Se3_F64 found, double tolTran, double tolRotation ) {
+		assertEquals( expected.getTranslation(), found.getTranslation(), tolTran );
+
+		assertTrue(MatrixFeatures.isIdentical(expected.R, found.R, tolRotation), "rotation");
+	}
+
+	public static void assertEquals( Se3_F32 expected, Se3_F32 found, double tolTran, double tolRotation ) {
+		assertEquals( expected.getTranslation(), found.getTranslation(), tolTran );
+
+		assertTrue(MatrixFeatures.isIdentical(expected.R,found.R,tolRotation),"rotation");
+	}
 
 	public static void assertEquals( Se2_F64 expected, Se2_F64 found, double tolTran, double tolyaw ) {
 		assertEquals( expected.getTranslation(), found.getTranslation(), tolTran );

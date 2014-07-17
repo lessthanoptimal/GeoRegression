@@ -20,7 +20,7 @@ package georegression.transform;
 
 import georegression.struct.InvertibleTransform;
 import georegression.struct.affine.Affine2D_F32;
-import georegression.struct.homo.Homography2D_F32;
+import georegression.struct.homography.Homography2D_F32;
 import georegression.struct.se.Se2_F32;
 
 

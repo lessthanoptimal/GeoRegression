@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.struct.homo;
+package georegression.struct.homography;
 
 
 import georegression.struct.Matrix3x3_F64;

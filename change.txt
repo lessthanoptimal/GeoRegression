@@ -22,6 +22,8 @@ Version : 0.7
 - Intersection
   * added 3D triangle and line segment
 - Added default plus and times operators to GeoTuple2D and GeoTuple3D
+- Changed packages named homo to homography
+- Added Linear interpolation between two Se3.  InterpolateLinearSe3_*
 
 ---------------------------------------------
 Date    : 2014-06-18

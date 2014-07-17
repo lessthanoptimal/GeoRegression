@@ -35,7 +35,7 @@ public class ExampleRotationParameterizations {
 		DenseMatrix64F R = RotationMatrixGenerator.eulerXYZ(0.5,-1,-0.45,null);
 
 		// matrix to Rodrigues
-		Rodrigues_F64 rod = RotationMatrixGenerator.matrixToRodrigues(R,null);
+		Rodrigues_F64 rod = RotationMatrixGenerator.matrixToRodrigues(R,(Rodrigues_F64)null);
 
 		// Rodrigues to Quaternion
 		Quaternion_F64 quat = RotationMatrixGenerator.rodriguesToQuaternion(rod,null);

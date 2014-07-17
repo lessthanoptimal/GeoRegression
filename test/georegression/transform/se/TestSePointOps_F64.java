@@ -19,6 +19,7 @@
 package georegression.transform.se;
 
 import georegression.geometry.RotationMatrixGenerator;
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
@@ -35,7 +36,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Peter Abeles
  */
-public class TestSePointOps {
+public class TestSePointOps_F64 {
 
 	@Test
 	public void transform_2d_single() {
@@ -46,21 +47,21 @@ public class TestSePointOps {
 		// see if it creates a new instance correctly
 		Point2D_F64 found = SePointOps_F64.transform( tran, pt, null );
 
-		assertEquals( -4, found.getX(), 1e-8 );
-		assertEquals( -1, found.getY(), 1e-8 );
-		assertEquals( 2, pt.getX(), 1e-8 );
-		assertEquals( 4, pt.getY(), 1e-8 );
+		assertEquals( -4, found.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -1, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 2, pt.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 4, pt.getY(), GrlConstants.DOUBLE_TEST_TOL );
 
 		// now provide it an input to work off of
 		found.set( 10, 10 );
 		SePointOps_F64.transform( tran, pt, found );
-		assertEquals( -4, found.getX(), 1e-8 );
-		assertEquals( -1, found.getY(), 1e-8 );
+		assertEquals( -4, found.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -1, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
 
 		// modify the original
 		SePointOps_F64.transform( tran, pt, pt );
-		assertEquals( -4, pt.getX(), 1e-8 );
-		assertEquals( -1, pt.getY(), 1e-8 );
+		assertEquals( -4, pt.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -1, pt.getY(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
@@ -72,21 +73,21 @@ public class TestSePointOps {
 		// see if it creates a new instance correctly
 		Point2D_F64 found = SePointOps_F64.transformReverse( tran, pt, null );
 
-		assertEquals( 1, found.getX(), 1e-8 );
-		assertEquals( -4, found.getY(), 1e-8 );
-		assertEquals( 2, pt.getX(), 1e-8 );
-		assertEquals( 4, pt.getY(), 1e-8 );
+		assertEquals( 1, found.getX(), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( -4, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 2, pt.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 4, pt.getY(), GrlConstants.DOUBLE_TEST_TOL );
 
 		// now provide it an input to work off of
 		found.set( 10, 10 );
 		SePointOps_F64.transformReverse( tran, pt, found );
-		assertEquals( 1, found.getX(), 1e-8 );
-		assertEquals( -4, found.getY(), 1e-8 );
+		assertEquals( 1, found.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -4, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
 
 		// modify the original
 		SePointOps_F64.transformReverse( tran, pt, pt );
-		assertEquals( 1, pt.getX(), 1e-8 );
-		assertEquals( -4, pt.getY(), 1e-8 );
+		assertEquals( 1, pt.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -4, pt.getY(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
@@ -101,13 +102,13 @@ public class TestSePointOps {
 		int N = 12;
 		SePointOps_F64.transform( tran, pts, N );
 		for( int i = 0; i < N; i++ ) {
-			assertEquals( -4, pts[i].getX(), 1e-8 );
-			assertEquals( -1, pts[i].getY(), 1e-8 );
+			assertEquals( -4, pts[i].getX(), GrlConstants.DOUBLE_TEST_TOL );
+			assertEquals( -1, pts[i].getY(), GrlConstants.DOUBLE_TEST_TOL );
 		}
 		// see if the stuff after N has not been modified
 		for( int i = N; i < pts.length; i++ ) {
-			assertEquals( 2, pts[i].getX(), 1e-8 );
-			assertEquals( 4, pts[i].getY(), 1e-8 );
+			assertEquals( 2, pts[i].getX(), GrlConstants.DOUBLE_TEST_TOL );
+			assertEquals( 4, pts[i].getY(), GrlConstants.DOUBLE_TEST_TOL );
 		}
 	}
 
@@ -122,8 +123,8 @@ public class TestSePointOps {
 
 		SePointOps_F64.transform( tran, pts );
 		for( Point2D_F64 pt : pts ) {
-			assertEquals( -4, pt.getX(), 1e-8 );
-			assertEquals( -1, pt.getY(), 1e-8 );
+			assertEquals( -4, pt.getX(), GrlConstants.DOUBLE_TEST_TOL );
+			assertEquals( -1, pt.getY(), GrlConstants.DOUBLE_TEST_TOL );
 		}
 	}
 
@@ -139,9 +140,9 @@ public class TestSePointOps {
 
 		SePointOps_F64.transform( se, P, Pt );
 
-		assertEquals( 10, Pt.getX(), 1e-8 );
-		assertEquals( 9, Pt.getY(), 1e-8 );
-		assertEquals( 2, Pt.getZ(), 1e-8 );
+		assertEquals( 10, Pt.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 9, Pt.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 2, Pt.getZ(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
@@ -156,8 +157,8 @@ public class TestSePointOps {
 
 		SePointOps_F64.transformReverse( se, P, Pt );
 
-		assertEquals( 1, Pt.getX(), 1e-8 );
-		assertEquals( 7, Pt.getY(), 1e-8 );
-		assertEquals( 9, Pt.getZ(), 1e-8 );
+		assertEquals( 1, Pt.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 7, Pt.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 9, Pt.getZ(), GrlConstants.DOUBLE_TEST_TOL );
 	}
 }

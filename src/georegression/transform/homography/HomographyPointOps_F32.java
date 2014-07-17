@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-package georegression.transform.homo;
+package georegression.transform.homography;
 
-import georegression.struct.homo.Homography2D_F64;
-import georegression.struct.point.Point2D_F64;
+import georegression.struct.homography.Homography2D_F32;
+import georegression.struct.point.Point2D_F32;
 
 
 /**
@@ -27,7 +27,7 @@ import georegression.struct.point.Point2D_F64;
  *
  * @author Peter Abeles
  */
-public class HomographyPointOps_F64 {
+public class HomographyPointOps_F32 {
 
 	/**
 	 * Applies a 2D homography transform to the point and stores the results in another
@@ -40,17 +40,17 @@ public class HomographyPointOps_F64 {
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Homography2D_F64 H, Point2D_F64 orig, Point2D_F64 result ) {
+	public static Point2D_F32 transform( Homography2D_F32 H, Point2D_F32 orig, Point2D_F32 result ) {
 
 		if( result == null ) {
-			result = new Point2D_F64();
+			result = new Point2D_F32();
 		}
 
 		// copy the values so that no errors happen if orig and result are the same instance
-		double x = orig.x;
-		double y = orig.y;
+		float x = orig.x;
+		float y = orig.y;
 
-		double z = H.a31 * x + H.a32 * y + H.a33;
+		float z = H.a31 * x + H.a32 * y + H.a33;
 
 		result.x = (H.a11 * x + H.a12 * y + H.a13)/z;
 		result.y = (H.a21 * x + H.a22 * y + H.a23)/z;
@@ -71,13 +71,13 @@ public class HomographyPointOps_F64 {
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Homography2D_F64 H, double x , double y , Point2D_F64 result ) {
+	public static Point2D_F32 transform( Homography2D_F32 H, float x , float y , Point2D_F32 result ) {
 
 		if( result == null ) {
-			result = new Point2D_F64();
+			result = new Point2D_F32();
 		}
 
-		double z = H.a31 * x + H.a32 * y + H.a33;
+		float z = H.a31 * x + H.a32 * y + H.a33;
 
 		result.x = (H.a11 * x + H.a12 * y + H.a13)/z;
 		result.y = (H.a21 * x + H.a22 * y + H.a23)/z;

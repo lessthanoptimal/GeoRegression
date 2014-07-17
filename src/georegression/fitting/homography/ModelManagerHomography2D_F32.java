@@ -18,7 +18,7 @@
 
 package georegression.fitting.homography;
 
-import georegression.struct.homo.Homography2D_F32;
+import georegression.struct.homography.Homography2D_F32;
 import org.ddogleg.fitting.modelset.ModelManager;
 
 /**

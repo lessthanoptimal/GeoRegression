@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-package georegression.struct.homo;
+package georegression.struct.homography;
 
 import georegression.struct.GenericInvertibleTransformTests_F64;
 import georegression.struct.InvertibleTransform;
 import georegression.struct.point.Point2D_F64;
-import georegression.transform.homo.HomographyPointOps_F64;
+import georegression.transform.homography.HomographyPointOps_F64;
 
 import java.util.Random;
 

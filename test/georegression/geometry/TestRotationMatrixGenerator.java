@@ -83,7 +83,7 @@ public class TestRotationMatrixGenerator {
 	}
 
 	@Test
-	public void matrixToRodrigues() {
+	public void matrixToRodrigues_F64() {
 		// create the rotation axis
 //		for( int i = 1; i < 20; i++ ) {
 //			double angle = i * Math.PI / 20;
@@ -104,12 +104,17 @@ public class TestRotationMatrixGenerator {
 //		checkMatrixToRodrigues( new Rodrigues( -Math.PI, 1, 1, 1 ), new Rodrigues( Math.PI, 1, 1, 1 ) );
 	}
 
+	@Test
+	public void matrixToRodrigues_F32() {
+		fail("implement");
+	}
+
 	private void checkMatrixToRodrigues( Rodrigues_F64 rodInput ) {
 		// create the matrix using rodrigues
 		DenseMatrix64F rod = RotationMatrixGenerator.rodriguesToMatrix( rodInput, null );
 
 		// see if the vectors are the same
-		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( rod, null );
+		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( rod, (Rodrigues_F64)null );
 
 		// if the lines are parallel the dot product will be 1 or -1
 		double dot = found.unitAxisRotation.dot( rodInput.unitAxisRotation);
@@ -127,7 +132,7 @@ public class TestRotationMatrixGenerator {
 		DenseMatrix64F rod = RotationMatrixGenerator.rodriguesToMatrix( input, null );
 
 		// see if the vectors are the same
-		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( rod, null );
+		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( rod, (Rodrigues_F64)null );
 
 		// if the lines are parallel the dot product will be 1 or -1
 		assertEquals( 1, Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), 1e-8 );
@@ -147,7 +152,7 @@ public class TestRotationMatrixGenerator {
 						"5.42066400000000000000e-14 1.00000000000000040000e+00 2.46136444559397200000e-13 \n" +
 						"3.16267800000000000000e-13 -2.46191955710628460000e-13 1.00000000000000040000e+00", 3);
 
-		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( R, null );
+		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( R, (Rodrigues_F64)null );
 
 		assertEquals(0,found.getTheta(),1e-8);
 	}
@@ -159,7 +164,7 @@ public class TestRotationMatrixGenerator {
 						"5.42066400000000000000e-14 0.99999999999999000000e+00 2.46136444559397200000e-13 \n" +
 						"3.16267800000000000000e-13 -2.46191955710628460000e-13 0.99999999999999000000e+00", 3);
 
-		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( R, null );
+		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( R, (Rodrigues_F64)null );
 
 		assertEquals(0,found.getTheta(),1e-8);
 	}
@@ -241,24 +246,24 @@ public class TestRotationMatrixGenerator {
 	}
 
 	@Test
-	public void matrixToEulerXYZ() {
+	public void matrixToEulerXYZ_F64() {
 		// test case one
 		DenseMatrix64F A = RotationMatrixGenerator.eulerXYZ( 0.1, -0.5, -0.96, null );
-		double[] euler = RotationMatrixGenerator.matrixToEulerXYZ( A , null );
+		double[] euler = RotationMatrixGenerator.matrixToEulerXYZ( A , (double[])null );
 		DenseMatrix64F B = RotationMatrixGenerator.eulerXYZ( euler[0], euler[1], euler[2], null );
 
 		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
 
 		// now try a pathological case
 		A = RotationMatrixGenerator.eulerXYZ( 0.1, -0.5, 0, null );
-		euler = RotationMatrixGenerator.matrixToEulerXYZ( A , null );
+		euler = RotationMatrixGenerator.matrixToEulerXYZ( A , (double[])null );
 		B = RotationMatrixGenerator.eulerXYZ( euler[0], euler[1], euler[2], null );
 
 		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
 
 		// try all zeros
 		A = RotationMatrixGenerator.eulerXYZ( 0, 0, 0, null );
-		euler = RotationMatrixGenerator.matrixToEulerXYZ( A , null );
+		euler = RotationMatrixGenerator.matrixToEulerXYZ( A , (double[])null );
 		B = RotationMatrixGenerator.eulerXYZ( euler[0], euler[1], euler[2], null );
 
 		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
