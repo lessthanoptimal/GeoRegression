@@ -24,6 +24,7 @@ Version : 0.7
 - Added default plus and times operators to GeoTuple2D and GeoTuple3D
 - Changed packages named homo to homography
 - Added Linear interpolation between two Se3.  InterpolateLinearSe3_*
+- MotionSe2PointSVD no longer throws RuntimeException if it fails.  returns false instead
 
 ---------------------------------------------
 Date    : 2014-06-18
@@ -39,7 +40,6 @@ Version : 0.6
 - Split up AffinePointOps into 32 and 64
 - Rectangle
   * Removed image processing notation for top-left corner.  Replaced with lower-extend and upper-extent
-- MotionSe2PointSVD no longer throws RuntimeException if it fails.  returns false instead
 
 ---------------------------------------------
 Date    : 2013-12-26
