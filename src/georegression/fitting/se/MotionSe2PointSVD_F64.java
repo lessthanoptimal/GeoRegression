@@ -23,8 +23,10 @@ import georegression.geometry.GeometryMath_F64;
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se2_F64;
-import org.ejml.simple.SimpleMatrix;
-import org.ejml.simple.SimpleSVD;
+import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.DecompositionFactory;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition;
+import org.ejml.ops.CommonOps;
 
 import java.util.List;
 
@@ -54,6 +56,12 @@ public class MotionSe2PointSVD_F64 implements MotionTransformPoint<Se2_F64, Poin
 
 	Point2D_F64 meanFrom = new Point2D_F64();
 	Point2D_F64 meanTo = new Point2D_F64();
+
+	SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(2,2,true,true,false);
+	DenseMatrix64F Sigma = new DenseMatrix64F(2,2);
+	DenseMatrix64F U = new DenseMatrix64F(2,2);
+	DenseMatrix64F V = new DenseMatrix64F(2,2);
+	DenseMatrix64F R = new DenseMatrix64F(2,2);
 
 	@Override
 	public Se2_F64 getTransformSrcToDst() {
@@ -96,24 +104,27 @@ public class MotionSe2PointSVD_F64 implements MotionTransformPoint<Se2_F64, Poin
 		s21 = s21 / N - m21;
 		s22 = s22 / N - m22;
 
-		SimpleMatrix Sigma = new SimpleMatrix( 2, 2, true, s11, s12, s21, s22 );
-
+		Sigma.data[0] = s11;Sigma.data[1] = s12;
+		Sigma.data[2] = s21;Sigma.data[3] = s22;
 		// Compute the SVD of the cross correlation matrix
 		// The rotation matrix is R = V*U^T
 
-		SimpleSVD evd = Sigma.svd( false );
-		SimpleMatrix U = evd.getU();
-		SimpleMatrix V = evd.getV();
+		if( !svd.decompose(Sigma) )
+			return false;
 
-		SimpleMatrix R = V.mult( U.transpose() );
+		svd.getU(U,false);
+		svd.getV(V, false);
+
+		CommonOps.multTransB(V,U,R);
 
 		// There are situations where R might not have a determinant of one and is instead
 		// a reflection is returned
-		if( R.determinant() < 0 ) {
+		/**/double det = CommonOps.det(R);
+		if( det < 0 ) {
 			for( int i = 0; i < 2; i++ )
 				V.set( i, 1, -V.get( i, 1 ) );
-			R = V.mult( U.transpose() );
-			double det = (double) R.determinant();
+			CommonOps.multTransB(V,U,R);
+			det = CommonOps.det(R);
 			if( det < 0 ) {
 				throw new RuntimeException( "Crap" );
 			}
