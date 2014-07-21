@@ -19,8 +19,8 @@
 package georegression.geometry;
 
 import georegression.struct.shapes.Quadrilateral_F32;
-import georegression.struct.shapes.Rectangle2D_I32;
-import georegression.struct.shapes.RectangleCorner2D_F32;
+import georegression.struct.shapes.Rectangle2D_F32;
+import georegression.struct.shapes.RectangleLength2D_I32;
 
 /**
  * Various functions related to polygons.
@@ -35,7 +35,7 @@ public class UtilPolygons2D_F32 {
 	 * @param input Rectangle.
 	 * @param output Quadrilateral.  Modified.
 	 */
-	public static void convert( RectangleCorner2D_F32 input , Quadrilateral_F32 output ) {
+	public static void convert( Rectangle2D_F32 input , Quadrilateral_F32 output ) {
 		output.a.x = input.x0;
 		output.a.y = input.y0;
 
@@ -55,7 +55,7 @@ public class UtilPolygons2D_F32 {
 	 * @param input Rectangle.
 	 * @param output Quadrilateral.  Modified.
 	 */
-	public static void convert( Rectangle2D_I32 input , Quadrilateral_F32 output ) {
+	public static void convert( RectangleLength2D_I32 input , Quadrilateral_F32 output ) {
 		output.a.x = input.x0;
 		output.a.y = input.y0;
 
@@ -75,7 +75,7 @@ public class UtilPolygons2D_F32 {
 	 * @param quad (Input) Quadrilateral
 	 * @param rectangle (Output) Minimum area rectangle
 	 */
-	public static void bounding( Quadrilateral_F32 quad , RectangleCorner2D_F32 rectangle ) {
+	public static void bounding( Quadrilateral_F32 quad , Rectangle2D_F32 rectangle ) {
 
 		rectangle.x0 = (float)Math.min(quad.a.x,quad.b.x);
 		rectangle.x0 = (float)Math.min(rectangle.x0,quad.c.x);

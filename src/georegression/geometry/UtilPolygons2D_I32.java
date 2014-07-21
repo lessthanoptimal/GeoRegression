@@ -20,7 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_I32;
-import georegression.struct.shapes.RectangleCorner2D_I32;
+import georegression.struct.shapes.Rectangle2D_I32;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class UtilPolygons2D_I32 {
 	 * @param points (Input) Quadrilateral
 	 * @param rectangle (Output) Minimum area rectangle
 	 */
-	public static void bounding( List<Point2D_I32> points , RectangleCorner2D_I32 rectangle ) {
+	public static void bounding( List<Point2D_I32> points , Rectangle2D_I32 rectangle ) {
 
 		rectangle.x0 = Integer.MAX_VALUE;
 		rectangle.y0 = Integer.MAX_VALUE;
@@ -69,7 +69,7 @@ public class UtilPolygons2D_I32 {
 	 * @param quad (Input) Quadrilateral
 	 * @param rectangle (Output) Minimum area rectangle
 	 */
-	public static void bounding( Polygon2D_I32 quad , RectangleCorner2D_I32 rectangle ) {
+	public static void bounding( Polygon2D_I32 quad , Rectangle2D_I32 rectangle ) {
 
 		UtilPolygons2D_I32.bounding(quad.vertexes.toList(),rectangle);
 	}

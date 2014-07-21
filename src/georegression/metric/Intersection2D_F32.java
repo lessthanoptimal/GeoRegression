@@ -25,7 +25,7 @@ import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.shapes.Polygon2D_F32;
 import georegression.struct.shapes.Rectangle2D_F32;
-import georegression.struct.shapes.RectangleCorner2D_F32;
+import georegression.struct.shapes.RectangleLength2D_F32;
 
 
 /**
@@ -259,14 +259,14 @@ public class Intersection2D_F32 {
 		return top / bottom;
 	}
 
-	public static boolean contains( Rectangle2D_F32 a, float x, float y ) {
+	public static boolean contains( RectangleLength2D_F32 a, float x, float y ) {
 		if( a.getX() <= x && a.getX() + a.getWidth() > x ) {
 			return a.getY() <= y && a.getY() + a.getHeight() > y;
 		}
 		return false;
 	}
 
-	public static Rectangle2D_F32 intersection( Rectangle2D_F32 a, Rectangle2D_F32 b ) {
+	public static RectangleLength2D_F32 intersection( RectangleLength2D_F32 a, RectangleLength2D_F32 b ) {
 		float tl_x, tl_y, w, h;
 
 		if( a.getX() >= b.getX() ) {
@@ -298,7 +298,7 @@ public class Intersection2D_F32 {
 		}
 
 
-		return new Rectangle2D_F32( tl_x, tl_y, w, h );
+		return new RectangleLength2D_F32( tl_x, tl_y, w, h );
 	}
 
 	/**
@@ -308,7 +308,7 @@ public class Intersection2D_F32 {
 	 * @param b Rectangle
 	 * @return true if intersection
 	 */
-	public static boolean intersects( RectangleCorner2D_F32 a , RectangleCorner2D_F32 b ) {
+	public static boolean intersects( Rectangle2D_F32 a , Rectangle2D_F32 b ) {
 		return( a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0 );
 	}
 
@@ -320,7 +320,7 @@ public class Intersection2D_F32 {
 	 * @param result Storage for the found intersection
 	 * @return true if intersection
 	 */
-	public static boolean intersection( RectangleCorner2D_F32 a , RectangleCorner2D_F32 b , RectangleCorner2D_F32 result ) {
+	public static boolean intersection( Rectangle2D_F32 a , Rectangle2D_F32 b , Rectangle2D_F32 result ) {
 		if( !intersects(a,b) )
 			return false;
 

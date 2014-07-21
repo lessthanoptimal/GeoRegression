@@ -20,7 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_I32;
-import georegression.struct.shapes.RectangleCorner2D_I32;
+import georegression.struct.shapes.Rectangle2D_I32;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class TestUtilPolygons2D_I32 {
 				poly.add(new Point2D_I32(x, y));
 			}
 
-			RectangleCorner2D_I32 rectangle = new RectangleCorner2D_I32();
+			Rectangle2D_I32 rectangle = new Rectangle2D_I32();
 			UtilPolygons2D_I32.bounding(poly,rectangle);
 
 			for( int i = 0; i < 20; i++ ) {
@@ -74,7 +74,7 @@ public class TestUtilPolygons2D_I32 {
 				poly.vertexes.grow().set(x,y);
 			}
 
-			RectangleCorner2D_I32 rectangle = new RectangleCorner2D_I32();
+			Rectangle2D_I32 rectangle = new Rectangle2D_I32();
 			UtilPolygons2D_I32.bounding(poly,rectangle);
 
 			for( int i = 0; i < 20; i++ ) {

@@ -154,6 +154,22 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
+	public void contained2_box_point() {
+		Box3D_F64 box = new Box3D_F64(2,3,4,3,4.5,6.5);
+
+		// point clearly inside the code
+		assertTrue(Intersection3D_F64.contained2(box, new Point3D_F64(2.1, 3.1, 4.1)));
+		// point way outside
+		assertFalse(Intersection3D_F64.contained2(box, new Point3D_F64(-2, 9, 8)));
+
+		// test edge cases
+		assertTrue(Intersection3D_F64.contained2(box, new Point3D_F64(2, 3, 4)));
+		assertTrue(Intersection3D_F64.contained2(box, new Point3D_F64(2 + 1, 3.1, 4.1)));
+		assertTrue(Intersection3D_F64.contained2(box, new Point3D_F64(2.1, 3 + 1.5, 4.1)));
+		assertTrue(Intersection3D_F64.contained2(box, new Point3D_F64(2.1, 3.1, 4 + 2.5)));
+	}
+
+	@Test
 	public void contained_box_box() {
 		Box3D_F64 box = new Box3D_F64(2,3,4,3,4.5,6.5);
 

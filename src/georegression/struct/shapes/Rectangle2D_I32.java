@@ -18,121 +18,90 @@
 
 package georegression.struct.shapes;
 
-import java.io.Serializable;
-
 /**
- * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), width, and height.  The three
- * other corners are (x0 + width-1,y0), (x0,y0 + height-1), (x0 + width-1,y0 + height-1).
+ * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), and upper extent (x1,y1).
+ * x0 <= x1 and y0 <= y1.  (x1,y1) is exclusive and not contained in the rectangle.
  */
-public class Rectangle2D_I32 implements Serializable {
+public class Rectangle2D_I32 {
 	/**
-	 * Lower extent x-axis
+	 * Lower extent
 	 */
-	public int x0;
+	public int x0,y0;
 	/**
-	 * Lower extent y-axis
+	 * Upper extent
 	 */
-	public int y0;
-	/**
-	 * Rectangle's width
-	 */
-	public int width;
-	/**
-	 * Rectangle's height
-	 */
-	public int height;
+	public int x1,y1;
+
+	public Rectangle2D_I32(int x0, int y0, int x1, int y1) {
+		set(x0,y0,x1,y1);
+	}
+
+	public Rectangle2D_I32(Rectangle2D_I32 orig) {
+		set(orig);
+	}
+
+	public void set( Rectangle2D_I32 orig ) {
+		this.x0 = orig.x0;
+		this.y0 = orig.y0;
+		this.x1 = orig.x1;
+		this.y1 = orig.y1;
+	}
+
+	public void set(int x0, int y0, int x1, int y1) {
+		this.x0 = x0;
+		this.y0 = y0;
+		this.x1 = x1;
+		this.y1 = y1;
+	}
 
 	public Rectangle2D_I32() {
 	}
 
-	public Rectangle2D_I32( int x0, int y0, int width, int height ) {
-		this.x0 = x0;
-		this.y0 = y0;
-		this.width = width;
-		this.height = height;
-	}
-
-	public void set( int tl_x, int tl_y, int width, int height ) {
-		this.x0 = tl_x;
-		this.y0 = tl_y;
-		this.width = width;
-		this.height = height;
-	}
-
-	/**
-	 * Sets lower extent
-	 *
-	 * @param x x-coordinate
-	 * @param y y-coordinate
-	 */
-	public void setLowerExtent(int x, int y) {
-		this.x0 = x;
-		this.y0 = y;
-	}
-
 	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth( int width ) {
-		this.width = width;
+		return x1-x0;
 	}
 
 	public int getHeight() {
-		return height;
+		return y1-y0;
 	}
 
-	public void setHeight( int height ) {
-		this.height = height;
+	public int area() {
+		return (y1-y0)*(x1-x0);
 	}
 
-	/**
-	 * @return Lower-extent x-coordinate
-	 */
-	public int getX() {
+	public int getX0() {
 		return x0;
 	}
 
-	/**
-	 * Sets the Lower-extent x-coordinate
-	 *
-	 * @param x Lower-extentx-coordinate
-	 */
-	public void setX( int x ) {
-		this.x0 = x;
+	public void setX0(int x0) {
+		this.x0 = x0;
 	}
 
-	/**
-	 * @return Lower-extent y-coordinate
-	 */
-	public int getY() {
+	public int getY0() {
 		return y0;
 	}
 
-	/**
-	 * Sets the Lower-extenty-coordinate
-	 *
-	 * @param y Lower-extent y-coordinate
-	 */
-	public void setY( int y ) {
-		this.y0 = y;
+	public void setY0(int y0) {
+		this.y0 = y0;
 	}
 
-	/**
-	 * Sets this rectangle to be equal to the passed in rectangle.
-	 * @param r Rectangle which this is to be set equal to
-	 */
-	public void set(Rectangle2D_I32 r) {
-		this.x0 = r.x0;
-		this.y0 = r.y0;
-		this.width = r.width;
-		this.height = r.height;
+	public int getX1() {
+		return x1;
 	}
 
-	@Override
+	public void setX1(int x1) {
+		this.x1 = x1;
+	}
+
+	public int getY1() {
+		return y1;
+	}
+
+	public void setY1(int y1) {
+		this.y1 = y1;
+	}
+
 	public String toString() {
-		return getClass().getSimpleName()+"{" +
-				"p=[ " + x0 + " , " + y0 +
-				"], width=" + width + ", height=" + height + '}';
+		return "RectangleCorner2D_I32( "+x0+" "+y0+" "+x1+" "+y1+" )";
 	}
 }

@@ -20,8 +20,8 @@ package georegression.geometry;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.shapes.Quadrilateral_F32;
-import georegression.struct.shapes.Rectangle2D_I32;
-import georegression.struct.shapes.RectangleCorner2D_F32;
+import georegression.struct.shapes.Rectangle2D_F32;
+import georegression.struct.shapes.RectangleLength2D_I32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -33,7 +33,7 @@ public class TestUtilPolygons2D_F32 {
 
 	@Test
 	public void convert_rectcorner_quad() {
-		RectangleCorner2D_F32 r = new RectangleCorner2D_F32(1,2,5,6);
+		Rectangle2D_F32 r = new Rectangle2D_F32(1,2,5,6);
 		Quadrilateral_F32 q = new Quadrilateral_F32();
 
 		UtilPolygons2D_F32.convert(r,q);
@@ -50,7 +50,7 @@ public class TestUtilPolygons2D_F32 {
 
 	@Test
 	public void convert_rectwh_quad() {
-		Rectangle2D_I32 rect = new Rectangle2D_I32(1,2,5,6);
+		RectangleLength2D_I32 rect = new RectangleLength2D_I32(1,2,5,6);
 
 		Quadrilateral_F32 q = new Quadrilateral_F32();
 
@@ -69,7 +69,7 @@ public class TestUtilPolygons2D_F32 {
 	@Test
 	public void bounding_quadrilateral() {
 		Quadrilateral_F32 q = new Quadrilateral_F32(3,0,2,-3,-2,3,1,5);
-		RectangleCorner2D_F32 out = new RectangleCorner2D_F32();
+		Rectangle2D_F32 out = new Rectangle2D_F32();
 
 		UtilPolygons2D_F32.bounding(q,out);
 

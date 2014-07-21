@@ -25,7 +25,7 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
-import georegression.struct.shapes.RectangleCorner2D_F64;
+import georegression.struct.shapes.RectangleLength2D_F64;
 
 
 /**
@@ -259,14 +259,47 @@ public class Intersection2D_F64 {
 		return top / bottom;
 	}
 
-	public static boolean contains( Rectangle2D_F64 a, double x, double y ) {
+	/**
+	 * <p>
+	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * if it is >= the lower extend and < the upper extent.
+	 * </p>
+	 * <p>
+	 * inside = x >= x0 && x < x0+width && y >= y0 && y < y0+height
+	 * </p>
+	 * @param a Rectangle.
+	 * @param x x-coordinate of point being tested for containment
+	 * @param y y-coordinate of point being tested for containment
+	 * @return true if inside and false if output
+	 */
+	public static boolean contains( RectangleLength2D_F64 a, double x, double y ) {
 		if( a.getX() <= x && a.getX() + a.getWidth() > x ) {
 			return a.getY() <= y && a.getY() + a.getHeight() > y;
 		}
 		return false;
 	}
 
-	public static Rectangle2D_F64 intersection( Rectangle2D_F64 a, Rectangle2D_F64 b ) {
+	/**
+	 * <p>
+	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * if it is >= the lower extend and <= the upper extent.
+	 * </p>
+	 * <p>
+	 * inside = x >= x0 && x <= x0+width && y >= y0 && y <= y0+height
+	 * </p>
+	 * @param a Rectangle.
+	 * @param x x-coordinate of point being tested for containment
+	 * @param y y-coordinate of point being tested for containment
+	 * @return true if inside and false if output
+	 */
+	public static boolean contains2( RectangleLength2D_F64 a, double x, double y ) {
+		if( a.getX() <= x && a.getX() + a.getWidth() >= x ) {
+			return a.getY() <= y && a.getY() + a.getHeight() >= y;
+		}
+		return false;
+	}
+
+	public static RectangleLength2D_F64 intersection( RectangleLength2D_F64 a, RectangleLength2D_F64 b ) {
 		double tl_x, tl_y, w, h;
 
 		if( a.getX() >= b.getX() ) {
@@ -298,7 +331,7 @@ public class Intersection2D_F64 {
 		}
 
 
-		return new Rectangle2D_F64( tl_x, tl_y, w, h );
+		return new RectangleLength2D_F64( tl_x, tl_y, w, h );
 	}
 
 	/**
@@ -308,8 +341,8 @@ public class Intersection2D_F64 {
 	 * @param b Rectangle
 	 * @return true if intersection
 	 */
-	public static boolean intersects( RectangleCorner2D_F64 a , RectangleCorner2D_F64 b ) {
-		return( a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0 );
+	public static boolean intersects( Rectangle2D_F64 a , Rectangle2D_F64 b ) {
+		return( a.p0.x < b.p1.x && a.p1.x > b.p0.x && a.p0.y < b.p1.y && a.p1.y > b.p0.y );
 	}
 
 	/**
@@ -320,14 +353,14 @@ public class Intersection2D_F64 {
 	 * @param result Storage for the found intersection
 	 * @return true if intersection
 	 */
-	public static boolean intersection( RectangleCorner2D_F64 a , RectangleCorner2D_F64 b , RectangleCorner2D_F64 result ) {
+	public static boolean intersection( Rectangle2D_F64 a , Rectangle2D_F64 b , Rectangle2D_F64 result ) {
 		if( !intersects(a,b) )
 			return false;
 
-		result.x0 = Math.max(a.x0,b.x0);
-		result.x1 = Math.min(a.x1, b.x1);
-		result.y0 = Math.max(a.y0,b.y0);
-		result.y1 = Math.min(a.y1,b.y1);
+		result.p0.x = Math.max(a.p0.x,b.p0.x);
+		result.p1.x = Math.min(a.p1.x,b.p1.x);
+		result.p0.y = Math.max(a.p0.y,b.p0.y);
+		result.p1.y = Math.min(a.p1.y,b.p1.y);
 
 		return true;
 	}

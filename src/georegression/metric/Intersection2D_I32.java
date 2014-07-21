@@ -21,7 +21,7 @@ package georegression.metric;
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_I32;
 import georegression.struct.shapes.Rectangle2D_I32;
-import georegression.struct.shapes.RectangleCorner2D_I32;
+import georegression.struct.shapes.RectangleLength2D_I32;
 
 /**
  *
@@ -36,7 +36,7 @@ public class Intersection2D_I32 {
 	 * @param b Rectangle
 	 * @return true if intersection
 	 */
-	public static boolean intersects( RectangleCorner2D_I32 a , RectangleCorner2D_I32 b ) {
+	public static boolean intersects( Rectangle2D_I32 a , Rectangle2D_I32 b ) {
 		return( a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0 );
 	}
 
@@ -48,7 +48,7 @@ public class Intersection2D_I32 {
 	 * @param result Storage for the found intersection
 	 * @return true if intersection
 	 */
-	public static boolean intersection( RectangleCorner2D_I32 a , RectangleCorner2D_I32 b , RectangleCorner2D_I32 result ) {
+	public static boolean intersection( Rectangle2D_I32 a , Rectangle2D_I32 b , Rectangle2D_I32 result ) {
 		if( !intersects(a,b) )
 			return false;
 
@@ -139,7 +139,7 @@ public class Intersection2D_I32 {
 	 * @param y y-coordinate of point
 	 * @return true if the point is inside and false it is not
 	 */
-	public static boolean contains( Rectangle2D_I32 a, int x, int y ) {
+	public static boolean contains( RectangleLength2D_I32 a, int x, int y ) {
 		if( a.getX() <= x && a.getX() + a.getWidth() > x ) {
 			return a.getY() <= y && a.getY() + a.getHeight() > y;
 		}
