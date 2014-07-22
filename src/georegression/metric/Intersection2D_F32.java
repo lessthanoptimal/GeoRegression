@@ -259,11 +259,78 @@ public class Intersection2D_F32 {
 		return top / bottom;
 	}
 
+	/**
+	 * <p>
+	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * if it is >= the lower extend and < the upper extent.
+	 * </p>
+	 * <p>
+	 * inside = x >= x0 && x < x0+width && y >= y0 && y < y0+height
+	 * </p>
+	 * @param a Rectangle.
+	 * @param x x-coordinate of point being tested for containment
+	 * @param y y-coordinate of point being tested for containment
+	 * @return true if inside and false if output
+	 */
 	public static boolean contains( RectangleLength2D_F32 a, float x, float y ) {
 		if( a.getX() <= x && a.getX() + a.getWidth() > x ) {
 			return a.getY() <= y && a.getY() + a.getHeight() > y;
 		}
 		return false;
+	}
+
+	/**
+	 * <p>
+	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * if it is >= the lower extend and <= the upper extent.
+	 * </p>
+	 * <p>
+	 * inside = x >= x0 && x <= x0+width && y >= y0 && y <= y0+height
+	 * </p>
+	 * @param a Rectangle.
+	 * @param x x-coordinate of point being tested for containment
+	 * @param y y-coordinate of point being tested for containment
+	 * @return true if inside and false if output
+	 */
+	public static boolean contains2( RectangleLength2D_F32 a, float x, float y ) {
+		if( a.getX() <= x && a.getX() + a.getWidth() >= x ) {
+			return a.getY() <= y && a.getY() + a.getHeight() >= y;
+		}
+		return false;
+	}
+
+	/**
+	 * <p>
+	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * if it is >= the lower extend and <b the upper extent.
+	 * </p>
+	 * <p>
+	 * inside = x >= x0 && x <= x1 && y >= y0 && y <= y1
+	 * </p>
+	 * @param a Rectangle.
+	 * @param x x-coordinate of point being tested for containment
+	 * @param y y-coordinate of point being tested for containment
+	 * @return true if inside and false if output
+	 */
+	public static boolean contains( Rectangle2D_F32 a, float x, float y ) {
+		return( a.p0.x <= x && a.p1.x > x && a.p0.y <= y && a.p1.y > y );
+	}
+
+	/**
+	 * <p>
+	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * if it is >= the lower extend and <= the upper extent.
+	 * </p>
+	 * <p>
+	 * inside = x >= x0 && x <= x1 && y >= y0 && y <= y1
+	 * </p>
+	 * @param a Rectangle.
+	 * @param x x-coordinate of point being tested for containment
+	 * @param y y-coordinate of point being tested for containment
+	 * @return true if inside and false if output
+	 */
+	public static boolean contains2( Rectangle2D_F32 a, float x, float y ) {
+		return( a.p0.x <= x && a.p1.x >= x && a.p0.y <= y && a.p1.y >= y );
 	}
 
 	public static RectangleLength2D_F32 intersection( RectangleLength2D_F32 a, RectangleLength2D_F32 b ) {
@@ -309,7 +376,7 @@ public class Intersection2D_F32 {
 	 * @return true if intersection
 	 */
 	public static boolean intersects( Rectangle2D_F32 a , Rectangle2D_F32 b ) {
-		return( a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0 );
+		return( a.p0.x < b.p1.x && a.p1.x > b.p0.x && a.p0.y < b.p1.y && a.p1.y > b.p0.y );
 	}
 
 	/**
@@ -324,10 +391,10 @@ public class Intersection2D_F32 {
 		if( !intersects(a,b) )
 			return false;
 
-		result.x0 = (float)Math.max(a.x0,b.x0);
-		result.x1 = (float)Math.min(a.x1, b.x1);
-		result.y0 = (float)Math.max(a.y0,b.y0);
-		result.y1 = (float)Math.min(a.y1,b.y1);
+		result.p0.x = (float)Math.max(a.p0.x,b.p0.x);
+		result.p1.x = (float)Math.min(a.p1.x,b.p1.x);
+		result.p0.y = (float)Math.max(a.p0.y,b.p0.y);
+		result.p1.y = (float)Math.min(a.p1.y,b.p1.y);
 
 		return true;
 	}

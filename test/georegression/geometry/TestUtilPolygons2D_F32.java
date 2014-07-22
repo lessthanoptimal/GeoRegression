@@ -73,9 +73,9 @@ public class TestUtilPolygons2D_F32 {
 
 		UtilPolygons2D_F32.bounding(q,out);
 
-		assertEquals(-2,out.x0, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(-3,out.y0, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 3,out.x1, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 5,out.y1, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-2,out.p0.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-3,out.p0.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 3,out.p1.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 5,out.p1.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 }

@@ -154,6 +154,22 @@ public class TestIntersection3D_F32 {
 	}
 
 	@Test
+	public void contained2_box_point() {
+		Box3D_F32 box = new Box3D_F32(2,3,4,3,4.5f,6.5f);
+
+		// point clearly inside the code
+		assertTrue(Intersection3D_F32.contained2(box, new Point3D_F32(2.1f, 3.1f, 4.1f)));
+		// point way outside
+		assertFalse(Intersection3D_F32.contained2(box, new Point3D_F32(-2, 9, 8)));
+
+		// test edge cases
+		assertTrue(Intersection3D_F32.contained2(box, new Point3D_F32(2, 3, 4)));
+		assertTrue(Intersection3D_F32.contained2(box, new Point3D_F32(2 + 1, 3.1f, 4.1f)));
+		assertTrue(Intersection3D_F32.contained2(box, new Point3D_F32(2.1f, 3 + 1.5f, 4.1f)));
+		assertTrue(Intersection3D_F32.contained2(box, new Point3D_F32(2.1f, 3.1f, 4 + 2.5f)));
+	}
+
+	@Test
 	public void contained_box_box() {
 		Box3D_F32 box = new Box3D_F32(2,3,4,3,4.5f,6.5f);
 

@@ -20,6 +20,8 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple2D_F32;
 import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.Rectangle2D_F32;
+import georegression.struct.shapes.RectangleLength2D_F32;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,5 +109,72 @@ public class UtilPoint2D_F32 {
 
 	public static boolean isEquals( GeoTuple2D_F32 a, GeoTuple2D_F32 b, float tol ) {
 		return ( (float)Math.abs( a.x - b.x ) <= tol && (float)Math.abs( a.x - b.x ) <= tol );
+	}
+
+	/**
+	 * Finds the minimal volume {@link georegression.struct.shapes.RectangleLength2D_F32} which contains all the points.
+	 *
+	 * @param points Input: List of points.
+	 * @param bounding Output: Bounding rectangle
+	 */
+	public static RectangleLength2D_F32 bounding(List<Point2D_F32> points, RectangleLength2D_F32 bounding) {
+		if( bounding == null )
+			bounding = new RectangleLength2D_F32();
+
+		float minX=Float.MAX_VALUE,maxX=-Float.MAX_VALUE;
+		float minY=Float.MAX_VALUE,maxY=-Float.MAX_VALUE;
+
+		for( int i = 0; i < points.size(); i++ ) {
+			Point2D_F32 p = points.get(i);
+			if( p.x < minX )
+				minX = p.x;
+			if( p.x > maxX )
+				maxX = p.x;
+			if( p.y < minY )
+				minY = p.y;
+			if( p.y > maxY )
+				maxY = p.y;
+		}
+
+		bounding.x0 = minX;
+		bounding.y0 = minY;
+		bounding.width = maxX-minX;
+		bounding.height = maxY-minY;
+
+		// make sure rounding doesn't cause a point to be out of bounds
+		bounding.width += (float)Math.max(0,(maxX-(bounding.x0+bounding.width))*10.0f);
+		bounding.height += (float)Math.max(0,(maxY-(bounding.y0+bounding.height))*10.0f);
+
+		return bounding;
+	}
+
+	/**
+	 * Finds the minimal volume {@link georegression.struct.shapes.RectangleLength2D_F32} which contains all the points.
+	 *
+	 * @param points Input: List of points.
+	 * @param bounding Output: Bounding rectangle
+	 */
+	public static Rectangle2D_F32 bounding(List<Point2D_F32> points, Rectangle2D_F32 bounding) {
+		if( bounding == null )
+			bounding = new Rectangle2D_F32();
+
+		float minX=Float.MAX_VALUE,maxX=-Float.MAX_VALUE;
+		float minY=Float.MAX_VALUE,maxY=-Float.MAX_VALUE;
+
+		for( int i = 0; i < points.size(); i++ ) {
+			Point2D_F32 p = points.get(i);
+			if( p.x < minX )
+				minX = p.x;
+			if( p.x > maxX )
+				maxX = p.x;
+			if( p.y < minY )
+				minY = p.y;
+			if( p.y > maxY )
+				maxY = p.y;
+		}
+
+		bounding.set(minX,minY,maxX,maxY);
+
+		return bounding;
 	}
 }

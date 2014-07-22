@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
 
 import java.util.ArrayList;
@@ -139,6 +140,40 @@ public class UtilPoint2D_F64 {
 		bounding.y0 = minY;
 		bounding.width = maxX-minX;
 		bounding.height = maxY-minY;
+
+		// make sure rounding doesn't cause a point to be out of bounds
+		bounding.width += Math.max(0, (maxX - (bounding.x0 + bounding.width)) * 10.0);
+		bounding.height += Math.max(0,(maxY-(bounding.y0+bounding.height))*10.0);
+
+		return bounding;
+	}
+
+	/**
+	 * Finds the minimal volume {@link georegression.struct.shapes.RectangleLength2D_F64} which contains all the points.
+	 *
+	 * @param points Input: List of points.
+	 * @param bounding Output: Bounding rectangle
+	 */
+	public static Rectangle2D_F64 bounding(List<Point2D_F64> points, Rectangle2D_F64 bounding) {
+		if( bounding == null )
+			bounding = new Rectangle2D_F64();
+
+		double minX=Double.MAX_VALUE,maxX=-Double.MAX_VALUE;
+		double minY=Double.MAX_VALUE,maxY=-Double.MAX_VALUE;
+
+		for( int i = 0; i < points.size(); i++ ) {
+			Point2D_F64 p = points.get(i);
+			if( p.x < minX )
+				minX = p.x;
+			if( p.x > maxX )
+				maxX = p.x;
+			if( p.y < minY )
+				minY = p.y;
+			if( p.y > maxY )
+				maxY = p.y;
+		}
+
+		bounding.set(minX,minY,maxX,maxY);
 
 		return bounding;
 	}

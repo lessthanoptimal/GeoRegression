@@ -247,8 +247,13 @@ public class Intersection3D_F32 {
 	}
 
 	/**
-	 * Returns true if the point is contained inside the box. The point is considered to be inside the box
-	 * if the following test passes for each dimension.  box.p0.x <= point.x < box.p1.x
+	 * <p>
+	 * Returns true if the point is contained inside the box, with an exclusive upper extent.
+	 * The point is considered to be inside the box if the following test passes:<br>
+	 * box.p0.x <= point.x < box.p1.x<br>
+	 * box.p0.y <= point.y < box.p1.y<br>
+	 * box.p0.z <= point.z < box.p1.z<br>
+	 * </p>
 	 *
 	 * @param box Box
 	 * @param point Point which is tested to see if it is inside the box
@@ -259,6 +264,25 @@ public class Intersection3D_F32 {
 		return( box.p0.x <= point.x && point.x < box.p1.x &&
 				box.p0.y <= point.y && point.y < box.p1.y &&
 				box.p0.z <= point.z && point.z < box.p1.z );
+	}
+
+	/**
+	 * <p>
+	 * Returns true if the point is contained inside the box, with an inclusive upper extent.
+	 * The point is considered to be inside the box if the following test passes:<br>
+	 * box.p0.x <= point.x <= box.p1.x<br>
+	 * box.p0.y <= point.y <= box.p1.y<br>
+	 * box.p0.z <= point.z <= box.p1.z<br>
+	 * </p>
+	 *
+	 * @param box Box
+	 * @param point Point which is tested to see if it is inside the box
+	 * @return true for inside and false for not
+	 */
+	public static boolean contained2( Box3D_F32 box , Point3D_F32 point ) {
+		return( box.p0.x <= point.x && point.x <= box.p1.x &&
+				box.p0.y <= point.y && point.y <= box.p1.y &&
+				box.p0.z <= point.z && point.z <= box.p1.z );
 	}
 
 	/**

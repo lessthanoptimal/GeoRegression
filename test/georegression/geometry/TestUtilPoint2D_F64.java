@@ -21,6 +21,7 @@ package georegression.geometry;
 import georegression.metric.Intersection2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
 import org.junit.Test;
 
@@ -58,6 +59,27 @@ public class TestUtilPoint2D_F64 {
 	}
 
 	@Test
+	public void bounding_length() {
+		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
+
+		for( int i = 0; i < 20; i++ ) {
+			Point2D_F64 p = new Point2D_F64();
+			p.x = rand.nextDouble()*100-50;
+			p.y = rand.nextDouble()*100-50;
+
+			list.add(p);
+		}
+
+		RectangleLength2D_F64 bounding = UtilPoint2D_F64.bounding(list,(RectangleLength2D_F64)null);
+
+		for( int i = 0; i < list.size(); i++ ) {
+			Point2D_F64 p = list.get(i);
+
+			assertTrue(Intersection2D_F64.contains2(bounding, p.x, p.y));
+		}
+	}
+
+	@Test
 	public void bounding() {
 		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
 
@@ -69,7 +91,7 @@ public class TestUtilPoint2D_F64 {
 			list.add(p);
 		}
 
-		RectangleLength2D_F64 bounding = UtilPoint2D_F64.bounding(list,null);
+		Rectangle2D_F64 bounding = UtilPoint2D_F64.bounding(list,(Rectangle2D_F64)null);
 
 		for( int i = 0; i < list.size(); i++ ) {
 			Point2D_F64 p = list.get(i);

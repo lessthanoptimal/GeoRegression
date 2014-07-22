@@ -36,17 +36,17 @@ public class UtilPolygons2D_F32 {
 	 * @param output Quadrilateral.  Modified.
 	 */
 	public static void convert( Rectangle2D_F32 input , Quadrilateral_F32 output ) {
-		output.a.x = input.x0;
-		output.a.y = input.y0;
+		output.a.x = input.p0.x;
+		output.a.y = input.p0.y;
 
-		output.b.x = input.x1;
-		output.b.y = input.y0;
+		output.b.x = input.p1.x;
+		output.b.y = input.p0.y;
 
-		output.c.x = input.x1;
-		output.c.y = input.y1;
+		output.c.x = input.p1.x;
+		output.c.y = input.p1.y;
 
-		output.d.x = input.x0;
-		output.d.y = input.y1;
+		output.d.x = input.p0.x;
+		output.d.y = input.p1.y;
 	}
 
 	/**
@@ -77,20 +77,20 @@ public class UtilPolygons2D_F32 {
 	 */
 	public static void bounding( Quadrilateral_F32 quad , Rectangle2D_F32 rectangle ) {
 
-		rectangle.x0 = (float)Math.min(quad.a.x,quad.b.x);
-		rectangle.x0 = (float)Math.min(rectangle.x0,quad.c.x);
-		rectangle.x0 = (float)Math.min(rectangle.x0,quad.d.x);
+		rectangle.p0.x = (float)Math.min(quad.a.x,quad.b.x);
+		rectangle.p0.x = (float)Math.min(rectangle.p0.x,quad.c.x);
+		rectangle.p0.x = (float)Math.min(rectangle.p0.x,quad.d.x);
 
-		rectangle.y0 = (float)Math.min(quad.a.y,quad.b.y);
-		rectangle.y0 = (float)Math.min(rectangle.y0,quad.c.y);
-		rectangle.y0 = (float)Math.min(rectangle.y0,quad.d.y);
+		rectangle.p0.y = (float)Math.min(quad.a.y,quad.b.y);
+		rectangle.p0.y = (float)Math.min(rectangle.p0.y,quad.c.y);
+		rectangle.p0.y = (float)Math.min(rectangle.p0.y,quad.d.y);
 
-		rectangle.x1 = (float)Math.max(quad.a.x,quad.b.x);
-		rectangle.x1 = (float)Math.max(rectangle.x1,quad.c.x);
-		rectangle.x1 = (float)Math.max(rectangle.x1,quad.d.x);
+		rectangle.p1.x = (float)Math.max(quad.a.x,quad.b.x);
+		rectangle.p1.x = (float)Math.max(rectangle.p1.x,quad.c.x);
+		rectangle.p1.x = (float)Math.max(rectangle.p1.x,quad.d.x);
 
-		rectangle.y1 = (float)Math.max(quad.a.y,quad.b.y);
-		rectangle.y1 = (float)Math.max(rectangle.y1,quad.c.y);
-		rectangle.y1 = (float)Math.max(rectangle.y1,quad.d.y);
+		rectangle.p1.y = (float)Math.max(quad.a.y,quad.b.y);
+		rectangle.p1.y = (float)Math.max(rectangle.p1.y,quad.c.y);
+		rectangle.p1.y = (float)Math.max(rectangle.p1.y,quad.d.y);
 	}
 }

@@ -299,6 +299,40 @@ public class Intersection2D_F64 {
 		return false;
 	}
 
+	/**
+	 * <p>
+	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * if it is >= the lower extend and <b the upper extent.
+	 * </p>
+	 * <p>
+	 * inside = x >= x0 && x <= x1 && y >= y0 && y <= y1
+	 * </p>
+	 * @param a Rectangle.
+	 * @param x x-coordinate of point being tested for containment
+	 * @param y y-coordinate of point being tested for containment
+	 * @return true if inside and false if output
+	 */
+	public static boolean contains( Rectangle2D_F64 a, double x, double y ) {
+		return( a.p0.x <= x && a.p1.x > x && a.p0.y <= y && a.p1.y > y );
+	}
+
+	/**
+	 * <p>
+	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * if it is >= the lower extend and <= the upper extent.
+	 * </p>
+	 * <p>
+	 * inside = x >= x0 && x <= x1 && y >= y0 && y <= y1
+	 * </p>
+	 * @param a Rectangle.
+	 * @param x x-coordinate of point being tested for containment
+	 * @param y y-coordinate of point being tested for containment
+	 * @return true if inside and false if output
+	 */
+	public static boolean contains2( Rectangle2D_F64 a, double x, double y ) {
+		return( a.p0.x <= x && a.p1.x >= x && a.p0.y <= y && a.p1.y >= y );
+	}
+
 	public static RectangleLength2D_F64 intersection( RectangleLength2D_F64 a, RectangleLength2D_F64 b ) {
 		double tl_x, tl_y, w, h;
 
