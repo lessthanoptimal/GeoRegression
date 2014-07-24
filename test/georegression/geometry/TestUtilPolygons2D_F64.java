@@ -19,12 +19,16 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_I32;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Peter Abeles
@@ -77,5 +81,32 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(-3,out.p0.y, GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals( 3,out.p1.x, GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals( 5,out.p1.y, GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void isCCW() {
+		// check convex case
+		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
+		list.add(new Point2D_F64(1, 1));
+		list.add(new Point2D_F64(2, 1));
+		list.add(new Point2D_F64(2, 2));
+		assertTrue(UtilPolygons2D_F64.isCCW(list));
+		assertFalse(UtilPolygons2D_F64.isCCW(reverse(list)));
+
+		// check concave case
+		list.add(new Point2D_F64(1, 2));
+		list.add(new Point2D_F64(1.5, 1.5));
+		assertTrue(UtilPolygons2D_F64.isCCW(list));
+		assertFalse(UtilPolygons2D_F64.isCCW(reverse(list)));
+	}
+
+	private static List<Point2D_F64> reverse( List<Point2D_F64> points ) {
+		List<Point2D_F64> reverse = new ArrayList<Point2D_F64>();
+
+		for (int i = points.size()-1; i >= 0; i--) {
+			reverse.add( points.get(i));
+		}
+
+		return reverse;
 	}
 }

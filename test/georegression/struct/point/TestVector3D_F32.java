@@ -18,17 +18,19 @@
 
 package georegression.struct.point;
 
+import georegression.geometry.GeometryMath_F32;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * @author Peter Abeles
  */
 public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
+
+
 	public TestVector3D_F32() {
 		super( new Vector3D_F32() );
 	}
@@ -49,17 +51,44 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 
 	@Test
 	public void minus_a_b() {
-		fail("Implement");
+		for( int i = 0; i < 20; i++ ) {
+			Point3D_F32 a = randomPoint();
+			Point3D_F32 b = randomPoint();
+			Vector3D_F32 expected = new Vector3D_F32();
+			Vector3D_F32 found = new Vector3D_F32();
+
+			GeometryMath_F32.sub(a, b, expected);
+			found.minus(a,b);
+			GeometryUnitTest.assertEquals(expected,found,GrlConstants.FLOAT_TEST_TOL);
+		}
 	}
 
 	@Test
 	public void cross_a_b() {
-		fail("Implement");
+
+		for( int i = 0; i < 20; i++ ) {
+			Vector3D_F32 a = randomVector();
+			Vector3D_F32 b = randomVector();
+			Vector3D_F32 expected = new Vector3D_F32();
+			Vector3D_F32 found = new Vector3D_F32();
+
+			GeometryMath_F32.cross(a, b, expected);
+			found.cross(a,b);
+			GeometryUnitTest.assertEquals(expected,found,GrlConstants.FLOAT_TEST_TOL);
+		}
 	}
+
 
 	@Test
 	public void cross_b() {
-		fail("Implement");
+		for( int i = 0; i < 20; i++ ) {
+			Vector3D_F32 a = randomVector();
+			Vector3D_F32 b = randomVector();
+			Vector3D_F32 expected = new Vector3D_F32();
+
+			GeometryMath_F32.cross(a, b, expected);
+			GeometryUnitTest.assertEquals(expected,a.cross(b),GrlConstants.FLOAT_TEST_TOL);
+		}
 	}
 
 	@Test

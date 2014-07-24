@@ -21,6 +21,8 @@ package georegression.struct.point;
 import georegression.misc.GrlConstants;
 import georegression.struct.GeoTuple3D_F32;
 
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 
@@ -30,6 +32,7 @@ import static org.junit.Assert.*;
 @SuppressWarnings({"unchecked"})
 public class GenericGeoTupleTests3D_F32<T extends GeoTuple3D_F32> extends GenericGeoTupleTests_F32<T> {
 
+	Random rand = new Random(234234);
 	private T seed;
 
 	public GenericGeoTupleTests3D_F32( T seed ) {
@@ -101,5 +104,21 @@ public class GenericGeoTupleTests3D_F32<T extends GeoTuple3D_F32> extends Generi
 		assertTrue( a.isNaN() );
 		a.set( Float.NaN, 1, 3 );
 		assertTrue( a.isNaN() );
+	}
+
+	protected Vector3D_F32 randomVector() {
+		float x = (rand.nextFloat()-0.5f)*2.0f;
+		float y = (rand.nextFloat()-0.5f)*2.0f;
+		float z = (rand.nextFloat()-0.5f)*2.0f;
+
+		return new Vector3D_F32(x,y,z);
+	}
+
+	protected Point3D_F32 randomPoint() {
+		float x = (rand.nextFloat()-0.5f)*2.0f;
+		float y = (rand.nextFloat()-0.5f)*2.0f;
+		float z = (rand.nextFloat()-0.5f)*2.0f;
+
+		return new Point3D_F32(x,y,z);
 	}
 }

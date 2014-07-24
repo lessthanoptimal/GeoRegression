@@ -147,6 +147,31 @@ public class SePointOps_F32 {
 	}
 
 	/**
+	 * Applies a 3D special euclidean transform to a list of points.
+	 *
+	 * @param se	 The transform.
+	 * @param points List of points which are to be transformed.  Modified.
+	 */
+	public static void transform( Se3_F32 se, Point3D_F32[] points , int start , int length ) {
+		for (int i = 0; i < length; i++) {
+			Point3D_F32 p = points[i+start];
+			transform(se,p,p);
+		}
+	}
+
+	/**
+	 * Applies a 3D special euclidean transform to a list of points.
+	 *
+	 * @param se	 The transform.
+	 * @param points List of points which are to be transformed.  Modified.
+	 */
+	public static void transform( Se3_F32 se, List<Point3D_F32> points ) {
+		for( Point3D_F32 p : points ) {
+			transform(se,p,p);
+		}
+	}
+
+	/**
 	 * <p>.
 	 * Applies the transform specified by SpecialEuclidean to a point.<br>
 	 * <br>
