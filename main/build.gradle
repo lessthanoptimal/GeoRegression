@@ -1,0 +1,6 @@
+
+idea {
+    module {
+        name = "BUBO Main"
+    }
+}

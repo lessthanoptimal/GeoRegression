@@ -1,0 +1,9 @@
+dependencies {
+    compile project(':georegression')
+}
+
+idea {
+    module {
+        name = "BUBO Examples"
+    }
+}
