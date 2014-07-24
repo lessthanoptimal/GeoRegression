@@ -30,7 +30,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 
-
 	public TestVector3D_F32() {
 		super( new Vector3D_F32() );
 	}
@@ -77,7 +76,6 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 			GeometryUnitTest.assertEquals(expected,found,GrlConstants.FLOAT_TEST_TOL);
 		}
 	}
-
 
 	@Test
 	public void cross_b() {

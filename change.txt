@@ -19,10 +19,12 @@ Version : 0.7
   * Added default addition and multiplication Tuple3D and Tuple2D
 - ClosestPoint
   * Added 2D line segment to point
+  * Added ClosestPoint3D.closestPointOrigin()
 - Intersection
   * Added 3D triangle and line segment
   * Added contained2() for Rectangle2D_F* and Box2D_F* in which the upper extent is inclusive
 - Added default plus and times operators to GeoTuple2D and GeoTuple3D
+- Added UtilPlane3D.planeToWorld()
 - Changed packages named homo to homography
 - Added Linear interpolation between two Se3.  InterpolateLinearSe3_*
 - MotionSe2PointSVD no longer throws RuntimeException if it fails.  returns false instead

@@ -18,9 +18,13 @@
 
 package georegression.geometry;
 
+import georegression.metric.UtilAngle;
+import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.Quadrilateral_F32;
 import georegression.struct.shapes.Rectangle2D_F32;
 import georegression.struct.shapes.RectangleLength2D_I32;
+
+import java.util.List;
 
 /**
  * Various functions related to polygons.
@@ -93,4 +97,37 @@ public class UtilPolygons2D_F32 {
 		rectangle.p1.y = (float)Math.max(rectangle.p1.y,quad.c.y);
 		rectangle.p1.y = (float)Math.max(rectangle.p1.y,quad.d.y);
 	}
+
+	/**
+	 * Returns true if the polygon is ordered in a counter-clockwise order.  This is done by summing up the interior
+	 * angles.
+	 * 
+	 * @param polygon List of ordered points which define a polygon
+	 * @return true if CCW and false if CW
+	 */
+	public static boolean isCCW( List<Point2D_F32> polygon ) {
+		float total = 0;
+
+		final int N = polygon.size();
+		for (int i = 0; i <= N; i++) {
+			Point2D_F32 a = polygon.get(i%N);
+			Point2D_F32 b = polygon.get((i+1)%N);
+			Point2D_F32 c = polygon.get((i+2)%N);
+
+			float angleBA = (float)Math.atan2(a.y-b.y,a.x-b.x);
+			float angleBC = (float)Math.atan2(c.y-b.y,c.x-b.x);
+
+			total += UtilAngle.minus(angleBA, angleBC);
+		}
+
+
+		return total > 0;
+	}
+
+//	public static boolean isCCW( Point2D_F32 a, Point2D_F32 b , Point2D_F32 c ) {
+//		float angleAB = (float)Math.atan2(b.y-a.y,b.x-a.x);
+//		float angleAC = (float)Math.atan2(c.y-a.y,c.x-a.x);
+//
+//		return UtilAngle.distanceCCW(angleAB,angleAC) < (float)Math.PI;
+//	}
 }

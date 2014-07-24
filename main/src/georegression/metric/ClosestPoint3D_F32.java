@@ -199,6 +199,26 @@ public class ClosestPoint3D_F32 {
 	}
 
 	/**
+	 * Finds the closest point on the plane to the origin.
+	 *
+	 * @param plane The plane
+	 * @param found (Optional) Storage for the closest point.  Can be same as instance as 'pt'. If null a new point is declared internally.
+	 * @return The closest point
+	 */
+	public static Point3D_F32 closestPointOrigin( PlaneGeneral3D_F32 plane , Point3D_F32 found ) {
+		if( found == null )
+			found = new Point3D_F32();
+
+		float n2 = plane.A*plane.A + plane.B*plane.B + plane.C*plane.C;
+
+		found.x = plane.A*plane.D/n2;
+		found.y = plane.B*plane.D/n2;
+		found.z = plane.C*plane.D/n2;
+
+		return found;
+	}
+
+	/**
 	 * Finds the closest point on a line segment to the specified point.
 	 *
 	 * @param line Line on which the closest point is being found.  Not modified.

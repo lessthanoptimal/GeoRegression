@@ -4,6 +4,6 @@ dependencies {
 
 idea {
     module {
-        name = "BUBO Experimental"
+        name = "GeoRegression Experimental"
     }
 }

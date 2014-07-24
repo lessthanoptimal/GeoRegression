@@ -22,8 +22,11 @@ import georegression.misc.GrlConstants;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.plane.PlaneTangent3D_F64;
+import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
+import georegression.struct.se.Se3_F64;
+import georegression.transform.se.SePointOps_F64;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -196,6 +199,35 @@ public class TestUtilPlane3D_F64 {
 		}
 
 		return ret;
+	}
+
+	/**
+	 * Tests the planeToWorld function by randomly generating 2D points and converting them to 3D.  Then it
+	 * tests to see if the points lie on the plane.
+	 */
+	@Test
+	public void planeToWorld() {
+		checkPlaneToWorld(new PlaneNormal3D_F64(1,2,3,0,0,1));
+		checkPlaneToWorld(new PlaneNormal3D_F64(1,2,3,0,1,0));
+		checkPlaneToWorld(new PlaneNormal3D_F64(1,2,3,1,0,0));
+		checkPlaneToWorld(new PlaneNormal3D_F64(1,2,3,-2,-4,0.5));
+	}
+
+	private void checkPlaneToWorld(PlaneNormal3D_F64 planeN) {
+
+		planeN.getN().normalize();
+		PlaneGeneral3D_F64 planeG = UtilPlane3D_F64.convert(planeN, null);
+
+		List<Point2D_F64> points2D = UtilPoint2D_F64.random(-2, 2, 100, rand);
+
+		Se3_F64 planeToWorld = UtilPlane3D_F64.planeToWorld(planeG,null);
+		Point3D_F64 p3 = new Point3D_F64();
+		for( Point2D_F64 p : points2D ) {
+			p3.set(p.x,p.y,0);
+			SePointOps_F64.transform(planeToWorld, p3, p3);
+
+			assertEquals(0,UtilPlane3D_F64.evaluate(planeG,p3), GrlConstants.DOUBLE_TEST_TOL);
+		}
 	}
 
 }

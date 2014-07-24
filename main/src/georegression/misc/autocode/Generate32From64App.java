@@ -68,8 +68,7 @@ public class Generate32From64App {
 	private void processFile( File f ) {
 		try {
 			System.out.println( "Examining " + f.getName() );
-			ConvertFile32From64 convert = new ConvertFile32From64( f );
-			convert.process();
+			new ConvertFile32From64( f ).process();
 		} catch( FileNotFoundException e ) {
 			throw new RuntimeException( e );
 		} catch( IOException e ) {
@@ -78,12 +77,10 @@ public class Generate32From64App {
 	}
 
 	public static void main( String args[] ) {
-		Generate32From64App app = new Generate32From64App( "src" );
+		String directories[] = new String[]{"main/src","main/test","experimental/src","experimental/test"};
 
-		app.process();
-
-		app = new Generate32From64App( "test" );
-
-		app.process();
+		for( String dir : directories ) {
+			new Generate32From64App( dir ).process();
+		}
 	}
 }

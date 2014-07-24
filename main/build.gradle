@@ -1,6 +1,6 @@
 
 idea {
     module {
-        name = "BUBO Main"
+        name = "GeoRegression Main"
     }
 }

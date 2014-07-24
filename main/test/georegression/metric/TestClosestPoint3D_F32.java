@@ -161,6 +161,18 @@ public class TestClosestPoint3D_F32 {
 	}
 
 	@Test
+	public void closestPointOrigin() {
+		PlaneGeneral3D_F32 g = new PlaneGeneral3D_F32(1,2,3,4);
+
+		Point3D_F32 expected = ClosestPoint3D_F32.closestPoint(g,new Point3D_F32(0,0,0),null);
+		Point3D_F32 found = ClosestPoint3D_F32.closestPointOrigin(g,null);
+
+		assertEquals(expected.x,found.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.y,found.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.z,found.z, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
 	public void closestPoint_lineSeg_pt() {
 		// closest point is on the line
 		LineSegment3D_F32 lineA = new LineSegment3D_F32(2,3,4,7,8,9);

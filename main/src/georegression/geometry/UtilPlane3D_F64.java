@@ -18,11 +18,14 @@
 
 package georegression.geometry;
 
+import georegression.metric.ClosestPoint3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.plane.PlaneTangent3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
+import georegression.struct.se.Se3_F64;
+import org.ejml.data.DenseMatrix64F;
 
 /**
  * @author Peter Abeles
@@ -186,5 +189,54 @@ public class UtilPlane3D_F64 {
 			return false;
 
 		return true;
+	}
+
+	/**
+	 * Creates a transform from the plane's reference frame into world's reference frame.  The z-axis is set to the
+	 * plane's normal and the x-axis and y-axis are arbitrarily choosen.  Points which lie along the plane will
+	 * lie along its x-y plane.
+	 *
+	 * @param plane Plane
+	 * @param planeToWorld (Optional) storage for the planeToWorld transform.  Can be null.
+	 * @return Transform from planeToWorld
+	 */
+	public static Se3_F64 planeToWorld( PlaneGeneral3D_F64 plane , Se3_F64 planeToWorld ) {
+		if( planeToWorld == null )
+			planeToWorld = new Se3_F64();
+
+		Vector3D_F64 axisZ = new Vector3D_F64(plane.A,plane.B,plane.C);
+		Vector3D_F64 axisX = new Vector3D_F64();
+		Vector3D_F64 axisY = new Vector3D_F64();
+
+		// pick an arbitrary perpendicular axis to be the x-axis
+		if( axisZ.x != 0 ) {
+			axisX.x = axisZ.y;
+			axisX.y = -axisZ.x;
+			axisX.z = axisZ.z;
+		} else if( axisZ.y != 0 ) {
+			axisX.x = -axisZ.y;
+			axisX.y = 0;
+			axisX.z = axisZ.z;
+		} else if( axisZ.z != 0 ) {
+			axisX.x = 0;
+			axisX.y = axisZ.z;
+			axisX.z = 0;
+		}
+
+		axisX.normalize();
+		axisZ.normalize();
+
+		axisY.cross(axisX,axisZ);
+		axisX.cross(axisY,axisZ);
+
+		DenseMatrix64F R = planeToWorld.R;
+		R.data[0] = axisX.x; R.data[1] = axisY.x; R.data[2] = axisZ.x;
+		R.data[3] = axisX.y; R.data[4] = axisY.y; R.data[5] = axisZ.y;
+		R.data[6] = axisX.z; R.data[7] = axisY.z; R.data[8] = axisZ.z;
+
+		Point3D_F64 cp = ClosestPoint3D_F64.closestPointOrigin(plane,null);
+		planeToWorld.getT().set(cp.x,cp.y,cp.z);
+
+		return planeToWorld;
 	}
 }
