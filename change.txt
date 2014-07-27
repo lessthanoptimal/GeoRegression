@@ -23,6 +23,9 @@ Version : 0.7
 - Intersection
   * Added 3D triangle and line segment
   * Added contained2() for Rectangle2D_F* and Box2D_F* in which the upper extent is inclusive
+- UtilLine2D
+  * Added convert polar to general and general to polar
+  * Added convert line segment to general
 - Added default plus and times operators to GeoTuple2D and GeoTuple3D
 - Added UtilPlane3D.planeToWorld()
 - Changed packages named homo to homography

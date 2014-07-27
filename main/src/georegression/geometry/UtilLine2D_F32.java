@@ -55,6 +55,50 @@ public class UtilLine2D_F32 {
 	}
 
 	/**
+	 * Converts a line from polar form to general.  After conversion A*A + B*B == 1
+	 *
+	 * @param src (input) line is polar notation
+	 * @param ret (output) line in general notation.  If null a new instance will be created.
+	 * @return Converted line in general notation
+	 */
+	public static LineGeneral2D_F32 convert( LinePolar2D_F32 src , LineGeneral2D_F32 ret )
+	{
+		if( ret == null )
+			ret = new LineGeneral2D_F32();
+
+		float c = (float) (float)Math.cos(src.angle);
+		float s = (float) (float)Math.sin(src.angle);
+
+		ret.A = -c;
+		ret.B = -s;
+		ret.C = src.distance;
+
+		return ret;
+	}
+
+	/**
+	 * Converts a line from general to polar.
+	 *
+	 * @param src (input) line is general notation
+	 * @param ret (output) line in polar notation.  If null a new instance will be created.
+	 * @return Converted line in polar notation
+	 */
+	public static LinePolar2D_F32 convert( LineGeneral2D_F32 src , LinePolar2D_F32 ret )
+	{
+		if( ret == null )
+			ret = new LinePolar2D_F32();
+
+		float r = (float)Math.sqrt(src.A*src.A + src.B*src.B);
+
+		float sign = src.C < 0 ? -1 : 1;
+
+		ret.angle = (float)Math.atan2(-sign*src.B/r,-sign*src.A/r);
+		ret.distance = sign*src.C/r;
+
+		return ret;
+	}
+
+	/**
 	 * Converts a line segment into a parametric line.
 	 *
 	 * @param src
@@ -68,6 +112,25 @@ public class UtilLine2D_F32 {
 
 		ret.p.set(src.a);
 		ret.slope.set(src.slopeX(),src.slopeY());
+
+		return ret;
+	}
+
+	/**
+	 * Converts a line segment into a general line.
+	 *
+	 * @param src (Input) line segment
+	 * @param ret (output) line in general notation. If null a new instance will be created.
+	 * @return Line in general notation
+	 */
+	public static LineGeneral2D_F32 convert( LineSegment2D_F32 src , LineGeneral2D_F32 ret )
+	{
+		if( ret == null )
+			ret = new LineGeneral2D_F32();
+
+		ret.A = src.a.y - src.b.y;
+		ret.B = src.b.x - src.a.x;
+		ret.C = -(ret.A*src.a.x + ret.B*src.a.y);
 
 		return ret;
 	}

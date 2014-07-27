@@ -56,6 +56,16 @@ public class TestUtilLine2D_F32 {
 	}
 
 	@Test
+	public void convert_segment_general() {
+		LineSegment2D_F32 segment = new LineSegment2D_F32();
+		LineGeneral2D_F32 general = UtilLine2D_F32.convert(segment,(LineGeneral2D_F32)null);
+
+		// see if the two end points lie on the general line
+		assertEquals(0,general.evaluate(segment.a.x,segment.a.y), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,general.evaluate(segment.b.x,segment.b.y), GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
 	public void convert_polar_parametric() {
 		LinePolar2D_F32 polar = new LinePolar2D_F32();
 		LineParametric2D_F32 para = new LineParametric2D_F32();
@@ -69,6 +79,49 @@ public class TestUtilLine2D_F32 {
 		assertEquals(para.p.y,5, GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(Math.abs(para.slope.x),1, GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(para.slope.y,0, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void convert_polar_general() {
+		LinePolar2D_F32 polar = new LinePolar2D_F32();
+
+		polar.distance = 5;
+		polar.angle = (float)Math.PI/3.0f;
+
+		LineGeneral2D_F32 found = UtilLine2D_F32.convert(polar,(LineGeneral2D_F32)null);
+		LineParametric2D_F32 para = UtilLine2D_F32.convert(polar,(LineParametric2D_F32)null);
+		LineGeneral2D_F32 expected = UtilLine2D_F32.convert(para,(LineGeneral2D_F32)null);
+		expected.normalize();
+		// handle the sign ambiguity
+		if( expected.A*found.A < 0 || expected.B*found.B < 0) {
+			found.A *= -1;
+			found.B *= -1;
+			found.C *= -1;
+		}
+
+		assertEquals(expected.A,found.A,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.B,found.B,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.C,found.C,GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void convert_general_polar() {
+		LineGeneral2D_F32 general = new LineGeneral2D_F32(2,-3,-5);
+		LinePolar2D_F32 found = UtilLine2D_F32.convert(general,(LinePolar2D_F32)null);
+
+		// find two points on the line using the polar equation
+		float c = (float) (float)Math.cos(found.angle);
+		float s = (float) (float)Math.sin(found.angle);
+
+		float x0 = c*found.distance;
+		float y0 = s*found.distance;
+
+		float x1 = x0 - s;
+		float y1 = y0 + c;
+
+		// see if they are also on the general line equation
+		assertEquals(0,general.evaluate(x0,y0), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,general.evaluate(x1,y1), GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test

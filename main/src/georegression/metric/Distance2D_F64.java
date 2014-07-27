@@ -38,31 +38,27 @@ public class Distance2D_F64 {
 
 	/**
 	 * <p>
-	 * Returns the distance of the closest point on the line segment from the provided line.
-	 * Does NOT assume the line's slope is normalized to one.
+	 * Returns the Euclidean distance of the closest point on the line from a point.
 	 * </p>
 	 *
 	 * @param line A line segment. Not modified.
-	 * @param p	The point. Not modified.
+	 * @param p The point. Not modified.
 	 * @return Distance the closest point on the line is away from the point.
 	 */
-	public static double distance( LineParametric2D_F64 line,
-								   Point2D_F64 p ) {
+	public static double distance( LineParametric2D_F64 line, Point2D_F64 p ) {
 		return Math.sqrt(distanceSq(line, p));
 	}
 
 	/**
 	 * <p>
-	 * Returns the square of the distance to the closest point on the line segment from the provided line.
-	 * Using this function avoids the expensive square root computation.
+	 * Returns the Euclidean distance squared of the closest point on the line from a point.
 	 * </p>
 	 *
 	 * @param line A line segment. Not modified.
-	 * @param p	The point. Not modified.
-	 * @return Distance squared to the closest point on the line is away from the point.
+	 * @param p The point. Not modified.
+	 * @return Euclidean distance squared to the closest point on the line is away from the point.
 	 */
-	public static double distanceSq( LineParametric2D_F64 line,
-									 Point2D_F64 p ) {
+	public static double distanceSq( LineParametric2D_F64 line, Point2D_F64 p ) {
 		double t = ClosestPoint2D_F64.closestPointT( line, p );
 
 		double a = line.slope.x * t + line.p.x;
@@ -76,16 +72,14 @@ public class Distance2D_F64 {
 
 	/**
 	 * <p>
-	 * Returns the distance the closest point on a line segment is from the specified point.
-	 * The closest point is bounded to be along the line segment.
+	 * Returns the Euclidean distance of the closest point on a line segment to the specified point.
 	 * </p>
 	 *
 	 * @param line A line segment. Not modified.
 	 * @param p The point. Not modified.
-	 * @return Distance the closest point on the line is away from the point.
+	 * @return Euclidean distance of the closest point on a line is away from a point.
 	 */
-	public static double distance( LineSegment2D_F64 line,
-								   Point2D_F64 p ) {
+	public static double distance( LineSegment2D_F64 line, Point2D_F64 p ) {
 		double a = line.b.x - line.a.x;
 		double b = line.b.y - line.a.y;
 
@@ -105,12 +99,12 @@ public class Distance2D_F64 {
 
 	/**
 	 * <p>
-	 * Returns the distance the closest point the line is from the specified point.
+	 * Returns the Euclidean distance of the closest point on the line to the specified point.
 	 * </p>
 	 *
 	 * @param line A line. Not modified.
 	 * @param p The point. Not modified.
-	 * @return Distance of the closest point on the line to the specified point.
+	 * @return Euclidean distance of the closest point on the line to the specified point.
 	 */
 	public static double distance( LineGeneral2D_F64 line , Point2D_F64 p ) {
 		return (Math.abs(line.A*p.x + line.B*p.y + line.C) / Math.sqrt( line.A*line.A + line.B*line.B ));

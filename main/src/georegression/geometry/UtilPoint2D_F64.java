@@ -142,7 +142,7 @@ public class UtilPoint2D_F64 {
 		bounding.height = maxY-minY;
 
 		// make sure rounding doesn't cause a point to be out of bounds
-		bounding.width += Math.max(0, (maxX - (bounding.x0 + bounding.width)) * 10.0);
+		bounding.width  += Math.max(0,(maxX-(bounding.x0+bounding.width ))*10.0);
 		bounding.height += Math.max(0,(maxY-(bounding.y0+bounding.height))*10.0);
 
 		return bounding;

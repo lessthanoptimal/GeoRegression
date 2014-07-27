@@ -40,6 +40,12 @@ public class LineGeneral2D_F64 implements Serializable {
 		set(a,b,c);
 	}
 
+	public LineGeneral2D_F64(LineGeneral2D_F64 line ) {
+		A = line.A;
+		B = line.B;
+		C = line.C;
+	}
+
 	public LineGeneral2D_F64() {
 	}
 
@@ -71,5 +77,34 @@ public class LineGeneral2D_F64 implements Serializable {
 
 	public void setC(double c) {
 		C = c;
+	}
+
+	/**
+	 * Ensures that A*A + B*B == 1
+	 */
+	public void normalize() {
+		double d = Math.sqrt(A*A + B*B);
+		A /= d;
+		B /= d;
+		C /= d;
+	}
+
+	/**
+	 * Returns the result of A*x + B*y + C.
+	 * @param x x-coordinate of a point
+	 * @param y y-coordinate of a point
+	 * @return result of line equation
+	 */
+	public double evaluate( double x , double y ) {
+		return A*x + B*y + C;
+	}
+
+	public LineGeneral2D_F64 copy() {
+		return new LineGeneral2D_F64(this);
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+"{ A="+A+" B="+B+" C="+C+" }";
 	}
 }

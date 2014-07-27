@@ -115,4 +115,8 @@ public class Quadrilateral_F32 implements Serializable {
 	public Quadrilateral_F32 copy() {
 		return new Quadrilateral_F32(this);
 	}
+
+	public String toString() {
+		return getClass().getSimpleName()+"{ a("+a.x+" "+a.y+") b("+b.x+" "+b.y+") c("+c.x+" "+c.y+") d("+d.x+" "+d.y+") }";
+	}
 }
