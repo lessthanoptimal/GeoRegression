@@ -236,12 +236,12 @@ public class TestIntersection2D_F64 {
 	}
 	
 	@Test
-	public void intersection_l_to_l_general() {
+	public void intersection_l_to_l_general_3D() {
 		// check two arbitrary lines
 		LineGeneral2D_F64 a = new LineGeneral2D_F64(1,2,3);
 		LineGeneral2D_F64 b = new LineGeneral2D_F64(2,-1,0.5);
 
-		Point3D_F64 found = Intersection2D_F64.intersection(a,b,null);
+		Point3D_F64 found = Intersection2D_F64.intersection(a,b,(Point3D_F64)null);
 		assertEquals(0,a.A*found.x/found.z+a.B*found.y/found.z+a.C, GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(0,a.A*found.x+a.B*found.y+a.C*found.z, GrlConstants.DOUBLE_TEST_TOL);
 
@@ -252,6 +252,22 @@ public class TestIntersection2D_F64 {
 		Intersection2D_F64.intersection(a,b,found);
 		assertEquals(0,found.z,GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(0,a.A*found.x+a.B*found.y+a.C*found.z, GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void intersection_l_to_l_general_2D() {
+		// check two arbitrary lines
+		LineGeneral2D_F64 a = new LineGeneral2D_F64(1,2,3);
+		LineGeneral2D_F64 b = new LineGeneral2D_F64(2,-1,0.5);
+
+		Point2D_F64 found = Intersection2D_F64.intersection(a,b,(Point2D_F64)null);
+		assertEquals(0,a.A*found.x+a.B*found.y+a.C, GrlConstants.DOUBLE_TEST_TOL);
+
+		// give it two parallel lines
+		a = new LineGeneral2D_F64(1,2,3);
+		b = new LineGeneral2D_F64(1,2,0.5);
+
+		assertTrue(null == Intersection2D_F64.intersection(a, b, found));
 	}
 
 	@Test

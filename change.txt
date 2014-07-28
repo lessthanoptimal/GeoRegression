@@ -23,6 +23,7 @@ Version : 0.7
 - Intersection
   * Added 3D triangle and line segment
   * Added contained2() for Rectangle2D_F* and Box2D_F* in which the upper extent is inclusive
+  * Added line general and line general for 2D point (homogeneous already existed)
 - UtilLine2D
   * Added convert polar to general and general to polar
   * Added convert line segment to general
