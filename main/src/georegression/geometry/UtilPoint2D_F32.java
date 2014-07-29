@@ -22,6 +22,7 @@ import georegression.struct.GeoTuple2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.Rectangle2D_F32;
 import georegression.struct.shapes.RectangleLength2D_F32;
+import org.ddogleg.sorting.QuickSort_F32;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,5 +177,37 @@ public class UtilPoint2D_F32 {
 		bounding.set(minX,minY,maxX,maxY);
 
 		return bounding;
+	}
+
+	/**
+	 * Puts the points into counter-clockwise order around their center.
+	 *
+	 * @param points List of points. Not modified.
+	 * @return ordered list
+	 */
+	public static List<Point2D_F32> orderCCW( List<Point2D_F32> points ) {
+		Point2D_F32 center = mean(points,null);
+
+		float angles[] = new float[ points.size() ];
+		for (int i = 0; i < angles.length; i++) {
+			Point2D_F32 p = points.get(i);
+
+			float dx = p.x - center.x;
+			float dy = p.y - center.y;
+
+			angles[i] = (float)Math.atan2(dy,dx);
+		}
+
+		int order[] = new int[ points.size() ];
+
+		QuickSort_F32 sorter = new QuickSort_F32();
+		sorter.sort(angles,points.size(),order);
+
+		List<Point2D_F32> out = new ArrayList<Point2D_F32>(points.size());
+		for (int i = 0; i < points.size(); i++) {
+			out.add( points.get(order[i]));
+		}
+
+		return out;
 	}
 }

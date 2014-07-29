@@ -228,6 +228,37 @@ public class Intersection2D_F32 {
 
 		return ret;
 	}
+
+	/**
+	 * <p>
+	 * Finds the intersection of two lines as a 2D point in coordinates. If the lines are parallel
+	 * then null is returned.
+	 * </p>
+	 *
+	 * @param a Line
+	 * @param b Line
+	 * @param ret Storage for point of intersection.
+	 * @return Point of intersection represented in homogeneous coordinates.
+	 */
+	public static Point2D_F32 intersection( LineGeneral2D_F32 a , LineGeneral2D_F32 b , Point2D_F32 ret )
+	{
+		if( ret == null )
+			ret = new Point2D_F32();
+
+		// compute the intersection as the cross product of 'a' and 'b'
+		ret.x = a.B * b.C - a.C * b.B;
+		ret.y = a.C * b.A - a.A * b.C;
+		float z = a.A * b.B - a.B * b.A;
+
+		if( z == 0 )
+			return null;
+
+		ret.x /= z;
+		ret.y /= z;
+
+		return ret;
+	}
+
 	/**
 	 * Finds the point of intersection between a line and a line segment.  The point of intersection
 	 * is specified as the distance along the parametric line.  If no intersection is found then

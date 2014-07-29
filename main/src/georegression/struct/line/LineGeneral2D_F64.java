@@ -26,6 +26,10 @@ import java.io.Serializable;
  * following formula, A*x + B*y + C = 0.  Any 2D line can be represented using this notation.
  * This formulation is also known as standard and implicit.
  * </p>
+ * <p>
+ * If it is said the line is normalized that refers to it being scaled such that A*A + B*B = 1.  To
+ * normalize a line call {@link #normalize()}.  After normalization several operations become less expensive.
+ * </p>
  *
  * @author Peter Abeles
  */

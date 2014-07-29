@@ -54,8 +54,8 @@ public class TestUtilPoint2D_F32 {
 
 		Point2D_F32 found = UtilPoint2D_F32.mean(list, null);
 
-		assertEquals(X/20,found.x , GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(Y / 20, found.y , GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(X/20, found.x , GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(Y/20, found.y , GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -98,6 +98,22 @@ public class TestUtilPoint2D_F32 {
 
 			assertTrue(Intersection2D_F32.contains2(bounding, p.x, p.y));
 		}
+	}
+
+	@Test
+	public void orderCCW() {
+		List<Point2D_F32> input = new ArrayList<Point2D_F32>();
+		input.add(new Point2D_F32(2,-3));
+		input.add(new Point2D_F32(2,1));
+		input.add(new Point2D_F32(-2,-3));
+		input.add(new Point2D_F32(-2,1));
+
+		List<Point2D_F32> found = UtilPoint2D_F32.orderCCW(input);
+
+		assertTrue(found.get(0) == input.get(2));
+		assertTrue(found.get(1) == input.get(0));
+		assertTrue(found.get(2) == input.get(1));
+		assertTrue(found.get(3) == input.get(3));
 	}
 
 }

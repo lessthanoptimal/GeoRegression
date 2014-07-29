@@ -27,12 +27,15 @@ Version : 0.7
 - UtilLine2D
   * Added convert polar to general and general to polar
   * Added convert line segment to general
+  * Added acuteAngle() and acuteAngleN() for computing the acute angle between the slope of two general lines
+- UtilPoint2D
+  * added bounding() for finding the bounding rectangle
+  * added orderCCW() for sorting a points on CCW order around their centroil
 - Added default plus and times operators to GeoTuple2D and GeoTuple3D
 - Added UtilPlane3D.planeToWorld()
 - Changed packages named homo to homography
 - Added Linear interpolation between two Se3.  InterpolateLinearSe3_*
 - MotionSe2PointSVD no longer throws RuntimeException if it fails.  returns false instead
-- UtilPoint2D_F* added bounding() for finding the bounding rectangle
 - Renamed Rectangle2D to RectangleLength2D and RectangleCorner2D to Rectangle2D for consistency with 3D Box format
 - Rectangle2D now uses points instead of regular variables
 

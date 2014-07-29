@@ -30,6 +30,8 @@ import org.junit.Test;
 
 import java.util.Random;
 
+import static georegression.geometry.UtilLine2D_F64.acuteAngle;
+import static georegression.geometry.UtilLine2D_F64.acuteAngleN;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -38,6 +40,35 @@ import static org.junit.Assert.assertEquals;
 public class TestUtilLine2D_F64 {
 
 	Random rand = new Random(234234);
+
+	@Test
+	public void acuteAngle_general() {
+		assertEquals(0, acuteAngle(new LineGeneral2D_F64(1, 0, 0.5), new LineGeneral2D_F64(1, 0, 6)),
+				GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, acuteAngle(new LineGeneral2D_F64(0, 2, 0.5), new LineGeneral2D_F64(0, 2, 6)),
+				GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(Math.PI, acuteAngle(new LineGeneral2D_F64(2, 2, 0.5), new LineGeneral2D_F64(-3, -3, 6)),
+				GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(Math.PI/2, acuteAngle(new LineGeneral2D_F64(2, 2, 0.5), new LineGeneral2D_F64(-4, 4, 6)),
+				GrlConstants.DOUBLE_TEST_TOL);
+
+		// pathological cause with numerical round off.  acos( -1.000000000123 )
+		double a = Math.cos(Math.PI/4.0);
+		assertEquals(Math.PI, acuteAngle(new LineGeneral2D_F64(a, a, 0.5), new LineGeneral2D_F64(-a, -a, 6)),
+				GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void acuteAngleN_general() {
+
+		double a = Math.cos(Math.PI/4.0);
+		double tol = GrlConstants.DOUBLE_TEST_TOL*10.0;// float case needs more tolerance
+
+		assertEquals(0, acuteAngleN(new LineGeneral2D_F64(1, 0, 0.5), new LineGeneral2D_F64(1, 0, 6)),tol);
+		assertEquals(0, acuteAngleN(new LineGeneral2D_F64(0, 1, 0.5), new LineGeneral2D_F64(0, 1, 6)),tol);
+		assertEquals(Math.PI, acuteAngleN(new LineGeneral2D_F64(a, a, 0.5), new LineGeneral2D_F64(-a, -a, 6)),tol);
+		assertEquals(Math.PI/2, acuteAngleN(new LineGeneral2D_F64(a, a, 0.5), new LineGeneral2D_F64(-a, a, 6)),tol);
+	}
 
 	@Test
 	public void convert_segment_parametric() {
