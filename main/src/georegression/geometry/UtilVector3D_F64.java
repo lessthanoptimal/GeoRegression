@@ -117,4 +117,16 @@ public class UtilVector3D_F64 {
 
 		return v;
 	}
+
+	/**
+	 * Returns the acute angle between the two vectors.  Computed using the dot product.
+	 * @param a vector
+	 * @param b vector
+	 * @return acute angle
+	 */
+	public static double acute( Vector3D_F64 a , Vector3D_F64 b ) {
+		double dot = a.dot(b);
+
+		return Math.acos( dot/(a.norm()*b.norm()));
+	}
 }

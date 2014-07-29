@@ -19,6 +19,7 @@
 package georegression.struct.point;
 
 import georegression.geometry.GeometryMath_F64;
+import georegression.geometry.UtilVector3D_F64;
 import georegression.struct.GeoTuple3D_F64;
 
 /**
@@ -102,5 +103,14 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 
 	public double dot( Vector3D_F64 a ) {
 		return x * a.x + y * a.y + z * a.z;
+	}
+
+	/**
+	 * Returns the acute angle between the two vectors.  Computed using the dot product.
+	 * @param a Vector
+	 * @return Acute angle in radians between 'this' and 'a'.
+	 */
+	public double acute( Vector3D_F64 a ) {
+		return UtilVector3D_F64.acute(this,a);
 	}
 }

@@ -17,9 +17,11 @@ Version : 0.7
 - Vectors and Points
   * Added cross and minus inline to vector
   * Added default addition and multiplication Tuple3D and Tuple2D
+  * Acute angle between two 3d vectors
 - ClosestPoint
   * Added 2D line segment to point
   * Added ClosestPoint3D.closestPointOrigin()
+  * Added closest point on line to a point in 3D parameterized as a scalar
 - Intersection
   * Added 3D triangle and line segment
   * Added contained2() for Rectangle2D_F* and Box2D_F* in which the upper extent is inclusive
@@ -30,7 +32,7 @@ Version : 0.7
   * Added acuteAngle() and acuteAngleN() for computing the acute angle between the slope of two general lines
 - UtilPoint2D
   * added bounding() for finding the bounding rectangle
-  * added orderCCW() for sorting a points on CCW order around their centroil
+  * added orderCCW() for sorting a points on CCW order around their centroid
 - Added default plus and times operators to GeoTuple2D and GeoTuple3D
 - Added UtilPlane3D.planeToWorld()
 - Changed packages named homo to homography

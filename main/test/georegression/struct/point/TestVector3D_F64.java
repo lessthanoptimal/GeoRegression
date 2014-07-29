@@ -98,4 +98,14 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 		assertEquals( 1.0, a.norm(), GrlConstants.DOUBLE_TEST_TOL );
 		GeometryUnitTest.assertEquals( a, 1.0 / n, 2.0 / n, 3.0 / n, GrlConstants.DOUBLE_TEST_TOL );
 	}
+
+	@Test
+	public void acute() {
+
+		Vector3D_F64 a = new Vector3D_F64(1,0,0);
+
+		assertEquals(Math.PI/2.0,a.acute(new Vector3D_F64(0, 1, 0)),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(Math.PI/2.0,a.acute(new Vector3D_F64(0, 0, 1)),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(Math.PI,a.acute(new Vector3D_F64(-1, 0, 0)),GrlConstants.DOUBLE_TEST_TOL);
+	}
 }

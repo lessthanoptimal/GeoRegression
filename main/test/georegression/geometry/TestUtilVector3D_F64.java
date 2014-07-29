@@ -55,4 +55,14 @@ public class TestUtilVector3D_F64 {
 
 		assertEquals( 1, a.norm(), GrlConstants.DOUBLE_TEST_TOL );
 	}
+
+	@Test
+	public void acute() {
+		assertEquals(Math.PI/2.0,
+				UtilVector3D_F64.acute(new Vector3D_F64(1,0,0),new Vector3D_F64(0,1,0)),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(Math.PI/2.0,
+				UtilVector3D_F64.acute(new Vector3D_F64(1,0,0),new Vector3D_F64(0,0,1)),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(Math.PI,
+				UtilVector3D_F64.acute(new Vector3D_F64(1,0,0),new Vector3D_F64(-1,0,0)),GrlConstants.DOUBLE_TEST_TOL);
+	}
 }

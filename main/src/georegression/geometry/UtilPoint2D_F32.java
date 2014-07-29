@@ -205,7 +205,7 @@ public class UtilPoint2D_F32 {
 
 		List<Point2D_F32> out = new ArrayList<Point2D_F32>(points.size());
 		for (int i = 0; i < points.size(); i++) {
-			out.add( points.get(order[i]));
+			out.add(points.get(order[i]));
 		}
 
 		return out;

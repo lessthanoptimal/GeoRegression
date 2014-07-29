@@ -108,6 +108,29 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
+	public void closestPoint_point_d() {
+		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
+		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
+		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
+
+		Vector3D_F64 va = new Vector3D_F64( a, b );
+
+		LineParametric3D_F64 lineA = new LineParametric3D_F64( a, va );
+
+		double d = ClosestPoint3D_F64.closestPoint(lineA, c);
+
+		Point3D_F64 pt = new Point3D_F64();
+		pt.x = a.x + va.x*d;
+		pt.y = a.y + va.y*d;
+		pt.z = a.z + va.z*d;
+
+		Vector3D_F64 p = new Vector3D_F64( pt, c );
+
+		// see if they are perpendicular and therefor c foundB is the closest point
+		assertEquals( 0, p.dot(va), GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	@Test
 	public void closestPoint_planeNorm_point() {
 		Point3D_F64 found;
 

@@ -98,4 +98,14 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 		assertEquals( 1.0f, a.norm(), GrlConstants.FLOAT_TEST_TOL );
 		GeometryUnitTest.assertEquals( a, 1.0f / n, 2.0f / n, 3.0f / n, GrlConstants.FLOAT_TEST_TOL );
 	}
+
+	@Test
+	public void acute() {
+
+		Vector3D_F32 a = new Vector3D_F32(1,0,0);
+
+		assertEquals(Math.PI/2.0f,a.acute(new Vector3D_F32(0, 1, 0)),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(Math.PI/2.0f,a.acute(new Vector3D_F32(0, 0, 1)),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(Math.PI,a.acute(new Vector3D_F32(-1, 0, 0)),GrlConstants.FLOAT_TEST_TOL);
+	}
 }

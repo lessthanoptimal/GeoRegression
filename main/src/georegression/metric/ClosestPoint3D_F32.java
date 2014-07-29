@@ -125,9 +125,8 @@ public class ClosestPoint3D_F32 {
 	 * @param pt   The point whose closest point is being looked for.  Not modified.
 	 * @param ret  Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
 	 */
-	public static Point3D_F32 closestPoint(LineParametric3D_F32 line,
-										   Point3D_F32 pt,
-										   Point3D_F32 ret) {
+	public static Point3D_F32 closestPoint(LineParametric3D_F32 line, Point3D_F32 pt, Point3D_F32 ret)
+	{
 		if( ret == null ) {
 			ret = new Point3D_F32();
 		}
@@ -136,15 +135,31 @@ public class ClosestPoint3D_F32 {
 		float dy = pt.y - line.p.y;
 		float dz = pt.z - line.p.z;
 
-		float n = line.slope.norm();
+		float n2 = line.slope.normSq();
 
-		float d = (line.slope.x*dx + line.slope.y*dy + line.slope.z*dz) / n;
+		float d = (line.slope.x*dx + line.slope.y*dy + line.slope.z*dz);
 
-		ret.x = line.p.x + d * line.slope.x / n;
-		ret.y = line.p.y + d * line.slope.y / n;
-		ret.z = line.p.z + d * line.slope.z / n;
+		ret.x = line.p.x + d * line.slope.x / n2;
+		ret.y = line.p.y + d * line.slope.y / n2;
+		ret.z = line.p.z + d * line.slope.z / n2;
 
 		return ret;
+	}
+
+	/**
+	 * Finds the closest point on a line to the specified point as a function of distance along the line.  The 3D
+	 * coordinate of the point at 'd', the returned value, is P = (x,y,z) + (slope.x,slope.y,slope.z)*d.
+	 *
+	 * @param line Line on which the closest point is being found.  Not modified.
+	 * @param pt   The point whose closest point is being looked for.  Not modified.
+	 */
+	public static float closestPoint(LineParametric3D_F32 line, Point3D_F32 pt )
+	{
+		float dx = pt.x - line.p.x;
+		float dy = pt.y - line.p.y;
+		float dz = pt.z - line.p.z;
+
+		return (line.slope.x*dx + line.slope.y*dy + line.slope.z*dz) / line.slope.normSq();
 	}
 
 	/**
@@ -225,9 +240,7 @@ public class ClosestPoint3D_F32 {
 	 * @param pt   The point whose closest point is being looked for.  Not modified.
 	 * @param ret  (Optional) Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
 	 */
-	public static Point3D_F32 closestPoint(LineSegment3D_F32 line,
-										   Point3D_F32 pt,
-										   Point3D_F32 ret) {
+	public static Point3D_F32 closestPoint(LineSegment3D_F32 line, Point3D_F32 pt, Point3D_F32 ret) {
 		if( ret == null ) {
 			ret = new Point3D_F32();
 		}

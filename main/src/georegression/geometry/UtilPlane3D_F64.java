@@ -223,11 +223,12 @@ public class UtilPlane3D_F64 {
 			axisX.z = 0;
 		}
 
-		axisX.normalize();
-		axisZ.normalize();
-
 		axisY.cross(axisX,axisZ);
 		axisX.cross(axisY,axisZ);
+
+		axisX.normalize();
+		axisY.normalize();
+		axisZ.normalize();
 
 		DenseMatrix64F R = planeToWorld.R;
 		R.data[0] = axisX.x; R.data[1] = axisY.x; R.data[2] = axisZ.x;

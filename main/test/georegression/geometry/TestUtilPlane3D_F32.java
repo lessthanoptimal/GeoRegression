@@ -222,11 +222,17 @@ public class TestUtilPlane3D_F32 {
 
 		Se3_F32 planeToWorld = UtilPlane3D_F32.planeToWorld(planeG,null);
 		Point3D_F32 p3 = new Point3D_F32();
+		Point3D_F32 l3 = new Point3D_F32();
+		Point3D_F32 k3 = new Point3D_F32();
 		for( Point2D_F32 p : points2D ) {
 			p3.set(p.x,p.y,0);
-			SePointOps_F32.transform(planeToWorld, p3, p3);
+			SePointOps_F32.transform(planeToWorld, p3, l3);
 
-			assertEquals(0,UtilPlane3D_F32.evaluate(planeG,p3), GrlConstants.FLOAT_TEST_TOL);
+			// see if it created a valid transform
+			SePointOps_F32.transformReverse(planeToWorld,l3,k3);
+			assertEquals(0,k3.distance(p3), GrlConstants.FLOAT_TEST_TOL );
+
+			assertEquals(0,UtilPlane3D_F32.evaluate(planeG,l3), GrlConstants.FLOAT_TEST_TOL);
 		}
 	}
 
