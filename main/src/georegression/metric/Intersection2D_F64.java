@@ -333,7 +333,7 @@ public class Intersection2D_F64 {
 	/**
 	 * <p>
 	 * Checks to see if the specified point is inside the rectangle.  A point is inside
-	 * if it is >= the lower extend and <b the upper extent.
+	 * if it is >= the lower extend and < the upper extent.
 	 * </p>
 	 * <p>
 	 * inside = x >= x0 && x <= x1 && y >= y0 && y <= y1

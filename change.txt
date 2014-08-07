@@ -40,6 +40,7 @@ Version : 0.7
 - MotionSe2PointSVD no longer throws RuntimeException if it fails.  returns false instead
 - Renamed Rectangle2D to RectangleLength2D and RectangleCorner2D to Rectangle2D for consistency with 3D Box format
 - Rectangle2D now uses points instead of regular variables
+- CovarianceToEllipse_F64 for computing containment ellipses from 2D covariance matrix
 
 ---------------------------------------------
 Date    : 2014-06-18
