@@ -19,8 +19,11 @@
 package georegression.metric;
 
 import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.Quadrilateral_F32;
 
 /**
+ * The area contained inside 2D shapes
+ *
  * @author Peter Abeles
  */
 public class Area2D_F32 {
@@ -39,5 +42,15 @@ public class Area2D_F32 {
 		float inner = a.x*(b.y - c.y) + b.x*(c.y - a.y) + c.x*(a.y - b.y);
 
 		return (float)Math.abs(inner/2.0f);
+	}
+
+	/**
+	 * Area of a quadrilateral computed from two triangles.
+	 *
+	 * @param quad quadrilateral
+	 * @return area
+	 */
+	public static float quadrilateral( Quadrilateral_F32 quad ) {
+		return triangle(quad.a,quad.b,quad.d) + triangle(quad.b,quad.c,quad.d);
 	}
 }

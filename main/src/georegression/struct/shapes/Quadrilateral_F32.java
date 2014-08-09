@@ -18,6 +18,7 @@
 
 package georegression.struct.shapes;
 
+import georegression.metric.Area2D_F32;
 import georegression.struct.point.Point2D_F32;
 
 import java.io.Serializable;
@@ -71,6 +72,14 @@ public class Quadrilateral_F32 implements Serializable {
 			this.c = c;
 			this.d = d;
 		}
+	}
+
+	/**
+	 * Returns the area of this quadrilateral
+	 * @return area
+	 */
+	public float area() {
+		return Area2D_F32.quadrilateral(this);
 	}
 
 	public Point2D_F32 getA() {

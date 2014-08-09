@@ -18,7 +18,9 @@
 
 package georegression.metric;
 
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.Quadrilateral_F32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -38,7 +40,14 @@ public class TestArea2D_F32 {
 
 		float found = Area2D_F32.triangle(a,b,c);
 
-		assertEquals(expected,found,1e-8);
+		assertEquals(expected,found,GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void quadrilateral() {
+		Quadrilateral_F32 q = new Quadrilateral_F32(0,0,2,0,2,3,0,3);
+
+		assertEquals(2*3,Area2D_F32.quadrilateral(q), GrlConstants.FLOAT_TEST_TOL);
 	}
 
 }
