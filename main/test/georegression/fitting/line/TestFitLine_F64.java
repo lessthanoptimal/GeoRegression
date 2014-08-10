@@ -60,7 +60,7 @@ public class TestFitLine_F64 {
 	@Test
 	public void polar_weighted() {
 
-		double weights[] = new double[20];
+		double weights[] = new double[30];
 		double r = 1.5;
 		double theta = 0.75;
 
@@ -74,6 +74,11 @@ public class TestFitLine_F64 {
 			weights[i] = 0.5;
 
 			pts.add(p);
+		}
+
+		// add in data which should be ignored
+		for (int i = 20; i < weights.length; i++) {
+			weights[i] = 1000;
 		}
 
 		LinePolar2D_F64 found = FitLine_F64.polar(pts,weights,null);

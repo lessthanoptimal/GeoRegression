@@ -60,7 +60,7 @@ public class TestFitLine_F32 {
 	@Test
 	public void polar_weighted() {
 
-		float weights[] = new float[20];
+		float weights[] = new float[30];
 		float r = 1.5f;
 		float theta = 0.75f;
 
@@ -74,6 +74,11 @@ public class TestFitLine_F32 {
 			weights[i] = 0.5f;
 
 			pts.add(p);
+		}
+
+		// add in data which should be ignored
+		for (int i = 20; i < weights.length; i++) {
+			weights[i] = 1000;
 		}
 
 		LinePolar2D_F32 found = FitLine_F32.polar(pts,weights,null);

@@ -94,7 +94,7 @@ public class FitLine_F32 {
 	 *
 	 *
 	 * @param points Set of points on the line.
-	 * @paran weights Weight for each point.  weights[i] >= 0
+	 * @param weights Weight for each point.  weights[i] >= 0
 	 * @param ret Storage for the line.  If null a new line will be declared.
 	 * @return Best fit line.
 	 */
@@ -102,15 +102,15 @@ public class FitLine_F32 {
 		if( ret == null )
 			ret = new LinePolar2D_F32();
 
+		final int N = points.size();
 		float totalWeight = 0;
-		for( int i = 0; i < weights.length; i++ ) {
+		for( int i = 0; i < N; i++ ) {
 			totalWeight += weights[i];
 		}
 
 		float meanX = 0;
 		float meanY = 0;
 
-		final int N = points.size();
 		for( int i = 0; i < N; i++ ) {
 			Point2D_F32 p = points.get(i);
 			float w = weights[i];

@@ -42,7 +42,6 @@ public class FitLine_F64 {
 	 * and Map Building" Proc. SPIE, Mobile Robotics XIII, Vol. 3210, 1997
 	 * </p>
 	 *
-	 *
 	 * @param points Set of points on the line.
 	 * @param ret Storage for the line.  If null a new line will be declared.
 	 * @return Best fit line.
@@ -92,9 +91,8 @@ public class FitLine_F64 {
 	 * and Map Building" Proc. SPIE, Mobile Robotics XIII, Vol. 3210, 1997
 	 * </p>
 	 *
-	 *
 	 * @param points Set of points on the line.
-	 * @paran weights Weight for each point.  weights[i] >= 0
+	 * @param weights Weight for each point.  weights[i] >= 0
 	 * @param ret Storage for the line.  If null a new line will be declared.
 	 * @return Best fit line.
 	 */
@@ -102,15 +100,15 @@ public class FitLine_F64 {
 		if( ret == null )
 			ret = new LinePolar2D_F64();
 
+		final int N = points.size();
 		double totalWeight = 0;
-		for( int i = 0; i < weights.length; i++ ) {
+		for( int i = 0; i < N; i++ ) {
 			totalWeight += weights[i];
 		}
 
 		double meanX = 0;
 		double meanY = 0;
 
-		final int N = points.size();
 		for( int i = 0; i < N; i++ ) {
 			Point2D_F64 p = points.get(i);
 			double w = weights[i];

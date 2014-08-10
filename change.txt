@@ -43,6 +43,7 @@ Version : 0.7
 - CovarianceToEllipse_F64 for computing containment ellipses from 2D covariance matrix
 - Area2D
   * Added quadrilateral
+- Fixed bug in FitLine.polar(points,weights)
 
 ---------------------------------------------
 Date    : 2014-06-18
