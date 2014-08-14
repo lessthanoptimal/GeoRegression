@@ -42,7 +42,6 @@ public class FitLine_F32 {
 	 * and Map Building" Proc. SPIE, Mobile Robotics XIII, Vol. 3210, 1997
 	 * </p>
 	 *
-	 *
 	 * @param points Set of points on the line.
 	 * @param ret Storage for the line.  If null a new line will be declared.
 	 * @return Best fit line.
@@ -91,7 +90,6 @@ public class FitLine_F32 {
 	 * [1] K. Arras, R. Siegwart, "Feature Extraction and Scene Interpretation for Map-Based Navigation
 	 * and Map Building" Proc. SPIE, Mobile Robotics XIII, Vol. 3210, 1997
 	 * </p>
-	 *
 	 *
 	 * @param points Set of points on the line.
 	 * @param weights Weight for each point.  weights[i] >= 0

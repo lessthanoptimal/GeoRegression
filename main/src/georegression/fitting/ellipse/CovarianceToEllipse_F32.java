@@ -54,15 +54,17 @@ public class CovarianceToEllipse_F32 {
 	 * @param a11 element in covariance matrix.
 	 * @param a12 element in covariance matrix.
 	 * @param a22  element in covariance matrix.
+	 * @return true if it was successful or false if something went wrong
 	 */
-	public void setCovariance( float a11 , float a12, float a22 ) {
+	public boolean setCovariance( float a11 , float a12, float a22 ) {
 		Q.data[0] = a11;
 		Q.data[1] = a12;
 		Q.data[2] = a12;
 		Q.data[3] = a22;
 
 		if( !eigen.decompose(Q) ) {
-			throw new RuntimeException("Eigenvalue decomposition failed!");
+			System.err.println("Eigenvalue decomposition failed!");
+			return false;
 		}
 
 		Complex64F v0 = eigen.getEigenvalue(0);
@@ -73,13 +75,18 @@ public class CovarianceToEllipse_F32 {
 		if( v0.getMagnitude2() > v1.getMagnitude2() ) {
 			a0 = eigen.getEigenVector(0);
 			a1 = eigen.getEigenVector(1);
-			lengthX = (float) v0.real;
-			lengthY = (float) v1.real;
+			lengthX = (float) v0.getMagnitude();
+			lengthY = (float) v1.getMagnitude();
 		} else {
 			a0 = eigen.getEigenVector(1);
 			a1 = eigen.getEigenVector(0);
-			lengthX = (float) v1.real;
-			lengthY = (float) v0.real;
+			lengthX = (float) v1.getMagnitude();
+			lengthY = (float) v0.getMagnitude();
+		}
+
+		if( a0 == null || a1 == null ) {
+			System.err.println("Complex eigenvalues: "+v0+"  "+v1);
+			return false;
 		}
 
 		lengthX = (float)Math.sqrt(lengthX);
@@ -87,6 +94,8 @@ public class CovarianceToEllipse_F32 {
 
 		x.set( (float) a0.get(0) , (float) a0.get(1));
 		y.set( (float) a1.get(0) , (float) a1.get(1));
+
+		return true;
 	}
 
 	/**
