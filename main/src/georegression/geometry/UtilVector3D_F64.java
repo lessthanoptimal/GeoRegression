@@ -127,6 +127,12 @@ public class UtilVector3D_F64 {
 	public static double acute( Vector3D_F64 a , Vector3D_F64 b ) {
 		double dot = a.dot(b);
 
-		return Math.acos( dot/(a.norm()*b.norm()));
+		double value = dot/(a.norm()*b.norm());
+		if( value > 1.0 )
+			value = 1.0;
+		else if( value < -1.0 )
+			value = -1.0;
+
+		return Math.acos( value );
 	}
 }
