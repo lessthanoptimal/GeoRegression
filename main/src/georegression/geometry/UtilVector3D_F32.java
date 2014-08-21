@@ -127,6 +127,12 @@ public class UtilVector3D_F32 {
 	public static float acute( Vector3D_F32 a , Vector3D_F32 b ) {
 		float dot = a.dot(b);
 
-		return (float)Math.acos( dot/(a.norm()*b.norm()));
+		float value = dot/(a.norm()*b.norm());
+		if( value > 1.0f )
+			value = 1.0f;
+		else if( value < -1.0f )
+			value = -1.0f;
+
+		return (float)Math.acos( value );
 	}
 }
