@@ -14,7 +14,7 @@ Capabilities:
     Metric measures
         Distance, closest point, and points of intersection. 
     Transforms
-        Rigid body and affine. 
+        Rigid body 2D/3D, homography, and affine.
     Best Fit
         Shapes (e.g. best fit line from points).
         Motion/Transform (e.g. motion for a set of point pairs). 
@@ -29,6 +29,7 @@ src/                     Project source code.
 test/                    Source code for unit tests
 libs/                    Contains jars of external dependencies
 examples/                Directory containing code examples showing how to use this library.
+experimental/            Code not yet ready for the main distribution but still might be useful
 
 ---------------------------------------------------------------------------
 

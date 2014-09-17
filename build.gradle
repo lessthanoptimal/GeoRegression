@@ -4,7 +4,7 @@ allprojects {
     apply plugin: 'eclipse'
 
     group = 'org.georegression'
-    version = '0.7-SNAPSHOT'
+    version = '0.7'
 }
 
 
@@ -38,7 +38,6 @@ subprojects {
 
         test {
             java {
-                srcDir 'examples/src'
                 srcDir 'test'
                 srcDir 'generate'
                 srcDir 'benchmark'
@@ -50,7 +49,7 @@ subprojects {
     }
 
     dependencies {
-        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.6-SNAPSHOT'
+        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.6'
 
         testCompile group: 'junit', name: 'junit', version: '4.11'
     }
