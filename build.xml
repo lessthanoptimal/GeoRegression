@@ -15,7 +15,7 @@
     <property name="junit.dir"  value="lib/"/>
 
     <path id="source.classpath">
-      <pathelement path="src"/>
+      <pathelement path="main/src"/>
     </path>
 
     <path id="project.classpath">
@@ -95,8 +95,8 @@
                 sourcepathref="source.classpath">
 
             <link offline="false" href="http://ddogleg.org/javadoc/" packagelistloc="package-list" />
-            <link offline="false" href="http://ejml.org/javadoc/" packagelistloc="package-list" />
             <link offline="false" href="http://docs.oracle.com/javase/6/docs/api/" packagelistloc="package-list" />
+            <link offline="false" href="http://ejml.org/javadoc/" packagelistloc="package-list" />
 
             <header><![CDATA[
 <script type="text/javascript"><!--

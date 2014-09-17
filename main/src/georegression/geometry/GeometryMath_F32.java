@@ -199,7 +199,7 @@ public class GeometryMath_F32 {
 	 *
 	 * @param a0 Scaling factor for pt0.
 	 * @param pt0 A point. Not modified.
-	 * @oaran a1 Scaling factor for pt1.
+	 * @param a1 Scaling factor for pt1.
 	 * @param pt1 A point. Not modified.
 	 * @param pt2 Where the results are stored. Modified.
 	 */
@@ -548,11 +548,6 @@ public class GeometryMath_F32 {
 	 * <p>
 	 * ret = a<sup>T</sup>*M*b
 	 * </p>
-	 *
-	 * @param a
-	 * @param M
-	 * @param b
-	 * @return
 	 */
 	public static float innerProd( GeoTuple3D_F32 a, DenseMatrix64F M, GeoTuple3D_F32 b ) {
 		if( M.numRows != 3 || M.numCols != 3 )
