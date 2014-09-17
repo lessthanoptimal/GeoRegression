@@ -1,4 +1,5 @@
 - Make sure all unit tests pass
+- Update GrlConstants.VERSION
 - Update change.txt
 - Update version in build.gradle
 - Commit and tag release
