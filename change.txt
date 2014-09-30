@@ -1,6 +1,13 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2014/
+Version : 0.8
+
+- Fixed issue with UtilAngle.distanceCW and distanceCCW
+  * Would return 2*PI instead of 0 if two inputs were identical
+
+---------------------------------------------
 Date    : 2014/09/17
 Version : 0.7
 

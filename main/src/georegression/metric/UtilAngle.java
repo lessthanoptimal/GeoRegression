@@ -118,7 +118,7 @@ public class UtilAngle {
 	 * @return An angle from 0 to 2 &pi;
 	 */
 	public static double distanceCCW( double angA, double angB ) {
-		if( angB > angA )
+		if( angB >= angA )
 			return angB-angA;
 		else
 			return GrlConstants.PI2 - (angA-angB);
@@ -133,7 +133,7 @@ public class UtilAngle {
 	 * @return An angle from 0 to 2 &pi;
 	 */
 	public static double distanceCW( double angA, double angB ) {
-		if( angA > angB )
+		if( angA >= angB )
 			return angA-angB;
 		else
 			return GrlConstants.PI2-(angB-angA);

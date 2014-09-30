@@ -70,12 +70,14 @@ public class TestUtilAngle {
 	public void testDistanceCCW() {
 		assertEquals( PI * 1.5, distanceCCW(-0.75 * PI, 0.75 * PI), 1e-5 );
 		assertEquals( PI * 0.5, distanceCCW( 0.75 * PI, -0.75 * PI), 1e-5 );
+		assertEquals( 0, distanceCCW(1,1), 1e-5 );
 	}
 
 	@Test
 	public void testDistanceCW() {
 		assertEquals( PI * 0.5, distanceCW(-0.75 * PI, 0.75 * PI), 1e-5 );
 		assertEquals( PI * 1.5, distanceCW(0.75 * PI, -0.75 * PI), 1e-5 );
+		assertEquals( 0, distanceCW(1, 1), 1e-5 );
 	}
 
 	@Test
