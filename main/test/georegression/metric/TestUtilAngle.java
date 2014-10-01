@@ -18,9 +18,11 @@
 
 package georegression.metric;
 
+import georegression.misc.GrlConstants;
 import org.junit.Test;
 
 import static georegression.metric.UtilAngle.*;
+import static georegression.misc.GrlConstants.F_PI;
 import static java.lang.Math.PI;
 import static org.junit.Assert.*;
 
@@ -67,17 +69,31 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDistanceCCW() {
-		assertEquals( PI * 1.5, distanceCCW(-0.75 * PI, 0.75 * PI), 1e-5 );
-		assertEquals( PI * 0.5, distanceCCW( 0.75 * PI, -0.75 * PI), 1e-5 );
-		assertEquals( 0, distanceCCW(1,1), 1e-5 );
+	public void testDistanceCCW_F64() {
+		assertEquals( PI * 1.5, distanceCCW(-0.75 * PI, 0.75 * PI), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( PI * 0.5, distanceCCW( 0.75 * PI, -0.75 * PI), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, distanceCCW(1,1), GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
-	public void testDistanceCW() {
-		assertEquals( PI * 0.5, distanceCW(-0.75 * PI, 0.75 * PI), 1e-5 );
-		assertEquals( PI * 1.5, distanceCW(0.75 * PI, -0.75 * PI), 1e-5 );
-		assertEquals( 0, distanceCW(1, 1), 1e-5 );
+	public void testDistanceCCW_F32() {
+		assertEquals( F_PI * 1.5f, distanceCCW(-0.75f * F_PI, 0.75f * F_PI), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( F_PI * 0.5f, distanceCCW( 0.75f * F_PI, -0.75f * F_PI), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 0f, distanceCCW(1f,1f), GrlConstants.FLOAT_TEST_TOL  );
+	}
+
+	@Test
+	public void testDistanceCW_F64() {
+		assertEquals( PI * 0.5, distanceCW(-0.75 * PI, 0.75 * PI), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( PI * 1.5, distanceCW(0.75 * PI, -0.75 * PI), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, distanceCW(1, 1), GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	@Test
+	public void testDistanceCW_F32() {
+		assertEquals( F_PI * 0.5f, distanceCW(-0.75f * F_PI, 0.75f * F_PI), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( F_PI * 1.5f, distanceCW(0.75f * F_PI, -0.75f * F_PI), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 0, distanceCW(1f, 1f), GrlConstants.FLOAT_TEST_TOL  );
 	}
 
 	@Test

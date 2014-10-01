@@ -125,6 +125,21 @@ public class UtilAngle {
 	}
 
 	/**
+	 * Angular distance in radians to go from angA to angB in counter clock-wise direction.
+	 * The resulting angle will be from 0 to 2&pi;.
+	 *
+	 * @param angA First angle. -pi to pi
+	 * @param angB Second angle -pi to pi
+	 * @return An angle from 0 to 2 &pi;
+	 */
+	public static float distanceCCW( float angA, float angB ) {
+		if( angB >= angA )
+			return angB-angA;
+		else
+			return GrlConstants.F_PI2 - (angA-angB);
+	}
+
+	/**
 	 * Angular distance in radians to go from angA to angB in clock-wise direction.
 	 * The resulting angle will be from 0 to 2&pi;.
 	 *
@@ -137,6 +152,21 @@ public class UtilAngle {
 			return angA-angB;
 		else
 			return GrlConstants.PI2-(angB-angA);
+	}
+
+	/**
+	 * Angular distance in radians to go from angA to angB in clock-wise direction.
+	 * The resulting angle will be from 0 to 2&pi;.
+	 *
+	 * @param angA First angle. -pi to pi
+	 * @param angB Second angle   -pi to pi
+	 * @return An angle from 0 to 2 &pi;
+	 */
+	public static float distanceCW( float angA, float angB ) {
+		if( angA >= angB )
+			return angA-angB;
+		else
+			return GrlConstants.F_PI2-(angB-angA);
 	}
 	
 	/**
