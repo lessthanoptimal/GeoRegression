@@ -7,6 +7,7 @@ Version : 0.8
 - Fixed issue with UtilAngle.distanceCW and distanceCCW
   * Would return 2*PI instead of 0 if two inputs were identical
 - Added linear interpolation for Se2
+- Added dot product and acute angle to Vector2D
 
 ---------------------------------------------
 Date    : 2014/09/17

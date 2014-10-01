@@ -101,6 +101,12 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 		z /= r;
 	}
 
+	/**
+	 * Dot product between this and 'a' = this.x * a.x + this.y * a.y + this.z * a.z
+	 *
+	 * @param a A vector
+	 * @return dot product.
+	 */
 	public double dot( Vector3D_F64 a ) {
 		return x * a.x + y * a.y + z * a.z;
 	}

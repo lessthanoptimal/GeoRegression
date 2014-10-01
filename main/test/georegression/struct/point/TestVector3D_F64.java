@@ -45,7 +45,7 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 		Vector3D_F64 b = new Vector3D_F64( 3, 4, 5 );
 
 		double found = a.dot( b );
-		assertEquals( 26, found, 13 - 8 );
+		assertEquals( 26, found, GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test

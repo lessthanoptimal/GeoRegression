@@ -18,6 +18,7 @@
 
 package georegression.struct.point;
 
+import georegression.geometry.UtilVector2D_F32;
 import georegression.struct.GeoTuple2D_F32;
 
 /**
@@ -62,5 +63,24 @@ public class Vector2D_F32 extends GeoTuple2D_F32<Vector2D_F32> {
 
 	public String toString() {
 		return "V( " + x + " " + y + " )";
+	}
+
+	/**
+	 * Dot product between this and 'a' = this.x * a.x + this.y * a.y
+	 *
+	 * @param a A vector
+	 * @return dot product.
+	 */
+	public float dot( Vector2D_F32 a ) {
+		return x * a.x + y * a.y;
+	}
+
+	/**
+	 * Returns the acute angle between the two vectors.  Computed using the dot product.
+	 * @param a Vector
+	 * @return Acute angle in radians between 'this' and 'a'.
+	 */
+	public float acute( Vector2D_F32 a ) {
+		return UtilVector2D_F32.acute(this, a);
 	}
 }

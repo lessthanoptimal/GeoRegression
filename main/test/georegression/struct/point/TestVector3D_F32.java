@@ -45,7 +45,7 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 		Vector3D_F32 b = new Vector3D_F32( 3, 4, 5 );
 
 		float found = a.dot( b );
-		assertEquals( 26, found, 13 - 8 );
+		assertEquals( 26, found, GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test
