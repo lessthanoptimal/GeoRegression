@@ -66,6 +66,7 @@ subprojects {
             links = ['http://docs.oracle.com/javase/7/docs/api/',
                      'http://ejml.org/javadoc/',
                      'http://ddogleg.org/javadoc/']
+            failOnError = false
         }
     }
 
