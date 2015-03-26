@@ -76,6 +76,15 @@ public class LineParametric3D_F64 implements Serializable {
 		}
 	}
 
+	/**
+	 * where = p + t*slope.
+	 */
+	public void setPointOnLine( double t , Point3D_F64 where ) {
+		where.x = p.x + t*slope.x;
+		where.y = p.y + t*slope.y;
+		where.z = p.z + t*slope.z;
+	}
+
 	public void setPoint( Point3D_F64 pt ) {
 		this.p.set( pt );
 	}

@@ -8,6 +8,8 @@ Version : 0.8
   * Would return 2*PI instead of 0 if two inputs were identical
 - Added linear interpolation for Se2
 - Added dot product and acute angle to Vector2D
+- Added ClosestPoint3D.closestPointT() for line and plane
+  * Added LineParametric3D.setPointOnLine
 
 ---------------------------------------------
 Date    : 2014/09/17

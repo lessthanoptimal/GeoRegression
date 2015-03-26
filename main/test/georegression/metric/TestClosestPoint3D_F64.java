@@ -256,6 +256,19 @@ public class TestClosestPoint3D_F64 {
 		assertEquals(0,found.z,GrlConstants.DOUBLE_TEST_TOL);
 	}
 
+	@Test
+	public void closestPointT_line_plane() {
+		LineParametric3D_F64 l = new LineParametric3D_F64(2,3,4,0,2,0);
+		PlaneNormal3D_F64 above = new PlaneNormal3D_F64(5,6,7,0,1,0);
+		PlaneNormal3D_F64 below = new PlaneNormal3D_F64(5,-1,7,0,1,0);
+
+		double t_above = ClosestPoint3D_F64.closestPointT(l,above);
+		double t_below = ClosestPoint3D_F64.closestPointT(l,below);
+
+		assertEquals(1.5,t_above,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(-2.0,t_below,GrlConstants.DOUBLE_TEST_TOL);
+	}
+
 	private void checkIsClosest( LineSegment3D_F64 line ,  Point3D_F64 target  ) {
 
 		Point3D_F64 pointOnLine = ClosestPoint3D_F64.closestPoint(line,target,null);

@@ -50,8 +50,8 @@ public class LineParametric3D_F32 implements Serializable {
 
 	public LineParametric3D_F32( Point3D_F32 p, Vector3D_F32 slope ) {
 		this();
-		setPoint( p );
-		setSlope( slope );
+		setPoint(p);
+		setSlope(slope);
 	}
 
 	public LineParametric3D_F32() {
@@ -74,6 +74,15 @@ public class LineParametric3D_F32 implements Serializable {
 			p = new Point3D_F32();
 			slope = new Vector3D_F32();
 		}
+	}
+
+	/**
+	 * where = p + t*slope.
+	 */
+	public void setPointOnLine( float t , Point3D_F32 where ) {
+		where.x = p.x + t*slope.x;
+		where.y = p.y + t*slope.y;
+		where.z = p.z + t*slope.z;
 	}
 
 	public void setPoint( Point3D_F32 pt ) {

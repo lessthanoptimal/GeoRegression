@@ -361,4 +361,30 @@ public class ClosestPoint3D_F64 {
 
 		return ret;
 	}
+
+	/**
+	 * <p>
+	 * Computes the closest point along the line to the plane as a function of 't':<br>
+	 * [x, y, z] = [x_0, y_0, z_0] + t·[slopeX, slopeY, slopZ]
+	 * </p>
+	 *
+	 * If there is no intersection then Double.NaN is returned.
+	 *
+	 * @param line The line along which the closest point is being found. Not modified.
+	 * @param plane Plane being checked for intersection
+	 * @return Distance as a function of 't'.  NaN if there is no intersection.
+	 */
+	public static double closestPointT( LineParametric3D_F64 line , PlaneNormal3D_F64 plane ) {
+		double dx = plane.p.x - line.p.x;
+		double dy = plane.p.y - line.p.y;
+		double dz = plane.p.z - line.p.z;
+
+		double top = dx*plane.n.x + dy*plane.n.y + dz*plane.n.z;
+		double bottom = line.slope.dot(plane.n);
+
+		if( bottom == 0 )
+			return Double.NaN;
+
+		return top/bottom;
+	}
 }
