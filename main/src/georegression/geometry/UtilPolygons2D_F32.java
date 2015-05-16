@@ -99,6 +99,26 @@ public class UtilPolygons2D_F32 {
 	}
 
 	/**
+	 * Computes the center or average point in the quadrilateral.
+	 *
+	 * @param quad (Input) Quadrilateral
+	 * @param center (output) Center point of the quadrilateral.  Can be null.
+	 * @return The center point.
+	 */
+	public static Point2D_F32 center( Quadrilateral_F32 quad , Point2D_F32 center ) {
+		if( center == null )
+			center = new Point2D_F32();
+
+		center.x = quad.a.x + quad.b.x + quad.c.x + quad.d.x;
+		center.y = quad.a.y + quad.b.y + quad.c.y + quad.d.y;
+
+		center.x /= 4.0f;
+		center.y /= 4.0f;
+
+		return center;
+	}
+
+	/**
 	 * Returns true if the polygon is ordered in a counter-clockwise order.  This is done by summing up the interior
 	 * angles.
 	 * 

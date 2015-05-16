@@ -84,6 +84,27 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
+	public void center_quadrilateral() {
+		Quadrilateral_F64 q = new Quadrilateral_F64(3,0,2,-3,-2,3,1,5);
+
+		Point2D_F64 pts[] = new Point2D_F64[]{q.a,q.b,q.c,q.d};
+
+		Point2D_F64 expected = new Point2D_F64();
+
+		for (int i = 0; i < pts.length; i++) {
+			expected.x += pts[i].x;
+			expected.y += pts[i].y;
+		}
+		expected.x /= 4.0;
+		expected.y /= 4.0;
+
+		Point2D_F64 found = UtilPolygons2D_F64.center(q,null);
+
+		assertEquals(expected.x,found.x,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected.y,found.y,GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
 	public void isCCW() {
 		// check convex case
 		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
