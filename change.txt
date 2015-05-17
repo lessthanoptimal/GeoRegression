@@ -10,6 +10,8 @@ Version : 0.8
 - Added dot product and acute angle to Vector2D
 - Added ClosestPoint3D.closestPointT() for line and plane
   * Added LineParametric3D.setPointOnLine
+- Distance2D
+  * added line segment to line segment
 - UtilPolygons2D
   * Center for Quadrilateral
 

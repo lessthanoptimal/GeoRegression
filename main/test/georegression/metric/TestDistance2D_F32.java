@@ -44,8 +44,8 @@ public class TestDistance2D_F32 {
 
 	@Test
 	public void distanceSq_parametric_line() {
-		float found = Distance2D_F32.distanceSq( new LineParametric2D_F32( -2, 0, 1, 1 ), new Point2D_F32( 4, -2 ) );
-		float expected = (float) UtilTrig_F32.distanceSq( 0, 2, 4, -2);
+		float found = Distance2D_F32.distanceSq(new LineParametric2D_F32(-2, 0, 1, 1), new Point2D_F32(4, -2));
+		float expected = (float) UtilTrig_F32.distanceSq(0, 2, 4, -2);
 		assertEquals( expected, found, GrlConstants.FLOAT_TEST_TOL );
 	}
 
@@ -77,5 +77,32 @@ public class TestDistance2D_F32 {
 		float found = Distance2D_F32.distance( general , new Point2D_F32( 4, -2 ) );
 		float expected = (float) UtilTrig_F32.distance( 0, 2, 4, -2 );
 		assertEquals(expected, found, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void distance_lineSegment_lineSegment() {
+		// case of no intersection but one of the lines intersects inside
+		LineSegment2D_F32 a = new LineSegment2D_F32(0,0,10,0);
+		LineSegment2D_F32 b = new LineSegment2D_F32(5,2,5,10);
+
+		assertEquals(2,Distance2D_F32.distance(a,b),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,Distance2D_F32.distance(b,a),GrlConstants.FLOAT_TEST_TOL);
+
+		// the two lines intersect
+		b.set(5, -1, 5, 1);
+		assertEquals(0, Distance2D_F32.distance(a, b), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0, Distance2D_F32.distance(b, a), GrlConstants.FLOAT_TEST_TOL);
+
+		// two lines are parallel but don't intersect
+		b.set(12, 2, 2, 20);
+		float expected = (float)Math.sqrt(2*2*2);
+		assertEquals(expected, Distance2D_F32.distance(a, b), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected, Distance2D_F32.distance(b, a), GrlConstants.FLOAT_TEST_TOL);
+
+		// general case where the end points are the closest
+		//        one of these cases was tested above already
+		b.set(5,-2,5,-10);
+		assertEquals(2,Distance2D_F32.distance(a,b),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,Distance2D_F32.distance(b,a),GrlConstants.FLOAT_TEST_TOL);
 	}
 }

@@ -80,6 +80,19 @@ public class Distance2D_F64 {
 	 * @return Euclidean distance of the closest point on a line is away from a point.
 	 */
 	public static double distance( LineSegment2D_F64 line, Point2D_F64 p ) {
+		return Math.sqrt(distanceSq(line, p));
+	}
+
+	/**
+	 * <p>
+	 * Returns the Euclidean distance squared of the closest point on a line segment to the specified point.
+	 * </p>
+	 *
+	 * @param line A line segment. Not modified.
+	 * @param p The point. Not modified.
+	 * @return Euclidean distance squared of the closest point on a line is away from a point.
+	 */
+	public static double distanceSq( LineSegment2D_F64 line, Point2D_F64 p ) {
 		double a = line.b.x - line.a.x;
 		double b = line.b.y - line.a.y;
 
@@ -89,12 +102,61 @@ public class Distance2D_F64 {
 		// if the point of intersection is past the end points return the distance
 		// from the closest end point
 		if( t < 0 ) {
-			return UtilPoint2D_F64.distance( line.a.x, line.a.y, p.x, p.y );
+			return UtilPoint2D_F64.distanceSq(line.a.x, line.a.y, p.x, p.y);
 		} else if( t > 1.0 )
-			return UtilPoint2D_F64.distance( line.b.x, line.b.y, p.x, p.y );
+			return UtilPoint2D_F64.distanceSq(line.b.x, line.b.y, p.x, p.y);
 
 		// return the distance of the closest point on the line
-		return UtilPoint2D_F64.distance( line.a.x + t * a, line.a.y + t * b, p.x, p.y );
+		return UtilPoint2D_F64.distanceSq(line.a.x + t * a, line.a.y + t * b, p.x, p.y);
+	}
+
+	/**
+	 * Finds the distance between the two line segments
+	 * @param segmentA Line segment. Not modified.
+	 * @param segmentB Line segment. Not modified.
+	 * @return Euclidean distance of the closest point between the two line segments.
+	 */
+	public static double distance( LineSegment2D_F64 segmentA , LineSegment2D_F64 segmentB ) {
+		return Math.sqrt(distanceSq(segmentA,segmentB));
+	}
+
+	/**
+	 * Finds the distance squared between the two line segments
+	 * @param segmentA Line segment. Not modified.
+	 * @param segmentB Line segment. Not modified.
+	 * @return Euclidean distance squared of the closest point between the two line segments.
+	 */
+	public static double distanceSq( LineSegment2D_F64 segmentA , LineSegment2D_F64 segmentB ) {
+
+		// intersection of the two lines relative to A
+		double slopeAX = segmentA.slopeX();
+		double slopeAY = segmentA.slopeY();
+		double slopeBX = segmentB.slopeX();
+		double slopeBY = segmentB.slopeY();
+
+		double ta = slopeBX*( segmentA.a.y - segmentB.a.y ) - slopeBY*( segmentA.a.x - segmentB.a.x );
+		double bottom = slopeBY*slopeAX - slopeAY*slopeBX;
+
+		// see they intersect
+		if( bottom != 0 ) {
+			// see if the intersection is inside of lineA
+			ta /= bottom;
+			if( ta >= 0 && ta <= 1.0 ) {
+				// see if the intersection is inside of lineB
+				double tb = slopeAX*( segmentB.a.y - segmentA.a.y ) - slopeAY*( segmentB.a.x - segmentA.a.x );
+				tb /= slopeAY*slopeBX - slopeBY*slopeAX;
+				if( tb >= 0 && tb <= 1.0 )
+					return 0;
+			}
+		}
+
+		double closest = Double.MAX_VALUE;
+		closest = Math.min(closest,distanceSq(segmentA, segmentB.a));
+		closest = Math.min(closest,distanceSq(segmentA, segmentB.b));
+		closest = Math.min(closest,distanceSq(segmentB, segmentA.a));
+		closest = Math.min(closest,distanceSq(segmentB, segmentA.b));
+
+		return closest;
 	}
 
 	/**
