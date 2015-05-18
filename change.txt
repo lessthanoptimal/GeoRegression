@@ -12,6 +12,7 @@ Version : 0.8
   * Added LineParametric3D.setPointOnLine
 - Distance2D
   * added line segment to line segment
+  * added quadrilateral to point
 - UtilPolygons2D
   * Center for Quadrilateral
 

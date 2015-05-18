@@ -23,6 +23,7 @@ import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.Quadrilateral_F64;
 
 
 /**
@@ -117,7 +118,7 @@ public class Distance2D_F64 {
 	 * @return Euclidean distance of the closest point between the two line segments.
 	 */
 	public static double distance( LineSegment2D_F64 segmentA , LineSegment2D_F64 segmentB ) {
-		return Math.sqrt(distanceSq(segmentA,segmentB));
+		return Math.sqrt(distanceSq(segmentA, segmentB));
 	}
 
 	/**
@@ -157,6 +158,35 @@ public class Distance2D_F64 {
 		closest = Math.min(closest,distanceSq(segmentB, segmentA.b));
 
 		return closest;
+	}
+
+	/**
+	 * Returns the Euclidean distance of the closest point on the quadrilateral to the provided point.
+	 *
+	 * @param quad Quadrilateral
+	 * @param p Point
+	 * @return Distance apart
+	 */
+	public static double distance( Quadrilateral_F64 quad , Point2D_F64 p ) {
+		return Math.sqrt(distanceSq(quad,p));
+	}
+
+	/**
+	 * Returns the Euclidean distance squared of the closest point on the quadrilateral to the provided point.
+	 *
+	 * @param quad Quadrilateral
+	 * @param p Point
+	 * @return Distance squared apart
+	 */
+	public static double distanceSq( Quadrilateral_F64 quad , Point2D_F64 p ) {
+		LineSegment2D_F64 seg = LineSegment2D_F64.wrap(quad.a, quad.b);
+		double a = distanceSq(seg, p);
+		seg.a = quad.b;seg.b = quad.c;
+		a = Math.min(a,distanceSq(seg,p));
+		seg.a = quad.c;seg.b = quad.d;
+		a = Math.min(a,distanceSq(seg,p));
+		seg.a = quad.d;seg.b = quad.a;
+		return Math.min(a,distanceSq(seg,p));
 	}
 
 	/**
