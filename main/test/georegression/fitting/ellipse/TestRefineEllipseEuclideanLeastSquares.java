@@ -22,7 +22,7 @@ import georegression.geometry.UtilEllipse_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.EllipseRotated_F64;
-import org.ddogleg.optimization.JacobianChecker;
+import org.ddogleg.optimization.DerivativeChecker;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -170,7 +170,7 @@ public class TestRefineEllipseEuclideanLeastSquares {
 		RefineEllipseEuclideanLeastSquares.Error error = alg.createError();
 		RefineEllipseEuclideanLeastSquares.Jacobian jacobian = alg.createJacobian();
 
-		JacobianChecker.jacobian(error,jacobian,alg.initialParam,1e-5);
+		DerivativeChecker.jacobian(error,jacobian,alg.initialParam,1e-5);
 	}
 
 }

@@ -21,7 +21,7 @@ package georegression.fitting.cylinder;
 import georegression.fitting.sphere.SphereToPointSignedDistanceJacobian_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
-import org.ddogleg.optimization.JacobianChecker;
+import org.ddogleg.optimization.DerivativeChecker;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -55,9 +55,9 @@ public class TestCylinderToPointSignedDistanceJacobian_F64 {
 		function.setPoints(points);
 		jacobian.setPoints(points);
 
-//		JacobianChecker.jacobianPrint(function, jacobian, param, 100.0*GrlConstants.DOUBLE_TEST_TOL,
+//		DerivativeChecker.jacobianPrint(function, jacobian, param, 100.0*GrlConstants.DOUBLE_TEST_TOL,
 //				GrlConstants.DOUBLE_TEST_TOL);
-		assertTrue(JacobianChecker.jacobian(function, jacobian, param, 100.0 * GrlConstants.DOUBLE_TEST_TOL,
+		assertTrue(DerivativeChecker.jacobian(function, jacobian, param, 100.0 * GrlConstants.DOUBLE_TEST_TOL,
 				GrlConstants.DOUBLE_TEST_TOL));
 	}
 
