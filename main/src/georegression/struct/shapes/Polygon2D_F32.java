@@ -40,6 +40,19 @@ public class Polygon2D_F32 implements Serializable {
 		vertexes.size = numVertexes;
 	}
 
+	public Polygon2D_F32( float... points ) {
+		if( points.length % 2 == 1 )
+			throw new IllegalArgumentException("Expected an even number");
+		vertexes = new FastQueue<Point2D_F32>(Point2D_F32.class,true);
+		vertexes.growArray(points.length/2);
+		vertexes.size = points.length/2;
+
+		int count = 0;
+		for (int i = 0; i < points.length; i += 2) {
+			vertexes.data[count++].set( points[i],points[i+1]);
+		}
+	}
+
 	public Polygon2D_F32() {
 		vertexes = new FastQueue<Point2D_F32>(Point2D_F32.class,true);
 	}

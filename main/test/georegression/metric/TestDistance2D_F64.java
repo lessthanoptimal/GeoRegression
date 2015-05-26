@@ -25,6 +25,7 @@ import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import org.junit.Test;
 
@@ -119,6 +120,19 @@ public class TestDistance2D_F64 {
 		assertEquals(4,Distance2D_F64.distance(quad,new Point2D_F64(5,14)),GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(5,Distance2D_F64.distance(quad,new Point2D_F64(15,5)),GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(6,Distance2D_F64.distance(quad,new Point2D_F64(6,-6)),GrlConstants.DOUBLE_TEST_TOL);
+	}
 
+	@Test
+	public void distance_polygon_point() {
+		Polygon2D_F64 poly = new Polygon2D_F64(2,0, 2,10, 10,10, 10,0);
+
+		// test a point to the left and right of a side.  should be the same
+		assertEquals(3,Distance2D_F64.distance(poly,new Point2D_F64(-1,3)),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(3,Distance2D_F64.distance(poly,new Point2D_F64(5,3)),GrlConstants.DOUBLE_TEST_TOL);
+
+		// try the other sides
+		assertEquals(4,Distance2D_F64.distance(poly,new Point2D_F64(5,14)),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(5,Distance2D_F64.distance(poly,new Point2D_F64(15,5)),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(6,Distance2D_F64.distance(poly,new Point2D_F64(6,-6)),GrlConstants.DOUBLE_TEST_TOL);
 	}
 }

@@ -23,6 +23,7 @@ import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 
 
@@ -187,6 +188,44 @@ public class Distance2D_F64 {
 		a = Math.min(a,distanceSq(seg,p));
 		seg.a = quad.d;seg.b = quad.a;
 		return Math.min(a,distanceSq(seg,p));
+	}
+
+	/**
+	 * Returns the Euclidean distance of the closest point on the Polygon to the provided point.
+	 *
+	 * @param poly Polygon2D
+	 * @param p Point
+	 * @return Distance squared apart
+	 */
+	public static double distance( Polygon2D_F64 poly , Point2D_F64 p ) {
+		return Math.sqrt(distanceSq(poly,p,null));
+	}
+
+	/**
+	 * Returns the Euclidean distance squared of the closest point on the Polygon to the provided point.
+	 *
+	 * @param poly Polygon2D
+	 * @param p Point
+	 * @param storage Optional storage for linesegment which is used internally to compute the distance
+	 * @return Distance squared apart
+	 */
+	public static double distanceSq( Polygon2D_F64 poly , Point2D_F64 p , LineSegment2D_F64 storage ) {
+		if( storage == null )
+			storage = LineSegment2D_F64.wrap(null,null);
+
+		double minimum = Double.MAX_VALUE;
+		for (int i = 0; i < poly.size(); i++) {
+			int j = (i+1)%poly.size();
+
+			storage.a = poly.vertexes.data[i];
+			storage.b = poly.vertexes.data[j];
+
+			double d = distanceSq(storage, p);
+			if( d < minimum )
+				minimum = d;
+		}
+
+		return minimum;
 	}
 
 	/**
