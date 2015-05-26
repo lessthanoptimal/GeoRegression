@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_I32;
@@ -119,6 +120,31 @@ public class TestUtilPolygons2D_F64 {
 		list.add(new Point2D_F64(1.5, 1.5));
 		assertTrue(UtilPolygons2D_F64.isCCW(list));
 		assertFalse(UtilPolygons2D_F64.isCCW(reverse(list)));
+	}
+
+	@Test
+	public void reverseOrder() {
+
+		Polygon2D_F64 poly3 = new Polygon2D_F64(3);
+		Polygon2D_F64 poly4 = new Polygon2D_F64(4);
+
+		List<Point2D_F64> orig3 = new ArrayList<Point2D_F64>();
+		List<Point2D_F64> orig4 = new ArrayList<Point2D_F64>();
+
+		orig3.addAll(poly3.vertexes.toList());
+		orig4.addAll(poly4.vertexes.toList());
+
+		UtilPolygons2D_F64.reverseOrder(poly3);
+		UtilPolygons2D_F64.reverseOrder(poly4);
+
+		assertTrue(poly3.get(0)==orig3.get(0));
+		assertTrue(poly3.get(1)==orig3.get(2));
+		assertTrue(poly3.get(2)==orig3.get(1));
+
+		assertTrue(poly4.get(0)==orig4.get(0));
+		assertTrue(poly4.get(1)==orig4.get(3));
+		assertTrue(poly4.get(2)==orig4.get(2));
+		assertTrue(poly4.get(3)==orig4.get(1));
 	}
 
 	private static List<Point2D_F64> reverse( List<Point2D_F64> points ) {

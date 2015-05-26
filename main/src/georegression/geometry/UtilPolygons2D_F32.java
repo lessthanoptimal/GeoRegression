@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.Polygon2D_F32;
 import georegression.struct.shapes.Quadrilateral_F32;
 import georegression.struct.shapes.Rectangle2D_F32;
 import georegression.struct.shapes.RectangleLength2D_I32;
@@ -142,6 +143,21 @@ public class UtilPolygons2D_F32 {
 
 
 		return total > 0;
+	}
+
+	/**
+	 * Reverses the order of points in a polygon.  The first vertex will still be the first vertex
+	 * @param polygon The input polygon whose vertexes are being re-ordered
+	 */
+	public static void reverseOrder( Polygon2D_F32 polygon ) {
+		for (int i = 1; i <= polygon.size()/2; i++) {
+			int j = polygon.size()-i;
+			Point2D_F32 a = polygon.vertexes.data[i];
+			Point2D_F32 b = polygon.vertexes.data[j];
+
+			polygon.vertexes.data[i] = b;
+			polygon.vertexes.data[j] = a;
+		}
 	}
 
 //	public static boolean isCCW( Point2D_F32 a, Point2D_F32 b , Point2D_F32 c ) {
