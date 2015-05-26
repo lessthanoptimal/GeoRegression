@@ -17,6 +17,7 @@ Version : 0.8
 - UtilPolygons2D
   * Center for Quadrilateral
   * reverse order for Polygon2D
+  * added vertexAve
 - Quadrilateral
   * isEquals()
 

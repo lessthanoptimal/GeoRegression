@@ -57,6 +57,13 @@ public class Polygon2D_F32 implements Serializable {
 		vertexes = new FastQueue<Point2D_F32>(Point2D_F32.class,true);
 	}
 
+	public void set( Polygon2D_F32 orig ) {
+		vertexes.resize(orig.size());
+		for (int i = 0; i < orig.size(); i++) {
+			vertexes.data[i].set( orig.vertexes.data[i]);
+		}
+	}
+
 	public void set( int index , float x , float y ) {
 		vertexes.data[index].set(x,y);
 	}

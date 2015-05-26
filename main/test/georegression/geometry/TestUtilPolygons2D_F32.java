@@ -147,6 +147,19 @@ public class TestUtilPolygons2D_F32 {
 		assertTrue(poly4.get(3)==orig4.get(1));
 	}
 
+	@Test
+	public void vertexAverage() {
+
+		Polygon2D_F32 poly = new Polygon2D_F32(1,2,3,4,5,6);
+
+		Point2D_F32 ave = new Point2D_F32();
+
+		UtilPolygons2D_F32.vertexAverage(poly,ave);
+
+		assertEquals((1+3+5)/3.0f,ave.x,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals((2+4+6)/3.0f,ave.y,GrlConstants.FLOAT_TEST_TOL);
+	}
+
 	private static List<Point2D_F32> reverse( List<Point2D_F32> points ) {
 		List<Point2D_F32> reverse = new ArrayList<Point2D_F32>();
 

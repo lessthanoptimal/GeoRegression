@@ -160,6 +160,23 @@ public class UtilPolygons2D_F64 {
 		}
 	}
 
+	/**
+	 * Computes the average of all the vertexes
+	 * @param input (input) polygon
+	 * @param average (output) average point
+	 */
+	public static void vertexAverage(Polygon2D_F64 input, Point2D_F64 average ) {
+		average.set(0,0);
+
+		for (int i = 0; i < input.size(); i++) {
+			Point2D_F64 v = input.vertexes.data[i];
+			average.x += v.x;
+			average.y += v.y;
+		}
+		average.x /= input.size();
+		average.y /= input.size();
+	}
+
 //	public static boolean isCCW( Point2D_F64 a, Point2D_F64 b , Point2D_F64 c ) {
 //		double angleAB = Math.atan2(b.y-a.y,b.x-a.x);
 //		double angleAC = Math.atan2(c.y-a.y,c.x-a.x);
