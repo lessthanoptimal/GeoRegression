@@ -125,6 +125,26 @@ public class Quadrilateral_F32 implements Serializable {
 		return new Quadrilateral_F32(this);
 	}
 
+	/**
+	 * Returns true if the two quadrilaterals are equal to each other to within tolerance.  Equality is defined
+	 * by seeing if the distance between two equivalent vertexes is within tolerance.
+	 *
+	 * @param quad The second quadrilateral
+	 * @param tol Maximum allowed distance between vertexes.
+	 * @return true if equals or false if not
+	 */
+	public boolean isEquals( Quadrilateral_F32 quad , float tol ) {
+		tol *= tol;
+
+		if( a.distance2(quad.a) > tol )
+			return false;
+		if( b.distance2(quad.b) > tol )
+			return false;
+		if( c.distance2(quad.c) > tol )
+			return false;
+		return d.distance2(quad.d) <= tol;
+	}
+
 	public String toString() {
 		return getClass().getSimpleName()+"{ a("+a.x+" "+a.y+") b("+b.x+" "+b.y+") c("+c.x+" "+c.y+") d("+d.x+" "+d.y+") }";
 	}
