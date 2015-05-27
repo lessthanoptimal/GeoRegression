@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2014, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -195,6 +195,6 @@ public class TestUtilPolygons2D_F64 {
 		Polygon2D_F64 poly2 = new Polygon2D_F64(1,2,3,4,5,6.1);
 
 		assertTrue(UtilPolygons2D_F64.isIdentical(poly1,poly2,0.11));
-		assertFalse(UtilPolygons2D_F64.isIdentical(poly1,poly2,0.09));
+		assertFalse(UtilPolygons2D_F64.isIdentical(poly1, poly2, 0.09));
 	}
 }
