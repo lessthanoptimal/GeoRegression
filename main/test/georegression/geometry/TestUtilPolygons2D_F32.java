@@ -37,6 +37,25 @@ import static org.junit.Assert.*;
 public class TestUtilPolygons2D_F32 {
 
 	@Test
+	public void isConvex() {
+		Polygon2D_F32 a = new Polygon2D_F32(0,0,5,5,-5,5);
+		assertTrue(UtilPolygons2D_F32.isConvex(a));
+		UtilPolygons2D_F32.reverseOrder(a);
+		assertTrue(UtilPolygons2D_F32.isConvex(a));
+
+		Polygon2D_F32 b = new Polygon2D_F32(0,0, 0,5, -5,5, -5,0);
+		assertTrue(UtilPolygons2D_F32.isConvex(b));
+		UtilPolygons2D_F32.reverseOrder(b);
+		assertTrue(UtilPolygons2D_F32.isConvex(b));
+
+		Polygon2D_F32 c = new Polygon2D_F32(0,0, 0,5, -5,5, -0.1f,4.5f);
+		assertFalse(UtilPolygons2D_F32.isConvex(c));
+		UtilPolygons2D_F32.reverseOrder(c);
+		assertFalse(UtilPolygons2D_F32.isConvex(c));
+	}
+
+
+	@Test
 	public void convert_rectcorner_quad() {
 		Rectangle2D_F32 r = new Rectangle2D_F32(1,2,5,6);
 		Quadrilateral_F32 q = new Quadrilateral_F32();
@@ -168,5 +187,14 @@ public class TestUtilPolygons2D_F32 {
 		}
 
 		return reverse;
+	}
+
+	@Test
+	public void isIdentical_poly_poly() {
+		Polygon2D_F32 poly1 = new Polygon2D_F32(1,2,3,4,5,6);
+		Polygon2D_F32 poly2 = new Polygon2D_F32(1,2,3,4,5,6.1f);
+
+		assertTrue(UtilPolygons2D_F32.isIdentical(poly1,poly2,0.11f));
+		assertFalse(UtilPolygons2D_F32.isIdentical(poly1,poly2,0.09f));
 	}
 }

@@ -210,6 +210,26 @@ public class UtilPolygons2D_F64 {
 		average.y /= input.size();
 	}
 
+	/**
+	 * Checks to see if the vertexes of the two polygon's are the same up to the specified tolerance
+	 *
+	 * @param a Polygon
+	 * @param b Polygon
+	 * @param tol tolerance
+	 * @return true if identical up to tolerance or false if not
+	 */
+	public static boolean isIdentical( Polygon2D_F64 a , Polygon2D_F64 b , double tol ) {
+		if( a.size() != b.size())
+			return false;
+
+		double tol2 = tol*tol;
+		for (int i = 0; i < a.size(); i++) {
+			if( a.get(i).distance2(b.get(i)) > tol2 )
+				return false;
+		}
+		return true;
+	}
+
 //	public static boolean isCCW( Point2D_F64 a, Point2D_F64 b , Point2D_F64 c ) {
 //		double angleAB = Math.atan2(b.y-a.y,b.x-a.x);
 //		double angleAC = Math.atan2(c.y-a.y,c.x-a.x);

@@ -19,6 +19,7 @@ Version : 0.8
   * reverse order for Polygon2D
   * added vertexAve
   * isConvex()
+  * isIdentical()
 - Area2D
   * Area convex polygon
 - Quadrilateral

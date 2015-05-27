@@ -35,6 +35,39 @@ import java.util.List;
 public class UtilPolygons2D_F32 {
 
 	/**
+	 * Determines if the polugon is convex or concave.
+	 *
+	 * @param poly Polygon
+	 * @return true if convex and false if concave
+	 */
+	public static boolean isConvex( Polygon2D_F32 poly ) {
+		// if the cross product of all consecutive triples is positive or negative then it is convex
+
+		final int N = poly.size();
+		int numPositive = 0;
+		for (int i = 0; i < N; i++) {
+			int j = (i+1)%N;
+			int k = (i+2)%N;
+
+			Point2D_F32 a = poly.vertexes.data[i];
+			Point2D_F32 b = poly.vertexes.data[j];
+			Point2D_F32 c = poly.vertexes.data[k];
+
+			float dx0 = a.x-b.x;
+			float dy0 = a.y-b.y;
+
+			float dx1 = c.x-b.x;
+			float dy1 = c.y-b.y;
+
+			float z = dx0 * dy1 - dy0 * dx1;
+			if( z > 0 )
+				numPositive++;
+		}
+
+		return( numPositive == 0 || numPositive == N );
+	}
+
+	/**
 	 * Converts a rectangle into a quadrilateral
 	 *
 	 * @param input Rectangle.
@@ -175,6 +208,26 @@ public class UtilPolygons2D_F32 {
 		}
 		average.x /= input.size();
 		average.y /= input.size();
+	}
+
+	/**
+	 * Checks to see if the vertexes of the two polygon's are the same up to the specified tolerance
+	 *
+	 * @param a Polygon
+	 * @param b Polygon
+	 * @param tol tolerance
+	 * @return true if identical up to tolerance or false if not
+	 */
+	public static boolean isIdentical( Polygon2D_F32 a , Polygon2D_F32 b , float tol ) {
+		if( a.size() != b.size())
+			return false;
+
+		float tol2 = tol*tol;
+		for (int i = 0; i < a.size(); i++) {
+			if( a.get(i).distance2(b.get(i)) > tol2 )
+				return false;
+		}
+		return true;
 	}
 
 //	public static boolean isCCW( Point2D_F32 a, Point2D_F32 b , Point2D_F32 c ) {
