@@ -19,6 +19,7 @@
 package georegression.metric;
 
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 
 /**
@@ -52,5 +53,24 @@ public class Area2D_F64 {
 	 */
 	public static double quadrilateral( Quadrilateral_F64 quad ) {
 		return triangle(quad.a,quad.b,quad.d) + triangle(quad.b,quad.c,quad.d);
+	}
+
+	/**
+	 * Area of a convex polygon
+	 * @param poly Convex polygon
+	 * @return area
+	 */
+	public static double polygonConvex( Polygon2D_F64 poly ) {
+		double total = 0;
+
+		for (int i = 2; i < poly.size(); i++) {
+			Point2D_F64 v0 = poly.get(i-2);
+			Point2D_F64 v1 = poly.get(i-1);
+			Point2D_F64 v2 = poly.get(i);
+
+			total += triangle(v0,v1,v2);
+		}
+
+		return total;
 	}
 }

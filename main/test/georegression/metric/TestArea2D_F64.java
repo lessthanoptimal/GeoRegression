@@ -18,8 +18,10 @@
 
 package georegression.metric;
 
+import georegression.geometry.UtilPolygons2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import org.junit.Test;
 
@@ -48,6 +50,21 @@ public class TestArea2D_F64 {
 		Quadrilateral_F64 q = new Quadrilateral_F64(0,0,2,0,2,3,0,3);
 
 		assertEquals(2*3,Area2D_F64.quadrilateral(q), GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void polygonConvex() {
+		Polygon2D_F64 t = new Polygon2D_F64(0,0,5,0,0,3);
+		assertEquals(0.5*5*3,Area2D_F64.polygonConvex(t), GrlConstants.DOUBLE_TEST_TOL);
+
+		Polygon2D_F64 q = new Polygon2D_F64(0,0,2,0,2,3,0,3);
+		assertEquals(2*3,Area2D_F64.polygonConvex(q), GrlConstants.DOUBLE_TEST_TOL);
+
+		UtilPolygons2D_F64.reverseOrder(t);
+		assertEquals(0.5*5*3,Area2D_F64.polygonConvex(t), GrlConstants.DOUBLE_TEST_TOL);
+
+		UtilPolygons2D_F64.reverseOrder(q);
+		assertEquals(2*3,Area2D_F64.polygonConvex(q), GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 }

@@ -18,6 +18,8 @@ Version : 0.8
   * Center for Quadrilateral
   * reverse order for Polygon2D
   * added vertexAve
+- Area2D
+  * Area convex polygon
 - Quadrilateral
   * isEquals()
 
