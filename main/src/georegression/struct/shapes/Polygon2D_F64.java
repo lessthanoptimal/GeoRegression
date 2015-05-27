@@ -20,6 +20,7 @@ package georegression.struct.shapes;
 
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.metric.Area2D_F64;
+import georegression.metric.Intersection2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.struct.FastQueue;
@@ -35,6 +36,13 @@ public class Polygon2D_F64 implements Serializable {
 
 	// vertexes in the polygon
 	public FastQueue<Point2D_F64> vertexes;
+
+	public Polygon2D_F64( Polygon2D_F64 a ) {
+		vertexes = new FastQueue<Point2D_F64>(Point2D_F64.class,true);
+		for (int i = 0; i < a.size(); i++) {
+			vertexes.grow().set(a.get(i));
+		}
+	}
 
 	public Polygon2D_F64( int numVertexes ) {
 		vertexes = new FastQueue<Point2D_F64>(Point2D_F64.class,true);
@@ -79,6 +87,10 @@ public class Polygon2D_F64 implements Serializable {
 		return vertexes.size();
 	}
 
+	public Polygon2D_F64 copy() {
+		return new Polygon2D_F64(this);
+	}
+
 	public double area() {
 		if( isConvex())
 			return Area2D_F64.polygonConvex(this);
@@ -86,8 +98,38 @@ public class Polygon2D_F64 implements Serializable {
 			throw new RuntimeException("Doesn't support area for concave polygons yet");
 	}
 
+	/**
+	 * Returns true if the point is inside the polygon.  Points along the border are ambiguously considered inside
+	 * or outside.
+	 *
+	 * @see {@link Intersection2D_F64#containConcave(Polygon2D_F64, Point2D_F64)}
+	 * @see {@link Intersection2D_F64#containConcave(Polygon2D_F64, Point2D_F64)}
+	 *
+	 * @param p A point
+	 * @return true if inside and false if outside
+	 */
+	public boolean isInside( Point2D_F64 p ) {
+		if( isConvex() ) {
+			return Intersection2D_F64.containConvex(this,p);
+		} else {
+			return Intersection2D_F64.containConcave(this,p);
+		}
+	}
+
+	/**
+	 * true if the order of vertexes is in counter clockwise order.
+	 * @return true if ccw or false if cw
+	 */
+	public boolean isCCW() {
+		return UtilPolygons2D_F64.isCCW(vertexes.toList());
+	}
+
 	public boolean isConvex() {
 		return UtilPolygons2D_F64.isConvex(this);
+	}
+
+	public boolean isIdentical( Polygon2D_F64 a , double tol ) {
+		return UtilPolygons2D_F64.isIdentical(this,a,tol);
 	}
 
 	public LineSegment2D_F64 getLine( int index , LineSegment2D_F64 storage ) {
