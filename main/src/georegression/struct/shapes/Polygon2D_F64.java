@@ -18,6 +18,9 @@
 
 package georegression.struct.shapes;
 
+import georegression.geometry.UtilPolygons2D_F64;
+import georegression.metric.Area2D_F64;
+import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.struct.FastQueue;
 
@@ -74,5 +77,28 @@ public class Polygon2D_F64 implements Serializable {
 
 	public int size() {
 		return vertexes.size();
+	}
+
+	public double area() {
+		if( isConvex())
+			return Area2D_F64.polygonConvex(this);
+		else
+			throw new RuntimeException("Doesn't support area for concave polygons yet");
+	}
+
+	public boolean isConvex() {
+		return UtilPolygons2D_F64.isConvex(this);
+	}
+
+	public LineSegment2D_F64 getLine( int index , LineSegment2D_F64 storage ) {
+		if( storage == null )
+			storage = new LineSegment2D_F64();
+
+		int j = (index+1)%vertexes.size;
+
+		storage.a.set(get(index));
+		storage.b.set(get(j));
+
+		return storage;
 	}
 }
