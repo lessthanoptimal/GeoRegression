@@ -35,6 +35,39 @@ import java.util.List;
 public class UtilPolygons2D_F64 {
 
 	/**
+	 * Determines if the polugon is convex or concave.
+	 *
+	 * @param poly Polygon
+	 * @return true if convex and false if concave
+	 */
+	public static boolean isConvex( Polygon2D_F64 poly ) {
+		// if the cross product of all consecutive triples is positive or negative then it is convex
+
+		final int N = poly.size();
+		int numPositive = 0;
+		for (int i = 0; i < N; i++) {
+			int j = (i+1)%N;
+			int k = (i+2)%N;
+
+			Point2D_F64 a = poly.vertexes.data[i];
+			Point2D_F64 b = poly.vertexes.data[j];
+			Point2D_F64 c = poly.vertexes.data[k];
+
+			double dx0 = a.x-b.x;
+			double dy0 = a.y-b.y;
+
+			double dx1 = c.x-b.x;
+			double dy1 = c.y-b.y;
+
+			double z = dx0 * dy1 - dy0 * dx1;
+			if( z > 0 )
+				numPositive++;
+		}
+
+		return( numPositive == 0 || numPositive == N );
+	}
+
+	/**
 	 * Converts a rectangle into a quadrilateral
 	 *
 	 * @param input Rectangle.

@@ -37,6 +37,25 @@ import static org.junit.Assert.*;
 public class TestUtilPolygons2D_F64 {
 
 	@Test
+	public void isConvex() {
+		Polygon2D_F64 a = new Polygon2D_F64(0,0,5,5,-5,5);
+		assertTrue(UtilPolygons2D_F64.isConvex(a));
+		UtilPolygons2D_F64.reverseOrder(a);
+		assertTrue(UtilPolygons2D_F64.isConvex(a));
+
+		Polygon2D_F64 b = new Polygon2D_F64(0,0, 0,5, -5,5, -5,0);
+		assertTrue(UtilPolygons2D_F64.isConvex(b));
+		UtilPolygons2D_F64.reverseOrder(b);
+		assertTrue(UtilPolygons2D_F64.isConvex(b));
+
+		Polygon2D_F64 c = new Polygon2D_F64(0,0, 0,5, -5,5, -0.1,4.5);
+		assertFalse(UtilPolygons2D_F64.isConvex(c));
+		UtilPolygons2D_F64.reverseOrder(c);
+		assertFalse(UtilPolygons2D_F64.isConvex(c));
+	}
+
+
+	@Test
 	public void convert_rectcorner_quad() {
 		Rectangle2D_F64 r = new Rectangle2D_F64(1,2,5,6);
 		Quadrilateral_F64 q = new Quadrilateral_F64();
