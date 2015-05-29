@@ -38,17 +38,17 @@ public class TestUtilPolygons2D_F32 {
 
 	@Test
 	public void isConvex() {
-		Polygon2D_F32 a = new Polygon2D_F32(0,0,5,5,-5,5);
+		Polygon2D_F32 a = new Polygon2D_F32(0, 0, 5, 5, -5, 5);
 		assertTrue(UtilPolygons2D_F32.isConvex(a));
 		UtilPolygons2D_F32.reverseOrder(a);
 		assertTrue(UtilPolygons2D_F32.isConvex(a));
 
-		Polygon2D_F32 b = new Polygon2D_F32(0,0, 0,5, -5,5, -5,0);
+		Polygon2D_F32 b = new Polygon2D_F32(0, 0, 0, 5, -5, 5, -5, 0);
 		assertTrue(UtilPolygons2D_F32.isConvex(b));
 		UtilPolygons2D_F32.reverseOrder(b);
 		assertTrue(UtilPolygons2D_F32.isConvex(b));
 
-		Polygon2D_F32 c = new Polygon2D_F32(0,0, 0,5, -5,5, -0.1f,4.5f);
+		Polygon2D_F32 c = new Polygon2D_F32(0, 0, 0, 5, -5, 5, -0.1f, 4.5f);
 		assertFalse(UtilPolygons2D_F32.isConvex(c));
 		UtilPolygons2D_F32.reverseOrder(c);
 		assertFalse(UtilPolygons2D_F32.isConvex(c));
@@ -57,57 +57,70 @@ public class TestUtilPolygons2D_F32 {
 
 	@Test
 	public void convert_rectcorner_quad() {
-		Rectangle2D_F32 r = new Rectangle2D_F32(1,2,5,6);
+		Rectangle2D_F32 r = new Rectangle2D_F32(1, 2, 5, 6);
 		Quadrilateral_F32 q = new Quadrilateral_F32();
 
-		UtilPolygons2D_F32.convert(r,q);
+		UtilPolygons2D_F32.convert(r, q);
 
-		assertEquals( 1,q.a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 2,q.a.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 5,q.b.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 2,q.b.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 5,q.c.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 6,q.c.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 1,q.d.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 6,q.d.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, q.a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2, q.a.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5, q.b.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2, q.b.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5, q.c.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(6, q.c.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, q.d.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(6, q.d.y, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void convert_poly_quad() {
+		Polygon2D_F32 r = new Polygon2D_F32(1,2, 5,2, 5,6, 1,6);
+		Quadrilateral_F32 q = new Quadrilateral_F32();
+
+		UtilPolygons2D_F32.convert(r, q);
+
+		assertTrue(r.get(0).distance(q.a)<GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(r.get(1).distance(q.b)<GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(r.get(2).distance(q.c)<GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(r.get(3).distance(q.d)<GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
 	public void convert_rectwh_quad() {
-		RectangleLength2D_I32 rect = new RectangleLength2D_I32(1,2,5,6);
+		RectangleLength2D_I32 rect = new RectangleLength2D_I32(1, 2, 5, 6);
 
 		Quadrilateral_F32 q = new Quadrilateral_F32();
 
-		UtilPolygons2D_F32.convert(rect,q);
+		UtilPolygons2D_F32.convert(rect, q);
 
-		assertEquals( 1,q.a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 2,q.a.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 5,q.b.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 2,q.b.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 5,q.c.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 7,q.c.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 1,q.d.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 7,q.d.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, q.a.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2, q.a.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5, q.b.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2, q.b.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5, q.c.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(7, q.c.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, q.d.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(7, q.d.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
 	public void bounding_quadrilateral() {
-		Quadrilateral_F32 q = new Quadrilateral_F32(3,0,2,-3,-2,3,1,5);
+		Quadrilateral_F32 q = new Quadrilateral_F32(3, 0, 2, -3, -2, 3, 1, 5);
 		Rectangle2D_F32 out = new Rectangle2D_F32();
 
-		UtilPolygons2D_F32.bounding(q,out);
+		UtilPolygons2D_F32.bounding(q, out);
 
-		assertEquals(-2,out.p0.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(-3,out.p0.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 3,out.p1.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( 5,out.p1.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-2, out.p0.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-3, out.p0.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3, out.p1.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5, out.p1.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
 	public void center_quadrilateral() {
-		Quadrilateral_F32 q = new Quadrilateral_F32(3,0,2,-3,-2,3,1,5);
+		Quadrilateral_F32 q = new Quadrilateral_F32(3, 0, 2, -3, -2, 3, 1, 5);
 
-		Point2D_F32 pts[] = new Point2D_F32[]{q.a,q.b,q.c,q.d};
+		Point2D_F32 pts[] = new Point2D_F32[]{q.a, q.b, q.c, q.d};
 
 		Point2D_F32 expected = new Point2D_F32();
 
@@ -118,10 +131,10 @@ public class TestUtilPolygons2D_F32 {
 		expected.x /= 4.0f;
 		expected.y /= 4.0f;
 
-		Point2D_F32 found = UtilPolygons2D_F32.center(q,null);
+		Point2D_F32 found = UtilPolygons2D_F32.center(q, null);
 
-		assertEquals(expected.x,found.x,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(expected.y,found.y,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.x, found.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.y, found.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -156,34 +169,34 @@ public class TestUtilPolygons2D_F32 {
 		UtilPolygons2D_F32.reverseOrder(poly3);
 		UtilPolygons2D_F32.reverseOrder(poly4);
 
-		assertTrue(poly3.get(0)==orig3.get(0));
-		assertTrue(poly3.get(1)==orig3.get(2));
-		assertTrue(poly3.get(2)==orig3.get(1));
+		assertTrue(poly3.get(0) == orig3.get(0));
+		assertTrue(poly3.get(1) == orig3.get(2));
+		assertTrue(poly3.get(2) == orig3.get(1));
 
-		assertTrue(poly4.get(0)==orig4.get(0));
-		assertTrue(poly4.get(1)==orig4.get(3));
-		assertTrue(poly4.get(2)==orig4.get(2));
-		assertTrue(poly4.get(3)==orig4.get(1));
+		assertTrue(poly4.get(0) == orig4.get(0));
+		assertTrue(poly4.get(1) == orig4.get(3));
+		assertTrue(poly4.get(2) == orig4.get(2));
+		assertTrue(poly4.get(3) == orig4.get(1));
 	}
 
 	@Test
 	public void vertexAverage() {
 
-		Polygon2D_F32 poly = new Polygon2D_F32(1,2,3,4,5,6);
+		Polygon2D_F32 poly = new Polygon2D_F32(1, 2, 3, 4, 5, 6);
 
 		Point2D_F32 ave = new Point2D_F32();
 
-		UtilPolygons2D_F32.vertexAverage(poly,ave);
+		UtilPolygons2D_F32.vertexAverage(poly, ave);
 
-		assertEquals((1+3+5)/3.0f,ave.x,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals((2+4+6)/3.0f,ave.y,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals((1 + 3 + 5) / 3.0f, ave.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals((2 + 4 + 6) / 3.0f, ave.y, GrlConstants.FLOAT_TEST_TOL);
 	}
 
-	private static List<Point2D_F32> reverse( List<Point2D_F32> points ) {
+	private static List<Point2D_F32> reverse(List<Point2D_F32> points) {
 		List<Point2D_F32> reverse = new ArrayList<Point2D_F32>();
 
-		for (int i = points.size()-1; i >= 0; i--) {
-			reverse.add( points.get(i));
+		for (int i = points.size() - 1; i >= 0; i--) {
+			reverse.add(points.get(i));
 		}
 
 		return reverse;
@@ -191,10 +204,25 @@ public class TestUtilPolygons2D_F32 {
 
 	@Test
 	public void isIdentical_poly_poly() {
-		Polygon2D_F32 poly1 = new Polygon2D_F32(1,2,3,4,5,6);
-		Polygon2D_F32 poly2 = new Polygon2D_F32(1,2,3,4,5,6.1f);
+		Polygon2D_F32 poly1 = new Polygon2D_F32(1, 2, 3, 4, 5, 6);
+		Polygon2D_F32 poly2 = new Polygon2D_F32(1, 2, 3, 4, 5, 6.1f);
 
-		assertTrue(UtilPolygons2D_F32.isIdentical(poly1,poly2,0.11f));
+		assertTrue(UtilPolygons2D_F32.isIdentical(poly1, poly2, 0.11f));
 		assertFalse(UtilPolygons2D_F32.isIdentical(poly1, poly2, 0.09f));
+	}
+
+	@Test
+	public void isEquivalent_poly_poly() {
+		Polygon2D_F32 poly1 = new Polygon2D_F32(1, 2, 3, 4, 5, 6);
+		Polygon2D_F32 poly2 = new Polygon2D_F32(1, 2, 3, 4, 5, 6);
+
+		// create a shifted version of poly2
+		for (int i = 0; i < poly1.size(); i++) {
+			Polygon2D_F32 poly3 = new Polygon2D_F32(poly1.size());
+			for (int j = 0; j < poly1.size(); j++) {
+				poly3.vertexes.data[j] = poly2.vertexes.data[(j+i)%poly1.size()];
+			}
+			assertTrue(UtilPolygons2D_F32.isEquivalent(poly1,poly3,GrlConstants.FLOAT_TEST_TOL));
+		}
 	}
 }

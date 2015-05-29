@@ -20,6 +20,8 @@ Version : 0.8
   * added vertexAve
   * isConvex()
   * isIdentical()
+  * isEquivalent()
+  * convert poly to quad
 - Area2D
   * Area convex polygon
 - Quadrilateral

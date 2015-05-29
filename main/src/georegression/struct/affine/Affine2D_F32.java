@@ -32,6 +32,14 @@ public class Affine2D_F32 implements Affine<Affine2D_F32> {
 	public float tx, ty;
 
 	public Affine2D_F32( float a11, float a12, float a21, float a22, float tx, float ty ) {
+		set(a11,a12,a21,a22,tx,ty);
+	}
+
+	public Affine2D_F32() {
+		reset();
+	}
+
+	public void set( float a11, float a12, float a21, float a22, float tx, float ty ) {
 		this.a11 = a11;
 		this.a12 = a12;
 		this.a21 = a21;
@@ -40,9 +48,6 @@ public class Affine2D_F32 implements Affine<Affine2D_F32> {
 		this.ty = ty;
 	}
 
-	public Affine2D_F32() {
-		reset();
-	}
 
 	@Override
 	public int getDimension() {

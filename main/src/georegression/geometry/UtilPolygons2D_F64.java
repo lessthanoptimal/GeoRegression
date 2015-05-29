@@ -88,6 +88,22 @@ public class UtilPolygons2D_F64 {
 	}
 
 	/**
+	 * Converts a polygon into a quadrilateral
+	 *
+	 * @param input polygon.
+	 * @param output Quadrilateral.  Modified.
+	 */
+	public static void convert( Polygon2D_F64 input , Quadrilateral_F64 output ) {
+		if( input.size() != 4 )
+			throw new IllegalArgumentException("Expected 4-sided polygon as input");
+
+		output.a.set(input.get(0));
+		output.b.set(input.get(1));
+		output.c.set(input.get(2));
+		output.d.set(input.get(3));
+	}
+
+	/**
 	 * Converts a rectangle into a quadrilateral
 	 *
 	 * @param input Rectangle.
@@ -226,6 +242,46 @@ public class UtilPolygons2D_F64 {
 		for (int i = 0; i < a.size(); i++) {
 			if( a.get(i).distance2(b.get(i)) > tol2 )
 				return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Checks to see if the vertexes of the two polygon's are the same up to the specified tolerance and allows
+	 * for a shift in their order
+	 *
+	 * @param a Polygon
+	 * @param b Polygon
+	 * @param tol tolerance
+	 * @return true if identical up to tolerance or false if not
+	 */
+	public static boolean isEquivalent( Polygon2D_F64 a , Polygon2D_F64 b , double tol ) {
+		if( a.size() != b.size())
+			return false;
+
+		double tol2 = tol*tol;
+
+		// first find two vertexes which are the same
+		Point2D_F64 a0 = a.get(0);
+		int match = -1;
+		for (int i = 0; i < b.size(); i++) {
+			if( a0.distance2(b.get(i)) <= tol2 ) {
+				match = i;
+				break;
+			}
+		}
+
+		if( match < 0 )
+			return false;
+
+		// now go in a circle and see if they all line up
+		for (int i = 1; i < b.size(); i++) {
+			Point2D_F64 ai = a.get(i);
+			Point2D_F64 bi = b.get((match+i)%b.size());
+
+			if( ai.distance2(bi) > tol2 ) {
+				return false;
+			}
 		}
 		return true;
 	}

@@ -54,7 +54,7 @@ public class Polygon2D_F64 implements Serializable {
 	public Polygon2D_F64( double... points ) {
 		if( points.length % 2 == 1 )
 			throw new IllegalArgumentException("Expected an even number");
-		vertexes = new FastQueue<Point2D_F64>(Point2D_F64.class,true);
+		vertexes = new FastQueue<Point2D_F64>(points.length/2,Point2D_F64.class,true);
 		vertexes.growArray(points.length/2);
 		vertexes.size = points.length/2;
 
