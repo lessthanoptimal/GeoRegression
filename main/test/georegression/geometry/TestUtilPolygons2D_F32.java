@@ -195,6 +195,6 @@ public class TestUtilPolygons2D_F32 {
 		Polygon2D_F32 poly2 = new Polygon2D_F32(1,2,3,4,5,6.1f);
 
 		assertTrue(UtilPolygons2D_F32.isIdentical(poly1,poly2,0.11f));
-		assertFalse(UtilPolygons2D_F32.isIdentical(poly1,poly2,0.09f));
+		assertFalse(UtilPolygons2D_F32.isIdentical(poly1, poly2, 0.09f));
 	}
 }

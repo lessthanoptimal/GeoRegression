@@ -38,14 +38,14 @@ public class Polygon2D_F32 implements Serializable {
 	public FastQueue<Point2D_F32> vertexes;
 
 	public Polygon2D_F32( Polygon2D_F32 a ) {
-		vertexes = new FastQueue<Point2D_F32>(Point2D_F32.class,true);
+		vertexes = new FastQueue<Point2D_F32>(a.size(),Point2D_F32.class,true);
 		for (int i = 0; i < a.size(); i++) {
 			vertexes.grow().set(a.get(i));
 		}
 	}
 
 	public Polygon2D_F32( int numVertexes ) {
-		vertexes = new FastQueue<Point2D_F32>(Point2D_F32.class,true);
+		vertexes = new FastQueue<Point2D_F32>(numVertexes, Point2D_F32.class,true);
 
 		vertexes.growArray(numVertexes);
 		vertexes.size = numVertexes;
