@@ -57,6 +57,22 @@ public class Rectangle2D_I32 {
 	public Rectangle2D_I32() {
 	}
 
+	/**
+	 * Makes sure x0,y0 is the lower extent and x1,y1 is the upper extent
+	 */
+	public void enforceExtents() {
+		if( x1 < x0 ) {
+			int tmp = x1;
+			x1 = x0;
+			x0 = tmp;
+		}
+		if( y1 < y0 ) {
+			int tmp = y1;
+			y1 = y0;
+			y0 = tmp;
+		}
+	}
+
 	public int getWidth() {
 		return x1-x0;
 	}

@@ -56,6 +56,22 @@ public class Rectangle2D_F64 implements Serializable {
 	public Rectangle2D_F64() {
 	}
 
+	/**
+	 * Makes sure x0,y0 is the lower extent and x1,y1 is the upper extent
+	 */
+	public void enforceExtents() {
+		if( p1.x < p0.x ) {
+			double tmp = p1.x;
+			p1.x = p0.x;
+			p0.x = tmp;
+		}
+		if( p1.y < p0.y ) {
+			double tmp = p1.y;
+			p1.y = p0.y;
+			p0.y = tmp;
+		}
+	}
+
 	public double getWidth() {
 		return p1.x-p0.x;
 	}
