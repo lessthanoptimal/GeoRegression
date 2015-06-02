@@ -18,7 +18,6 @@
 
 package georegression.geometry;
 
-import georegression.metric.UtilAngle;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
@@ -176,22 +175,32 @@ public class UtilPolygons2D_F64 {
 	 * @return true if CCW and false if CW
 	 */
 	public static boolean isCCW( List<Point2D_F64> polygon ) {
-		double total = 0;
+		// if the cross product of all consecutive triples is positive or negative then it is convex
 
 		final int N = polygon.size();
-		for (int i = 0; i <= N; i++) {
-			Point2D_F64 a = polygon.get(i%N);
-			Point2D_F64 b = polygon.get((i+1)%N);
-			Point2D_F64 c = polygon.get((i+2)%N);
+		int sign = 0;
+		for (int i = 0; i < N; i++) {
+			int j = (i+1)%N;
+			int k = (i+2)%N;
 
-			double angleBA = Math.atan2(a.y-b.y,a.x-b.x);
-			double angleBC = Math.atan2(c.y-b.y,c.x-b.x);
+			Point2D_F64 a = polygon.get(i);
+			Point2D_F64 b = polygon.get(j);
+			Point2D_F64 c = polygon.get(k);
 
-			total += UtilAngle.minus(angleBA, angleBC);
+			double dx0 = a.x-b.x;
+			double dy0 = a.y-b.y;
+
+			double dx1 = c.x-b.x;
+			double dy1 = c.y-b.y;
+
+			double z = dx0 * dy1 - dy0 * dx1;
+			if( z > 0 )
+				sign++;
+			else
+				sign--;
 		}
 
-
-		return total > 0;
+		return sign < 0;
 	}
 
 	/**

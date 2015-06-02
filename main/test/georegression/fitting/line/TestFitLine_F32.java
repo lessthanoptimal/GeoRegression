@@ -86,4 +86,20 @@ public class TestFitLine_F32 {
 		assertEquals(r,found.distance, GrlConstants.FLOAT_TEST_TOL);
 		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.FLOAT_TEST_TOL);
 	}
+
+	/**
+	 * Test case where sum of weight is zero
+	 */
+	@Test
+	public void polar_weighted_zero() {
+		float weights[] = new float[20];
+
+		List<Point2D_F32> pts = new ArrayList<Point2D_F32>();
+		for( int i = 0; i < 20; i++ ) {
+			pts.add( new Point2D_F32());
+		}
+
+		LinePolar2D_F32 found = FitLine_F32.polar(pts,weights,null);
+		assertTrue( null == found);
+	}
 }

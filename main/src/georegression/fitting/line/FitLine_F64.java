@@ -44,7 +44,7 @@ public class FitLine_F64 {
 	 *
 	 * @param points Set of points on the line.
 	 * @param ret Storage for the line.  If null a new line will be declared.
-	 * @return Best fit line.
+	 * @return Best fit line
 	 */
 	public static LinePolar2D_F64 polar( List<Point2D_F64> points , LinePolar2D_F64 ret ) {
 		if( ret == null )
@@ -94,17 +94,21 @@ public class FitLine_F64 {
 	 * @param points Set of points on the line.
 	 * @param weights Weight for each point.  weights[i] >= 0
 	 * @param ret Storage for the line.  If null a new line will be declared.
-	 * @return Best fit line.
+	 * @return Best fit line. or null if sum of weights is zero
 	 */
 	public static LinePolar2D_F64 polar( List<Point2D_F64> points , double weights[] , LinePolar2D_F64 ret ) {
-		if( ret == null )
-			ret = new LinePolar2D_F64();
 
 		final int N = points.size();
 		double totalWeight = 0;
 		for( int i = 0; i < N; i++ ) {
 			totalWeight += weights[i];
 		}
+
+		if( totalWeight == 0 )
+			return null;
+
+		if( ret == null )
+			ret = new LinePolar2D_F64();
 
 		double meanX = 0;
 		double meanY = 0;

@@ -86,4 +86,20 @@ public class TestFitLine_F64 {
 		assertEquals(r,found.distance, GrlConstants.DOUBLE_TEST_TOL);
 		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.DOUBLE_TEST_TOL);
 	}
+
+	/**
+	 * Test case where sum of weight is zero
+	 */
+	@Test
+	public void polar_weighted_zero() {
+		double weights[] = new double[20];
+
+		List<Point2D_F64> pts = new ArrayList<Point2D_F64>();
+		for( int i = 0; i < 20; i++ ) {
+			pts.add( new Point2D_F64());
+		}
+
+		LinePolar2D_F64 found = FitLine_F64.polar(pts,weights,null);
+		assertTrue( null == found);
+	}
 }
