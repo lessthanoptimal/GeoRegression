@@ -173,7 +173,7 @@ public class TestIntersection2D_I32 {
 	}
 
 	@Test
-	public void contains_rect_pt() {
+	public void contains_rectLength_pt() {
 		RectangleLength2D_I32 rect = new RectangleLength2D_I32(-10,-5,5,10);
 
 		assertTrue(Intersection2D_I32.contains(rect,-10,-5));
@@ -183,5 +183,18 @@ public class TestIntersection2D_I32 {
 		assertFalse(Intersection2D_I32.contains(rect,-10,-6));
 		assertFalse(Intersection2D_I32.contains(rect,-5,4));
 		assertFalse(Intersection2D_I32.contains(rect,-6,5));
+	}
+
+	@Test
+	public void contains_rect_pt() {
+		Rectangle2D_I32 rect = new Rectangle2D_I32(-10,-5,5,10);
+
+		assertTrue(Intersection2D_I32.contains(rect,-10,-5));
+		assertTrue(Intersection2D_I32.contains(rect,4,9));
+
+		assertFalse(Intersection2D_I32.contains(rect,-11,-3));
+		assertFalse(Intersection2D_I32.contains(rect,-5,-6));
+		assertFalse(Intersection2D_I32.contains(rect, 5,-3));
+		assertFalse(Intersection2D_I32.contains(rect,-5, 10));
 	}
 }

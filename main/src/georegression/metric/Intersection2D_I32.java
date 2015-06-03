@@ -146,4 +146,16 @@ public class Intersection2D_I32 {
 		return false;
 	}
 
+	/**
+	 * True if the point is contained inside the rectangle
+	 *
+	 * @param a Rectangle
+	 * @param x x-coordinate of point
+	 * @param y y-coordinate of point
+	 * @return true if the point is inside and false it is not
+	 */
+	public static boolean contains( Rectangle2D_I32 a, int x, int y ) {
+		return( x >= a.x0 && y >= a.y0 && x < a.x1 && y < a.y1 );
+	}
+
 }
