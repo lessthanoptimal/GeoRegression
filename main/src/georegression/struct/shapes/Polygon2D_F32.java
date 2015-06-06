@@ -143,4 +143,18 @@ public class Polygon2D_F32 implements Serializable {
 
 		return storage;
 	}
+
+	@Override
+	public String toString() {
+		String out = getClass().getSimpleName()+"{ order "+vertexes.size+" : vertexes [ ";
+
+		for (int i = 0; i < vertexes.size; i++) {
+			Point2D_F32 p = vertexes.get(i);
+			out += p.x+" , "+p.y+" ; ";
+		}
+
+		out += " ] }";
+
+		return out;
+	}
 }
