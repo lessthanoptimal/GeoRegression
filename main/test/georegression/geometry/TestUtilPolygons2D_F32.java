@@ -73,6 +73,36 @@ public class TestUtilPolygons2D_F32 {
 	}
 
 	@Test
+	public void convert_rect_poly() {
+		Rectangle2D_F32 r = new Rectangle2D_F32(1,2,5,6);
+		Polygon2D_F32 p = new Polygon2D_F32(4);
+
+		UtilPolygons2D_F32.convert(r, p);
+
+		assertEquals(1, p.get(0).x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2, p.get(0).y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5, p.get(1).x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2, p.get(1).y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5, p.get(2).x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(6, p.get(2).y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, p.get(3).x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(6, p.get(3).y, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void convert_quad_poly() {
+		Quadrilateral_F32 q = new Quadrilateral_F32(1,2,3,4,5,6,7,8);
+		Polygon2D_F32 p = new Polygon2D_F32(4);
+
+		UtilPolygons2D_F32.convert(q, p);
+
+		assertTrue(p.get(0).distance(q.a)<GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(p.get(1).distance(q.b)<GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(p.get(2).distance(q.c)<GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(p.get(3).distance(q.d)<GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
 	public void convert_poly_quad() {
 		Polygon2D_F32 r = new Polygon2D_F32(1,2, 5,2, 5,6, 1,6);
 		Quadrilateral_F32 q = new Quadrilateral_F32();

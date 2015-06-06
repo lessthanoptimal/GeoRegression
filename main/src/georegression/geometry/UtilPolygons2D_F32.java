@@ -87,6 +87,38 @@ public class UtilPolygons2D_F32 {
 	}
 
 	/**
+	 * Converts a rectangle into a polygon
+	 *
+	 * @param input Rectangle.
+	 * @param output Polygon2D_F32.  Modified.
+	 */
+	public static void convert( Rectangle2D_F32 input , Polygon2D_F32 output ) {
+		if (output.size() != 4)
+			throw new IllegalArgumentException("polygon of order 4 expected");
+
+		output.get(0).set(input.p0.x, input.p0.y);
+		output.get(1).set(input.p1.x, input.p0.y);
+		output.get(2).set(input.p1.x, input.p1.y);
+		output.get(3).set(input.p0.x, input.p1.y);
+	}
+
+	/**
+	 * Converts a quadrilateral into a polygon
+	 *
+	 * @param input Quadrilateral.
+	 * @param output Polygon2D_F32.  Modified.
+	 */
+	public static void convert( Quadrilateral_F32 input , Polygon2D_F32 output ) {
+		if (output.size() != 4)
+			throw new IllegalArgumentException("polygon of order 4 expected");
+
+		output.get(0).set(input.a);
+		output.get(1).set(input.b);
+		output.get(2).set(input.c);
+		output.get(3).set(input.d);
+	}
+
+	/**
 	 * Converts a polygon into a quadrilateral
 	 *
 	 * @param input polygon.
