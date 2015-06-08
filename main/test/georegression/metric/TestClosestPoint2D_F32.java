@@ -19,7 +19,9 @@
 package georegression.metric;
 
 import georegression.fitting.ellipse.ClosestPointEllipseAngle_F32;
+import georegression.geometry.UtilLine2D_F32;
 import georegression.misc.GrlConstants;
+import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
@@ -33,6 +35,17 @@ import static org.junit.Assert.assertEquals;
  * @author Peter Abeles
  */
 public class TestClosestPoint2D_F32 {
+
+	@Test
+	public void closestPoint_general() {
+		LineParametric2D_F32 line = new LineParametric2D_F32( 1, 2, -1, 1 );
+		LineGeneral2D_F32 general = UtilLine2D_F32.convert(line,(LineGeneral2D_F32)null);
+		Point2D_F32 pt = new Point2D_F32( 1, 0 );
+
+		Point2D_F32 found = ClosestPoint2D_F32.closestPoint( general, pt, null );
+		assertEquals( 2, found.getX(), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 1, found.getY(), GrlConstants.FLOAT_TEST_TOL );
+	}
 
 	@Test
 	public void closestPoint_parametric() {

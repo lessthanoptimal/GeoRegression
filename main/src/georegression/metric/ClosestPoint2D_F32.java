@@ -20,6 +20,7 @@ package georegression.metric;
 
 import georegression.fitting.ellipse.ClosestPointEllipseAngle_F32;
 import georegression.misc.GrlConstants;
+import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
@@ -32,6 +33,35 @@ import georegression.struct.shapes.EllipseRotated_F32;
  * @author Peter Abeles
  */
 public class ClosestPoint2D_F32 {
+
+	/**
+	 * <p>
+	 * Finds the closest point on 'line' to the specified point.
+	 * </p>
+	 *
+	 * @param line Line along which the closest point is to be found.
+	 * @param p Point.
+	 * @param output Where the solution is stored.  If null a new instance is created. Modified.
+	 * @return Closest point on the line.
+	 */
+	public static Point2D_F32 closestPoint( LineGeneral2D_F32 line,
+											Point2D_F32 p,
+											Point2D_F32 output ) {
+		if( output == null )
+			output = new Point2D_F32();
+
+		float AA = line.A*line.A;
+		float AB = line.A*line.B;
+		float BB = line.B*line.B;
+
+		output.y = AA*p.y - AB*p.x - line.B*line.C;
+		output.y /= AA+BB;
+
+		output.x = BB*p.x - AB*p.y - line.A*line.C;
+		output.x /= AA+BB;
+
+		return output;
+	}
 
 	/**
 	 * <p>

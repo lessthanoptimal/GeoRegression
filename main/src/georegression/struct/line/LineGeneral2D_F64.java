@@ -24,7 +24,7 @@ import java.io.Serializable;
  * <p>
  * Represents the line using three parameters such that any point on the line obeys the
  * following formula, A*x + B*y + C = 0.  Any 2D line can be represented using this notation.
- * This formulation is also known as standard and implicit.
+ * This formulation is also known as standard and implicit.  The slope is -A/B.
  * </p>
  * <p>
  * If it is said the line is normalized that refers to it being scaled such that A*A + B*B = 1.  To

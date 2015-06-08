@@ -132,6 +132,11 @@ public class Polygon2D_F32 implements Serializable {
 		return UtilPolygons2D_F32.isIdentical(this,a,tol);
 	}
 
+	/**
+	 * Returns the line/edge defined by vertex index and index+1.
+	 * @param index Index of the line
+	 * @return A new instance of the line segment.
+	 */
 	public LineSegment2D_F32 getLine( int index , LineSegment2D_F32 storage ) {
 		if( storage == null )
 			storage = new LineSegment2D_F32();
