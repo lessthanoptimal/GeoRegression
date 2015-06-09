@@ -75,27 +75,27 @@ public class UtilAngle {
 	}
 
 	/**
-	 * Checks to see if it is between -&pi and &pi.
+	 * Checks to see if it is between -&pi; and &pi;.
 	 *
 	 * @param ang Angle being tested
-	 * @return true if it is between -&pi and &pi;
+	 * @return true if it is between -&pi; and &pi;
 	 */
 	public static boolean isStandardDomain( double ang ) {
 		return ( ang <= Math.PI && ang >= -Math.PI );
 	}
 
 	/**
-	 * Checks to see if it is between -&pi/2 and &pi/2.
+	 * Checks to see if it is between -&pi;/2 and &pi;/2.
 	 *
 	 * @param ang Angle being tested
-	 * @return true if it is between -&pi/2 and &pi/2;
+	 * @return true if it is between -&pi;/2 and &pi;/2;
 	 */
 	public static boolean isHalfDomain( double ang ) {
 		return ( ang <= Math.PI/2 && ang >= -Math.PI/2 );
 	}
 
 	/**
-	 * Returns an angle which is equivalent to the one provided, but between (inclusive) -pi and pi.
+	 * Returns an angle which is equivalent to the one provided, but between (inclusive) -&pi; and &pi;.
 	 */
 	public static double bound( double ang ) {
 		ang %= GrlConstants.PI2;

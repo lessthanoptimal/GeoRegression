@@ -177,7 +177,6 @@ public class SePointOps_F32 {
 	 * <br>
 	 * p' = R*p + T
 	 * </p>
-	 * <p/>
 	 * <p>
 	 * Both origPt and tranPt can be the same instance.
 	 * </p>
@@ -206,7 +205,6 @@ public class SePointOps_F32 {
 	 * <br>
 	 * p = R<sup>T</sup>*(p'-T)
 	 * </p>
-	 * <p/>
 	 * <p>
 	 * Both origPt and tranPt can be the same instance.
 	 * </p>

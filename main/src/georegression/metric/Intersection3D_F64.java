@@ -250,9 +250,9 @@ public class Intersection3D_F64 {
 	 * <p>
 	 * Returns true if the point is contained inside the box, with an exclusive upper extent.
 	 * The point is considered to be inside the box if the following test passes:<br>
-	 * box.p0.x <= point.x < box.p1.x<br>
-	 * box.p0.y <= point.y < box.p1.y<br>
-	 * box.p0.z <= point.z < box.p1.z<br>
+	 * box.p0.x &le; point.x < box.p1.x<br>
+	 * box.p0.y &le; point.y < box.p1.y<br>
+	 * box.p0.z &le; point.z < box.p1.z<br>
 	 * </p>
 	 *
 	 * @param box Box
@@ -270,9 +270,9 @@ public class Intersection3D_F64 {
 	 * <p>
 	 * Returns true if the point is contained inside the box, with an inclusive upper extent.
 	 * The point is considered to be inside the box if the following test passes:<br>
-	 * box.p0.x <= point.x <= box.p1.x<br>
-	 * box.p0.y <= point.y <= box.p1.y<br>
-	 * box.p0.z <= point.z <= box.p1.z<br>
+	 * box.p0.x &le; point.x &le; box.p1.x<br>
+	 * box.p0.y &le; point.y &le; box.p1.y<br>
+	 * box.p0.z &le; point.z &le; box.p1.z<br>
 	 * </p>
 	 *
 	 * @param box Box

@@ -55,9 +55,6 @@ public class MotionAffinePoint2D_F64 implements MotionTransformPoint<Affine2D_F6
 		return model;
 	}
 
-	/**
-	 *  @inheritdoc
-	 */
 	@Override
 	public boolean process( List<Point2D_F64> srcPts, List<Point2D_F64> dstPts) {
 		// grow or shrink the matrix sizes

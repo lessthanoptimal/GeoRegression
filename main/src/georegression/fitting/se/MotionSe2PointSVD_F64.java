@@ -35,14 +35,12 @@ import java.util.List;
  * Finds the rigid body motion which minimizes the different between the two sets of associated points in 2D.  The
  * rotation is computed from the SVD of a cross correlation matrix.
  * </p>
- * <p/>
  * <p>
  * The mean square error function that is minimized is:<br>
  * f(p) = (1/N) sum( i=1:N , ||x_i - R(theta)*p_i + T||<sup>2</sup> )<br>
  * where theta is the angle of rotation and T is the translation, x is the set of 'to' points
  * and p is the set of 'from' points.
  * </p>
- * <p/>
  * <p>
  * Based upon the sketch of Arun et al. 1987 provided in: D.W. Eggert, A. Loruso, R.B. Fisher, "Estimating 3-D Rigid Body Transformation:
  * A Comparison of Four Major Algorithms" Machine Vision and Applications 1997

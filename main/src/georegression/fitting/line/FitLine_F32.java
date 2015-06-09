@@ -92,7 +92,7 @@ public class FitLine_F32 {
 	 * </p>
 	 *
 	 * @param points Set of points on the line.
-	 * @param weights Weight for each point.  weights[i] >= 0
+	 * @param weights Weight for each point.  weights[i] &ge; 0
 	 * @param ret Storage for the line.  If null a new line will be declared.
 	 * @return Best fit line. or null if sum of weights is zero
 	 */

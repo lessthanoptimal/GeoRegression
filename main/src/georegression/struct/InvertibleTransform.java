@@ -24,12 +24,10 @@ import java.io.Serializable;
  * <p>
  * Any transform which has an unique inverse. T(u) = v and u = T<sup>-1</sup>(v).
  * </p>
- * <p/>
  * <p>
  * Functions are provided to determining the dimensionality of the transform, inverting the transform,
  * and concating two transforms.
  * </p>
- * <p/>
  * <p>
  * Design Note: A function to apply the transform has not been provided to any
  * data structures (e.g. {@link GeoTuple}).  Instead that has been pushed off onto specialized static
@@ -66,7 +64,6 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 * Computes a transform which is the equivalent to applying 'this' then
 	 * the 'second' transform.
 	 * </p>
-	 * <p/>
 	 * <p>
 	 * For example:<br>
 	 * <br>
@@ -92,7 +89,6 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 * Computes a transform which is the inverse of this transform. The 'this' matrix can be passed
 	 * in as an input.
 	 * </p>
-	 * <p/>
 	 * <p>
 	 * Example:<br>
 	 * Point A = tran(B);<br>

@@ -34,7 +34,7 @@ import java.util.List;
  * Fits an ellipse to a set of points in "closed form" by minimizing algebraic least-squares error.  The method used is
  * described in [1] and is a repartitioning of the solution describe in [2], with the aim of improving numerical
  * stability.  The found ellipse is described using 6 coefficients, as is shown below.
- * F(x,y) = a*x^2 + 2*b*x*y + c*y^2 + 2*d*x + 2*e*y + f = 0 and b^2 - 4*ac < 0
+ * {@code F(x,y) = a*x^2 + 2*b*x*y + c*y^2 + 2*d*x + 2*e*y + f = 0 and b^2 - 4*ac < 0}
  * <p>
  *
  * <p>

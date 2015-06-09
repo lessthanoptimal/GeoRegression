@@ -26,7 +26,6 @@ import georegression.struct.point.Vector2D_F64;
  * Special Euclidean transform that has been parameterized with three parameters:
  * translation (x,y) and rotation (yaw).  First the rotation is applied then the translation.
  * </p>
- * <p/>
  * <p>
  * Note that this data structure does not specify the units or coordinate frames.
  * </p>

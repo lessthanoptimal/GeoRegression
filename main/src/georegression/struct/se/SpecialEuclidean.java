@@ -27,13 +27,12 @@ import java.io.Serializable;
  * Special Euclidean or rigid body motion is a transform that preserves the norm and cross product
  * between any two vectors.
  * </p>
- * <p>
+
  * <UL>
  * <LI> norm: ||se(v)|| = ||v||
  * <LI> cross product: se(u) x se(v) = se(u x v)
  * </UL>
- * where se(.) is a special euclidean transform, and u and v are real vectors of appropriate dimension.
- * </p>
+ * <p>where se(.) is a special euclidean transform, and u and v are real vectors of appropriate dimension.</p>
  *
  * @author Peter Abeles
  */

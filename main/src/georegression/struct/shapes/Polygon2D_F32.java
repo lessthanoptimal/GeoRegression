@@ -102,8 +102,8 @@ public class Polygon2D_F32 implements Serializable {
 	 * Returns true if the point is inside the polygon.  Points along the border are ambiguously considered inside
 	 * or outside.
 	 *
-	 * @see {@link Intersection2D_F32#containConcave(Polygon2D_F32, Point2D_F32)}
-	 * @see {@link Intersection2D_F32#containConcave(Polygon2D_F32, Point2D_F32)}
+	 * @see Intersection2D_F32#containConcave(Polygon2D_F32, Point2D_F32)
+	 * @see Intersection2D_F32#containConcave(Polygon2D_F32, Point2D_F32)
 	 *
 	 * @param p A point
 	 * @return true if inside and false if outside

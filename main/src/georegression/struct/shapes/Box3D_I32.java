@@ -24,7 +24,7 @@ import java.io.Serializable;
 
 /**
  * An axis aligned box in 3D that is specified by two points, p0 and p1, the lower and upper extents of the box.
- * Point p0 is less or equal to point p1, 0.x <= p1.x, p0.y <= p1.y, p0.z <= p1.z.
+ * Point p0 is less or equal to point p1, 0.x &le; p1.x, p0.y &le; p1.y, p0.z &le; p1.z.
  */
 public class Box3D_I32 implements Serializable {
 

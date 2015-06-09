@@ -29,7 +29,7 @@ import java.io.Serializable;
  * </p>
  *
  * <p>
- * R(&theta;) = e<sup>w*&theta</sup><br>
+ * R(&theta;) = e<sup>w*&theta;</sup><br>
  * R(&theta;) = 1 + w*sin(&theta;) + w<sup>2</sup>*(1-cos(&theta;))<br>
  * where &theta; is the angle of rotation, 'w' is a skew symmetric matrix around the axis of rotation.
  * </p>

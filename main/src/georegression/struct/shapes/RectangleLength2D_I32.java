@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 /**
  * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), width, and height.  The three
- * other corners are (x0 + width-1,y0), (x0,y0 + height-1), (x0 + width-1,y0 + height-1).
+ * other corners are {@code (x0 + width-1,y0), (x0,y0 + height-1), (x0 + width-1,y0 + height-1)}.
  */
 public class RectangleLength2D_I32 implements Serializable {
 	/**

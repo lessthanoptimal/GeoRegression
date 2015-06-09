@@ -54,10 +54,7 @@ public class MotionAffinePoint2D_F32 implements MotionTransformPoint<Affine2D_F3
 	public Affine2D_F32 getTransformSrcToDst() {
 		return model;
 	}
-
-	/**
-	 *  @inheritdoc
-	 */
+	
 	@Override
 	public boolean process( List<Point2D_F32> srcPts, List<Point2D_F32> dstPts) {
 		// grow or shrink the matrix sizes
