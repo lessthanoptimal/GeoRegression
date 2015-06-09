@@ -61,6 +61,17 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 		y /= r;
 	}
 
+	/**
+	 * In-place minus operation. this = a - b.
+	 *
+	 * @param a Point
+	 * @param b Point
+	 */
+	public void minus( Point2D_F64 a , Point2D_F64 b ) {
+		x = a.x - b.x;
+		y = a.y - b.y;
+	}
+
 	public String toString() {
 		return "V( " + x + " " + y + " )";
 	}

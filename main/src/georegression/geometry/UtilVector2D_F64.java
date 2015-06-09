@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
 
 /**
@@ -40,5 +41,23 @@ public class UtilVector2D_F64 {
 			value = -1.0;
 
 		return Math.acos( value );
+	}
+
+	/**
+	 * Sets the vector equal to 'a' - 'b'.
+	 *
+	 * @param a point
+	 * @param b point
+	 * @param output (output) optional storage for vector.
+	 * @return Solution
+	 */
+	public static Vector2D_F64 minus( Point2D_F64 a , Point2D_F64 b , Vector2D_F64 output ) {
+		if( output == null )
+			output = new Vector2D_F64();
+
+		output.x = a.x - b.x;
+		output.y = a.y - b.y;
+
+		return output;
 	}
 }

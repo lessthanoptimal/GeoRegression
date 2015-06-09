@@ -30,6 +30,8 @@ Version : 0.8
   * enforceExtents()
 - Intersection2D_I32
   * inside( rect , pt )
+- Math
+  * minus point output vector in 2D
 
 ---------------------------------------------
 Date    : 2014/09/17

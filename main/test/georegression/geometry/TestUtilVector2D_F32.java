@@ -19,6 +19,7 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Vector2D_F32;
 import org.junit.Test;
 
@@ -35,5 +36,17 @@ public class TestUtilVector2D_F32 {
 
 		assertEquals(Math.PI/2.0f,UtilVector2D_F32.acute(a,new Vector2D_F32(0, 1)), GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(Math.PI, UtilVector2D_F32.acute(a,new Vector2D_F32(-1, 0)), GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void minus() {
+
+		Point2D_F32 a = new Point2D_F32(4,9);
+		Point2D_F32 b = new Point2D_F32(1.2f,3.5f);
+
+		Vector2D_F32 out = UtilVector2D_F32.minus(a,b,null);
+
+		assertEquals(a.x-b.x,out.x,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(a.y-b.y,out.y,GrlConstants.FLOAT_TEST_TOL);
 	}
 }

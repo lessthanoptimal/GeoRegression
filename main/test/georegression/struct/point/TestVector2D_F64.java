@@ -29,6 +29,18 @@ import static org.junit.Assert.assertEquals;
 public class TestVector2D_F64 {
 
 	@Test
+	public void minus() {
+		Point2D_F64 a = new Point2D_F64(4,9);
+		Point2D_F64 b = new Point2D_F64(1.2,3.5);
+
+		Vector2D_F64 out = new Vector2D_F64();
+		out.minus(a,b);
+
+		assertEquals(a.x-b.x,out.x,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(a.y-b.y,out.y,GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
 	public void dot() {
 		Vector2D_F64 a = new Vector2D_F64( 1, 2 );
 		Vector2D_F64 b = new Vector2D_F64( 3, 4 );

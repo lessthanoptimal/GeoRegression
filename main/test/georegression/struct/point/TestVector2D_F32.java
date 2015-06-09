@@ -29,6 +29,18 @@ import static org.junit.Assert.assertEquals;
 public class TestVector2D_F32 {
 
 	@Test
+	public void minus() {
+		Point2D_F32 a = new Point2D_F32(4,9);
+		Point2D_F32 b = new Point2D_F32(1.2f,3.5f);
+
+		Vector2D_F32 out = new Vector2D_F32();
+		out.minus(a,b);
+
+		assertEquals(a.x-b.x,out.x,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(a.y-b.y,out.y,GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
 	public void dot() {
 		Vector2D_F32 a = new Vector2D_F32( 1, 2 );
 		Vector2D_F32 b = new Vector2D_F32( 3, 4 );
