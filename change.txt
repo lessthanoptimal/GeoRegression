@@ -16,7 +16,6 @@ Version : 0.8
   * added Polygon2D and point
 - UtilPolygons2D
   * Center for Quadrilateral
-  * reverse order for Polygon2D
   * added vertexAve
   * isConvex()
   * isIdentical()

@@ -234,21 +234,6 @@ public class UtilPolygons2D_F64 {
 	}
 
 	/**
-	 * Reverses the order of points in a polygon.  The first vertex will still be the first vertex
-	 * @param polygon The input polygon whose vertexes are being re-ordered
-	 */
-	public static void reverseOrder( Polygon2D_F64 polygon ) {
-		for (int i = 1; i <= polygon.size()/2; i++) {
-			int j = polygon.size()-i;
-			Point2D_F64 a = polygon.vertexes.data[i];
-			Point2D_F64 b = polygon.vertexes.data[j];
-
-			polygon.vertexes.data[i] = b;
-			polygon.vertexes.data[j] = a;
-		}
-	}
-
-	/**
 	 * Computes the average of all the vertexes
 	 * @param input (input) polygon
 	 * @param average (output) average point
@@ -334,8 +319,8 @@ public class UtilPolygons2D_F64 {
 		int N = a.size();
 		int H = N/2;
 
-		for (int i = 0; i <= H; i++) {
-			int j = (N-i)%N;
+		for (int i = 1; i <= H; i++) {
+			int j = N-i;
 			Point2D_F64 tmp = a.vertexes.data[i];
 			a.vertexes.data[i] = a.vertexes.data[j];
 			a.vertexes.data[j] = tmp;
