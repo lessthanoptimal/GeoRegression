@@ -207,8 +207,6 @@ public class UtilPolygons2D_F32 {
 	 * @return true if CCW and false if CW
 	 */
 	public static boolean isCCW( List<Point2D_F32> polygon ) {
-		// if the cross product of all consecutive triples is positive or negative then it is convex
-
 		final int N = polygon.size();
 		int sign = 0;
 		for (int i = 0; i < N; i++) {
@@ -327,10 +325,20 @@ public class UtilPolygons2D_F32 {
 		return true;
 	}
 
-//	public static boolean isCCW( Point2D_F32 a, Point2D_F32 b , Point2D_F32 c ) {
-//		float angleAB = (float)Math.atan2(b.y-a.y,b.x-a.x);
-//		float angleAC = (float)Math.atan2(c.y-a.y,c.x-a.x);
-//
-//		return UtilAngle.distanceCCW(angleAB,angleAC) < (float)Math.PI;
-//	}
+	/**
+	 * Flips the order of points inside the polygon.  The first index will remain the same will otherwise be reversed
+	 *
+	 * @param a Polygon of order 3 or more.
+	 */
+	public static void flip( Polygon2D_F32 a ) {
+		int N = a.size();
+		int H = N/2;
+
+		for (int i = 0; i <= H; i++) {
+			int j = (N-i)%N;
+			Point2D_F32 tmp = a.vertexes.data[i];
+			a.vertexes.data[i] = a.vertexes.data[j];
+			a.vertexes.data[j] = tmp;
+		}
+	}
 }

@@ -132,6 +132,14 @@ public class Polygon2D_F64 implements Serializable {
 		return UtilPolygons2D_F64.isIdentical(this,a,tol);
 	}
 
+	public boolean isEquivalent( Polygon2D_F64 a , double tol ) {
+		return UtilPolygons2D_F64.isEquivalent(this, a, tol);
+	}
+
+	public void flip() {
+		UtilPolygons2D_F64.flip(this);
+	}
+
 	/**
 	 * Returns the line/edge defined by vertex index and index+1.
 	 * @param index Index of the line

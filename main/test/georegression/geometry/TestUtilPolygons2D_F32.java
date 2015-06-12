@@ -255,4 +255,40 @@ public class TestUtilPolygons2D_F32 {
 			assertTrue(UtilPolygons2D_F32.isEquivalent(poly1,poly3,GrlConstants.FLOAT_TEST_TOL));
 		}
 	}
+
+	@Test
+	public void flip() {
+
+		// less than 3 has undrfined behavior
+
+		Polygon2D_F32 poly = new Polygon2D_F32(3);
+		List<Point2D_F32> orig = new ArrayList<Point2D_F32>();
+		orig.addAll(poly.vertexes.toList());
+
+		UtilPolygons2D_F32.flip(poly);
+		assertTrue(orig.get(0)==poly.get(0));
+		assertTrue(orig.get(1)==poly.get(2));
+		assertTrue(orig.get(2)==poly.get(1));
+
+		poly = new Polygon2D_F32(4);
+		orig.clear();
+		orig.addAll(poly.vertexes.toList());
+
+		UtilPolygons2D_F32.flip(poly);
+		assertTrue(orig.get(0)==poly.get(0));
+		assertTrue(orig.get(1)==poly.get(3));
+		assertTrue(orig.get(2)==poly.get(2));
+		assertTrue(orig.get(3)==poly.get(1));
+
+		poly = new Polygon2D_F32(5);
+		orig.clear();
+		orig.addAll(poly.vertexes.toList());
+
+		UtilPolygons2D_F32.flip(poly);
+		assertTrue(orig.get(0)==poly.get(0));
+		assertTrue(orig.get(1)==poly.get(4));
+		assertTrue(orig.get(2)==poly.get(3));
+		assertTrue(orig.get(3)==poly.get(2));
+		assertTrue(orig.get(4)==poly.get(1));
+	}
 }

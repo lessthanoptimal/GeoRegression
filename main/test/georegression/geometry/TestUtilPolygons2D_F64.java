@@ -255,4 +255,40 @@ public class TestUtilPolygons2D_F64 {
 			assertTrue(UtilPolygons2D_F64.isEquivalent(poly1,poly3,GrlConstants.DOUBLE_TEST_TOL));
 		}
 	}
+
+	@Test
+	public void flip() {
+
+		// less than 3 has undrfined behavior
+
+		Polygon2D_F64 poly = new Polygon2D_F64(3);
+		List<Point2D_F64> orig = new ArrayList<Point2D_F64>();
+		orig.addAll(poly.vertexes.toList());
+
+		UtilPolygons2D_F64.flip(poly);
+		assertTrue(orig.get(0)==poly.get(0));
+		assertTrue(orig.get(1)==poly.get(2));
+		assertTrue(orig.get(2)==poly.get(1));
+
+		poly = new Polygon2D_F64(4);
+		orig.clear();
+		orig.addAll(poly.vertexes.toList());
+
+		UtilPolygons2D_F64.flip(poly);
+		assertTrue(orig.get(0)==poly.get(0));
+		assertTrue(orig.get(1)==poly.get(3));
+		assertTrue(orig.get(2)==poly.get(2));
+		assertTrue(orig.get(3)==poly.get(1));
+
+		poly = new Polygon2D_F64(5);
+		orig.clear();
+		orig.addAll(poly.vertexes.toList());
+
+		UtilPolygons2D_F64.flip(poly);
+		assertTrue(orig.get(0)==poly.get(0));
+		assertTrue(orig.get(1)==poly.get(4));
+		assertTrue(orig.get(2)==poly.get(3));
+		assertTrue(orig.get(3)==poly.get(2));
+		assertTrue(orig.get(4)==poly.get(1));
+	}
 }

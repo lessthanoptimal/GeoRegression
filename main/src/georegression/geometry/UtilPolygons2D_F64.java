@@ -325,10 +325,20 @@ public class UtilPolygons2D_F64 {
 		return true;
 	}
 
-//	public static boolean isCCW( Point2D_F64 a, Point2D_F64 b , Point2D_F64 c ) {
-//		double angleAB = Math.atan2(b.y-a.y,b.x-a.x);
-//		double angleAC = Math.atan2(c.y-a.y,c.x-a.x);
-//
-//		return UtilAngle.distanceCCW(angleAB,angleAC) < Math.PI;
-//	}
+	/**
+	 * Flips the order of points inside the polygon.  The first index will remain the same will otherwise be reversed
+	 *
+	 * @param a Polygon of order 3 or more.
+	 */
+	public static void flip( Polygon2D_F64 a ) {
+		int N = a.size();
+		int H = N/2;
+
+		for (int i = 0; i <= H; i++) {
+			int j = (N-i)%N;
+			Point2D_F64 tmp = a.vertexes.data[i];
+			a.vertexes.data[i] = a.vertexes.data[j];
+			a.vertexes.data[j] = tmp;
+		}
+	}
 }

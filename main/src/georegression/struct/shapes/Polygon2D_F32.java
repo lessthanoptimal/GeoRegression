@@ -132,6 +132,10 @@ public class Polygon2D_F32 implements Serializable {
 		return UtilPolygons2D_F32.isIdentical(this,a,tol);
 	}
 
+	public boolean isEquivalent( Polygon2D_F32 a , float tol ) {
+		return UtilPolygons2D_F32.isEquivalent(this,a,tol);
+	}
+
 	/**
 	 * Returns the line/edge defined by vertex index and index+1.
 	 * @param index Index of the line
