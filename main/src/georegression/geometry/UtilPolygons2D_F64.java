@@ -207,8 +207,6 @@ public class UtilPolygons2D_F64 {
 	 * @return true if CCW and false if CW
 	 */
 	public static boolean isCCW( List<Point2D_F64> polygon ) {
-		// if the cross product of all consecutive triples is positive or negative then it is convex
-
 		final int N = polygon.size();
 		int sign = 0;
 		for (int i = 0; i < N; i++) {

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * @author Peter Abeles
@@ -84,6 +84,33 @@ public class TestUtilPolygons2D_I32 {
 					fail("Failed");
 			}
 		}
+	}
+
+	@Test
+	public void isCCW() {
+		// check convex case
+		List<Point2D_I32> list = new ArrayList<Point2D_I32>();
+		list.add(new Point2D_I32(2, 2));
+		list.add(new Point2D_I32(4, 2));
+		list.add(new Point2D_I32(4, 4));
+		assertTrue(UtilPolygons2D_I32.isCCW(list));
+		assertFalse(UtilPolygons2D_I32.isCCW(reverse(list)));
+
+		// check concave case
+		list.add(new Point2D_I32(2, 4));
+		list.add(new Point2D_I32(3, 3));
+		assertTrue(UtilPolygons2D_I32.isCCW(list));
+		assertFalse(UtilPolygons2D_I32.isCCW(reverse(list)));
+	}
+
+	private static List<Point2D_I32> reverse(List<Point2D_I32> points) {
+		List<Point2D_I32> reverse = new ArrayList<Point2D_I32>();
+
+		for (int i = points.size() - 1; i >= 0; i--) {
+			reverse.add(points.get(i));
+		}
+
+		return reverse;
 	}
 
 }

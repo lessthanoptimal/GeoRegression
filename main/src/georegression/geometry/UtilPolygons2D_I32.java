@@ -73,4 +73,38 @@ public class UtilPolygons2D_I32 {
 
 		UtilPolygons2D_I32.bounding(quad.vertexes.toList(),rectangle);
 	}
+
+	/**
+	 * Returns true if the polygon is ordered in a counter-clockwise order.  This is done by summing up the interior
+	 * angles.
+	 *
+	 * @param polygon List of ordered points which define a polygon
+	 * @return true if CCW and false if CW
+	 */
+	public static boolean isCCW( List<Point2D_I32> polygon ) {
+		final int N = polygon.size();
+		int sign = 0;
+		for (int i = 0; i < N; i++) {
+			int j = (i+1)%N;
+			int k = (i+2)%N;
+
+			Point2D_I32 a = polygon.get(i);
+			Point2D_I32 b = polygon.get(j);
+			Point2D_I32 c = polygon.get(k);
+
+			int dx0 = a.x-b.x;
+			int dy0 = a.y-b.y;
+
+			int dx1 = c.x-b.x;
+			int dy1 = c.y-b.y;
+
+			int z = dx0 * dy1 - dy0 * dx1;
+			if( z > 0 )
+				sign++;
+			else
+				sign--;
+		}
+
+		return sign < 0;
+	}
 }
