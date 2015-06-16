@@ -18,7 +18,6 @@
 
 package georegression.metric;
 
-import georegression.geometry.UtilPolygons2D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.Polygon2D_F32;
@@ -60,11 +59,11 @@ public class TestArea2D_F32 {
 		Polygon2D_F32 q = new Polygon2D_F32(0,0,2,0,2,3,0,3);
 		assertEquals(2*3,Area2D_F32.polygonConvex(q), GrlConstants.FLOAT_TEST_TOL);
 
-		UtilPolygons2D_F32.reverseOrder(t);
-		assertEquals(0.5f*5*3,Area2D_F32.polygonConvex(t), GrlConstants.FLOAT_TEST_TOL);
+		t.flip();
+		assertEquals(0.5f * 5 * 3, Area2D_F32.polygonConvex(t), GrlConstants.FLOAT_TEST_TOL);
 
-		UtilPolygons2D_F32.reverseOrder(q);
-		assertEquals(2*3,Area2D_F32.polygonConvex(q), GrlConstants.FLOAT_TEST_TOL);
+		q.flip();
+		assertEquals(2 * 3, Area2D_F32.polygonConvex(q), GrlConstants.FLOAT_TEST_TOL);
 	}
 
 }

@@ -133,7 +133,11 @@ public class Polygon2D_F32 implements Serializable {
 	}
 
 	public boolean isEquivalent( Polygon2D_F32 a , float tol ) {
-		return UtilPolygons2D_F32.isEquivalent(this,a,tol);
+		return UtilPolygons2D_F32.isEquivalent(this, a, tol);
+	}
+
+	public void flip() {
+		UtilPolygons2D_F32.flip(this);
 	}
 
 	/**

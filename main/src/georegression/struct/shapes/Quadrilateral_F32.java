@@ -82,6 +82,16 @@ public class Quadrilateral_F32 implements Serializable {
 		return Area2D_F32.quadrilateral(this);
 	}
 
+	public Point2D_F32 get( int index ) {
+		switch( index ) {
+			case 0: return a;
+			case 1: return b;
+			case 2: return c;
+			case 3: return d;
+		}
+		throw new IllegalArgumentException("Requested index out of range. "+index);
+	}
+
 	public Point2D_F32 getA() {
 		return a;
 	}

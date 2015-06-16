@@ -26,6 +26,7 @@ Version : 0.8
   * Area convex polygon
 - Quadrilateral
   * isEquals()
+  * get( index )
 - Rectangle2D
   * enforceExtents()
 - Intersection2D_I32

@@ -40,17 +40,17 @@ public class TestUtilPolygons2D_F32 {
 	public void isConvex() {
 		Polygon2D_F32 a = new Polygon2D_F32(0, 0, 5, 5, -5, 5);
 		assertTrue(UtilPolygons2D_F32.isConvex(a));
-		UtilPolygons2D_F32.reverseOrder(a);
+		a.flip();
 		assertTrue(UtilPolygons2D_F32.isConvex(a));
 
 		Polygon2D_F32 b = new Polygon2D_F32(0, 0, 0, 5, -5, 5, -5, 0);
 		assertTrue(UtilPolygons2D_F32.isConvex(b));
-		UtilPolygons2D_F32.reverseOrder(b);
+		b.flip();
 		assertTrue(UtilPolygons2D_F32.isConvex(b));
 
 		Polygon2D_F32 c = new Polygon2D_F32(0, 0, 0, 5, -5, 5, -0.1f, 4.5f);
 		assertFalse(UtilPolygons2D_F32.isConvex(c));
-		UtilPolygons2D_F32.reverseOrder(c);
+		c.flip();
 		assertFalse(UtilPolygons2D_F32.isConvex(c));
 	}
 
@@ -182,31 +182,6 @@ public class TestUtilPolygons2D_F32 {
 		list.add(new Point2D_F32(1.5f, 1.5f));
 		assertTrue(UtilPolygons2D_F32.isCCW(list));
 		assertFalse(UtilPolygons2D_F32.isCCW(reverse(list)));
-	}
-
-	@Test
-	public void reverseOrder() {
-
-		Polygon2D_F32 poly3 = new Polygon2D_F32(3);
-		Polygon2D_F32 poly4 = new Polygon2D_F32(4);
-
-		List<Point2D_F32> orig3 = new ArrayList<Point2D_F32>();
-		List<Point2D_F32> orig4 = new ArrayList<Point2D_F32>();
-
-		orig3.addAll(poly3.vertexes.toList());
-		orig4.addAll(poly4.vertexes.toList());
-
-		UtilPolygons2D_F32.reverseOrder(poly3);
-		UtilPolygons2D_F32.reverseOrder(poly4);
-
-		assertTrue(poly3.get(0) == orig3.get(0));
-		assertTrue(poly3.get(1) == orig3.get(2));
-		assertTrue(poly3.get(2) == orig3.get(1));
-
-		assertTrue(poly4.get(0) == orig4.get(0));
-		assertTrue(poly4.get(1) == orig4.get(3));
-		assertTrue(poly4.get(2) == orig4.get(2));
-		assertTrue(poly4.get(3) == orig4.get(1));
 	}
 
 	@Test
