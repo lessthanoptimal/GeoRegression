@@ -63,8 +63,8 @@ public class Area2D_F64 {
 	public static double polygonConvex( Polygon2D_F64 poly ) {
 		double total = 0;
 
+		Point2D_F64 v0 = poly.get(0);
 		for (int i = 2; i < poly.size(); i++) {
-			Point2D_F64 v0 = poly.get(i-2);
 			Point2D_F64 v1 = poly.get(i-1);
 			Point2D_F64 v2 = poly.get(i);
 

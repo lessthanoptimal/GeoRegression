@@ -59,10 +59,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.containConvex(poly,outside));
 
 		// change the order of the vertexes
-		poly.vertexes.data[0].set(-1, 1);
-		poly.vertexes.data[1].set(1, 1);
-		poly.vertexes.data[2].set(1, -1);
-		poly.vertexes.data[3].set(-1,-1);
+		poly.flip();
 
 		assertFalse(Intersection2D_F64.containConvex(poly,online));
 		assertTrue(Intersection2D_F64.containConvex(poly,inside));
@@ -85,6 +82,19 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(-2,0)));
 		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0,2)));
 		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0,-2)));
+	}
+
+	@Test
+	public void containTriangle() {
+		Point2D_F64 a = new Point2D_F64(1,2);
+		Point2D_F64 b = new Point2D_F64(4,2);
+		Point2D_F64 c = new Point2D_F64(4,5);
+
+		Point2D_F64 inside = new Point2D_F64(3,3);
+		Point2D_F64 outside = new Point2D_F64(-10,2);
+
+		assertTrue(Intersection2D_F64.containTriangle(a,b,c,inside));
+		assertFalse(Intersection2D_F64.containTriangle(a,b,c,outside));
 	}
 
 	@Test

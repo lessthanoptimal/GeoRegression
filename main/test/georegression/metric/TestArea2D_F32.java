@@ -59,11 +59,18 @@ public class TestArea2D_F32 {
 		Polygon2D_F32 q = new Polygon2D_F32(0,0,2,0,2,3,0,3);
 		assertEquals(2*3,Area2D_F32.polygonConvex(q), GrlConstants.FLOAT_TEST_TOL);
 
+		Polygon2D_F32 p = new Polygon2D_F32(0,0,2,0,2,3,1,5,0,3);
+		float pt = Area2D_F32.triangle(p.get(2),p.get(3),p.get(4));
+		assertEquals(2*3+pt,Area2D_F32.polygonConvex(p), GrlConstants.FLOAT_TEST_TOL);
+
 		t.flip();
 		assertEquals(0.5f * 5 * 3, Area2D_F32.polygonConvex(t), GrlConstants.FLOAT_TEST_TOL);
 
 		q.flip();
 		assertEquals(2 * 3, Area2D_F32.polygonConvex(q), GrlConstants.FLOAT_TEST_TOL);
+
+		p.flip();
+		assertEquals(2*3+pt, Area2D_F32.polygonConvex(p), GrlConstants.FLOAT_TEST_TOL);
 	}
 
 }

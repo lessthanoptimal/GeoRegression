@@ -39,8 +39,14 @@ public class Intersection2D_F32 {
 	// todo how are parallel lines handled?
 
 	/**
+	 * <p>
 	 * Checks to see if the point is contained inside the convex polygon.  If the
 	 * point is an the polygon's perimeter it is considered to NOT be inside.
+	 * </p>
+	 *
+	 * <p>
+	 * Clockwise or counter-clockwise order of the polygon does not matter.
+	 * </p>
 	 *
 	 * @param polygon Convex polygon. Not modified.
 	 * @param pt Point. Not modified.
@@ -107,6 +113,33 @@ public class Intersection2D_F32 {
 		}
 
 		return (left % 2 == 1 && right % 2 == 1);
+	}
+
+	/**
+	 * Returns true of the the point is inside the triangle.
+	 *
+	 * This function is simply an unrolled version of {@link #containConcave(Polygon2D_F32, Point2D_F32)}.
+	 *
+	 * @param a vertex in triangle
+	 * @param b vertex in triangle
+	 * @param c vertex in triangle
+	 * @param pt Point which is being tested for containment inside of triangle
+	 * @return true if the point is inside of triangle
+	 */
+	public static boolean containTriangle( Point2D_F32 a , Point2D_F32 b , Point2D_F32 c , Point2D_F32 pt )
+	{
+		boolean ret = false;
+
+		if ( ((a.y>pt.y) != (b.y>pt.y)) && (pt.x < (b.x-a.x) * (pt.y-a.y) / (b.y-a.y) + a.x) )
+			ret = true;
+
+		if ( ((b.y>pt.y) != (c.y>pt.y)) && (pt.x < (c.x-b.x) * (pt.y-b.y) / (c.y-b.y) + b.x) )
+			ret = !ret;
+
+		if ( ((c.y>pt.y) != (a.y>pt.y)) && (pt.x < (a.x-c.x) * (pt.y-c.y) / (a.y-c.y) + c.x) )
+			ret = !ret;
+
+		return ret;
 	}
 
 	/**

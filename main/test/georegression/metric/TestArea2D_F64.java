@@ -59,11 +59,18 @@ public class TestArea2D_F64 {
 		Polygon2D_F64 q = new Polygon2D_F64(0,0,2,0,2,3,0,3);
 		assertEquals(2*3,Area2D_F64.polygonConvex(q), GrlConstants.DOUBLE_TEST_TOL);
 
+		Polygon2D_F64 p = new Polygon2D_F64(0,0,2,0,2,3,1,5,0,3);
+		double pt = Area2D_F64.triangle(p.get(2),p.get(3),p.get(4));
+		assertEquals(2*3+pt,Area2D_F64.polygonConvex(p), GrlConstants.DOUBLE_TEST_TOL);
+
 		t.flip();
 		assertEquals(0.5 * 5 * 3, Area2D_F64.polygonConvex(t), GrlConstants.DOUBLE_TEST_TOL);
 
 		q.flip();
 		assertEquals(2 * 3, Area2D_F64.polygonConvex(q), GrlConstants.DOUBLE_TEST_TOL);
+
+		p.flip();
+		assertEquals(2*3+pt, Area2D_F64.polygonConvex(p), GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 }
