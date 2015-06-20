@@ -19,6 +19,7 @@
 package georegression.struct.shapes;
 
 import georegression.metric.Area2D_F64;
+import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 
 import java.io.Serializable;
@@ -122,6 +123,21 @@ public class Quadrilateral_F64 implements Serializable {
 
 	public void setD(Point2D_F64 d) {
 		this.d = d;
+	}
+
+	public LineSegment2D_F64 getLine( int which , LineSegment2D_F64 storage ) {
+		if( storage == null )
+			storage = new LineSegment2D_F64();
+
+		switch( which ) {
+			case 0: storage.a.set(a);storage.b.set(b);break;
+			case 1: storage.a.set(b);storage.b.set(c);break;
+			case 2: storage.a.set(c);storage.b.set(d);break;
+			case 3: storage.a.set(d);storage.b.set(a);break;
+			default:
+				throw new IllegalArgumentException("Requested index out of range. "+which);
+		}
+		return storage;
 	}
 
 	public void set(Quadrilateral_F64 quad) {

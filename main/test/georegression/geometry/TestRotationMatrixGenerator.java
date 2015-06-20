@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.so.Quaternion_F64;
@@ -85,23 +86,27 @@ public class TestRotationMatrixGenerator {
 	@Test
 	public void matrixToRodrigues_F64() {
 		// create the rotation axis
-//		for( int i = 1; i < 20; i++ ) {
-//			double angle = i * Math.PI / 20;
-//			checkMatrixToRodrigues( new Rodrigues( angle, 0.1, 2, 6 ) );
-//			checkMatrixToRodrigues( new Rodrigues( angle, 1, 0, 0 ) );
-//			checkMatrixToRodrigues( new Rodrigues( angle, 1, 1, 1 ) );
-//			checkMatrixToRodrigues( new Rodrigues( angle, -1, -1, -1 ) );
-//		}
-//
-//		// see how well it handles underflow
-//		checkMatrixToRodrigues( new Rodrigues( 1e-7, -1, -1, -1 ) );
-//
-//		// test known pathological cases
-//		checkMatrixToRodrigues( new Rodrigues( 0, 1, 1, 1 ), new Rodrigues( 0, 1, 0, 0 ) );
-		checkMatrixToRodrigues( new Rodrigues_F64( 1e-4, 1, 1, 1 ), new Rodrigues_F64( 1e-4, 1, 0, 0 ) );
-//		checkMatrixToRodrigues( new Rodrigues( Math.PI/2, 1, 1, 1 ), new Rodrigues( Math.PI/2, 1, 1, 1 ) );
-//		checkMatrixToRodrigues( new Rodrigues( Math.PI, 1, 1, 1 ), new Rodrigues( Math.PI, 1, 1, 1 ) );
-//		checkMatrixToRodrigues( new Rodrigues( -Math.PI, 1, 1, 1 ), new Rodrigues( Math.PI, 1, 1, 1 ) );
+		for( int i = 1; i < 20; i++ ) {
+			double angle = i * Math.PI / 20;
+			checkMatrixToRodrigues( new Rodrigues_F64( angle, 0.1, 2, 6 ) );
+			checkMatrixToRodrigues( new Rodrigues_F64( angle, 1, 0, 0 ) );
+			checkMatrixToRodrigues( new Rodrigues_F64( angle, 1, 1, 1 ) );
+			checkMatrixToRodrigues( new Rodrigues_F64( angle, -1, -1, -1 ) );
+		}
+
+		// see how well it handles underflow
+		checkMatrixToRodrigues( new Rodrigues_F64( 1e-7, -1, -1, -1 ) );
+
+		// test known pathological cases
+		checkMatrixToRodrigues( new Rodrigues_F64( 0, 1, 1, 1 ), new Rodrigues_F64( 0, 1, 0, 0 ) );
+		checkMatrixToRodrigues( new Rodrigues_F64( Math.PI/2, 1, 1, 1 ), new Rodrigues_F64( Math.PI/2, 1, 1, 1 ) );
+		checkMatrixToRodrigues( new Rodrigues_F64( Math.PI, 1, 1, 1 ), new Rodrigues_F64( Math.PI, 1, 1, 1 ) );
+		checkMatrixToRodrigues( new Rodrigues_F64( -Math.PI, 1, 1, 1 ), new Rodrigues_F64( Math.PI, 1, 1, 1 ) );
+
+		// edge case where diagonals sum up to 1
+		checkMatrixToRodrigues( new Rodrigues_F64( Math.PI, 1, 0, 0 ) );
+		checkMatrixToRodrigues( new Rodrigues_F64( Math.PI, 0, 1, 0 ) );
+		checkMatrixToRodrigues( new Rodrigues_F64( Math.PI, 0, 0, 1 ));
 	}
 
 	@Test
@@ -118,7 +123,7 @@ public class TestRotationMatrixGenerator {
 
 		// if the lines are parallel the dot product will be 1 or -1
 		double dot = found.unitAxisRotation.dot( rodInput.unitAxisRotation);
-		assertEquals( 1, Math.abs( dot ), 1e-8 );
+		assertEquals( 1, Math.abs( dot ), GrlConstants.DOUBLE_TEST_TOL );
 
 		// if the rotation vector is in the opposite direction then the found angle will be
 		// the negative of the input.  both are equivalent
@@ -168,7 +173,6 @@ public class TestRotationMatrixGenerator {
 
 		assertEquals(0,found.getTheta(),1e-8);
 	}
-
 
 	@Test
 	public void rotX() {
