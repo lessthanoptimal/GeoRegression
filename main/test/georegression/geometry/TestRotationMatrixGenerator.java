@@ -107,6 +107,13 @@ public class TestRotationMatrixGenerator {
 		checkMatrixToRodrigues( new Rodrigues_F64( Math.PI, 1, 0, 0 ) );
 		checkMatrixToRodrigues( new Rodrigues_F64( Math.PI, 0, 1, 0 ) );
 		checkMatrixToRodrigues( new Rodrigues_F64( Math.PI, 0, 0, 1 ));
+
+		checkMatrixToRodrigues(Math.PI,Math.PI/2,0);
+		checkMatrixToRodrigues(Math.PI,-Math.PI/2,0);
+		checkMatrixToRodrigues(Math.PI,0,Math.PI/2);
+		checkMatrixToRodrigues(Math.PI,0,-Math.PI/2);
+		checkMatrixToRodrigues(0,Math.PI,Math.PI/2);
+		checkMatrixToRodrigues(0,Math.PI,-Math.PI/2);;
 	}
 
 	@Test
@@ -128,6 +135,14 @@ public class TestRotationMatrixGenerator {
 		// if the rotation vector is in the opposite direction then the found angle will be
 		// the negative of the input.  both are equivalent
 		assertEquals( rodInput.theta * dot, found.theta, 1e-8 );
+	}
+
+	private void checkMatrixToRodrigues( double eulerX , double eulerY , double eulerZ ) {
+
+		DenseMatrix64F M = RotationMatrixGenerator.eulerXYZ(eulerX,eulerY,eulerZ,null);
+		Rodrigues_F64 rod = RotationMatrixGenerator.matrixToRodrigues(M, (Rodrigues_F64)null);
+		DenseMatrix64F found = RotationMatrixGenerator.rodriguesToMatrix(rod,null);
+		assertTrue(MatrixFeatures.isIdentical(M,found,1e-6));
 	}
 
 	private void checkMatrixToRodrigues( Rodrigues_F64 input,

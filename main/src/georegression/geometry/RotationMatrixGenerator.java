@@ -179,7 +179,7 @@ public class RotationMatrixGenerator {
 
 		double absDiagSum = Math.abs(diagSum);
 		
-		if( absDiagSum < 1 ) {
+		if( Math.abs(absDiagSum-1) > 10.0*GrlConstants.EPS ) {
 			// if numerically stable use a faster technique
 			rodrigues.theta = Math.acos(diagSum);
 			double bottom = 2.0 * Math.sin(rodrigues.theta);
@@ -195,22 +195,33 @@ public class RotationMatrixGenerator {
 
 			// In theory this might be more stable
 			// rotationAxis( R, rodrigues.unitAxisRotation);
-		} else if( diagSum == -1 ) {
-			// if the diagonal sum exactly equals -1 then that means 1 diagonal was 0 and the other two -1.
-			// which happens when a rotation of PI around one the axises occures
-			rodrigues.theta = Math.PI;
-			rodrigues.unitAxisRotation.set(0,0,0);
-			if( R.get(0,0)>0) {
-				rodrigues.unitAxisRotation.x = 1;
-			} else if( R.get(1,1) > 0 ) {
-				rodrigues.unitAxisRotation.y = 1;
-			} else {
-				rodrigues.unitAxisRotation.z = 1;
-			}
 		} else {
-			// the largest sum of diagonal elements is 3, thus if absDiagSum is more than 1 it must be rounding error
-			rodrigues.theta = 0;
-			rodrigues.unitAxisRotation.set( 1, 0, 0 );
+			// this handles the special case where the bottom is very very small or equal to zero
+			rodrigues.theta = Math.acos(diagSum);
+
+			// compute the value of x,y,z up to a sign ambiguity
+			rodrigues.unitAxisRotation.x = Math.sqrt((R.get(0, 0) + 1) / 2);
+			rodrigues.unitAxisRotation.y = Math.sqrt((R.get(1, 1) + 1) / 2);
+			rodrigues.unitAxisRotation.z = Math.sqrt((R.get(2, 2) + 1) / 2);
+
+			double x = rodrigues.unitAxisRotation.x;
+			double y = rodrigues.unitAxisRotation.y;
+			double z = rodrigues.unitAxisRotation.z;
+
+			if (Math.abs(R.get(1, 0) - 2 * x * y) > GrlConstants.EPS) {
+				x *= -1;
+			}
+			if (Math.abs(R.get(2, 0) - 2 * x * z) > GrlConstants.EPS) {
+				z *= -1;
+			}
+			if (Math.abs(R.get(2,1) - 2 * z * y) > GrlConstants.EPS) {
+				y *= -1;
+				x *= -1;
+			}
+
+			rodrigues.unitAxisRotation.x = x;
+			rodrigues.unitAxisRotation.y = y;
+			rodrigues.unitAxisRotation.z = z;
 		}
 
 		return rodrigues;
@@ -234,7 +245,7 @@ public class RotationMatrixGenerator {
 
 		double absDiagSum = Math.abs(diagSum);
 
-		if( absDiagSum < 1 ) {
+		if( Math.abs(absDiagSum-1) > 10.0*GrlConstants.F_EPS ) {
 			// if numerically stable use a faster technique
 			rodrigues.theta = (float)Math.acos( diagSum );
 			double bottom = 2.0 * Math.sin( rodrigues.theta );
@@ -251,9 +262,32 @@ public class RotationMatrixGenerator {
 			// In theory this might be more stable
 			// rotationAxis( R, rodrigues.unitAxisRotation);
 		} else {
-			// the largest sum of diagonal elements is 3, thus if absDiagSum is more than 1 it must be rounding error
-			rodrigues.theta = 0;
-			rodrigues.unitAxisRotation.set( 1, 0, 0 );
+			// this handles the special case where the bottom is very very small or equal to zero
+			rodrigues.theta = (float)Math.acos(diagSum);
+
+			// compute the value of x,y,z up to a sign ambiguity
+			rodrigues.unitAxisRotation.x = (float)Math.sqrt((R.get(0, 0) + 1) / 2);
+			rodrigues.unitAxisRotation.y = (float)Math.sqrt((R.get(1, 1) + 1) / 2);
+			rodrigues.unitAxisRotation.z = (float)Math.sqrt((R.get(2, 2) + 1) / 2);
+
+			float x = rodrigues.unitAxisRotation.x;
+			float y = rodrigues.unitAxisRotation.y;
+			float z = rodrigues.unitAxisRotation.z;
+
+			if (Math.abs(R.get(1, 0) - 2 * x * y) > GrlConstants.F_EPS) {
+				x *= -1;
+			}
+			if (Math.abs(R.get(2, 0) - 2 * x * z) > GrlConstants.F_EPS) {
+				z *= -1;
+			}
+			if (Math.abs(R.get(2,1) - 2 * z * y) > GrlConstants.F_EPS) {
+				y *= -1;
+				x *= -1;
+			}
+
+			rodrigues.unitAxisRotation.x = x;
+			rodrigues.unitAxisRotation.y = y;
+			rodrigues.unitAxisRotation.z = z;
 		}
 
 		return rodrigues;
