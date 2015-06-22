@@ -33,6 +33,8 @@ Version : 0.8
   * inside( rect , pt )
 - Math
   * minus point output vector in 2D
+- RotationMatrixGenerator
+  * Rotations of PI degrees are now handled correctly
 
 ---------------------------------------------
 Date    : 2014/09/17
