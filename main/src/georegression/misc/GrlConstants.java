@@ -19,6 +19,8 @@
 package georegression.misc;
 
 
+import org.ejml.UtilEjml;
+
 /**
  * Constants used throughout the library.
  *
@@ -27,7 +29,13 @@ package georegression.misc;
 public class GrlConstants {
 
 	public static float F_PI = (float)Math.PI;
+	/**
+	 * Float 2*PI
+	 */
 	public static float F_PI2 = (float)(2.0*Math.PI);
+	/**
+	 * Float PI/2
+	 */
 	public static float F_PId2 = (float)(Math.PI/2.0);
 	public static double PI2 = 2.0*Math.PI;
 	public static double PId2 = Math.PI/2.0;
@@ -39,7 +47,7 @@ public class GrlConstants {
 	public static float FLOAT_TEST_TOL = 1e-4f;
 	public static double DOUBLE_TEST_TOL = 1e-8f;
 
-	public static double F_EPS = 1.19e-17;
-	public static double EPS = 2.22e-16;
+	public static double F_EPS = (float)Math.pow(2,-21);
+	public static double EPS = UtilEjml.EPS;
 
 }

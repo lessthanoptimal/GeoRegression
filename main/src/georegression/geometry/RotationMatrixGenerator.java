@@ -179,7 +179,7 @@ public class RotationMatrixGenerator {
 
 		double absDiagSum = Math.abs(diagSum);
 		
-		if( Math.abs(absDiagSum-1) > 10.0*GrlConstants.EPS ) {
+		if( absDiagSum <= 1.0 && 1.0-absDiagSum > 10.0*GrlConstants.EPS ) {
 			// if numerically stable use a faster technique
 			rodrigues.theta = Math.acos(diagSum);
 			double bottom = 2.0 * Math.sin(rodrigues.theta);
@@ -196,8 +196,14 @@ public class RotationMatrixGenerator {
 			// In theory this might be more stable
 			// rotationAxis( R, rodrigues.unitAxisRotation);
 		} else {
+
 			// this handles the special case where the bottom is very very small or equal to zero
-			rodrigues.theta = Math.acos(diagSum);
+			if( diagSum >= 1.0 )
+				rodrigues.theta = 0;
+			else if( diagSum <= -1.0 )
+				rodrigues.theta = Math.PI;
+			else
+				rodrigues.theta = Math.acos(diagSum);
 
 			// compute the value of x,y,z up to a sign ambiguity
 			rodrigues.unitAxisRotation.x = Math.sqrt((R.get(0, 0) + 1) / 2);
@@ -245,7 +251,7 @@ public class RotationMatrixGenerator {
 
 		double absDiagSum = Math.abs(diagSum);
 
-		if( Math.abs(absDiagSum-1) > 10.0*GrlConstants.F_EPS ) {
+		if( absDiagSum <= 1.0 && 1.0-absDiagSum > 5.0*GrlConstants.EPS ) {
 			// if numerically stable use a faster technique
 			rodrigues.theta = (float)Math.acos( diagSum );
 			double bottom = 2.0 * Math.sin( rodrigues.theta );
@@ -263,7 +269,12 @@ public class RotationMatrixGenerator {
 			// rotationAxis( R, rodrigues.unitAxisRotation);
 		} else {
 			// this handles the special case where the bottom is very very small or equal to zero
-			rodrigues.theta = (float)Math.acos(diagSum);
+			if( diagSum >= 1.0 )
+				rodrigues.theta = 0;
+			else if( diagSum <= -1.0 )
+				rodrigues.theta = GrlConstants.F_PI;
+			else
+				rodrigues.theta = (float)Math.acos(diagSum);
 
 			// compute the value of x,y,z up to a sign ambiguity
 			rodrigues.unitAxisRotation.x = (float)Math.sqrt((R.get(0, 0) + 1) / 2);

@@ -18,10 +18,12 @@
 
 package georegression.geometry;
 
+import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.so.Quaternion_F64;
+import georegression.struct.so.Rodrigues_F32;
 import georegression.struct.so.Rodrigues_F64;
 import org.ejml.UtilEjml;
 import org.ejml.data.DenseMatrix64F;
@@ -32,7 +34,11 @@ import org.junit.Test;
 
 import java.util.Random;
 
+import static georegression.misc.GrlConstants.F_PI;
+import static georegression.misc.GrlConstants.F_PId2;
 import static org.junit.Assert.*;
+
+
 
 
 /**
@@ -50,12 +56,18 @@ public class TestRotationMatrixGenerator {
 
 		DenseMatrix64F rod = RotationMatrixGenerator.rodriguesToMatrix( r, null );
 
-		assertTrue( MatrixFeatures.isIdentical( rotZ, rod, 1e-8 ) );
+		assertTrue( MatrixFeatures.isIdentical( rotZ, rod, GrlConstants.DOUBLE_TEST_TOL ) );
 	}
 
 	@Test
 	public void rodriguesF32_to_Matrix() {
-		fail("implement");
+		DenseMatrix64F rotZ = RotationMatrixGenerator.rotZ( 0.5, null );
+
+		Rodrigues_F32 r = new Rodrigues_F32( 0.5f, 0, 0, 1 );
+
+		DenseMatrix64F rod = RotationMatrixGenerator.rodriguesToMatrix( r, null );
+
+		assertTrue( MatrixFeatures.isIdentical( rotZ, rod, GrlConstants.FLOAT_TEST_TOL ) );
 	}
 
 	@Test
@@ -118,7 +130,29 @@ public class TestRotationMatrixGenerator {
 
 	@Test
 	public void matrixToRodrigues_F32() {
-		fail("implement");
+		// create the rotation axis
+		for( int i = 1; i < 20; i++ ) {
+			float angle = i * F_PI / 20;
+			checkMatrixToRodrigues( new Rodrigues_F32( angle, 0.1f, 2, 6 ) );
+			checkMatrixToRodrigues( new Rodrigues_F32( angle, 1, 0, 0 ) );
+			checkMatrixToRodrigues( new Rodrigues_F32( angle, 1, 1, 1 ) );
+			checkMatrixToRodrigues( new Rodrigues_F32( angle, -1, -1, -1 ) );
+		}
+
+		// see how well it handles underflow
+		checkMatrixToRodrigues( new Rodrigues_F64( 1e-7, -1, -1, -1 ) );
+
+		// test known pathological cases
+		checkMatrixToRodrigues( new Rodrigues_F32( 0, 1, 1, 1 ), new Rodrigues_F32( 0, 1, 0, 0 ) );
+		checkMatrixToRodrigues( new Rodrigues_F32( F_PId2, 1, 1, 1 ), new Rodrigues_F32( F_PId2, 1, 1, 1 ) );
+		checkMatrixToRodrigues( new Rodrigues_F32( F_PI, 1, 1, 1 ), new Rodrigues_F32( F_PI, 1, 1, 1 ) );
+		checkMatrixToRodrigues( new Rodrigues_F32( -F_PI, 1, 1, 1 ), new Rodrigues_F32( F_PI, 1, 1, 1 ) );
+
+		// edge case where diagonals sum up to 1
+		checkMatrixToRodrigues( new Rodrigues_F32( F_PI, 1, 0, 0 ) );
+		checkMatrixToRodrigues( new Rodrigues_F32( F_PI, 0, 1, 0 ) );
+		checkMatrixToRodrigues( new Rodrigues_F32( F_PI, 0, 0, 1 ));
+
 	}
 
 	private void checkMatrixToRodrigues( Rodrigues_F64 rodInput ) {
@@ -134,7 +168,23 @@ public class TestRotationMatrixGenerator {
 
 		// if the rotation vector is in the opposite direction then the found angle will be
 		// the negative of the input.  both are equivalent
-		assertEquals( rodInput.theta * dot, found.theta, 1e-8 );
+		assertTrue(UtilAngle.dist(rodInput.theta * dot, found.theta) <= GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	private void checkMatrixToRodrigues( Rodrigues_F32 rodInput ) {
+		// create the matrix using rodrigues
+		DenseMatrix64F rod = RotationMatrixGenerator.rodriguesToMatrix( rodInput, null );
+
+		// see if the vectors are the same
+		Rodrigues_F32 found = RotationMatrixGenerator.matrixToRodrigues( rod, (Rodrigues_F32)null );
+
+		// if the lines are parallel the dot product will be 1 or -1
+		float dot = found.unitAxisRotation.dot( rodInput.unitAxisRotation);
+		assertEquals( 1, (float)Math.abs( dot ), GrlConstants.FLOAT_TEST_TOL );
+
+		// if the rotation vector is in the opposite direction then the found angle will be
+		// the negative of the input.  both are equivalent
+		assertTrue(UtilAngle.dist(rodInput.theta * dot, found.theta) <= GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	private void checkMatrixToRodrigues( double eulerX , double eulerY , double eulerZ ) {
@@ -155,11 +205,28 @@ public class TestRotationMatrixGenerator {
 		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( rod, (Rodrigues_F64)null );
 
 		// if the lines are parallel the dot product will be 1 or -1
-		assertEquals( 1, Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), 1e-8 );
+		assertEquals( 1, Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), GrlConstants.DOUBLE_TEST_TOL );
 
 		// if the rotation vector is in the opposite direction then the found angle will be
 		// the negative of the input.  both are equivalent
-		assertEquals( expected.theta, found.theta, 1e-7 );
+		assertEquals( expected.theta, found.theta, 10.0*GrlConstants.DOUBLE_TEST_TOL );
+	}
+
+	private void checkMatrixToRodrigues( Rodrigues_F32 input,
+										 Rodrigues_F32 expected ) {
+
+		// create the matrix using rodrigues
+		DenseMatrix64F rod = RotationMatrixGenerator.rodriguesToMatrix( input, null );
+
+		// see if the vectors are the same
+		Rodrigues_F32 found = RotationMatrixGenerator.matrixToRodrigues( rod, (Rodrigues_F32)null );
+
+		// if the lines are parallel the dot product will be 1 or -1
+		assertEquals( 1, Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), GrlConstants.FLOAT_TEST_TOL );
+
+		// if the rotation vector is in the opposite direction then the found angle will be
+		// the negative of the input.  both are equivalent
+		assertEquals( expected.theta, found.theta, 10.0f*GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	/**
@@ -186,7 +253,7 @@ public class TestRotationMatrixGenerator {
 
 		Rodrigues_F64 found = RotationMatrixGenerator.matrixToRodrigues( R, (Rodrigues_F64)null );
 
-		assertEquals(0,found.getTheta(),1e-8);
+		assertEquals(0,found.getTheta(),5e-7);
 	}
 
 	@Test
