@@ -140,6 +140,21 @@ public class Quadrilateral_F64 implements Serializable {
 		return storage;
 	}
 
+	public double getSideLength( int which ) {
+		return Math.sqrt(getSideLength2(which));
+	}
+
+	public double getSideLength2( int which ) {
+		switch( which ) {
+			case 0: return a.distance2(b);
+			case 1: return b.distance2(c);
+			case 2: return c.distance2(d);
+			case 3: return d.distance2(a);
+			default:
+				throw new IllegalArgumentException("Requested index out of range. "+which);
+		}
+	}
+
 	public void set(Quadrilateral_F64 quad) {
 		this.a.set(quad.a);
 		this.b.set(quad.b);
