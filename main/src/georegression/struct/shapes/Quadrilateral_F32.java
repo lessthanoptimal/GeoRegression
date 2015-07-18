@@ -125,6 +125,36 @@ public class Quadrilateral_F32 implements Serializable {
 		this.d = d;
 	}
 
+	public LineSegment2D_F32 getLine( int which , LineSegment2D_F32 storage ) {
+		if( storage == null )
+			storage = new LineSegment2D_F32();
+
+		switch( which ) {
+			case 0: storage.a.set(a);storage.b.set(b);break;
+			case 1: storage.a.set(b);storage.b.set(c);break;
+			case 2: storage.a.set(c);storage.b.set(d);break;
+			case 3: storage.a.set(d);storage.b.set(a);break;
+			default:
+				throw new IllegalArgumentException("Requested index out of range. "+which);
+		}
+		return storage;
+	}
+
+	public float getSideLength( int which ) {
+		return (float)Math.sqrt(getSideLength2(which));
+	}
+
+	public float getSideLength2( int which ) {
+		switch( which ) {
+			case 0: return a.distance2(b);
+			case 1: return b.distance2(c);
+			case 2: return c.distance2(d);
+			case 3: return d.distance2(a);
+			default:
+				throw new IllegalArgumentException("Requested index out of range. "+which);
+		}
+	}
+
 	public void set(Quadrilateral_F32 quad) {
 		this.a.set(quad.a);
 		this.b.set(quad.b);
