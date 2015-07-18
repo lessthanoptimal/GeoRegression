@@ -120,7 +120,7 @@ public class Rodrigues_F64 implements Serializable {
 	@Override
 	public String toString() {
 		return getClass().getSimpleName()+
-				" v{ "+unitAxisRotation.x+" , "+unitAxisRotation.x+" , "+unitAxisRotation.x+" } theta = "+
+				" v{ "+unitAxisRotation.x+" , "+unitAxisRotation.y+" , "+unitAxisRotation.z+" } theta = "+
 				theta;
 	}
 }
