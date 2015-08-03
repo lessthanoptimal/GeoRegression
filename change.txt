@@ -31,6 +31,8 @@ Version : 0.8
   * enforceExtents()
 - Intersection2D_I32
   * inside( rect , pt )
+- Intersection2D_F64
+  * intersectionArea( Rectangle2D_F64 a , Rectangle2D_F64 b )
 - Math
   * minus point output vector in 2D
 - RotationMatrixGenerator

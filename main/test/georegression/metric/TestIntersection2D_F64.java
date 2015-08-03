@@ -74,14 +74,14 @@ public class TestIntersection2D_F64 {
 		poly.vertexes.data[2].set(1, 1);
 		poly.vertexes.data[3].set(-1, 1);
 
-		assertTrue(Intersection2D_F64.containConcave(poly, new Point2D_F64(0,0)));
+		assertTrue(Intersection2D_F64.containConcave(poly, new Point2D_F64(0, 0)));
 
 		// perimeter cases intentionally not handled here
 
-		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(2,0)));
-		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(-2,0)));
-		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0,2)));
-		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0,-2)));
+		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(2, 0)));
+		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(-2, 0)));
+		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0, 2)));
+		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0, -2)));
 	}
 
 	@Test
@@ -93,8 +93,8 @@ public class TestIntersection2D_F64 {
 		Point2D_F64 inside = new Point2D_F64(3,3);
 		Point2D_F64 outside = new Point2D_F64(-10,2);
 
-		assertTrue(Intersection2D_F64.containTriangle(a,b,c,inside));
-		assertFalse(Intersection2D_F64.containTriangle(a,b,c,outside));
+		assertTrue(Intersection2D_F64.containTriangle(a, b, c, inside));
+		assertFalse(Intersection2D_F64.containTriangle(a, b, c, outside));
 	}
 
 	@Test
@@ -114,28 +114,28 @@ public class TestIntersection2D_F64 {
 
 		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(2,0)));
 		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(-2,0)));
-		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0,2)));
-		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0,-2)));
+		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0, 2)));
+		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0, -2)));
 	}
 	
 	@Test
 	public void intersection_ls_to_ls() {
 		// check positive, none pathological cases
-		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 2 ), new LineSegment2D_F64( 2, 0, 2, 3 ), new Point2D_F64( 2, 2 ) );
-		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 0 ), new LineSegment2D_F64( 0, 0, 2, 2 ), new Point2D_F64( 1, 1 ) );
+		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 3), new Point2D_F64(2, 2));
+		checkIntersection(new LineSegment2D_F64(0, 2, 2, 0), new LineSegment2D_F64(0, 0, 2, 2), new Point2D_F64(1, 1));
 
 		// check boundary conditions
-		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 2 ), new LineSegment2D_F64( 0, 0, 0, 2 ), new Point2D_F64( 0, 2 ) );
-		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 2 ), new LineSegment2D_F64( 2, 0, 2, 2 ), new Point2D_F64( 2, 2 ) );
-		checkIntersection( new LineSegment2D_F64( 1, 0, 1, 2 ), new LineSegment2D_F64( 0, 0, 2, 0 ), new Point2D_F64( 1, 0 ) );
+		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 2), new Point2D_F64(0, 2));
+		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 2), new Point2D_F64(2, 2));
+		checkIntersection(new LineSegment2D_F64(1, 0, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), new Point2D_F64(1, 0));
 
 		// check negative
-		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 2 ), new LineSegment2D_F64( 0, 0, 0, 1.9 ), null );
-		checkIntersection( new LineSegment2D_F64( 0, 2, 2, 2 ), new LineSegment2D_F64( 2, 0, 2, 1.9 ), null );
-		checkIntersection( new LineSegment2D_F64( 1, 0.1, 1, 2 ), new LineSegment2D_F64( 0, 0, 2, 0 ), null );
+		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 1.9), null);
+		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 1.9), null);
+		checkIntersection(new LineSegment2D_F64(1, 0.1, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), null);
 
 		// check parallel closestPoint
-		checkIntersection( new LineSegment2D_F64( 0, 2, 0, 5 ), new LineSegment2D_F64( 0, 1, 0, 3 ), null );
+		checkIntersection(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, 1, 0, 3), null);
 	}
 
 	public void checkIntersection( LineSegment2D_F64 a, LineSegment2D_F64 b, Point2D_F64 expected ) {
@@ -259,9 +259,9 @@ public class TestIntersection2D_F64 {
 		a = new LineGeneral2D_F64(1,2,3);
 		b = new LineGeneral2D_F64(1,2,0.5);
 
-		Intersection2D_F64.intersection(a,b,found);
+		Intersection2D_F64.intersection(a, b, found);
 		assertEquals(0,found.z,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0,a.A*found.x+a.B*found.y+a.C*found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, a.A * found.x + a.B * found.y + a.C * found.z, GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 	@Test
@@ -299,10 +299,10 @@ public class TestIntersection2D_F64 {
 		// edge cases
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(0,0,0,0),false);
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(100,120,100,120),false);
-		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(-10,0,0,120),false);
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(-10, 0, 0, 120), false);
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(100,0,105,120),false);
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(0,-10,100,0),false);
-		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(0,120,100,125),false);
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(0, 120, 100, 125), false);
 	}
 
 	private void check( Rectangle2D_F64 a , Rectangle2D_F64 b , boolean expected ) {
@@ -365,12 +365,12 @@ public class TestIntersection2D_F64 {
 		assertTrue(Intersection2D_F64.contains(rect,-6.001,4.99));
 
 		assertTrue(Intersection2D_F64.contains(rect,-5.99,4));
-		assertTrue(Intersection2D_F64.contains(rect,-10,4.001));
+		assertTrue(Intersection2D_F64.contains(rect, -10, 4.001));
 
-		assertFalse(Intersection2D_F64.contains(rect,-11,-5));
-		assertFalse(Intersection2D_F64.contains(rect,-10,-6));
-		assertFalse(Intersection2D_F64.contains(rect,-5,4));
-		assertFalse(Intersection2D_F64.contains(rect,-6,5));
+		assertFalse(Intersection2D_F64.contains(rect, -11, -5));
+		assertFalse(Intersection2D_F64.contains(rect, -10, -6));
+		assertFalse(Intersection2D_F64.contains(rect, -5, 4));
+		assertFalse(Intersection2D_F64.contains(rect, -6, 5));
 	}
 
 	@Test
@@ -396,18 +396,18 @@ public class TestIntersection2D_F64 {
 	public void contains_rect_pt() {
 		Rectangle2D_F64 rect = new Rectangle2D_F64(-10,-5,-5,5);
 
-		assertTrue(Intersection2D_F64.contains(rect,-10,-5));
-		assertTrue(Intersection2D_F64.contains(rect,-6,4));
-		assertTrue(Intersection2D_F64.contains(rect,-9.9,-4.99));
-		assertTrue(Intersection2D_F64.contains(rect,-6.001,4.99));
+		assertTrue(Intersection2D_F64.contains(rect, -10, -5));
+		assertTrue(Intersection2D_F64.contains(rect, -6, 4));
+		assertTrue(Intersection2D_F64.contains(rect, -9.9, -4.99));
+		assertTrue(Intersection2D_F64.contains(rect, -6.001, 4.99));
 
-		assertTrue(Intersection2D_F64.contains(rect,-5.99,4));
-		assertTrue(Intersection2D_F64.contains(rect,-10,4.001));
+		assertTrue(Intersection2D_F64.contains(rect, -5.99, 4));
+		assertTrue(Intersection2D_F64.contains(rect, -10, 4.001));
 
-		assertFalse(Intersection2D_F64.contains(rect,-11,-5));
-		assertFalse(Intersection2D_F64.contains(rect,-10,-6));
-		assertFalse(Intersection2D_F64.contains(rect,-5,4));
-		assertFalse(Intersection2D_F64.contains(rect,-6,5));
+		assertFalse(Intersection2D_F64.contains(rect, -11, -5));
+		assertFalse(Intersection2D_F64.contains(rect, -10, -6));
+		assertFalse(Intersection2D_F64.contains(rect, -5, 4));
+		assertFalse(Intersection2D_F64.contains(rect, -6, 5));
 	}
 
 	@Test
@@ -428,4 +428,34 @@ public class TestIntersection2D_F64 {
 		assertTrue(Intersection2D_F64.contains2(rect, -5, 4));
 		assertTrue(Intersection2D_F64.contains2(rect, -6, 5));
 	}
+
+	@Test
+	public void intersectionArea_rect_rect() {
+		// check several positive cases
+		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(0,0,100,120), 100*120);
+		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(10,12,99,119), 89*107);
+		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(50,50,200,200), 50*70 );
+		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(-10,-10,10,10), 10*10 );
+		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(90,-10,105,1), 10*1 );
+		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(90,5,105,105), 10*100 );
+
+		// negative cases
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(200, 200, 300, 305), 0);
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(-200, -200, -10, -10), 0);
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(0, -20, 100, -5), 0);
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(0, 125, 100, 130), 0);
+
+		// edge cases
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(0, 0, 0, 0), 0);
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(100, 120, 100, 120), 0);
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(-10, 0, 0, 120), 0);
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(100, 0, 105, 120), 0);
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(0, -10, 100, 0), 0);
+		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(0, 120, 100, 125), 0);
+	}
+
+	private void check( Rectangle2D_F64 a , Rectangle2D_F64 b , double expected ) {
+		assertEquals(expected,Intersection2D_F64.intersectionArea(a,b),GrlConstants.DOUBLE_TEST_TOL);
+	}
+
 }

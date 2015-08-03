@@ -462,4 +462,23 @@ public class Intersection2D_F64 {
 
 		return true;
 	}
+
+	/**
+	 * Returns the area of the intersection of two rectangles.
+	 *
+	 * @param a Rectangle
+	 * @param b Rectangle
+	 * @return area of intersection
+	 */
+	public static double intersectionArea( Rectangle2D_F64 a , Rectangle2D_F64 b ) {
+		if( !intersects(a,b) )
+			return 0;
+
+		double x0 = Math.max(a.p0.x,b.p0.x);
+		double x1 = Math.min(a.p1.x,b.p1.x);
+		double y0 = Math.max(a.p0.y,b.p0.y);
+		double y1 = Math.min(a.p1.y,b.p1.y);
+
+		return (x1-x0)*(y1-y0);
+	}
 }
