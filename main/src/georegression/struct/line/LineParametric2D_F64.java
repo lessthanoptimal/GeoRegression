@@ -47,8 +47,8 @@ public class LineParametric2D_F64 implements Serializable {
 	}
 
 	public LineParametric2D_F64( Point2D_F64 p, Vector2D_F64 slope ) {
-		setPoint( p );
-		setSlope( slope );
+		setPoint(p);
+		setSlope(slope);
 	}
 
 	public LineParametric2D_F64() {
@@ -134,5 +134,10 @@ public class LineParametric2D_F64 implements Serializable {
 
 	public LineParametric2D_F64 copy() {
 		return new LineParametric2D_F64( p, slope );
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+" P( "+p.x+" "+p.y+" ) Slope( "+slope.x+" "+slope.y+" )";
 	}
 }

@@ -132,7 +132,7 @@ public class LineParametric3D_F32 implements Serializable {
 	}
 
 	public final float getSlopeZ() {
-		return slope.y;
+		return slope.z;
 	}
 
 	public final float getX() {
@@ -144,7 +144,7 @@ public class LineParametric3D_F32 implements Serializable {
 	}
 
 	public final float getZ() {
-		return p.y;
+		return p.z;
 	}
 
 	public void set( float x_0, float y_0, float z_0,
@@ -170,6 +170,7 @@ public class LineParametric3D_F32 implements Serializable {
 		return new LineParametric3D_F32( p, slope );
 	}
 
+	@Override
 	public String toString() {
 		return getClass().getSimpleName()+" P( "+p.x+" "+p.y+" "+p.z+" ) Slope( "+slope.x+" "+slope.y+" "+slope.z+" )";
 	}
