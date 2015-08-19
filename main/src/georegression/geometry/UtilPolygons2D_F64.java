@@ -326,4 +326,34 @@ public class UtilPolygons2D_F64 {
 			a.vertexes.data[j] = tmp;
 		}
 	}
+
+	/**
+	 * Shifts all the vertexes in the polygon up one element.  Wraps around at the end
+	 * @param a Polygon
+	 */
+	public static void shiftUp( Polygon2D_F64 a ) {
+		final int N = a.size();
+
+		Point2D_F64 first = a.get(0);
+
+		for (int i = 0; i < N-1; i++ ) {
+			a.vertexes.data[i] = a.vertexes.data[i+1];
+		}
+		a.vertexes.data[N-1] = first;
+	}
+
+	/**
+	 * Shifts all the vertexes in the polygon up one element.  Wraps around at the end
+	 * @param a Polygon
+	 */
+	public static void shiftDown( Polygon2D_F64 a ) {
+		final int N = a.size();
+
+		Point2D_F64 last = a.get(N-1);
+
+		for (int i = N-1; i > 0; i-- ) {
+			a.vertexes.data[i] = a.vertexes.data[i-1];
+		}
+		a.vertexes.data[0] = last;
+	}
 }

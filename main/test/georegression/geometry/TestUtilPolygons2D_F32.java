@@ -96,10 +96,10 @@ public class TestUtilPolygons2D_F32 {
 
 		UtilPolygons2D_F32.convert(q, p);
 
-		assertTrue(p.get(0).distance(q.a)<GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(p.get(1).distance(q.b)<GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(p.get(2).distance(q.c)<GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(p.get(3).distance(q.d)<GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(p.get(0).distance(q.a) < GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(p.get(1).distance(q.b) < GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(p.get(2).distance(q.c) < GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(p.get(3).distance(q.d) < GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -265,5 +265,35 @@ public class TestUtilPolygons2D_F32 {
 		assertTrue(orig.get(2)==poly.get(3));
 		assertTrue(orig.get(3)==poly.get(2));
 		assertTrue(orig.get(4)==poly.get(1));
+	}
+
+	@Test
+	public void shiftUp() {
+		for (int i = 1; i <= 5; i++) {
+			Polygon2D_F32 poly = new Polygon2D_F32(i);
+			List<Point2D_F32> orig = new ArrayList<Point2D_F32>();
+			orig.addAll(poly.vertexes.toList());
+
+			UtilPolygons2D_F32.shiftUp(poly);
+			for (int j = 0; j < i-1; j++) {
+				assertTrue(orig.get(j+1) == poly.get(j));
+			}
+			assertTrue(orig.get(0) == poly.get(i-1));
+		}
+	}
+
+	@Test
+	public void shiftDown() {
+		for (int i = 1; i <= 5; i++) {
+			Polygon2D_F32 poly = new Polygon2D_F32(i);
+			List<Point2D_F32> orig = new ArrayList<Point2D_F32>();
+			orig.addAll(poly.vertexes.toList());
+
+			UtilPolygons2D_F32.shiftDown(poly);
+			for (int j = 1; j < i; j++) {
+				assertTrue(orig.get(j-1) == poly.get(j));
+			}
+			assertTrue(orig.get(i-1) == poly.get(0));
+		}
 	}
 }
