@@ -46,7 +46,7 @@ public class TestGeoTuple2D_F32 {
 		Dummy c = a.plus(b);
 
 		assertEquals(1,a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,a.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2, a.y, GrlConstants.FLOAT_TEST_TOL);
 
 		assertEquals(5,c.x, GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(7,c.y, GrlConstants.FLOAT_TEST_TOL);
@@ -79,10 +79,26 @@ public class TestGeoTuple2D_F32 {
 		Dummy b = a.times(2.5f);
 
 		assertEquals(1,a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,a.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2, a.y, GrlConstants.FLOAT_TEST_TOL);
 
 		assertEquals(2.5f,b.x, GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(5,b.y, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void distance_two() {
+		Dummy a = new Dummy(1,2);
+
+		assertEquals(0,a.distance(1,2), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(Math.sqrt(1+4),a.distance(2,4), GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void distance2_two() {
+		Dummy a = new Dummy(1,2);
+
+		assertEquals(0,a.distance2(1,2), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1+4,a.distance2(2, 4), GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	public static class Dummy extends GeoTuple2D_F32<Dummy> {

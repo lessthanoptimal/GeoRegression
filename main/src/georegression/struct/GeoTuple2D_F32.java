@@ -130,6 +130,32 @@ public abstract class GeoTuple2D_F32<T extends GeoTuple2D_F32> extends GeoTuple_
 		return ret;
 	}
 
+	/**
+	 * Euclidean distance from the point
+	 * @param x x-coordinate
+	 * @param y y-coordinate
+	 * @return distance
+	 */
+	public float distance( float x , float y ) {
+		float dx = x - this.x;
+		float dy = y - this.y;
+
+		return (float)Math.sqrt(dx*dx + dy*dy);
+	}
+
+	/**
+	 * Euclidean squared distance from the point
+	 * @param x x-coordinate
+	 * @param y y-coordinate
+	 * @return distance squared
+	 */
+	public float distance2( float x , float y ) {
+		float dx = x - this.x;
+		float dy = y - this.y;
+
+		return dx*dx + dy*dy;
+	}
+
 	@Override
 	public float distance( T t ) {
 		float dx = t.x - x;
