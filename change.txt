@@ -1,7 +1,7 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2014/
+Date    : 2015/
 Version : 0.8
 
 - Fixed issue with UtilAngle.distanceCW and distanceCCW
@@ -33,6 +33,7 @@ Version : 0.8
   * inside( rect , pt )
 - Intersection2D_F64
   * intersectionArea( Rectangle2D_F64 a , Rectangle2D_F64 b )
+  * contains quadrilateral and a point
 - Math
   * minus point output vector in 2D
 - RotationMatrixGenerator

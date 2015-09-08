@@ -26,6 +26,7 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.shapes.Polygon2D_F64;
+import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
 import georegression.transform.se.SePointOps_F64;
@@ -82,6 +83,24 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(-2, 0)));
 		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0, 2)));
 		assertFalse(Intersection2D_F64.containConcave(poly, new Point2D_F64(0, -2)));
+	}
+
+	@Test
+	public void contains_quadrilateral() {
+		Quadrilateral_F64 quad = new Quadrilateral_F64();
+		quad.a.set(-1, -1);
+		quad.b.set(1, -1);
+		quad.c.set(1, 1);
+		quad.d.set(-1, 1);
+
+		assertTrue(Intersection2D_F64.contains(quad, new Point2D_F64(0, 0)));
+
+		// perimeter cases intentionally not handled here
+
+		assertFalse(Intersection2D_F64.contains(quad, new Point2D_F64(2, 0)));
+		assertFalse(Intersection2D_F64.contains(quad, new Point2D_F64(-2, 0)));
+		assertFalse(Intersection2D_F64.contains(quad, new Point2D_F64(0, 2)));
+		assertFalse(Intersection2D_F64.contains(quad, new Point2D_F64(0, -2)));
 	}
 
 	@Test

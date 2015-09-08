@@ -24,6 +24,7 @@ import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.shapes.Polygon2D_F32;
+import georegression.struct.shapes.Quadrilateral_F32;
 import georegression.struct.shapes.Rectangle2D_F32;
 import georegression.struct.shapes.RectangleLength2D_F32;
 
@@ -113,6 +114,19 @@ public class Intersection2D_F32 {
 		}
 
 		return (left % 2 == 1 && right % 2 == 1);
+	}
+
+	/**
+	 * True if the point is contained inside the quadrilateral.
+	 *
+	 * @param quad quadrilateral
+	 * @param pt point
+	 * @return true if the point is inside and false if it is not.
+	 */
+	public static boolean contains( Quadrilateral_F32 quad , Point2D_F32 pt ) {
+		return containTriangle(quad.a, quad.b, quad.d, pt) ||
+				containTriangle(quad.b, quad.c, quad.d, pt);
+
 	}
 
 	/**
