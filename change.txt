@@ -1,7 +1,7 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2015/
+Date    : 2015/09/18
 Version : 0.8
 
 - Fixed issue with UtilAngle.distanceCW and distanceCCW
