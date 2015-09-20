@@ -54,6 +54,10 @@ subprojects {
         testCompile group: 'junit', name: 'junit', version: '4.11'
     }
 
+    test {
+        ignoreFailures true
+    }
+
     jar {
         manifest { // the manifest of the default jar is of type OsgiManifest
             instruction 'Bundle-Vendor', 'GeoRegression'

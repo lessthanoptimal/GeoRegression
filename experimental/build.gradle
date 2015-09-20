@@ -1,5 +1,6 @@
 dependencies {
     compile project(':georegression')
+    testCompile project(':georegression').sourceSets.test.output
 }
 
 idea {
