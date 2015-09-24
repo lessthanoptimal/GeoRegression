@@ -1,6 +1,13 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2015
+Version : 0.9
+
+- UtilPolygons2D
+  * Added convexHull()
+
+---------------------------------------------
 Date    : 2015/09/18
 Version : 0.8
 

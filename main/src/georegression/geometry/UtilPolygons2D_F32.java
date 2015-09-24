@@ -61,6 +61,8 @@ public class UtilPolygons2D_F32 {
 			float z = dx0 * dy1 - dy0 * dx1;
 			if( z > 0 )
 				numPositive++;
+			// z can be zero if there are duplicate points.
+			// not sure if it should throw an exception if its "bad" or not
 		}
 
 		return( numPositive == 0 || numPositive == N );
@@ -233,6 +235,10 @@ public class UtilPolygons2D_F32 {
 		return sign < 0;
 	}
 
+	public static boolean isCCW( Polygon2D_F32 polygon ) {
+		return isCCW(polygon.vertexes.toList());
+	}
+
 	/**
 	 * Computes the average of all the vertexes
 	 * @param input (input) polygon
@@ -355,5 +361,14 @@ public class UtilPolygons2D_F32 {
 			a.vertexes.data[i] = a.vertexes.data[i-1];
 		}
 		a.vertexes.data[0] = last;
+	}
+
+	/**
+	 *
+	 * @param points
+	 * @param hull
+	 */
+	public static void convexHull( List<Point2D_F32> points , Polygon2D_F32 hull ) {
+
 	}
 }

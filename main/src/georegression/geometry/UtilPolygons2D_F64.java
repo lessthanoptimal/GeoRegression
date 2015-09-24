@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.geometry.algs.AndrewMonotoneConvexHull_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
@@ -61,6 +62,8 @@ public class UtilPolygons2D_F64 {
 			double z = dx0 * dy1 - dy0 * dx1;
 			if( z > 0 )
 				numPositive++;
+			// z can be zero if there are duplicate points.
+			// not sure if it should throw an exception if its "bad" or not
 		}
 
 		return( numPositive == 0 || numPositive == N );
@@ -233,6 +236,10 @@ public class UtilPolygons2D_F64 {
 		return sign < 0;
 	}
 
+	public static boolean isCCW( Polygon2D_F64 polygon ) {
+		return isCCW(polygon.vertexes.toList());
+	}
+
 	/**
 	 * Computes the average of all the vertexes
 	 * @param input (input) polygon
@@ -355,5 +362,27 @@ public class UtilPolygons2D_F64 {
 			a.vertexes.data[i] = a.vertexes.data[i-1];
 		}
 		a.vertexes.data[0] = last;
+	}
+
+	/**
+	 * Computes the convex hull of the set of points.
+	 *
+	 * <p>
+	 * NOTE: This method declares a temporary array.  If you want to avoid that invoke {@link AndrewMonotoneConvexHull_F64}
+	 * directly.
+	 * </p>
+	 *
+	 * @param points (Input) Set of points.
+	 * @param hull (output) storage for convex hull.  Will be in counter-clockwise order
+	 */
+	public static void convexHull( List<Point2D_F64> points , Polygon2D_F64 hull ) {
+		Point2D_F64[] array = new Point2D_F64[points.size()];
+
+		for (int i = 0; i < points.size(); i++) {
+			array[i] = points.get(i);
+		}
+
+		AndrewMonotoneConvexHull_F64 andrew = new AndrewMonotoneConvexHull_F64();
+		andrew.process(array,array.length,hull);
 	}
 }
