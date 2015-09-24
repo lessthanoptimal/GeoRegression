@@ -52,7 +52,18 @@ public class Area2D_F32 {
 	 * @return area
 	 */
 	public static float quadrilateral( Quadrilateral_F32 quad ) {
-		return triangle(quad.a,quad.b,quad.d) + triangle(quad.b,quad.c,quad.d);
+		float bx = quad.b.x-quad.a.x;
+		float by = quad.b.y-quad.a.y;
+		float cx = quad.c.x-quad.a.x;
+		float cy = quad.c.y-quad.a.y;
+		float dx = quad.d.x-quad.a.x;
+		float dy = quad.d.y-quad.a.y;
+
+		if( (bx * cy - by * cx >= 0) == (cx * dy - cy * dx >= 0)) {
+			return triangle(quad.a,quad.b,quad.c) + triangle(quad.a,quad.c,quad.d);
+		} else {
+			return triangle(quad.a,quad.b,quad.d) + triangle(quad.b,quad.c,quad.d);
+		}
 	}
 
 	/**

@@ -6,6 +6,8 @@ Version : 0.9
 
 - UtilPolygons2D
   * Added convexHull()
+- Area2D
+  * Fixed concave Quadrilateral case
 
 ---------------------------------------------
 Date    : 2015/09/18

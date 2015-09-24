@@ -49,6 +49,20 @@ public class TestArea2D_F32 {
 		Quadrilateral_F32 q = new Quadrilateral_F32(0,0,2,0,2,3,0,3);
 
 		assertEquals(2*3,Area2D_F32.quadrilateral(q), GrlConstants.FLOAT_TEST_TOL);
+
+		// see if it can handle the convex case
+		q = new Quadrilateral_F32(0,0,2,0,1,1,0,4);
+
+		float expected = Area2D_F32.triangle(q.a,q.b,q.c) + Area2D_F32.triangle(q.a,q.c,q.d);
+
+		for (int i = 0; i < 4; i++) {
+			assertEquals(expected,Area2D_F32.quadrilateral(q), GrlConstants.FLOAT_TEST_TOL);
+			Point2D_F32 tmp = q.a;
+			q.a = q.b;
+			q.b = q.c;
+			q.c = q.d;
+			q.d = tmp;
+		}
 	}
 
 	@Test

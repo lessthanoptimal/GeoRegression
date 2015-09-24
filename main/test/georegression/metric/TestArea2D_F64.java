@@ -49,6 +49,20 @@ public class TestArea2D_F64 {
 		Quadrilateral_F64 q = new Quadrilateral_F64(0,0,2,0,2,3,0,3);
 
 		assertEquals(2*3,Area2D_F64.quadrilateral(q), GrlConstants.DOUBLE_TEST_TOL);
+
+		// see if it can handle the convex case
+		q = new Quadrilateral_F64(0,0,2,0,1,1,0,4);
+
+		double expected = Area2D_F64.triangle(q.a,q.b,q.c) + Area2D_F64.triangle(q.a,q.c,q.d);
+
+		for (int i = 0; i < 4; i++) {
+			assertEquals(expected,Area2D_F64.quadrilateral(q), GrlConstants.DOUBLE_TEST_TOL);
+			Point2D_F64 tmp = q.a;
+			q.a = q.b;
+			q.b = q.c;
+			q.c = q.d;
+			q.d = tmp;
+		}
 	}
 
 	@Test

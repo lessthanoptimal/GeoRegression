@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.geometry.algs.AndrewMonotoneConvexHull_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.Polygon2D_F32;
 import georegression.struct.shapes.Quadrilateral_F32;
@@ -364,11 +365,24 @@ public class UtilPolygons2D_F32 {
 	}
 
 	/**
+	 * Computes the convex hull of the set of points.
 	 *
-	 * @param points
-	 * @param hull
+	 * <p>
+	 * NOTE: This method declares a temporary array.  If you want to avoid that invoke {@link AndrewMonotoneConvexHull_F32}
+	 * directly.
+	 * </p>
+	 *
+	 * @param points (Input) Set of points.
+	 * @param hull (output) storage for convex hull.  Will be in counter-clockwise order
 	 */
 	public static void convexHull( List<Point2D_F32> points , Polygon2D_F32 hull ) {
+		Point2D_F32[] array = new Point2D_F32[points.size()];
 
+		for (int i = 0; i < points.size(); i++) {
+			array[i] = points.get(i);
+		}
+
+		AndrewMonotoneConvexHull_F32 andrew = new AndrewMonotoneConvexHull_F32();
+		andrew.process(array,array.length,hull);
 	}
 }

@@ -296,4 +296,9 @@ public class TestUtilPolygons2D_F32 {
 			assertTrue(orig.get(i-1) == poly.get(0));
 		}
 	}
+
+	@Test
+	public void convexHull() {
+		fail("implement");
+	}
 }
