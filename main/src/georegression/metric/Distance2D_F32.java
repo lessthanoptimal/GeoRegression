@@ -251,7 +251,7 @@ public class Distance2D_F32 {
 	 * @param p The point. Not modified.
 	 * @return Euclidean distance of the closest point on the line to the specified point.
 	 */
-	public static float distanceSignedNorm( LineGeneral2D_F32 line , Point2D_F32 p ) {
-		return (line.A*p.x + line.B*p.y + line.C) /( line.A*line.A + line.B*line.B );
+	public static float distanceNorm(LineGeneral2D_F32 line, Point2D_F32 p) {
+		return (float)Math.abs(line.A*p.x + line.B*p.y + line.C);
 	}
 }

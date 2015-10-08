@@ -251,7 +251,7 @@ public class Distance2D_F64 {
 	 * @param p The point. Not modified.
 	 * @return Euclidean distance of the closest point on the line to the specified point.
 	 */
-	public static double distanceSignedNorm( LineGeneral2D_F64 line , Point2D_F64 p ) {
-		return (line.A*p.x + line.B*p.y + line.C) /( line.A*line.A + line.B*line.B );
+	public static double distanceNorm(LineGeneral2D_F64 line, Point2D_F64 p) {
+		return Math.abs(line.A*p.x + line.B*p.y + line.C);
 	}
 }

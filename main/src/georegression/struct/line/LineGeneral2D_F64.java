@@ -94,7 +94,9 @@ public class LineGeneral2D_F64 implements Serializable {
 	}
 
 	/**
-	 * Returns the result of A*x + B*y + C.
+	 * Returns the result of A*x + B*y + C.  If the line is normalized then this is also the signed distance
+	 * away from the line.
+	 *
 	 * @param x x-coordinate of a point
 	 * @param y y-coordinate of a point
 	 * @return result of line equation

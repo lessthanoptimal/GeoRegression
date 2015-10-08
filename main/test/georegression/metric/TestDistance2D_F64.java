@@ -82,19 +82,20 @@ public class TestDistance2D_F64 {
 	}
 
 	@Test
-	public void distance_generalSignedNorm_line() {
+	public void distance_generalNorm_line() {
 		// easier to cherry pick points in parametric notation
 		LineParametric2D_F64 parametric = new LineParametric2D_F64( -2, 0, 1, 1 );
 		// convert into general format
 		LineGeneral2D_F64 general = UtilLine2D_F64.convert(parametric,(LineGeneral2D_F64)null);
 		general.normalize();
 
-		double found = Distance2D_F64.distanceSignedNorm(general, new Point2D_F64(4, -2));
+		// test a point and its reflection.  Should be same distance and positive
+		double found = Distance2D_F64.distanceNorm(general, new Point2D_F64(4, -2));
 		double expected = (double) UtilTrig_F64.distance( 0, 2, 4, -2 );
-		assertEquals(-expected, found, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected, found, GrlConstants.DOUBLE_TEST_TOL);
 
-		// the reflection should be positive
-		found = Distance2D_F64.distanceSignedNorm(general, new Point2D_F64(-4, 6));
+		// the reflection should also be positive
+		found = Distance2D_F64.distanceNorm(general, new Point2D_F64(-4, 6));
 		assertEquals(expected, found, GrlConstants.DOUBLE_TEST_TOL);
 	}
 
