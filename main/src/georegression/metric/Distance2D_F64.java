@@ -187,7 +187,7 @@ public class Distance2D_F64 {
 		seg.a = quad.c;seg.b = quad.d;
 		a = Math.min(a,distanceSq(seg,p));
 		seg.a = quad.d;seg.b = quad.a;
-		return Math.min(a,distanceSq(seg,p));
+		return Math.min(a, distanceSq(seg, p));
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class Distance2D_F64 {
 	 * @return Distance squared apart
 	 */
 	public static double distance( Polygon2D_F64 poly , Point2D_F64 p ) {
-		return Math.sqrt(distanceSq(poly,p,null));
+		return Math.sqrt(distanceSq(poly, p, null));
 	}
 
 	/**
@@ -238,6 +238,20 @@ public class Distance2D_F64 {
 	 * @return Euclidean distance of the closest point on the line to the specified point.
 	 */
 	public static double distance( LineGeneral2D_F64 line , Point2D_F64 p ) {
-		return (Math.abs(line.A*p.x + line.B*p.y + line.C) / Math.sqrt( line.A*line.A + line.B*line.B ));
+		return Math.abs(line.A*p.x + line.B*p.y + line.C) / Math.sqrt( line.A*line.A + line.B*line.B );
+	}
+
+	/**
+	 * <p>
+	 * Returns the signed Euclidean distance of the closest point on the line to the specified point.
+	 * The line is assumed be normalized.  See {@link LineGeneral2D_F64} for details on normalization.
+	 * </p>
+	 *
+	 * @param line A normalized line. Not modified.
+	 * @param p The point. Not modified.
+	 * @return Euclidean distance of the closest point on the line to the specified point.
+	 */
+	public static double distanceSignedNorm( LineGeneral2D_F64 line , Point2D_F64 p ) {
+		return (line.A*p.x + line.B*p.y + line.C) /( line.A*line.A + line.B*line.B );
 	}
 }

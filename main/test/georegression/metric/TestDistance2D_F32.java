@@ -82,6 +82,23 @@ public class TestDistance2D_F32 {
 	}
 
 	@Test
+	public void distance_generalSignedNorm_line() {
+		// easier to cherry pick points in parametric notation
+		LineParametric2D_F32 parametric = new LineParametric2D_F32( -2, 0, 1, 1 );
+		// convert into general format
+		LineGeneral2D_F32 general = UtilLine2D_F32.convert(parametric,(LineGeneral2D_F32)null);
+		general.normalize();
+
+		float found = Distance2D_F32.distanceSignedNorm(general, new Point2D_F32(4, -2));
+		float expected = (float) UtilTrig_F32.distance( 0, 2, 4, -2 );
+		assertEquals(-expected, found, GrlConstants.FLOAT_TEST_TOL);
+
+		// the reflection should be positive
+		found = Distance2D_F32.distanceSignedNorm(general, new Point2D_F32(-4, 6));
+		assertEquals(expected, found, GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
 	public void distance_lineSegment_lineSegment() {
 		// case of no intersection but one of the lines intersects inside
 		LineSegment2D_F32 a = new LineSegment2D_F32(0,0,10,0);

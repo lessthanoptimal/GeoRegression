@@ -8,6 +8,9 @@ Version : 0.9
   * Added convexHull()
 - Area2D
   * Fixed concave Quadrilateral case
+- Distance2D
+  * Added signed distance from point for normalized GeneralizedLine2D
+
 
 ---------------------------------------------
 Date    : 2015/09/18

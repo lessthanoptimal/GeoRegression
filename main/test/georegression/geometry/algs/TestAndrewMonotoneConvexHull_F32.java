@@ -121,7 +121,7 @@ public class TestAndrewMonotoneConvexHull_F32 {
 		AndrewMonotoneConvexHull_F32 alg = new AndrewMonotoneConvexHull_F32();
 		Polygon2D_F32 output = new Polygon2D_F32();
 
-		for (int numPoints = 3; numPoints < 20; numPoints++) {
+		for (int numPoints = 10; numPoints < 20; numPoints++) {
 
 			Point2D_F32 data[] = new Point2D_F32[numPoints];
 			for (int i = 0; i < numPoints; i++) {
@@ -141,6 +141,39 @@ public class TestAndrewMonotoneConvexHull_F32 {
 			for (int i = 0; i < numPoints; i++) {
 				Intersection2D_F32.containConvex(output,data[i]);
 			}
+		}
+	}
+
+	@Test
+	public void grid() {
+
+		AndrewMonotoneConvexHull_F32 alg = new AndrewMonotoneConvexHull_F32();
+		Polygon2D_F32 output = new Polygon2D_F32();
+
+		int numRows = 5;
+		int numCols = 6;
+
+		float w = 1.2f;
+
+		Point2D_F32 points[] = new Point2D_F32[numRows*numCols];
+
+		for (int row = 0; row < numRows; row++) {
+			float y = row*w - 2.1f;
+			for (int col = 0; col < numCols; col++) {
+				float x = col*w - 2.6f;
+
+				points[ row*numCols + col ] = new Point2D_F32(x,y);
+			}
+		}
+		alg.process(points,points.length,output);
+
+		// check some of the properties of the convex hull
+		assertTrue(output.size() <= points.length);
+		assertTrue(output.isCCW());
+		assertTrue(output.isConvex());
+
+		for (int i = 0; i < points.length; i++) {
+			Intersection2D_F32.containConvex(output,points[i]);
 		}
 	}
 
