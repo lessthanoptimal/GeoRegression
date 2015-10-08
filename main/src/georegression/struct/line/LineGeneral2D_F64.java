@@ -45,9 +45,7 @@ public class LineGeneral2D_F64 implements Serializable {
 	}
 
 	public LineGeneral2D_F64(LineGeneral2D_F64 line ) {
-		A = line.A;
-		B = line.B;
-		C = line.C;
+		set(line);
 	}
 
 	public LineGeneral2D_F64() {
@@ -63,6 +61,12 @@ public class LineGeneral2D_F64 implements Serializable {
 
 	public double getC() {
 		return C;
+	}
+
+	public void set( LineGeneral2D_F64 original ) {
+		this.A = original.A;
+		this.B = original.B;
+		this.C = original.C;
 	}
 
 	public void set(double a, double b, double c) {
