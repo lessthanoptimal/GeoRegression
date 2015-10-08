@@ -6,6 +6,8 @@ Version : 0.9
 
 - UtilPolygons2D
   * Added convexHull()
+- UtilLine2D
+  * 2 point line segment into line general
 - Area2D
   * Fixed concave Quadrilateral case
 - Distance2D

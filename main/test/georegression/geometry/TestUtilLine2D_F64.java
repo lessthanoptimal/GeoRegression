@@ -89,11 +89,27 @@ public class TestUtilLine2D_F64 {
 	@Test
 	public void convert_segment_general() {
 		LineSegment2D_F64 segment = new LineSegment2D_F64();
+
+		segment.a.set(0,2);
+		segment.b.set(5,6);
+
 		LineGeneral2D_F64 general = UtilLine2D_F64.convert(segment,(LineGeneral2D_F64)null);
 
 		// see if the two end points lie on the general line
 		assertEquals(0,general.evaluate(segment.a.x,segment.a.y), GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(0,general.evaluate(segment.b.x,segment.b.y), GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void convert_segment2pt_general() {
+		Point2D_F64 a = new Point2D_F64(2,6);
+		Point2D_F64 b = new Point2D_F64(7,8);
+
+		LineGeneral2D_F64 general = UtilLine2D_F64.convert(a,b,(LineGeneral2D_F64)null);
+
+		// see if the two end points lie on the general line
+		assertEquals(0,general.evaluate(a.x,a.y), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,general.evaluate(b.x,b.y), GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 	@Test

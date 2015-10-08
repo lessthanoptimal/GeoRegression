@@ -162,12 +162,25 @@ public class UtilLine2D_F64 {
 	 */
 	public static LineGeneral2D_F64 convert( LineSegment2D_F64 src , LineGeneral2D_F64 ret )
 	{
+		return convert(src.a,src.b,ret);
+	}
+
+	/**
+	 * Converts a line segment into a general line. Line segment is defined by two points.
+	 *
+	 * @param a (Input) End point of line segment
+	 * @param b (Input) End point of line segment
+	 * @param ret (output) line in general notation. If null a new instance will be created.
+	 * @return Line in general notation
+	 */
+	public static LineGeneral2D_F64 convert( Point2D_F64 a , Point2D_F64 b , LineGeneral2D_F64 ret )
+	{
 		if( ret == null )
 			ret = new LineGeneral2D_F64();
 
-		ret.A = src.a.y - src.b.y;
-		ret.B = src.b.x - src.a.x;
-		ret.C = -(ret.A*src.a.x + ret.B*src.a.y);
+		ret.A = a.y - b.y;
+		ret.B = b.x - a.x;
+		ret.C = -(ret.A*a.x + ret.B*a.y);
 
 		return ret;
 	}
