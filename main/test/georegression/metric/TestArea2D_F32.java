@@ -65,26 +65,51 @@ public class TestArea2D_F32 {
 		}
 	}
 
+	/**
+	 * Test convex caused for the simple polygon area algorithm
+	 */
 	@Test
-	public void polygonConvex() {
+	public void polygonSimple_convex() {
 		Polygon2D_F32 t = new Polygon2D_F32(0,0,5,0,0,3);
-		assertEquals(0.5f*5*3,Area2D_F32.polygonConvex(t), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.5f*5*3,Area2D_F32.polygonSimple(t), GrlConstants.FLOAT_TEST_TOL);
 
 		Polygon2D_F32 q = new Polygon2D_F32(0,0,2,0,2,3,0,3);
-		assertEquals(2*3,Area2D_F32.polygonConvex(q), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2*3,Area2D_F32.polygonSimple(q), GrlConstants.FLOAT_TEST_TOL);
 
 		Polygon2D_F32 p = new Polygon2D_F32(0,0,2,0,2,3,1,5,0,3);
 		float pt = Area2D_F32.triangle(p.get(2),p.get(3),p.get(4));
-		assertEquals(2*3+pt,Area2D_F32.polygonConvex(p), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2*3+pt,Area2D_F32.polygonSimple(p), GrlConstants.FLOAT_TEST_TOL);
 
 		t.flip();
-		assertEquals(0.5f * 5 * 3, Area2D_F32.polygonConvex(t), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.5f * 5 * 3, Area2D_F32.polygonSimple(t), GrlConstants.FLOAT_TEST_TOL);
 
 		q.flip();
-		assertEquals(2 * 3, Area2D_F32.polygonConvex(q), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2 * 3, Area2D_F32.polygonSimple(q), GrlConstants.FLOAT_TEST_TOL);
 
 		p.flip();
-		assertEquals(2*3+pt, Area2D_F32.polygonConvex(p), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2*3+pt, Area2D_F32.polygonSimple(p), GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	/**
+	 * Test concave caused for the simple polygon area algorithm
+	 */
+	@Test
+	public void polygonSimple_concave() {
+		Polygon2D_F32 t_inside = new Polygon2D_F32(5,5, 3,3, 0,5);
+		float area_inside = Area2D_F32.polygonSimple(t_inside);
+
+		Polygon2D_F32 t = new Polygon2D_F32(0,0, 5,0, 5,5, 3,3, 0,5);
+		assertEquals(5*5-area_inside,Area2D_F32.polygonSimple(t), GrlConstants.FLOAT_TEST_TOL);
+
+		float area_q_full = Area2D_F32.polygonSimple(new Polygon2D_F32(0,3, 5,5, 5,0));
+		Polygon2D_F32 q = new Polygon2D_F32(0,3, 5,5,  3,3, 5,0);
+		assertEquals(area_q_full - area_inside,Area2D_F32.polygonSimple(q), GrlConstants.FLOAT_TEST_TOL);
+
+		t.flip();
+		assertEquals(5*5-area_inside, Area2D_F32.polygonSimple(t), GrlConstants.FLOAT_TEST_TOL);
+
+		q.flip();
+		assertEquals(area_q_full - area_inside, Area2D_F32.polygonSimple(q), GrlConstants.FLOAT_TEST_TOL);
 	}
 
 }

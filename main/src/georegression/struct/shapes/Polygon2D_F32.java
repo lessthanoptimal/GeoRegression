@@ -91,11 +91,12 @@ public class Polygon2D_F32 implements Serializable {
 		return new Polygon2D_F32(this);
 	}
 
-	public float area() {
-		if( isConvex())
-			return Area2D_F32.polygonConvex(this);
-		else
-			throw new RuntimeException("Doesn't support area for concave polygons yet");
+	/**
+	 * Returns the area for simply polygons.  Non-self intersecting convex or concave.
+	 * @return area
+	 */
+	public float areaSimple() {
+		return Area2D_F32.polygonSimple(this);
 	}
 
 	/**

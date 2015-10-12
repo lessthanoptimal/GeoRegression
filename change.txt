@@ -10,6 +10,8 @@ Version : 0.9
   * 2 point line segment into line general
 - Area2D
   * Fixed concave Quadrilateral case
+  * removed polygon convex
+  * added polygon simple
 - Distance2D
   * Added distance from point for normalized GeneralizedLine2D
 

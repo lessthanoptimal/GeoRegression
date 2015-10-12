@@ -67,21 +67,29 @@ public class Area2D_F64 {
 	}
 
 	/**
-	 * Area of a convex polygon
-	 * @param poly Convex polygon
+	 * Area of a simple polygon.  Meaning it can be concave or convex, but can't have self intersections
+	 * @param poly Simple polygon
 	 * @return area
 	 */
-	public static double polygonConvex( Polygon2D_F64 poly ) {
+	public static double polygonSimple( Polygon2D_F64 poly ) {
 		double total = 0;
 
 		Point2D_F64 v0 = poly.get(0);
+		Point2D_F64 v1 = poly.get(1);
 		for (int i = 2; i < poly.size(); i++) {
-			Point2D_F64 v1 = poly.get(i-1);
 			Point2D_F64 v2 = poly.get(i);
 
-			total += triangle(v0,v1,v2);
+			total += v1.x*( v2.y - v0.y);
+
+			v0 = v1; v1 = v2;
 		}
 
-		return total;
+		Point2D_F64 v2 = poly.get(0);
+		total += v1.x*( v2.y - v0.y);
+		v0 = v1; v1 = v2;
+		v2 = poly.get(1);
+		total += v1.x*( v2.y - v0.y);
+
+		return Math.abs(total/2.0);
 	}
 }
