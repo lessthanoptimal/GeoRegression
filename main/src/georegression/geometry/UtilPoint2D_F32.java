@@ -92,6 +92,25 @@ public class UtilPoint2D_F32 {
 		return mean;
 	}
 
+
+	/**
+	 * Computes the mean/average of two points.
+	 *
+	 * @param a (input) Point A
+	 * @param b (input) Point B
+	 * @param mean (output) average of 'a' and 'b'
+	 *
+	 */
+	public static Point2D_F32 mean( Point2D_F32 a , Point2D_F32 b, Point2D_F32 mean ) {
+		if( mean == null )
+			mean = new Point2D_F32();
+
+		mean.x = (a.x + b.x)/2.0f;
+		mean.y = (a.y + b.y)/2.0f;
+
+		return mean;
+	}
+
 	public static List<Point2D_F32> random( float min, float max, int num, Random rand ) {
 		List<Point2D_F32> ret = new ArrayList<Point2D_F32>();
 

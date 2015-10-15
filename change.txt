@@ -6,6 +6,8 @@ Version : 0.9
 
 - UtilPolygons2D
   * Added convexHull()
+- UtilPoint2D
+  * Added mean for 2 points
 - UtilLine2D
   * 2 point line segment into line general
 - Area2D

@@ -59,6 +59,19 @@ public class TestUtilPoint2D_F64 {
 	}
 
 	@Test
+	public void mean_2pt() {
+		Point2D_F64 a = new Point2D_F64(3,8);
+		Point2D_F64 b = new Point2D_F64(-4,7.8);
+
+		Point2D_F64 ave = new Point2D_F64();
+
+		UtilPoint2D_F64.mean(a,b,ave);
+
+		assertEquals((a.x+b.x)/2.0, ave.x , GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals((a.y+b.y)/2.0, ave.y , GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
 	public void bounding_length() {
 		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
 
