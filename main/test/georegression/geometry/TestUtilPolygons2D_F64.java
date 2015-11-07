@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.metric.Intersection2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
@@ -28,6 +29,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -35,6 +37,8 @@ import static org.junit.Assert.*;
  * @author Peter Abeles
  */
 public class TestUtilPolygons2D_F64 {
+
+	Random rand = new Random(234);
 
 	@Test
 	public void isConvex() {
@@ -297,8 +301,33 @@ public class TestUtilPolygons2D_F64 {
 		}
 	}
 
+	/**
+	 * Simple and not exhaustive test of convex hull.  The low level algorithm class has a more
+	 * detailed implementation.
+	 */
 	@Test
 	public void convexHull() {
-		fail("implement");
+		Polygon2D_F64 output = new Polygon2D_F64();
+
+		for (int numPoints = 10; numPoints < 20; numPoints++) {
+
+			List<Point2D_F64> data = new ArrayList<Point2D_F64>();
+			for (int i = 0; i < numPoints; i++) {
+				double x = rand.nextGaussian()*5;
+				double y = rand.nextGaussian()*5;
+
+				data.add( new Point2D_F64(x,y) );
+			}
+
+			UtilPolygons2D_F64.convexHull(data, output);
+
+			// check some of the properties of the convex hull
+			assertTrue(output.size() <= numPoints);
+			assertTrue(output.isConvex());
+
+			for (int i = 0; i < numPoints; i++) {
+				Intersection2D_F64.containConvex(output, data.get(i));
+			}
+		}
 	}
 }

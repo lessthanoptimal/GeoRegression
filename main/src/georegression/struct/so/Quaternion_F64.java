@@ -23,7 +23,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Specifies a 3D rotation using a quaternion.
+ * Specifies a 3D rotation using a quaternion. q = w + x*i + y*j + z*k, where (w,x,y,z) are the parameters of
+ * the quaternion and (i,j,k) are unit vectors representing the Cartesian axis.
  * </p>
  *
  * <p>
