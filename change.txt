@@ -1,6 +1,13 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    :
+Version : 0.10
+
+- UtilAngle
+  * Added function to change domain from -pi to pi into 0 to 2*pi
+
+---------------------------------------------
 Date    : 2015/11/07
 Version : 0.9
 
