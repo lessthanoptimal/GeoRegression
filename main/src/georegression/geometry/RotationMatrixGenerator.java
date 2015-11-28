@@ -104,18 +104,41 @@ public class RotationMatrixGenerator {
 
 	/**
 	 * <p>
-	 * Converts {@link georegression.struct.so.Rodrigues_F64} into {@link georegression.struct.so.Quaternion_F64}.
+	 * Converts {@link Rodrigues_F32} into a unit {@link Quaternion_F32}.
 	 * </p>
 	 *
 	 * @param rodrigues The angle of rotation around the rotation axis.
-	 * @param quat	  Storage for quaternion coordinate.  If null a new quaternion is created. Modified.
-	 * @return quaternion coordinate.
+	 * @param quat Storage for quaternion coordinate.  If null a new quaternion is created. Modified.
+	 * @return unit quaternion coordinate.
+	 */
+	public static Quaternion_F32 rodriguesToQuaternion( Rodrigues_F32 rodrigues,
+														Quaternion_F32 quat ) {
+		if( quat == null )
+			quat = new Quaternion_F32();
+
+		quat.w = (float)Math.cos( rodrigues.theta / 2.0f );
+		float s = (float)Math.sin( rodrigues.theta / 2.0f );
+
+		quat.x = rodrigues.unitAxisRotation.x * s;
+		quat.y = rodrigues.unitAxisRotation.y * s;
+		quat.z = rodrigues.unitAxisRotation.z * s;
+
+		return quat;
+	}
+
+	/**
+	 * <p>
+	 * Converts {@link georegression.struct.so.Rodrigues_F64} into a unit {@link georegression.struct.so.Quaternion_F64}.
+	 * </p>
+	 *
+	 * @param rodrigues The angle of rotation around the rotation axis.
+	 * @param quat Storage for quaternion coordinate.  If null a new quaternion is created. Modified.
+	 * @return unit quaternion coordinate.
 	 */
 	public static Quaternion_F64 rodriguesToQuaternion( Rodrigues_F64 rodrigues,
 														Quaternion_F64 quat ) {
 		if( quat == null )
 			quat = new Quaternion_F64();
-
 
 		quat.w = Math.cos( rodrigues.theta / 2.0 );
 		double s = Math.sin( rodrigues.theta / 2.0 );
@@ -128,13 +151,32 @@ public class RotationMatrixGenerator {
 	}
 
 	/**
-	 * Converts {@link Quaternion_F64} into {@link Rodrigues_F64}.
-	 * @param quat (Input) quaternion
+	 * Converts unit {@link Quaternion_F32} into {@link Rodrigues_F32}.
+	 * @param quat (Input) Unit quaternion
 	 * @param rodrigues (Optional) Storage for rodrigues coodinate.  If null a new instance is created.
 	 * @return rodrigues
 	 */
-	public static Quaternion_F64 quaternionToRodrigues( Quaternion_F64 quat,
-														Rodrigues_F64 rodrigues ) {
+	public static Rodrigues_F32 quaternionToRodrigues( Quaternion_F32 quat,
+													   Rodrigues_F32 rodrigues ) {
+		if( rodrigues == null )
+			rodrigues = new Rodrigues_F32();
+
+		rodrigues.unitAxisRotation.set(quat.x, quat.y, quat.z);
+		rodrigues.unitAxisRotation.normalize();
+
+		rodrigues.theta = (float)(2.0 * Math.acos( quat.w));
+
+		return rodrigues;
+	}
+
+	/**
+	 * Converts a unit {@link Quaternion_F64} into {@link Rodrigues_F64}.
+	 * @param quat (Input) Unit quaternion
+	 * @param rodrigues (Optional) Storage for rodrigues coodinate.  If null a new instance is created.
+	 * @return rodrigues
+	 */
+	public static Rodrigues_F64 quaternionToRodrigues( Quaternion_F64 quat,
+													   Rodrigues_F64 rodrigues ) {
 		if( rodrigues == null )
 			rodrigues = new Rodrigues_F64();
 
@@ -143,7 +185,7 @@ public class RotationMatrixGenerator {
 
 		rodrigues.theta = 2.0 * Math.acos( quat.w);
 
-		return quat;
+		return rodrigues;
 	}
 
 	/**
@@ -783,14 +825,14 @@ public class RotationMatrixGenerator {
 	}
 
 	/**
-	 * Converts a quaternion into a rotation matrix.
-	 * <p/>
+	 * <p>Converts a unit quaternion into a rotation matrix.</p>
+	 *
 	 * <p>
 	 * Equations is taken from: Paul J. Besl and Neil D. McKay, "A Method for Registration of 3-D Shapes" IEEE
 	 * Transactions on Pattern Analysis and Machine Intelligence, Vol 14, No. 2, Feb. 1992
 	 * </p>
 	 *
-	 * @param quat unit quaternion.
+	 * @param quat Unit quaternion.
 	 * @param R	Storage for rotation matrix.  If null a new matrix is created. Modified.
 	 */
 	public static DenseMatrix64F quaternionToMatrix( Quaternion_F64 quat, DenseMatrix64F R ) {

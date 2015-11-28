@@ -21,7 +21,9 @@ package georegression.geometry;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
+import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Quaternion_F64;
 import georegression.struct.so.Rodrigues_F32;
 import georegression.struct.so.Rodrigues_F64;
@@ -71,13 +73,66 @@ public class TestRotationMatrixGenerator {
 	}
 
 	@Test
-	public void rodriguesToQuaternion() {
-		fail( "Implement" );
+	public void rodriguesToQuaternion_F32() {
+		Rodrigues_F32 rod = new Rodrigues_F32(-1.5f,1,3,-4);
+
+		Quaternion_F32 quat = RotationMatrixGenerator.rodriguesToQuaternion(rod,null);
+
+		DenseMatrix64F A = RotationMatrixGenerator.quaternionToMatrix(quat, null);
+		DenseMatrix64F B = RotationMatrixGenerator.rodriguesToMatrix(rod, null);
+
+		DenseMatrix64F C = new DenseMatrix64F(3,3);
+		CommonOps.multTransA(A,B,C);
+
+		assertTrue(MatrixFeatures.isIdentity(C, GrlConstants.FLOAT_TEST_TOL));
 	}
 
 	@Test
-	public void quaternionToRodrigues() {
-		fail( "implement" );
+	public void rodriguesToQuaternion_F64() {
+		Rodrigues_F64 rod = new Rodrigues_F64(-1.5,1,3,-4);
+
+		Quaternion_F64 quat = RotationMatrixGenerator.rodriguesToQuaternion(rod, null);
+
+		DenseMatrix64F A = RotationMatrixGenerator.quaternionToMatrix(quat, null);
+		DenseMatrix64F B = RotationMatrixGenerator.rodriguesToMatrix(rod, null);
+
+		DenseMatrix64F C = new DenseMatrix64F(3,3);
+		CommonOps.multTransA(A,B,C);
+
+		assertTrue(MatrixFeatures.isIdentity(C, GrlConstants.DOUBLE_TEST_TOL));
+	}
+
+	@Test
+	public void quaternionToRodrigues_F32() {
+		Quaternion_F32 quat = new Quaternion_F32(0.6f,2f,3f,-1f);
+		quat.normalize();
+
+		Rodrigues_F32 rod = RotationMatrixGenerator.quaternionToRodrigues(quat,null);
+
+		DenseMatrix64F A = RotationMatrixGenerator.quaternionToMatrix(quat, null);
+		DenseMatrix64F B = RotationMatrixGenerator.rodriguesToMatrix(rod, null);
+
+		DenseMatrix64F C = new DenseMatrix64F(3,3);
+		CommonOps.multTransA(A,B,C);
+
+		assertTrue(MatrixFeatures.isIdentity(C, GrlConstants.FLOAT_TEST_TOL));
+	}
+
+	@Test
+	public void quaternionToRodrigues_F64() {
+		Quaternion_F64 quat = new Quaternion_F64(0.6,2,3,-1);
+		quat.normalize();
+
+		Rodrigues_F64 rod = RotationMatrixGenerator.quaternionToRodrigues(quat,null);
+
+		quat.normalize();
+		DenseMatrix64F A = RotationMatrixGenerator.quaternionToMatrix(quat, null);
+		DenseMatrix64F B = RotationMatrixGenerator.rodriguesToMatrix(rod, null);
+
+		DenseMatrix64F C = new DenseMatrix64F(3,3);
+		CommonOps.multTransA(A,B,C);
+
+		assertTrue(MatrixFeatures.isIdentity(C, GrlConstants.DOUBLE_TEST_TOL));
 	}
 
 	@Test
@@ -400,7 +455,7 @@ public class TestRotationMatrixGenerator {
 
 		Point3D_F64 p = new Point3D_F64( 1, 0, 0 );
 		GeometryMath_F64.mult( R, p, p );
-		GeometryUnitTest.assertEquals( p, 0, 1, 0, 1e-8 );
+		GeometryUnitTest.assertEquals( p, 0, 1, 0, GrlConstants.DOUBLE_TEST_TOL );
 
 
 		// rotate around y-axis 90 degrees
@@ -411,11 +466,29 @@ public class TestRotationMatrixGenerator {
 
 		p.set( 1, 0, 0 );
 		GeometryMath_F64.mult( R, p, p );
-		GeometryUnitTest.assertEquals( p, 0, 0, -1, 1e-8 );
+		GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test
 	public void quaternionToMatrix_F32() {
-		fail("implement");
+		// rotate around z-axis 90 degrees
+		Quaternion_F32 q = RotationMatrixGenerator.rodriguesToQuaternion( new Rodrigues_F32( GrlConstants.F_PId2, 0, 0, 1 ), null );
+
+		DenseMatrix64F R = RotationMatrixGenerator.quaternionToMatrix( q, null );
+
+		Point3D_F32 p = new Point3D_F32( 1, 0, 0 );
+		GeometryMath_F32.mult( R, p, p );
+		GeometryUnitTest.assertEquals( p, 0, 1, 0, GrlConstants.FLOAT_TEST_TOL );
+
+
+		// rotate around y-axis 90 degrees
+		q = RotationMatrixGenerator.rodriguesToQuaternion( new Rodrigues_F32( GrlConstants.F_PId2, 0, 1, 0 ), null );
+		q.normalize();
+
+		R = RotationMatrixGenerator.quaternionToMatrix( q, R );
+
+		p.set( 1, 0, 0 );
+		GeometryMath_F32.mult( R, p, p );
+		GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.FLOAT_TEST_TOL );
 	}
 }

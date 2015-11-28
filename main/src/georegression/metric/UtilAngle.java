@@ -255,4 +255,17 @@ public class UtilAngle {
 		else
 			return Math.PI-a;
 	}
+
+	/**
+	 * Converts an angle from -pi to pi into 0 to 2*pi domain
+	 * @param angle angle from -pi to pi radians
+	 * @return angle from 0 to 2*pi radians
+	 */
+	public static double domain2PI( double angle ) {
+		if( angle < 0 ) {
+			return angle + 2*Math.PI;
+		} else {
+			return angle;
+		}
+	}
 }

@@ -142,4 +142,14 @@ public class TestUtilAngle {
 		assertEquals(Math.PI/2.0,UtilAngle.distHalf(0,Math.PI/2.0),1e-8);
 		assertEquals(Math.PI/2.0-0.1,UtilAngle.distHalf(-0.1,Math.PI/2.0),1e-8);
 	}
+
+	@Test
+	public void domain2PI() {
+		double angles[] = new double[]{-0.1,-Math.PI,-0.4,0.1,0.4,2.5,Math.PI};
+
+		for( double angle : angles ) {
+			assertEquals(Math.cos(angle), Math.cos(UtilAngle.domain2PI(angle)), 1e-8);
+			assertEquals(Math.sin(angle), Math.sin(UtilAngle.domain2PI(angle)), 1e-8);
+		}
+	}
 }
