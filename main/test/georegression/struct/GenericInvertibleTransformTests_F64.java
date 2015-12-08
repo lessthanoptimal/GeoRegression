@@ -104,4 +104,21 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 
 		assertTrue( found.isIdentical( orig, GrlConstants.DOUBLE_TEST_TOL ) );
 	}
+
+	/**
+	 * Makes sure it uses the storage correctlyt
+	 */
+	@Test
+	public void testInvert_input() {
+		InvertibleTransform aInv = createRandomTransform();
+
+		InvertibleTransform a = createRandomTransform();
+		T orig = createRandomPoint();
+		T tran = apply( a, orig, null );
+
+		assertTrue( aInv == a.invert( aInv ) );
+		T found = apply( aInv, tran, null );
+
+		assertTrue( found.isIdentical( orig, GrlConstants.DOUBLE_TEST_TOL ) );
+	}
 }

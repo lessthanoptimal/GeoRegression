@@ -88,19 +88,20 @@ public class Affine2D_F32 implements Affine<Affine2D_F32> {
 
 	@Override
 	public Affine2D_F32 invert( Affine2D_F32 inverse ) {
-		Affine2D_F32 inv = new Affine2D_F32();
+		if( inverse == null )
+			inverse = new Affine2D_F32();
 
 		float div = a11 * a22 - a12 * a21;
 
-		inv.a11 = a22 / div;
-		inv.a12 = -a12 / div;
-		inv.a21 = -a21 / div;
-		inv.a22 = a11 / div;
+		inverse.a11 = a22 / div;
+		inverse.a12 = -a12 / div;
+		inverse.a21 = -a21 / div;
+		inverse.a22 = a11 / div;
 
-		inv.tx = -( inv.a11 * tx + inv.a12 * ty );
-		inv.ty = -( inv.a21 * tx + inv.a22 * ty );
+		inverse.tx = -( inverse.a11 * tx + inverse.a12 * ty );
+		inverse.ty = -( inverse.a21 * tx + inverse.a22 * ty );
 
-		return inv;
+		return inverse;
 	}
 
 	@Override
