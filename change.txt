@@ -6,6 +6,8 @@ Version : 0.10
 
 - UtilAngle
   * Added function to change domain from -pi to pi into 0 to 2*pi
+- Fixed bug in Affine2D inverse
+  * storage for transform wasn't being used
 
 ---------------------------------------------
 Date    : 2015/11/07
