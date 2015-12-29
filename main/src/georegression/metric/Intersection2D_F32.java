@@ -285,7 +285,7 @@ public class Intersection2D_F32 {
 	 * @param a Line
 	 * @param b Line
 	 * @param ret Storage for point of intersection.
-	 * @return Point of intersection represented in homogeneous coordinates.
+	 * @return Point of intersection in 2D coordinates.  null if intersection at infinity
 	 */
 	public static Point2D_F32 intersection( LineGeneral2D_F32 a , LineGeneral2D_F32 b , Point2D_F32 ret )
 	{

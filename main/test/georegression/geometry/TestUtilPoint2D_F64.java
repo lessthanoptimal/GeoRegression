@@ -40,7 +40,7 @@ public class TestUtilPoint2D_F64 {
 	Random rand = new Random(234);
 
 	@Test
-	public void mean() {
+	public void mean_list() {
 		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
 
 		double X=0,Y=0;
@@ -53,6 +53,25 @@ public class TestUtilPoint2D_F64 {
 		}
 
 		Point2D_F64 found = UtilPoint2D_F64.mean(list, null);
+
+		assertEquals(X/20, found.x , GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(Y/20, found.y , GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void mean_array() {
+		Point2D_F64[] list = new Point2D_F64[20];
+
+		double X=0,Y=0;
+		for( int i = 0; i < list.length; i++ ) {
+			Point2D_F64 p = new Point2D_F64();
+			X += p.x = rand.nextDouble()*100-50;
+			Y += p.y = rand.nextDouble()*100-50;
+
+			list[i] = p;
+		}
+
+		Point2D_F64 found = UtilPoint2D_F64.mean(list,0,list.length, null);
 
 		assertEquals(X/20, found.x , GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(Y/20, found.y , GrlConstants.DOUBLE_TEST_TOL);
