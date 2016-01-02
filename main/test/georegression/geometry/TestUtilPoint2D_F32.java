@@ -40,7 +40,7 @@ public class TestUtilPoint2D_F32 {
 	Random rand = new Random(234);
 
 	@Test
-	public void mean() {
+	public void mean_list() {
 		List<Point2D_F32> list = new ArrayList<Point2D_F32>();
 
 		float X=0,Y=0;
@@ -53,6 +53,25 @@ public class TestUtilPoint2D_F32 {
 		}
 
 		Point2D_F32 found = UtilPoint2D_F32.mean(list, null);
+
+		assertEquals(X/20, found.x , GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(Y/20, found.y , GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void mean_array() {
+		Point2D_F32[] list = new Point2D_F32[20];
+
+		float X=0,Y=0;
+		for( int i = 0; i < list.length; i++ ) {
+			Point2D_F32 p = new Point2D_F32();
+			X += p.x = rand.nextFloat()*100-50;
+			Y += p.y = rand.nextFloat()*100-50;
+
+			list[i] = p;
+		}
+
+		Point2D_F32 found = UtilPoint2D_F32.mean(list,0,list.length, null);
 
 		assertEquals(X/20, found.x , GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(Y/20, found.y , GrlConstants.FLOAT_TEST_TOL);

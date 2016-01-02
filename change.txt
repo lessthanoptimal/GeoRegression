@@ -10,6 +10,8 @@ Version : 0.10
   * storage for transform wasn't being used
 - Distance2D
   * distance from origin for parametric line
+- UtilPoint2D_F
+  * Mean from array
 
 ---------------------------------------------
 Date    : 2015/11/07
