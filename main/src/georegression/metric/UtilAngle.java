@@ -110,6 +110,21 @@ public class UtilAngle {
 	}
 
 	/**
+	 * Returns an angle which is equivalent to the one provided, but between (inclusive) -&pi; and &pi;.
+	 */
+	public static float bound( float ang ) {
+		ang %= GrlConstants.F_PI2;
+
+		if( ang > GrlConstants.F_PI ) {
+			return ang - GrlConstants.F_PI2;
+		} else if( ang < -GrlConstants.F_PI ) {
+			return ang + GrlConstants.F_PI2;
+		}
+
+		return ang;
+	}
+
+	/**
 	 * Angular distance in radians to go from angA to angB in counter clock-wise direction.
 	 * The resulting angle will be from 0 to 2&pi;.
 	 *

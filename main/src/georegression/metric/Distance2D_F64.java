@@ -254,4 +254,15 @@ public class Distance2D_F64 {
 	public static double distanceNorm(LineGeneral2D_F64 line, Point2D_F64 p) {
 		return Math.abs(line.A*p.x + line.B*p.y + line.C);
 	}
+
+	/**
+	 * Returns the distance of the closest point on the line from the origin
+	 * @param line Line
+	 * @return Euclidean distance
+	 */
+	public static double distanceOrigin( LineParametric2D_F64 line ) {
+		double top = line.slope.y*line.p.x - line.slope.x*line.p.y;
+
+		return Math.abs(top)/line.slope.norm();
+	}
 }

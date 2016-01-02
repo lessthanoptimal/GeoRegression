@@ -153,4 +153,14 @@ public class TestDistance2D_F64 {
 		assertEquals(5,Distance2D_F64.distance(poly,new Point2D_F64(15,5)),GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(6,Distance2D_F64.distance(poly,new Point2D_F64(6,-6)),GrlConstants.DOUBLE_TEST_TOL);
 	}
+
+	@Test
+	public void distanceOrigin_LineParametric() {
+		LineParametric2D_F64 line = new LineParametric2D_F64(2.3,-9.5,2,-3.1);
+
+		double expected = Distance2D_F64.distance(line,new Point2D_F64());
+		double found = Distance2D_F64.distanceOrigin(line);
+
+		assertEquals(expected,found,GrlConstants.DOUBLE_TEST_TOL);
+	}
 }

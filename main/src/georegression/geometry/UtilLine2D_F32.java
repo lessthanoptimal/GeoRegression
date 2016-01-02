@@ -19,7 +19,7 @@
 package georegression.geometry;
 
 
-import georegression.metric.ClosestPoint2D_F32;
+import georegression.metric.UtilAngle;
 import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LinePolar2D_F32;
@@ -197,13 +197,14 @@ public class UtilLine2D_F32 {
 		if( ret == null )
 			ret = new LinePolar2D_F32();
 
-		float t = ClosestPoint2D_F32.closestPointT(src, new Point2D_F32());
+		float top = src.slope.y*src.p.x - src.slope.x*src.p.y;
+		ret.distance = top/src.slope.norm();
+		ret.angle = (float)Math.atan2(-src.slope.x,src.slope.y);
 
-		float cpX = src.slope.x * t + src.p.x;
-		float cpY = src.slope.y * t + src.p.y;
-
-		ret.angle = (float)Math.atan2(cpY,cpX);
-		ret.distance = (float)Math.sqrt(cpX*cpX + cpY*cpY);
+		if( ret.distance < 0 ) {
+			ret.distance = -ret.distance;
+			ret.angle = UtilAngle.bound(ret.angle + (float)Math.PI);
+		}
 
 		return ret;
 	}
@@ -220,12 +221,9 @@ public class UtilLine2D_F32 {
 			ret = new LineGeneral2D_F32();
 		}
 
-		float x1 = src.p.x + src.slope.x;
-		float y1 = src.p.y + src.slope.y;
-
-		ret.A = (src.p.y - y1);
-		ret.B = (x1 - src.p.x);
-		ret.C = src.p.x*y1 - x1*src.p.y;
+		ret.A = -src.slope.y;
+		ret.B = src.slope.x;
+		ret.C = -ret.A*src.p.x - ret.B*src.p.y;
 
 		return ret;
 	}

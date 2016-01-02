@@ -153,4 +153,14 @@ public class TestDistance2D_F32 {
 		assertEquals(5,Distance2D_F32.distance(poly,new Point2D_F32(15,5)),GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(6,Distance2D_F32.distance(poly,new Point2D_F32(6,-6)),GrlConstants.FLOAT_TEST_TOL);
 	}
+
+	@Test
+	public void distanceOrigin_LineParametric() {
+		LineParametric2D_F32 line = new LineParametric2D_F32(2.3f,-9.5f,2,-3.1f);
+
+		float expected = Distance2D_F32.distance(line,new Point2D_F32());
+		float found = Distance2D_F32.distanceOrigin(line);
+
+		assertEquals(expected,found,GrlConstants.FLOAT_TEST_TOL);
+	}
 }

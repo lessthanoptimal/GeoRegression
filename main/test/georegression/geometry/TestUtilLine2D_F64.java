@@ -213,7 +213,7 @@ public class TestUtilLine2D_F64 {
 	private void normalize( LinePolar2D_F64 l ) {
 		if( l.distance < 0 ) {
 			l.distance = -l.distance;
-			l.angle = (double) UtilAngle.bound(l.angle+Math.PI);
+			l.angle = UtilAngle.bound(l.angle + Math.PI);
 		}
 	}
 
@@ -234,7 +234,7 @@ public class TestUtilLine2D_F64 {
 		// test the basic properties of this line equation
 		double val = general.A*p.x + general.B*p.y + general.C;
 
-		assertEquals(0,val,1e-8);
+		assertEquals(0,val, GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 	@Test
@@ -254,6 +254,6 @@ public class TestUtilLine2D_F64 {
 		// See if that same point is on the general equation
 		double val = general.A*p.x + general.B*p.y + general.C;
 
-		assertEquals(0,val,1e-8);
+		assertEquals(0,val, GrlConstants.DOUBLE_TEST_TOL);
 	}
 }
