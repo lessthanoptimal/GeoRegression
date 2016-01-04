@@ -21,6 +21,7 @@ package georegression.struct.se;
 import georegression.geometry.GeometryMath_F32;
 import georegression.geometry.RotationMatrixGenerator;
 import georegression.misc.GrlConstants;
+import georegression.struct.EulerType;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
@@ -139,7 +140,7 @@ public class TestSpecialEuclideanOps_F32 {
 
 		Point3D_F32 expected = SePointOps_F32.transform( se, orig, null );
 
-		DenseMatrix64F R = RotationMatrixGenerator.eulerXYZ( 0.1f, 2, -0.3f, se.getR() );
+		DenseMatrix64F R = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0.1f, 2, -0.3f, se.getR() );
 
 		Point3D_F32 found = GeometryMath_F32.mult( R, orig, (Point3D_F32) null );
 		found.x += 2;

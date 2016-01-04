@@ -23,6 +23,7 @@ import georegression.geometry.RotationMatrixGenerator;
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.geometry.UtilPoint3D_F64;
 import georegression.misc.GrlConstants;
+import georegression.struct.EulerType;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
@@ -79,7 +80,7 @@ public class TestFitSpecialEuclideanOps_F64 {
 	 */
 	@Test
 	public void fitPoints3D_list() {
-		DenseMatrix64F R = RotationMatrixGenerator.eulerXYZ( 0.1, 1.0, -1.5 , null );
+		DenseMatrix64F R = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0.1, 1.0, -1.5 , null );
 		Se3_F64 tran = new Se3_F64( R , new Vector3D_F64( 1 , 2 , 3));
 
 		List<Point3D_F64> from = UtilPoint3D_F64.random( -10, 10, 30, rand );

@@ -21,6 +21,7 @@ package georegression.transform.se;
 import georegression.geometry.RotationMatrixGenerator;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
+import georegression.struct.EulerType;
 import georegression.struct.se.Se3_F32;
 import org.ejml.ops.MatrixFeatures;
 import org.junit.Test;
@@ -128,7 +129,7 @@ public class TestInterpolateLinearSe3_F32 {
 								  float rotX, float rotY , float rotZ ) {
 		Se3_F32 ret = new Se3_F32();
 		ret.setTranslation(x,y,z);
-		RotationMatrixGenerator.eulerXYZ(rotX,rotY,rotZ,ret.R);
+		RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,rotX,rotY,rotZ,ret.R);
 		return ret;
 	}
 }

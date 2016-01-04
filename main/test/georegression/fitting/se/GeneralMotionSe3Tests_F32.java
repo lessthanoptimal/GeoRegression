@@ -23,6 +23,7 @@ import georegression.geometry.RotationMatrixGenerator;
 import georegression.geometry.UtilPoint3D_F32;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
+import georegression.struct.EulerType;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
@@ -47,7 +48,7 @@ public abstract class GeneralMotionSe3Tests_F32 {
 	@Test
 	public void noiseless() {
 		for( int i = 0; i < 100; i++ ) {
-			DenseMatrix64F R = RotationMatrixGenerator.eulerXYZ(rand.nextGaussian(),
+			DenseMatrix64F R = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,rand.nextGaussian(),
 					(float)rand.nextGaussian(), (float)rand.nextGaussian(), null);
 			Vector3D_F32 T = new Vector3D_F32( (float)rand.nextGaussian(),
 					(float)rand.nextGaussian(), (float)rand.nextGaussian() );
@@ -74,7 +75,7 @@ public abstract class GeneralMotionSe3Tests_F32 {
 	@Test
 	public void noiselessPlanar() {
 		for( int i = 0; i < 100; i++ ) {
-			DenseMatrix64F R = RotationMatrixGenerator.eulerXYZ( (float)rand.nextGaussian(),
+			DenseMatrix64F R = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, (float)rand.nextGaussian(),
 					(float)rand.nextGaussian(),rand.nextGaussian(), null );
 			Vector3D_F32 T = new Vector3D_F32( (float)rand.nextGaussian(),
 					(float)rand.nextGaussian(), (float)rand.nextGaussian() );

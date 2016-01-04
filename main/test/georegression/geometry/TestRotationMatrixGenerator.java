@@ -21,6 +21,7 @@ package georegression.geometry;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
+import georegression.struct.EulerType;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.so.Quaternion_F32;
@@ -136,18 +137,100 @@ public class TestRotationMatrixGenerator {
 	}
 
 	@Test
+	public void quaternionToEuler() {
+		for(EulerType type : EulerType.values() ) {
+			System.out.println("type = "+type);
+
+			double PId2 = Math.PI/2.0;
+
+			quaternionToEuler(type,0,0,0);
+
+			// single axis
+			quaternionToEuler(type,PId2,0,0);
+			quaternionToEuler(type,0,PId2,0);
+			quaternionToEuler(type,0,0,PId2);
+			quaternionToEuler(type,-PId2,0,0);
+			quaternionToEuler(type,0,-PId2,0);
+			quaternionToEuler(type,0,0,-PId2);
+
+			// two axis maybe pathological
+			quaternionToEuler(type,PId2,PId2,0);
+			quaternionToEuler(type,PId2,0,PId2);
+
+			quaternionToEuler(type,PId2,PId2,0);
+			quaternionToEuler(type,0,PId2,PId2);
+
+			quaternionToEuler(type,PId2,0,PId2);
+			quaternionToEuler(type,0,PId2,PId2);
+
+			for (int i = 0; i < 30; i++) {
+				double rotA = 2.0*rand.nextDouble()*Math.PI-Math.PI;
+				double rotB = rand.nextDouble()*Math.PI-Math.PI/2.0;
+				double rotC = 2.0*rand.nextDouble()*Math.PI-Math.PI;
+
+				quaternionToEuler(type,rotA,rotB,rotC);
+			}
+		}
+	}
+
+	private void quaternionToEuler(EulerType type , double rotA , double rotB , double rotC )
+	{
+		DenseMatrix64F expected = RotationMatrixGenerator.eulerToMatrix(type,rotA,rotB,rotC,null);
+
+		Quaternion_F64 q = RotationMatrixGenerator.matrixToQuaternion(expected,null);
+		double euler[] = RotationMatrixGenerator.quaternionToEuler(q,type,null);
+
+		DenseMatrix64F found = RotationMatrixGenerator.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
+
+		DenseMatrix64F difference = new DenseMatrix64F(3,3);
+		CommonOps.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures.isIdentity(difference,Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
+	}
+
+	@Test
 	public void matrixToQuaternion() {
-		fail( "implement" );
+
+		double pid2 = Math.PI/2.0;
+
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,0,0,0,null));
+
+		// single axis rotations
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,pid2,0,0,null));
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,0,pid2,0,null));
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,0,0,pid2,null));
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,-pid2,0,0,null));
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,0,-pid2,0,null));
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,0,0,-pid2,null));
+
+		// two axis rotations which could be pathological
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,pid2,pid2,0,null));
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,pid2,0,pid2,null));
+
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,pid2,pid2,0,null));
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,0,pid2,pid2,null));
+
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,pid2,0,pid2,null));
+		matrixToQuaternion(RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,0,pid2,pid2,null));
+
+		for (int i = 0; i < 100; i++) {
+			double rotX = 2.0*rand.nextDouble()*Math.PI-Math.PI;
+			double rotY = 2.0*rand.nextDouble()*Math.PI-Math.PI;
+			double rotZ = 2.0*rand.nextDouble()*Math.PI-Math.PI;
+
+			DenseMatrix64F R = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,rotX,rotY,rotZ,null);
+			matrixToQuaternion(R);
+		}
 	}
 
-	@Test
-	public void rotationAxis() {
-		fail( "Implement" );
-	}
+	public void matrixToQuaternion( DenseMatrix64F R ) {
+		Quaternion_F64 q = RotationMatrixGenerator.matrixToQuaternion(R,null);
+		q.normalize();
+		DenseMatrix64F found = RotationMatrixGenerator.quaternionToMatrix(q,null);
 
-	@Test
-	public void rotationAngle() {
-		fail( "Implement" );
+		DenseMatrix64F result = new DenseMatrix64F(3,3);
+		CommonOps.multTransB(R,found,result);
+
+		assertTrue(MatrixFeatures.isIdentity(result,Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
 	}
 
 	@Test
@@ -244,7 +327,7 @@ public class TestRotationMatrixGenerator {
 
 	private void checkMatrixToRodrigues( double eulerX , double eulerY , double eulerZ ) {
 
-		DenseMatrix64F M = RotationMatrixGenerator.eulerXYZ(eulerX,eulerY,eulerZ,null);
+		DenseMatrix64F M = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,eulerX,eulerY,eulerZ,null);
 		Rodrigues_F64 rod = RotationMatrixGenerator.matrixToRodrigues(M, (Rodrigues_F64)null);
 		DenseMatrix64F found = RotationMatrixGenerator.rodriguesToMatrix(rod,null);
 		assertTrue(MatrixFeatures.isIdentical(M,found,1e-6));
@@ -354,58 +437,76 @@ public class TestRotationMatrixGenerator {
 	}
 
 	@Test
-	public void eulerArbitrary() {
-		DenseMatrix64F R_e = RotationMatrixGenerator.eulerXYZ( 1.2, -.5, 2.4, null );
-		DenseMatrix64F R_a = RotationMatrixGenerator.eulerArbitrary( 0, 1, 2, 1.2, -.5, 2.4 );
+	public void matrixToEuler() {
+		for(EulerType type : EulerType.values() ) {
+			System.out.println("type = "+type);
 
-		assertTrue( MatrixFeatures.isIdentical( R_e, R_a, 1e-8 ) );
+			double PId2 = Math.PI/2.0;
+
+			quaternionToEuler(type,0,0,0);
+
+			// single axis
+			quaternionToEuler(type,PId2,0,0);
+			quaternionToEuler(type,0,PId2,0);
+			quaternionToEuler(type,0,0,PId2);
+			quaternionToEuler(type,-PId2,0,0);
+			quaternionToEuler(type,0,-PId2,0);
+			quaternionToEuler(type,0,0,-PId2);
+
+			// two axis maybe pathological
+			quaternionToEuler(type,PId2,PId2,0);
+			quaternionToEuler(type,PId2,0,PId2);
+
+			quaternionToEuler(type,PId2,PId2,0);
+			quaternionToEuler(type,0,PId2,PId2);
+
+			quaternionToEuler(type,PId2,0,PId2);
+			quaternionToEuler(type,0,PId2,PId2);
+
+			for (int i = 0; i < 30; i++) {
+				double rotA = 2.0*rand.nextDouble()*Math.PI-Math.PI;
+				double rotB = rand.nextDouble()*Math.PI-Math.PI/2.0;
+				double rotC = 2.0*rand.nextDouble()*Math.PI-Math.PI;
+
+				matrixToEuler(type,rotA,rotB,rotC);
+			}
+		}
 	}
 
-	@Test
-	public void eulerXYZ() {
-		DenseMatrix64F R_x = RotationMatrixGenerator.rotX( 1.2, null );
-		DenseMatrix64F R_y = RotationMatrixGenerator.rotY( -.5, null );
-		DenseMatrix64F R_z = RotationMatrixGenerator.rotZ( 2.4, null );
+	private void matrixToEuler(EulerType type , double rotA , double rotB , double rotC )
+	{
+		DenseMatrix64F expected = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,rotA,rotB,rotC,null);
 
-		DenseMatrix64F A = new DenseMatrix64F( 3, 3 );
-		DenseMatrix64F R = new DenseMatrix64F( 3, 3 );
+		double euler[] = RotationMatrixGenerator.matrixToEuler(expected,type,null);
 
-		CommonOps.mult( R_y, R_x, A );
-		CommonOps.mult( R_z, A, R );
+		DenseMatrix64F found = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,euler[0],euler[1],euler[2],null);
 
-		DenseMatrix64F xyz = RotationMatrixGenerator.eulerXYZ( 1.2, -.5, 2.4, null );
-
-		Point3D_F64 pt_found = new Point3D_F64( -1.56, 2.03, 0.5 );
-		Point3D_F64 pt_expected = pt_found.copy();
-
-
-		GeometryMath_F64.mult( R, pt_expected, pt_expected );
-		GeometryMath_F64.mult( xyz, pt_found, pt_found );
-
-		assertTrue( pt_expected.isIdentical( pt_found, 1e-8 ) );
-
+		DenseMatrix64F difference = new DenseMatrix64F(3,3);
+		CommonOps.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures.isIdentity(difference,Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
 	}
+
 
 	@Test
 	public void matrixToEulerXYZ_F64() {
 		// test case one
-		DenseMatrix64F A = RotationMatrixGenerator.eulerXYZ( 0.1, -0.5, -0.96, null );
+		DenseMatrix64F A = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0.1, -0.5, -0.96, null );
 		double[] euler = RotationMatrixGenerator.matrixToEulerXYZ( A , (double[])null );
-		DenseMatrix64F B = RotationMatrixGenerator.eulerXYZ( euler[0], euler[1], euler[2], null );
+		DenseMatrix64F B = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, euler[0], euler[1], euler[2], null );
 
 		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
 
 		// now try a pathological case
-		A = RotationMatrixGenerator.eulerXYZ( 0.1, -0.5, 0, null );
+		A = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0.1, -0.5, 0, null );
 		euler = RotationMatrixGenerator.matrixToEulerXYZ( A , (double[])null );
-		B = RotationMatrixGenerator.eulerXYZ( euler[0], euler[1], euler[2], null );
+		B = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, euler[0], euler[1], euler[2], null );
 
 		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
 
 		// try all zeros
-		A = RotationMatrixGenerator.eulerXYZ( 0, 0, 0, null );
+		A = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0, 0, 0, null );
 		euler = RotationMatrixGenerator.matrixToEulerXYZ( A , (double[])null );
-		B = RotationMatrixGenerator.eulerXYZ( euler[0], euler[1], euler[2], null );
+		B = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, euler[0], euler[1], euler[2], null );
 
 		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
 	}
@@ -435,8 +536,48 @@ public class TestRotationMatrixGenerator {
 	}
 
 	@Test
-	public void eulerToQuaternions() {
-		fail( "Implement" );
+	public void eulerToQuaternion() {
+		fail("implement");
+	}
+
+	@Test
+	public void eulerToMatrix() {
+		fail("implement");
+	}
+
+	@Test
+	public void eulerZyxToQuaternion() {
+		double pid2 = Math.PI/2.0;
+		eulerZyxToQuaternion(0,0,0);
+		eulerZyxToQuaternion(pid2,0,0);
+		eulerZyxToQuaternion(0,pid2,0);
+		eulerZyxToQuaternion(0,0,pid2);
+		eulerZyxToQuaternion(-pid2,0,0);
+		eulerZyxToQuaternion(0,-pid2,0);
+		eulerZyxToQuaternion(0,0,-pid2);
+
+		for (int i = 0; i < 50; i++) {
+			double a = Math.PI;
+			double rotZ = 2*rand.nextDouble()*a - a;
+			double rotY = 2*rand.nextDouble()*a - a;
+			double rotX = 2*rand.nextDouble()*a - a;
+
+			eulerZyxToQuaternion(rotZ,rotY,rotX);
+		}
+	}
+
+	public void eulerZyxToQuaternion( double rotZ , double rotY , double rotX ) {
+		DenseMatrix64F rotZyx = RotationMatrixGenerator.eulerToMatrix(EulerType.ZYX,rotZ,rotX,rotY,null);
+
+		Quaternion_F64 quat = new Quaternion_F64();
+		RotationMatrixGenerator.eulerZyxToQuaternion(rotZ,rotY,rotX,quat);
+
+		DenseMatrix64F rotQuat = RotationMatrixGenerator.quaternionToMatrix(quat,null);
+
+		DenseMatrix64F result = new DenseMatrix64F(3,3);
+		CommonOps.multTransB(rotZyx,rotQuat,result);
+		result.print();
+		assertTrue(MatrixFeatures.isIdentity(result, Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
 	}
 
 	/**
@@ -467,6 +608,22 @@ public class TestRotationMatrixGenerator {
 		p.set( 1, 0, 0 );
 		GeometryMath_F64.mult( R, p, p );
 		GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.DOUBLE_TEST_TOL );
+
+		for (int i = 0; i < 30; i++) {
+			Rodrigues_F64 rod = new Rodrigues_F64();
+			rod.theta = Math.PI*(2*rand.nextDouble()-1);
+			rod.setParamVector(rand.nextDouble()-0.5,rand.nextDouble()-0.5,rand.nextDouble()-0.5);
+			rod.unitAxisRotation.normalize();
+
+			q = RotationMatrixGenerator.rodriguesToQuaternion( rod, null );
+			q.normalize();
+			DenseMatrix64F expected = RotationMatrixGenerator.rodriguesToMatrix( rod, null );
+			DenseMatrix64F found = RotationMatrixGenerator.quaternionToMatrix( q, null );
+
+			DenseMatrix64F difference = new DenseMatrix64F(3,3);
+			CommonOps.multTransB(expected,found,difference);
+			assertTrue(MatrixFeatures.isIdentity(difference,GrlConstants.DOUBLE_TEST_TOL));
+		}
 	}
 
 	@Test

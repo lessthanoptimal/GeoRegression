@@ -19,32 +19,31 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
-import georegression.struct.point.Vector3D_F64;
+import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Quaternion_F64;
 import georegression.struct.so.Rodrigues_F32;
 import georegression.struct.so.Rodrigues_F64;
 import org.ejml.UtilEjml;
-import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
-import org.ejml.interfaces.decomposition.EigenDecomposition;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
 
 
 /**
+ * Provides functions to convert between different parameterizations of 3D rotation matrices.
+ *
  * @author Peter Abeles
  */
-// todo rename to Rotation3D ?
-// TODO return a specialized matrix instead?
+// todo rename to RotationConverter3D_F64 ?
 public class RotationMatrixGenerator {
 
 	/**
 	 * Converts {@link georegression.struct.so.Rodrigues_F64} into a rotation matrix.
 	 *
 	 * @param rodrigues rotation defined using rotation axis angle notation.
-	 * @param R		 where the results will be stored.  If null a new matrix is declared/
+	 * @param R where the results will be stored.  If null a new matrix is declared/
 	 * @return rotation matrix.
 	 */
 	public static DenseMatrix64F rodriguesToMatrix( Rodrigues_F64 rodrigues, DenseMatrix64F R ) {
@@ -189,11 +188,141 @@ public class RotationMatrixGenerator {
 	}
 
 	/**
+	 * <p>Converts a quaternion into an euler rotation of different types</p>
+	 *
+	 * @param q (Input) Normalized quaternion. Not modified.
+	 * @param type Type of Euler rotation
+	 * @param euler (Output) Optional storage for Euler rotation
+	 * @return The Euler rotation.
+	 */
+	public static double[] quaternionToEuler(Quaternion_F64 q , EulerType type , double []euler )
+	{
+		DenseMatrix64F R = quaternionToMatrix(q,null);
+		return matrixToEuler(R,type,euler);
+	}
+
+	/**
+	 * <p>Converts a rotation matrix into an Euler angle of different types</p>
+	 *
+	 * @param R (Input) Rotation matrix. Not modified.
+	 * @param type Type of Euler rotation
+	 * @param euler (Output) Optional storage for Euler rotation
+	 * @return The Euler rotation.
+	 */
+	public static double[] matrixToEuler(DenseMatrix64F R , EulerType type , double[] euler ) {
+		if( euler == null )
+			euler = new double[3];
+
+		switch(type){
+			case ZYX:
+				TanSinTan(-2,1,  3,  -6,9, R,euler);
+				break;
+
+			case ZYZ:
+				TanCosTan(8,-7,  9,   6,3, R,euler);
+				break;
+
+			case ZXY:
+				TanSinTan(4,5,  -6,   3,9, R,euler);
+				break;
+
+			case ZXZ:
+				TanCosTan(7,8,   9,  3,-6, R,euler);
+				break;
+
+			case YXZ:
+				TanSinTan(-7,9,  8, -2,5, R,euler);
+				break;
+
+			case YXY:
+				TanCosTan(4,-6,  5,  2,8, R,euler);
+				break;
+
+			case YZX:
+				TanSinTan(3,1,  -2,  8,5, R,euler);
+				break;
+
+			case YZY:
+				TanCosTan(6,4,   5,  8,-2, R,euler);
+				break;
+
+			case XYZ:
+				TanSinTan(8,9,  -7,  4,1, R,euler);
+				break;
+
+			case XYX:
+				TanCosTan(2,3,   1,  4,-7, R,euler);
+				break;
+
+			case XZY:
+				TanSinTan(-6,5,  4, -7,1, R,euler);
+				break;
+
+			case XZX:
+				TanCosTan(3,-2,  1,  7,4, R,euler);
+				break;
+
+			default:
+				throw new IllegalArgumentException("Unknown rotation sequence");
+		}
+
+		return euler;
+	}
+
+	private static void TanSinTan( int y0 , int x0 , int sin1 , int y2 , int x2 ,
+								  DenseMatrix64F R , double euler[] ) {
+
+		double val_y0 = get(R,y0);
+		double val_x0 = get(R,x0);
+		double val_sin1 = get(R,sin1);
+		double val_y2 = get(R,y2);
+		double val_x2 = get(R,x2);
+
+		if( 1.0-Math.abs(val_sin1) <= GrlConstants.EPS ) {
+			throw new RuntimeException("This case isn't handled yet");
+		} else {
+			euler[0] = Math.atan2(val_y0,val_x0);
+			euler[1] = Math.asin(val_sin1);
+			euler[2] = Math.atan2(val_y2,val_x2);
+		}
+	}
+
+	private static void TanCosTan( int y0 , int x0 , int cos1 , int y2 , int x2 ,
+								  DenseMatrix64F R , double euler[] ) {
+
+		double val_y0 = get(R,y0);
+		double val_x0 = get(R,x0);
+		double val_cos1 = get(R,cos1);
+		double val_y2 = get(R,y2);
+		double val_x2 = get(R,x2);
+
+		if( 1.0-Math.abs(val_cos1) <= GrlConstants.EPS ) {
+			throw new RuntimeException("This case isn't handled yet");
+		} else {
+			euler[0] = Math.atan2(val_y0,val_x0);
+			euler[1] = Math.acos(val_cos1);
+			euler[2] = Math.atan2(val_y2,val_x2);
+		}
+	}
+
+	/**
+	 * If the index is negative it returns the negative of the value at -index.  Starts at 0
+	 */
+	private static double get( DenseMatrix64F M , int index ) {
+		if( index < 0 ) {
+			return -M.data[-index-1];
+		} else {
+			return M.data[index-1];
+		}
+	}
+
+
+	/**
 	 * Extracts quaternions from the provided rotation matrix.
 	 *
-	 * @param R	rotation matrix
-	 * @param quat storage for quaternion.  If null a new class will be declared.
-	 * @return quaternion representation of the rotation matrix.
+	 * @param R (Input) rotation matrix
+	 * @param quat (Output) Optional storage for quaternion.  If null a new class will be declared.
+	 * @return unit quaternion representation of the rotation matrix.
 	 */
 	public static Quaternion_F64 matrixToQuaternion( DenseMatrix64F R, Quaternion_F64 quat ) {
 		// first get rodrigues
@@ -347,114 +476,10 @@ public class RotationMatrixGenerator {
 	}
 
 	/**
-	 * <p>
-	 * Determines the axis of rotation for a given rotation matrix using eigenvalue decomposition.
-	 * </p>
-	 * <p/>
-	 * <p>
-	 * EVD can be used since R*v = v, where clearly the axis of rotation 'v' is an eigen vector
-	 * that has an eigenvalue of 1.  This technique is numerically stable under all conditions.
-	 * </p>
-	 *
-	 * @param R A rotation matrix.
-	 * @return axis of rotation vector.
-	 */
-	public static Vector3D_F64 rotationAxis( DenseMatrix64F R, Vector3D_F64 ret ) {
-		if( ret == null )
-			ret = new Vector3D_F64();
-
-		EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(R.numRows,true);
-
-		if( !eig.decompose( R ) )
-			throw new RuntimeException( "Decomposition failed" );
-
-		// find the eigenvalue closest to one
-		int bestIndex = -1;
-		double best = Double.MAX_VALUE;
-
-		for( int i = 0; i < 3; i++ ) {
-			Complex64F e = eig.getEigenvalue( i );
-			if( e.isReal() ) {
-				double diff = Math.abs( e.getReal() - 1.0 );
-				if( diff < best ) {
-					best = diff;
-					bestIndex = i;
-				}
-			}
-		}
-
-		if( bestIndex == -1 )
-			throw new RuntimeException( "Couldn't find a valid eigenvalue.  If the matrix is valid report this as a bug." );
-
-		DenseMatrix64F v = eig.getEigenVector( bestIndex );
-
-		ret.set( v.get( 0, 0 ), v.get( 1, 0 ), v.get( 2, 0 ) );
-		return ret;
-	}
-
-	/**
-	 * <p>
-	 * Given a rotation matrix and its axis of rotation compute the rotation matrix's rotation
-	 * angle.  This angle can be combined with the axisOfRotation to reconstruct the rotation matrix.
-	 * </p>
-	 * <p/>
-	 * <p>
-	 * A series of cross products and dot products are used.  Provides an alternative approach to
-	 * {@link #matrixToRodrigues}.  Not sure if there is any advantage.
-	 * </p>
-	 *
-	 * @param R Rotation matrix. Not modified.
-	 * @param axisOfRotation Axis of rotation of the provided rotation matrix. Not modified.
-	 * @return angle of rotation -&pi; &le; &theta; &le; &pi;
-	 */
-	public static double rotationAngle( DenseMatrix64F R, Vector3D_F64 axisOfRotation ) {
-		// each row in R is perpendicular to each other
-		// at least two of them is not parallel to the axis of rotation
-		// find the row which is closest to being perpendicular
-		int row = 0;
-		double smallestDot = Double.MAX_VALUE;
-		for( int i = 0; i < 3; i++ ) {
-			double dot = R.get( i, 0 ) * axisOfRotation.getX() +
-					R.get( i, 1 ) * axisOfRotation.getY()
-					+ R.get( i, 2 ) * axisOfRotation.getZ();
-			double v = Math.abs( dot );
-			if( v < smallestDot ) {
-				row = i;
-				smallestDot = v;
-			}
-		}
-
-		// extract the selected row
-		Vector3D_F64 a = new Vector3D_F64();
-		a.set( R.get( row, 0 ), R.get( row, 1 ), R.get( row, 2 ) );
-
-		// compute the cross product of that vector against the rotation axis
-		// to find a vector which is perpendicular to the axis of rotation
-		Vector3D_F64 b = axisOfRotation.cross( a );
-		b.normalize();
-
-		// rotate the found vector
-		GeometryMath_F64.mult( R, b, a );
-
-		// compute the angle of rotation's magnitude using the dot product theorem
-		double theta = Math.acos( GeometryMath_F64.dot( a, b ) );
-
-		// find the direction using cross product
-		Vector3D_F64 c = b.cross( a );
-		double dot = c.dot( axisOfRotation );
-
-		// the dot product will be positive if they are pointing in the same direction
-		if( dot < 0 )
-			theta = -theta;
-
-		return theta;
-	}
-
-	/**
 	 * Creates a rotation matrix about the x-axis.
 	 *
 	 * @param ang the angle it rotates a point by in radians.
-	 * @param R
+	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
 	public static DenseMatrix64F rotX( double ang, DenseMatrix64F R ) {
@@ -470,29 +495,28 @@ public class RotationMatrixGenerator {
 	 * Sets the values in the specified matrix to a rotation matrix about the x-axis.
 	 *
 	 * @param ang the angle it rotates a point by in radians.
-	 * @param r   A 3 by 3 matrix. Is modified.
+	 * @param R (Output) Storage for rotation matrix.  Modified.
 	 */
-	public static void setRotX( double ang, DenseMatrix64F r ) {
+	public static void setRotX( double ang, DenseMatrix64F R ) {
 		double c = Math.cos( ang );
 		double s = Math.sin( ang );
 
-		r.set( 0, 0, 1 );
-		r.set( 1, 1, c );
-		r.set( 1, 2, -s );
-		r.set( 2, 1, s );
-		r.set( 2, 2, c );
+		R.set( 0, 0, 1 );
+		R.set( 1, 1, c );
+		R.set( 1, 2, -s );
+		R.set( 2, 1, s );
+		R.set( 2, 2, c );
 	}
 
 	/**
 	 * Creates a rotation matrix about the y-axis.
 	 *
 	 * @param ang the angle it rotates a point by in radians.
-	 * @param R
+	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
 	public static DenseMatrix64F rotY( double ang, DenseMatrix64F R ) {
-		if( R == null )
-			R = new DenseMatrix64F( 3, 3 );
+		R = checkDeclare3x3( R );
 
 		setRotY( ang, R );
 
@@ -520,12 +544,11 @@ public class RotationMatrixGenerator {
 	 * Creates a rotation matrix about the z-axis.
 	 *
 	 * @param ang the angle it rotates a point by in radians.
-	 * @param R
+	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
 	public static DenseMatrix64F rotZ( double ang, DenseMatrix64F R ) {
-		if( R == null )
-			R = new DenseMatrix64F( 3, 3 );
+		R = checkDeclare3x3( R );
 
 		setRotZ( ang, R );
 
@@ -550,27 +573,24 @@ public class RotationMatrixGenerator {
 	}
 
 	/**
-	 * Creates an Euler rotation matrix for an arbitrary ordering of rotations about axises.
-	 * Which axis is rotated when is specified in the first three arguments.  0 = x axis
-	 * , 1 = y axis, and 2 = z axis.  The remaining three parameters are the angles it will
-	 * rotate about the respective axises.
-	 *
-	 * @param axisA The first axis it will rotate around.
-	 * @param axisB The second axis it will rotate around.
-	 * @param axisC The third axis it will rotate around.
-	 * @param rotA  Rotation angle in radians about the first axis.
-	 * @param rotB  Rotation angle in radians about the second axis.
-	 * @param rotC  Rotation angle in radians about the third axis.
-	 * @return Resulting 3 by 3 rotation matrix.
+	 * Converts an Euler coordinate into a rotation matrix.  Different type of Euler coordinates are accepted.
+	 * @param type Which Euler coordinate is the input in
+	 * @param rotA Angle of rotation around axis A
+	 * @param rotB Angle of rotation around axis B
+	 * @param rotC Angle of rotation around axis C
+	 * @param R (Output) Optional storage for output rotation matrix
+	 * @return Rotation matrix
 	 */
-	public static DenseMatrix64F eulerArbitrary( int axisA, int axisB, int axisC,
-												 double rotA, double rotB, double rotC ) {
-		DenseMatrix64F R_a = createRot( axisA, rotA, null );
-		DenseMatrix64F R_b = createRot( axisB, rotB, null );
-		DenseMatrix64F R_c = createRot( axisC, rotC, null );
+	public static DenseMatrix64F eulerToMatrix( EulerType type ,
+												double rotA, double rotB, double rotC,
+												DenseMatrix64F R ) {
+		R = checkDeclare3x3( R );
+
+		DenseMatrix64F R_a = rotationAboutAxis( type.getAxisA(), rotA, null );
+		DenseMatrix64F R_b = rotationAboutAxis( type.getAxisB(), rotB, null );
+		DenseMatrix64F R_c = rotationAboutAxis( type.getAxisC(), rotC, null );
 
 		DenseMatrix64F A = new DenseMatrix64F( 3, 3 );
-		DenseMatrix64F R = new DenseMatrix64F( 3, 3 );
 
 		CommonOps.mult( R_b, R_a, A );
 		CommonOps.mult( R_c, A, R );
@@ -585,7 +605,7 @@ public class RotationMatrixGenerator {
 	 * @param angle The angle it is rotated by in radians.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	private static DenseMatrix64F createRot( int axis, double angle, DenseMatrix64F R ) {
+	private static DenseMatrix64F rotationAboutAxis(int axis, double angle, DenseMatrix64F R ) {
 		switch( axis ) {
 			case 0:
 				return RotationMatrixGenerator.rotX( angle, R );
@@ -602,51 +622,16 @@ public class RotationMatrixGenerator {
 	}
 
 	/**
-	 * Creates a rotation matrix that is equivalent to rotating around the x,
-	 * y and z axises in that order.
-	 *
-	 * @param rotX The angle it is rotated by around the x-axis.
-	 * @param rotY The angle it is rotated by around the y-axis.
-	 * @param rotZ The angle it is rotated by around the z-axis.
-	 * @param R
-	 * @return A 3 by 3 rotation matrix.
-	 */
-	public static DenseMatrix64F eulerXYZ( double rotX, double rotY, double rotZ, DenseMatrix64F R ) {
-		if( R == null )
-			R = new DenseMatrix64F( 3, 3 );
-
-		double c1 = Math.cos( rotX );
-		double c2 = Math.cos( rotY );
-		double c3 = Math.cos( rotZ );
-
-		double s1 = Math.sin( rotX );
-		double s2 = Math.sin( rotY );
-		double s3 = Math.sin( rotZ );
-
-		R.set( 0, 0, c2 * c3 );
-		R.set( 0, 1, c3 * s1 * s2 - c1 * s3 );
-		R.set( 0, 2, c1 * c3 * s2 + s1 * s3 );
-		R.set( 1, 0, c2 * s3 );
-		R.set( 1, 1, c1 * c3 + s1 * s2 * s3 );
-		R.set( 1, 2, c1 * s2 * s3 - c3 * s1 );
-		R.set( 2, 0, -s2 );
-		R.set( 2, 1, c2 * s1 );
-		R.set( 2, 2, c1 * c2 );
-
-		return R;
-	}
-
-	/**
 	 * <p>
 	 * Given a rotation matrix it will compute the XYZ euler angles.
 	 * </p>
 	 * <p>
 	 * See Internet PDF "Computing Euler angles from a rotation matrix" by Gregory G. Slabaugh.
-	 * </p>                                                                                                                                                                      ose
+	 * </p>
 	 */
 	public static double[] matrixToEulerXYZ( DenseMatrix64F M , double euler[] ) {
-      if( euler == null )
-         euler = new double[3];
+		if( euler == null )
+			euler = new double[3];
 
 		double m31 = M.get( 2, 0 );
 
@@ -694,7 +679,7 @@ public class RotationMatrixGenerator {
 	 * </p>
 	 * <p>
 	 * See Internet PDF "Computing Euler angles from a rotation matrix" by Gregory G. Slabaugh.
-	 * </p>                                                                                                                                                                      ose
+	 * </p>
 	 */
 	public static float[] matrixToEulerXYZ( DenseMatrix64F M , float euler[] ) {
 		if( euler == null )
@@ -763,9 +748,7 @@ public class RotationMatrixGenerator {
 	 * @param R	The resulting approximated rotation matrix.  Modified.
 	 */
 	public static DenseMatrix64F approximateRotationMatrix( DenseMatrix64F orig, DenseMatrix64F R ) {
-		if( R == null ) {
-			R = new DenseMatrix64F( 3, 3 );
-		}
+		R = checkDeclare3x3( R );
 
 		SingularValueDecomposition<DenseMatrix64F> svd =
 				DecompositionFactory.svd( orig.numRows, orig.numCols ,true,true,false);
@@ -785,24 +768,22 @@ public class RotationMatrixGenerator {
 	}
 
 	/**
-	 * Converts euler rotation coordinates into quaternions.
+	 * Converts euler (Z,Y,X) a.k.a. (yaw,roll,pitch) rotation coordinates into quaternions.
 	 *
-	 * @param euler Euler coordinates encoded as [yaw, roll, pitch].
-	 * @param quat  Quaternion
+	 * @param rotZ rotation about z-axis. yaw
+	 * @param rotY rotation about y-axis. roll
+	 * @param rotX rotation about x-axis. pitch
+	 * @param quat Output Quaternion
 	 */
-	public static void eulerToQuaternions( double euler[], Quaternion_F64 quat ) {
-
-		double yaw = euler[0];
-		double roll = euler[1];
-		double pitch = euler[2];
+	public static void eulerZyxToQuaternion(double rotZ , double rotY , double rotX, Quaternion_F64 quat ) {
 
 		// See: http://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-		double cy = Math.cos( yaw * 0.5 );
-		double sy = Math.sin( yaw * 0.5 );
-		double cp = Math.cos( pitch * 0.5 );
-		double sp = Math.sin( pitch * 0.5 );
-		double cr = Math.cos( roll * 0.5 );
-		double sr = Math.sin( roll * 0.5 );
+		double cy = Math.cos( rotZ * 0.5 );
+		double sy = Math.sin( rotZ * 0.5 );
+		double cp = Math.cos( rotX * 0.5 );
+		double sp = Math.sin( rotX * 0.5 );
+		double cr = Math.cos( rotY * 0.5 );
+		double sr = Math.sin( rotY * 0.5 );
 
 		double ccc = cr * cp * cy;
 		double ccs = cr * cp * sy;
@@ -819,11 +800,6 @@ public class RotationMatrixGenerator {
 		quat.z = ccs - ssc;
 	}
 
-	public static double[] quaternionsToEuler( Quaternion_F64 quaternion, double euler[] ) {
-
-      return null;
-	}
-
 	/**
 	 * <p>Converts a unit quaternion into a rotation matrix.</p>
 	 *
@@ -833,61 +809,60 @@ public class RotationMatrixGenerator {
 	 * </p>
 	 *
 	 * @param quat Unit quaternion.
-	 * @param R	Storage for rotation matrix.  If null a new matrix is created. Modified.
+	 * @param R Storage for rotation matrix.  If null a new matrix is created. Modified.
 	 */
 	public static DenseMatrix64F quaternionToMatrix( Quaternion_F64 quat, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
 
-		final double q0 = quat.w;
-		final double q1 = quat.x;
-		final double q2 = quat.y;
-		final double q3 = quat.z;
+		final double w = quat.w;
+		final double x = quat.x;
+		final double y = quat.y;
+		final double z = quat.z;
 
-		R.set( 0, 0, q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3 );
-		R.set( 0, 1, 2.0 * ( q1 * q2 - q0 * q3 ) );
-		R.set( 0, 2, 2.0 * ( q1 * q3 + q0 * q2 ) );
+		R.set( 0, 0, 1.0 - 2.0*(y*y + z*z) );
+		R.set( 0, 1, 2.0 * ( x*y - z*w ) );
+		R.set( 0, 2, 2.0 * ( x*z + y*w ) );
 
-		R.set( 1, 0, 2.0 * ( q1 * q2 + q0 * q3 ) );
-		R.set( 1, 1, q0 * q0 - q1 * q1 + q2 * q2 - q3 * q3 );
-		R.set( 1, 2, 2.0 * ( q2 * q3 - q0 * q1 ) );
+		R.set( 1, 0, 2.0 * ( x*y + z*w ) );
+		R.set( 1, 1, 1.0 - 2.0*(x*x + z*z));
+		R.set( 1, 2, 2.0 * ( y*z - x*w ) );
 
-		R.set( 2, 0, 2.0 * ( q1 * q3 - q0 * q2 ) );
-		R.set( 2, 1, 2.0 * ( q2 * q3 + q0 * q1 ) );
-		R.set( 2, 2, q0 * q0 - q1 * q1 - q2 * q2 + q3 * q3 );
+		R.set( 2, 0, 2.0 * ( x*z - y*w ) );
+		R.set( 2, 1, 2.0 * ( y*z + x*w ) );
+		R.set( 2, 2, 1.0 - 2.0*(x*x + y*y) );
 
 		return R;
 	}
 
 	/**
 	 * Converts a quaternion into a rotation matrix.
-	 * <p/>
 	 * <p>
 	 * Equations is taken from: Paul J. Besl and Neil D. McKay, "A Method for Registration of 3-D Shapes" IEEE
 	 * Transactions on Pattern Analysis and Machine Intelligence, Vol 14, No. 2, Feb. 1992
 	 * </p>
 	 *
 	 * @param quat unit quaternion.
-	 * @param R	Storage for rotation matrix.  If null a new matrix is created. Modified.
+	 * @param R Storage for rotation matrix.  If null a new matrix is created. Modified.
 	 */
 	public static DenseMatrix64F quaternionToMatrix( Quaternion_F32 quat, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
 
-		final double q0 = quat.w;
-		final double q1 = quat.x;
-		final double q2 = quat.y;
-		final double q3 = quat.z;
+		final double w = quat.w;
+		final double x = quat.x;
+		final double y = quat.y;
+		final double z = quat.z;
 
-		R.set( 0, 0, q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3 );
-		R.set( 0, 1, 2.0 * ( q1 * q2 - q0 * q3 ) );
-		R.set( 0, 2, 2.0 * ( q1 * q3 + q0 * q2 ) );
+		R.set( 0, 0, 1.0 - 2.0*(y*y + z*z) );
+		R.set( 0, 1, 2.0 * ( x*y - z*w ) );
+		R.set( 0, 2, 2.0 * ( x*z + y*w ) );
 
-		R.set( 1, 0, 2.0 * ( q1 * q2 + q0 * q3 ) );
-		R.set( 1, 1, q0 * q0 - q1 * q1 + q2 * q2 - q3 * q3 );
-		R.set( 1, 2, 2.0 * ( q2 * q3 - q0 * q1 ) );
+		R.set( 1, 0, 2.0 * ( x*y + z*w ) );
+		R.set( 1, 1, 1.0 - 2.0*(x*x + z*z));
+		R.set( 1, 2, 2.0 * ( y*z - x*w ) );
 
-		R.set( 2, 0, 2.0 * ( q1 * q3 - q0 * q2 ) );
-		R.set( 2, 1, 2.0 * ( q2 * q3 + q0 * q1 ) );
-		R.set( 2, 2, q0 * q0 - q1 * q1 - q2 * q2 + q3 * q3 );
+		R.set( 2, 0, 2.0 * ( x*z - y*w ) );
+		R.set( 2, 1, 2.0 * ( y*z + x*w ) );
+		R.set( 2, 2, 1.0 - 2.0*(x*x + y*y) );
 
 		return R;
 	}
