@@ -814,22 +814,22 @@ public class RotationMatrixGenerator {
 	public static DenseMatrix64F quaternionToMatrix( Quaternion_F64 quat, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
 
-		final double w = quat.w;
-		final double x = quat.x;
-		final double y = quat.y;
-		final double z = quat.z;
+		final double q0 = quat.w;
+		final double q1 = quat.x;
+		final double q2 = quat.y;
+		final double q3 = quat.z;
 
-		R.set( 0, 0, 1.0 - 2.0*(y*y + z*z) );
-		R.set( 0, 1, 2.0 * ( x*y - z*w ) );
-		R.set( 0, 2, 2.0 * ( x*z + y*w ) );
+		R.set( 0, 0, q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3 );
+		R.set( 0, 1, 2.0 * ( q1 * q2 - q0 * q3 ) );
+		R.set( 0, 2, 2.0 * ( q1 * q3 + q0 * q2 ) );
 
-		R.set( 1, 0, 2.0 * ( x*y + z*w ) );
-		R.set( 1, 1, 1.0 - 2.0*(x*x + z*z));
-		R.set( 1, 2, 2.0 * ( y*z - x*w ) );
+		R.set( 1, 0, 2.0 * ( q1 * q2 + q0 * q3 ) );
+		R.set( 1, 1, q0 * q0 - q1 * q1 + q2 * q2 - q3 * q3 );
+		R.set( 1, 2, 2.0 * ( q2 * q3 - q0 * q1 ) );
 
-		R.set( 2, 0, 2.0 * ( x*z - y*w ) );
-		R.set( 2, 1, 2.0 * ( y*z + x*w ) );
-		R.set( 2, 2, 1.0 - 2.0*(x*x + y*y) );
+		R.set( 2, 0, 2.0 * ( q1 * q3 - q0 * q2 ) );
+		R.set( 2, 1, 2.0 * ( q2 * q3 + q0 * q1 ) );
+		R.set( 2, 2, q0 * q0 - q1 * q1 - q2 * q2 + q3 * q3 );
 
 		return R;
 	}
@@ -847,22 +847,22 @@ public class RotationMatrixGenerator {
 	public static DenseMatrix64F quaternionToMatrix( Quaternion_F32 quat, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
 
-		final double w = quat.w;
-		final double x = quat.x;
-		final double y = quat.y;
-		final double z = quat.z;
+		final double q0 = quat.w;
+		final double q1 = quat.x;
+		final double q2 = quat.y;
+		final double q3 = quat.z;
 
-		R.set( 0, 0, 1.0 - 2.0*(y*y + z*z) );
-		R.set( 0, 1, 2.0 * ( x*y - z*w ) );
-		R.set( 0, 2, 2.0 * ( x*z + y*w ) );
+		R.set( 0, 0, q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3 );
+		R.set( 0, 1, 2.0 * ( q1 * q2 - q0 * q3 ) );
+		R.set( 0, 2, 2.0 * ( q1 * q3 + q0 * q2 ) );
 
-		R.set( 1, 0, 2.0 * ( x*y + z*w ) );
-		R.set( 1, 1, 1.0 - 2.0*(x*x + z*z));
-		R.set( 1, 2, 2.0 * ( y*z - x*w ) );
+		R.set( 1, 0, 2.0 * ( q1 * q2 + q0 * q3 ) );
+		R.set( 1, 1, q0 * q0 - q1 * q1 + q2 * q2 - q3 * q3 );
+		R.set( 1, 2, 2.0 * ( q2 * q3 - q0 * q1 ) );
 
-		R.set( 2, 0, 2.0 * ( x*z - y*w ) );
-		R.set( 2, 1, 2.0 * ( y*z + x*w ) );
-		R.set( 2, 2, 1.0 - 2.0*(x*x + y*y) );
+		R.set( 2, 0, 2.0 * ( q1 * q3 - q0 * q2 ) );
+		R.set( 2, 1, 2.0 * ( q2 * q3 + q0 * q1 ) );
+		R.set( 2, 2, q0 * q0 - q1 * q1 - q2 * q2 + q3 * q3 );
 
 		return R;
 	}
