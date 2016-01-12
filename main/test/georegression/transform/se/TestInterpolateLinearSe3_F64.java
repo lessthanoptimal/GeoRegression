@@ -18,7 +18,7 @@
 
 package georegression.transform.se;
 
-import georegression.geometry.RotationMatrixGenerator;
+import georegression.geometry.ConvertRotation3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.EulerType;
@@ -87,7 +87,7 @@ public class TestInterpolateLinearSe3_F64 {
 			double t = i / (double) 9;
 			alg.interpolate(t, c);
 
-			double euler[] = RotationMatrixGenerator.matrixToEuler(c.getR(),EulerType.XYZ,(double[])null);
+			double euler[] = ConvertRotation3D_F64.matrixToEuler(c.getR(),EulerType.XYZ,(double[])null);
 
 			assertEquals(1,c.T.x, GrlConstants.DOUBLE_TEST_TOL);
 			assertEquals(2,c.T.y, GrlConstants.DOUBLE_TEST_TOL);
@@ -113,7 +113,7 @@ public class TestInterpolateLinearSe3_F64 {
 			double t = i / (double) 9;
 			alg.interpolate(t, c);
 
-			double euler[] = RotationMatrixGenerator.matrixToEuler(c.getR(),EulerType.XYZ,(double[])null);
+			double euler[] = ConvertRotation3D_F64.matrixToEuler(c.getR(),EulerType.XYZ,(double[])null);
 
 			assertEquals(1+3*t,c.T.x, GrlConstants.DOUBLE_TEST_TOL);
 			assertEquals(2+2*t,c.T.y, GrlConstants.DOUBLE_TEST_TOL);
@@ -129,7 +129,7 @@ public class TestInterpolateLinearSe3_F64 {
 								  double rotX, double rotY , double rotZ ) {
 		Se3_F64 ret = new Se3_F64();
 		ret.setTranslation(x,y,z);
-		RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,rotX,rotY,rotZ,ret.R);
+		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,rotX,rotY,rotZ,ret.R);
 		return ret;
 	}
 }

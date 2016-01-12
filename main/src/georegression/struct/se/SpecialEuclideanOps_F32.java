@@ -18,7 +18,7 @@
 
 package georegression.struct.se;
 
-import georegression.geometry.RotationMatrixGenerator;
+import georegression.geometry.ConvertRotation3D_F32;
 import georegression.struct.EulerType;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.point.Vector3D_F32;
@@ -184,7 +184,7 @@ public class SpecialEuclideanOps_F32 {
 		if( se == null )
 			se = new Se3_F32();
 
-		RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, rotX, rotY, rotZ, se.getR() );
+		ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, rotX, rotY, rotZ, se.getR() );
 		Vector3D_F32 T = se.getT();
 		T.x = dx;
 		T.y = dy;

@@ -18,8 +18,8 @@
 
 package georegression.struct.se;
 
+import georegression.geometry.ConvertRotation3D_F64;
 import georegression.geometry.GeometryMath_F64;
-import georegression.geometry.RotationMatrixGenerator;
 import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.affine.Affine2D_F64;
@@ -140,7 +140,7 @@ public class TestSpecialEuclideanOps_F64 {
 
 		Point3D_F64 expected = SePointOps_F64.transform( se, orig, null );
 
-		DenseMatrix64F R = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0.1, 2, -0.3, se.getR() );
+		DenseMatrix64F R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0.1, 2, -0.3, se.getR() );
 
 		Point3D_F64 found = GeometryMath_F64.mult( R, orig, (Point3D_F64) null );
 		found.x += 2;

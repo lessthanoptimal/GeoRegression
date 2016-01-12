@@ -18,7 +18,7 @@
 
 package georegression.transform.se;
 
-import georegression.geometry.RotationMatrixGenerator;
+import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.so.Rodrigues_F64;
@@ -66,7 +66,7 @@ public class InterpolateLinearSe3_F64 {
 
 		CommonOps.multTransA(initial.getR(), end.getR(), R);
 
-		RotationMatrixGenerator.matrixToRodrigues(R,rotation);
+		ConvertRotation3D_F64.matrixToRodrigues(R,rotation);
 		rotMagnitude = rotation.theta;
 	}
 
@@ -78,7 +78,7 @@ public class InterpolateLinearSe3_F64 {
 	 */
 	public void interpolate( double where , Se3_F64 output ) {
 		rotation.setTheta(where*rotMagnitude);
-		RotationMatrixGenerator.rodriguesToMatrix(rotation,R);
+		ConvertRotation3D_F64.rodriguesToMatrix(rotation,R);
 
 		output.T.x = initial.T.x + where*translation.x;
 		output.T.y = initial.T.y + where*translation.y;

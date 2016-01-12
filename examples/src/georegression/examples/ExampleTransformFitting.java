@@ -20,7 +20,7 @@ package georegression.examples;
 
 import georegression.fitting.MotionTransformPoint;
 import georegression.fitting.se.MotionSe3PointSVD_F64;
-import georegression.geometry.RotationMatrixGenerator;
+import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.EulerType;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
@@ -41,7 +41,7 @@ public class ExampleTransformFitting {
 
 		// Create a transform which will be applied to the point cloud
 		Se3_F64 actual = new Se3_F64();
-		RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,0.5,-2,0.15,actual.R);
+		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,0.5,-2,0.15,actual.R);
 		actual.T.set(2,3,-2);
 
 		// Create a random point cloud and transform it

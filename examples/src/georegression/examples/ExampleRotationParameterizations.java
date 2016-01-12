@@ -18,7 +18,7 @@
 
 package georegression.examples;
 
-import georegression.geometry.RotationMatrixGenerator;
+import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F64;
 import georegression.struct.so.Rodrigues_F64;
@@ -33,16 +33,16 @@ public class ExampleRotationParameterizations {
 	public static void main(String[] args) {
 
 		// Euler to rotation matrix
-		DenseMatrix64F R = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,0.5,-1,-0.45,null);
+		DenseMatrix64F R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,0.5,-1,-0.45,null);
 
 		// matrix to Rodrigues
-		Rodrigues_F64 rod = RotationMatrixGenerator.matrixToRodrigues(R,(Rodrigues_F64)null);
+		Rodrigues_F64 rod = ConvertRotation3D_F64.matrixToRodrigues(R,(Rodrigues_F64)null);
 
 		// Rodrigues to Quaternion
-		Quaternion_F64 quat = RotationMatrixGenerator.rodriguesToQuaternion(rod,null);
+		Quaternion_F64 quat = ConvertRotation3D_F64.rodriguesToQuaternion(rod,null);
 
 		// Quaternion to Rotation Matrix
-		DenseMatrix64F T = RotationMatrixGenerator.quaternionToMatrix(quat,null);
+		DenseMatrix64F T = ConvertRotation3D_F64.quaternionToMatrix(quat,null);
 
 		// see if you get the same answer
 		R.print();

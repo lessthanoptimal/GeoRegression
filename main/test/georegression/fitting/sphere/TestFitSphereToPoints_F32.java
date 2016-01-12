@@ -18,8 +18,8 @@
 
 package georegression.fitting.sphere;
 
+import georegression.geometry.ConvertRotation3D_F32;
 import georegression.geometry.GeometryMath_F32;
-import georegression.geometry.RotationMatrixGenerator;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
@@ -93,9 +93,9 @@ public class TestFitSphereToPoints_F32 {
 		p.set(0,0,sphere.radius);
 
 		Rodrigues_F32 rodX = new Rodrigues_F32(phi,new Vector3D_F32(1,0,0));
-		DenseMatrix64F rotX = RotationMatrixGenerator.rodriguesToMatrix(rodX, null);
+		DenseMatrix64F rotX = ConvertRotation3D_F32.rodriguesToMatrix(rodX, null);
 		Rodrigues_F32 rodZ = new Rodrigues_F32(theta,new Vector3D_F32(0,0,1));
-		DenseMatrix64F rotZ = RotationMatrixGenerator.rodriguesToMatrix(rodZ, null);
+		DenseMatrix64F rotZ = ConvertRotation3D_F32.rodriguesToMatrix(rodZ, null);
 
 		GeometryMath_F32.mult(rotX, p, p);
 		GeometryMath_F32.mult(rotZ, p, p);

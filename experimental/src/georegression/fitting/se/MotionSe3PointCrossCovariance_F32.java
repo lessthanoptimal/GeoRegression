@@ -19,8 +19,8 @@
 package georegression.fitting.se;
 
 import georegression.fitting.MotionTransformPoint;
+import georegression.geometry.ConvertRotation3D_F32;
 import georegression.geometry.GeometryMath_F32;
-import georegression.geometry.RotationMatrixGenerator;
 import georegression.geometry.UtilPoint3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
@@ -163,7 +163,7 @@ public class MotionSe3PointCrossCovariance_F32 implements MotionTransformPoint<S
 		quat.z = (float) v_max.get( 3 );
 		quat.normalize();
 
-		RotationMatrixGenerator.quaternionToMatrix( quat, motion.getR() );
+		ConvertRotation3D_F32.quaternionToMatrix( quat, motion.getR() );
 	}
 
 	@Override

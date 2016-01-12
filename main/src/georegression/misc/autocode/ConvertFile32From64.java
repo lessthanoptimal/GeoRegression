@@ -99,6 +99,7 @@ public class ConvertFile32From64 {
 		s = s.replaceAll( "GrlConstants.PId2", "GrlConstants.F_PId2" );
 		s = s.replaceAll( "GrlConstants.EPS", "GrlConstants.F_EPS" );
 		s = replaceStartString( s, "Math.", "(float)Math." );
+		s = replaceStartString( s, "-Math.", "(float)-Math." );
 		s = replaceStartString( s, "rand.nextGaussian", "(float)rand.nextGaussian" );
 		s = handleFloats( s );
 

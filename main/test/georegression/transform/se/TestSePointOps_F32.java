@@ -18,7 +18,7 @@
 
 package georegression.transform.se;
 
-import georegression.geometry.RotationMatrixGenerator;
+import georegression.geometry.ConvertRotation3D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.point.Point2D_F32;
@@ -131,7 +131,7 @@ public class TestSePointOps_F32 {
 
 	@Test
 	public void transform_3d_single() {
-		DenseMatrix64F R = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0, (float)Math.PI / 2, 0, null );
+		DenseMatrix64F R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0, (float)Math.PI / 2, 0, null );
 		Vector3D_F32 T = new Vector3D_F32( 1, 2, 3 );
 
 		Point3D_F32 P = new Point3D_F32( 1, 7, 9 );
@@ -148,7 +148,7 @@ public class TestSePointOps_F32 {
 
 	@Test
 	public void transformReverse_3d_single() {
-		DenseMatrix64F R = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0, (float)Math.PI / 2, 0, null );
+		DenseMatrix64F R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0, (float)Math.PI / 2, 0, null );
 		Vector3D_F32 T = new Vector3D_F32( 1, 2, 3 );
 
 		Point3D_F32 P = new Point3D_F32( 10, 9, 2 );

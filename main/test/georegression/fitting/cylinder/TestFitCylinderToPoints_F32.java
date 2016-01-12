@@ -18,8 +18,8 @@
 
 package georegression.fitting.cylinder;
 
+import georegression.geometry.ConvertRotation3D_F32;
 import georegression.geometry.GeometryMath_F32;
-import georegression.geometry.RotationMatrixGenerator;
 import georegression.metric.Distance3D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F32;
@@ -127,7 +127,7 @@ public class TestFitCylinderToPoints_F32 {
 		angle = (float)Math.acos( angle / (cylinder.line.slope.norm()));
 
 		Rodrigues_F32 rod = new Rodrigues_F32(angle,cross);
-		DenseMatrix64F R = RotationMatrixGenerator.rodriguesToMatrix(rod, null);
+		DenseMatrix64F R = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
 
 		GeometryMath_F32.mult(R, p, p);
 		p.x += cylinder.line.p.x;
