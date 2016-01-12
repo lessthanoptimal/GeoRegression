@@ -439,29 +439,49 @@ public class TestRotationMatrixGenerator {
 	@Test
 	public void matrixToEuler() {
 		for(EulerType type : EulerType.values() ) {
-			System.out.println("type = "+type);
+//			System.out.println("type = "+type);
 
 			double PId2 = Math.PI/2.0;
+			double PI = Math.PI;
 
-			quaternionToEuler(type,0,0,0);
+			matrixToEuler(type,0,0,0);
 
 			// single axis
-			quaternionToEuler(type,PId2,0,0);
-			quaternionToEuler(type,0,PId2,0);
-			quaternionToEuler(type,0,0,PId2);
-			quaternionToEuler(type,-PId2,0,0);
-			quaternionToEuler(type,0,-PId2,0);
-			quaternionToEuler(type,0,0,-PId2);
+			matrixToEuler(type,PId2,0,0);
+			matrixToEuler(type,0,PId2,0);
+			matrixToEuler(type,0,0,PId2);
+			matrixToEuler(type,-PId2,0,0);
+			matrixToEuler(type,0,-PId2,0);
+			matrixToEuler(type,0,0,-PId2);
+			matrixToEuler(type,PI,0,0);
+			matrixToEuler(type,0,0,PI);
+			matrixToEuler(type,-PI,0,0);
+			matrixToEuler(type,0,0,-PI);
 
 			// two axis maybe pathological
-			quaternionToEuler(type,PId2,PId2,0);
-			quaternionToEuler(type,PId2,0,PId2);
+			for (int i = 0; i < 4; i++) {
+				double sgn0 = i%2==0?1:-1;
+				double sgn1 = i/2==0?1:-1;
+//				System.out.println(sgn0+" "+sgn1);
 
-			quaternionToEuler(type,PId2,PId2,0);
-			quaternionToEuler(type,0,PId2,PId2);
+				matrixToEuler(type,sgn0*PId2,sgn1*PId2,0);
+				matrixToEuler(type,sgn0*PId2,0,sgn1*PId2);
 
-			quaternionToEuler(type,PId2,0,PId2);
-			quaternionToEuler(type,0,PId2,PId2);
+				matrixToEuler(type,sgn0*PId2,sgn1*PId2,0);
+				matrixToEuler(type,0,sgn0*PId2,sgn1*PId2);
+
+				matrixToEuler(type,sgn0*PId2,0,sgn1*PId2);
+				matrixToEuler(type,0,sgn0*PId2,sgn1*PId2);
+
+				matrixToEuler(type,sgn0*PI,sgn1*PId2,0);
+				matrixToEuler(type,sgn0*PI,0,sgn1*PI);
+
+				matrixToEuler(type,sgn0*PI,sgn1*PId2,0);
+				matrixToEuler(type,0,sgn0*PId2,sgn1*PI);
+
+				matrixToEuler(type,sgn0*PI,0,sgn1*PI);
+				matrixToEuler(type,0,sgn0*PId2,sgn1*PI);
+			}
 
 			for (int i = 0; i < 30; i++) {
 				double rotA = 2.0*rand.nextDouble()*Math.PI-Math.PI;
@@ -475,11 +495,11 @@ public class TestRotationMatrixGenerator {
 
 	private void matrixToEuler(EulerType type , double rotA , double rotB , double rotC )
 	{
-		DenseMatrix64F expected = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,rotA,rotB,rotC,null);
+		DenseMatrix64F expected = RotationMatrixGenerator.eulerToMatrix(type,rotA,rotB,rotC,null);
 
 		double euler[] = RotationMatrixGenerator.matrixToEuler(expected,type,null);
 
-		DenseMatrix64F found = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ,euler[0],euler[1],euler[2],null);
+		DenseMatrix64F found = RotationMatrixGenerator.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
 		DenseMatrix64F difference = new DenseMatrix64F(3,3);
 		CommonOps.multTransB(expected,found,difference);

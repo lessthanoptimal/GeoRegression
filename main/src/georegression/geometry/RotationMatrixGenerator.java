@@ -215,51 +215,51 @@ public class RotationMatrixGenerator {
 
 		switch(type){
 			case ZYX:
-				TanSinTan(-2,1,  3,  -6,9, R,euler);
+				TanSinTan(-2,1,  3,  -6,9,  5,-7,4,8, R,euler);//4,5,7,8
 				break;
 
 			case ZYZ:
-				TanCosTan(8,-7,  9,   6,3, R,euler);
+				TanCosTan(8,-7,  9,   6,3,  5,-7,4,8,  R,euler);
 				break;
 
 			case ZXY:
-				TanSinTan(4,5,  -6,   3,9, R,euler);
+				TanSinTan(4,5,  -6,   3,9,  1,8,-2,7,  R,euler);
 				break;
 
 			case ZXZ:
-				TanCosTan(7,8,   9,  3,-6, R,euler);
+				TanCosTan(7,8,   9,  3,-6,  1,8,-2,7,  R,euler);
 				break;
 
 			case YXZ:
-				TanSinTan(-7,9,  8, -2,5, R,euler);
+				TanSinTan(-7,9,  8, -2,5,  1,-6,3,4,  R,euler);
 				break;
 
 			case YXY:
-				TanCosTan(4,-6,  5,  2,8, R,euler);
+				TanCosTan(4,-6,  5,  2,8,  1,-6,3,4,  R,euler);
 				break;
 
 			case YZX:
-				TanSinTan(3,1,  -2,  8,5, R,euler);
+				TanSinTan(3,1,  -2,  8,5,  9,4,-7,6,  R,euler);
 				break;
 
 			case YZY:
-				TanCosTan(6,4,   5,  8,-2, R,euler);
+				TanCosTan(6,4,   5,  8,-2, 9,4,-7,6,  R,euler);
 				break;
 
 			case XYZ:
-				TanSinTan(8,9,  -7,  4,1, R,euler);
+				TanSinTan(8,9,  -7,  4,1,  5,3,-6,2,  R,euler);
 				break;
 
 			case XYX:
-				TanCosTan(2,3,   1,  4,-7, R,euler);
+				TanCosTan(2,3,   1,  4,-7, 5,3,-6,2,  R,euler);
 				break;
 
 			case XZY:
-				TanSinTan(-6,5,  4, -7,1, R,euler);
+				TanSinTan(-6,5,  4, -7,1,  9,-2,8,3,  R,euler);
 				break;
 
 			case XZX:
-				TanCosTan(3,-2,  1,  7,4, R,euler);
+				TanCosTan(3,-2,  1,  7,4,  9,-2,8,3,  R,euler);
 				break;
 
 			default:
@@ -270,7 +270,8 @@ public class RotationMatrixGenerator {
 	}
 
 	private static void TanSinTan( int y0 , int x0 , int sin1 , int y2 , int x2 ,
-								  DenseMatrix64F R , double euler[] ) {
+								   int cos0a , int cos0b , int sin0a , int sin0b,
+								   DenseMatrix64F R , double euler[] ) {
 
 		double val_y0 = get(R,y0);
 		double val_x0 = get(R,x0);
@@ -279,7 +280,15 @@ public class RotationMatrixGenerator {
 		double val_x2 = get(R,x2);
 
 		if( 1.0-Math.abs(val_sin1) <= GrlConstants.EPS ) {
-			throw new RuntimeException("This case isn't handled yet");
+
+			double sign = Math.signum(val_sin1);
+
+			double sin0 = (get(R,sin0a)+sign*get(R,sin0b))/2.0;
+			double cos0 = (get(R,cos0a)+sign*get(R,cos0b))/2.0;
+
+			euler[0] = Math.atan2(sin0,cos0);
+			euler[1] = sign*Math.PI/2.0;
+			euler[2] = 0;
 		} else {
 			euler[0] = Math.atan2(val_y0,val_x0);
 			euler[1] = Math.asin(val_sin1);
@@ -288,6 +297,7 @@ public class RotationMatrixGenerator {
 	}
 
 	private static void TanCosTan( int y0 , int x0 , int cos1 , int y2 , int x2 ,
+								   int cos0a , int cos0b , int sin0a , int sin0b,
 								  DenseMatrix64F R , double euler[] ) {
 
 		double val_y0 = get(R,y0);
@@ -297,7 +307,12 @@ public class RotationMatrixGenerator {
 		double val_x2 = get(R,x2);
 
 		if( 1.0-Math.abs(val_cos1) <= GrlConstants.EPS ) {
-			throw new RuntimeException("This case isn't handled yet");
+			double sin0 = (get(R,sin0a)+get(R,sin0b))/2.0;
+			double cos0 = (get(R,cos0a)+get(R,cos0b))/2.0;
+
+			euler[0] = Math.atan2(sin0,cos0);
+			euler[1] = 0;
+			euler[2] = 0;
 		} else {
 			euler[0] = Math.atan2(val_y0,val_x0);
 			euler[1] = Math.acos(val_cos1);
