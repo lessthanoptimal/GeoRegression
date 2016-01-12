@@ -87,7 +87,7 @@ public class TestInterpolateLinearSe3_F64 {
 			double t = i / (double) 9;
 			alg.interpolate(t, c);
 
-			double euler[] = RotationMatrixGenerator.matrixToEulerXYZ(c.getR(),(double[])null);
+			double euler[] = RotationMatrixGenerator.matrixToEuler(c.getR(),EulerType.XYZ,(double[])null);
 
 			assertEquals(1,c.T.x, GrlConstants.DOUBLE_TEST_TOL);
 			assertEquals(2,c.T.y, GrlConstants.DOUBLE_TEST_TOL);
@@ -113,7 +113,7 @@ public class TestInterpolateLinearSe3_F64 {
 			double t = i / (double) 9;
 			alg.interpolate(t, c);
 
-			double euler[] = RotationMatrixGenerator.matrixToEulerXYZ(c.getR(),(double[])null);
+			double euler[] = RotationMatrixGenerator.matrixToEuler(c.getR(),EulerType.XYZ,(double[])null);
 
 			assertEquals(1+3*t,c.T.x, GrlConstants.DOUBLE_TEST_TOL);
 			assertEquals(2+2*t,c.T.y, GrlConstants.DOUBLE_TEST_TOL);

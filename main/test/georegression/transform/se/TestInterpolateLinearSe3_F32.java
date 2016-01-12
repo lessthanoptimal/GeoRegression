@@ -87,7 +87,7 @@ public class TestInterpolateLinearSe3_F32 {
 			float t = i / (float) 9;
 			alg.interpolate(t, c);
 
-			float euler[] = RotationMatrixGenerator.matrixToEulerXYZ(c.getR(),(float[])null);
+			float euler[] = RotationMatrixGenerator.matrixToEuler(c.getR(),EulerType.XYZ,(float[])null);
 
 			assertEquals(1,c.T.x, GrlConstants.FLOAT_TEST_TOL);
 			assertEquals(2,c.T.y, GrlConstants.FLOAT_TEST_TOL);
@@ -113,7 +113,7 @@ public class TestInterpolateLinearSe3_F32 {
 			float t = i / (float) 9;
 			alg.interpolate(t, c);
 
-			float euler[] = RotationMatrixGenerator.matrixToEulerXYZ(c.getR(),(float[])null);
+			float euler[] = RotationMatrixGenerator.matrixToEuler(c.getR(),EulerType.XYZ,(float[])null);
 
 			assertEquals(1+3*t,c.T.x, GrlConstants.FLOAT_TEST_TOL);
 			assertEquals(2+2*t,c.T.y, GrlConstants.FLOAT_TEST_TOL);

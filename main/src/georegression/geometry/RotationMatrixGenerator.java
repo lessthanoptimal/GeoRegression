@@ -24,7 +24,6 @@ import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Quaternion_F64;
 import georegression.struct.so.Rodrigues_F32;
 import georegression.struct.so.Rodrigues_F64;
-import org.ejml.UtilEjml;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
@@ -68,6 +67,20 @@ public class RotationMatrixGenerator {
 		R.data[8] = c + z * z * oc;
 
 		return R;
+	}
+
+	/**
+	 * <p>Converts{@link georegression.struct.so.Rodrigues_F64} into an euler rotation of different types</p>
+	 *
+	 * @param rodrigues rotation defined using rotation axis angle notation.
+	 * @param type Type of Euler rotation
+	 * @param euler (Output) Optional storage for Euler rotation
+	 * @return The Euler rotation.
+	 */
+	public static double[] rodriguesToEuler(Rodrigues_F64 rodrigues , EulerType type , double []euler )
+	{
+		DenseMatrix64F R = rodriguesToMatrix(rodrigues,null);
+		return matrixToEuler(R,type,euler);
 	}
 
 	/**
@@ -199,6 +212,17 @@ public class RotationMatrixGenerator {
 	{
 		DenseMatrix64F R = quaternionToMatrix(q,null);
 		return matrixToEuler(R,type,euler);
+	}
+
+	public static float[] matrixToEuler(DenseMatrix64F R , EulerType type , float[] euler ) {
+		if( euler == null )
+			euler = new float[3];
+		double[] d = matrixToEuler(R,type,(double[])null);
+		euler[0] = (float)d[0];
+		euler[1] = (float)d[1];
+		euler[2] = (float)d[2];
+
+		return euler;
 	}
 
 	/**
@@ -634,110 +658,6 @@ public class RotationMatrixGenerator {
 			default:
 				throw new IllegalArgumentException( "Unknown which" );
 		}
-	}
-
-	/**
-	 * <p>
-	 * Given a rotation matrix it will compute the XYZ euler angles.
-	 * </p>
-	 * <p>
-	 * See Internet PDF "Computing Euler angles from a rotation matrix" by Gregory G. Slabaugh.
-	 * </p>
-	 */
-	public static double[] matrixToEulerXYZ( DenseMatrix64F M , double euler[] ) {
-		if( euler == null )
-			euler = new double[3];
-
-		double m31 = M.get( 2, 0 );
-
-		double rotX, rotY, rotZ;
-
-
-		if( Math.abs( Math.abs( m31 ) - 1 ) < UtilEjml.EPS ) {
-			double m12 = M.get( 0, 1 );
-			double m13 = M.get( 0, 2 );
-
-			rotZ = 0;
-			double gamma = Math.atan2( m12, m13 );
-
-			if( m31 < 0 ) {
-				rotY = Math.PI / 2.0;
-				rotX = rotZ + gamma;
-			} else {
-				rotY = -Math.PI / 2.0;
-				rotX = -rotZ + gamma;
-			}
-		} else {
-			double m32 = M.get( 2, 1 );
-			double m33 = M.get( 2, 2 );
-
-			double m21 = M.get( 1, 0 );
-			double m11 = M.get( 0, 0 );
-
-			rotY = -Math.asin( m31 );
-			double cosRotY = Math.cos( rotY );
-			rotX = Math.atan2( m32 / cosRotY, m33 / cosRotY );
-			rotZ = Math.atan2( m21 / cosRotY, m11 / cosRotY );
-
-		}
-
-		euler[0] = rotX;
-		euler[1] = rotY;
-		euler[2] = rotZ;
-
-		return euler;
-	}
-
-	/**
-	 * <p>
-	 * Given a rotation matrix it will compute the XYZ euler angles.
-	 * </p>
-	 * <p>
-	 * See Internet PDF "Computing Euler angles from a rotation matrix" by Gregory G. Slabaugh.
-	 * </p>
-	 */
-	public static float[] matrixToEulerXYZ( DenseMatrix64F M , float euler[] ) {
-		if( euler == null )
-			euler = new float[3];
-
-		double m31 = M.get( 2, 0 );
-
-		double rotX, rotY, rotZ;
-
-
-		if( Math.abs( Math.abs( m31 ) - 1 ) < GrlConstants.EPS) {
-			double m12 = M.get( 0, 1 );
-			double m13 = M.get( 0, 2 );
-
-			rotZ = 0;
-			double gamma = Math.atan2( m12, m13 );
-
-			if( m31 < 0 ) {
-				rotY = Math.PI / 2.0;
-				rotX = rotZ + gamma;
-			} else {
-				rotY = -Math.PI / 2.0;
-				rotX = -rotZ + gamma;
-			}
-		} else {
-			double m32 = M.get( 2, 1 );
-			double m33 = M.get( 2, 2 );
-
-			double m21 = M.get( 1, 0 );
-			double m11 = M.get( 0, 0 );
-
-			rotY = -Math.asin( m31 );
-			double cosRotY = Math.cos( rotY );
-			rotX = Math.atan2( m32 / cosRotY, m33 / cosRotY );
-			rotZ = Math.atan2( m21 / cosRotY, m11 / cosRotY );
-
-		}
-
-		euler[0] = (float)rotX;
-		euler[1] = (float)rotY;
-		euler[2] = (float)rotZ;
-
-		return euler;
 	}
 
 	/**

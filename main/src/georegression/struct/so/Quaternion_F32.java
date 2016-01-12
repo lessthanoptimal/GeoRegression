@@ -29,8 +29,8 @@ import java.io.Serializable;
  *
  * <p>
  * If the quaternion is a unit quaternion then the following is true:<br>
- * q = cos(theta/2) + u*sin(theta/2)<br>
- * where 'theta' is the angle of rotation, u=(x,y,z) is the unit axis of rotation.
+ * q = cos(theta/2) + (x*i + y*j + z*k)*sin(theta/2)<br>
+ * where 'theta' is the angle of rotation, (x,y,z) is the unit axis of rotation.
  * </p>
  *
  * @author Peter Abeles

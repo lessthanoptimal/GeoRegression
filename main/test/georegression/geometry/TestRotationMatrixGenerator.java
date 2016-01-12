@@ -35,6 +35,8 @@ import org.ejml.ops.MatrixFeatures;
 import org.ejml.ops.RandomMatrices;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Random;
 
 import static georegression.misc.GrlConstants.F_PI;
@@ -60,6 +62,25 @@ public class TestRotationMatrixGenerator {
 		DenseMatrix64F rod = RotationMatrixGenerator.rodriguesToMatrix( r, null );
 
 		assertTrue( MatrixFeatures.isIdentical( rotZ, rod, GrlConstants.DOUBLE_TEST_TOL ) );
+	}
+
+	@Test
+	public void rodriguesToEuler() throws InvocationTargetException, IllegalAccessException {
+		somethingToEulerTest("rodriguesToEuler",rand);
+	}
+
+	public static void rodriguesToEuler(EulerType type , double rotA , double rotB , double rotC )
+	{
+		DenseMatrix64F expected = RotationMatrixGenerator.eulerToMatrix(type,rotA,rotB,rotC,null);
+
+		Rodrigues_F64 rod = RotationMatrixGenerator.matrixToRodrigues(expected,(Rodrigues_F64)null);
+
+		double[] euler = RotationMatrixGenerator.rodriguesToEuler(rod,type,null);
+		DenseMatrix64F found = RotationMatrixGenerator.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
+
+		DenseMatrix64F difference = new DenseMatrix64F(3,3);
+		CommonOps.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures.isIdentity(difference,Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
 	}
 
 	@Test
@@ -137,43 +158,11 @@ public class TestRotationMatrixGenerator {
 	}
 
 	@Test
-	public void quaternionToEuler() {
-		for(EulerType type : EulerType.values() ) {
-			System.out.println("type = "+type);
-
-			double PId2 = Math.PI/2.0;
-
-			quaternionToEuler(type,0,0,0);
-
-			// single axis
-			quaternionToEuler(type,PId2,0,0);
-			quaternionToEuler(type,0,PId2,0);
-			quaternionToEuler(type,0,0,PId2);
-			quaternionToEuler(type,-PId2,0,0);
-			quaternionToEuler(type,0,-PId2,0);
-			quaternionToEuler(type,0,0,-PId2);
-
-			// two axis maybe pathological
-			quaternionToEuler(type,PId2,PId2,0);
-			quaternionToEuler(type,PId2,0,PId2);
-
-			quaternionToEuler(type,PId2,PId2,0);
-			quaternionToEuler(type,0,PId2,PId2);
-
-			quaternionToEuler(type,PId2,0,PId2);
-			quaternionToEuler(type,0,PId2,PId2);
-
-			for (int i = 0; i < 30; i++) {
-				double rotA = 2.0*rand.nextDouble()*Math.PI-Math.PI;
-				double rotB = rand.nextDouble()*Math.PI-Math.PI/2.0;
-				double rotC = 2.0*rand.nextDouble()*Math.PI-Math.PI;
-
-				quaternionToEuler(type,rotA,rotB,rotC);
-			}
-		}
+	public void quaternionToEuler() throws InvocationTargetException, IllegalAccessException {
+		somethingToEulerTest("quaternionToEuler",rand);
 	}
 
-	private void quaternionToEuler(EulerType type , double rotA , double rotB , double rotC )
+	public static void quaternionToEuler(EulerType type , double rotA , double rotB , double rotC )
 	{
 		DenseMatrix64F expected = RotationMatrixGenerator.eulerToMatrix(type,rotA,rotB,rotC,null);
 
@@ -437,98 +426,21 @@ public class TestRotationMatrixGenerator {
 	}
 
 	@Test
-	public void matrixToEuler() {
-		for(EulerType type : EulerType.values() ) {
-//			System.out.println("type = "+type);
-
-			double PId2 = Math.PI/2.0;
-			double PI = Math.PI;
-
-			matrixToEuler(type,0,0,0);
-
-			// single axis
-			matrixToEuler(type,PId2,0,0);
-			matrixToEuler(type,0,PId2,0);
-			matrixToEuler(type,0,0,PId2);
-			matrixToEuler(type,-PId2,0,0);
-			matrixToEuler(type,0,-PId2,0);
-			matrixToEuler(type,0,0,-PId2);
-			matrixToEuler(type,PI,0,0);
-			matrixToEuler(type,0,0,PI);
-			matrixToEuler(type,-PI,0,0);
-			matrixToEuler(type,0,0,-PI);
-
-			// two axis maybe pathological
-			for (int i = 0; i < 4; i++) {
-				double sgn0 = i%2==0?1:-1;
-				double sgn1 = i/2==0?1:-1;
-//				System.out.println(sgn0+" "+sgn1);
-
-				matrixToEuler(type,sgn0*PId2,sgn1*PId2,0);
-				matrixToEuler(type,sgn0*PId2,0,sgn1*PId2);
-
-				matrixToEuler(type,sgn0*PId2,sgn1*PId2,0);
-				matrixToEuler(type,0,sgn0*PId2,sgn1*PId2);
-
-				matrixToEuler(type,sgn0*PId2,0,sgn1*PId2);
-				matrixToEuler(type,0,sgn0*PId2,sgn1*PId2);
-
-				matrixToEuler(type,sgn0*PI,sgn1*PId2,0);
-				matrixToEuler(type,sgn0*PI,0,sgn1*PI);
-
-				matrixToEuler(type,sgn0*PI,sgn1*PId2,0);
-				matrixToEuler(type,0,sgn0*PId2,sgn1*PI);
-
-				matrixToEuler(type,sgn0*PI,0,sgn1*PI);
-				matrixToEuler(type,0,sgn0*PId2,sgn1*PI);
-			}
-
-			for (int i = 0; i < 30; i++) {
-				double rotA = 2.0*rand.nextDouble()*Math.PI-Math.PI;
-				double rotB = rand.nextDouble()*Math.PI-Math.PI/2.0;
-				double rotC = 2.0*rand.nextDouble()*Math.PI-Math.PI;
-
-				matrixToEuler(type,rotA,rotB,rotC);
-			}
-		}
+	public void matrixToEuler() throws InvocationTargetException, IllegalAccessException {
+		somethingToEulerTest("matrixToEuler",rand);
 	}
 
-	private void matrixToEuler(EulerType type , double rotA , double rotB , double rotC )
+	public static void matrixToEuler(EulerType type , double rotA , double rotB , double rotC )
 	{
 		DenseMatrix64F expected = RotationMatrixGenerator.eulerToMatrix(type,rotA,rotB,rotC,null);
 
-		double euler[] = RotationMatrixGenerator.matrixToEuler(expected,type,null);
+		double euler[] = RotationMatrixGenerator.matrixToEuler(expected,type,(double[])null);
 
 		DenseMatrix64F found = RotationMatrixGenerator.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
 		DenseMatrix64F difference = new DenseMatrix64F(3,3);
 		CommonOps.multTransB(expected,found,difference);
 		assertTrue(MatrixFeatures.isIdentity(difference,Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
-	}
-
-
-	@Test
-	public void matrixToEulerXYZ_F64() {
-		// test case one
-		DenseMatrix64F A = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0.1, -0.5, -0.96, null );
-		double[] euler = RotationMatrixGenerator.matrixToEulerXYZ( A , (double[])null );
-		DenseMatrix64F B = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, euler[0], euler[1], euler[2], null );
-
-		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
-
-		// now try a pathological case
-		A = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0.1, -0.5, 0, null );
-		euler = RotationMatrixGenerator.matrixToEulerXYZ( A , (double[])null );
-		B = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, euler[0], euler[1], euler[2], null );
-
-		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
-
-		// try all zeros
-		A = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, 0, 0, 0, null );
-		euler = RotationMatrixGenerator.matrixToEulerXYZ( A , (double[])null );
-		B = RotationMatrixGenerator.eulerToMatrix(EulerType.XYZ, euler[0], euler[1], euler[2], null );
-
-		assertTrue( MatrixFeatures.isIdentical( A, B, 1e-8 ) );
 	}
 
 	/**
@@ -667,5 +579,73 @@ public class TestRotationMatrixGenerator {
 		p.set( 1, 0, 0 );
 		GeometryMath_F32.mult( R, p, p );
 		GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.FLOAT_TEST_TOL );
+	}
+
+	/**
+	 * Standard checks for converting one parameterization into Euler.  Checks special cases with rotations of 90 and
+	 * 180 degrees plus random ones
+	 */
+	public static void somethingToEulerTest(String functionName , Random rand ) throws InvocationTargetException, IllegalAccessException {
+
+		Method m;
+		try {
+			m = TestRotationMatrixGenerator.class.getMethod(functionName,EulerType.class,double.class,double.class,double.class);
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+
+		for(EulerType type : EulerType.values() ) {
+//			System.out.println("type = "+type);
+
+			double PId2 = Math.PI/2.0;
+			double PI = Math.PI;
+
+			m.invoke(null,type,0,0,0);
+
+			// single axis
+			m.invoke(null,type,PId2,0,0);
+			m.invoke(null,type,0,PId2,0);
+			m.invoke(null,type,0,0,PId2);
+			m.invoke(null,type,-PId2,0,0);
+			m.invoke(null,type,0,-PId2,0);
+			m.invoke(null,type,0,0,-PId2);
+			m.invoke(null,type,PI,0,0);
+			m.invoke(null,type,0,0,PI);
+			m.invoke(null,type,-PI,0,0);
+			m.invoke(null,type,0,0,-PI);
+
+			// two axis maybe pathological
+			for (int i = 0; i < 4; i++) {
+				double sgn0 = i%2==0?1:-1;
+				double sgn1 = i/2==0?1:-1;
+//				System.out.println(sgn0+" "+sgn1);
+
+				m.invoke(null,type,sgn0*PId2,sgn1*PId2,0);
+				m.invoke(null,type,sgn0*PId2,0,sgn1*PId2);
+
+				m.invoke(null,type,sgn0*PId2,sgn1*PId2,0);
+				m.invoke(null,type,0,sgn0*PId2,sgn1*PId2);
+
+				m.invoke(null,type,sgn0*PId2,0,sgn1*PId2);
+				m.invoke(null,type,0,sgn0*PId2,sgn1*PId2);
+
+				m.invoke(null,type,sgn0*PI,sgn1*PId2,0);
+				m.invoke(null,type,sgn0*PI,0,sgn1*PI);
+
+				m.invoke(null,type,sgn0*PI,sgn1*PId2,0);
+				m.invoke(null,type,0,sgn0*PId2,sgn1*PI);
+
+				m.invoke(null,type,sgn0*PI,0,sgn1*PI);
+				m.invoke(null,type,0,sgn0*PId2,sgn1*PI);
+			}
+
+			for (int i = 0; i < 30; i++) {
+				double rotA = 2.0*rand.nextDouble()*Math.PI-Math.PI;
+				double rotB = rand.nextDouble()*Math.PI-Math.PI/2.0;
+				double rotC = 2.0*rand.nextDouble()*Math.PI-Math.PI;
+
+				m.invoke(null,type,rotA,rotB,rotC);
+			}
+		}
 	}
 }
