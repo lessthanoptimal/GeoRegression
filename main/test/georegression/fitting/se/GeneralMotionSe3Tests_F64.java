@@ -65,7 +65,6 @@ public abstract class GeneralMotionSe3Tests_F64 {
 
 			assertTrue( alg.process( src, dst ) );
 
-
 			Se3_F64 foundSrcToDst = alg.getTransformSrcToDst();
 
 			checkTransform( src, dst, foundSrcToDst, GrlConstants.DOUBLE_TEST_TOL );
@@ -94,8 +93,8 @@ public abstract class GeneralMotionSe3Tests_F64 {
 
 			Se3_F64 tranFound = alg.getTransformSrcToDst();
 			
-			R.print();
-			tranFound.getR().print();
+//			R.print();
+//			tranFound.getR().print();
 			
 			checkTransform( from, to, tranFound, GrlConstants.DOUBLE_TEST_TOL );
 		}

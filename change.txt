@@ -12,6 +12,10 @@ Version : 0.10
   * distance from origin for parametric line
 - UtilPoint2D_F
   * Mean from array
+- Renamed RotationMatrixGenerator to ConvertRotation3D
+  * Broken up into F64 and F32
+- Added support for all 3-axis Euler angles
+- New equations for some conversions too and from rotation matrix
 
 ---------------------------------------------
 Date    : 2015/11/07

@@ -19,8 +19,10 @@
 package georegression.struct;
 
 /**
- * Enumerated types for different Euler rotations. Axises A,B,C indicate which coordinate axis is rotated first
- * to third.  0 = axis-x, 1 = axis-y, 2 = axis-z.
+ * Enumerated types for each possible Euler coordinate composed of three rotations.
+ * Axises A,B,C indicate which coordinate axis is rotated first to third.  0 = axis-x, 1 = axis-y, 2 = axis-z.
+ * The order in which the rotations are applied is from left to right.  E.g. XYZ first applies the rotation around
+ * x-axis, followed by y-axis, then z-axis.
  *
  * @author Peter Abeles
  */
@@ -45,14 +47,23 @@ public enum EulerType {
 		this.axisC = axisC;
 	}
 
+	/**
+	 * Returns the axis in which first rotation is performed around
+	 */
 	public int getAxisA() {
 		return axisA;
 	}
 
+	/**
+	 * Returns the axis in which second rotation is performed around
+	 */
 	public int getAxisB() {
 		return axisB;
 	}
 
+	/**
+	 * Returns the axis in which third rotation is performed around
+	 */
 	public int getAxisC() {
 		return axisC;
 	}

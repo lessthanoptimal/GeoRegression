@@ -267,20 +267,62 @@ public class ConvertRotation3D_F64 {
 		}
 	}
 
-
 	/**
 	 * Extracts quaternions from the provided rotation matrix.
 	 *
 	 * @param R (Input) rotation matrix
-	 * @param quat (Output) Optional storage for quaternion.  If null a new class will be dR.get( 0, 0 ) + R.get( 1, 1 ) + R.get( 2, 2 )eclared.
+	 * @param quat (Output) Optional storage for quaternion.  If null a new class will be used.
 	 * @return unit quaternion representation of the rotation matrix.
 	 */
 	public static Quaternion_F64 matrixToQuaternion( DenseMatrix64F R, Quaternion_F64 quat ) {
-		// first get rodrigues
-		Rodrigues_F64 r = matrixToRodrigues( R, (Rodrigues_F64)null );
 
-		// then convert to quaternions
-		return rodriguesToQuaternion( r, quat );
+		if( quat == null )
+			quat = new Quaternion_F64();
+
+		// algorithm from:
+		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
+		//
+		// Designed to minimize numerical error by not dividing by very small numbers
+
+		double m00 = (double)R.unsafe_get(0,0);
+		double m01 = (double)R.unsafe_get(0,1);
+		double m02 = (double)R.unsafe_get(0,2);
+		double m10 = (double)R.unsafe_get(1,0);
+		double m11 = (double)R.unsafe_get(1,1);
+		double m12 = (double)R.unsafe_get(1,2);
+		double m20 = (double)R.unsafe_get(2,0);
+		double m21 = (double)R.unsafe_get(2,1);
+		double m22 = (double)R.unsafe_get(2,2);
+
+		double trace = m00 + m11 + m22;
+
+		if (trace > 0) {
+			double S = Math.sqrt(trace+1.0) * 2; // S=4*qw
+			quat.w = 0.25 * S;
+			quat.x = (m21 - m12) / S;
+			quat.y = (m02 - m20) / S;
+			quat.z = (m10 - m01) / S;
+		} else if ((m00 > m11)&(m00 > m22)) {
+			double S = Math.sqrt(1.0 + m00 - m11 - m22) * 2; // S=4*qx
+			quat.w = (m21 - m12) / S;
+			quat.x = 0.25 * S;
+			quat.y = (m01 + m10) / S;
+			quat.z = (m02 + m20) / S;
+		} else if (m11 > m22) {
+			double S = Math.sqrt(1.0 + m11 - m00 - m22) * 2; // S=4*qy
+			quat.w = (m02 - m20) / S;
+			quat.x = (m01 + m10) / S;
+			quat.y = 0.25 * S;
+			quat.z = (m12 + m21) / S;
+		} else {
+			double S = Math.sqrt(1.0 + m22 - m00 - m11) * 2; // S=4*qz
+			quat.w = (m10 - m01) / S;
+			quat.x = (m02 + m20) / S;
+			quat.y = (m12 + m21) / S;
+			quat.z = 0.25 * S;
+		}
+
+		return quat;
 	}
 
 	/**
@@ -455,9 +497,9 @@ public class ConvertRotation3D_F64 {
 	/**
 	 * Converts an Euler coordinate into a rotation matrix.  Different type of Euler coordinates are accepted.
 	 * @param type Which Euler coordinate is the input in
-	 * @param rotA Angle of rotation around axis A
-	 * @param rotB Angle of rotation around axis B
-	 * @param rotC Angle of rotation around axis C
+	 * @param rotA Angle of rotation around axis A.  First rotation
+	 * @param rotB Angle of rotation around axis B   Second rotation
+	 * @param rotC Angle of rotation around axis C   Third rotation
 	 * @param R (Output) Optional storage for output rotation matrix
 	 * @return Rotation matrix
 	 */
@@ -477,6 +519,112 @@ public class ConvertRotation3D_F64 {
 
 		return R;
 	}
+
+	public static Quaternion_F64 eulerToQuaternion( EulerType type ,
+													double rotA, double rotB, double rotC,
+													Quaternion_F64 q ) {
+		if( q == null )
+			q = new Quaternion_F64();
+
+		double ca = Math.cos( rotA * 0.5 );
+		double sa = Math.sin( rotA * 0.5 );
+		double cb = Math.cos( rotB * 0.5 );
+		double sb = Math.sin( rotB * 0.5 );
+		double cc = Math.cos( rotC * 0.5 );
+		double sc = Math.sin( rotC * 0.5 );
+
+		double w=0,x=0,y=0,z=0;
+		switch( type ) {
+			case ZYX:
+				w = ca*cb*cc - sa*sb*sc;
+				x = cc*sa*sb + ca*cb*sc;
+				y = ca*cc*sb - cb*sa*sc;
+				z = cb*cc*sa + ca*sb*sc;
+				break;
+
+			case ZYZ:
+				w = ca*cb*cc - cb*sa*sc;
+				x = cc*sa*sb - ca*sb*sc;
+				y = ca*cc*sb + sa*sb*sc;
+				z = cb*cc*sa + ca*cb*sc;
+				break;
+
+			case ZXY:
+				w = ca*cb*cc + sa*sb*sc;
+				x = ca*cc*sb + cb*sa*sc;
+				y = -cc*sa*sb + ca*cb*sc;
+				z = cb*cc*sa - ca*sb*sc;
+				break;
+
+			case ZXZ:
+				w = ca*cb*cc - cb*sa*sc;
+				x = ca*cc*sb + sa*sb*sc;
+				y = -cc*sa*sb + ca*sb*sc;
+				z = cb*cc*sa + ca*cb*sc;
+				break;
+
+			case YXZ:
+				w = ca*cb*cc - sa*sb*sc;
+				x = ca*cc*sb - cb*sa*sc;
+				y = cb*cc*sa + ca*sb*sc;
+				z = cc*sa*sb + ca*cb*sc;
+				break;
+
+			case YXY:
+				w = ca*cb*cc - cb*sa*sc;
+				x = ca*cc*sb + sa*sb*sc;
+				y = cb*cc*sa + ca*cb*sc;
+				z = cc*sa*sb - ca*sb*sc;
+				break;
+
+			case YZX:
+				w = ca*cb*cc + sa*sb*sc;
+				x = -cc*sa*sb + ca*cb*sc;
+				y = cb*cc*sa - ca*sb*sc;
+				z = ca*cc*sb + cb*sa*sc;
+				break;
+
+			case YZY:
+				w = ca*cb*cc - cb*sa*sc;
+				x = -cc*sa*sb + ca*sb*sc;
+				y = cb*cc*sa + ca*cb*sc;
+				z = ca*cc*sb + sa*sb*sc;
+				break;
+
+			case XYZ:
+				w = ca*cb*cc + sa*sb*sc;
+				x = cb*cc*sa - ca*sb*sc;
+				y = ca*cc*sb + cb*sa*sc;
+				z = -cc*sa*sb + ca*cb*sc;
+				break;
+
+			case XYX:
+				w = ca*cb*cc - cb*sa*sc;
+				x = cb*cc*sa + ca*cb*sc;
+				y = ca*cc*sb + sa*sb*sc;
+				z = -cc*sa*sb + ca*sb*sc;
+				break;
+
+			case XZY:
+				w = ca*cb*cc - sa*sb*sc;
+				x = cb*cc*sa + ca*sb*sc;
+				y = cc*sa*sb + ca*cb*sc;
+				z = ca*cc*sb - cb*sa*sc;
+				break;
+
+			case XZX:
+				w = ca*cb*cc - cb*sa*sc;
+				x = cb*cc*sa + ca*cb*sc;
+				y = cc*sa*sb - ca*sb*sc;
+				z = ca*cc*sb + sa*sb*sc;
+				break;
+
+		}
+
+		q.set(w,x,y,z);
+		return q;
+	}
+
 
 	/**
 	 * Creates a rotation matrix about the specified axis.
@@ -541,39 +689,6 @@ public class ConvertRotation3D_F64 {
 			CommonOps.scale( -1, R );
 
 		return R;
-	}
-
-	/**
-	 * Converts euler (Z,Y,X) a.k.a. (yaw,roll,pitch) rotation coordinates into quaternions.
-	 *
-	 * @param rotZ rotation about z-axis. yaw
-	 * @param rotY rotation about y-axis. roll
-	 * @param rotX rotation about x-axis. pitch
-	 * @param quat Output Quaternion
-	 */
-	public static void eulerZyxToQuaternion(double rotZ , double rotY , double rotX, Quaternion_F64 quat ) {
-
-		// See: http://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-		double cy = Math.cos( rotZ * 0.5 );
-		double sy = Math.sin( rotZ * 0.5 );
-		double cp = Math.cos( rotX * 0.5 );
-		double sp = Math.sin( rotX * 0.5 );
-		double cr = Math.cos( rotY * 0.5 );
-		double sr = Math.sin( rotY * 0.5 );
-
-		double ccc = cr * cp * cy;
-		double ccs = cr * cp * sy;
-		double css = cr * sp * sy;
-		double sss = sr * sp * sy;
-		double scc = sr * cp * cy;
-		double ssc = sr * sp * cy;
-		double csc = cr * sp * cy;
-		double scs = sr * cp * sy;
-
-		quat.w = ccc + sss;
-		quat.x = scc - css;
-		quat.y = csc + scs;
-		quat.z = ccs - ssc;
 	}
 
 	/**

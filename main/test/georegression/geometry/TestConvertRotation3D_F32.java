@@ -36,7 +36,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 
@@ -361,47 +362,57 @@ public class TestConvertRotation3D_F32 {
 	}
 
 	@Test
-	public void eulerToQuaternion() {
-		fail("implement");
+	public void eulerToMatrix() throws InvocationTargetException, IllegalAccessException {
+		somethingToEulerTest("eulerToMatrix",rand);
+	}
+
+	public static void eulerToMatrix(EulerType type , float rotA , float rotB , float rotC ) {
+
+		DenseMatrix64F matA = rotateAxis(type.getAxisA(),rotA);
+		DenseMatrix64F matB = rotateAxis(type.getAxisB(),rotB);
+		DenseMatrix64F matC = rotateAxis(type.getAxisC(),rotC);
+
+		DenseMatrix64F matEuler = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
+
+		Point3D_F32 a = new Point3D_F32(1,2,3);
+
+		Point3D_F32 tmp = new Point3D_F32();
+		Point3D_F32 expected = new Point3D_F32();
+		Point3D_F32 found = new Point3D_F32();
+
+		GeometryMath_F32.mult(matA,a,expected);
+		GeometryMath_F32.mult(matB,expected,tmp);
+		GeometryMath_F32.mult(matC,tmp,expected);
+
+		GeometryMath_F32.mult(matEuler,a,found);
+
+		assertTrue(expected.distance(found) < GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	private static DenseMatrix64F rotateAxis( int which , float angle ) {
+		if( which == 0 )
+			return ConvertRotation3D_F32.rotX(angle,null);
+		else if( which == 1 )
+			return ConvertRotation3D_F32.rotY(angle,null);
+		else
+			return ConvertRotation3D_F32.rotZ(angle,null);
 	}
 
 	@Test
-	public void eulerToMatrix() {
-		fail("implement");
+	public void eulerToQuaternion() throws InvocationTargetException, IllegalAccessException {
+		somethingToEulerTest("eulerToQuaternion",rand);
 	}
 
-	@Test
-	public void eulerZyxToQuaternion() {
-		float pid2 = (float)Math.PI/2.0f;
-		eulerZyxToQuaternion(0,0,0);
-		eulerZyxToQuaternion(pid2,0,0);
-		eulerZyxToQuaternion(0,pid2,0);
-		eulerZyxToQuaternion(0,0,pid2);
-		eulerZyxToQuaternion(-pid2,0,0);
-		eulerZyxToQuaternion(0,-pid2,0);
-		eulerZyxToQuaternion(0,0,-pid2);
+	public static void eulerToQuaternion(EulerType type , float rotA , float rotB , float rotC ) {
+		DenseMatrix64F expected = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
 
-		for (int i = 0; i < 50; i++) {
-			float a = (float)Math.PI;
-			float rotZ = 2*rand.nextFloat()*a - a;
-			float rotY = 2*rand.nextFloat()*a - a;
-			float rotX = 2*rand.nextFloat()*a - a;
+		Quaternion_F32 q = new Quaternion_F32();
+		ConvertRotation3D_F32.eulerToQuaternion(type,rotA,rotB,rotC,q);
 
-			eulerZyxToQuaternion(rotZ,rotY,rotX);
-		}
-	}
-
-	public void eulerZyxToQuaternion( float rotZ , float rotY , float rotX ) {
-		DenseMatrix64F rotZyx = ConvertRotation3D_F32.eulerToMatrix(EulerType.ZYX,rotZ,rotX,rotY,null);
-
-		Quaternion_F32 quat = new Quaternion_F32();
-		ConvertRotation3D_F32.eulerZyxToQuaternion(rotZ,rotY,rotX,quat);
-
-		DenseMatrix64F rotQuat = ConvertRotation3D_F32.quaternionToMatrix(quat,null);
+		DenseMatrix64F found = ConvertRotation3D_F32.quaternionToMatrix(q,null);
 
 		DenseMatrix64F result = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(rotZyx,rotQuat,result);
-//		result.print();
+		CommonOps.multTransB(expected,found,result);
 		assertTrue(MatrixFeatures.isIdentity(result, (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
 	}
 

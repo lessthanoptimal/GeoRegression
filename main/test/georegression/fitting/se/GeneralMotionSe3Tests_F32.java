@@ -65,7 +65,6 @@ public abstract class GeneralMotionSe3Tests_F32 {
 
 			assertTrue( alg.process( src, dst ) );
 
-
 			Se3_F32 foundSrcToDst = alg.getTransformSrcToDst();
 
 			checkTransform( src, dst, foundSrcToDst, GrlConstants.FLOAT_TEST_TOL );
@@ -94,8 +93,8 @@ public abstract class GeneralMotionSe3Tests_F32 {
 
 			Se3_F32 tranFound = alg.getTransformSrcToDst();
 			
-			R.print();
-			tranFound.getR().print();
+//			R.print();
+//			tranFound.getR().print();
 			
 			checkTransform( from, to, tranFound, GrlConstants.FLOAT_TEST_TOL );
 		}
