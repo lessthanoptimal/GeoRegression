@@ -115,7 +115,7 @@ public class TestDistance3D_F32 {
 						0.8728715609439697f , 0.4364357804719848f , -0.21821789023599247f );
 		Point3D_F32 p = new Point3D_F32( 1.0f ,-0.5f ,3.0f );
 
-		assertEquals(0,Distance3D_F32.distance(line,p),1e-8);
+		assertEquals(0,Distance3D_F32.distance(line,p), GrlConstants.FLOAT_TEST_TOL);
 	}
 
 

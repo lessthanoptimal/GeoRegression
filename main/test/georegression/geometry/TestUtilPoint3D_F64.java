@@ -55,7 +55,7 @@ public class TestUtilPoint3D_F64 {
 		Box3D_F64 cube = new Box3D_F64();
 		UtilPoint3D_F64.boundingBox(list, cube);
 
-		assertEquals(0,cube.getP0().distance(list.get(0)),1e-8);
+		assertEquals(0,cube.getP0().distance(list.get(0)),GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(0,cube.getP1().distance(new Point3D_F64(2,3,5)),1e-8);
 	}
 }

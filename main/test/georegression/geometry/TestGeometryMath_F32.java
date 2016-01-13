@@ -78,7 +78,7 @@ public class TestGeometryMath_F32 {
 		DenseMatrix64F V1 = GeometryMath_F32.crossMatrix( v, null );
 		DenseMatrix64F V2 = GeometryMath_F32.crossMatrix( a, b, c, null );
 
-		assertTrue( MatrixFeatures.isIdentical( V1 ,V2 , 1e-8 ));
+		assertTrue( MatrixFeatures.isIdentical( V1 ,V2 , GrlConstants.FLOAT_TEST_TOL ));
 	}
 
 	@Test

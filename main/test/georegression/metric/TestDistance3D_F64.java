@@ -115,7 +115,7 @@ public class TestDistance3D_F64 {
 						0.8728715609439697 , 0.4364357804719848 , -0.21821789023599247 );
 		Point3D_F64 p = new Point3D_F64( 1.0 ,-0.5 ,3.0 );
 
-		assertEquals(0,Distance3D_F64.distance(line,p),1e-8);
+		assertEquals(0,Distance3D_F64.distance(line,p), GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 

@@ -114,7 +114,7 @@ public class ConvertFile32From64 {
 	 * to make it into a float and not a double.
 	 */
 	private String handleFloats( String input ) {
-		String regex = "\\d+\\.+\\d+";
+		String regex = "\\d+((\\.+\\d+)|([eE][-+]\\d+))";
 
 		return input.replaceAll( regex, "$0f" );
 	}

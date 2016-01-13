@@ -261,7 +261,7 @@ public class TestConvertRotation3D_F64 {
 
 		Rodrigues_F64 found = ConvertRotation3D_F64.matrixToRodrigues( R, (Rodrigues_F64)null );
 
-		assertEquals(0,found.getTheta(),1e-8);
+		assertEquals(0,found.getTheta(),GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 	@Test
@@ -273,7 +273,7 @@ public class TestConvertRotation3D_F64 {
 
 		Rodrigues_F64 found = ConvertRotation3D_F64.matrixToRodrigues( R, (Rodrigues_F64)null );
 
-		assertEquals(0,found.getTheta(),5e-7);
+		assertEquals(0,found.getTheta(),50*GrlConstants.DOUBLE_TEST_TOL );
 	}
 
 	@Test

@@ -229,7 +229,7 @@ public class TestConvertRotation3D_F32 {
 		DenseMatrix64F M = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,eulerX,eulerY,eulerZ,null);
 		Rodrigues_F32 rod = ConvertRotation3D_F32.matrixToRodrigues(M, (Rodrigues_F32)null);
 		DenseMatrix64F found = ConvertRotation3D_F32.rodriguesToMatrix(rod,null);
-		assertTrue(MatrixFeatures.isIdentical(M,found,1e-6));
+		assertTrue(MatrixFeatures.isIdentical(M,found,1e-6f));
 	}
 
 	private void checkMatrixToRodrigues( Rodrigues_F32 input,
@@ -261,7 +261,7 @@ public class TestConvertRotation3D_F32 {
 
 		Rodrigues_F32 found = ConvertRotation3D_F32.matrixToRodrigues( R, (Rodrigues_F32)null );
 
-		assertEquals(0,found.getTheta(),1e-8);
+		assertEquals(0,found.getTheta(),GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -273,7 +273,7 @@ public class TestConvertRotation3D_F32 {
 
 		Rodrigues_F32 found = ConvertRotation3D_F32.matrixToRodrigues( R, (Rodrigues_F32)null );
 
-		assertEquals(0,found.getTheta(),5e-7);
+		assertEquals(0,found.getTheta(),50*GrlConstants.FLOAT_TEST_TOL );
 	}
 
 	@Test

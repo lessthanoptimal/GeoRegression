@@ -48,7 +48,7 @@ public class ClosestPointEllipseAngle_F32 {
 	/**
 	 * Specifies convergence criteria
 	 *
-	 * @param tol Convergence tolerance.  Try 1e-8
+	 * @param tol Convergence tolerance.  Try 1e-8f
 	 * @param maxIterations Maximum number of iterations.  Try 100
 	 */
 	public ClosestPointEllipseAngle_F32(float tol, int maxIterations) {

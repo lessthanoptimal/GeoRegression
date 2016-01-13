@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class TestUtilTrig_F32 {
 		Point2D_F32 b = new Point2D_F32(2,7);
 		
 		float found = UtilTrig_F32.dot(a,b);
-		assertEquals(-2+14,found,1e-8);
+		assertEquals(-2+14,found, GrlConstants.FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -44,6 +45,6 @@ public class TestUtilTrig_F32 {
 		Point3D_F32 b = new Point3D_F32(2,7,0.5f);
 
 		float found = UtilTrig_F32.dot(a,b);
-		assertEquals(-2+14+1.5f,found,1e-8);
+		assertEquals(-2+14+1.5f,found, GrlConstants.FLOAT_TEST_TOL);
 	}
 }

@@ -35,7 +35,7 @@ public class TestUtilPoint3D_F32 {
 	@Test
 	public void distance() {
 		float found = UtilPoint3D_F32.distance(1,2,3,4,-3,-4);
-		assertEquals(9.1104f,found,1e-3);
+		assertEquals(9.1104f,found,1e-3f);
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class TestUtilPoint3D_F32 {
 		Box3D_F32 cube = new Box3D_F32();
 		UtilPoint3D_F32.boundingBox(list, cube);
 
-		assertEquals(0,cube.getP0().distance(list.get(0)),1e-8);
-		assertEquals(0,cube.getP1().distance(new Point3D_F32(2,3,5)),1e-8);
+		assertEquals(0,cube.getP0().distance(list.get(0)),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,cube.getP1().distance(new Point3D_F32(2,3,5)),1e-8f);
 	}
 }
