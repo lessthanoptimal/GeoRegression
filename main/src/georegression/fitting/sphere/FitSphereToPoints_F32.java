@@ -74,7 +74,7 @@ public class FitSphereToPoints_F32 implements ModelFitter<Sphere3D_F32,Point3D_F
 	 * @param maxIterations Maximum number of iterations.  Try 100
 	 */
 	public FitSphereToPoints_F32( int maxIterations ) {
-		this(FactoryOptimization.leastSquaresLM(1e-3f,false),maxIterations,1e-12f,0);
+		this(FactoryOptimization.leastSquaresLM(1e-3,false),maxIterations,1e-12,0);
 	}
 
 	@Override

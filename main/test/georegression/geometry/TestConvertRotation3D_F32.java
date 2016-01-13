@@ -187,7 +187,7 @@ public class TestConvertRotation3D_F32 {
 		}
 
 		// see how well it handles underflow
-		checkMatrixToRodrigues( new Rodrigues_F32( 10*GrlConstants.FLOAT_TEST_TOL, -1, -1, -1 ) );
+		checkMatrixToRodrigues( new Rodrigues_F32( 50*GrlConstants.FLOAT_TEST_TOL, -1, -1, -1 ) );
 
 		// test known pathological cases
 		checkMatrixToRodrigues( new Rodrigues_F32( 0, 1, 1, 1 ), new Rodrigues_F32( 0, 1, 0, 0 ) );
@@ -229,7 +229,7 @@ public class TestConvertRotation3D_F32 {
 		DenseMatrix64F M = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,eulerX,eulerY,eulerZ,null);
 		Rodrigues_F32 rod = ConvertRotation3D_F32.matrixToRodrigues(M, (Rodrigues_F32)null);
 		DenseMatrix64F found = ConvertRotation3D_F32.rodriguesToMatrix(rod,null);
-		assertTrue(MatrixFeatures.isIdentical(M,found,1e-6f));
+		assertTrue(MatrixFeatures.isIdentical(M,found,1e-6));
 	}
 
 	private void checkMatrixToRodrigues( Rodrigues_F32 input,
@@ -255,9 +255,9 @@ public class TestConvertRotation3D_F32 {
 	@Test
 	public void matrixToRodrigues_case0() {
 		DenseMatrix64F R = UtilEjml.parseMatrix(
-						"1.00000000000000000000fe+00 -5.42066399999221260000fe-14 -3.16267800000013500000fe-13 \n" +
-						"5.42066400000000000000fe-14 1.00000000000000040000fe+00 2.46136444559397200000fe-13 \n" +
-						"3.16267800000000000000fe-13 -2.46191955710628460000fe-13 1.00000000000000040000fe+00", 3);
+						"1.00000000000000000000e+00f -5.42066399999221260000e-14f -3.16267800000013500000e-13f \n" +
+						"5.42066400000000000000e-14f 1.00000000000000040000e+00f 2.46136444559397200000e-13f \n" +
+						"3.16267800000000000000e-13f -2.46191955710628460000e-13f 1.00000000000000040000e+00f", 3);
 
 		Rodrigues_F32 found = ConvertRotation3D_F32.matrixToRodrigues( R, (Rodrigues_F32)null );
 
@@ -267,9 +267,9 @@ public class TestConvertRotation3D_F32 {
 	@Test
 	public void matrixToRodrigues_case1() {
 		DenseMatrix64F R = UtilEjml.parseMatrix(
-						"0.99999999999999000000fe+00 -5.42066399999221260000fe-14 -3.16267800000013500000fe-13 \n" +
-						"5.42066400000000000000fe-14 0.99999999999999000000fe+00 2.46136444559397200000fe-13 \n" +
-						"3.16267800000000000000fe-13 -2.46191955710628460000fe-13 0.99999999999999000000fe+00", 3);
+						"0.99999999999999000000e+00f -5.42066399999221260000e-14f -3.16267800000013500000e-13f \n" +
+						"5.42066400000000000000e-14f 0.99999999999999000000e+00f 2.46136444559397200000e-13f \n" +
+						"3.16267800000000000000e-13f -2.46191955710628460000e-13f 0.99999999999999000000e+00f", 3);
 
 		Rodrigues_F32 found = ConvertRotation3D_F32.matrixToRodrigues( R, (Rodrigues_F32)null );
 
@@ -401,7 +401,7 @@ public class TestConvertRotation3D_F32 {
 
 		DenseMatrix64F result = new DenseMatrix64F(3,3);
 		CommonOps.multTransB(rotZyx,rotQuat,result);
-		result.print();
+//		result.print();
 		assertTrue(MatrixFeatures.isIdentity(result, (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
 	}
 

@@ -74,7 +74,7 @@ public class FitCylinderToPoints_F32 implements ModelFitter<Cylinder3D_F32,Point
 	 * @param maxIterations Maximum number of iterations.  Try 100
 	 */
 	public FitCylinderToPoints_F32( int maxIterations ) {
-		this(FactoryOptimization.leastSquaresLM(1e-3f, false),maxIterations,1e-12f,0);
+		this(FactoryOptimization.leastSquaresLM(1e-3, false),maxIterations,1e-12,0);
 	}
 
 	@Override

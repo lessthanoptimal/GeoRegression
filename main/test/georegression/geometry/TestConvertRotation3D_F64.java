@@ -187,7 +187,7 @@ public class TestConvertRotation3D_F64 {
 		}
 
 		// see how well it handles underflow
-		checkMatrixToRodrigues( new Rodrigues_F64( 10*GrlConstants.DOUBLE_TEST_TOL, -1, -1, -1 ) );
+		checkMatrixToRodrigues( new Rodrigues_F64( 50*GrlConstants.DOUBLE_TEST_TOL, -1, -1, -1 ) );
 
 		// test known pathological cases
 		checkMatrixToRodrigues( new Rodrigues_F64( 0, 1, 1, 1 ), new Rodrigues_F64( 0, 1, 0, 0 ) );
@@ -401,7 +401,7 @@ public class TestConvertRotation3D_F64 {
 
 		DenseMatrix64F result = new DenseMatrix64F(3,3);
 		CommonOps.multTransB(rotZyx,rotQuat,result);
-		result.print();
+//		result.print();
 		assertTrue(MatrixFeatures.isIdentity(result, Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
 	}
 
