@@ -21,10 +21,12 @@ package georegression.fitting.se;
 import georegression.fitting.MotionTransformPoint;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
+import org.junit.Ignore;
 
 /**
  * @author Peter Abeles
  */
+@Ignore
 public class TestMotionSe3PointCrossCovariance_F64 extends GeneralMotionSe3Tests_F64 {
 
 	@Override
