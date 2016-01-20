@@ -503,6 +503,11 @@ public class GeometryMath_F32 {
 	/**
 	 * mod = M<sup>T</sup>*pt<br>
 	 * where pt.z = 1 implicitly.
+	 *
+	 * @param M 3 by 3 matrix.
+	 * @param pt 2D point in homogeneous coordinates. Implicit z = 1
+	 * @param mod 2D point in homogeneous coordinates.  Implicit z = 1
+	 * @return 2D point in homogeneous coordinates.  Implicit z = 1
 	 */
 	public static <T extends GeoTuple3D_F32> T multTran( DenseMatrix64F M, GeoTuple2D_F32 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
@@ -525,6 +530,11 @@ public class GeometryMath_F32 {
 	/**
 	 * mod = M<sup>T</sup>*pt<br>
 	 * where pt.z = 1 implicitly.
+	 *
+	 * @param M 3 by 3 matrix.
+	 * @param pt 2D point in homogeneous coordinates. Implicit z = 1
+	 * @param mod 2D point in homogeneous coordinates.  Implicit z = 1
+	 * @return 2D point in homogeneous coordinates.  Implicit z = 1
 	 */
 	public static <T extends GeoTuple2D_F32> T multTran( DenseMatrix64F M, GeoTuple2D_F32 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
@@ -548,6 +558,11 @@ public class GeometryMath_F32 {
 	 * <p>
 	 * ret = a<sup>T</sup>*M*b
 	 * </p>
+	 *
+	 * @param a 3D point.
+	 * @param M 3 by 3 matrix.
+	 * @param b 3D point.
+	 * @return scalar number
 	 */
 	public static float innerProd( GeoTuple3D_F32 a, DenseMatrix64F M, GeoTuple3D_F32 b ) {
 		if( M.numRows != 3 || M.numCols != 3 )

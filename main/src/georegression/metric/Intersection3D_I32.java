@@ -27,7 +27,7 @@ import georegression.struct.shapes.Box3D_I32;
 public class Intersection3D_I32 {
 	/**
 	 * Returns true if the point is contained inside the box. The point is considered to be inside the box
-	 * if the following test passes for each dimension.  box.p0.x <= point.x < box.p1.x + box.lengthX
+	 * if the following test passes for each dimension.  box.p0.x &le; point.x {@code <} box.p1.x + box.lengthX
 	 *
 	 * @param box Box
 	 * @param point Point which is tested to see if it is inside the box
@@ -54,7 +54,7 @@ public class Intersection3D_I32 {
 	}
 
 	/**
-	 * Returns true if the two boxs intersect each other. p0 is inclusive and p1 is exclusive.
+	 * Returns true if the two boxes intersect each other. p0 is inclusive and p1 is exclusive.
 	 * So if the p0 edge and p1 edge overlap perfectly there is no intersection.
 	 *
 	 * @param boxA Box
