@@ -340,10 +340,10 @@ public class Intersection2D_F64 {
 	/**
 	 * <p>
 	 * Checks to see if the specified point is inside the rectangle.  A point is inside
-	 * if it is &ge; the lower extend and < the upper extent.
+	 * if it is &ge; the lower extend and &lt; the upper extent.
 	 * </p>
 	 * <p>
-	 * inside = x &ge; x0 && x < x0+width && y &ge; y0 && y < y0+height
+	 * inside = x &ge; x0 AND x &lt; x0+width AND y &ge; y0 AND y &lt; y0+height
 	 * </p>
 	 * @param a Rectangle.
 	 * @param x x-coordinate of point being tested for containment
@@ -363,7 +363,7 @@ public class Intersection2D_F64 {
 	 * if it is &ge; the lower extend and &le; the upper extent.
 	 * </p>
 	 * <p>
-	 * {@code inside = x &ge; x0 && x &le; x0+width and y &ge; y0 && y &le; y0+height}
+	 * {@code inside = x &ge; x0 AND x &le; x0+width and y &ge; y0 AND y &le; y0+height}
 	 * </p>
 	 * @param a Rectangle.
 	 * @param x x-coordinate of point being tested for containment
@@ -380,10 +380,10 @@ public class Intersection2D_F64 {
 	/**
 	 * <p>
 	 * Checks to see if the specified point is inside the rectangle.  A point is inside
-	 * if it is &ge; the lower extend and < the upper extent.
+	 * if it is &ge; the lower extend and &lt; the upper extent.
 	 * </p>
 	 * <p>
-	 * inside = x &ge; x0 && x &le; x1 && y &ge; y0 && y &le; y1
+	 * inside = x &ge; x0 AND x &le; x1 AND y &ge; y0 AND y &le; y1
 	 * </p>
 	 * @param a Rectangle.
 	 * @param x x-coordinate of point being tested for containment
@@ -397,7 +397,7 @@ public class Intersection2D_F64 {
 	/**
 	 * <p>
 	 * Checks to see if the specified point is inside the rectangle.  A point is inside
-	 * if it is >= the lower extend and &le; the upper extent.
+	 * if it is &ge; the lower extend and &le; the upper extent.
 	 * </p>
 	 * <p>
 	 * inside = x &ge; x0 AND x &le; x1 AND y &ge; y0 AND y &le; y1

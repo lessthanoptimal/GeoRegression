@@ -669,7 +669,8 @@ public class ConvertRotation3D_F32 {
 	 * </p>
 	 *
 	 * @param orig Input approximate rotation matrix.  Not modified.
-	 * @param R	The resulting approximated rotation matrix.  Modified.
+	 * @param R (Optional) Storage for the approximated rotation matrix.  Modified.
+	 * @return Rotation matrix
 	 */
 	public static DenseMatrix64F approximateRotationMatrix( DenseMatrix64F orig, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
@@ -701,6 +702,7 @@ public class ConvertRotation3D_F32 {
 	 *
 	 * @param quat Unit quaternion.
 	 * @param R Storage for rotation matrix.  If null a new matrix is created. Modified.
+	 * @return Rotation matrix
 	 */
 	public static DenseMatrix64F quaternionToMatrix( Quaternion_F32 quat, DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );

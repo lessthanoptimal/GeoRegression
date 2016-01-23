@@ -143,9 +143,9 @@ public class Intersection3D_F32 {
 	 * @param T Triangle in 3D space
 	 * @param R Line segment in 3D space.
 	 * @param output Storage for the intersection, if there is one
-	 * @return -1 = triangle is degenerate (a segment or point)
-	 *          0 =  disjoint (no intersect)
-	 *          1 =  intersect in unique point I1
+	 * @return -1 = triangle is degenerate (a segment or point)<br>
+	 *          0 =  disjoint (no intersect)<br>
+	 *          1 =  intersect in unique point I1<br>
 	 *          2 =  are in the same plane
 	 **/
 	public static int intersection( Triangle3D_F32 T , LineSegment3D_F32 R , Point3D_F32 output ) {
@@ -233,7 +233,7 @@ public class Intersection3D_F32 {
 
 	/**
 	 * Returns true if the point is contained inside the box. The point is considered to be inside the box
-	 * if the following test passes for each dimension.  box.x <= point.x < box.x + box.lengthX
+	 * if the following test passes for each dimension.  box.x &le; point.x {@code <} box.x + box.lengthX
 	 *
 	 * @param box Box
 	 * @param point Point which is tested to see if it is inside the box
@@ -250,9 +250,9 @@ public class Intersection3D_F32 {
 	 * <p>
 	 * Returns true if the point is contained inside the box, with an exclusive upper extent.
 	 * The point is considered to be inside the box if the following test passes:<br>
-	 * box.p0.x &le; point.x < box.p1.x<br>
-	 * box.p0.y &le; point.y < box.p1.y<br>
-	 * box.p0.z &le; point.z < box.p1.z<br>
+	 * box.p0.x &le; point.x {@code <} box.p1.x<br>
+	 * box.p0.y &le; point.y {@code <} box.p1.y<br>
+	 * box.p0.z &le; point.z {@code <} box.p1.z<br>
 	 * </p>
 	 *
 	 * @param box Box
