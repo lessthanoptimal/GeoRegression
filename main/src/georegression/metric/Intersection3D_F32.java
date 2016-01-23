@@ -40,8 +40,9 @@ public class Intersection3D_F32 {
 	 * Finds the intersection of a line and a plane.  Returns true if they intersect at a unique point or false if
 	 * there is no intersection or an infinite number of intersections.
 	 *
-	 * @param plane Plane
-	 * @param line Line
+	 * @param plane (Input) Plane
+	 * @param line (Input) Line
+	 * @param intersection (Output) Where the intersection is written to
 	 * @return True if the intersection is at a unique point.  If false then no intersection or infinite.
 	 */
 	public static boolean intersect( PlaneNormal3D_F32 plane , LineParametric3D_F32 line , Point3D_F32 intersection ) {
@@ -68,8 +69,9 @@ public class Intersection3D_F32 {
 	 * Finds the intersection of a line and a plane.  Returns true if they intersect at a unique point or false if
 	 * there is no intersection or an infinite number of intersections.
 	 *
-	 * @param plane Plane
-	 * @param line Line
+	 * @param plane (Input) Plane
+	 * @param line (Input) Line
+	 * @param intersection (Output) Where the intersection is written to
 	 * @return True if the intersection is at a unique point.  If false then no intersection or infinite.
 	 */
 	public static boolean intersect( PlaneGeneral3D_F32 plane , LineParametric3D_F32 line , Point3D_F32 intersection ) {
@@ -94,8 +96,8 @@ public class Intersection3D_F32 {
 	 * the planes must not be parallel to each other.  If the planes are parallel then the slope of the returned line
 	 * will have a value of zero for each element.
 	 *
-	 * @param a Plane
-	 * @param b Plane
+	 * @param a (Input) Plane
+	 * @param b (Input) Plane
 	 * @param line (Output) Intersection.
 	 * @return true if they intersect ata line or false if not
 	 */
@@ -140,9 +142,9 @@ public class Intersection3D_F32 {
 	 * [1] http://geomalgorithms.com/a06-_intersect-2.html
 	 * </p>
 	 *
-	 * @param T Triangle in 3D space
-	 * @param R Line segment in 3D space.
-	 * @param output Storage for the intersection, if there is one
+	 * @param T (Input) Triangle in 3D space
+	 * @param R (Input) Line segment in 3D space.
+	 * @param output (Output) Storage for the intersection, if there is one
 	 * @return -1 = triangle is degenerate (a segment or point)<br>
 	 *          0 =  disjoint (no intersect)<br>
 	 *          1 =  intersect in unique point I1<br>

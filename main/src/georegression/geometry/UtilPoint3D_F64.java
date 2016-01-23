@@ -31,12 +31,31 @@ import java.util.Random;
  */
 public class UtilPoint3D_F64 {
 
-
+	/**
+	 * Euclidean distance between the two specified points
+	 * @param x0 x-axis on Point 0
+	 * @param y0 y-axis on Point 0
+	 * @param z0 z-axis on Point 0
+	 * @param x1 x-axis on Point 1
+	 * @param y1 y-axis on Point 1
+	 * @param z1 z-axis on Point 1
+	 * @return Euclidean distance
+	 */
 	public static double distance( double x0 , double y0 , double z0 ,
 								   double x1 , double y1 , double z1) {
 		return norm(x1-x0,y1-y0,z1-z0);
 	}
 
+	/**
+	 * Euclidean distance squared between the two specified points
+	 * @param x0 x-axis on Point 0
+	 * @param y0 y-axis on Point 0
+	 * @param z0 z-axis on Point 0
+	 * @param x1 x-axis on Point 1
+	 * @param y1 y-axis on Point 1
+	 * @param z1 z-axis on Point 1
+	 * @return Euclidean distance squared
+	 */
 	public static double distanceSq( double x0 , double y0 , double z0 ,
 								   double x1 , double y1 , double z1) {
 		double dx = x1-x0;

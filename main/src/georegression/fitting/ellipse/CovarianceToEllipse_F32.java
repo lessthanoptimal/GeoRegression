@@ -99,35 +99,35 @@ public class CovarianceToEllipse_F32 {
 	}
 
 	/**
-	 * Vector which defines the major axis
+	 * @return Vector which defines the major axis
 	 */
 	public Vector2D_F32 getMajorVector() {
 		return x;
 	}
 
 	/**
-	 * Vector which defines the minor axis
+	 * @return Vector which defines the minor axis
 	 */
 	public Vector2D_F32 getMinorVector() {
 		return y;
 	}
 
 	/**
-	 * Angle between the major axis and the x-axis
+	 * @return Angle between the major axis and the x-axis
 	 */
 	public float getAngle() {
 		return (float)Math.atan2( x.y, x.x );
 	}
 
 	/**
-	 * Length of the major axis
+	 * @return Length of the major axis
 	 */
 	public float getMajorAxis() {
 		return numStdev*lengthX;
 	}
 
 	/**
-	 * Length of the minor axis
+	 * @return Length of the minor axis
 	 */
 	public float getMinorAxis() {
 		return numStdev*lengthY;

@@ -107,6 +107,9 @@ public class UtilVector3D_F64 {
 
 	/**
 	 * Converts matrices into vectors.  All matrices must be vectors with 3 elements.
+	 *
+	 * @param m A 3x1 or 1x3 matrix
+	 * @return Equivalent 3D vector
 	 */
 	public static Vector3D_F64 convert( DenseMatrix64F m ) {
 

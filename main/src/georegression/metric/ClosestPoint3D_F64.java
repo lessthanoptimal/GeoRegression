@@ -152,6 +152,7 @@ public class ClosestPoint3D_F64 {
 	 *
 	 * @param line Line on which the closest point is being found.  Not modified.
 	 * @param pt   The point whose closest point is being looked for.  Not modified.
+	 * @return The location 'd' along the line of the closeset point
 	 */
 	public static double closestPoint(LineParametric3D_F64 line, Point3D_F64 pt )
 	{
@@ -239,6 +240,7 @@ public class ClosestPoint3D_F64 {
 	 * @param line Line on which the closest point is being found.  Not modified.
 	 * @param pt   The point whose closest point is being looked for.  Not modified.
 	 * @param ret  (Optional) Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
+	 * @return The closest point
 	 */
 	public static Point3D_F64 closestPoint(LineSegment3D_F64 line, Point3D_F64 pt, Point3D_F64 ret) {
 		if( ret == null ) {
@@ -277,6 +279,7 @@ public class ClosestPoint3D_F64 {
 	 * @param l0 First line.  Not modified.
 	 * @param l1 Second line.  Not modified.
 	 * @param ret (Optional) Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
+	 * @return The closest point
 	 */
 	public static Point3D_F64 closestPoint( LineSegment3D_F64 l0 , LineSegment3D_F64 l1 , Point3D_F64 ret ) {
 		if( ret == null ) {
