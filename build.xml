@@ -98,20 +98,6 @@
             <link offline="false" href="http://docs.oracle.com/javase/6/docs/api/" packagelistloc="package-list" />
             <link offline="false" href="http://ejml.org/javadoc/" packagelistloc="package-list" />
 
-            <header><![CDATA[
-<script type="text/javascript"><!--
-google_ad_client = "ca-pub-0419821832107208";
-/* boofcv javadoc banner */
-google_ad_slot = "3257872658";
-google_ad_width = 468;
-google_ad_height = 60;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-]]>
-            </header>
             <doctitle><![CDATA[<h1>Geometric Regression Library API Specification</h1>]]></doctitle>
             <bottom><![CDATA[<script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -124,7 +110,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 </script>
 <br>
-<b>Copyright &copy; 2011-2014 Peter Abeles</b>
+<b>Copyright &copy; 2011-2016 Peter Abeles</b>
 ]]>
             </bottom>
  
@@ -146,7 +132,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
             <link offline="false" href="http://docs.oracle.com/javase/6/docs/api/" packagelistloc="package-list" />
 
             <doctitle><![CDATA[<h1>Geometric Regression Library API Specification</h1>]]></doctitle>
-            <bottom><![CDATA[<i>Copyright &#169; 2011-2014 Peter Abeles All Rights Reserved.</i>]]></bottom>
+            <bottom><![CDATA[<i>Copyright &#169; 2011-2016 Peter Abeles All Rights Reserved.</i>]]></bottom>
         </javadoc>
         <jar compress="true" destfile="docs/javadoc.jar" basedir="docs/api" />
     </target>
