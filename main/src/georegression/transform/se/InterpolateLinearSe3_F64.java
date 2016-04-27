@@ -28,7 +28,7 @@ import org.ejml.ops.CommonOps;
 /**
  * <p>
  * Linear interpolation between two {@link georegression.struct.se.Se3_F64} transforms.  It is assumed that
- * the rotation able between the two transforms is {@code < 180} degrees.  If more than 180 degrees than it will close
+ * the rotation able between the two transforms is {@code < 180} degrees.  If more than 180 degrees than it will chose
  * the wrong direction to rotate.
  * </p>
  * <p>
