@@ -22,13 +22,15 @@ import georegression.geometry.ConvertRotation3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F64;
+import georegression.struct.so.Rodrigues_F64;
+import org.ejml.data.DenseMatrix64F;
+import org.ejml.ops.CommonOps;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -94,31 +96,22 @@ public class TestAverageQuaternion_F64 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(expected,found, Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
+		checkEquals(expected, found, Math.pow(GrlConstants.DOUBLE_TEST_TOL,0.3));
 	}
 
 	/**
 	 * Sees if two quaternions are equal up to a sign ambiguity
 	 */
 	public static void checkEquals( Quaternion_F64 expected , Quaternion_F64 found , double errorTol ) {
-		double sumAdd = 0;
-		sumAdd += expected.w + found.w;
-		sumAdd += expected.x + found.x;
-		sumAdd += expected.y + found.y;
-		sumAdd += expected.z + found.z;
-		sumAdd = Math.abs(sumAdd);
 
-		double sumMinus = 0;
-		sumMinus += expected.w - found.w;
-		sumMinus += expected.x - found.x;
-		sumMinus += expected.y - found.y;
-		sumMinus += expected.z - found.z;
-		sumMinus = Math.abs(sumMinus);
+		DenseMatrix64F E = ConvertRotation3D_F64.quaternionToMatrix(expected,null);
+		DenseMatrix64F F = ConvertRotation3D_F64.quaternionToMatrix(found,null);
 
-		if( sumAdd < sumMinus ) {
-			assertEquals( 0 , sumAdd/4   , errorTol );
-		} else {
-			assertEquals( 0 , sumMinus/4 , errorTol );
-		}
+		DenseMatrix64F diff = new DenseMatrix64F(3,3);
+		CommonOps.multTransA(E,F,diff);
+
+		Rodrigues_F64 error = ConvertRotation3D_F64.matrixToRodrigues(diff,null);
+
+		assertTrue( Math.abs(error.theta) <= errorTol );
 	}
 }
