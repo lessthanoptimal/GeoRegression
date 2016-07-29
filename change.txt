@@ -4,6 +4,9 @@ YEAR-MONTH-DAY
 Date    : 2016/
 Version : 0.12
 
+- Added FitEllipseWeightedAlgebraic
+   * Weighted version of FitEllipseAlgebraic
+
 ---------------------------------------------
 Date    : 2016/06/09
 Version : 0.11
