@@ -109,4 +109,14 @@ public class EllipseRotated_F32 implements Serializable {
 		this.b = ellipse.b;
 		this.phi = ellipse.phi;
 	}
+
+	@Override
+	public String toString() {
+		return "EllipseRotated_F32{" +
+				"center=" + center +
+				", a=" + a +
+				", b=" + b +
+				", phi=" + phi +
+				'}';
+	}
 }
