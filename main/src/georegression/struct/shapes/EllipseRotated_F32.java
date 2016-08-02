@@ -61,6 +61,10 @@ public class EllipseRotated_F32 implements Serializable {
 		set(x0,y0,a,b,phi);
 	}
 
+	public EllipseRotated_F32( EllipseRotated_F32 original ) {
+		this(original.center,original.getA(),original.getB(),original.getPhi());
+	}
+
 	public EllipseRotated_F32() {
 	}
 
