@@ -25,6 +25,7 @@ import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.EllipseRotated_F32;
 import georegression.struct.shapes.Polygon2D_F32;
 import georegression.struct.shapes.Quadrilateral_F32;
 import org.junit.Test;
@@ -162,5 +163,22 @@ public class TestDistance2D_F32 {
 		float found = Distance2D_F32.distanceOrigin(line);
 
 		assertEquals(expected,found,GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void distance_ellipserotated_point() {
+		EllipseRotated_F32 ellipse = new EllipseRotated_F32(4,5,4,3, GrlConstants.F_PId2);
+
+		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4+3,5)), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4-3,5)), GrlConstants.FLOAT_TEST_TOL);
+
+		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4,5-4)), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4,5+4)), GrlConstants.FLOAT_TEST_TOL);
+
+		assertEquals(1, Distance2D_F32.distance(ellipse,new Point2D_F32(4+2,5)), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, Distance2D_F32.distance(ellipse,new Point2D_F32(4-2,5)), GrlConstants.FLOAT_TEST_TOL);
+
+		assertEquals(1.1f, Distance2D_F32.distance(ellipse,new Point2D_F32(4+4.1f,5)), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1.1f, Distance2D_F32.distance(ellipse,new Point2D_F32(4-4.1f,5)), GrlConstants.FLOAT_TEST_TOL);
 	}
 }

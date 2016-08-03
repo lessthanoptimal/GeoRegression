@@ -23,6 +23,7 @@ import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.EllipseRotated_F32;
 import georegression.struct.shapes.Polygon2D_F32;
 import georegression.struct.shapes.Quadrilateral_F32;
 
@@ -264,5 +265,44 @@ public class Distance2D_F32 {
 		float top = line.slope.y*line.p.x - line.slope.x*line.p.y;
 
 		return (float)Math.abs(top)/line.slope.norm();
+	}
+
+	/**
+	 * Euclidean distance of closest point on ellipse to point 'p'.
+	 *
+	 * @param ellipse Ellipse
+	 * @param p Point
+	 * @return Euclidean distance
+	 */
+	public static float distance(EllipseRotated_F32 ellipse , Point2D_F32 p ) {
+		return (float)Math.sqrt(distance2(ellipse, p));
+	}
+
+	/**
+	 * Euclidean distance squared of closest point on ellipse to point 'p'.
+	 *
+	 * @param ellipse Ellipse
+	 * @param p Point
+	 * @return Euclidean distance squared
+	 */
+	public static float distance2(EllipseRotated_F32 ellipse , Point2D_F32 p ) {
+		// put point into ellipse's reference frame
+		float cphi = (float)Math.cos(ellipse.phi);
+		float sphi = (float)Math.sin(ellipse.phi);
+
+		float xc = p.x - ellipse.center.x;
+		float yc = p.y - ellipse.center.y;
+		float r = (float)Math.sqrt(xc*xc + yc*yc);
+
+		float x =  cphi*xc + sphi*yc;
+		float y = -sphi*xc + cphi*yc;
+
+		float ct = x/r;
+		float st = y/r;
+
+		x = ellipse.center.x + ellipse.a*ct*cphi - ellipse.b*st*sphi;
+		y = ellipse.center.y + ellipse.a*ct*sphi + ellipse.b*st*cphi;
+
+		return p.distance2(x,y);
 	}
 }

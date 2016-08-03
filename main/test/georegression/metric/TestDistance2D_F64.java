@@ -25,6 +25,7 @@ import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.EllipseRotated_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import org.junit.Test;
@@ -162,5 +163,22 @@ public class TestDistance2D_F64 {
 		double found = Distance2D_F64.distanceOrigin(line);
 
 		assertEquals(expected,found,GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void distance_ellipserotated_point() {
+		EllipseRotated_F64 ellipse = new EllipseRotated_F64(4,5,4,3, GrlConstants.PId2);
+
+		assertEquals(0, Distance2D_F64.distance(ellipse,new Point2D_F64(4+3,5)), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, Distance2D_F64.distance(ellipse,new Point2D_F64(4-3,5)), GrlConstants.DOUBLE_TEST_TOL);
+
+		assertEquals(0, Distance2D_F64.distance(ellipse,new Point2D_F64(4,5-4)), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, Distance2D_F64.distance(ellipse,new Point2D_F64(4,5+4)), GrlConstants.DOUBLE_TEST_TOL);
+
+		assertEquals(1, Distance2D_F64.distance(ellipse,new Point2D_F64(4+2,5)), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1, Distance2D_F64.distance(ellipse,new Point2D_F64(4-2,5)), GrlConstants.DOUBLE_TEST_TOL);
+
+		assertEquals(1.1, Distance2D_F64.distance(ellipse,new Point2D_F64(4+4.1,5)), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1.1, Distance2D_F64.distance(ellipse,new Point2D_F64(4-4.1,5)), GrlConstants.DOUBLE_TEST_TOL);
 	}
 }
