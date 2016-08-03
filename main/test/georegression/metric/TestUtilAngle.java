@@ -23,6 +23,8 @@ import org.junit.Test;
 
 import static georegression.metric.UtilAngle.*;
 import static georegression.misc.GrlConstants.F_PI;
+import static georegression.misc.GrlConstants.F_PId2;
+import static georegression.misc.GrlConstants.PId2;
 import static java.lang.Math.PI;
 import static org.junit.Assert.*;
 
@@ -66,6 +68,28 @@ public class TestUtilAngle {
 		assertEquals( PI * 0.3, bound( PI * 8.3 ), 1e-5 );
 		assertEquals( PI * 0.3, bound( PI * 0.3 ), 1e-5 );
 		assertEquals( -PI * 0.9, bound( -PI * 0.9 ), 1e-5 );
+	}
+
+	@Test
+	public void testBoundHalf_F64() {
+		assertEquals( -0.1, boundHalf( PI - 0.1 ), 1e-5 );
+		assertEquals(  0.1, boundHalf( -PI + 0.1 ), 1e-5 );
+		assertEquals( PId2-0.1, boundHalf( PId2-0.1 ), 1e-5 );
+		assertEquals( -PId2+0.1, boundHalf( -PId2+0.1 ), 1e-5 );
+
+		assertEquals( -0.1, boundHalf( 3*PI - 0.1 ), 1e-5 );
+		assertEquals(  0.1, boundHalf( -3*PI + 0.1 ), 1e-5 );
+	}
+
+	@Test
+	public void testBoundHalf_F32() {
+		assertEquals( -0.1f, boundHalf( F_PI - 0.1f ), 1e-5f );
+		assertEquals(  0.1f, boundHalf( -F_PI + 0.1f ), 1e-5f );
+		assertEquals( F_PId2-0.1f, boundHalf( F_PId2-0.1f ), 1e-5f );
+		assertEquals( -F_PId2+0.1f, boundHalf( -F_PId2+0.1f ), 1e-5f );
+
+		assertEquals( -0.1f, boundHalf( 3*F_PI - 0.1f ), 1e-5f );
+		assertEquals(  0.1f, boundHalf( -3*F_PI + 0.1f ), 1e-5f );
 	}
 
 	@Test

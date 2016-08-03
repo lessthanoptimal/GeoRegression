@@ -125,6 +125,38 @@ public class UtilAngle {
 	}
 
 	/**
+	 * Bounds the angle between -&pi;/2 and &pi/2
+	 * @param angle angle in radians
+	 * @return bounded angle
+	 */
+	public static double boundHalf( double angle ) {
+		angle = bound(angle);
+
+		if( angle > GrlConstants.PId2 ) {
+			angle -= Math.PI;
+		} else if( angle < -GrlConstants.PId2 ){
+			angle += Math.PI;
+		}
+		return angle;
+	}
+
+	/**
+	 * Bounds the angle between -&pi;/2 and &pi/2
+	 * @param angle angle in radians
+	 * @return bounded angle
+	 */
+	public static float boundHalf( float angle ) {
+		angle = bound(angle);
+
+		if( angle > GrlConstants.F_PId2 ) {
+			angle -= GrlConstants.F_PI;
+		} else if( angle < -GrlConstants.F_PId2 ){
+			angle += GrlConstants.F_PI;
+		}
+		return angle;
+	}
+
+	/**
 	 * Angular distance in radians to go from angA to angB in counter clock-wise direction.
 	 * The resulting angle will be from 0 to 2&pi;.
 	 *
