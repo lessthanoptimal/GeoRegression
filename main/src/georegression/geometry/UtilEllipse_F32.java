@@ -161,7 +161,6 @@ public class UtilEllipse_F32 {
 		x -= ellipse.center.x;
 		y -= ellipse.center.y;
 
-
 		float left = (x*cphi + y*sphi);
 		float right = (-x*sphi + y*cphi);
 

@@ -161,7 +161,6 @@ public class UtilEllipse_F64 {
 		x -= ellipse.center.x;
 		y -= ellipse.center.y;
 
-
 		double left = (x*cphi + y*sphi);
 		double right = (-x*sphi + y*cphi);
 

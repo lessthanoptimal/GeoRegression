@@ -25,10 +25,7 @@ import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.se.Se2_F32;
-import georegression.struct.shapes.Polygon2D_F32;
-import georegression.struct.shapes.Quadrilateral_F32;
-import georegression.struct.shapes.Rectangle2D_F32;
-import georegression.struct.shapes.RectangleLength2D_F32;
+import georegression.struct.shapes.*;
 import georegression.transform.se.SePointOps_F32;
 import org.junit.Test;
 
@@ -114,6 +111,20 @@ public class TestIntersection2D_F32 {
 
 		assertTrue(Intersection2D_F32.containTriangle(a, b, c, inside));
 		assertFalse(Intersection2D_F32.containTriangle(a, b, c, outside));
+	}
+
+	@Test
+	public void containEllipseRotated() {
+
+		EllipseRotated_F32 ellipse = new EllipseRotated_F32(5,6,4,3, GrlConstants.F_PId2);
+
+		assertFalse(Intersection2D_F32.contains(ellipse,0,0));
+		assertTrue(Intersection2D_F32.contains(ellipse,5,6));
+		assertTrue(Intersection2D_F32.contains(ellipse,5,6+4 - GrlConstants.FLOAT_TEST_TOL));
+		assertTrue(Intersection2D_F32.contains(ellipse,5+3.0f - GrlConstants.FLOAT_TEST_TOL,6));
+
+		assertFalse(Intersection2D_F32.contains(ellipse,5,6+4.0f + GrlConstants.FLOAT_TEST_TOL));
+		assertFalse(Intersection2D_F32.contains(ellipse,5+3 + GrlConstants.FLOAT_TEST_TOL,6));
 	}
 
 	@Test

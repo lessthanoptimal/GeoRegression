@@ -18,15 +18,13 @@
 
 package georegression.metric;
 
+import georegression.geometry.UtilEllipse_F64;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
-import georegression.struct.shapes.Polygon2D_F64;
-import georegression.struct.shapes.Quadrilateral_F64;
-import georegression.struct.shapes.Rectangle2D_F64;
-import georegression.struct.shapes.RectangleLength2D_F64;
+import georegression.struct.shapes.*;
 
 
 /**
@@ -409,6 +407,18 @@ public class Intersection2D_F64 {
 	 */
 	public static boolean contains2( Rectangle2D_F64 a, double x, double y ) {
 		return( a.p0.x <= x && a.p1.x >= x && a.p0.y <= y && a.p1.y >= y );
+	}
+
+	/**
+	 * Tests to see if the provided point lies on or is contained inside the ellipse
+	 *
+	 * @param ellipse  Ellipse
+	 * @param x x-coordinate of point being tested for containment
+	 * @param y y-coordinate of point being tested for containment
+	 * @return true if inside and false if output
+	 */
+	public static boolean contains(EllipseRotated_F64 ellipse , double x , double y ) {
+		return (UtilEllipse_F64.evaluate(x,y, ellipse) <= 1.0 );
 	}
 
 	public static RectangleLength2D_F64 intersection( RectangleLength2D_F64 a, RectangleLength2D_F64 b ) {
