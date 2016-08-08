@@ -18,6 +18,8 @@
 
 package georegression.metric;
 
+import georegression.geometry.UtilEllipse_F32;
+import georegression.geometry.UtilLine2D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
@@ -486,6 +488,83 @@ public class TestIntersection2D_F32 {
 
 	private void check( Rectangle2D_F32 a , Rectangle2D_F32 b , float expected ) {
 		assertEquals(expected,Intersection2D_F32.intersectionArea(a,b),GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void line_ellipse() {
+
+		// easy cases where the ellipse is at the original aligned to the coordinate axis
+		EllipseRotated_F32 ellipse = new EllipseRotated_F32(0,0,2,1,0);
+
+		checkIntersection(new LineGeneral2D_F32(1,0,0),ellipse); // vertical line
+		checkIntersection(new LineGeneral2D_F32(0,1,0),ellipse); // horizontal line
+		checkIntersection(new LineGeneral2D_F32(0.25f,2.0f,1),ellipse); // angled line
+		checkIntersection(new LineGeneral2D_F32(2.0f,0.25f,1),ellipse); // angled line
+		checkSingleIntersection(new LineGeneral2D_F32(1,0,-2),ellipse); // single point
+		checkSingleIntersection(new LineGeneral2D_F32(0,1,-1),ellipse); // single point
+		checkNoIntersection(new LineGeneral2D_F32(1,0,20),ellipse);// no intersection
+
+		// Test to see if the rotation is handled correctly.  Still centered at the original but rotated 90 degrees
+		ellipse = new EllipseRotated_F32(0,0,2,1, GrlConstants.F_PId2);
+
+		checkIntersection(new LineGeneral2D_F32(1,0,0),ellipse); // vertical line
+		checkIntersection(new LineGeneral2D_F32(0,1,0),ellipse); // horizontal line
+		checkIntersection(new LineGeneral2D_F32(0.25f,2.0f,1),ellipse); // angled line
+		checkIntersection(new LineGeneral2D_F32(2.0f,0.25f,1),ellipse); // angled line
+		checkSingleIntersection(new LineGeneral2D_F32(1,0,-1),ellipse); // single point
+		checkSingleIntersection(new LineGeneral2D_F32(0,1,-2),ellipse); // single point
+		checkNoIntersection(new LineGeneral2D_F32(1,0,20),ellipse);// no intersection
+
+		//  Offset it from the original
+		ellipse = new EllipseRotated_F32(0.1f,0,2,1,0);
+
+		checkIntersection(new LineGeneral2D_F32(1,0,0),ellipse); // vertical line
+		checkIntersection(new LineGeneral2D_F32(0,1,0),ellipse); // horizontal line
+
+		// Hardest case.  not at origin and rotated an arbitrary amount
+		ellipse = new EllipseRotated_F32(0.12f,-0.13f,2,1,0.4f);
+		checkIntersection(new LineGeneral2D_F32(1,0,0),ellipse); // vertical line
+		checkIntersection(new LineGeneral2D_F32(0,1,0),ellipse); // horizontal line
+		checkIntersection(new LineGeneral2D_F32(0.25f,2.0f,1),ellipse); // angled line
+		checkIntersection(new LineGeneral2D_F32(2.0f,0.25f,1),ellipse); // angled line
+		checkIntersection(new LineGeneral2D_F32(1,0,-2),ellipse); // single point
+		checkIntersection(new LineGeneral2D_F32(0,1,-1),ellipse); // single point
+		checkNoIntersection(new LineGeneral2D_F32(1,0,20),ellipse);// no intersection
+	}
+
+	private void checkNoIntersection( LineGeneral2D_F32 line , EllipseRotated_F32 ellipse ) {
+		Point2D_F32 a = new Point2D_F32();
+		Point2D_F32 b = new Point2D_F32();
+
+		assertEquals(0,Intersection2D_F32.intersection(line,ellipse,a,b));
+	}
+
+	private void checkIntersection( LineGeneral2D_F32 line , EllipseRotated_F32 ellipse ) {
+		Point2D_F32 a = new Point2D_F32();
+		Point2D_F32 b = new Point2D_F32();
+
+		assertEquals(2,Intersection2D_F32.intersection(line,ellipse,a,b));
+
+		// use the line and ellipse definition to check solution
+		assertEquals(0, line.evaluate(a.x, a.y), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0, line.evaluate(b.x, b.y), GrlConstants.FLOAT_TEST_TOL);
+
+		assertEquals(1.0f, UtilEllipse_F32.evaluate(a.x, a.y, ellipse), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1.0f, UtilEllipse_F32.evaluate(b.x, b.y, ellipse), GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	private void checkSingleIntersection( LineGeneral2D_F32 line , EllipseRotated_F32 ellipse ) {
+		Point2D_F32 a = new Point2D_F32();
+		Point2D_F32 b = new Point2D_F32();
+
+		assertEquals(1,Intersection2D_F32.intersection(line,ellipse,a,b));
+
+		assertEquals(0, a.distance(b), GrlConstants.FLOAT_TEST_TOL);
+
+		// use the line and ellipse definition to check solution
+		assertEquals(0, line.evaluate(a.x, a.y), GrlConstants.FLOAT_TEST_TOL);
+
+		assertEquals(1.0f, UtilEllipse_F32.evaluate(a.x, a.y, ellipse), GrlConstants.FLOAT_TEST_TOL);
 	}
 
 }

@@ -28,6 +28,8 @@ import org.ejml.UtilEjml;
  */
 public class GrlConstants {
 
+	public static double PI = Math.PI;
+
 	public static float F_PI = (float)Math.PI;
 	/**
 	 * Float 2*PI

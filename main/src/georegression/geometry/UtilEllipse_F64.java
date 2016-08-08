@@ -165,7 +165,10 @@ public class UtilEllipse_F64 {
 		double left = (x*cphi + y*sphi);
 		double right = (-x*sphi + y*cphi);
 
-		return (left*left)/(ellipse.a*ellipse.a) + (right*right)/(ellipse.b*ellipse.b);
+		double ll = left/ellipse.a;
+		double rr = right/ellipse.b;
+
+		return ll*ll + rr*rr;
 	}
 
 	/**

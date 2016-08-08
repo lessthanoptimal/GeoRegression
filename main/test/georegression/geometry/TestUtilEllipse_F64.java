@@ -134,7 +134,7 @@ public class TestUtilEllipse_F64 {
 		UtilEllipse_F64.convert(rotated,quad);
 
 		for( int i = 0; i < 100; i++ ) {
-			double t = Math.PI*2*i/100.0;
+			double t = GrlConstants.PI*2*i/100.0;
 			Point2D_F64 p = UtilEllipse_F64.computePoint(t,rotated,null);
 			double eval = UtilEllipse_F64.evaluate(p.x,p.y,quad);
 			assertEquals(0,eval, GrlConstants.DOUBLE_TEST_TOL);
@@ -146,7 +146,7 @@ public class TestUtilEllipse_F64 {
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0.2);
 
 		for( int i = 0; i <= 100; i++ ) {
-			double t = Math.PI*2*i/100.0 - Math.PI;
+			double t = GrlConstants.PI*2*i/100.0 - GrlConstants.PI;
 			Point2D_F64 p = UtilEllipse_F64.computePoint(t,rotated,null);
 			double found = UtilEllipse_F64.computeAngle(p,rotated);
 //			System.out.println(t+" "+found);
@@ -163,7 +163,7 @@ public class TestUtilEllipse_F64 {
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0);
 
 		for (int i = 0; i < 20; i++) {
-			double theta = i*Math.PI*2.0/20.0;
+			double theta = i*GrlConstants.PI*2.0/20.0;
 			checkTangent(theta,rotated,delta);
 		}
 
@@ -171,7 +171,7 @@ public class TestUtilEllipse_F64 {
 		rotated = new EllipseRotated_F64(1,2,4.5,3,0.4);
 
 		for (int i = 0; i < 20; i++) {
-			double theta = i*Math.PI*2.0/20.0;
+			double theta = i*GrlConstants.PI*2.0/20.0;
 			checkTangent(theta,rotated,delta);
 		}
 	}

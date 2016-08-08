@@ -18,6 +18,8 @@
 
 package georegression.metric;
 
+import georegression.geometry.UtilEllipse_F64;
+import georegression.geometry.UtilLine2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
@@ -490,15 +492,79 @@ public class TestIntersection2D_F64 {
 
 	@Test
 	public void line_ellipse() {
-		// easy cases where the ellipse is at the original aligned to the coordinate axis
-		// vertical line
-		// horizontal line
-		// angled line
-		// single point
-		// no intersection
 
-		// Harder cases where the ellipse of offset from the original and rotated
-		fail("Implement");
+		// easy cases where the ellipse is at the original aligned to the coordinate axis
+		EllipseRotated_F64 ellipse = new EllipseRotated_F64(0,0,2,1,0);
+
+		checkIntersection(new LineGeneral2D_F64(1,0,0),ellipse); // vertical line
+		checkIntersection(new LineGeneral2D_F64(0,1,0),ellipse); // horizontal line
+		checkIntersection(new LineGeneral2D_F64(0.25,2.0,1),ellipse); // angled line
+		checkIntersection(new LineGeneral2D_F64(2.0,0.25,1),ellipse); // angled line
+		checkSingleIntersection(new LineGeneral2D_F64(1,0,-2),ellipse); // single point
+		checkSingleIntersection(new LineGeneral2D_F64(0,1,-1),ellipse); // single point
+		checkNoIntersection(new LineGeneral2D_F64(1,0,20),ellipse);// no intersection
+
+		// Test to see if the rotation is handled correctly.  Still centered at the original but rotated 90 degrees
+		ellipse = new EllipseRotated_F64(0,0,2,1, GrlConstants.PId2);
+
+		checkIntersection(new LineGeneral2D_F64(1,0,0),ellipse); // vertical line
+		checkIntersection(new LineGeneral2D_F64(0,1,0),ellipse); // horizontal line
+		checkIntersection(new LineGeneral2D_F64(0.25,2.0,1),ellipse); // angled line
+		checkIntersection(new LineGeneral2D_F64(2.0,0.25,1),ellipse); // angled line
+		checkSingleIntersection(new LineGeneral2D_F64(1,0,-1),ellipse); // single point
+		checkSingleIntersection(new LineGeneral2D_F64(0,1,-2),ellipse); // single point
+		checkNoIntersection(new LineGeneral2D_F64(1,0,20),ellipse);// no intersection
+
+		//  Offset it from the original
+		ellipse = new EllipseRotated_F64(0.1,0,2,1,0);
+
+		checkIntersection(new LineGeneral2D_F64(1,0,0),ellipse); // vertical line
+		checkIntersection(new LineGeneral2D_F64(0,1,0),ellipse); // horizontal line
+
+		// Hardest case.  not at origin and rotated an arbitrary amount
+		ellipse = new EllipseRotated_F64(0.12,-0.13,2,1,0.4);
+		checkIntersection(new LineGeneral2D_F64(1,0,0),ellipse); // vertical line
+		checkIntersection(new LineGeneral2D_F64(0,1,0),ellipse); // horizontal line
+		checkIntersection(new LineGeneral2D_F64(0.25,2.0,1),ellipse); // angled line
+		checkIntersection(new LineGeneral2D_F64(2.0,0.25,1),ellipse); // angled line
+		checkIntersection(new LineGeneral2D_F64(1,0,-2),ellipse); // single point
+		checkIntersection(new LineGeneral2D_F64(0,1,-1),ellipse); // single point
+		checkNoIntersection(new LineGeneral2D_F64(1,0,20),ellipse);// no intersection
+	}
+
+	private void checkNoIntersection( LineGeneral2D_F64 line , EllipseRotated_F64 ellipse ) {
+		Point2D_F64 a = new Point2D_F64();
+		Point2D_F64 b = new Point2D_F64();
+
+		assertEquals(0,Intersection2D_F64.intersection(line,ellipse,a,b));
+	}
+
+	private void checkIntersection( LineGeneral2D_F64 line , EllipseRotated_F64 ellipse ) {
+		Point2D_F64 a = new Point2D_F64();
+		Point2D_F64 b = new Point2D_F64();
+
+		assertEquals(2,Intersection2D_F64.intersection(line,ellipse,a,b));
+
+		// use the line and ellipse definition to check solution
+		assertEquals(0, line.evaluate(a.x, a.y), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, line.evaluate(b.x, b.y), GrlConstants.DOUBLE_TEST_TOL);
+
+		assertEquals(1.0, UtilEllipse_F64.evaluate(a.x, a.y, ellipse), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1.0, UtilEllipse_F64.evaluate(b.x, b.y, ellipse), GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	private void checkSingleIntersection( LineGeneral2D_F64 line , EllipseRotated_F64 ellipse ) {
+		Point2D_F64 a = new Point2D_F64();
+		Point2D_F64 b = new Point2D_F64();
+
+		assertEquals(1,Intersection2D_F64.intersection(line,ellipse,a,b));
+
+		assertEquals(0, a.distance(b), GrlConstants.DOUBLE_TEST_TOL);
+
+		// use the line and ellipse definition to check solution
+		assertEquals(0, line.evaluate(a.x, a.y), GrlConstants.DOUBLE_TEST_TOL);
+
+		assertEquals(1.0, UtilEllipse_F64.evaluate(a.x, a.y, ellipse), GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 }

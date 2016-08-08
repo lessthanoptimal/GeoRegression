@@ -19,6 +19,7 @@
 package georegression.metric;
 
 import georegression.geometry.UtilEllipse_F64;
+import georegression.misc.GrlConstants;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
@@ -507,9 +508,8 @@ public class Intersection2D_F64 {
 	}
 
 	/**
-	 * Determines the location(s) that a line and ellipse intersect.  If the line
-	 * intersects the ellipse true is returned.  If the intersection is at a single point then
-	 * the point is returned twice
+	 * Determines the location(s) that a line and ellipse intersect.  Returns the number of intersections found.
+	 * NOTE: Due to floating point errors, it's possible for a single solution to returned as two points.
 	 *
 	 * @param line Line
 	 * @param ellipse Ellipse
@@ -517,11 +517,11 @@ public class Intersection2D_F64 {
 	 * @param intersection1 Storage for second point of intersection.
 	 * @return Number of intersections.  Possible values are 0, 1, or 2.
 	 */
-	public static boolean intersection( LineGeneral2D_F64 line , EllipseRotated_F64 ellipse ,
+	public static int intersection( LineGeneral2D_F64 line , EllipseRotated_F64 ellipse ,
 									Point2D_F64 intersection0 , Point2D_F64 intersection1 ) {
 
 		// First translate the line so that coordinate origin is the same as the ellipse
-		double C = line.C - (line.A*ellipse.center.x - line.B*ellipse.center.y);
+		double C = line.C + (line.A*ellipse.center.x + line.B*ellipse.center.y);
 
 		// Now rotate the line
 		double cphi = Math.cos(ellipse.phi);
@@ -537,15 +537,25 @@ public class Intersection2D_F64 {
 
 		double x0,y0;
 		double x1,y1;
+
+		int totalIntersections;
+
 		if( Math.abs(A) > Math.abs(B) ) {
 			double alpha = -C/A;
 			double beta = -B/A;
 
 			double aa = beta*beta/a2 + 1.0/b2;
 			double bb = 2.0*alpha*beta/a2;
-			double cc = -alpha*alpha/a2 - 1.0;
+			double cc = alpha*alpha/a2 - 1.0;
 
-			double right = Math.sqrt(bb*bb -4.0*aa*cc);
+			double inner = bb*bb -4.0*aa*cc;
+			if( inner < 0.0 )
+				return 0;
+			else if( inner/aa < GrlConstants.EPS ) // divide by aa for scaling
+				totalIntersections = 1;
+			else
+				totalIntersections = 2;
+			double right = Math.sqrt(inner);
 			y0 = (-bb + right)/(2.0*aa);
 			y1 = (-bb - right)/(2.0*aa);
 
@@ -559,7 +569,14 @@ public class Intersection2D_F64 {
 			double bb = 2.0*alpha*beta/b2;
 			double cc = alpha*alpha/b2-1.0;
 
-			double right = Math.sqrt(bb*bb -4.0*aa*cc);
+			double inner = bb*bb -4.0*aa*cc;
+			if( inner < 0.0)
+				return 0;
+			else if( inner/aa < GrlConstants.EPS )
+				totalIntersections = 1;
+			else
+				totalIntersections = 2;
+			double right = Math.sqrt(inner);
 			x0 = (-bb + right)/(2.0*aa);
 			x1 = (-bb - right)/(2.0*aa);
 
@@ -574,6 +591,6 @@ public class Intersection2D_F64 {
 		intersection1.x = x1*cphi - y1*sphi + ellipse.center.x;
 		intersection1.y = x1*sphi + y1*cphi + ellipse.center.y;
 
-		return true;
+		return totalIntersections;
 	}
 }

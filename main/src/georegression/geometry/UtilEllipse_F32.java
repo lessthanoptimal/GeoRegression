@@ -165,7 +165,10 @@ public class UtilEllipse_F32 {
 		float left = (x*cphi + y*sphi);
 		float right = (-x*sphi + y*cphi);
 
-		return (left*left)/(ellipse.a*ellipse.a) + (right*right)/(ellipse.b*ellipse.b);
+		float ll = left/ellipse.a;
+		float rr = right/ellipse.b;
+
+		return ll*ll + rr*rr;
 	}
 
 	/**

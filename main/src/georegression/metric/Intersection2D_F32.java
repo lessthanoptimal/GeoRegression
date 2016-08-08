@@ -19,6 +19,7 @@
 package georegression.metric;
 
 import georegression.geometry.UtilEllipse_F32;
+import georegression.misc.GrlConstants;
 import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
@@ -504,5 +505,92 @@ public class Intersection2D_F32 {
 		float y1 = (float)Math.min(a.p1.y,b.p1.y);
 
 		return (x1-x0)*(y1-y0);
+	}
+
+	/**
+	 * Determines the location(s) that a line and ellipse intersect.  Returns the number of intersections found.
+	 * NOTE: Due to floating point errors, it's possible for a single solution to returned as two points.
+	 *
+	 * @param line Line
+	 * @param ellipse Ellipse
+	 * @param intersection0 Storage for first point of intersection.
+	 * @param intersection1 Storage for second point of intersection.
+	 * @return Number of intersections.  Possible values are 0, 1, or 2.
+	 */
+	public static int intersection( LineGeneral2D_F32 line , EllipseRotated_F32 ellipse ,
+									Point2D_F32 intersection0 , Point2D_F32 intersection1 ) {
+
+		// First translate the line so that coordinate origin is the same as the ellipse
+		float C = line.C + (line.A*ellipse.center.x + line.B*ellipse.center.y);
+
+		// Now rotate the line
+		float cphi = (float)Math.cos(ellipse.phi);
+		float sphi = (float)Math.sin(ellipse.phi);
+		float A = line.A*cphi + line.B*sphi;
+		float B = line.B*cphi - line.A*sphi;
+
+		// Now solve for the intersections with the coordinate system centered and aligned to the ellipse
+		// There are two different ways to solve for this.  Pick the axis with the largest slope
+		// to avoid the pathological case
+		float a2 = ellipse.a*ellipse.a;
+		float b2 = ellipse.b*ellipse.b;
+
+		float x0,y0;
+		float x1,y1;
+
+		int totalIntersections;
+
+		if( (float)Math.abs(A) > (float)Math.abs(B) ) {
+			float alpha = -C/A;
+			float beta = -B/A;
+
+			float aa = beta*beta/a2 + 1.0f/b2;
+			float bb = 2.0f*alpha*beta/a2;
+			float cc = alpha*alpha/a2 - 1.0f;
+
+			float inner = bb*bb -4.0f*aa*cc;
+			if( inner < 0.0f )
+				return 0;
+			else if( inner/aa < GrlConstants.F_EPS ) // divide by aa for scaling
+				totalIntersections = 1;
+			else
+				totalIntersections = 2;
+			float right = (float)Math.sqrt(inner);
+			y0 = (-bb + right)/(2.0f*aa);
+			y1 = (-bb - right)/(2.0f*aa);
+
+			x0 =  -(C + B*y0)/A;
+			x1 =  -(C + B*y1)/A;
+		} else {
+			float alpha = -C/B;
+			float beta = -A/B;
+
+			float aa = beta*beta/b2 + 1.0f/a2;
+			float bb = 2.0f*alpha*beta/b2;
+			float cc = alpha*alpha/b2-1.0f;
+
+			float inner = bb*bb -4.0f*aa*cc;
+			if( inner < 0.0f)
+				return 0;
+			else if( inner/aa < GrlConstants.F_EPS )
+				totalIntersections = 1;
+			else
+				totalIntersections = 2;
+			float right = (float)Math.sqrt(inner);
+			x0 = (-bb + right)/(2.0f*aa);
+			x1 = (-bb - right)/(2.0f*aa);
+
+			y0 = -(A*x0 + C)/B;
+			y1 = -(A*x1 + C)/B;
+		}
+
+		// go back into world coordinate system
+		intersection0.x = x0*cphi - y0*sphi + ellipse.center.x;
+		intersection0.y = x0*sphi + y0*cphi + ellipse.center.y;
+
+		intersection1.x = x1*cphi - y1*sphi + ellipse.center.x;
+		intersection1.y = x1*sphi + y1*cphi + ellipse.center.y;
+
+		return totalIntersections;
 	}
 }

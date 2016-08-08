@@ -134,7 +134,7 @@ public class TestUtilEllipse_F32 {
 		UtilEllipse_F32.convert(rotated,quad);
 
 		for( int i = 0; i < 100; i++ ) {
-			float t = (float)Math.PI*2*i/100.0f;
+			float t = GrlConstants.F_PI*2*i/100.0f;
 			Point2D_F32 p = UtilEllipse_F32.computePoint(t,rotated,null);
 			float eval = UtilEllipse_F32.evaluate(p.x,p.y,quad);
 			assertEquals(0,eval, GrlConstants.FLOAT_TEST_TOL);
@@ -146,7 +146,7 @@ public class TestUtilEllipse_F32 {
 		EllipseRotated_F32 rotated = new EllipseRotated_F32(1,2,4.5f,3,0.2f);
 
 		for( int i = 0; i <= 100; i++ ) {
-			float t = (float)Math.PI*2*i/100.0f - (float)Math.PI;
+			float t = GrlConstants.F_PI*2*i/100.0f - GrlConstants.F_PI;
 			Point2D_F32 p = UtilEllipse_F32.computePoint(t,rotated,null);
 			float found = UtilEllipse_F32.computeAngle(p,rotated);
 //			System.out.println(t+" "+found);
@@ -163,7 +163,7 @@ public class TestUtilEllipse_F32 {
 		EllipseRotated_F32 rotated = new EllipseRotated_F32(1,2,4.5f,3,0);
 
 		for (int i = 0; i < 20; i++) {
-			float theta = i*Math.PI*2.0f/20.0f;
+			float theta = i*GrlConstants.F_PI*2.0f/20.0f;
 			checkTangent(theta,rotated,delta);
 		}
 
@@ -171,7 +171,7 @@ public class TestUtilEllipse_F32 {
 		rotated = new EllipseRotated_F32(1,2,4.5f,3,0.4f);
 
 		for (int i = 0; i < 20; i++) {
-			float theta = i*Math.PI*2.0f/20.0f;
+			float theta = i*GrlConstants.F_PI*2.0f/20.0f;
 			checkTangent(theta,rotated,delta);
 		}
 	}
