@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F32;
+import georegression.struct.point.Vector2D_F32;
 import georegression.struct.shapes.EllipseQuadratic_F32;
 import georegression.struct.shapes.EllipseRotated_F32;
 
@@ -209,5 +210,38 @@ public class UtilEllipse_F32 {
 		float y = -se*xc + ce*yc;
 
 		return (float)Math.atan2( y/ellipse.b , x/ellipse.a );
+	}
+
+	/**
+	 * Computes the tangent to the ellipse at the specified location
+	 *
+	 * @param t Location on the ellipse.  Radians
+	 * @param ellipse Ellipse equation
+	 * @param output Optional storage for tangent
+	 * @return The tangent
+	 */
+	public static Vector2D_F32 computeTangent( float t ,
+											   EllipseRotated_F32 ellipse ,
+											   Vector2D_F32 output  ) {
+		if( output == null )
+			output = new Vector2D_F32();
+
+		float ct = (float)Math.cos(t);
+		float st = (float)Math.sin(t);
+		float cphi = (float)Math.cos(ellipse.phi);
+		float sphi = (float)Math.sin(ellipse.phi);
+
+		float h = ellipse.a*ct*ellipse.b*ellipse.b;
+		float v = ellipse.b*st*ellipse.a*ellipse.a;
+
+		float dx = h*cphi - v*sphi;
+		float dy = h*sphi + v*cphi;
+
+		float r = (float)Math.sqrt(dx*dx + dy*dy);
+
+		output.x = -dy/r;
+		output.y = dx/r;
+
+		return output;
 	}
 }

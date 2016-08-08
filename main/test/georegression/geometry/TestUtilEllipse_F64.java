@@ -21,6 +21,7 @@ package georegression.geometry;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.point.Vector2D_F64;
 import georegression.struct.shapes.EllipseQuadratic_F64;
 import georegression.struct.shapes.EllipseRotated_F64;
 import org.junit.Test;
@@ -153,4 +154,53 @@ public class TestUtilEllipse_F64 {
 		}
 	}
 
+
+	@Test
+	public void computeTangent_rotated() {
+		double delta = GrlConstants.DOUBLE_TEST_TOL;
+
+		// axis aligned case
+		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0);
+
+		for (int i = 0; i < 20; i++) {
+			double theta = i*Math.PI*2.0/20.0;
+			checkTangent(theta,rotated,delta);
+		}
+
+		// rotated case
+		rotated = new EllipseRotated_F64(1,2,4.5,3,0.4);
+
+		for (int i = 0; i < 20; i++) {
+			double theta = i*Math.PI*2.0/20.0;
+			checkTangent(theta,rotated,delta);
+		}
+	}
+
+	private void checkTangent( double t , EllipseRotated_F64 ellipse , double delta ) {
+		Vector2D_F64 found = UtilEllipse_F64.computeTangent(t,ellipse,null);
+		Vector2D_F64 expected = numericalTangent(t,ellipse,delta);
+
+		double error0 = found.distance(expected);
+		expected.x *= -1;
+		expected.y *= -1;
+		double error1 = found.distance(expected);
+
+		double error = Math.min(error0,error1);
+
+		assertEquals(0,error,Math.sqrt(delta));
+	}
+
+	private Vector2D_F64 numericalTangent( double t , EllipseRotated_F64 ellipse , double delta ) {
+
+		Point2D_F64 a = UtilEllipse_F64.computePoint(t-delta,ellipse,null);
+		Point2D_F64 b = UtilEllipse_F64.computePoint(t+delta,ellipse,null);
+
+		Vector2D_F64 output = new Vector2D_F64();
+		output.x = (b.x-a.x)/(2.0*delta);
+		output.y = (b.y-a.y)/(2.0*delta);
+
+		output.normalize();
+
+		return output;
+	}
 }

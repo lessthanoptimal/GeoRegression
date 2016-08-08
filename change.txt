@@ -12,6 +12,8 @@ Version : 0.12
   * Euclidean distance of point from rotated ellipse
 - UtilAngle
   * Added bound for -pi/2 and pi/2
+- UtilEllipse
+  * added computeTangent
 
 ---------------------------------------------
 Date    : 2016/06/09

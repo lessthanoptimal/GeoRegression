@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.point.Vector2D_F64;
 import georegression.struct.shapes.EllipseQuadratic_F64;
 import georegression.struct.shapes.EllipseRotated_F64;
 
@@ -209,5 +210,38 @@ public class UtilEllipse_F64 {
 		double y = -se*xc + ce*yc;
 
 		return Math.atan2( y/ellipse.b , x/ellipse.a );
+	}
+
+	/**
+	 * Computes the tangent to the ellipse at the specified location
+	 *
+	 * @param t Location on the ellipse.  Radians
+	 * @param ellipse Ellipse equation
+	 * @param output Optional storage for tangent
+	 * @return The tangent
+	 */
+	public static Vector2D_F64 computeTangent( double t ,
+											   EllipseRotated_F64 ellipse ,
+											   Vector2D_F64 output  ) {
+		if( output == null )
+			output = new Vector2D_F64();
+
+		double ct = Math.cos(t);
+		double st = Math.sin(t);
+		double cphi = Math.cos(ellipse.phi);
+		double sphi = Math.sin(ellipse.phi);
+
+		double h = ellipse.a*ct*ellipse.b*ellipse.b;
+		double v = ellipse.b*st*ellipse.a*ellipse.a;
+
+		double dx = h*cphi - v*sphi;
+		double dy = h*sphi + v*cphi;
+
+		double r = Math.sqrt(dx*dx + dy*dy);
+
+		output.x = -dy/r;
+		output.y = dx/r;
+
+		return output;
 	}
 }

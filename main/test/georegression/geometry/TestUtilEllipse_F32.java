@@ -21,6 +21,7 @@ package georegression.geometry;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F32;
+import georegression.struct.point.Vector2D_F32;
 import georegression.struct.shapes.EllipseQuadratic_F32;
 import georegression.struct.shapes.EllipseRotated_F32;
 import org.junit.Test;
@@ -153,4 +154,53 @@ public class TestUtilEllipse_F32 {
 		}
 	}
 
+
+	@Test
+	public void computeTangent_rotated() {
+		float delta = GrlConstants.FLOAT_TEST_TOL;
+
+		// axis aligned case
+		EllipseRotated_F32 rotated = new EllipseRotated_F32(1,2,4.5f,3,0);
+
+		for (int i = 0; i < 20; i++) {
+			float theta = i*Math.PI*2.0f/20.0f;
+			checkTangent(theta,rotated,delta);
+		}
+
+		// rotated case
+		rotated = new EllipseRotated_F32(1,2,4.5f,3,0.4f);
+
+		for (int i = 0; i < 20; i++) {
+			float theta = i*Math.PI*2.0f/20.0f;
+			checkTangent(theta,rotated,delta);
+		}
+	}
+
+	private void checkTangent( float t , EllipseRotated_F32 ellipse , float delta ) {
+		Vector2D_F32 found = UtilEllipse_F32.computeTangent(t,ellipse,null);
+		Vector2D_F32 expected = numericalTangent(t,ellipse,delta);
+
+		float error0 = found.distance(expected);
+		expected.x *= -1;
+		expected.y *= -1;
+		float error1 = found.distance(expected);
+
+		float error = (float)Math.min(error0,error1);
+
+		assertEquals(0,error,Math.sqrt(delta));
+	}
+
+	private Vector2D_F32 numericalTangent( float t , EllipseRotated_F32 ellipse , float delta ) {
+
+		Point2D_F32 a = UtilEllipse_F32.computePoint(t-delta,ellipse,null);
+		Point2D_F32 b = UtilEllipse_F32.computePoint(t+delta,ellipse,null);
+
+		Vector2D_F32 output = new Vector2D_F32();
+		output.x = (b.x-a.x)/(2.0f*delta);
+		output.y = (b.y-a.y)/(2.0f*delta);
+
+		output.normalize();
+
+		return output;
+	}
 }
