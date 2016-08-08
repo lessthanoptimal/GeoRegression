@@ -488,4 +488,17 @@ public class TestIntersection2D_F64 {
 		assertEquals(expected,Intersection2D_F64.intersectionArea(a,b),GrlConstants.DOUBLE_TEST_TOL);
 	}
 
+	@Test
+	public void line_ellipse() {
+		// easy cases where the ellipse is at the original aligned to the coordinate axis
+		// vertical line
+		// horizontal line
+		// angled line
+		// single point
+		// no intersection
+
+		// Harder cases where the ellipse of offset from the original and rotated
+		fail("Implement");
+	}
+
 }

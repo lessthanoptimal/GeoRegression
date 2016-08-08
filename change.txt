@@ -8,6 +8,7 @@ Version : 0.12
    * Weighted version of FitEllipseAlgebraic
 - Intersection2D
   * point inside ellipse
+  * line ellipse intersection
 - Distance2D
   * Euclidean distance of point from rotated ellipse
 - UtilAngle
