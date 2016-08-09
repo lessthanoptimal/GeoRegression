@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
 import georegression.struct.shapes.EllipseQuadratic_F64;
@@ -246,5 +247,84 @@ public class UtilEllipse_F64 {
 		output.y = dx/r;
 
 		return output;
+	}
+
+	/**
+	 * Finds the two liens which are tangent to the ellipse and pass through the point.  The point is assumed to be
+	 * outside of the ellipse.
+	 *
+	 * @param pt Point which the liens will pass though
+	 * @param ellipse The ellipse which the lines will be tangent to
+	 * @param lineA (output) line
+	 * @param lineB (output) line
+	 */
+	public static boolean tangentLines(Point2D_F64 pt , EllipseRotated_F64 ellipse ,
+									LineGeneral2D_F64 lineA , LineGeneral2D_F64 lineB )
+	{
+		// Derivation:
+		// Compute the tangent at only point along the ellipse by computing dy/dx
+		//    x*b^2/(y*a^2) or - x*b^2/(y*a^2)  are the possible solutions for the tangent
+		// The slope of the line and the gradient are the same, so this is true:
+		//   y - y'     -x*b^2
+		//  -------  =  -------
+		//   x - x'      y*a^2
+		//
+		//  (x,y) is point on ellipse, (x',y') is pt that lines pass through
+		//
+		//  that becomes
+		//  y^2*a^2 + x^2*b^2 = x'*x*b^2 + y'*y*a^2
+		//  use the equation for the ellipse (centered and aligned at origin)
+		//  a^2*b^2 =  x'*x*b^2 + y'*y*a^2
+		//
+		// solve for y
+		// plug into ellipse equation
+		// solve for x, which is a quadratic equation
+
+		// translate and rotate into ellipse reference frame
+		double cphi = Math.cos(ellipse.phi);
+		double sphi = Math.sin(ellipse.phi);
+
+		double x = pt.x*cphi - pt.y*sphi - ellipse.center.x;
+		double y = pt.x*sphi + pt.y*cphi - ellipse.center.y;
+
+		// solve
+		double a2 = ellipse.a*ellipse.a;
+		double b2 = ellipse.b*ellipse.b;
+
+		double aa = y*y + x*x/a2;
+		double bb = -2.0*x;
+		double cc = a2*(1.0-y*y);
+
+		double inner = bb*bb -4.0*aa*cc;
+		if( inner < 0.0 )
+			return false;
+
+		double right = Math.sqrt(inner);
+
+		double x0 = (-bb + right)/(2.0*aa);
+		double x1 = (-bb - right)/(2.0*aa);
+
+		double y0 = Math.sqrt(b2 - x0*x0*b2/a2);
+		double y1 = Math.sqrt(b2 - x1*x1*b2/a2);
+
+		// convert the lines back into world space
+		double xx0 = x0*cphi - y0*sphi + ellipse.center.x;
+		double yy0 = x0*sphi + y0*cphi + ellipse.center.y;
+
+		double xx1 = x1*cphi - y1*sphi + ellipse.center.x;
+		double yy1 = x1*sphi + y1*cphi + ellipse.center.y;
+
+		// convert into a line
+		lineA.A = pt.y - yy0;
+		lineA.B = xx0 - pt.x;
+		lineA.C = -(lineA.A*pt.x + lineA.B*pt.y);
+		lineA.normalize();
+
+		lineB.A = pt.y - yy1;
+		lineB.B = xx1 - pt.x;
+		lineB.C = -(lineB.A*pt.x + lineB.B*pt.y);
+		lineB.normalize();
+
+		return true;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,8 +18,10 @@
 
 package georegression.geometry;
 
+import georegression.metric.Intersection2D_F64;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
+import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
 import georegression.struct.shapes.EllipseQuadratic_F64;
@@ -28,8 +30,7 @@ import org.junit.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author Peter Abeles
@@ -202,5 +203,42 @@ public class TestUtilEllipse_F64 {
 		output.normalize();
 
 		return output;
+	}
+
+	@Test
+	public void tangentLines() {
+
+		// simple case with a circle at the origin
+		checkTangentLines( -10,0, new EllipseRotated_F64(0,0,2,2,0));
+		checkTangentLines( -10,1, new EllipseRotated_F64(0,0,2,2,0));
+
+		fail("Implement");
+	}
+
+	public void checkTangentLines( double x, double y , EllipseRotated_F64 ellipse ) {
+		Point2D_F64 pt = new Point2D_F64(x,y);
+
+		LineGeneral2D_F64 lineA = new LineGeneral2D_F64();
+		LineGeneral2D_F64 lineB = new LineGeneral2D_F64();
+
+		UtilEllipse_F64.tangentLines(pt,ellipse,lineA,lineB);
+
+		// the point should pass through both lines
+		assertEquals(0, lineA.evaluate(pt.x,pt.y), GrlConstants.EPS);
+		assertEquals(0, lineB.evaluate(pt.x,pt.y), GrlConstants.EPS);
+
+		// if it's tangent there should only be one point of intersection
+		Point2D_F64 pA = new Point2D_F64();
+		Point2D_F64 pB = new Point2D_F64();
+
+		assertTrue( 0 < Intersection2D_F64.intersection(lineA,ellipse,pA,pB));
+		assertEquals(0,pA.distance(pB) , GrlConstants.DOUBLE_TEST_TOL*10.0 );
+		assertTrue( 0 < Intersection2D_F64.intersection(lineB,ellipse,pA,pB));
+		assertEquals(0,pA.distance(pB) , GrlConstants.DOUBLE_TEST_TOL*10.0 );
+
+		// Make sure the lines are not identical
+		assertNotEquals( lineA.A , lineB.A , GrlConstants.DOUBLE_TEST_TOL );
+		assertNotEquals( lineA.B , lineB.B , GrlConstants.DOUBLE_TEST_TOL );
+		assertNotEquals( lineA.C , lineB.C , GrlConstants.DOUBLE_TEST_TOL );
 	}
 }
