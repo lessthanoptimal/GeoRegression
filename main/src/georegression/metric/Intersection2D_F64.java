@@ -554,7 +554,7 @@ public class Intersection2D_F64 {
 			double cc = alpha*alpha/a2 - 1.0;
 
 			double inner = bb*bb -4.0*aa*cc;
-			if( Math.abs(inner)/aa < EPS ) { // divide by aa for scale invariance
+			if( Math.abs(inner/aa) < EPS ) { // divide by aa for scale invariance
 				totalIntersections = 1;
 				inner = inner < 0 ? 0 : inner;
 			} else if( inner < 0 ) {
@@ -577,7 +577,7 @@ public class Intersection2D_F64 {
 			double cc = alpha*alpha/b2-1.0;
 
 			double inner = bb*bb -4.0*aa*cc;
-			if( Math.abs(inner)/aa < EPS ) { // divide by aa for scale invariance
+			if( Math.abs(inner/aa) < EPS ) { // divide by aa for scale invariance
 				totalIntersections = 1;
 				inner = inner < 0 ? 0 : inner;
 			} else if( inner < 0 ) {

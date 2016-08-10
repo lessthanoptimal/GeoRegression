@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Vector2D_F32;
 import georegression.struct.shapes.EllipseQuadratic_F32;
@@ -188,8 +189,13 @@ public class UtilEllipse_F32 {
 		float cphi = (float)Math.cos(ellipse.phi);
 		float sphi = (float)Math.sin(ellipse.phi);
 
-		output.x = ellipse.center.x + ellipse.a*ct*cphi - ellipse.b*st*sphi;
-		output.y = ellipse.center.y + ellipse.a*ct*sphi + ellipse.b*st*cphi;
+		// coordinate in ellipse frame
+		float x = ellipse.a*ct;
+		float y = ellipse.b*st;
+
+		// put into global frame
+		output.x = ellipse.center.x + x*cphi - y*sphi;
+		output.y = ellipse.center.y + x*sphi + y*cphi;
 
 		return output;
 	}
@@ -206,6 +212,7 @@ public class UtilEllipse_F32 {
 		float ce = (float)Math.cos(ellipse.phi);
 		float se = (float)Math.sin(ellipse.phi);
 
+		// world into ellipse frame
 		float xc = p.x - ellipse.center.x;
 		float yc = p.y - ellipse.center.y;
 
@@ -234,17 +241,129 @@ public class UtilEllipse_F32 {
 		float cphi = (float)Math.cos(ellipse.phi);
 		float sphi = (float)Math.sin(ellipse.phi);
 
-		float h = ellipse.a*ct*ellipse.b*ellipse.b;
-		float v = ellipse.b*st*ellipse.a*ellipse.a;
+		// point in ellipse frame multiplied by b^2 and a^2
+		float x = ellipse.a*ct*ellipse.b*ellipse.b;
+		float y = ellipse.b*st*ellipse.a*ellipse.a;
 
-		float dx = h*cphi - v*sphi;
-		float dy = h*sphi + v*cphi;
+		// rotate vector normal into world frame
+		float rx = x*cphi - y*sphi;
+		float ry = x*sphi + y*cphi;
 
-		float r = (float)Math.sqrt(dx*dx + dy*dy);
+		// normalize and change into tangent
+		float r = (float)Math.sqrt(rx*rx + ry*ry);
 
-		output.x = -dy/r;
-		output.y = dx/r;
+		output.x = -ry/r;
+		output.y = rx/r;
 
 		return output;
+	}
+
+	/**
+	 * Finds the two liens which are tangent to the ellipse and pass through the point.  The point is assumed to be
+	 * outside of the ellipse.
+	 *
+	 * @param pt Point which the liens will pass though
+	 * @param ellipse The ellipse which the lines will be tangent to
+	 * @param lineA (output) line
+	 * @param lineB (output) line
+	 */
+	public static boolean tangentLines(Point2D_F32 pt , EllipseRotated_F32 ellipse ,
+									LineGeneral2D_F32 lineA , LineGeneral2D_F32 lineB )
+	{
+		// Derivation:
+		// Compute the tangent at only point along the ellipse by computing dy/dx
+		//    x*b^2/(y*a^2) or - x*b^2/(y*a^2)  are the possible solutions for the tangent
+		// The slope of the line and the gradient are the same, so this is true:
+		//   y - y'     -x*b^2
+		//  -------  =  -------
+		//   x - x'      y*a^2
+		//
+		//  (x,y) is point on ellipse, (x',y') is pt that lines pass through
+		//
+		//  that becomes
+		//  y^2*a^2 + x^2*b^2 = x'*x*b^2 + y'*y*a^2
+		//  use the equation for the ellipse (centered and aligned at origin)
+		//  a^2*b^2 =  x'*x*b^2 + y'*y*a^2
+		//
+		// solve for y
+		// plug into ellipse equation
+		// solve for x, which is a quadratic equation
+
+		// translate and rotate into ellipse reference frame
+		float cphi = (float)Math.cos(ellipse.phi);
+		float sphi = (float)Math.sin(ellipse.phi);
+
+		float tmpx = pt.x - ellipse.center.x;
+		float tmpy = pt.y - ellipse.center.y;
+
+		float xt =  tmpx*cphi + tmpy*sphi;
+		float yt = -tmpx*sphi + tmpy*cphi;
+
+		// solve
+		float a2 = ellipse.a*ellipse.a;
+		float b2 = ellipse.b*ellipse.b;
+
+		// quadratic equation for the two variants.
+		// solving for x
+		float aa0 = yt*yt + xt*xt*b2/a2;
+		float bb0 = -2.0f*xt*b2;
+		float cc0 = a2*(b2-yt*yt);
+
+		float descriminant0 = bb0*bb0 - 4.0f*aa0*cc0;
+
+		// solving for y
+		float aa1 = xt*xt + yt*yt*a2/b2;
+		float bb1 = -2.0f*yt*a2;
+		float cc1 = b2*(a2-xt*xt);
+
+		float descriminant1 = bb1*bb1 - 4.0f*aa1*cc1;
+
+		float x0,y0, x1,y1;
+		if( descriminant0 < 0 && descriminant1 < 0 ) {
+			return false;
+		} else if( descriminant0 > descriminant1 ) {
+			if( yt == 0 )
+				return false;
+
+			float right = (float)Math.sqrt(descriminant0);
+
+			x0 = (-bb0 + right)/(2.0f*aa0);
+			x1 = (-bb0 - right)/(2.0f*aa0);
+
+			y0 = b2/yt - xt*x0*b2/(yt*a2);
+			y1 = b2/yt - xt*x1*b2/(yt*a2);
+
+		} else {
+			if( xt == 0 )
+				return false;
+
+			float right = (float)Math.sqrt(descriminant1);
+
+			y0 = (-bb1 + right)/(2.0f*aa1);
+			y1 = (-bb1 - right)/(2.0f*aa1);
+
+			x0 = a2/xt - yt*y0*a2/(xt*b2);
+			x1 = a2/xt - yt*y1*a2/(xt*b2);
+		}
+
+		// convert the lines back into world space
+		float xx0 = x0*cphi - y0*sphi + ellipse.center.x;
+		float yy0 = x0*sphi + y0*cphi + ellipse.center.y;
+
+		float xx1 = x1*cphi - y1*sphi + ellipse.center.x;
+		float yy1 = x1*sphi + y1*cphi + ellipse.center.y;
+
+		// convert into a line
+		lineA.A = pt.y - yy0;
+		lineA.B = xx0 - pt.x;
+		lineA.C = -(lineA.A*pt.x + lineA.B*pt.y);
+		lineA.normalize();
+
+		lineB.A = pt.y - yy1;
+		lineB.B = xx1 - pt.x;
+		lineB.C = -(lineB.A*pt.x + lineB.B*pt.y);
+		lineB.normalize();
+
+		return true;
 	}
 }

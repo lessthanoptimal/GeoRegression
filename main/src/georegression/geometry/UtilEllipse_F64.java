@@ -293,8 +293,11 @@ public class UtilEllipse_F64 {
 		double cphi = Math.cos(ellipse.phi);
 		double sphi = Math.sin(ellipse.phi);
 
-		double xt = pt.x*cphi - pt.y*sphi - ellipse.center.x;
-		double yt = pt.x*sphi + pt.y*cphi - ellipse.center.y;
+		double tmpx = pt.x - ellipse.center.x;
+		double tmpy = pt.y - ellipse.center.y;
+
+		double xt =  tmpx*cphi + tmpy*sphi;
+		double yt = -tmpx*sphi + tmpy*cphi;
 
 		// solve
 		double a2 = ellipse.a*ellipse.a;
@@ -316,7 +319,12 @@ public class UtilEllipse_F64 {
 		double descriminant1 = bb1*bb1 - 4.0*aa1*cc1;
 
 		double x0,y0, x1,y1;
-		if( descriminant0 > descriminant1 ) {
+		if( descriminant0 < 0 && descriminant1 < 0 ) {
+			return false;
+		} else if( descriminant0 > descriminant1 ) {
+			if( yt == 0 )
+				return false;
+
 			double right = Math.sqrt(descriminant0);
 
 			x0 = (-bb0 + right)/(2.0*aa0);
@@ -326,6 +334,9 @@ public class UtilEllipse_F64 {
 			y1 = b2/yt - xt*x1*b2/(yt*a2);
 
 		} else {
+			if( xt == 0 )
+				return false;
+
 			double right = Math.sqrt(descriminant1);
 
 			y0 = (-bb1 + right)/(2.0*aa1);

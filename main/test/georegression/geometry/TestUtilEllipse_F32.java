@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,8 +18,10 @@
 
 package georegression.geometry;
 
+import georegression.metric.Intersection2D_F32;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
+import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Vector2D_F32;
 import georegression.struct.shapes.EllipseQuadratic_F32;
@@ -28,8 +30,7 @@ import org.junit.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author Peter Abeles
@@ -202,5 +203,83 @@ public class TestUtilEllipse_F32 {
 		output.normalize();
 
 		return output;
+	}
+
+	@Test
+	public void tangentLines() {
+
+		// simple case with a circle at the origin
+		checkTangentLines( -2,2, new EllipseRotated_F32(0,0,2,2,0));
+		checkTangentLines( 0,-10, new EllipseRotated_F32(0,0,2,2,0));
+		checkTangentLines( -10,0, new EllipseRotated_F32(0,0,2,2,0));
+		checkTangentLines( -10,1, new EllipseRotated_F32(0,0,2,2,0));
+		checkTangentLines( 1,-10, new EllipseRotated_F32(0,0,2,2,0));
+
+		// test failure case.  Inside
+		checkTangentLinesFail( 0,0, new EllipseRotated_F32(0,0,2,2,0));
+		checkTangentLinesFail( 0.05f,0, new EllipseRotated_F32(0,0,2,2,0));
+		checkTangentLinesFail( 0,0.1f, new EllipseRotated_F32(0,0,2,2,0));
+		checkTangentLinesFail( 0.05f,0.1f, new EllipseRotated_F32(0,0,2,2,0));
+
+		// same, but not circular
+		checkTangentLines( -2,2, new EllipseRotated_F32(0,0,2,3,0));
+		checkTangentLines( 0,-10, new EllipseRotated_F32(0,0,2,3,0));
+		checkTangentLines( -10,0, new EllipseRotated_F32(0,0,2,3,0));
+		checkTangentLines( -10,1, new EllipseRotated_F32(0,0,2,3,0));
+		checkTangentLines( 1,-10, new EllipseRotated_F32(0,0,2,3,0));
+
+		// same, but translated
+		float x = 1.2f, y = -0.5f;
+		checkTangentLines( -2+x , 2  +y, new EllipseRotated_F32(x,y,2,3,0));
+		checkTangentLines(  0+x , -10+y, new EllipseRotated_F32(x,y,2,3,0));
+		checkTangentLines( -10+x, 0  +y, new EllipseRotated_F32(x,y,2,3,0));
+		checkTangentLines( -10+x, 1  +y, new EllipseRotated_F32(x,y,2,3,0));
+		checkTangentLines(  1+x , -10+y, new EllipseRotated_F32(x,y,2,3,0));
+
+		// same, but translated and rotated
+		checkTangentLines( -3+x , 3  +y, new EllipseRotated_F32(x,y,2,3,0.1f));
+		checkTangentLines(  0+x , -10+y, new EllipseRotated_F32(x,y,2,3,0.1f));
+		checkTangentLines( -10+x, 0  +y, new EllipseRotated_F32(x,y,2,3,0.1f));
+		checkTangentLines( -10+x, 1  +y, new EllipseRotated_F32(x,y,2,3,0.1f));
+		checkTangentLines(  1+x , -10+y, new EllipseRotated_F32(x,y,2,3,0.1f));
+	}
+
+	public void checkTangentLinesFail( float x, float y , EllipseRotated_F32 ellipse ) {
+		Point2D_F32 pt = new Point2D_F32(x,y);
+
+		LineGeneral2D_F32 lineA = new LineGeneral2D_F32();
+		LineGeneral2D_F32 lineB = new LineGeneral2D_F32();
+
+		assertFalse(UtilEllipse_F32.tangentLines(pt,ellipse,lineA,lineB));
+	}
+
+	public void checkTangentLines( float x, float y , EllipseRotated_F32 ellipse ) {
+		Point2D_F32 pt = new Point2D_F32(x,y);
+
+		LineGeneral2D_F32 lineA = new LineGeneral2D_F32();
+		LineGeneral2D_F32 lineB = new LineGeneral2D_F32();
+
+		assertTrue(UtilEllipse_F32.tangentLines(pt,ellipse,lineA,lineB));
+
+		// the point should pass through both lines
+		assertEquals(0, lineA.evaluate(pt.x,pt.y), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0, lineB.evaluate(pt.x,pt.y), GrlConstants.FLOAT_TEST_TOL);
+
+		// if it's tangent there should only be one point of intersection
+		Point2D_F32 pA = new Point2D_F32();
+		Point2D_F32 pB = new Point2D_F32();
+
+		assertTrue( 0 < Intersection2D_F32.intersection(lineA,ellipse,pA,pB, GrlConstants.FLOAT_TEST_TOL));
+		assertEquals(0,pA.distance(pB) , GrlConstants.FLOAT_TEST_TOL*20.0f );
+		assertTrue( 0 < Intersection2D_F32.intersection(lineB,ellipse,pA,pB, GrlConstants.FLOAT_TEST_TOL));
+		assertEquals(0,pA.distance(pB) , GrlConstants.FLOAT_TEST_TOL*20.0f );
+
+		// Make sure the lines are not identical
+		boolean idential = true;
+		idential &= (float)Math.abs( lineA.A - lineB.A ) <= GrlConstants.FLOAT_TEST_TOL;
+		idential &= (float)Math.abs( lineA.B - lineB.B ) <= GrlConstants.FLOAT_TEST_TOL;
+		idential &= (float)Math.abs( lineA.C - lineB.C ) <= GrlConstants.FLOAT_TEST_TOL;
+
+		assertFalse( idential );
 	}
 }

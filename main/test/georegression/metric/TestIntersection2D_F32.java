@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -536,14 +536,14 @@ public class TestIntersection2D_F32 {
 		Point2D_F32 a = new Point2D_F32();
 		Point2D_F32 b = new Point2D_F32();
 
-		assertEquals(0,Intersection2D_F32.intersection(line,ellipse,a,b));
+		assertEquals(0,Intersection2D_F32.intersection(line,ellipse,a,b,-1));
 	}
 
 	private void checkIntersection( LineGeneral2D_F32 line , EllipseRotated_F32 ellipse ) {
 		Point2D_F32 a = new Point2D_F32();
 		Point2D_F32 b = new Point2D_F32();
 
-		assertEquals(2,Intersection2D_F32.intersection(line,ellipse,a,b));
+		assertEquals(2,Intersection2D_F32.intersection(line,ellipse,a,b, -1));
 
 		// use the line and ellipse definition to check solution
 		assertEquals(0, line.evaluate(a.x, a.y), GrlConstants.FLOAT_TEST_TOL);
@@ -557,7 +557,7 @@ public class TestIntersection2D_F32 {
 		Point2D_F32 a = new Point2D_F32();
 		Point2D_F32 b = new Point2D_F32();
 
-		assertEquals(1,Intersection2D_F32.intersection(line,ellipse,a,b));
+		assertEquals(1,Intersection2D_F32.intersection(line,ellipse,a,b, -1));
 
 		assertEquals(0, a.distance(b), GrlConstants.FLOAT_TEST_TOL);
 

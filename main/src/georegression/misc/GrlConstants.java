@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -49,7 +49,7 @@ public class GrlConstants {
 	public static float FLOAT_TEST_TOL = 1e-4f;
 	public static double DOUBLE_TEST_TOL = 1e-8f;
 
-	public static double F_EPS = (float)Math.pow(2,-21);
+	public static float F_EPS = (float)Math.pow(2,-21);
 	public static double EPS = UtilEjml.EPS;
 
 }

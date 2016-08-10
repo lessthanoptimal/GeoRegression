@@ -215,6 +215,12 @@ public class TestUtilEllipse_F64 {
 		checkTangentLines( -10,1, new EllipseRotated_F64(0,0,2,2,0));
 		checkTangentLines( 1,-10, new EllipseRotated_F64(0,0,2,2,0));
 
+		// test failure case.  Inside
+		checkTangentLinesFail( 0,0, new EllipseRotated_F64(0,0,2,2,0));
+		checkTangentLinesFail( 0.05,0, new EllipseRotated_F64(0,0,2,2,0));
+		checkTangentLinesFail( 0,0.1, new EllipseRotated_F64(0,0,2,2,0));
+		checkTangentLinesFail( 0.05,0.1, new EllipseRotated_F64(0,0,2,2,0));
+
 		// same, but not circular
 		checkTangentLines( -2,2, new EllipseRotated_F64(0,0,2,3,0));
 		checkTangentLines( 0,-10, new EllipseRotated_F64(0,0,2,3,0));
@@ -223,11 +229,28 @@ public class TestUtilEllipse_F64 {
 		checkTangentLines( 1,-10, new EllipseRotated_F64(0,0,2,3,0));
 
 		// same, but translated
-		checkTangentLines( -2,2, new EllipseRotated_F64(0,0,2,3,0));
-		checkTangentLines( 0,-10, new EllipseRotated_F64(0,0,2,3,0));
-		checkTangentLines( -10,0, new EllipseRotated_F64(0,0,2,3,0));
-		checkTangentLines( -10,1, new EllipseRotated_F64(0,0,2,3,0));
-		checkTangentLines( 1,-10, new EllipseRotated_F64(0,0,2,3,0));
+		double x = 1.2, y = -0.5;
+		checkTangentLines( -2+x , 2  +y, new EllipseRotated_F64(x,y,2,3,0));
+		checkTangentLines(  0+x , -10+y, new EllipseRotated_F64(x,y,2,3,0));
+		checkTangentLines( -10+x, 0  +y, new EllipseRotated_F64(x,y,2,3,0));
+		checkTangentLines( -10+x, 1  +y, new EllipseRotated_F64(x,y,2,3,0));
+		checkTangentLines(  1+x , -10+y, new EllipseRotated_F64(x,y,2,3,0));
+
+		// same, but translated and rotated
+		checkTangentLines( -3+x , 3  +y, new EllipseRotated_F64(x,y,2,3,0.1));
+		checkTangentLines(  0+x , -10+y, new EllipseRotated_F64(x,y,2,3,0.1));
+		checkTangentLines( -10+x, 0  +y, new EllipseRotated_F64(x,y,2,3,0.1));
+		checkTangentLines( -10+x, 1  +y, new EllipseRotated_F64(x,y,2,3,0.1));
+		checkTangentLines(  1+x , -10+y, new EllipseRotated_F64(x,y,2,3,0.1));
+	}
+
+	public void checkTangentLinesFail( double x, double y , EllipseRotated_F64 ellipse ) {
+		Point2D_F64 pt = new Point2D_F64(x,y);
+
+		LineGeneral2D_F64 lineA = new LineGeneral2D_F64();
+		LineGeneral2D_F64 lineB = new LineGeneral2D_F64();
+
+		assertFalse(UtilEllipse_F64.tangentLines(pt,ellipse,lineA,lineB));
 	}
 
 	public void checkTangentLines( double x, double y , EllipseRotated_F64 ellipse ) {
@@ -246,10 +269,10 @@ public class TestUtilEllipse_F64 {
 		Point2D_F64 pA = new Point2D_F64();
 		Point2D_F64 pB = new Point2D_F64();
 
-		assertTrue( 0 < Intersection2D_F64.intersection(lineA,ellipse,pA,pB, 1e-14));
-		assertEquals(0,pA.distance(pB) , GrlConstants.DOUBLE_TEST_TOL*10.0 );
-		assertTrue( 0 < Intersection2D_F64.intersection(lineB,ellipse,pA,pB, 1e-14));
-		assertEquals(0,pA.distance(pB) , GrlConstants.DOUBLE_TEST_TOL*10.0 );
+		assertTrue( 0 < Intersection2D_F64.intersection(lineA,ellipse,pA,pB, GrlConstants.DOUBLE_TEST_TOL));
+		assertEquals(0,pA.distance(pB) , GrlConstants.DOUBLE_TEST_TOL*20.0 );
+		assertTrue( 0 < Intersection2D_F64.intersection(lineB,ellipse,pA,pB, GrlConstants.DOUBLE_TEST_TOL));
+		assertEquals(0,pA.distance(pB) , GrlConstants.DOUBLE_TEST_TOL*20.0 );
 
 		// Make sure the lines are not identical
 		boolean idential = true;

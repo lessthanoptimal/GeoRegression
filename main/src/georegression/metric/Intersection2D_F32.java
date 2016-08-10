@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -515,10 +515,15 @@ public class Intersection2D_F32 {
 	 * @param ellipse Ellipse
 	 * @param intersection0 Storage for first point of intersection.
 	 * @param intersection1 Storage for second point of intersection.
+	 * @param EPS Numerical precision.  Set to a negative value to use default
 	 * @return Number of intersections.  Possible values are 0, 1, or 2.
 	 */
 	public static int intersection( LineGeneral2D_F32 line , EllipseRotated_F32 ellipse ,
-									Point2D_F32 intersection0 , Point2D_F32 intersection1 ) {
+									Point2D_F32 intersection0 , Point2D_F32 intersection1 , float EPS ) {
+
+		if( EPS < 0 ) {
+			EPS = GrlConstants.F_EPS;
+		}
 
 		// First translate the line so that coordinate origin is the same as the ellipse
 		float C = line.C + (line.A*ellipse.center.x + line.B*ellipse.center.y);
@@ -549,12 +554,14 @@ public class Intersection2D_F32 {
 			float cc = alpha*alpha/a2 - 1.0f;
 
 			float inner = bb*bb -4.0f*aa*cc;
-			if( inner < 0.0f )
-				return 0;
-			else if( inner/aa < GrlConstants.F_EPS ) // divide by aa for scaling
+			if( (float)Math.abs(inner/aa) < EPS ) { // divide by aa for scale invariance
 				totalIntersections = 1;
-			else
+				inner = inner < 0 ? 0 : inner;
+			} else if( inner < 0 ) {
+				return 0;
+			} else {
 				totalIntersections = 2;
+			}
 			float right = (float)Math.sqrt(inner);
 			y0 = (-bb + right)/(2.0f*aa);
 			y1 = (-bb - right)/(2.0f*aa);
@@ -570,12 +577,14 @@ public class Intersection2D_F32 {
 			float cc = alpha*alpha/b2-1.0f;
 
 			float inner = bb*bb -4.0f*aa*cc;
-			if( inner < 0.0f)
-				return 0;
-			else if( inner/aa < GrlConstants.F_EPS )
+			if( (float)Math.abs(inner/aa) < EPS ) { // divide by aa for scale invariance
 				totalIntersections = 1;
-			else
+				inner = inner < 0 ? 0 : inner;
+			} else if( inner < 0 ) {
+				return 0;
+			} else {
 				totalIntersections = 2;
+			}
 			float right = (float)Math.sqrt(inner);
 			x0 = (-bb + right)/(2.0f*aa);
 			x1 = (-bb - right)/(2.0f*aa);
