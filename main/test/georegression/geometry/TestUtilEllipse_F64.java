@@ -263,19 +263,22 @@ public class TestUtilEllipse_F64 {
 	public void checkTangentLinesFail( double x, double y , EllipseRotated_F64 ellipse ) {
 		Point2D_F64 pt = new Point2D_F64(x,y);
 
-		LineGeneral2D_F64 lineA = new LineGeneral2D_F64();
-		LineGeneral2D_F64 lineB = new LineGeneral2D_F64();
+		Point2D_F64 pointA = new Point2D_F64();
+		Point2D_F64 pointB = new Point2D_F64();
 
-		assertFalse(UtilEllipse_F64.tangentLines(pt,ellipse,lineA,lineB));
+		assertFalse(UtilEllipse_F64.tangentLines(pt,ellipse,pointA,pointB));
 	}
 
 	public void checkTangentLines( double x, double y , EllipseRotated_F64 ellipse ) {
 		Point2D_F64 pt = new Point2D_F64(x,y);
 
-		LineGeneral2D_F64 lineA = new LineGeneral2D_F64();
-		LineGeneral2D_F64 lineB = new LineGeneral2D_F64();
+		Point2D_F64 pointA = new Point2D_F64();
+		Point2D_F64 pointB = new Point2D_F64();
 
-		assertTrue(UtilEllipse_F64.tangentLines(pt,ellipse,lineA,lineB));
+		assertTrue(UtilEllipse_F64.tangentLines(pt,ellipse,pointA,pointB));
+
+		LineGeneral2D_F64 lineA = UtilLine2D_F64.convert(pt,pointA,(LineGeneral2D_F64)null);
+		LineGeneral2D_F64 lineB = UtilLine2D_F64.convert(pt,pointB,(LineGeneral2D_F64)null);
 
 		// the point should pass through both lines
 		assertEquals(0, lineA.evaluate(pt.x,pt.y), GrlConstants.DOUBLE_TEST_TOL);
