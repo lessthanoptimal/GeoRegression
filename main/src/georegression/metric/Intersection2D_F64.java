@@ -531,8 +531,8 @@ public class Intersection2D_F64 {
 		// Now rotate the line
 		double cphi = Math.cos(ellipse.phi);
 		double sphi = Math.sin(ellipse.phi);
-		double A = line.A*cphi + line.B*sphi;
-		double B = line.B*cphi - line.A*sphi;
+		double A =  line.A*cphi + line.B*sphi;
+		double B = -line.A*sphi + line.B*cphi;
 
 		// Now solve for the intersections with the coordinate system centered and aligned to the ellipse
 		// There are two different ways to solve for this.  Pick the axis with the largest slope

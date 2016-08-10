@@ -142,6 +142,22 @@ public class TestUtilEllipse_F32 {
 		}
 	}
 
+	/**
+	 * Try a few simple cases
+	 */
+	@Test
+	public void computePoint_rotated() {
+		EllipseRotated_F32 rotated = new EllipseRotated_F32(1,2,3,2,GrlConstants.F_PId2);
+
+		Point2D_F32 p = UtilEllipse_F32.computePoint(0,rotated,null);
+		assertEquals(1.0f,p.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2+3,p.y, GrlConstants.FLOAT_TEST_TOL);
+
+		p = UtilEllipse_F32.computePoint(GrlConstants.F_PId2,rotated,null);
+		assertEquals(-1.0f,p.x, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals( 2.0f,p.y, GrlConstants.FLOAT_TEST_TOL);
+	}
+
 	@Test
 	public void computeAngle() {
 		EllipseRotated_F32 rotated = new EllipseRotated_F32(1,2,4.5f,3,0.2f);
@@ -270,9 +286,9 @@ public class TestUtilEllipse_F32 {
 		Point2D_F32 pB = new Point2D_F32();
 
 		assertTrue( 0 < Intersection2D_F32.intersection(lineA,ellipse,pA,pB, GrlConstants.FLOAT_TEST_TOL));
-		assertEquals(0,pA.distance(pB) , GrlConstants.FLOAT_TEST_TOL*20.0f );
+		assertEquals(0,pA.distance(pB) , (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL) );
 		assertTrue( 0 < Intersection2D_F32.intersection(lineB,ellipse,pA,pB, GrlConstants.FLOAT_TEST_TOL));
-		assertEquals(0,pA.distance(pB) , GrlConstants.FLOAT_TEST_TOL*20.0f );
+		assertEquals(0,pA.distance(pB) , (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL*20.0f) );
 
 		// Make sure the lines are not identical
 		boolean idential = true;

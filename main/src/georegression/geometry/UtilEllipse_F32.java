@@ -305,16 +305,16 @@ public class UtilEllipse_F32 {
 
 		// quadratic equation for the two variants.
 		// solving for x
-		float aa0 = yt*yt + xt*xt*b2/a2;
-		float bb0 = -2.0f*xt*b2;
-		float cc0 = a2*(b2-yt*yt);
+		float aa0 = yt*yt/b2 + xt*xt/a2;
+		float bb0 = -2.0f*xt;
+		float cc0 = a2*(1.0f-yt*yt/b2);
 
 		float descriminant0 = bb0*bb0 - 4.0f*aa0*cc0;
 
 		// solving for y
-		float aa1 = xt*xt + yt*yt*a2/b2;
-		float bb1 = -2.0f*yt*a2;
-		float cc1 = b2*(a2-xt*xt);
+		float aa1 = xt*xt/a2 + yt*yt/b2;
+		float bb1 = -2.0f*yt;
+		float cc1 = b2*(1.0f-xt*xt/a2);
 
 		float descriminant1 = bb1*bb1 - 4.0f*aa1*cc1;
 

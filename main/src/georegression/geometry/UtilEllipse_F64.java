@@ -305,16 +305,16 @@ public class UtilEllipse_F64 {
 
 		// quadratic equation for the two variants.
 		// solving for x
-		double aa0 = yt*yt + xt*xt*b2/a2;
-		double bb0 = -2.0*xt*b2;
-		double cc0 = a2*(b2-yt*yt);
+		double aa0 = yt*yt/b2 + xt*xt/a2;
+		double bb0 = -2.0*xt;
+		double cc0 = a2*(1.0-yt*yt/b2);
 
 		double descriminant0 = bb0*bb0 - 4.0*aa0*cc0;
 
 		// solving for y
-		double aa1 = xt*xt + yt*yt*a2/b2;
-		double bb1 = -2.0*yt*a2;
-		double cc1 = b2*(a2-xt*xt);
+		double aa1 = xt*xt/a2 + yt*yt/b2;
+		double bb1 = -2.0*yt;
+		double cc1 = b2*(1.0-xt*xt/a2);
 
 		double descriminant1 = bb1*bb1 - 4.0*aa1*cc1;
 
