@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -515,10 +515,15 @@ public class Intersection2D_F64 {
 	 * @param ellipse Ellipse
 	 * @param intersection0 Storage for first point of intersection.
 	 * @param intersection1 Storage for second point of intersection.
+	 * @param EPS Numerical precision.  Set to a negative value to use default
 	 * @return Number of intersections.  Possible values are 0, 1, or 2.
 	 */
 	public static int intersection( LineGeneral2D_F64 line , EllipseRotated_F64 ellipse ,
-									Point2D_F64 intersection0 , Point2D_F64 intersection1 ) {
+									Point2D_F64 intersection0 , Point2D_F64 intersection1 , double EPS ) {
+
+		if( EPS < 0 ) {
+			EPS = GrlConstants.EPS;
+		}
 
 		// First translate the line so that coordinate origin is the same as the ellipse
 		double C = line.C + (line.A*ellipse.center.x + line.B*ellipse.center.y);
@@ -549,12 +554,14 @@ public class Intersection2D_F64 {
 			double cc = alpha*alpha/a2 - 1.0;
 
 			double inner = bb*bb -4.0*aa*cc;
-			if( inner < 0.0 )
-				return 0;
-			else if( inner/aa < GrlConstants.EPS ) // divide by aa for scaling
+			if( Math.abs(inner)/aa < EPS ) { // divide by aa for scale invariance
 				totalIntersections = 1;
-			else
+				inner = inner < 0 ? 0 : inner;
+			} else if( inner < 0 ) {
+				return 0;
+			} else {
 				totalIntersections = 2;
+			}
 			double right = Math.sqrt(inner);
 			y0 = (-bb + right)/(2.0*aa);
 			y1 = (-bb - right)/(2.0*aa);
@@ -570,12 +577,14 @@ public class Intersection2D_F64 {
 			double cc = alpha*alpha/b2-1.0;
 
 			double inner = bb*bb -4.0*aa*cc;
-			if( inner < 0.0)
-				return 0;
-			else if( inner/aa < GrlConstants.EPS )
+			if( Math.abs(inner)/aa < EPS ) { // divide by aa for scale invariance
 				totalIntersections = 1;
-			else
+				inner = inner < 0 ? 0 : inner;
+			} else if( inner < 0 ) {
+				return 0;
+			} else {
 				totalIntersections = 2;
+			}
 			double right = Math.sqrt(inner);
 			x0 = (-bb + right)/(2.0*aa);
 			x1 = (-bb - right)/(2.0*aa);

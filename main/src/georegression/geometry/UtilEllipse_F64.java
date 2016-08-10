@@ -189,8 +189,13 @@ public class UtilEllipse_F64 {
 		double cphi = Math.cos(ellipse.phi);
 		double sphi = Math.sin(ellipse.phi);
 
-		output.x = ellipse.center.x + ellipse.a*ct*cphi - ellipse.b*st*sphi;
-		output.y = ellipse.center.y + ellipse.a*ct*sphi + ellipse.b*st*cphi;
+		// coordinate in ellipse frame
+		double x = ellipse.a*ct;
+		double y = ellipse.b*st;
+
+		// put into global frame
+		output.x = ellipse.center.x + x*cphi - y*sphi;
+		output.y = ellipse.center.y + x*sphi + y*cphi;
 
 		return output;
 	}
@@ -207,6 +212,7 @@ public class UtilEllipse_F64 {
 		double ce = Math.cos(ellipse.phi);
 		double se = Math.sin(ellipse.phi);
 
+		// world into ellipse frame
 		double xc = p.x - ellipse.center.x;
 		double yc = p.y - ellipse.center.y;
 
@@ -235,16 +241,19 @@ public class UtilEllipse_F64 {
 		double cphi = Math.cos(ellipse.phi);
 		double sphi = Math.sin(ellipse.phi);
 
-		double h = ellipse.a*ct*ellipse.b*ellipse.b;
-		double v = ellipse.b*st*ellipse.a*ellipse.a;
+		// point in ellipse frame multiplied by b^2 and a^2
+		double x = ellipse.a*ct*ellipse.b*ellipse.b;
+		double y = ellipse.b*st*ellipse.a*ellipse.a;
 
-		double dx = h*cphi - v*sphi;
-		double dy = h*sphi + v*cphi;
+		// rotate vector normal into world frame
+		double rx = x*cphi - y*sphi;
+		double ry = x*sphi + y*cphi;
 
-		double r = Math.sqrt(dx*dx + dy*dy);
+		// normalize and change into tangent
+		double r = Math.sqrt(rx*rx + ry*ry);
 
-		output.x = -dy/r;
-		output.y = dx/r;
+		output.x = -ry/r;
+		output.y = rx/r;
 
 		return output;
 	}
@@ -284,28 +293,47 @@ public class UtilEllipse_F64 {
 		double cphi = Math.cos(ellipse.phi);
 		double sphi = Math.sin(ellipse.phi);
 
-		double x = pt.x*cphi - pt.y*sphi - ellipse.center.x;
-		double y = pt.x*sphi + pt.y*cphi - ellipse.center.y;
+		double xt = pt.x*cphi - pt.y*sphi - ellipse.center.x;
+		double yt = pt.x*sphi + pt.y*cphi - ellipse.center.y;
 
 		// solve
 		double a2 = ellipse.a*ellipse.a;
 		double b2 = ellipse.b*ellipse.b;
 
-		double aa = y*y + x*x/a2;
-		double bb = -2.0*x;
-		double cc = a2*(1.0-y*y);
+		// quadratic equation for the two variants.
+		// solving for x
+		double aa0 = yt*yt + xt*xt*b2/a2;
+		double bb0 = -2.0*xt*b2;
+		double cc0 = a2*(b2-yt*yt);
 
-		double inner = bb*bb -4.0*aa*cc;
-		if( inner < 0.0 )
-			return false;
+		double descriminant0 = bb0*bb0 - 4.0*aa0*cc0;
 
-		double right = Math.sqrt(inner);
+		// solving for y
+		double aa1 = xt*xt + yt*yt*a2/b2;
+		double bb1 = -2.0*yt*a2;
+		double cc1 = b2*(a2-xt*xt);
 
-		double x0 = (-bb + right)/(2.0*aa);
-		double x1 = (-bb - right)/(2.0*aa);
+		double descriminant1 = bb1*bb1 - 4.0*aa1*cc1;
 
-		double y0 = Math.sqrt(b2 - x0*x0*b2/a2);
-		double y1 = Math.sqrt(b2 - x1*x1*b2/a2);
+		double x0,y0, x1,y1;
+		if( descriminant0 > descriminant1 ) {
+			double right = Math.sqrt(descriminant0);
+
+			x0 = (-bb0 + right)/(2.0*aa0);
+			x1 = (-bb0 - right)/(2.0*aa0);
+
+			y0 = b2/yt - xt*x0*b2/(yt*a2);
+			y1 = b2/yt - xt*x1*b2/(yt*a2);
+
+		} else {
+			double right = Math.sqrt(descriminant1);
+
+			y0 = (-bb1 + right)/(2.0*aa1);
+			y1 = (-bb1 - right)/(2.0*aa1);
+
+			x0 = a2/xt - yt*y0*a2/(xt*b2);
+			x1 = a2/xt - yt*y1*a2/(xt*b2);
+		}
 
 		// convert the lines back into world space
 		double xx0 = x0*cphi - y0*sphi + ellipse.center.x;

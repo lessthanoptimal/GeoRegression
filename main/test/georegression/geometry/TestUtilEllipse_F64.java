@@ -209,10 +209,25 @@ public class TestUtilEllipse_F64 {
 	public void tangentLines() {
 
 		// simple case with a circle at the origin
+		checkTangentLines( -2,2, new EllipseRotated_F64(0,0,2,2,0));
+		checkTangentLines( 0,-10, new EllipseRotated_F64(0,0,2,2,0));
 		checkTangentLines( -10,0, new EllipseRotated_F64(0,0,2,2,0));
 		checkTangentLines( -10,1, new EllipseRotated_F64(0,0,2,2,0));
+		checkTangentLines( 1,-10, new EllipseRotated_F64(0,0,2,2,0));
 
-		fail("Implement");
+		// same, but not circular
+		checkTangentLines( -2,2, new EllipseRotated_F64(0,0,2,3,0));
+		checkTangentLines( 0,-10, new EllipseRotated_F64(0,0,2,3,0));
+		checkTangentLines( -10,0, new EllipseRotated_F64(0,0,2,3,0));
+		checkTangentLines( -10,1, new EllipseRotated_F64(0,0,2,3,0));
+		checkTangentLines( 1,-10, new EllipseRotated_F64(0,0,2,3,0));
+
+		// same, but translated
+		checkTangentLines( -2,2, new EllipseRotated_F64(0,0,2,3,0));
+		checkTangentLines( 0,-10, new EllipseRotated_F64(0,0,2,3,0));
+		checkTangentLines( -10,0, new EllipseRotated_F64(0,0,2,3,0));
+		checkTangentLines( -10,1, new EllipseRotated_F64(0,0,2,3,0));
+		checkTangentLines( 1,-10, new EllipseRotated_F64(0,0,2,3,0));
 	}
 
 	public void checkTangentLines( double x, double y , EllipseRotated_F64 ellipse ) {
@@ -221,24 +236,27 @@ public class TestUtilEllipse_F64 {
 		LineGeneral2D_F64 lineA = new LineGeneral2D_F64();
 		LineGeneral2D_F64 lineB = new LineGeneral2D_F64();
 
-		UtilEllipse_F64.tangentLines(pt,ellipse,lineA,lineB);
+		assertTrue(UtilEllipse_F64.tangentLines(pt,ellipse,lineA,lineB));
 
 		// the point should pass through both lines
-		assertEquals(0, lineA.evaluate(pt.x,pt.y), GrlConstants.EPS);
-		assertEquals(0, lineB.evaluate(pt.x,pt.y), GrlConstants.EPS);
+		assertEquals(0, lineA.evaluate(pt.x,pt.y), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, lineB.evaluate(pt.x,pt.y), GrlConstants.DOUBLE_TEST_TOL);
 
 		// if it's tangent there should only be one point of intersection
 		Point2D_F64 pA = new Point2D_F64();
 		Point2D_F64 pB = new Point2D_F64();
 
-		assertTrue( 0 < Intersection2D_F64.intersection(lineA,ellipse,pA,pB));
+		assertTrue( 0 < Intersection2D_F64.intersection(lineA,ellipse,pA,pB, 1e-14));
 		assertEquals(0,pA.distance(pB) , GrlConstants.DOUBLE_TEST_TOL*10.0 );
-		assertTrue( 0 < Intersection2D_F64.intersection(lineB,ellipse,pA,pB));
+		assertTrue( 0 < Intersection2D_F64.intersection(lineB,ellipse,pA,pB, 1e-14));
 		assertEquals(0,pA.distance(pB) , GrlConstants.DOUBLE_TEST_TOL*10.0 );
 
 		// Make sure the lines are not identical
-		assertNotEquals( lineA.A , lineB.A , GrlConstants.DOUBLE_TEST_TOL );
-		assertNotEquals( lineA.B , lineB.B , GrlConstants.DOUBLE_TEST_TOL );
-		assertNotEquals( lineA.C , lineB.C , GrlConstants.DOUBLE_TEST_TOL );
+		boolean idential = true;
+		idential &= Math.abs( lineA.A - lineB.A ) <= GrlConstants.DOUBLE_TEST_TOL;
+		idential &= Math.abs( lineA.B - lineB.B ) <= GrlConstants.DOUBLE_TEST_TOL;
+		idential &= Math.abs( lineA.C - lineB.C ) <= GrlConstants.DOUBLE_TEST_TOL;
+
+		assertFalse( idential );
 	}
 }
