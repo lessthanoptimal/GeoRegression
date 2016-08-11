@@ -48,6 +48,8 @@ public class GrlConstants {
 	// standard tolerances used in unit tests
 	public static float FLOAT_TEST_TOL = 1e-4f;
 	public static double DOUBLE_TEST_TOL = 1e-8f;
+	public static double DOUBLE_TEST_TOL_SQRT = Math.sqrt(DOUBLE_TEST_TOL);
+	public static float FLOAT_TEST_TOL_SQRT = (float)Math.sqrt(FLOAT_TEST_TOL);
 
 	public static float F_EPS = (float)Math.pow(2,-21);
 	public static double EPS = UtilEjml.EPS;

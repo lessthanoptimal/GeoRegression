@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -59,5 +59,32 @@ public class UtilVector2D_F64 {
 		output.y = a.y - b.y;
 
 		return output;
+	}
+
+	/**
+	 * Tests to see if the two vectors are identical up to a sign difference
+	 * @param xa x-component of vector 'a'
+	 * @param ya y-component of vector 'a'
+	 * @param xb x-component of vector 'b'
+	 * @param yb y-component of vector 'b'
+	 * @param tol Tolerance in Euclidan distance
+	 * @return true if identical to within tolerance and a sign ambiguity
+	 */
+	public static boolean identicalSign( double xa , double ya , double xb , double yb , double tol ) {
+		double dx0 = xb-xa;
+		double dy0 = yb-ya;
+		double dx1 = xb+xa;
+		double dy1 = yb+ya;
+
+
+		double error0 = dx0*dx0 + dy0*dy0;
+		double error1 = dx1*dx1 + dy1*dy1;
+
+		if( error0 < error1 ) {
+			return error0 <= tol*tol;
+		} else {
+			return error1 <= tol*tol;
+		}
+
 	}
 }

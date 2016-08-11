@@ -36,20 +36,26 @@ import static georegression.geometry.UtilEllipse_F64.tangentLines;
  */
 public class TangentLinesTwoEllipses_F64 {
 
-	double convergenceTol;
-	int maxIterations = 10;
+	// convergence parameters
+	private double convergenceTol;
+	private int maxIterations = 10;
 
-	Point2D_F64 temp0 = new Point2D_F64();
-	Point2D_F64 temp1 = new Point2D_F64();
+	// storage
+	private Point2D_F64 temp0 = new Point2D_F64();
+	private Point2D_F64 temp1 = new Point2D_F64();
 
+	// storage for the change in point positions
 	double sumDifference;
 
-	boolean converged;
+	// true of the optimization converged before it ran out of iterations
+	private boolean converged;
 
 	/**
+	 * Constructor that configures optimization parameters
 	 *
-	 * @param convergenceTol
-	 * @param maxIterations
+	 *
+	 * @param convergenceTol  Tolerance for when the iterations will stop.  Try 1e-8 for doubles and 1e-4 for floats
+	 * @param maxIterations Maximum number of iterations
 	 */
 	public TangentLinesTwoEllipses_F64(double convergenceTol,
 									   int maxIterations) {
@@ -85,14 +91,16 @@ public class TangentLinesTwoEllipses_F64 {
 
 		// initialize by picking an arbitrary point on A and then finding the points on B in which
 		// a line is tangent to B and passes through the point on A
-		if (initialize(ellipseA, ellipseB,
+		if (!initialize(ellipseA, ellipseB,
 				tangentA0, tangentA1, tangentA2, tangentA3,
 				tangentB0, tangentB1, tangentB2, tangentB3))
 			return false;
 
 
+		// update the location of each point until it converges or the maximum number of iterations has been exceeded
 		int iteration = 0;
 		for( ;iteration < maxIterations; iteration++ ) {
+			boolean allGood = false;
 			sumDifference = 0;
 
 			if( !selectTangent(tangentB0,tangentA0,ellipseA,tangentA0) )
@@ -105,20 +113,20 @@ public class TangentLinesTwoEllipses_F64 {
 				return false;
 
 			if( Math.sqrt(sumDifference)/4.0 < convergenceTol ) {
-				break;
+				allGood = true;
 			}
 			sumDifference = 0;
 
-			if( !selectTangent(tangentA0,tangentB0,ellipseA,tangentB0) )
+			if( !selectTangent(tangentA0,tangentB0,ellipseB,tangentB0) )
 				return false;
-			if( !selectTangent(tangentA1,tangentB1,ellipseA,tangentB1) )
+			if( !selectTangent(tangentA1,tangentB1,ellipseB,tangentB1) )
 				return false;
-			if( !selectTangent(tangentA2,tangentB2,ellipseA,tangentB2) )
+			if( !selectTangent(tangentA2,tangentB2,ellipseB,tangentB2) )
 				return false;
-			if( !selectTangent(tangentA3,tangentB3,ellipseA,tangentB3) )
+			if( !selectTangent(tangentA3,tangentB3,ellipseB,tangentB3) )
 				return false;
 
-			if( Math.sqrt(sumDifference)/4.0 < convergenceTol ) {
+			if( allGood && Math.sqrt(sumDifference)/4.0 < convergenceTol ) {
 				break;
 			}
 		}
@@ -136,33 +144,33 @@ public class TangentLinesTwoEllipses_F64 {
 	 * 3) Use those two tangent points on B to find 4 points on ellipse A
 	 * 4) Use those 4 points to select 4 points on B.
 	 */
-	private boolean initialize(EllipseRotated_F64 ellipseA, EllipseRotated_F64 ellipseB,
+	boolean initialize(EllipseRotated_F64 ellipseA, EllipseRotated_F64 ellipseB,
 							   Point2D_F64 tangentA0, Point2D_F64 tangentA1,
 							   Point2D_F64 tangentA2, Point2D_F64 tangentA3,
 							   Point2D_F64 tangentB0, Point2D_F64 tangentB1,
 							   Point2D_F64 tangentB2, Point2D_F64 tangentB3) {
+
+		// arbitrary point on ellipseA
 		UtilEllipse_F64.computePoint(0,ellipseA,tangentA0);
 
 		if( !tangentLines(tangentA0,ellipseB,tangentB0,tangentB3) )
-			return true;
+			return false;
 
 		// Find the initial seed of 4 points on ellipse A
 		if( !tangentLines(tangentB0,ellipseA,tangentA0,tangentA1) )
-			return true;
-
+			return false;
 		if( !tangentLines(tangentB3,ellipseA,tangentA2,tangentA3) )
-			return true;
+			return false;
 
 		// Find initial seed of 4 points on ellipse B
 		if( !selectTangent(tangentA1,tangentB0,ellipseB,tangentB1))
-			return true;
+			return false;
 		if( !selectTangent(tangentA0,tangentB0,ellipseB,tangentB0))
-			return true;
+			return false;
 		if( !selectTangent(tangentA2,tangentB3,ellipseB,tangentB2))
-			return true;
-		if( !selectTangent(tangentA3,tangentB3,ellipseB,tangentB3))
-			return true;
-		return false;
+			return false;
+
+		return selectTangent(tangentA3, tangentB3, ellipseB, tangentB3);
 	}
 
 	/**
@@ -173,7 +181,7 @@ public class TangentLinesTwoEllipses_F64 {
 	 * @param tangent (Output) Storage for the selected tangent point
 	 * @return true if everythign went well or false if finding tangent lines barfed
 	 */
-	private boolean selectTangent( Point2D_F64 a , Point2D_F64 srcA , EllipseRotated_F64 ellipse, Point2D_F64 tangent )
+	boolean selectTangent( Point2D_F64 a , Point2D_F64 srcA , EllipseRotated_F64 ellipse, Point2D_F64 tangent )
 	{
 		if( !tangentLines(a,ellipse,temp0,temp1) )
 			return false;
