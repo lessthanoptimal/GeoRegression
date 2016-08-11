@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.geometry.algs.TangentLinesTwoEllipses_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
@@ -359,39 +360,33 @@ public class UtilEllipse_F64 {
 	}
 
 	/**
-	 * <p>Finds two lines which are tangent to both ellipses.  Both ellipses are assumed to not intersect.</p>
-	 *
-	 * Algorithm:<br>
-	 * While a closed form solution does exist, it is very complex and an iterative solution is used
-	 * here instead.
-	 *
-	 * TODO Describe algorithm
+	 * <p>Finds four lines which are tangent to both ellipses.  Both ellipses must not intersect.</p>
+
+	 * @see TangentLinesTwoEllipses_F64
 	 *
 	 * @param ellipseA (Input) First ellipse
 	 * @param ellipseB (Input) Second ellipse
 	 * @param tangentA0 (Output) Point on ellipseA in which tangent line0 passes through
 	 * @param tangentA1 (Output) Point on ellipseA in which tangent line1 passes through
+	 * @param tangentA2 (Output) Point on ellipseA in which tangent line2 passes through
+	 * @param tangentA3 (Output) Point on ellipseA in which tangent line3 passes through
 	 * @param tangentB0 (Output) Point on ellipseB in which tangent line0 passes through
 	 * @param tangentB1 (Output) Point on ellipseB in which tangent line1 passes through
+	 * @param tangentB2 (Output) Point on ellipseB in which tangent line2 passes through
+	 * @param tangentB3 (Output) Point on ellipseB in which tangent line3 passes through
 	 * @return true if a solution was found or false if it failed
 	 */
 	public static boolean tangentLines( EllipseRotated_F64 ellipseA , EllipseRotated_F64 ellipseB ,
 										Point2D_F64 tangentA0 , Point2D_F64 tangentA1 ,
-										Point2D_F64 tangentB0 , Point2D_F64 tangentB1 )
+										Point2D_F64 tangentA2 , Point2D_F64 tangentA3 ,
+										Point2D_F64 tangentB0 , Point2D_F64 tangentB1 ,
+										Point2D_F64 tangentB2 , Point2D_F64 tangentB3 ,
+										int maxIterations )
 	{
-		// initialize by picking an arbitrary point on A and then finding the points on B in which
-		// a line is tangent to B and passes through the point on A
-		UtilEllipse_F64.computePoint(0,ellipseA,tangentA0);
+		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.DOUBLE_TEST_TOL,maxIterations);
 
-		if( !tangentLines(tangentA0,ellipseB,tangentB0,tangentB1) )
-			return false;
-
-
-
-//		while( true ) {
-//
-//		}
-
-		return true;
+		return alg.process(ellipseA, ellipseB,
+				tangentA0, tangentA1, tangentA2, tangentA3,
+				tangentB0, tangentB1, tangentB2, tangentB3) ;
 	}
 }

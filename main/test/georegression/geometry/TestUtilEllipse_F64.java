@@ -222,7 +222,7 @@ public class TestUtilEllipse_F64 {
 	}
 
 	@Test
-	public void tangentLines() {
+	public void tangentLines_point_ellipse() {
 
 		// simple case with a circle at the origin
 		checkTangentLines( -2,2, new EllipseRotated_F64(0,0,2,2,0));
@@ -300,5 +300,10 @@ public class TestUtilEllipse_F64 {
 		idential &= Math.abs( lineA.C - lineB.C ) <= GrlConstants.DOUBLE_TEST_TOL;
 
 		assertFalse( idential );
+	}
+
+	@Test
+	public void tangentLines_ellipse_ellipse() {
+		fail("Implement");
 	}
 }
