@@ -18,8 +18,8 @@
 
 package georegression.geometry;
 
+import georegression.geometry.algs.TangentLinesTwoEllipses_F32;
 import georegression.misc.GrlConstants;
-import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Vector2D_F32;
 import georegression.struct.shapes.EllipseQuadratic_F32;
@@ -259,16 +259,19 @@ public class UtilEllipse_F32 {
 	}
 
 	/**
-	 * Finds the two liens which are tangent to the ellipse and pass through the point.  The point is assumed to be
-	 * outside of the ellipse.
+	 * <p>Finds two points on the ellipse that in combination with point 'pt' each define
+	 * a line that is tangent to the ellipse.</p>
 	 *
-	 * @param pt Point which the liens will pass though
+	 * Notes:<br>
+	 * Point 'pt' is assumed to be outside of the ellipse.
+	 *
+	 * @param pt Point which the lines will pass though
 	 * @param ellipse The ellipse which the lines will be tangent to
-	 * @param lineA (output) line
-	 * @param lineB (output) line
+	 * @param tangentA (output) Point on the ellipse where tangent line A hits it
+	 * @param tangentB (output) Point on the ellipse where tangent line B hits it
 	 */
 	public static boolean tangentLines(Point2D_F32 pt , EllipseRotated_F32 ellipse ,
-									LineGeneral2D_F32 lineA , LineGeneral2D_F32 lineB )
+									   Point2D_F32 tangentA , Point2D_F32 tangentB )
 	{
 		// Derivation:
 		// Compute the tangent at only point along the ellipse by computing dy/dx
@@ -347,23 +350,43 @@ public class UtilEllipse_F32 {
 		}
 
 		// convert the lines back into world space
-		float xx0 = x0*cphi - y0*sphi + ellipse.center.x;
-		float yy0 = x0*sphi + y0*cphi + ellipse.center.y;
+		tangentA.x = x0*cphi - y0*sphi + ellipse.center.x;
+		tangentA.y = x0*sphi + y0*cphi + ellipse.center.y;
 
-		float xx1 = x1*cphi - y1*sphi + ellipse.center.x;
-		float yy1 = x1*sphi + y1*cphi + ellipse.center.y;
-
-		// convert into a line
-		lineA.A = pt.y - yy0;
-		lineA.B = xx0 - pt.x;
-		lineA.C = -(lineA.A*pt.x + lineA.B*pt.y);
-		lineA.normalize();
-
-		lineB.A = pt.y - yy1;
-		lineB.B = xx1 - pt.x;
-		lineB.C = -(lineB.A*pt.x + lineB.B*pt.y);
-		lineB.normalize();
+		tangentB.x = x1*cphi - y1*sphi + ellipse.center.x;
+		tangentB.y = x1*sphi + y1*cphi + ellipse.center.y;
 
 		return true;
+	}
+
+	/**
+	 * <p>Finds four lines which are tangent to both ellipses.  Both ellipses must not intersect.</p>
+
+	 * @see TangentLinesTwoEllipses_F32
+	 *
+	 * @param ellipseA (Input) First ellipse
+	 * @param ellipseB (Input) Second ellipse
+	 * @param tangentA0 (Output) Point on ellipseA in which tangent line0 passes through
+	 * @param tangentA1 (Output) Point on ellipseA in which tangent line1 passes through
+	 * @param tangentA2 (Output) Point on ellipseA in which tangent line2 passes through
+	 * @param tangentA3 (Output) Point on ellipseA in which tangent line3 passes through
+	 * @param tangentB0 (Output) Point on ellipseB in which tangent line0 passes through
+	 * @param tangentB1 (Output) Point on ellipseB in which tangent line1 passes through
+	 * @param tangentB2 (Output) Point on ellipseB in which tangent line2 passes through
+	 * @param tangentB3 (Output) Point on ellipseB in which tangent line3 passes through
+	 * @return true if a solution was found or false if it failed
+	 */
+	public static boolean tangentLines( EllipseRotated_F32 ellipseA , EllipseRotated_F32 ellipseB ,
+										Point2D_F32 tangentA0 , Point2D_F32 tangentA1 ,
+										Point2D_F32 tangentA2 , Point2D_F32 tangentA3 ,
+										Point2D_F32 tangentB0 , Point2D_F32 tangentB1 ,
+										Point2D_F32 tangentB2 , Point2D_F32 tangentB3 ,
+										int maxIterations )
+	{
+		TangentLinesTwoEllipses_F32 alg = new TangentLinesTwoEllipses_F32(GrlConstants.FLOAT_TEST_TOL,maxIterations);
+
+		return alg.process(ellipseA, ellipseB,
+				tangentA0, tangentA1, tangentA2, tangentA3,
+				tangentB0, tangentB1, tangentB2, tangentB3) ;
 	}
 }

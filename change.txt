@@ -15,7 +15,8 @@ Version : 0.12
   * Added bound for -pi/2 and pi/2
 - UtilEllipse
   * added computeTangent
-  * added tangentLines()  - finds two liens which are tangent to the ellipse and pass through a point outside ellipse
+  * added tangentLines() - finds two lines which are tangent to the ellipse and pass through a point outside ellipse
+  * added tangentLines() - 4 lines which are tangent to two ellipses
 
 ---------------------------------------------
 Date    : 2016/06/09

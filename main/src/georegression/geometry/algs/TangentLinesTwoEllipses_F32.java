@@ -18,14 +18,14 @@
 
 package georegression.geometry.algs;
 
-import georegression.geometry.UtilLine2D_F64;
-import georegression.metric.Intersection2D_F64;
-import georegression.struct.line.LineGeneral2D_F64;
-import georegression.struct.line.LineSegment2D_F64;
-import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
+import georegression.geometry.UtilLine2D_F32;
+import georegression.metric.Intersection2D_F32;
+import georegression.struct.line.LineGeneral2D_F32;
+import georegression.struct.line.LineSegment2D_F32;
+import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.EllipseRotated_F32;
 
-import static georegression.geometry.UtilEllipse_F64.tangentLines;
+import static georegression.geometry.UtilEllipse_F32.tangentLines;
 
 /**
  * Iterative algorithm for finding the 4 pairs of tangent lines between two ellipses.  The ellipses are assumed
@@ -37,38 +37,38 @@ import static georegression.geometry.UtilEllipse_F64.tangentLines;
  *
  * @author Peter Abeles
  */
-public class TangentLinesTwoEllipses_F64 {
+public class TangentLinesTwoEllipses_F32 {
 
 	// convergence parameters
-	private double convergenceTol;
+	private float convergenceTol;
 	private int maxIterations = 10;
 
 	// storage
-	private Point2D_F64 temp0 = new Point2D_F64();
-	private Point2D_F64 temp1 = new Point2D_F64();
+	private Point2D_F32 temp0 = new Point2D_F32();
+	private Point2D_F32 temp1 = new Point2D_F32();
 
 	// storage for the change in point positions
-	double sumDifference;
+	float sumDifference;
 
 	// true of the optimization converged before it ran out of iterations
 	private boolean converged;
 
-	LineSegment2D_F64 centerLine = new LineSegment2D_F64();
+	LineSegment2D_F32 centerLine = new LineSegment2D_F32();
 
 	// storage for local workspace
-	LineSegment2D_F64 tempLine = new LineSegment2D_F64();
-	LineGeneral2D_F64 lineGeneral = new LineGeneral2D_F64();
-	Point2D_F64 junk = new Point2D_F64();
+	LineSegment2D_F32 tempLine = new LineSegment2D_F32();
+	LineGeneral2D_F32 lineGeneral = new LineGeneral2D_F32();
+	Point2D_F32 junk = new Point2D_F32();
 
 
 	/**
 	 * Constructor that configures optimization parameters
 	 *
 	 *
-	 * @param convergenceTol  Tolerance for when the iterations will stop.  Try 1e-8 for doubles and 1e-4 for floats
+	 * @param convergenceTol  Tolerance for when the iterations will stop.  Try 1e-8 for floats and 1e-4 for floats
 	 * @param maxIterations Maximum number of iterations
 	 */
-	public TangentLinesTwoEllipses_F64(double convergenceTol,
+	public TangentLinesTwoEllipses_F32(float convergenceTol,
 									   int maxIterations) {
 		this.convergenceTol = convergenceTol;
 		this.maxIterations = maxIterations;
@@ -92,11 +92,11 @@ public class TangentLinesTwoEllipses_F64 {
 	 * @param tangentB3 (Output) Tangent point on B for line segment 3
 	 * @return true if no fatal error, false if one happened.
 	 */
-	public boolean process(EllipseRotated_F64 ellipseA , EllipseRotated_F64 ellipseB ,
-						   Point2D_F64 tangentA0 , Point2D_F64 tangentA1 ,
-						   Point2D_F64 tangentA2 , Point2D_F64 tangentA3 ,
-						   Point2D_F64 tangentB0 , Point2D_F64 tangentB1 ,
-						   Point2D_F64 tangentB2 , Point2D_F64 tangentB3 )
+	public boolean process(EllipseRotated_F32 ellipseA , EllipseRotated_F32 ellipseB ,
+						   Point2D_F32 tangentA0 , Point2D_F32 tangentA1 ,
+						   Point2D_F32 tangentA2 , Point2D_F32 tangentA3 ,
+						   Point2D_F32 tangentB0 , Point2D_F32 tangentB1 ,
+						   Point2D_F32 tangentB2 , Point2D_F32 tangentB3 )
 	{
 		converged = false;
 
@@ -122,7 +122,7 @@ public class TangentLinesTwoEllipses_F64 {
 			if( !selectTangent(tangentA3,tangentB3,ellipseB,tangentB3, false) )
 				return false;
 
-			if( Math.sqrt(sumDifference)/4.0 <= convergenceTol ) {
+			if( (float)Math.sqrt(sumDifference)/4.0f <= convergenceTol ) {
 				allGood = true;
 			}
 			sumDifference = 0;
@@ -136,7 +136,7 @@ public class TangentLinesTwoEllipses_F64 {
 			if( !selectTangent(tangentB3,tangentA3,ellipseA,tangentA3, false) )
 				return false;
 
-			if( allGood && Math.sqrt(sumDifference)/4.0 <= convergenceTol ) {
+			if( allGood && (float)Math.sqrt(sumDifference)/4.0f <= convergenceTol ) {
 				break;
 			}
 
@@ -155,17 +155,17 @@ public class TangentLinesTwoEllipses_F64 {
 	 * 3) Use those two tangent points on B to find 4 points on ellipse A
 	 * 4) Use those 4 points to select 4 points on B.
 	 */
-	boolean initialize(EllipseRotated_F64 ellipseA, EllipseRotated_F64 ellipseB,
-					   Point2D_F64 tangentA0, Point2D_F64 tangentA1,
-					   Point2D_F64 tangentA2, Point2D_F64 tangentA3,
-					   Point2D_F64 tangentB0, Point2D_F64 tangentB1,
-					   Point2D_F64 tangentB2, Point2D_F64 tangentB3) {
+	boolean initialize(EllipseRotated_F32 ellipseA, EllipseRotated_F32 ellipseB,
+					   Point2D_F32 tangentA0, Point2D_F32 tangentA1,
+					   Point2D_F32 tangentA2, Point2D_F32 tangentA3,
+					   Point2D_F32 tangentB0, Point2D_F32 tangentB1,
+					   Point2D_F32 tangentB2, Point2D_F32 tangentB3) {
 
 		centerLine.set(ellipseA.center,ellipseB.center);
 
-		UtilLine2D_F64.convert(centerLine, lineGeneral);
+		UtilLine2D_F32.convert(centerLine, lineGeneral);
 
-		Intersection2D_F64.intersection(lineGeneral, ellipseA, temp0, temp1, -1);
+		Intersection2D_F32.intersection(lineGeneral, ellipseA, temp0, temp1, -1);
 		if (temp0.distance2(ellipseB.center) < temp1.distance2(ellipseB.center)) {
 			tangentA0.set(temp0);
 		} else {
@@ -200,8 +200,8 @@ public class TangentLinesTwoEllipses_F64 {
 	 * @param tangent (Output) Storage for the selected tangent point
 	 * @return true if everything went well or false if finding tangent lines barfed
 	 */
-	boolean selectTangent( Point2D_F64 a , Point2D_F64 previousTangent ,
-						   EllipseRotated_F64 ellipse, Point2D_F64 tangent ,
+	boolean selectTangent( Point2D_F32 a , Point2D_F32 previousTangent ,
+						   EllipseRotated_F32 ellipse, Point2D_F32 tangent ,
 						   boolean cross )
 	{
 		if( !tangentLines(a,ellipse,temp0,temp1) )
@@ -210,9 +210,9 @@ public class TangentLinesTwoEllipses_F64 {
 		tempLine.a = a;
 
 		tempLine.b = temp0;
-		boolean crossed0 = Intersection2D_F64.intersection(centerLine,tempLine,junk) != null;
+		boolean crossed0 = Intersection2D_F32.intersection(centerLine,tempLine,junk) != null;
 		tempLine.b = temp1;
-		boolean crossed1 = Intersection2D_F64.intersection(centerLine,tempLine,junk) != null;
+		boolean crossed1 = Intersection2D_F32.intersection(centerLine,tempLine,junk) != null;
 
 		if( crossed0 == crossed1 )
 			throw new RuntimeException("Well this didn't work");
@@ -232,11 +232,11 @@ public class TangentLinesTwoEllipses_F64 {
 		return converged;
 	}
 
-	public double getConvergenceTol() {
+	public float getConvergenceTol() {
 		return convergenceTol;
 	}
 
-	public void setConvergenceTol(double convergenceTol) {
+	public void setConvergenceTol(float convergenceTol) {
 		this.convergenceTol = convergenceTol;
 	}
 

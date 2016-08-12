@@ -222,7 +222,7 @@ public class TestUtilEllipse_F32 {
 	}
 
 	@Test
-	public void tangentLines() {
+	public void tangentLines_point_ellipse() {
 
 		// simple case with a circle at the origin
 		checkTangentLines( -2,2, new EllipseRotated_F32(0,0,2,2,0));
@@ -263,19 +263,22 @@ public class TestUtilEllipse_F32 {
 	public void checkTangentLinesFail( float x, float y , EllipseRotated_F32 ellipse ) {
 		Point2D_F32 pt = new Point2D_F32(x,y);
 
-		LineGeneral2D_F32 lineA = new LineGeneral2D_F32();
-		LineGeneral2D_F32 lineB = new LineGeneral2D_F32();
+		Point2D_F32 pointA = new Point2D_F32();
+		Point2D_F32 pointB = new Point2D_F32();
 
-		assertFalse(UtilEllipse_F32.tangentLines(pt,ellipse,lineA,lineB));
+		assertFalse(UtilEllipse_F32.tangentLines(pt,ellipse,pointA,pointB));
 	}
 
 	public void checkTangentLines( float x, float y , EllipseRotated_F32 ellipse ) {
 		Point2D_F32 pt = new Point2D_F32(x,y);
 
-		LineGeneral2D_F32 lineA = new LineGeneral2D_F32();
-		LineGeneral2D_F32 lineB = new LineGeneral2D_F32();
+		Point2D_F32 pointA = new Point2D_F32();
+		Point2D_F32 pointB = new Point2D_F32();
 
-		assertTrue(UtilEllipse_F32.tangentLines(pt,ellipse,lineA,lineB));
+		assertTrue(UtilEllipse_F32.tangentLines(pt,ellipse,pointA,pointB));
+
+		LineGeneral2D_F32 lineA = UtilLine2D_F32.convert(pt,pointA,(LineGeneral2D_F32)null);
+		LineGeneral2D_F32 lineB = UtilLine2D_F32.convert(pt,pointB,(LineGeneral2D_F32)null);
 
 		// the point should pass through both lines
 		assertEquals(0, lineA.evaluate(pt.x,pt.y), GrlConstants.FLOAT_TEST_TOL);
@@ -297,5 +300,10 @@ public class TestUtilEllipse_F32 {
 		idential &= (float)Math.abs( lineA.C - lineB.C ) <= GrlConstants.FLOAT_TEST_TOL;
 
 		assertFalse( idential );
+	}
+
+	@Test
+	public void tangentLines_ellipse_ellipse() {
+		fail("Implement");
 	}
 }

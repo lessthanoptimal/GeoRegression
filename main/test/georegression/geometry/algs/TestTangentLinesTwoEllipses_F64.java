@@ -46,7 +46,13 @@ public class TestTangentLinesTwoEllipses_F64 {
 	public void process() {
 		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.DOUBLE_TEST_TOL, 20);
 
-		check( new EllipseRotated_F64(0,10,5,4,0), new EllipseRotated_F64(0,0,3,4,0), alg);
+		for( int i = 0; i < 20; i++ ) {
+			double theta = i*GrlConstants.PI/20 - GrlConstants.PI/2.0;
+//			System.out.println(i+"  Theta = "+theta);
+			check( new EllipseRotated_F64(0,10,5,4,theta), new EllipseRotated_F64(0,0,4,3,0), alg);
+			check( new EllipseRotated_F64(0,10,4,4,theta), new EllipseRotated_F64(0,0,4,4,0), alg);
+			check( new EllipseRotated_F64(2.5,10,5,4,theta), new EllipseRotated_F64(0,0,4.9,3, GrlConstants.PId2), alg);
+		}
 	}
 
 	public void check( EllipseRotated_F64 ellipseA , EllipseRotated_F64 ellipseB , TangentLinesTwoEllipses_F64 alg ) {
@@ -54,6 +60,7 @@ public class TestTangentLinesTwoEllipses_F64 {
 				tangentA0, tangentA1, tangentA2, tangentA3,
 				tangentB0, tangentB1, tangentB2, tangentB3));
 
+		assertTrue(alg.isConverged());
 
 		// make sure all the points are unique
 		checkResults(ellipseA, ellipseB, true);
@@ -64,7 +71,7 @@ public class TestTangentLinesTwoEllipses_F64 {
 		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.DOUBLE_TEST_TOL, 20);
 
 		EllipseRotated_F64 ellipseA = new EllipseRotated_F64(0,10,5,4,0);
-		EllipseRotated_F64 ellipseB = new EllipseRotated_F64(0,0,3,4,0);
+		EllipseRotated_F64 ellipseB = new EllipseRotated_F64(0,0,4,3, Math.PI/2.0);
 
 		assertTrue(alg.initialize(ellipseA,ellipseB,
 				tangentA0, tangentA1, tangentA2, tangentA3,
@@ -73,7 +80,8 @@ public class TestTangentLinesTwoEllipses_F64 {
 		checkResults(ellipseA, ellipseB, false);
 	}
 
-	private void checkResults(EllipseRotated_F64 ellipseA, EllipseRotated_F64 ellipseB , boolean checkTangent ) {
+	private void checkResults(EllipseRotated_F64 ellipseA, EllipseRotated_F64 ellipseB ,
+							  boolean completeTest ) {
 		// make sure all the points are unique
 		assertFalse(tangentA0.distance(tangentA1) <= GrlConstants.DOUBLE_TEST_TOL );
 		assertFalse(tangentA0.distance(tangentA2) <= GrlConstants.DOUBLE_TEST_TOL );
@@ -83,18 +91,19 @@ public class TestTangentLinesTwoEllipses_F64 {
 		assertFalse(tangentA2.distance(tangentA3) <= GrlConstants.DOUBLE_TEST_TOL );
 
 		assertFalse(tangentB0.distance(tangentB1) <= GrlConstants.DOUBLE_TEST_TOL );
-		assertFalse(tangentB0.distance(tangentB2) <= GrlConstants.DOUBLE_TEST_TOL );
-		assertFalse(tangentB0.distance(tangentB3) <= GrlConstants.DOUBLE_TEST_TOL );
-		assertFalse(tangentB1.distance(tangentB2) <= GrlConstants.DOUBLE_TEST_TOL );
-		assertFalse(tangentB1.distance(tangentB3) <= GrlConstants.DOUBLE_TEST_TOL );
-		assertFalse(tangentB2.distance(tangentB3) <= GrlConstants.DOUBLE_TEST_TOL );
 
-		if( checkTangent ) {
+		if( completeTest ) {
+			assertFalse(tangentB0.distance(tangentB2) <= GrlConstants.DOUBLE_TEST_TOL );
+			assertFalse(tangentB0.distance(tangentB3) <= GrlConstants.DOUBLE_TEST_TOL );
+			assertFalse(tangentB1.distance(tangentB2) <= GrlConstants.DOUBLE_TEST_TOL );
+			assertFalse(tangentB1.distance(tangentB3) <= GrlConstants.DOUBLE_TEST_TOL );
+			assertFalse(tangentB2.distance(tangentB3) <= GrlConstants.DOUBLE_TEST_TOL );
+
 			// make sure each pair is tangent
 			checkIsTangent(tangentA0, tangentB0, ellipseA, ellipseB);
 			checkIsTangent(tangentA1, tangentB1, ellipseA, ellipseB);
 			checkIsTangent(tangentA2, tangentB2, ellipseA, ellipseB);
-			checkIsTangent(tangentA2, tangentB3, ellipseA, ellipseB);
+			checkIsTangent(tangentA3, tangentB3, ellipseA, ellipseB);
 		}
 	}
 
@@ -129,11 +138,16 @@ public class TestTangentLinesTwoEllipses_F64 {
 		Point2D_F64 srcA = new Point2D_F64(2,11.5);
 		Point2D_F64 found = new Point2D_F64();
 
-		assertTrue(alg.selectTangent(a,srcA,ellipse,found));
+		alg.centerLine.set(0,0,0,10);
+		assertTrue(alg.selectTangent(a,srcA,ellipse,found, false));
 
 		assertEquals(2, found.x, GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(10, found.y, GrlConstants.DOUBLE_TEST_TOL);
 
 		assertEquals(1.5*1.5, alg.sumDifference, GrlConstants.DOUBLE_TEST_TOL );
+
+		assertTrue(alg.selectTangent(a,srcA,ellipse,found, true));
+		assertNotEquals(2, found.x, GrlConstants.DOUBLE_TEST_TOL);
+		assertNotEquals(10, found.y, GrlConstants.DOUBLE_TEST_TOL);
 	}
 }
