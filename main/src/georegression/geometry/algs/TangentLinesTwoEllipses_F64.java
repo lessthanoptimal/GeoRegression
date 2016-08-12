@@ -28,12 +28,22 @@ import georegression.struct.shapes.EllipseRotated_F64;
 import static georegression.geometry.UtilEllipse_F64.tangentLines;
 
 /**
+ * <p>
  * Iterative algorithm for finding the 4 pairs of tangent lines between two ellipses.  The ellipses are assumed
- * to not intersect.
+ * to not intersect.  Line 0 and line 3 will not intersect the line joining the center of the two
+ * ellipses while line 1 and 2 will.
+ * </p>
  *
- * Algorithm:<br>
- * While a closed form solution does exist, it is very complex and an iterative solution is used
+ * Algorithm: While a closed form solution does exist, it is very complex and an iterative solution is used
  * here instead.
+ * <ol>
+ *     <li>Initialize by finding four lines which are approximately tangent.  Two will cross the center line
+ *     and two will not.  See code for details</li>
+ *     <li>For each end point on a line find the two tangent points on the other ellipse.  Keep the line
+ *     which either crosses or does not cross the center line.</li>
+ *     <li>Repeat unit the location of each end points does not change significantly or the maximum number of
+ *     iterations has been exceeded</li>
+ * </ol>
  *
  * @author Peter Abeles
  */
@@ -172,11 +182,12 @@ public class TangentLinesTwoEllipses_F64 {
 			tangentA0.set(temp1);
 		}
 
-		// Two seed points for B.  This will be on two different sides of center line
+		// Two seed points for B.  This points will be on two different sides of center line
 		if( !tangentLines(tangentA0,ellipseB,tangentB0,tangentB1) )
 			return false;
 
-		// Find initial seed of 4 points on ellipse A
+		// Find initial seed of 4 points on ellipse A.  Careful which pairs of points cross or
+		// don't cross the center line
 		if( !selectTangent(tangentB0,tangentA0,ellipseA,tangentA0, false))
 			return false;
 		if( !selectTangent(tangentB0,tangentA0,ellipseA,tangentA1, true))

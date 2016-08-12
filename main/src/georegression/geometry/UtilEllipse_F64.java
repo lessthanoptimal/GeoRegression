@@ -360,7 +360,8 @@ public class UtilEllipse_F64 {
 	}
 
 	/**
-	 * <p>Finds four lines which are tangent to both ellipses.  Both ellipses must not intersect.</p>
+	 * <p>Finds four lines which are tangent to both ellipses.  Both ellipses must not intersect.  Line 0
+	 * and line 3 will not intersect the line joining the center of the two ellipses while line 1 and 2 will.</p>
 
 	 * @see TangentLinesTwoEllipses_F64
 	 *
