@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.geometry.algs.TangentLinesTwoEllipses_F64;
 import georegression.metric.Intersection2D_F64;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
@@ -302,8 +303,54 @@ public class TestUtilEllipse_F64 {
 		assertFalse( idential );
 	}
 
+	/**
+	 * Very basic unit test.  The more rigerous one is in
+	 * {@link georegression.geometry.algs.TestTangentLinesTwoEllipses_F64}
+	 */
 	@Test
 	public void tangentLines_ellipse_ellipse() {
-		fail("Implement");
+
+		EllipseRotated_F64 ellipseA = new EllipseRotated_F64(0,1,4,2,0.1);
+		EllipseRotated_F64 ellipseB = new EllipseRotated_F64(-6,1.2,1.5,0.8,-0.6);
+
+		Point2D_F64 tangentA0 = new Point2D_F64();
+		Point2D_F64 tangentA1 = new Point2D_F64();
+		Point2D_F64 tangentA2 = new Point2D_F64();
+		Point2D_F64 tangentA3 = new Point2D_F64();
+
+		Point2D_F64 tangentB0 = new Point2D_F64();
+		Point2D_F64 tangentB1 = new Point2D_F64();
+		Point2D_F64 tangentB2 = new Point2D_F64();
+		Point2D_F64 tangentB3 = new Point2D_F64();
+
+		UtilEllipse_F64.tangentLines(ellipseA,ellipseB,
+				tangentA0,tangentA1,tangentA2,tangentA3,
+				tangentB0,tangentB1,tangentB2,tangentB3);
+
+		Point2D_F64 fooA0 = new Point2D_F64();
+		Point2D_F64 fooA1 = new Point2D_F64();
+		Point2D_F64 fooA2 = new Point2D_F64();
+		Point2D_F64 fooA3 = new Point2D_F64();
+
+		Point2D_F64 fooB0 = new Point2D_F64();
+		Point2D_F64 fooB1 = new Point2D_F64();
+		Point2D_F64 fooB2 = new Point2D_F64();
+		Point2D_F64 fooB3 = new Point2D_F64();
+
+		// see if it produces the same results as invoking the algorithm directly
+		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.DOUBLE_TEST_TOL,10);
+
+		alg.process(ellipseA,ellipseB, fooA0,fooA1,fooA2,fooA3, fooB0,fooB1,fooB2,fooB3);
+
+		assertEquals( 0, fooA0.distance(tangentA0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 0, fooA1.distance(tangentA1), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 0, fooA2.distance(tangentA2), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 0, fooA3.distance(tangentA3), GrlConstants.DOUBLE_TEST_TOL);
+
+		assertEquals( 0, fooB0.distance(tangentB0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 0, fooB1.distance(tangentB1), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 0, fooB2.distance(tangentB2), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 0, fooB3.distance(tangentB3), GrlConstants.DOUBLE_TEST_TOL);
+
 	}
 }

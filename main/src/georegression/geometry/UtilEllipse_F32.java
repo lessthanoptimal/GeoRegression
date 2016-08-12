@@ -374,16 +374,16 @@ public class UtilEllipse_F32 {
 	 * @param tangentB1 (Output) Point on ellipseB in which tangent line1 passes through
 	 * @param tangentB2 (Output) Point on ellipseB in which tangent line2 passes through
 	 * @param tangentB3 (Output) Point on ellipseB in which tangent line3 passes through
+	 *
 	 * @return true if a solution was found or false if it failed
 	 */
 	public static boolean tangentLines( EllipseRotated_F32 ellipseA , EllipseRotated_F32 ellipseB ,
 										Point2D_F32 tangentA0 , Point2D_F32 tangentA1 ,
 										Point2D_F32 tangentA2 , Point2D_F32 tangentA3 ,
 										Point2D_F32 tangentB0 , Point2D_F32 tangentB1 ,
-										Point2D_F32 tangentB2 , Point2D_F32 tangentB3 ,
-										int maxIterations )
+										Point2D_F32 tangentB2 , Point2D_F32 tangentB3 )
 	{
-		TangentLinesTwoEllipses_F32 alg = new TangentLinesTwoEllipses_F32(GrlConstants.FLOAT_TEST_TOL,maxIterations);
+		TangentLinesTwoEllipses_F32 alg = new TangentLinesTwoEllipses_F32(GrlConstants.FLOAT_TEST_TOL,10);
 
 		return alg.process(ellipseA, ellipseB,
 				tangentA0, tangentA1, tangentA2, tangentA3,
