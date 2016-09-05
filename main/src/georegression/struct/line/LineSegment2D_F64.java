@@ -103,7 +103,7 @@ public class LineSegment2D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		return "LineSegment2D_F64{" +
+		return getClass().getSimpleName()+"{" +
 				"a=" + a +
 				", b=" + b +
 				'}';
