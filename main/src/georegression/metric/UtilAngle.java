@@ -317,7 +317,7 @@ public class UtilAngle {
 	}
 
 	/**
-	 * Ensures that the number is from 0 to 1, where 0 is inclusive and 1 is exclusive.
+	 * Ensures a circular bound so that the numbers from 0 to 1, where 0 is inclusive and 1 is exclusive.
 	 * <pre>Examples:
 	 * 1.5   = 0.5
 	 * -0.25 = 0.75
@@ -339,7 +339,7 @@ public class UtilAngle {
 	}
 
 	/**
-	 * Ensures that the number is from 0 to 1, where 0 is inclusive and 1 is exclusive.
+	 * Ensures a circular bound so that the numbers from 0 to 1, where 0 is inclusive and 1 is exclusive.
 	 * <pre>Examples:
 	 * 1.5   = 0.5
 	 * -0.25 = 0.75
