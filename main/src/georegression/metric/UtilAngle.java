@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -313,6 +313,50 @@ public class UtilAngle {
 			return angle + 2*Math.PI;
 		} else {
 			return angle;
+		}
+	}
+
+	/**
+	 * Ensures that the number is from 0 to 1, where 0 is inclusive and 1 is exclusive.
+	 * <pre>Examples:
+	 * 1.5   = 0.5
+	 * -0.25 = 0.75
+	 * 0     = 0
+	 * 1     = 0
+	 * 0.999 = 0.999
+	 * 2     = 1
+	 * -1    = 0
+	 * </pre>
+	 *
+	 * @return A value from 0 to 1, [0,1)
+	 */
+	public static double boundZeroToOne( double value ) {
+		if( value >= 0 )
+			return value % 1.0;
+		else {
+			return (1.0+(value%1.0))%1.0; // last bit is to ensure that 1.0 is returned as 0.0
+		}
+	}
+
+	/**
+	 * Ensures that the number is from 0 to 1, where 0 is inclusive and 1 is exclusive.
+	 * <pre>Examples:
+	 * 1.5   = 0.5
+	 * -0.25 = 0.75
+	 * 0     = 0
+	 * 1     = 0
+	 * 0.999 = 0.999
+	 * 2     = 1
+	 * -1    = 0
+	 * </pre>
+	 *
+	 * @return A value from 0 to 1, [0,1)
+	 */
+	public static float boundZeroToOne( float value ) {
+		if( value >= 0 )
+			return value % 1.0f;
+		else {
+			return (1.0f+(value%1.0f))%1.0f; // last bit is to ensure that 1.0 is returned as 0.0
 		}
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -175,5 +175,35 @@ public class TestUtilAngle {
 			assertEquals(Math.cos(angle), Math.cos(UtilAngle.domain2PI(angle)), 1e-8);
 			assertEquals(Math.sin(angle), Math.sin(UtilAngle.domain2PI(angle)), 1e-8);
 		}
+	}
+
+	@Test
+	public void boundZeroToOne_F64() {
+		assertEquals(0.00, UtilAngle.boundZeroToOne(2.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.boundZeroToOne(1.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.boundZeroToOne(0.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.50, UtilAngle.boundZeroToOne(1.5), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.boundZeroToOne(-1.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.boundZeroToOne(-6.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.25, UtilAngle.boundZeroToOne(0.25), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.50, UtilAngle.boundZeroToOne(0.50), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.75, UtilAngle.boundZeroToOne(-0.25), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.75, UtilAngle.boundZeroToOne(-5.25), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.50, UtilAngle.boundZeroToOne(-0.50), GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void boundZeroToOne_F32() {
+		assertEquals(0.00f, UtilAngle.boundZeroToOne(2.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.boundZeroToOne(1.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.boundZeroToOne(0.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.50f, UtilAngle.boundZeroToOne(1.5f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.boundZeroToOne(-1.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.boundZeroToOne(-6.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.25f, UtilAngle.boundZeroToOne(0.25f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.50f, UtilAngle.boundZeroToOne(0.50f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.75f, UtilAngle.boundZeroToOne(-0.25f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.75f, UtilAngle.boundZeroToOne(-5.25f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.50f, UtilAngle.boundZeroToOne(-0.50f), GrlConstants.FLOAT_TEST_TOL);
 	}
 }
