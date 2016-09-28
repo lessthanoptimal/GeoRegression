@@ -1,0 +1,74 @@
+/*
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ *
+ * This file is part of Geometric Regression Library (GeoRegression).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package georegression.geometry;
+
+import georegression.misc.GrlConstants;
+import georegression.misc.test.GeometryUnitTest;
+import georegression.struct.EulerType;
+import georegression.struct.point.Vector3D_F32;
+import org.ejml.data.DenseMatrix64F;
+import org.junit.Test;
+
+import java.util.Random;
+
+import static org.junit.Assert.fail;
+
+/**
+ * @author Peter Abeles
+ */
+public class TestConvertCoordinates3D_F32 {
+	Random rand = new Random(234);
+
+	/**
+	 * perform the equivalent operation in Euler coordinates and see if it gets the expected results
+	 */
+	@Test
+	public void latlonToUnitVector() {
+
+		// check a few specific cases
+		latlonToUnitVector(0,0);
+		latlonToUnitVector(0.0f,Math.PI/2.0f);
+		latlonToUnitVector(0.0f,-Math.PI/2.0f);
+		latlonToUnitVector(0.0f,Math.PI);
+		latlonToUnitVector(0.0f,-Math.PI);
+		latlonToUnitVector(Math.PI/2.0f,0);
+		latlonToUnitVector(-Math.PI/2.0f,0);
+		latlonToUnitVector(0.0f,Math.PI/2.0f);
+
+
+		// random cases now
+		for (int i = 0; i < 100; i++) {
+			float lat = rand.nextFloat()*Math.PI - GrlConstants.F_PId2;
+			float lon = rand.nextFloat()*GrlConstants.F_PI2 - (float)Math.PI;
+
+			latlonToUnitVector(lat, lon);
+		}
+	}
+
+	private void latlonToUnitVector(float lat, float lon) {
+		DenseMatrix64F M = ConvertRotation3D_F32.eulerToMatrix(EulerType.YXZ,lat,0,lon,null);
+
+		Vector3D_F32 expected = new Vector3D_F32();
+		GeometryMath_F32.mult(M,new Vector3D_F32(1,0,0),expected);
+
+		Vector3D_F32 found = ConvertCoordinates3D_F32.latlonToUnitVector(lat,lon,null);
+
+		GeometryUnitTest.assertEquals(expected, found, GrlConstants.FLOAT_TEST_TOL);
+	}
+}
