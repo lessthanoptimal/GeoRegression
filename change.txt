@@ -18,6 +18,8 @@ Version : 0.12
   * added computeTangent
   * added tangentLines() - finds two lines which are tangent to the ellipse and pass through a point outside ellipse
   * added tangentLines() - 4 lines which are tangent to two ellipses
+- LineSegment2D_F64
+  * Added a toString() at the suggestion of thhart
 
 ---------------------------------------------
 Date    : 2016/06/09

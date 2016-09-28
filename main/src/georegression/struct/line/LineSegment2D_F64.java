@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -99,5 +99,13 @@ public class LineSegment2D_F64 implements Serializable {
 
 	public LineSegment2D_F64 copy() {
 		return new LineSegment2D_F64( a, b );
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+"{" +
+				"a=" + a +
+				", b=" + b +
+				'}';
 	}
 }
