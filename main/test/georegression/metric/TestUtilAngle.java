@@ -178,32 +178,64 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void boundZeroToOne_F64() {
-		assertEquals(0.00, UtilAngle.boundZeroToOne(2.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.00, UtilAngle.boundZeroToOne(1.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.00, UtilAngle.boundZeroToOne(0.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.50, UtilAngle.boundZeroToOne(1.5), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.00, UtilAngle.boundZeroToOne(-1.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.00, UtilAngle.boundZeroToOne(-6.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.25, UtilAngle.boundZeroToOne(0.25), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.50, UtilAngle.boundZeroToOne(0.50), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.75, UtilAngle.boundZeroToOne(-0.25), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.75, UtilAngle.boundZeroToOne(-5.25), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.50, UtilAngle.boundZeroToOne(-0.50), GrlConstants.DOUBLE_TEST_TOL);
+	public void wrapZeroToOne_F64() {
+		assertEquals(0.00, UtilAngle.wrapZeroToOne(2.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.wrapZeroToOne(1.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.wrapZeroToOne(0.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.50, UtilAngle.wrapZeroToOne(1.5), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.wrapZeroToOne(-1.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.wrapZeroToOne(-6.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.25, UtilAngle.wrapZeroToOne(0.25), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.50, UtilAngle.wrapZeroToOne(0.50), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.75, UtilAngle.wrapZeroToOne(-0.25), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.75, UtilAngle.wrapZeroToOne(-5.25), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.50, UtilAngle.wrapZeroToOne(-0.50), GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 	@Test
-	public void boundZeroToOne_F32() {
-		assertEquals(0.00f, UtilAngle.boundZeroToOne(2.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.00f, UtilAngle.boundZeroToOne(1.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.00f, UtilAngle.boundZeroToOne(0.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.50f, UtilAngle.boundZeroToOne(1.5f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.00f, UtilAngle.boundZeroToOne(-1.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.00f, UtilAngle.boundZeroToOne(-6.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.25f, UtilAngle.boundZeroToOne(0.25f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.50f, UtilAngle.boundZeroToOne(0.50f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.75f, UtilAngle.boundZeroToOne(-0.25f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.75f, UtilAngle.boundZeroToOne(-5.25f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.50f, UtilAngle.boundZeroToOne(-0.50f), GrlConstants.FLOAT_TEST_TOL);
+	public void wrapZeroToOne_F32() {
+		assertEquals(0.00f, UtilAngle.wrapZeroToOne(2.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.wrapZeroToOne(1.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.wrapZeroToOne(0.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.50f, UtilAngle.wrapZeroToOne(1.5f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.wrapZeroToOne(-1.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.wrapZeroToOne(-6.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.25f, UtilAngle.wrapZeroToOne(0.25f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.50f, UtilAngle.wrapZeroToOne(0.50f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.75f, UtilAngle.wrapZeroToOne(-0.25f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.75f, UtilAngle.wrapZeroToOne(-5.25f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.50f, UtilAngle.wrapZeroToOne(-0.50f), GrlConstants.FLOAT_TEST_TOL);
+	}
+
+	@Test
+	public void reflectZeroToOne_F64() {
+		assertEquals(0.00, UtilAngle.reflectZeroToOne(2.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1.00, UtilAngle.reflectZeroToOne(1.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.reflectZeroToOne(0.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.50, UtilAngle.reflectZeroToOne(1.5), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.25, UtilAngle.reflectZeroToOne(1.75), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.25, UtilAngle.reflectZeroToOne(-0.25), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.25, UtilAngle.reflectZeroToOne(0.25), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.50, UtilAngle.reflectZeroToOne(0.50), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.50, UtilAngle.reflectZeroToOne(-0.50), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1.00, UtilAngle.reflectZeroToOne(-1.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.reflectZeroToOne(-6.0), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.75, UtilAngle.reflectZeroToOne(-5.25), GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void reflectZeroToOne_F32() {
+		assertEquals(0.00f, UtilAngle.reflectZeroToOne(2.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1.00f, UtilAngle.reflectZeroToOne(1.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.reflectZeroToOne(0.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.50f, UtilAngle.reflectZeroToOne(1.5f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.25f, UtilAngle.reflectZeroToOne(1.75f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.25f, UtilAngle.reflectZeroToOne(-0.25f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.25f, UtilAngle.reflectZeroToOne(0.25f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.50f, UtilAngle.reflectZeroToOne(0.50f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.50f, UtilAngle.reflectZeroToOne(-0.50f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1.00f, UtilAngle.reflectZeroToOne(-1.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.reflectZeroToOne(-6.0f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.75f, UtilAngle.reflectZeroToOne(-5.25f), GrlConstants.FLOAT_TEST_TOL);
 	}
 }

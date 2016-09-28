@@ -317,7 +317,7 @@ public class UtilAngle {
 	}
 
 	/**
-	 * Ensures a circular bound so that the numbers from 0 to 1, where 0 is inclusive and 1 is exclusive.
+	 * Ensures a wrapping circular bound so that the numbers from 0 to 1, where 0 is inclusive and 1 is exclusive.
 	 * <pre>Examples:
 	 * 1.5   = 0.5
 	 * -0.25 = 0.75
@@ -328,9 +328,9 @@ public class UtilAngle {
 	 * -1    = 0
 	 * </pre>
 	 *
-	 * @return A value from 0 to 1, [0,1)
+	 * @return A value from 0 to 1. [0,1)
 	 */
-	public static double boundZeroToOne( double value ) {
+	public static double wrapZeroToOne(double value ) {
 		if( value >= 0 )
 			return value % 1.0;
 		else {
@@ -339,7 +339,7 @@ public class UtilAngle {
 	}
 
 	/**
-	 * Ensures a circular bound so that the numbers from 0 to 1, where 0 is inclusive and 1 is exclusive.
+	 * Ensures a wrapping circular bound so that the numbers from 0 to 1, where 0 is inclusive and 1 is exclusive.
 	 * <pre>Examples:
 	 * 1.5   = 0.5
 	 * -0.25 = 0.75
@@ -350,13 +350,61 @@ public class UtilAngle {
 	 * -1    = 0
 	 * </pre>
 	 *
-	 * @return A value from 0 to 1, [0,1)
+	 * @return A value from 0 to 1. [0,1)
 	 */
-	public static float boundZeroToOne( float value ) {
+	public static float wrapZeroToOne(float value ) {
 		if( value >= 0 )
 			return value % 1.0f;
 		else {
 			return (1.0f+(value%1.0f))%1.0f; // last bit is to ensure that 1.0 is returned as 0.0
 		}
+	}
+
+	/**
+	 * Ensures a reflective bound so that the numbers from 0 to 1, where 0 is inclusive and 1 is inclusive.
+	 * <pre>Examples:
+	 * 1.5   = 0.5
+	 * -0.25 = 0.25
+	 * -0.75 = 0.75
+	 * 0     = 0
+	 * 1     = 1
+	 * 0.999 = 0.999
+	 * 2     = 0
+	 * -1    = 1
+	 * </pre>
+	 *
+	 * @return A value from 0 to 1. [0,1]
+	 */
+	public static double reflectZeroToOne(double value ) {
+		if( value < 0 )
+			value = -value;
+		value = value%2.0;
+		if( value > 1.0 )
+			return 2.0 - value;
+		return value;
+	}
+
+	/**
+	 * Ensures a reflective bound so that the numbers from 0 to 1, where 0 is inclusive and 1 is inclusive.
+	 * <pre>Examples:
+	 * 1.5   = 0.5
+	 * -0.25 = 0.25
+	 * -0.75 = 0.75
+	 * 0     = 0
+	 * 1     = 1
+	 * 0.999 = 0.999
+	 * 2     = 0
+	 * -1    = 1
+	 * </pre>
+	 *
+	 * @return A value from 0 to 1. [0,1]
+	 */
+	public static float reflectZeroToOne(float value ) {
+		if( value < 0 )
+			value = -value;
+		value = value%2.0f;
+		if( value > 1.0f )
+			return 2.0f - value;
+		return value;
 	}
 }
