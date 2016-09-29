@@ -43,19 +43,19 @@ public class TestConvertCoordinates3D_F32 {
 
 		// check a few specific cases
 		latlonToUnitVector(0,0);
-		latlonToUnitVector(0.0f,Math.PI/2.0f);
-		latlonToUnitVector(0.0f,-Math.PI/2.0f);
-		latlonToUnitVector(0.0f,Math.PI);
-		latlonToUnitVector(0.0f,-Math.PI);
-		latlonToUnitVector(Math.PI/2.0f,0);
-		latlonToUnitVector(-Math.PI/2.0f,0);
-		latlonToUnitVector(0.0f,Math.PI/2.0f);
+		latlonToUnitVector(0.0f, GrlConstants.F_PId2 );
+		latlonToUnitVector(0.0f, -GrlConstants.F_PId2 );
+		latlonToUnitVector(0.0f, GrlConstants.F_PI );
+		latlonToUnitVector(0.0f, -GrlConstants.F_PI );
+		latlonToUnitVector( GrlConstants.F_PId2 ,0);
+		latlonToUnitVector( -GrlConstants.F_PId2 ,0);
+		latlonToUnitVector(0.0f, GrlConstants.F_PId2 );
 
 
 		// random cases now
 		for (int i = 0; i < 100; i++) {
-			float lat = rand.nextFloat()*Math.PI - GrlConstants.F_PId2;
-			float lon = rand.nextFloat()*GrlConstants.F_PI2 - (float)Math.PI;
+			float lat = rand.nextFloat()*GrlConstants.F_PI - GrlConstants.F_PId2;
+			float lon = rand.nextFloat()*GrlConstants.F_PI2 - GrlConstants.F_PI;
 
 			latlonToUnitVector(lat, lon);
 		}

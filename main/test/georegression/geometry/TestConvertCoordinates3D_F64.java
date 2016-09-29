@@ -43,19 +43,19 @@ public class TestConvertCoordinates3D_F64 {
 
 		// check a few specific cases
 		latlonToUnitVector(0,0);
-		latlonToUnitVector(0.0,Math.PI/2.0);
-		latlonToUnitVector(0.0,-Math.PI/2.0);
-		latlonToUnitVector(0.0,Math.PI);
-		latlonToUnitVector(0.0,-Math.PI);
-		latlonToUnitVector(Math.PI/2.0,0);
-		latlonToUnitVector(-Math.PI/2.0,0);
-		latlonToUnitVector(0.0,Math.PI/2.0);
+		latlonToUnitVector(0.0, GrlConstants.PId2 );
+		latlonToUnitVector(0.0, -GrlConstants.PId2 );
+		latlonToUnitVector(0.0, GrlConstants.PI );
+		latlonToUnitVector(0.0, -GrlConstants.PI );
+		latlonToUnitVector( GrlConstants.PId2 ,0);
+		latlonToUnitVector( -GrlConstants.PId2 ,0);
+		latlonToUnitVector(0.0, GrlConstants.PId2 );
 
 
 		// random cases now
 		for (int i = 0; i < 100; i++) {
-			double lat = rand.nextDouble()*Math.PI - GrlConstants.PId2;
-			double lon = rand.nextDouble()*GrlConstants.PI2 - Math.PI;
+			double lat = rand.nextDouble()*GrlConstants.PI - GrlConstants.PId2;
+			double lon = rand.nextDouble()*GrlConstants.PI2 - GrlConstants.PI;
 
 			latlonToUnitVector(lat, lon);
 		}
