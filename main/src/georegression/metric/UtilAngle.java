@@ -36,6 +36,51 @@ public class UtilAngle {
 		return Math.PI * angleDegree / 180.0;
 	}
 
+	public static float radianToDegree( float angleRad ) {
+		return 180.0f * angleRad / GrlConstants.F_PI;
+	}
+
+	public static float degreeToRadian( float angleDegree ) {
+		return GrlConstants.F_PI * angleDegree / 180.0f;
+	}
+
+	/**
+	 * Converts radians into degrees
+	 * @param angleDegree angle in degrees
+	 * @return angle in radians
+	 */
+	public static double radian( double angleDegree ) {
+		return radianToDegree(angleDegree);
+	}
+
+	/**
+	 * Converts degrees into radians
+	 * @param angleRad angle in radians
+	 * @return angle in degrees
+	 */
+	public static double degree( double angleRad ) {
+		return radianToDegree(angleRad);
+	}
+
+	/**
+	 * Converts radians into degrees
+	 * @param angleDegree angle in degrees
+	 * @return angle in radians
+	 */
+	public static float radian( float angleDegree ) {
+		return radianToDegree(angleDegree);
+	}
+
+	/**
+	 * Converts degrees into radians
+	 * @param angleRad angle in radians
+	 * @return angle in degrees
+	 */
+	public static float degree( float angleRad ) {
+		return radianToDegree(angleRad);
+	}
+
+
 	public static double atanSafe( double y , double x ) {
 		if( x == 0 )
 			return Math.PI/2;

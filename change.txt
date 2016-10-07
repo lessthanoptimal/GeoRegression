@@ -22,6 +22,9 @@ Version : 0.12
 - LineSegment2D_F64
   * Added a toString() at the suggestion of thhart
 - Added ConvertCoordinates3D
+- angleToDegrees and degreesToAngle
+  * float versions
+  * short hand function calls
 
 ---------------------------------------------
 Date    : 2016/06/09
