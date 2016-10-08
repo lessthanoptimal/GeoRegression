@@ -50,7 +50,7 @@ public class UtilAngle {
 	 * @return angle in radians
 	 */
 	public static double radian( double angleDegree ) {
-		return radianToDegree(angleDegree);
+		return degreeToRadian(angleDegree);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class UtilAngle {
 	 * @return angle in radians
 	 */
 	public static float radian( float angleDegree ) {
-		return radianToDegree(angleDegree);
+		return degreeToRadian(angleDegree);
 	}
 
 	/**
