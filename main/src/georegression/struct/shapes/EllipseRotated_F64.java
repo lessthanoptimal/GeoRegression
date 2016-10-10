@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -50,6 +50,14 @@ public class EllipseRotated_F64 implements Serializable {
 	 */
 	public double phi;
 
+	/**
+	 * Constructor
+	 *
+	 * @param center Ellipse center
+	 * @param a major axis
+	 * @param b minor axis
+	 * @param phi orientation in radians
+	 */
 	public EllipseRotated_F64(Point2D_F64 center, double a, double b, double phi) {
 		this.center.set(center);
 		this.a = a;
@@ -57,10 +65,24 @@ public class EllipseRotated_F64 implements Serializable {
 		this.phi = phi;
 	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param x0 x coordinate of center
+	 * @param y0 y coordinate of center
+	 * @param a major axis
+	 * @param b minor axis
+	 * @param phi orientation in radians
+	 */
 	public EllipseRotated_F64( double x0 , double y0, double a, double b, double phi) {
 		set(x0,y0,a,b,phi);
 	}
 
+	/**
+	 * Copy constructor
+	 *
+	 * @param original Ellipse which is to be copied
+	 */
 	public EllipseRotated_F64( EllipseRotated_F64 original ) {
 		this(original.center,original.getA(),original.getB(),original.getPhi());
 	}
@@ -76,6 +98,10 @@ public class EllipseRotated_F64 implements Serializable {
 		this.center.set(center);
 	}
 
+	/**
+	 * Returns the major axis
+	 * @return major axis
+	 */
 	public double getA() {
 		return a;
 	}
@@ -84,6 +110,10 @@ public class EllipseRotated_F64 implements Serializable {
 		this.a = a;
 	}
 
+	/**
+	 * Returns the minor axis
+	 * @return minor axis
+	 */
 	public double getB() {
 		return b;
 	}
@@ -92,6 +122,10 @@ public class EllipseRotated_F64 implements Serializable {
 		this.b = b;
 	}
 
+	/**
+	 * Returns the orientation
+	 * @return orientation is randians
+	 */
 	public double getPhi() {
 		return phi;
 	}
