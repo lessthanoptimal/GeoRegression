@@ -9,6 +9,8 @@ Version : 0.12
 - Intersection2D
   * point inside ellipse
   * line ellipse intersection
+- Intersection3D
+  * line sphere intersection
 - Distance2D
   * Euclidean distance of point from rotated ellipse
 - UtilAngle

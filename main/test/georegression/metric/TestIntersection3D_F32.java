@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,6 +27,7 @@ import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.shapes.Box3D_F32;
 import georegression.struct.shapes.BoxLength3D_F32;
+import georegression.struct.shapes.Sphere3D_F32;
 import georegression.struct.shapes.Triangle3D_F32;
 import org.junit.Test;
 
@@ -222,5 +223,22 @@ public class TestIntersection3D_F32 {
 		assertFalse(Intersection3D_F32.intersect(1,0,2,1));
 		// outside
 		assertFalse(Intersection3D_F32.intersect(0,2,1,3));
+	}
+
+	@Test
+	public void intersect_line_sphere() {
+		Point3D_F32 a = new Point3D_F32();
+		Point3D_F32 b = new Point3D_F32();
+
+		// test a negative case first
+		assertFalse(Intersection3D_F32.intersect(
+				new LineParametric3D_F32(0,0,-10,1,0,0),new Sphere3D_F32(0,0,0,2),a,b));
+
+		// Now a positive case
+		assertTrue(Intersection3D_F32.intersect(
+				new LineParametric3D_F32(0,0,2,1,0,0),new Sphere3D_F32(0,0,2,2),a,b));
+		assertTrue( a.distance(new Point3D_F32( 2,0,2)) <= GrlConstants.FLOAT_TEST_TOL);
+		assertTrue( b.distance(new Point3D_F32(-2,0,2)) <= GrlConstants.FLOAT_TEST_TOL);
+
 	}
 }

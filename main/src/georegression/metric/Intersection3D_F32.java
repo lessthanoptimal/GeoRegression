@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -29,6 +29,7 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.shapes.Box3D_F32;
 import georegression.struct.shapes.BoxLength3D_F32;
+import georegression.struct.shapes.Sphere3D_F32;
 import georegression.struct.shapes.Triangle3D_F32;
 
 /**
@@ -320,6 +321,51 @@ public class Intersection3D_F32 {
 		} else {
 			return a0 < b1;
 		}
+	}
+
+	/**
+	 * Finds the intersection of a line and sphere.  There can be 0, 1, or 2 intersections.  If there is
+	 * 1 intersection the same point is returned twice.
+	 *
+	 * @param line line
+	 * @param sphere sphere
+	 * @param a (Output) Storage for point of intersection.  t = max(t0,t1), where t is location on line
+	 * @param b (Output) Storage for point of intersection.  t = max(t0,t1), where t is location on line
+	 * @return true if the line intersects the sphere
+	 */
+	public static boolean intersect(LineParametric3D_F32 line , Sphere3D_F32 sphere ,
+									Point3D_F32 a, Point3D_F32 b ) {
+
+		// this equation was found by solving for l:
+		// ||(P + V*l) - X0|| == r
+
+		float r2 = sphere.radius*sphere.radius;
+
+		float PP = GeometryMath_F32.dot(line.p,line.p);
+		float PV = GeometryMath_F32.dot(line.p,line.slope);
+		float PX = GeometryMath_F32.dot(line.p,sphere.center);
+		float VV = GeometryMath_F32.dot(line.slope,line.slope);
+		float VX = GeometryMath_F32.dot(line.slope,sphere.center);
+		float XX = GeometryMath_F32.dot(sphere.center,sphere.center);
+
+		// Coefficients in the quadratic equation
+		float A = VV;
+		float B = 2.0f*(PV-VX);
+		float C = PP+XX-2.0f*PX-r2;
+
+		// solve for the quadratic equation
+		float inner = B*B - 4.0f*A*C;
+		if( inner < 0 )
+			return false;
+		float sqrt = (float)Math.sqrt(inner);
+
+		float t0 = (-B + sqrt)/(2.0f*A);
+		float t1 = (-B - sqrt)/(2.0f*A);
+
+		line.setPointOnLine(t0,a);
+		line.setPointOnLine(t1,b);
+
+		return true;
 	}
 
 }
