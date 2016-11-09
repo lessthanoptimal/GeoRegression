@@ -85,10 +85,12 @@ public class TangentLinesTwoEllipses_F32 {
 	}
 
 	/**
-	 * Selects 4 pairs of points.  Each point in the pair represents an end point in a line segment which is tangent
+	 * <p>Selects 4 pairs of points.  Each point in the pair represents an end point in a line segment which is tangent
 	 * to both ellipseA and ellipseB.  Both ellipses are assumed to not intersect each other.  If a fatal error
 	 * occurs the function will return false.  However it can return true and did not converge.  To check for
-	 * convergence call {@link #isConverged()}.
+	 * convergence call {@link #isConverged()}.</p>
+	 *
+	 * <p>Line 0 and line 3 will not intersect the line joining the center of the two ellipses while line 1 and 2 will.</p>
 	 *
 	 * @param ellipseA (Input) An ellipse
 	 * @param ellipseB (Input) An ellipse

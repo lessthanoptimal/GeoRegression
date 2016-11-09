@@ -43,6 +43,20 @@ public class UtilVector2D_F64 {
 		return Math.acos( value );
 	}
 
+	public static double acute( double ax , double ay, double bx , double by ) {
+		double dot = ax*bx + ay*by;
+		double na = Math.sqrt(ax*ax + ay*ay);
+		double nb = Math.sqrt(bx*bx + by*by);
+
+		double value = dot/(na*nb);
+		if( value > 1.0 )
+			value = 1.0;
+		else if( value < -1.0 )
+			value = -1.0;
+
+		return Math.acos( value );
+	}
+
 	/**
 	 * Sets the vector equal to 'a' - 'b'.
 	 *

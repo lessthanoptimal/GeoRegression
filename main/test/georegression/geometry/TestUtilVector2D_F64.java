@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,6 +36,13 @@ public class TestUtilVector2D_F64 {
 
 		assertEquals(Math.PI/2.0,UtilVector2D_F64.acute(a,new Vector2D_F64(0, 1)), GrlConstants.DOUBLE_TEST_TOL);
 		assertEquals(Math.PI, UtilVector2D_F64.acute(a,new Vector2D_F64(-1, 0)), GrlConstants.DOUBLE_TEST_TOL);
+	}
+
+	@Test
+	public void acute_pts() {
+
+		assertEquals(Math.PI/2.0, UtilVector2D_F64.acute(1,0, 0, 1), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(Math.PI    , UtilVector2D_F64.acute(1,0,-1, 0), GrlConstants.DOUBLE_TEST_TOL);
 	}
 
 	@Test
