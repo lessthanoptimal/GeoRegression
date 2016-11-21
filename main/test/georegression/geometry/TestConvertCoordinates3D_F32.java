@@ -67,7 +67,7 @@ public class TestConvertCoordinates3D_F32 {
 		Vector3D_F32 expected = new Vector3D_F32();
 		GeometryMath_F32.mult(M,new Vector3D_F32(1,0,0),expected);
 
-		Vector3D_F32 found = ConvertCoordinates3D_F32.latlonToUnitVector(lat,lon,null);
+		Vector3D_F32 found = ConvertCoordinates3D_F32.latlonToUnitVector(lat,lon,(Vector3D_F32)null);
 
 		GeometryUnitTest.assertEquals(expected, found, GrlConstants.FLOAT_TEST_TOL);
 	}

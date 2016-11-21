@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.struct.GeoTuple3D_F32;
 import georegression.struct.point.Vector3D_F32;
 
 /**
@@ -35,9 +36,9 @@ public class ConvertCoordinates3D_F32 {
 	 * @param vector (output) Storage for unit vector.  If null is passed in a new instance will be created.
 	 * @return Unit vector
 	 */
-	public static Vector3D_F32 latlonToUnitVector( float lat , float lon , Vector3D_F32 vector ) {
+	public static <T extends GeoTuple3D_F32<T>> T latlonToUnitVector(float lat , float lon , T vector ) {
 		if( vector == null )
-			vector = new Vector3D_F32();
+			vector = (T)new Vector3D_F32();
 
 		vector.x = (float)Math.cos(lat) * (float)Math.cos(lon);
 		vector.y = (float)Math.cos(lat) * (float)Math.sin(lon);

@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.data.DenseMatrix64F;
 
@@ -127,8 +128,8 @@ public class UtilVector3D_F64 {
 	 * @param b vector
 	 * @return acute angle
 	 */
-	public static double acute( Vector3D_F64 a , Vector3D_F64 b ) {
-		double dot = a.dot(b);
+	public static double acute(GeoTuple3D_F64 a , GeoTuple3D_F64 b ) {
+		double dot = a.x*b.x + a.y*b.y + a.z*b.z;
 
 		double value = dot/(a.norm()*b.norm());
 		if( value > 1.0 )
