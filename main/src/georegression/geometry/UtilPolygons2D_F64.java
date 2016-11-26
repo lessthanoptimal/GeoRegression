@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -384,5 +384,32 @@ public class UtilPolygons2D_F64 {
 
 		AndrewMonotoneConvexHull_F64 andrew = new AndrewMonotoneConvexHull_F64();
 		andrew.process(array,array.length,hull);
+	}
+
+	/**
+	 * Removes a node from a polygon if the two lines its attached two are almost parallel
+	 * @param polygon The polygon being modified
+	 * @param tol Tolerance in radians
+	 */
+	public static void removeAlmostParallel( Polygon2D_F64 polygon , double tol ) {
+
+		for (int i = 0; i < polygon.vertexes.size(); ) {
+			int j = (i+1)%polygon.vertexes.size();
+			int k = (i+2)%polygon.vertexes.size();
+
+			Point2D_F64 p0 = polygon.vertexes.get(i);
+			Point2D_F64 p1 = polygon.vertexes.get(j);
+			Point2D_F64 p2 = polygon.vertexes.get(k);
+
+			double angle = UtilVector2D_F64.acute(p1.x-p0.x,p1.y-p0.y,p2.x-p1.x,p2.y-p1.y);
+
+			if( angle <= tol) {
+				polygon.vertexes.remove(j);
+				if( j < i )
+					i = polygon.vertexes.size()-1;
+			} else {
+				i++;
+			}
+		}
 	}
 }

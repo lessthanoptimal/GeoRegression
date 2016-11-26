@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,7 +19,6 @@
 package georegression.geometry;
 
 import georegression.metric.Intersection2D_F32;
-import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.Polygon2D_F32;
 import georegression.struct.shapes.Quadrilateral_F32;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static georegression.misc.GrlConstants.FLOAT_TEST_TOL;
 import static org.junit.Assert.*;
 
 /**
@@ -66,14 +66,14 @@ public class TestUtilPolygons2D_F32 {
 
 		UtilPolygons2D_F32.convert(r, q);
 
-		assertEquals(1, q.a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2, q.a.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5, q.b.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2, q.b.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5, q.c.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6, q.c.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(1, q.d.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6, q.d.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, q.a.x, FLOAT_TEST_TOL);
+		assertEquals(2, q.a.y, FLOAT_TEST_TOL);
+		assertEquals(5, q.b.x, FLOAT_TEST_TOL);
+		assertEquals(2, q.b.y, FLOAT_TEST_TOL);
+		assertEquals(5, q.c.x, FLOAT_TEST_TOL);
+		assertEquals(6, q.c.y, FLOAT_TEST_TOL);
+		assertEquals(1, q.d.x, FLOAT_TEST_TOL);
+		assertEquals(6, q.d.y, FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -83,14 +83,14 @@ public class TestUtilPolygons2D_F32 {
 
 		UtilPolygons2D_F32.convert(r, p);
 
-		assertEquals(1, p.get(0).x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2, p.get(0).y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5, p.get(1).x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2, p.get(1).y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5, p.get(2).x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6, p.get(2).y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(1, p.get(3).x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6, p.get(3).y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, p.get(0).x, FLOAT_TEST_TOL);
+		assertEquals(2, p.get(0).y, FLOAT_TEST_TOL);
+		assertEquals(5, p.get(1).x, FLOAT_TEST_TOL);
+		assertEquals(2, p.get(1).y, FLOAT_TEST_TOL);
+		assertEquals(5, p.get(2).x, FLOAT_TEST_TOL);
+		assertEquals(6, p.get(2).y, FLOAT_TEST_TOL);
+		assertEquals(1, p.get(3).x, FLOAT_TEST_TOL);
+		assertEquals(6, p.get(3).y, FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -100,10 +100,10 @@ public class TestUtilPolygons2D_F32 {
 
 		UtilPolygons2D_F32.convert(q, p);
 
-		assertTrue(p.get(0).distance(q.a) < GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(p.get(1).distance(q.b) < GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(p.get(2).distance(q.c) < GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(p.get(3).distance(q.d) < GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(p.get(0).distance(q.a) < FLOAT_TEST_TOL);
+		assertTrue(p.get(1).distance(q.b) < FLOAT_TEST_TOL);
+		assertTrue(p.get(2).distance(q.c) < FLOAT_TEST_TOL);
+		assertTrue(p.get(3).distance(q.d) < FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -113,10 +113,10 @@ public class TestUtilPolygons2D_F32 {
 
 		UtilPolygons2D_F32.convert(r, q);
 
-		assertTrue(r.get(0).distance(q.a)<GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(r.get(1).distance(q.b)<GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(r.get(2).distance(q.c)<GrlConstants.FLOAT_TEST_TOL);
-		assertTrue(r.get(3).distance(q.d)<GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(r.get(0).distance(q.a)< FLOAT_TEST_TOL);
+		assertTrue(r.get(1).distance(q.b)< FLOAT_TEST_TOL);
+		assertTrue(r.get(2).distance(q.c)< FLOAT_TEST_TOL);
+		assertTrue(r.get(3).distance(q.d)< FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -127,14 +127,14 @@ public class TestUtilPolygons2D_F32 {
 
 		UtilPolygons2D_F32.convert(rect, q);
 
-		assertEquals(1, q.a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2, q.a.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5, q.b.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2, q.b.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5, q.c.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(7, q.c.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(1, q.d.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(7, q.d.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, q.a.x, FLOAT_TEST_TOL);
+		assertEquals(2, q.a.y, FLOAT_TEST_TOL);
+		assertEquals(5, q.b.x, FLOAT_TEST_TOL);
+		assertEquals(2, q.b.y, FLOAT_TEST_TOL);
+		assertEquals(5, q.c.x, FLOAT_TEST_TOL);
+		assertEquals(7, q.c.y, FLOAT_TEST_TOL);
+		assertEquals(1, q.d.x, FLOAT_TEST_TOL);
+		assertEquals(7, q.d.y, FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -144,10 +144,10 @@ public class TestUtilPolygons2D_F32 {
 
 		UtilPolygons2D_F32.bounding(q, out);
 
-		assertEquals(-2, out.p0.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(-3, out.p0.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3, out.p1.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5, out.p1.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-2, out.p0.x, FLOAT_TEST_TOL);
+		assertEquals(-3, out.p0.y, FLOAT_TEST_TOL);
+		assertEquals(3, out.p1.x, FLOAT_TEST_TOL);
+		assertEquals(5, out.p1.y, FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -167,8 +167,8 @@ public class TestUtilPolygons2D_F32 {
 
 		Point2D_F32 found = UtilPolygons2D_F32.center(q, null);
 
-		assertEquals(expected.x, found.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(expected.y, found.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.x, found.x, FLOAT_TEST_TOL);
+		assertEquals(expected.y, found.y, FLOAT_TEST_TOL);
 	}
 
 	@Test
@@ -197,8 +197,8 @@ public class TestUtilPolygons2D_F32 {
 
 		UtilPolygons2D_F32.vertexAverage(poly, ave);
 
-		assertEquals((1 + 3 + 5) / 3.0f, ave.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals((2 + 4 + 6) / 3.0f, ave.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals((1 + 3 + 5) / 3.0f, ave.x, FLOAT_TEST_TOL);
+		assertEquals((2 + 4 + 6) / 3.0f, ave.y, FLOAT_TEST_TOL);
 	}
 
 	private static List<Point2D_F32> reverse(List<Point2D_F32> points) {
@@ -231,7 +231,7 @@ public class TestUtilPolygons2D_F32 {
 			for (int j = 0; j < poly1.size(); j++) {
 				poly3.vertexes.data[j] = poly2.vertexes.data[(j+i)%poly1.size()];
 			}
-			assertTrue(UtilPolygons2D_F32.isEquivalent(poly1,poly3,GrlConstants.FLOAT_TEST_TOL));
+			assertTrue(UtilPolygons2D_F32.isEquivalent(poly1,poly3, FLOAT_TEST_TOL));
 		}
 	}
 
@@ -329,5 +329,22 @@ public class TestUtilPolygons2D_F32 {
 				Intersection2D_F32.containConvex(output, data.get(i));
 			}
 		}
+	}
+
+	@Test
+	public void removeAlmostParallel() {
+		Polygon2D_F32 output = new Polygon2D_F32(5);
+
+		output.get(0).set(0,0);
+		output.get(1).set(2,0);
+		output.get(2).set(4,0);
+		output.get(3).set(4,5);
+		output.get(4).set(0,5);
+
+		UtilPolygons2D_F32.removeAlmostParallel(output, FLOAT_TEST_TOL);
+
+		assertEquals(4, output.size());
+		assertEquals(0, output.get(0).x, FLOAT_TEST_TOL);
+		assertEquals(4, output.get(1).x, FLOAT_TEST_TOL);
 	}
 }
