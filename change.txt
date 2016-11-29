@@ -17,6 +17,7 @@ Version : 0.12
   * Added bound for -pi/2 and pi/2
   * Added bound wrap for 0.0 to 1.0
   * Added bound reflect for 0.0 to 1.0
+  * Fixed behavior of atanSafe for x == 0 case
 - UtilEllipse
   * added computeTangent
   * added tangentLines() - finds two lines which are tangent to the ellipse and pass through a point outside ellipse

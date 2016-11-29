@@ -22,9 +22,7 @@ import georegression.misc.GrlConstants;
 import org.junit.Test;
 
 import static georegression.metric.UtilAngle.*;
-import static georegression.misc.GrlConstants.F_PI;
-import static georegression.misc.GrlConstants.F_PId2;
-import static georegression.misc.GrlConstants.PId2;
+import static georegression.misc.GrlConstants.*;
 import static java.lang.Math.PI;
 import static org.junit.Assert.*;
 
@@ -34,7 +32,7 @@ public class TestUtilAngle {
 	public void atanSafe() {
 		assertEquals(Math.PI/2.0,UtilAngle.atanSafe(0.0,0.0),1e-8);
 		assertEquals(Math.PI/2.0,UtilAngle.atanSafe(1.0,0.0),1e-8);
-		assertEquals(Math.PI/2.0,UtilAngle.atanSafe(-1.0,0.0),1e-8);
+		assertEquals(-Math.PI/2.0,UtilAngle.atanSafe(-1.0,0.0),1e-8);
 		assertEquals(Math.atan(1),UtilAngle.atanSafe(1.0,1.0),1e-8);
 	}
 

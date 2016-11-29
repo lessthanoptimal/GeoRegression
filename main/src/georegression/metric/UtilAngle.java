@@ -82,14 +82,21 @@ public class UtilAngle {
 
 
 	public static double atanSafe( double y , double x ) {
-		if( x == 0 )
-			return Math.PI/2;
+		if( x == 0.0 ) {
+			if( y >= 0.0)
+				return Math.PI / 2;
+			else
+				return -Math.PI / 2;
+		}
 		return Math.atan(y/x);
 	}
 
 	public static float atanSafe( float y , float x ) {
-		if( x == 0 )
-			return GrlConstants.F_PI/2;
+		if( x == 0.0 )
+			if( y >= 0.0)
+				return GrlConstants.F_PId2;
+			else
+				return -GrlConstants.F_PId2;
 		return (float)Math.atan(y/x);
 	}
 
