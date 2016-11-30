@@ -16,6 +16,7 @@ subprojects {
     apply plugin: 'signing'
 
     sourceCompatibility = 1.7
+    targetCompatibility = 1.7
 
     repositories {
         mavenCentral()
@@ -49,7 +50,7 @@ subprojects {
     }
 
     dependencies {
-        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.10-SNAPSHOT'
+        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.10'
 
         testCompile group: 'junit', name: 'junit', version: '4.11'
     }
@@ -172,8 +173,8 @@ task createLibraryDirectory( dependsOn: mainProjects.collect {[ it+':jar',it+':s
 
 idea {
     project {
-        jdkName = '1.6 (64bit)'
-        languageLevel = '1.6'
+        jdkName = '1.7 (64bit)'
+        languageLevel = '1.7'
     }
 }
 
