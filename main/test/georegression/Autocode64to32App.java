@@ -31,24 +31,24 @@ import java.io.File;
 public class Autocode64to32App extends RecursiveConvert {
 
 
-    public Autocode64to32App(ConvertFile32From64 converter) {
-        super(converter);
-    }
+	public Autocode64to32App(ConvertFile32From64 converter) {
+		super(converter);
+	}
 
-    public static void main(String args[] ) {
-        String directories[] = new String[]{
-                "main/src","main/test",
-                "experimental/src","experimental/test"};
+	public static void main(String args[]) {
+		String directories[] = new String[]{
+				"main/src", "main/test",
+				"experimental/src", "experimental/test"};
 
-        ConvertFile32From64 converter = new ConvertFile32From64(true);
+		ConvertFile32From64 converter = new ConvertFile32From64(true);
 
-        converter.replacePattern("DOUBLE_TEST_TOL", "FLOAT_TEST_TOL");
-        converter.replacePattern("GrlConstants.PI", "GrlConstants.F_PI");
-        converter.replacePattern("GrlConstants.EPS", "GrlConstants.F_EPS");
+		converter.replacePattern("DOUBLE_TEST_TOL", "FLOAT_TEST_TOL");
+		converter.replacePattern("GrlConstants.PI", "GrlConstants.F_PI");
+		converter.replacePattern("GrlConstants.EPS", "GrlConstants.F_EPS");
 
-        Autocode64to32App app = new Autocode64to32App(converter);
-        for( String dir : directories ) {
-            app.process(new File(dir) );
-        }
-    }
+		Autocode64to32App app = new Autocode64to32App(converter);
+		for (String dir : directories) {
+			app.process(new File(dir));
+		}
+	}
 }
