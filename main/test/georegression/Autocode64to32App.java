@@ -45,6 +45,7 @@ public class Autocode64to32App extends RecursiveConvert {
 		converter.replacePattern("DOUBLE_TEST_TOL", "FLOAT_TEST_TOL");
 		converter.replacePattern("GrlConstants.PI", "GrlConstants.F_PI");
 		converter.replacePattern("GrlConstants.EPS", "GrlConstants.F_EPS");
+		converter.replacePattern("rand.nextGaussian", "(float)rand.nextGaussian");
 
 		Autocode64to32App app = new Autocode64to32App(converter);
 		for (String dir : directories) {

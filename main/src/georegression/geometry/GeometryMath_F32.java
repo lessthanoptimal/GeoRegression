@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -696,6 +696,18 @@ public class GeometryMath_F32 {
 		p.x *= v;
 		p.y *= v;
 		p.z *= v;
+	}
+
+	/**
+	 * Divides each element by 'v'
+	 *
+	 * @param p tuple
+	 * @param v divisor
+	 */
+	public static void divide( GeoTuple3D_F32 p , float v ) {
+		p.x /= v;
+		p.y /= v;
+		p.z /= v;
 	}
 
 	/**

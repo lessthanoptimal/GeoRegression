@@ -1,5 +1,5 @@
 dependencies {
-    testCompile group: 'com.peterabeles', name: 'auto64fto32f', version: '1.0'
+    testCompile group: 'com.peterabeles', name: 'auto64fto32f', version: '1.0.1'
 }
 
 

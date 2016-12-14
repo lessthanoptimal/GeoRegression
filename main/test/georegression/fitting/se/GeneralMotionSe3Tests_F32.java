@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -104,7 +104,7 @@ public abstract class GeneralMotionSe3Tests_F32 {
 		List<Point3D_F32> ret = new ArrayList<Point3D_F32>();
 
 		for( int i = 0; i < N; i++ )
-			ret.add( new Point3D_F32((float) (rand.nextGaussian()*2),(float)(rand.nextGaussian()*2),3));
+			ret.add( new Point3D_F32((float) ((float)rand.nextGaussian()*2),(float)((float)rand.nextGaussian()*2),3));
 
 		return ret;
 	}

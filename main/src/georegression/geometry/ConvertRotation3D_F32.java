@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -39,18 +39,37 @@ public class ConvertRotation3D_F32 {
 	 * Converts {@link georegression.struct.so.Rodrigues_F32} into a rotation matrix.
 	 *
 	 * @param rodrigues rotation defined using rotation axis angle notation.
-	 * @param R where the results will be stored.  If null a new matrix is declared/
+	 * @param R where the results will be stored.  If null a new matrix is declared internally.
 	 * @return rotation matrix.
 	 */
 	public static DenseMatrix64F rodriguesToMatrix( Rodrigues_F32 rodrigues, DenseMatrix64F R ) {
+		return rodriguesToMatrix(
+				rodrigues.unitAxisRotation.x,
+				rodrigues.unitAxisRotation.y,
+				rodrigues.unitAxisRotation.z,
+				rodrigues.theta, R);
+	}
+
+	/**
+	 * Converts axis angle ({@link Rodrigues_F32}) into a rotation matrix with out needing to declare a storage
+	 * variable.
+	 *
+	 * @param axisX x-component of normalized rotation vector
+	 * @param axisY y-component of normalized rotation vector
+	 * @param axisZ z-component of normalized rotation vector
+	 * @param theta magnitude of rotation in radians
+	 * @param R (Optional) storage for 3x3 rotation matrix.  If null one will be declared internally.
+	 * @return Rotation matrix.
+	 */
+	public static DenseMatrix64F rodriguesToMatrix( float axisX , float axisY , float axisZ , float theta,
+													DenseMatrix64F R ) {
 		R = checkDeclare3x3( R );
 
-		float x = rodrigues.unitAxisRotation.x;
-		float y = rodrigues.unitAxisRotation.y;
-		float z = rodrigues.unitAxisRotation.z;
+		//noinspection UnnecessaryLocalVariable
+		float x = axisX, y = axisY, z = axisZ;
 
-		float c = (float)Math.cos( rodrigues.theta );
-		float s = (float)Math.sin( rodrigues.theta );
+		float c = (float)Math.cos( theta );
+		float s = (float)Math.sin( theta );
 		float oc = 1.0f - c;
 
 		R.data[0] = c + x * x * oc;
@@ -328,7 +347,7 @@ public class ConvertRotation3D_F32 {
 	/**
 	 * Converts a rotation matrix into {@link georegression.struct.so.Rodrigues_F32}.
 	 *
-	 * @param R		 Rotation matrix.
+	 * @param R Rotation matrix.
 	 * @param rodrigues Storage used for solution.  If null a new instance is declared.
 	 * @return The found axis and rotation angle.
 	 */

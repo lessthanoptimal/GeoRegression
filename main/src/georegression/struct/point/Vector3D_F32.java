@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -61,6 +61,16 @@ public class Vector3D_F32 extends GeoTuple3D_F32<Vector3D_F32> {
 		x = a.x - b.x;
 		y = a.y - b.y;
 		z = a.z - b.z;
+	}
+
+	/**
+	 * In-place divide operation.  x /= value;
+	 * @param value The value each component is divided by
+	 */
+	public void divide( float value ) {
+		x /= value;
+		y /= value;
+		z /= value;
 	}
 
 	public Vector3D_F32 copy() {

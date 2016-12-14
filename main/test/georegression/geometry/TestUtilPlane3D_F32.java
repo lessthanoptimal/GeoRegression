@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -144,8 +144,8 @@ public class TestUtilPlane3D_F32 {
 
 		for( int i = 0; i < 100; i++ ) {
 			PlaneNormal3D_F32 a = new PlaneNormal3D_F32(
-					(float)rand.nextGaussian(),(float)rand.nextGaussian(),(float)rand.nextGaussian(),
-					(float)rand.nextGaussian(),(float)rand.nextGaussian(),(float)rand.nextGaussian());
+					(float)(float)rand.nextGaussian(),(float)(float)rand.nextGaussian(),(float)(float)rand.nextGaussian(),
+					(float)(float)rand.nextGaussian(),(float)(float)rand.nextGaussian(),(float)(float)rand.nextGaussian());
 			PlaneNormal3D_F32 b = new PlaneNormal3D_F32(a);
 
 			b.p.x +=(rand.nextFloat()-0.5f)*GrlConstants.FLOAT_TEST_TOL;

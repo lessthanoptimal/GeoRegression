@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -434,6 +434,17 @@ public class TestGeometryMath_F32 {
 		assertEquals( -4, a.y, GrlConstants.FLOAT_TEST_TOL );
 		assertEquals( 6, a.z, GrlConstants.FLOAT_TEST_TOL );
 	}
+
+	@Test
+	public void divide() {
+		Vector3D_F32 a = new Vector3D_F32( 1, -2, 3 );
+		GeometryMath_F32.divide( a, 2 );
+
+		assertEquals( 0.5f, a.x, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( -1.0f, a.y, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 1.5f, a.z, GrlConstants.FLOAT_TEST_TOL );
+	}
+
 
 	@Test
 	public void changeSign() {
