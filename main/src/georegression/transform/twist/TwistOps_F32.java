@@ -102,7 +102,9 @@ public class TwistOps_F32 {
 			motion = new Se3_F32();
 		}
 
-		if( twist.isPureTranslation() ) {
+		float w_norm = twist.w.norm();
+
+		if( w_norm == 0.0f ) {
 			CommonOps.setIdentity(motion.R);
 			motion.T.x = twist.v.x*theta;
 			motion.T.y = twist.v.y*theta;
@@ -113,9 +115,11 @@ public class TwistOps_F32 {
 		DenseMatrix64F R = motion.getR();
 
 		// First handle the SO region.  This Rodrigues equation
-		float wx = twist.w.x, wy = twist.w.y, wz = twist.w.z;
+		float wx = twist.w.x/w_norm, wy = twist.w.y/w_norm, wz = twist.w.z/w_norm;
 
-		ConvertRotation3D_F32.rodriguesToMatrix(wx,wy,wz, theta, R);
+		ConvertRotation3D_F32.rodriguesToMatrix(wx,wy,wz, theta*w_norm, R);
+
+		theta *= w_norm;
 
 		// Now compute the translational component
 		// (I - SO)*(w cross v) + w*w'*v*theta
@@ -136,31 +140,32 @@ public class TwistOps_F32 {
 		motion.T.x = (float)left_x + right_x;
 		motion.T.y = (float)left_y + right_y;
 		motion.T.z = (float)left_z + right_z;
+		motion.T.divide(w_norm);
 
 		return motion;
 	}
 
 	/**
-	 * Converts a rigid body motion into a twist coordinate
+	 * Converts a rigid body motion into a twist coordinate.  The value of theta used to generate the motion
+	 * is assumed to be one.
 	 *
 	 * @param motion (Input) The SE(3) transformation
 	 * @param twist (Output) Storage for twist.
 	 * @return magnitude of the motion
 	 */
-	public static float twist( Se3_F32 motion , TwistCoordinate_F32 twist ) {
-		float theta;
+	public static TwistCoordinate_F32 twist( Se3_F32 motion , TwistCoordinate_F32 twist ) {
+		if( twist == null )
+			twist = new TwistCoordinate_F32();
+
 		if(MatrixFeatures.isIdentity(motion.R, GrlConstants.FLOAT_TEST_TOL)) {
 			twist.w.set(0,0,0);
 			twist.v.set(motion.T);
-			theta = twist.v.norm();
-			if( theta > 0 )
-				twist.v.divide(theta);
 		} else {
 			Rodrigues_F32 rod = new Rodrigues_F32();
 			ConvertRotation3D_F32.matrixToRodrigues(motion.R,rod);
 
 			twist.w.set(rod.unitAxisRotation);
-			theta = rod.theta;
+			float theta = rod.theta;
 
 			// A = (I-SO)*hat(w) + w*w'*theta
 			DenseMatrix64F A = CommonOps.identity(3);
@@ -184,10 +189,12 @@ public class TwistOps_F32 {
 
 			CommonOps.solve(A,y,x);
 
+			twist.w.scale(rod.theta);
 			twist.v.x = (float) x.data[0];
 			twist.v.y = (float) x.data[1];
 			twist.v.z = (float) x.data[2];
+			twist.v.scale(rod.theta);
 		}
-		return theta;
+		return twist;
 	}
 }

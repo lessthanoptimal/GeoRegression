@@ -18,8 +18,6 @@
 
 package georegression.transform.twist;
 
-import georegression.geometry.GeometryMath_F32;
-import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F32;
 
 /**
@@ -43,7 +41,7 @@ import georegression.struct.point.Vector3D_F32;
  */
 public class TwistCoordinate_F32 {
 	/**
-	 * Angular component in so(3). Normalized such that the F-norm is 1 or 0 if no rotation.
+	 * Angular component in so(3).   Does NOT need to be normalized to 1.
 	 */
 	public Vector3D_F32 w = new Vector3D_F32();
 	/**
@@ -71,28 +69,6 @@ public class TwistCoordinate_F32 {
 	public void set( TwistCoordinate_F32 original ) {
 		this.w.set( original.w );
 		this.v.set( original.v );
-	}
-
-	/**
-	 * Normalizes w.  If it is close to zero then it will be set to zero.  Otherwise it will be modified such
-	 * that the norm is 1.
-	 */
-	public void normalize() {
-		float n = w.normSq();
-		if( n <= GrlConstants.FLOAT_TEST_TOL )
-			w.set(0,0,0);
-		else
-			GeometryMath_F32.divide(w, (float)Math.sqrt(n));
-	}
-
-	/**
-	 * Returns true if the twist is pure translation or false is more rotation or a mix of both.  The
-	 * test is performed by looking at the norm squared of w and seeing if it is significantly different from 1.0f.
-	 * Since 'w' is required to be normalized to one this should test to see if
-	 * @return true if a purely translational twist
-	 */
-	public boolean isPureTranslation() {
-		return (float)Math.abs(w.normSq()-1.0f) > GrlConstants.FLOAT_TEST_TOL;
 	}
 
 	public void print() {
