@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -98,7 +98,7 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F64 transform.
 	 */
-	public static Se3_F64 toSe3_F64( DenseMatrix64F H, Se3_F64 ret ) {
+	public static Se3_F64 toSe3(DenseMatrix64F H, Se3_F64 ret ) {
 		if( H.numCols != 4 || H.numRows != 4 )
 			throw new IllegalArgumentException( "The homogeneous matrix must be 4 by 4 by definition." );
 

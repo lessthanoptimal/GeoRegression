@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -208,7 +208,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		String ret = "Se3_F32: T = "+T.toString()+"\n";
 		ret += R;
 
-		return ret+"\n";
+		return ret;
 	}
 
 	public void print() {

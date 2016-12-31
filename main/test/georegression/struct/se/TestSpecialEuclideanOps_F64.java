@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -109,7 +109,7 @@ public class TestSpecialEuclideanOps_F64 {
 
 		DenseMatrix64F H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
 
-		Se3_F64 found = SpecialEuclideanOps_F64.toSe3_F64( H, null );
+		Se3_F64 found = SpecialEuclideanOps_F64.toSe3( H, null );
 
 		assertEquals( se.getX(), found.getX(), GrlConstants.DOUBLE_TEST_TOL );
 		assertEquals( se.getY(), found.getY(), GrlConstants.DOUBLE_TEST_TOL );

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,7 +44,7 @@ public class TestConvertStructureDataType {
 		RandomMatrices.setRandom(src.getR(),rand);
 		src.getT().set(rand.nextDouble(),rand.nextDouble(),rand.nextDouble());
 
-		Se3_F32 dst = ConvertStructureDataType.convert(src,null);
+		Se3_F32 dst = ConvertFloatType.convert(src,null);
 
 		assertTrue(MatrixFeatures.isIdentical(src.getR(),dst.getR(), GrlConstants.FLOAT_TEST_TOL));
 		assertEquals(src.T.x,dst.T.x,GrlConstants.FLOAT_TEST_TOL);
@@ -56,7 +56,7 @@ public class TestConvertStructureDataType {
 	public void convert_Point3D_64_32() {
 		Point3D_F64 src = new Point3D_F64(rand.nextDouble(),rand.nextDouble(),rand.nextDouble());
 
-		Point3D_F32 dst = ConvertStructureDataType.convert(src,null);
+		Point3D_F32 dst = ConvertFloatType.convert(src,null);
 
 		assertEquals(src.x,dst.x,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(src.y,dst.y,GrlConstants.FLOAT_TEST_TOL);
@@ -67,7 +67,7 @@ public class TestConvertStructureDataType {
 	public void convert_Point2D_64_32() {
 		Point2D_F64 src = new Point2D_F64(rand.nextDouble(),rand.nextDouble());
 
-		Point2D_F32 dst = ConvertStructureDataType.convert(src,null);
+		Point2D_F32 dst = ConvertFloatType.convert(src,null);
 
 		assertEquals(src.x,dst.x,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(src.y,dst.y,GrlConstants.FLOAT_TEST_TOL);
@@ -77,7 +77,7 @@ public class TestConvertStructureDataType {
 	public void convert_Vector3D_64_32() {
 		Vector3D_F64 src = new Vector3D_F64(rand.nextDouble(),rand.nextDouble(),rand.nextDouble());
 
-		Vector3D_F32 dst = ConvertStructureDataType.convert(src,null);
+		Vector3D_F32 dst = ConvertFloatType.convert(src,null);
 
 		assertEquals(src.x,dst.x,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(src.y,dst.y,GrlConstants.FLOAT_TEST_TOL);
@@ -88,7 +88,7 @@ public class TestConvertStructureDataType {
 	public void convert_Vector2D_64_32() {
 		Vector2D_F64 src = new Vector2D_F64(rand.nextDouble(),rand.nextDouble());
 
-		Vector2D_F32 dst = ConvertStructureDataType.convert(src,null);
+		Vector2D_F32 dst = ConvertFloatType.convert(src,null);
 
 		assertEquals(src.x,dst.x,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(src.y,dst.y,GrlConstants.FLOAT_TEST_TOL);
