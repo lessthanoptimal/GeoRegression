@@ -18,14 +18,14 @@
 
 package georegression.struct;
 
-import org.ejml.data.FixedMatrix3x3_64F;
+import org.ejml.data.FixedMatrix3x3_32F;
 
 /**
  * Matrix with a fixed size of 3 by 3.
  *
  * @author Peter Abeles
  */
-public class Matrix3x3_F32 extends FixedMatrix3x3_64F {
+public class Matrix3x3_F32 extends FixedMatrix3x3_32F {
 
 	public void zero() {
 		a11=a12=a13=a21=a22=a23=a31=a32=a33=0;
