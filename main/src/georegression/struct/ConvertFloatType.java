@@ -18,6 +18,8 @@
 
 package georegression.struct;
 
+import georegression.struct.homography.Homography2D_F32;
+import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.*;
 import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
@@ -37,7 +39,7 @@ public class ConvertFloatType {
 			dst = new Se3_F32();
 		}
 
-		ConvertMatrixData.convert(dst.getR(), src.getR());
+		ConvertMatrixData.convert(src.getR(), dst.getR());
 		convert(src.T,dst.T);
 
 		return dst;
@@ -48,7 +50,7 @@ public class ConvertFloatType {
 			dst = new Se3_F64();
 		}
 
-		ConvertMatrixData.convert(dst.getR(), src.getR());
+		ConvertMatrixData.convert(src.getR(), dst.getR());
 		convert(src.T,dst.T);
 
 		return dst;
@@ -74,6 +76,26 @@ public class ConvertFloatType {
 		dst.c = src.c;
 		dst.s = src.s;
 		convert(src.T,dst.T);
+
+		return dst;
+	}
+
+	public static Homography2D_F32 convert(Homography2D_F64 src , Homography2D_F32 dst ) {
+		if( dst == null ) {
+			dst = new Homography2D_F32();
+		}
+
+		ConvertMatrixData.convert(src, dst);
+
+		return dst;
+	}
+
+	public static Homography2D_F64 convert(Homography2D_F32 src , Homography2D_F64 dst ) {
+		if( dst == null ) {
+			dst = new Homography2D_F64();
+		}
+
+		ConvertMatrixData.convert(src, dst);
 
 		return dst;
 	}
