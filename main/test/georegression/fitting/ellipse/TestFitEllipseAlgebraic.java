@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -75,12 +75,12 @@ public class TestFitEllipseAlgebraic {
 		normalize(expected);
 		normalize(found);
 
-		assertEquals(expected.a,found.a, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.b,found.b, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.c,found.c, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.d,found.d, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.e,found.e, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.f,found.f, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected.a,found.a, GrlConstants.TEST_F64);
+		assertEquals(expected.b,found.b, GrlConstants.TEST_F64);
+		assertEquals(expected.c,found.c, GrlConstants.TEST_F64);
+		assertEquals(expected.d,found.d, GrlConstants.TEST_F64);
+		assertEquals(expected.e,found.e, GrlConstants.TEST_F64);
+		assertEquals(expected.f,found.f, GrlConstants.TEST_F64);
 	}
 
 	/**

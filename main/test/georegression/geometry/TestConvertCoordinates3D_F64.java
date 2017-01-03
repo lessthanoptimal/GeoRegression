@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,8 +26,6 @@ import org.ejml.data.DenseMatrix64F;
 import org.junit.Test;
 
 import java.util.Random;
-
-import static org.junit.Assert.fail;
 
 /**
  * @author Peter Abeles
@@ -69,6 +67,6 @@ public class TestConvertCoordinates3D_F64 {
 
 		Vector3D_F64 found = ConvertCoordinates3D_F64.latlonToUnitVector(lat,lon,(Vector3D_F64)null);
 
-		GeometryUnitTest.assertEquals(expected, found, GrlConstants.DOUBLE_TEST_TOL);
+		GeometryUnitTest.assertEquals(expected, found, GrlConstants.TEST_F64);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -52,15 +52,15 @@ public class GenericGeoTupleTests3D_F64<T extends GeoTuple3D_F64> extends Generi
 	public void checkGetAndSetAxis() {
 		T a = (T) seed.createNewInstance();
 
-		assertEquals( 0, a.getX(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, a.getX(), GrlConstants.TEST_F64);
 		a.setX( 1.5 );
-		assertEquals( 1.5, a.getX(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 0, a.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1.5, a.getX(), GrlConstants.TEST_F64);
+		assertEquals( 0, a.getY(), GrlConstants.TEST_F64);
 		a.setY( 1.5 );
-		assertEquals( 1.5, a.getY(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 0, a.getZ(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1.5, a.getY(), GrlConstants.TEST_F64);
+		assertEquals( 0, a.getZ(), GrlConstants.TEST_F64);
 		a.setZ( 1.5 );
-		assertEquals( 1.5, a.getZ(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1.5, a.getZ(), GrlConstants.TEST_F64);
 	}
 
 	public void checkSetAxisAll() {
@@ -68,9 +68,9 @@ public class GenericGeoTupleTests3D_F64<T extends GeoTuple3D_F64> extends Generi
 
 		a.set( 1.5, 2.5, 3.5 );
 
-		assertEquals( 1.5, a.getX(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 2.5, a.getY(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 3.5, a.getZ(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1.5, a.getX(), GrlConstants.TEST_F64);
+		assertEquals( 2.5, a.getY(), GrlConstants.TEST_F64);
+		assertEquals( 3.5, a.getZ(), GrlConstants.TEST_F64);
 	}
 
 	public void isIdentical_3_double() {
@@ -78,7 +78,7 @@ public class GenericGeoTupleTests3D_F64<T extends GeoTuple3D_F64> extends Generi
 
 		a.set( 1, 2, 3 );
 
-		assertTrue( a.isIdentical( 1, 2, 3, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( a.isIdentical( 1, 2, 3, GrlConstants.TEST_F64) );
 	}
 
 	public void isIdentical_tuple() {
@@ -88,7 +88,7 @@ public class GenericGeoTupleTests3D_F64<T extends GeoTuple3D_F64> extends Generi
 
 		T b = (T) a.copy();
 
-		assertTrue( a.isIdentical( b, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( a.isIdentical( b, GrlConstants.TEST_F64) );
 	}
 
 	public void isNaN() {

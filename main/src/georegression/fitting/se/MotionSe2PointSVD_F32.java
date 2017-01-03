@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,10 +23,10 @@ import georegression.geometry.GeometryMath_F32;
 import georegression.geometry.UtilPoint2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.se.Se2_F32;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory_D64;
+import org.ejml.data.DenseMatrix32F;
+import org.ejml.factory.DecompositionFactory_D32;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
-import org.ejml.ops.CommonOps_D64;
+import org.ejml.ops.CommonOps_D32;
 
 import java.util.List;
 
@@ -55,11 +55,11 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 	Point2D_F32 meanFrom = new Point2D_F32();
 	Point2D_F32 meanTo = new Point2D_F32();
 
-	SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory_D64.svd(2,2,true,true,false);
-	DenseMatrix64F Sigma = new DenseMatrix64F(2,2);
-	DenseMatrix64F U = new DenseMatrix64F(2,2);
-	DenseMatrix64F V = new DenseMatrix64F(2,2);
-	DenseMatrix64F R = new DenseMatrix64F(2,2);
+	SingularValueDecomposition<DenseMatrix32F> svd = DecompositionFactory_D32.svd(2,2,true,true,false);
+	DenseMatrix32F Sigma = new DenseMatrix32F(2,2);
+	DenseMatrix32F U = new DenseMatrix32F(2,2);
+	DenseMatrix32F V = new DenseMatrix32F(2,2);
+	DenseMatrix32F R = new DenseMatrix32F(2,2);
 
 	@Override
 	public Se2_F32 getTransformSrcToDst() {
@@ -113,16 +113,16 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 		svd.getU(U,false);
 		svd.getV(V, false);
 
-		CommonOps_D64.multTransB(V,U,R);
+		CommonOps_D32.multTransB(V,U,R);
 
 		// There are situations where R might not have a determinant of one and is instead
 		// a reflection is returned
-		/**/double det = CommonOps_D64.det(R);
+		float det = CommonOps_D32.det(R);
 		if( det < 0 ) {
 			for( int i = 0; i < 2; i++ )
 				V.set( i, 1, -V.get( i, 1 ) );
-			CommonOps_D64.multTransB(V,U,R);
-			det = CommonOps_D64.det(R);
+			CommonOps_D32.multTransB(V,U,R);
+			det = CommonOps_D32.det(R);
 			if( det < 0 ) {
 				throw new RuntimeException( "Crap" );
 			}

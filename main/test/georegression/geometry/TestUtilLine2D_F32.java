@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,25 +44,25 @@ public class TestUtilLine2D_F32 {
 	@Test
 	public void acuteAngle_general() {
 		assertEquals(0, acuteAngle(new LineGeneral2D_F32(1, 0, 0.5f), new LineGeneral2D_F32(1, 0, 6)),
-				GrlConstants.FLOAT_TEST_TOL);
+				GrlConstants.TEST_F32);
 		assertEquals(0, acuteAngle(new LineGeneral2D_F32(0, 2, 0.5f), new LineGeneral2D_F32(0, 2, 6)),
-				GrlConstants.FLOAT_TEST_TOL);
+				GrlConstants.TEST_F32);
 		assertEquals(Math.PI, acuteAngle(new LineGeneral2D_F32(2, 2, 0.5f), new LineGeneral2D_F32(-3, -3, 6)),
-				GrlConstants.FLOAT_TEST_TOL);
+				GrlConstants.TEST_F32);
 		assertEquals(Math.PI/2, acuteAngle(new LineGeneral2D_F32(2, 2, 0.5f), new LineGeneral2D_F32(-4, 4, 6)),
-				GrlConstants.FLOAT_TEST_TOL);
+				GrlConstants.TEST_F32);
 
 		// pathological cause with numerical round off.  acos( -1.000000000123f )
 		float a = (float)Math.cos(Math.PI/4.0f);
 		assertEquals(Math.PI, acuteAngle(new LineGeneral2D_F32(a, a, 0.5f), new LineGeneral2D_F32(-a, -a, 6)),
-				GrlConstants.FLOAT_TEST_TOL);
+				GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void acuteAngleN_general() {
 
 		float a = (float)Math.cos(Math.PI/4.0f);
-		float tol = GrlConstants.FLOAT_TEST_TOL*10.0f;// float case needs more tolerance
+		float tol = GrlConstants.TEST_F32 *10.0f;// float case needs more tolerance
 
 		assertEquals(0, acuteAngleN(new LineGeneral2D_F32(1, 0, 0.5f), new LineGeneral2D_F32(1, 0, 6)),tol);
 		assertEquals(0, acuteAngleN(new LineGeneral2D_F32(0, 1, 0.5f), new LineGeneral2D_F32(0, 1, 6)),tol);
@@ -80,10 +80,10 @@ public class TestUtilLine2D_F32 {
 
 		UtilLine2D_F32.convert(segment,para);
 
-		assertEquals(para.p.x,0, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(para.p.y,0, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(Math.abs(para.slope.x),5, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(para.slope.y,0, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(para.p.x,0, GrlConstants.TEST_F32);
+		assertEquals(para.p.y,0, GrlConstants.TEST_F32);
+		assertEquals(Math.abs(para.slope.x),5, GrlConstants.TEST_F32);
+		assertEquals(para.slope.y,0, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -96,8 +96,8 @@ public class TestUtilLine2D_F32 {
 		LineGeneral2D_F32 general = UtilLine2D_F32.convert(segment,(LineGeneral2D_F32)null);
 
 		// see if the two end points lie on the general line
-		assertEquals(0,general.evaluate(segment.a.x,segment.a.y), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0,general.evaluate(segment.b.x,segment.b.y), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,general.evaluate(segment.a.x,segment.a.y), GrlConstants.TEST_F32);
+		assertEquals(0,general.evaluate(segment.b.x,segment.b.y), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -108,8 +108,8 @@ public class TestUtilLine2D_F32 {
 		LineGeneral2D_F32 general = UtilLine2D_F32.convert(a,b,(LineGeneral2D_F32)null);
 
 		// see if the two end points lie on the general line
-		assertEquals(0,general.evaluate(a.x,a.y), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0,general.evaluate(b.x,b.y), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,general.evaluate(a.x,a.y), GrlConstants.TEST_F32);
+		assertEquals(0,general.evaluate(b.x,b.y), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -122,10 +122,10 @@ public class TestUtilLine2D_F32 {
 
 		UtilLine2D_F32.convert(polar,para);
 
-		assertEquals(para.p.x,0, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(para.p.y,5, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(Math.abs(para.slope.x),1, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(para.slope.y,0, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(para.p.x,0, GrlConstants.TEST_F32);
+		assertEquals(para.p.y,5, GrlConstants.TEST_F32);
+		assertEquals(Math.abs(para.slope.x),1, GrlConstants.TEST_F32);
+		assertEquals(para.slope.y,0, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -146,9 +146,9 @@ public class TestUtilLine2D_F32 {
 			found.C *= -1;
 		}
 
-		assertEquals(expected.A,found.A,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(expected.B,found.B,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(expected.C,found.C,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.A,found.A,GrlConstants.TEST_F32);
+		assertEquals(expected.B,found.B,GrlConstants.TEST_F32);
+		assertEquals(expected.C,found.C,GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -167,8 +167,8 @@ public class TestUtilLine2D_F32 {
 		float y1 = y0 + c;
 
 		// see if they are also on the general line equation
-		assertEquals(0,general.evaluate(x0,y0), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0,general.evaluate(x1,y1), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,general.evaluate(x0,y0), GrlConstants.TEST_F32);
+		assertEquals(0,general.evaluate(x1,y1), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -179,14 +179,14 @@ public class TestUtilLine2D_F32 {
 		para.slope.set(1,0);
 		para.setPoint(0,5);
 		UtilLine2D_F32.convert(para,polar);
-		assertEquals(polar.distance,5, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(polar.angle,Math.PI/2, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(polar.distance,5, GrlConstants.TEST_F32);
+		assertEquals(polar.angle,Math.PI/2, GrlConstants.TEST_F32);
 
 		para.slope.set(1,-1);
 		para.setPoint(-5,-5);
 		UtilLine2D_F32.convert(para,polar);
-		assertEquals(polar.distance,5*Math.sqrt(2), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(polar.angle,-Math.PI+Math.PI/4, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(polar.distance,5*Math.sqrt(2), GrlConstants.TEST_F32);
+		assertEquals(polar.angle,-Math.PI+Math.PI/4, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -205,8 +205,8 @@ public class TestUtilLine2D_F32 {
 			normalize(polar);
 			normalize(found);
 
-			assertEquals(polar.angle, found.angle, GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(polar.distance,found.distance,GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(polar.angle, found.angle, GrlConstants.TEST_F32);
+			assertEquals(polar.distance,found.distance,GrlConstants.TEST_F32);
 		}
 	}
 
@@ -234,7 +234,7 @@ public class TestUtilLine2D_F32 {
 		// test the basic properties of this line equation
 		float val = general.A*p.x + general.B*p.y + general.C;
 
-		assertEquals(0,val, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,val, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -254,6 +254,6 @@ public class TestUtilLine2D_F32 {
 		// See if that same point is on the general equation
 		float val = general.A*p.x + general.B*p.y + general.C;
 
-		assertEquals(0,val, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,val, GrlConstants.TEST_F32);
 	}
 }

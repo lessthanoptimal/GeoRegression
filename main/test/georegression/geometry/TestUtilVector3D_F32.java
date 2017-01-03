@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,10 +41,10 @@ public class TestUtilVector3D_F32 {
 
 
 		// test positive
-		assertTrue( UtilVector3D_F32.isIdentical( a, a.copy(), GrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( UtilVector3D_F32.isIdentical( a, a.copy(), GrlConstants.TEST_F32) );
 
 		// test negative
-		assertFalse( UtilVector3D_F32.isIdentical( a, b, GrlConstants.FLOAT_TEST_TOL ) );
+		assertFalse( UtilVector3D_F32.isIdentical( a, b, GrlConstants.TEST_F32) );
 	}
 
 	@Test
@@ -53,16 +53,16 @@ public class TestUtilVector3D_F32 {
 
 		UtilVector3D_F32.normalize( a );
 
-		assertEquals( 1, a.norm(), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 1, a.norm(), GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void acute() {
 		assertEquals(Math.PI/2.0f,
-				UtilVector3D_F32.acute(new Vector3D_F32(1,0,0),new Vector3D_F32(0,1,0)),GrlConstants.FLOAT_TEST_TOL);
+				UtilVector3D_F32.acute(new Vector3D_F32(1,0,0),new Vector3D_F32(0,1,0)),GrlConstants.TEST_F32);
 		assertEquals(Math.PI/2.0f,
-				UtilVector3D_F32.acute(new Vector3D_F32(1,0,0),new Vector3D_F32(0,0,1)),GrlConstants.FLOAT_TEST_TOL);
+				UtilVector3D_F32.acute(new Vector3D_F32(1,0,0),new Vector3D_F32(0,0,1)),GrlConstants.TEST_F32);
 		assertEquals(Math.PI,
-				UtilVector3D_F32.acute(new Vector3D_F32(1,0,0),new Vector3D_F32(-1,0,0)),GrlConstants.FLOAT_TEST_TOL);
+				UtilVector3D_F32.acute(new Vector3D_F32(1,0,0),new Vector3D_F32(-1,0,0)),GrlConstants.TEST_F32);
 	}
 }

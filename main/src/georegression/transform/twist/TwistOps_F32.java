@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,9 +24,9 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps_D64;
-import org.ejml.ops.MatrixFeatures_D64;
+import org.ejml.data.DenseMatrix32F;
+import org.ejml.ops.CommonOps_D32;
+import org.ejml.ops.MatrixFeatures_D32;
 
 /**
  * Operations related to twists.
@@ -44,13 +44,13 @@ public class TwistOps_F32 {
 	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
-	public static DenseMatrix64F homogenous( Se3_F32 transform , DenseMatrix64F H ) {
+	public static DenseMatrix32F homogenous( Se3_F32 transform , DenseMatrix32F H ) {
 		if( H == null ) {
-			H = new DenseMatrix64F(4,4);
+			H = new DenseMatrix32F(4,4);
 		} else {
 			H.reshape(4,4);
 		}
-		CommonOps_D64.insert(transform.R,H,0,0);
+		CommonOps_D32.insert(transform.R,H,0,0);
 		H.data[3] = transform.T.x;
 		H.data[7] = transform.T.y;
 		H.data[11] = transform.T.z;
@@ -68,9 +68,9 @@ public class TwistOps_F32 {
 	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
-	public static DenseMatrix64F homogenous( TwistCoordinate_F32 twist , DenseMatrix64F H ) {
+	public static DenseMatrix32F homogenous( TwistCoordinate_F32 twist , DenseMatrix32F H ) {
 		if( H == null ) {
-			H = new DenseMatrix64F(4,4);
+			H = new DenseMatrix32F(4,4);
 		} else {
 			H.reshape(4,4);
 			H.data[12] = 0; H.data[13] = 0; H.data[14] = 0; H.data[15] = 0;
@@ -105,14 +105,14 @@ public class TwistOps_F32 {
 		float w_norm = twist.w.norm();
 
 		if( w_norm == 0.0f ) {
-			CommonOps_D64.setIdentity(motion.R);
+			CommonOps_D32.setIdentity(motion.R);
 			motion.T.x = twist.v.x*theta;
 			motion.T.y = twist.v.y*theta;
 			motion.T.z = twist.v.z*theta;
 			return motion;
 		}
 
-		DenseMatrix64F R = motion.getR();
+		DenseMatrix32F R = motion.getR();
 
 		// First handle the SO region.  This Rodrigues equation
 		float wx = twist.w.x/w_norm, wy = twist.w.y/w_norm, wz = twist.w.z/w_norm;
@@ -129,9 +129,9 @@ public class TwistOps_F32 {
 		float wv_y = wz*vx - wx*vz;
 		float wv_z = wx*vy - wy*vx;
 
-		/**/double left_x = (1 - R.data[0])*wv_x -      R.data[1]*wv_y  -      R.data[2]*wv_z;
-		/**/double left_y =     -R.data[3]*wv_x  + (1 - R.data[4])*wv_y -      R.data[5]*wv_z;
-		/**/double left_z =     -R.data[6]*wv_x  -      R.data[7]*wv_y  + (1 - R.data[8])*wv_z;
+		float left_x = (1 - R.data[0])*wv_x -      R.data[1]*wv_y  -      R.data[2]*wv_z;
+		float left_y =     -R.data[3]*wv_x  + (1 - R.data[4])*wv_y -      R.data[5]*wv_z;
+		float left_z =     -R.data[6]*wv_x  -      R.data[7]*wv_y  + (1 - R.data[8])*wv_z;
 
 		float right_x = (wx*wx*vx + wx*wy*vy + wx*wz*vz)*theta;
 		float right_y = (wy*wx*vx + wy*wy*vy + wy*wz*vz)*theta;
@@ -157,7 +157,7 @@ public class TwistOps_F32 {
 		if( twist == null )
 			twist = new TwistCoordinate_F32();
 
-		if(MatrixFeatures_D64.isIdentity(motion.R, GrlConstants.FLOAT_TEST_TOL)) {
+		if(MatrixFeatures_D32.isIdentity(motion.R, GrlConstants.TEST_F32)) {
 			twist.w.set(0,0,0);
 			twist.v.set(motion.T);
 		} else {
@@ -168,26 +168,26 @@ public class TwistOps_F32 {
 			float theta = rod.theta;
 
 			// A = (I-SO)*hat(w) + w*w'*theta
-			DenseMatrix64F A = CommonOps_D64.identity(3);
-			CommonOps_D64.subtract(A,motion.R, A);
+			DenseMatrix32F A = CommonOps_D32.identity(3);
+			CommonOps_D32.subtract(A,motion.R, A);
 
-			DenseMatrix64F w_hat = GeometryMath_F32.crossMatrix(twist.w,null);
-			DenseMatrix64F tmp = A.copy();
-			CommonOps_D64.mult(tmp,w_hat,A);
+			DenseMatrix32F w_hat = GeometryMath_F32.crossMatrix(twist.w,null);
+			DenseMatrix32F tmp = A.copy();
+			CommonOps_D32.mult(tmp,w_hat,A);
 
 			Vector3D_F32 w = twist.w;
 			A.data[0] += w.x*w.x*theta; A.data[1] += w.x*w.y*theta; A.data[2] += w.x*w.z*theta;
 			A.data[3] += w.y*w.x*theta; A.data[4] += w.y*w.y*theta; A.data[5] += w.y*w.z*theta;
 			A.data[6] += w.z*w.x*theta; A.data[7] += w.z*w.y*theta; A.data[8] += w.z*w.z*theta;
 
-			DenseMatrix64F y = new DenseMatrix64F(3,1);
+			DenseMatrix32F y = new DenseMatrix32F(3,1);
 			y.data[0] = motion.T.x;
 			y.data[1] = motion.T.y;
 			y.data[2] = motion.T.z;
 
-			DenseMatrix64F x = new DenseMatrix64F(3,1);
+			DenseMatrix32F x = new DenseMatrix32F(3,1);
 
-			CommonOps_D64.solve(A,y,x);
+			CommonOps_D32.solve(A,y,x);
 
 			twist.w.scale(rod.theta);
 			twist.v.x = (float) x.data[0];

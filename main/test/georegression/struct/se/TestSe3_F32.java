@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,7 +23,7 @@ import georegression.struct.InvertibleTransform;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.transform.se.SePointOps_F32;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DenseMatrix32F;
 import org.junit.Test;
 
 import java.util.Random;
@@ -42,7 +42,7 @@ public class TestSe3_F32 extends GenericInvertibleTransformTests_F32<Point3D_F32
 	 */
 	@Test
 	public void constructor_assign() {
-		DenseMatrix64F R = new DenseMatrix64F( 3, 3 );
+		DenseMatrix32F R = new DenseMatrix32F( 3, 3 );
 		Vector3D_F32 T = new Vector3D_F32( 1, 2, 3 );
 
 		Se3_F32 a = new Se3_F32( R, T, false );

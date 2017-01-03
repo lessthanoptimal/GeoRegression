@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -94,12 +94,12 @@ public class FitPlane3D_F64 {
 		if( !svd.decompose(A) )
 			return false;
 
-		/**/double sv[] = svd.getSingularValues();
+		double sv[] = svd.getSingularValues();
 
 		int smallestIndex = -1;
-		/**/double smallestValue = Double.MAX_VALUE;
+		double smallestValue = Double.MAX_VALUE;
 		for( int i = 0; i < 3; i++ ) {
-			/**/double v = sv[i];
+			double v = sv[i];
 			if( v < smallestValue ) {
 				smallestValue = v;
 				smallestIndex = i;

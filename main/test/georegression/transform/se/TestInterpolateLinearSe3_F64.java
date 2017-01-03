@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,7 +44,7 @@ public class TestInterpolateLinearSe3_F64 {
 
 		for( int i = 0; i < 10; i++ ) {
 			alg.interpolate(i/(double)9, b);
-			GeometryUnitTest.assertEquals(a, b, GrlConstants.DOUBLE_TEST_TOL, GrlConstants.DOUBLE_TEST_TOL*1000);
+			GeometryUnitTest.assertEquals(a, b, GrlConstants.TEST_F64, GrlConstants.TEST_F64 *1000);
 		}
 	}
 
@@ -65,10 +65,10 @@ public class TestInterpolateLinearSe3_F64 {
 			double expectedY = 2 + 2*t;
 			double expectedZ = 3 + 1*t;
 
-			assertEquals(expectedX,c.T.x, GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(expectedY,c.T.y, GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(expectedZ,c.T.z, GrlConstants.DOUBLE_TEST_TOL);
-			assertTrue(MatrixFeatures_D64.isIdentical(c.getR(),a.getR(),GrlConstants.DOUBLE_TEST_TOL));
+			assertEquals(expectedX,c.T.x, GrlConstants.TEST_F64);
+			assertEquals(expectedY,c.T.y, GrlConstants.TEST_F64);
+			assertEquals(expectedZ,c.T.z, GrlConstants.TEST_F64);
+			assertTrue(MatrixFeatures_D64.isIdentical(c.getR(),a.getR(),GrlConstants.TEST_F64));
 		}
 	}
 
@@ -89,13 +89,13 @@ public class TestInterpolateLinearSe3_F64 {
 
 			double euler[] = ConvertRotation3D_F64.matrixToEuler(c.getR(),EulerType.XYZ,(double[])null);
 
-			assertEquals(1,c.T.x, GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(2,c.T.y, GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(3,c.T.z, GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(1,c.T.x, GrlConstants.TEST_F64);
+			assertEquals(2,c.T.y, GrlConstants.TEST_F64);
+			assertEquals(3,c.T.z, GrlConstants.TEST_F64);
 
-			assertEquals(0.1 + t * 0.8, euler[0], GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(0,euler[1],GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(0,euler[2],GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0.1 + t * 0.8, euler[0], GrlConstants.TEST_F64);
+			assertEquals(0,euler[1],GrlConstants.TEST_F64);
+			assertEquals(0,euler[2],GrlConstants.TEST_F64);
 		}
 	}
 
@@ -115,13 +115,13 @@ public class TestInterpolateLinearSe3_F64 {
 
 			double euler[] = ConvertRotation3D_F64.matrixToEuler(c.getR(),EulerType.XYZ,(double[])null);
 
-			assertEquals(1+3*t,c.T.x, GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(2+2*t,c.T.y, GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(3+1*t,c.T.z, GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(1+3*t,c.T.x, GrlConstants.TEST_F64);
+			assertEquals(2+2*t,c.T.y, GrlConstants.TEST_F64);
+			assertEquals(3+1*t,c.T.z, GrlConstants.TEST_F64);
 
-			assertEquals(0.1+t*0.8,euler[0],GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(0,euler[1],GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(0,euler[2],GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0.1+t*0.8,euler[0],GrlConstants.TEST_F64);
+			assertEquals(0,euler[1],GrlConstants.TEST_F64);
+			assertEquals(0,euler[2],GrlConstants.TEST_F64);
 		}
 	}
 

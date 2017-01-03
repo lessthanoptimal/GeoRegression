@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -67,7 +67,7 @@ public abstract class GeneralMotionSe3Tests_F64 {
 
 			Se3_F64 foundSrcToDst = alg.getTransformSrcToDst();
 
-			checkTransform( src, dst, foundSrcToDst, GrlConstants.DOUBLE_TEST_TOL );
+			checkTransform( src, dst, foundSrcToDst, GrlConstants.TEST_F64);
 		}
 	}
 
@@ -96,7 +96,7 @@ public abstract class GeneralMotionSe3Tests_F64 {
 //			R.print();
 //			tranFound.getR().print();
 			
-			checkTransform( from, to, tranFound, GrlConstants.DOUBLE_TEST_TOL );
+			checkTransform( from, to, tranFound, GrlConstants.TEST_F64);
 		}
 	}
 

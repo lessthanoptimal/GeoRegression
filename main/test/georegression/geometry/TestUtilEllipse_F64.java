@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -91,11 +91,11 @@ public class TestUtilEllipse_F64 {
 
 		UtilEllipse_F64.convert(quad,found);
 
-		assertEquals(rotated.center.x,found.center.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(rotated.center.y,found.center.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(rotated.a,found.a, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(rotated.b,found.b, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(rotated.phi,found.phi, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(rotated.center.x,found.center.x, GrlConstants.TEST_F64);
+		assertEquals(rotated.center.y,found.center.y, GrlConstants.TEST_F64);
+		assertEquals(rotated.a,found.a, GrlConstants.TEST_F64);
+		assertEquals(rotated.b,found.b, GrlConstants.TEST_F64);
+		assertEquals(rotated.phi,found.phi, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -105,12 +105,12 @@ public class TestUtilEllipse_F64 {
 		Point2D_F64 p = UtilEllipse_F64.computePoint(0.45,rotated,null);
 
 		double eval = UtilEllipse_F64.evaluate(p.x,p.y,rotated);
-		assertEquals(1,eval, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1,eval, GrlConstants.TEST_F64);
 
 		EllipseQuadratic_F64 quad = new EllipseQuadratic_F64();
 		UtilEllipse_F64.convert(rotated,quad);
 		eval = UtilEllipse_F64.evaluate(p.x,p.y,quad);
-		assertEquals(0,eval, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,eval, GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class TestUtilEllipse_F64 {
 			double t = Math.PI*2*i/100.0;
 			Point2D_F64 p = UtilEllipse_F64.computePoint(t,rotated,null);
 			double eval = UtilEllipse_F64.evaluate(p.x,p.y,rotated);
-			assertEquals(1,eval, GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(1,eval, GrlConstants.TEST_F64);
 		}
 	}
 
@@ -139,7 +139,7 @@ public class TestUtilEllipse_F64 {
 			double t = GrlConstants.PI*2*i/100.0;
 			Point2D_F64 p = UtilEllipse_F64.computePoint(t,rotated,null);
 			double eval = UtilEllipse_F64.evaluate(p.x,p.y,quad);
-			assertEquals(0,eval, GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0,eval, GrlConstants.TEST_F64);
 		}
 	}
 
@@ -151,12 +151,12 @@ public class TestUtilEllipse_F64 {
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,3,2,GrlConstants.PId2);
 
 		Point2D_F64 p = UtilEllipse_F64.computePoint(0,rotated,null);
-		assertEquals(1.0,p.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2+3,p.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1.0,p.x, GrlConstants.TEST_F64);
+		assertEquals(2+3,p.y, GrlConstants.TEST_F64);
 
 		p = UtilEllipse_F64.computePoint(GrlConstants.PId2,rotated,null);
-		assertEquals(-1.0,p.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals( 2.0,p.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(-1.0,p.x, GrlConstants.TEST_F64);
+		assertEquals( 2.0,p.y, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -168,14 +168,14 @@ public class TestUtilEllipse_F64 {
 			Point2D_F64 p = UtilEllipse_F64.computePoint(t,rotated,null);
 			double found = UtilEllipse_F64.computeAngle(p,rotated);
 //			System.out.println(t+" "+found);
-			assertTrue(UtilAngle.dist(t, found) <= GrlConstants.DOUBLE_TEST_TOL);
+			assertTrue(UtilAngle.dist(t, found) <= GrlConstants.TEST_F64);
 		}
 	}
 
 
 	@Test
 	public void computeTangent_rotated() {
-		double delta = GrlConstants.DOUBLE_TEST_TOL;
+		double delta = GrlConstants.TEST_F64;
 
 		// axis aligned case
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0);
@@ -282,23 +282,23 @@ public class TestUtilEllipse_F64 {
 		LineGeneral2D_F64 lineB = UtilLine2D_F64.convert(pt,pointB,(LineGeneral2D_F64)null);
 
 		// the point should pass through both lines
-		assertEquals(0, lineA.evaluate(pt.x,pt.y), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0, lineB.evaluate(pt.x,pt.y), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, lineA.evaluate(pt.x,pt.y), GrlConstants.TEST_F64);
+		assertEquals(0, lineB.evaluate(pt.x,pt.y), GrlConstants.TEST_F64);
 
 		// if it's tangent there should only be one point of intersection
 		Point2D_F64 pA = new Point2D_F64();
 		Point2D_F64 pB = new Point2D_F64();
 
-		assertTrue( 0 < Intersection2D_F64.intersection(lineA,ellipse,pA,pB, GrlConstants.DOUBLE_TEST_TOL));
-		assertEquals(0,pA.distance(pB) , Math.sqrt(GrlConstants.DOUBLE_TEST_TOL) );
-		assertTrue( 0 < Intersection2D_F64.intersection(lineB,ellipse,pA,pB, GrlConstants.DOUBLE_TEST_TOL));
-		assertEquals(0,pA.distance(pB) , Math.sqrt(GrlConstants.DOUBLE_TEST_TOL*20.0) );
+		assertTrue( 0 < Intersection2D_F64.intersection(lineA,ellipse,pA,pB, GrlConstants.TEST_F64));
+		assertEquals(0,pA.distance(pB) , Math.sqrt(GrlConstants.TEST_F64) );
+		assertTrue( 0 < Intersection2D_F64.intersection(lineB,ellipse,pA,pB, GrlConstants.TEST_F64));
+		assertEquals(0,pA.distance(pB) , Math.sqrt(GrlConstants.TEST_F64 *20.0) );
 
 		// Make sure the lines are not identical
 		boolean idential = true;
-		idential &= Math.abs( lineA.A - lineB.A ) <= GrlConstants.DOUBLE_TEST_TOL;
-		idential &= Math.abs( lineA.B - lineB.B ) <= GrlConstants.DOUBLE_TEST_TOL;
-		idential &= Math.abs( lineA.C - lineB.C ) <= GrlConstants.DOUBLE_TEST_TOL;
+		idential &= Math.abs( lineA.A - lineB.A ) <= GrlConstants.TEST_F64;
+		idential &= Math.abs( lineA.B - lineB.B ) <= GrlConstants.TEST_F64;
+		idential &= Math.abs( lineA.C - lineB.C ) <= GrlConstants.TEST_F64;
 
 		assertFalse( idential );
 	}
@@ -338,19 +338,19 @@ public class TestUtilEllipse_F64 {
 		Point2D_F64 fooB3 = new Point2D_F64();
 
 		// see if it produces the same results as invoking the algorithm directly
-		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.DOUBLE_TEST_TOL,10);
+		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.TEST_F64,10);
 
 		alg.process(ellipseA,ellipseB, fooA0,fooA1,fooA2,fooA3, fooB0,fooB1,fooB2,fooB3);
 
-		assertEquals( 0, fooA0.distance(tangentA0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals( 0, fooA1.distance(tangentA1), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals( 0, fooA2.distance(tangentA2), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals( 0, fooA3.distance(tangentA3), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 0, fooA0.distance(tangentA0), GrlConstants.TEST_F64);
+		assertEquals( 0, fooA1.distance(tangentA1), GrlConstants.TEST_F64);
+		assertEquals( 0, fooA2.distance(tangentA2), GrlConstants.TEST_F64);
+		assertEquals( 0, fooA3.distance(tangentA3), GrlConstants.TEST_F64);
 
-		assertEquals( 0, fooB0.distance(tangentB0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals( 0, fooB1.distance(tangentB1), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals( 0, fooB2.distance(tangentB2), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals( 0, fooB3.distance(tangentB3), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 0, fooB0.distance(tangentB0), GrlConstants.TEST_F64);
+		assertEquals( 0, fooB1.distance(tangentB1), GrlConstants.TEST_F64);
+		assertEquals( 0, fooB2.distance(tangentB2), GrlConstants.TEST_F64);
+		assertEquals( 0, fooB3.distance(tangentB3), GrlConstants.TEST_F64);
 
 	}
 }

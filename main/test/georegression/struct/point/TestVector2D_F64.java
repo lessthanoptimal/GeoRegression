@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,8 +36,8 @@ public class TestVector2D_F64 {
 		Vector2D_F64 out = new Vector2D_F64();
 		out.minus(a,b);
 
-		assertEquals(a.x-b.x,out.x,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(a.y-b.y,out.y,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(a.x-b.x,out.x,GrlConstants.TEST_F64);
+		assertEquals(a.y-b.y,out.y,GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class TestVector2D_F64 {
 		Vector2D_F64 b = new Vector2D_F64( 3, 4 );
 
 		double found = a.dot( b );
-		assertEquals( 11, found, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( 11, found, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class TestVector2D_F64 {
 
 		Vector2D_F64 a = new Vector2D_F64(1,0);
 
-		assertEquals(Math.PI/2.0,a.acute(new Vector2D_F64(0, 1)),GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(Math.PI,a.acute(new Vector2D_F64(-1, 0)),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(Math.PI/2.0,a.acute(new Vector2D_F64(0, 1)),GrlConstants.TEST_F64);
+		assertEquals(Math.PI,a.acute(new Vector2D_F64(-1, 0)),GrlConstants.TEST_F64);
 	}
 }

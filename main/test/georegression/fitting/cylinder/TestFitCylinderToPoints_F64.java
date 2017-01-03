@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -89,11 +89,11 @@ public class TestFitCylinderToPoints_F64 {
 	}
 
 	public static void checkEquivalent( Cylinder3D_F64 a , Cylinder3D_F64 b ) {
-		assertEquals(a.radius,b.radius,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(a.radius,b.radius,GrlConstants.TEST_F64);
 
 		// the points should be on the other line
-		assertEquals(0, Distance3D_F64.distance(a.line, b.line.p),GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0, Distance3D_F64.distance(b.line,a.line.p),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, Distance3D_F64.distance(a.line, b.line.p),GrlConstants.TEST_F64);
+		assertEquals(0, Distance3D_F64.distance(b.line,a.line.p),GrlConstants.TEST_F64);
 
 		// slopes should be the same
 		double dot = a.line.slope.dot(b.line.slope);
@@ -105,8 +105,8 @@ public class TestFitCylinderToPoints_F64 {
 			angle = Math.PI;
 		else
 			angle = Math.acos( tmp );
-		assertTrue( Math.abs(angle) < GrlConstants.DOUBLE_TEST_TOL ||
-				Math.abs(angle-Math.PI) < GrlConstants.DOUBLE_TEST_TOL);
+		assertTrue( Math.abs(angle) < GrlConstants.TEST_F64 ||
+				Math.abs(angle-Math.PI) < GrlConstants.TEST_F64);
 	}
 
 	public static Point3D_F64 createPt( Cylinder3D_F64 cylinder , double h , double theta ) {
@@ -117,7 +117,7 @@ public class TestFitCylinderToPoints_F64 {
 
 		Vector3D_F64 axisZ = new Vector3D_F64(0,0,1);
 		Vector3D_F64 cross = axisZ.cross(cylinder.line.slope);
-		if( Math.abs(cross.norm()) < GrlConstants.DOUBLE_TEST_TOL  ) {
+		if( Math.abs(cross.norm()) < GrlConstants.TEST_F64) {
 			cross.set(0,0,1);
 		} else {
 			cross.normalize();

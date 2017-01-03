@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,7 +26,7 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.shapes.Cylinder3D_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DenseMatrix32F;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -89,11 +89,11 @@ public class TestFitCylinderToPoints_F32 {
 	}
 
 	public static void checkEquivalent( Cylinder3D_F32 a , Cylinder3D_F32 b ) {
-		assertEquals(a.radius,b.radius,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(a.radius,b.radius,GrlConstants.TEST_F32);
 
 		// the points should be on the other line
-		assertEquals(0, Distance3D_F32.distance(a.line, b.line.p),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0, Distance3D_F32.distance(b.line,a.line.p),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0, Distance3D_F32.distance(a.line, b.line.p),GrlConstants.TEST_F32);
+		assertEquals(0, Distance3D_F32.distance(b.line,a.line.p),GrlConstants.TEST_F32);
 
 		// slopes should be the same
 		float dot = a.line.slope.dot(b.line.slope);
@@ -105,8 +105,8 @@ public class TestFitCylinderToPoints_F32 {
 			angle = (float)Math.PI;
 		else
 			angle = (float)Math.acos( tmp );
-		assertTrue( (float)Math.abs(angle) < GrlConstants.FLOAT_TEST_TOL ||
-				(float)Math.abs(angle-Math.PI) < GrlConstants.FLOAT_TEST_TOL);
+		assertTrue( (float)Math.abs(angle) < GrlConstants.TEST_F32 ||
+				(float)Math.abs(angle-Math.PI) < GrlConstants.TEST_F32);
 	}
 
 	public static Point3D_F32 createPt( Cylinder3D_F32 cylinder , float h , float theta ) {
@@ -117,7 +117,7 @@ public class TestFitCylinderToPoints_F32 {
 
 		Vector3D_F32 axisZ = new Vector3D_F32(0,0,1);
 		Vector3D_F32 cross = axisZ.cross(cylinder.line.slope);
-		if( (float)Math.abs(cross.norm()) < GrlConstants.FLOAT_TEST_TOL  ) {
+		if( (float)Math.abs(cross.norm()) < GrlConstants.TEST_F32) {
 			cross.set(0,0,1);
 		} else {
 			cross.normalize();
@@ -127,7 +127,7 @@ public class TestFitCylinderToPoints_F32 {
 		angle = (float)Math.acos( angle / (cylinder.line.slope.norm()));
 
 		Rodrigues_F32 rod = new Rodrigues_F32(angle,cross);
-		DenseMatrix64F R = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
+		DenseMatrix32F R = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
 
 		GeometryMath_F32.mult(R, p, p);
 		p.x += cylinder.line.p.x;

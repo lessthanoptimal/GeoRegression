@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -187,7 +187,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 
 		for (int i = 0; i < expected.length; i++) {
 			for (int j = 0; j < output.size(); j++) {
-				if( expected[i].distance2(output.get(j)) <= GrlConstants.DOUBLE_TEST_TOL ) {
+				if( expected[i].distance2(output.get(j)) <= GrlConstants.TEST_F64) {
 					count[i]++;
 				}
 			}

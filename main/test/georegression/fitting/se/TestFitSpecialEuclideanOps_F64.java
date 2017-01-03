@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -96,7 +96,7 @@ public class TestFitSpecialEuclideanOps_F64 {
 		Se3_F64 found = FitSpecialEuclideanOps_F64.fitPoints3D( from , to );
 
 		// the exact same algorithm should be called and they should produce the same results
-		assertTrue( MatrixFeatures_D64.isIdentical( expected.getR() , found.getR() , GrlConstants.DOUBLE_TEST_TOL ));
-		assertTrue( expected.getT().isIdentical(found.getT() , GrlConstants.DOUBLE_TEST_TOL));
+		assertTrue( MatrixFeatures_D64.isIdentical( expected.getR() , found.getR() , GrlConstants.TEST_F64));
+		assertTrue( expected.getT().isIdentical(found.getT() , GrlConstants.TEST_F64));
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -415,12 +415,12 @@ public class GeometryMath_F64 {
 			result = new DenseMatrix64F(3,3);
 		}
 
-		/**/double x = A.x;
-		/**/double y = A.y;
+		double x = A.x;
+		double y = A.y;
 
-		/**/double a11 = M.data[0]; /**/double a12 = M.data[1]; /**/double a13 = M.data[2];
-		/**/double a21 = M.data[3]; /**/double a22 = M.data[4]; /**/double a23 = M.data[5];
-		/**/double a31 = M.data[6]; /**/double a32 = M.data[7]; /**/double a33 = M.data[8];
+		double a11 = M.data[0]; double a12 = M.data[1]; double a13 = M.data[2];
+		double a21 = M.data[3]; double a22 = M.data[4]; double a23 = M.data[5];
+		double a31 = M.data[6]; double a32 = M.data[7]; double a33 = M.data[8];
 
 		result.data[0] = -a21 + a31*y;
 		result.data[1] = -a22 + a32*y;
@@ -455,13 +455,13 @@ public class GeometryMath_F64 {
 			result = new DenseMatrix64F(3,3);
 		}
 
-		/**/double x = A.x;
-		/**/double y = A.y;
-		/**/double z = A.z;
+		double x = A.x;
+		double y = A.y;
+		double z = A.z;
 
-		/**/double a11 = M.data[0]; /**/double a12 = M.data[1]; /**/double a13 = M.data[2];
-		/**/double a21 = M.data[3]; /**/double a22 = M.data[4]; /**/double a23 = M.data[5];
-		/**/double a31 = M.data[6]; /**/double a32 = M.data[7]; /**/double a33 = M.data[8];
+		double a11 = M.data[0]; double a12 = M.data[1]; double a13 = M.data[2];
+		double a21 = M.data[3]; double a22 = M.data[4]; double a23 = M.data[5];
+		double a31 = M.data[6]; double a32 = M.data[7]; double a33 = M.data[8];
 
 		result.data[0] = -a21*z + a31*y;
 		result.data[1] = -a22*z + a32*y;

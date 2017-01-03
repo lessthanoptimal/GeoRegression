@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,7 +19,6 @@
 package georegression.metric;
 
 import georegression.geometry.UtilEllipse_F64;
-import georegression.geometry.UtilLine2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
@@ -122,11 +121,11 @@ public class TestIntersection2D_F64 {
 
 		assertFalse(Intersection2D_F64.contains(ellipse,0,0));
 		assertTrue(Intersection2D_F64.contains(ellipse,5,6));
-		assertTrue(Intersection2D_F64.contains(ellipse,5,6+4 - GrlConstants.DOUBLE_TEST_TOL));
-		assertTrue(Intersection2D_F64.contains(ellipse,5+3.0 - GrlConstants.DOUBLE_TEST_TOL,6));
+		assertTrue(Intersection2D_F64.contains(ellipse,5,6+4 - GrlConstants.TEST_F64));
+		assertTrue(Intersection2D_F64.contains(ellipse,5+3.0 - GrlConstants.TEST_F64,6));
 
-		assertFalse(Intersection2D_F64.contains(ellipse,5,6+4.0 + GrlConstants.DOUBLE_TEST_TOL));
-		assertFalse(Intersection2D_F64.contains(ellipse,5+3 + GrlConstants.DOUBLE_TEST_TOL,6));
+		assertFalse(Intersection2D_F64.contains(ellipse,5,6+4.0 + GrlConstants.TEST_F64));
+		assertFalse(Intersection2D_F64.contains(ellipse,5+3 + GrlConstants.TEST_F64,6));
 	}
 
 	@Test
@@ -175,8 +174,8 @@ public class TestIntersection2D_F64 {
 		if( found == null )
 			assertTrue( expected == null );
 		else {
-			assertEquals( found.getX(), expected.getX(), GrlConstants.DOUBLE_TEST_TOL );
-			assertEquals( found.getY(), expected.getY(), GrlConstants.DOUBLE_TEST_TOL );
+			assertEquals( found.getX(), expected.getX(), GrlConstants.TEST_F64);
+			assertEquals( found.getY(), expected.getY(), GrlConstants.TEST_F64);
 		}
 	}
 
@@ -225,13 +224,13 @@ public class TestIntersection2D_F64 {
 		paraLine.setSlope( 0, 1 );
 		paraLine.setAngle( paraLine.getAngle() + tran.getYaw() );
 		double dist = Intersection2D_F64.intersection( paraLine, target );
-		assertEquals( 1, dist, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1, dist, GrlConstants.TEST_F64);
 
 		// should hit dead center, but negative
 		paraLine.setSlope( 0, -1 );
 		paraLine.setAngle( paraLine.getAngle() + tran.getYaw() );
 		dist = Intersection2D_F64.intersection( paraLine, target );
-		assertEquals( -1, dist, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -1, dist, GrlConstants.TEST_F64);
 
 		// should miss it to the left
 		paraLine.setSlope( -1.1, 1 );
@@ -252,8 +251,8 @@ public class TestIntersection2D_F64 {
 		LineParametric2D_F64 b = new LineParametric2D_F64(-2,-4,0,1);
 
 		Point2D_F64 found = Intersection2D_F64.intersection(a,b,null);
-		assertEquals( -2, found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3, found.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( -2, found.x, GrlConstants.TEST_F64);
+		assertEquals(3, found.y, GrlConstants.TEST_F64);
 
 		LineParametric2D_F64 c = new LineParametric2D_F64(-8,2,0,1);
 
@@ -269,8 +268,8 @@ public class TestIntersection2D_F64 {
 
 		Point2D_F64 found = new Point2D_F64(2+t,3);
 
-		assertEquals( -2, found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3, found.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( -2, found.x, GrlConstants.TEST_F64);
+		assertEquals(3, found.y, GrlConstants.TEST_F64);
 
 		LineParametric2D_F64 c = new LineParametric2D_F64(-8,2,0,1);
 
@@ -284,16 +283,16 @@ public class TestIntersection2D_F64 {
 		LineGeneral2D_F64 b = new LineGeneral2D_F64(2,-1,0.5);
 
 		Point3D_F64 found = Intersection2D_F64.intersection(a,b,(Point3D_F64)null);
-		assertEquals(0,a.A*found.x/found.z+a.B*found.y/found.z+a.C, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0,a.A*found.x+a.B*found.y+a.C*found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,a.A*found.x/found.z+a.B*found.y/found.z+a.C, GrlConstants.TEST_F64);
+		assertEquals(0,a.A*found.x+a.B*found.y+a.C*found.z, GrlConstants.TEST_F64);
 
 		// give it two parallel lines
 		a = new LineGeneral2D_F64(1,2,3);
 		b = new LineGeneral2D_F64(1,2,0.5);
 
 		Intersection2D_F64.intersection(a, b, found);
-		assertEquals(0,found.z,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0, a.A * found.x + a.B * found.y + a.C * found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,found.z,GrlConstants.TEST_F64);
+		assertEquals(0, a.A * found.x + a.B * found.y + a.C * found.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -303,7 +302,7 @@ public class TestIntersection2D_F64 {
 		LineGeneral2D_F64 b = new LineGeneral2D_F64(2,-1,0.5);
 
 		Point2D_F64 found = Intersection2D_F64.intersection(a,b,(Point2D_F64)null);
-		assertEquals(0,a.A*found.x+a.B*found.y+a.C, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,a.A*found.x+a.B*found.y+a.C, GrlConstants.TEST_F64);
 
 		// give it two parallel lines
 		a = new LineGeneral2D_F64(1,2,3);
@@ -381,10 +380,10 @@ public class TestIntersection2D_F64 {
 		Rectangle2D_F64 found = new Rectangle2D_F64();
 		assertTrue(Intersection2D_F64.intersection(a, b, found));
 
-		assertEquals(expected.p0.x,found.p0.x,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.p1.x,found.p1.x,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.p0.y,found.p0.y,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.p1.y,found.p1.y,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected.p0.x,found.p0.x,GrlConstants.TEST_F64);
+		assertEquals(expected.p1.x,found.p1.x,GrlConstants.TEST_F64);
+		assertEquals(expected.p0.y,found.p0.y,GrlConstants.TEST_F64);
+		assertEquals(expected.p1.y,found.p1.y,GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -487,7 +486,7 @@ public class TestIntersection2D_F64 {
 	}
 
 	private void check( Rectangle2D_F64 a , Rectangle2D_F64 b , double expected ) {
-		assertEquals(expected,Intersection2D_F64.intersectionArea(a,b),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected,Intersection2D_F64.intersectionArea(a,b),GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -546,11 +545,11 @@ public class TestIntersection2D_F64 {
 		assertEquals(2,Intersection2D_F64.intersection(line,ellipse,a,b, -1));
 
 		// use the line and ellipse definition to check solution
-		assertEquals(0, line.evaluate(a.x, a.y), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0, line.evaluate(b.x, b.y), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, line.evaluate(a.x, a.y), GrlConstants.TEST_F64);
+		assertEquals(0, line.evaluate(b.x, b.y), GrlConstants.TEST_F64);
 
-		assertEquals(1.0, UtilEllipse_F64.evaluate(a.x, a.y, ellipse), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(1.0, UtilEllipse_F64.evaluate(b.x, b.y, ellipse), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1.0, UtilEllipse_F64.evaluate(a.x, a.y, ellipse), GrlConstants.TEST_F64);
+		assertEquals(1.0, UtilEllipse_F64.evaluate(b.x, b.y, ellipse), GrlConstants.TEST_F64);
 	}
 
 	private void checkSingleIntersection( LineGeneral2D_F64 line , EllipseRotated_F64 ellipse ) {
@@ -559,12 +558,12 @@ public class TestIntersection2D_F64 {
 
 		assertEquals(1,Intersection2D_F64.intersection(line,ellipse,a,b, -1));
 
-		assertEquals(0, a.distance(b), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, a.distance(b), GrlConstants.TEST_F64);
 
 		// use the line and ellipse definition to check solution
-		assertEquals(0, line.evaluate(a.x, a.y), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, line.evaluate(a.x, a.y), GrlConstants.TEST_F64);
 
-		assertEquals(1.0, UtilEllipse_F64.evaluate(a.x, a.y, ellipse), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1.0, UtilEllipse_F64.evaluate(a.x, a.y, ellipse), GrlConstants.TEST_F64);
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,13 +19,13 @@
 package georegression.transform.se;
 
 import georegression.struct.so.Quaternion_F32;
-import org.ejml.alg.fixed.FixedOps3_D64;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.data.FixedMatrix3x3_64F;
-import org.ejml.factory.DecompositionFactory_D64;
-import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
-import org.ejml.ops.CommonOps_D64;
-import org.ejml.ops.ConvertMatrixType_F64;
+import org.ejml.alg.fixed.FixedOps3_D32;
+import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.FixedMatrix3x3_32F;
+import org.ejml.factory.DecompositionFactory_D32;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition_F32;
+import org.ejml.ops.CommonOps_D32;
+import org.ejml.ops.ConvertMatrixStruct_F32;
 
 import java.util.List;
 
@@ -41,12 +41,12 @@ import java.util.List;
  */
 public class AverageRotationMatrix_F32 {
 
-	DenseMatrix64F M = new DenseMatrix64F(3,3);
-	FixedMatrix3x3_64F F = new FixedMatrix3x3_64F();
+	DenseMatrix32F M = new DenseMatrix32F(3,3);
+	FixedMatrix3x3_32F F = new FixedMatrix3x3_32F();
 
-	SingularValueDecomposition_F64<DenseMatrix64F> svd = DecompositionFactory_D64.svd(3,3,true,true,true);
+	SingularValueDecomposition_F32<DenseMatrix32F> svd = DecompositionFactory_D32.svd(3,3,true,true,true);
 
-	public boolean process(List<DenseMatrix64F> list , DenseMatrix64F average ) {
+	public boolean process(List<DenseMatrix32F> list , DenseMatrix32F average ) {
 
 		if( list.isEmpty() )
 			throw new IllegalArgumentException("Input list is empty");
@@ -56,7 +56,7 @@ public class AverageRotationMatrix_F32 {
 		M.zero();
 
 		for (int i = 0; i < list.size(); i++) {
-			DenseMatrix64F m = list.get(i);
+			DenseMatrix32F m = list.get(i);
 
 			// unroll to make it faster.  M = M + m
 			// row 0
@@ -67,33 +67,33 @@ public class AverageRotationMatrix_F32 {
 			M.data[6]  += m.data[6]; M.data[7]  += m.data[7]; M.data[8]  += m.data[8];
 		}
 
-		CommonOps_D64.divide(M,list.size());
+		CommonOps_D32.divide(M,list.size());
 
 		if( !svd.decompose(M) )
 			return false;
 
-		CommonOps_D64.multTransB(svd.getU(null,false),svd.getV(null,false),average);
+		CommonOps_D32.multTransB(svd.getU(null,false),svd.getV(null,false),average);
 
 		// determinant should be +1
-		/**/double det = CommonOps_D64.det(average);
+		float det = CommonOps_D32.det(average);
 
 		if( det < 0 )
-			CommonOps_D64.scale(-1,average);
+			CommonOps_D32.scale(-1,average);
 
 		return true;
 	}
 
-	public boolean process(List<FixedMatrix3x3_64F> list , FixedMatrix3x3_64F average ) {
+	public boolean process(List<FixedMatrix3x3_32F> list , FixedMatrix3x3_32F average ) {
 
 		if( list.isEmpty() )
 			throw new IllegalArgumentException("Input list is empty");
 		if( average == null )
 			throw new IllegalArgumentException("average is null");
 
-		FixedOps3_D64.fill(F,0);
+		FixedOps3_D32.fill(F,0);
 
 		for (int i = 0; i < list.size(); i++) {
-			FixedMatrix3x3_64F m = list.get(i);
+			FixedMatrix3x3_32F m = list.get(i);
 
 			// unroll to make it faster.  M = M + m
 			// row 0
@@ -104,21 +104,21 @@ public class AverageRotationMatrix_F32 {
 			F.a31  += m.a31; F.a32  += m.a32; F.a33  += m.a33;
 		}
 
-		FixedOps3_D64.divide(F,list.size());
+		FixedOps3_D32.divide(F,list.size());
 
-		ConvertMatrixType_F64.convert(F,M);
+		ConvertMatrixStruct_F32.convert(F,M);
 		if( !svd.decompose(M) )
 			return false;
 
-		CommonOps_D64.multTransB(svd.getU(null,false),svd.getV(null,false),M);
+		CommonOps_D32.multTransB(svd.getU(null,false),svd.getV(null,false),M);
 
 		// determinant should be +1
-		/**/double det = CommonOps_D64.det(M);
+		float det = CommonOps_D32.det(M);
 
 		if( det < 0 )
-			CommonOps_D64.scale(-1,M);
+			CommonOps_D32.scale(-1,M);
 
-		ConvertMatrixType_F64.convert(M,average);
+		ConvertMatrixStruct_F32.convert(M,average);
 
 		return true;
 	}

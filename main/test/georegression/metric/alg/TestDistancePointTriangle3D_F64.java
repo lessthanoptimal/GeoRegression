@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -60,8 +60,8 @@ public class TestDistancePointTriangle3D_F64 {
 
 	@Test
 	public void region0() {
-		assertEquals(2, distance(0.1, 0.2, 2), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2, distance(0.1, 0.2, -2), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2, distance(0.1, 0.2, 2), GrlConstants.TEST_F64);
+		assertEquals(2, distance(0.1, 0.2, -2), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -69,8 +69,8 @@ public class TestDistancePointTriangle3D_F64 {
 		Point3D_F64 P = new Point3D_F64(2,1,2);
 		double d = Distance3D_F64.distance(L12,P);
 
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -78,8 +78,8 @@ public class TestDistancePointTriangle3D_F64 {
 		Point3D_F64 P = new Point3D_F64(-0.2,7.2,2);
 		double d = P1.distance(P);
 
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -87,8 +87,8 @@ public class TestDistancePointTriangle3D_F64 {
 		Point3D_F64 P = new Point3D_F64(-0.1,1.5,0);
 		double d = Distance3D_F64.distance(L01,P);
 
-		assertEquals(d, distance(P.x, P.y, P.z), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(d, distance(P.x, P.y, P.z), GrlConstants.TEST_F64);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -96,8 +96,8 @@ public class TestDistancePointTriangle3D_F64 {
 		Point3D_F64 P = new Point3D_F64(-0.2,-0.5,2);
 		double d = P0.distance(P);
 
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -105,8 +105,8 @@ public class TestDistancePointTriangle3D_F64 {
 		Point3D_F64 P = new Point3D_F64(0.6,0.5,2);
 		double d = Distance3D_F64.distance(L20,P);
 
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -114,8 +114,8 @@ public class TestDistancePointTriangle3D_F64 {
 		Point3D_F64 P = new Point3D_F64(1.5,1,2);
 		double d = P2.distance(P);
 
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
 	public double distance( double x , double y , double z ) {

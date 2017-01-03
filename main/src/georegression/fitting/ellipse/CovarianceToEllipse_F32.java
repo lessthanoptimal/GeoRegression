@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,10 +19,10 @@
 package georegression.fitting.ellipse;
 
 import georegression.struct.point.Vector2D_F32;
-import org.ejml.data.Complex64F;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory_D64;
-import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
+import org.ejml.data.Complex32F;
+import org.ejml.data.DenseMatrix32F;
+import org.ejml.factory.DecompositionFactory_D32;
+import org.ejml.interfaces.decomposition.EigenDecomposition_F32;
 
 /**
  * Computes a containment ellipse given a covariance
@@ -31,8 +31,8 @@ import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
  */
 public class CovarianceToEllipse_F32 {
 
-	EigenDecomposition_F64<DenseMatrix64F> eigen = DecompositionFactory_D64.eig(2, true);
-	DenseMatrix64F Q = new DenseMatrix64F(2,2);
+	EigenDecomposition_F32<DenseMatrix32F> eigen = DecompositionFactory_D32.eig(2, true);
+	DenseMatrix32F Q = new DenseMatrix32F(2,2);
 
 	// major axis
 	Vector2D_F32 x = new Vector2D_F32();
@@ -67,10 +67,10 @@ public class CovarianceToEllipse_F32 {
 			return false;
 		}
 
-		Complex64F v0 = eigen.getEigenvalue(0);
-		Complex64F v1 = eigen.getEigenvalue(1);
+		Complex32F v0 = eigen.getEigenvalue(0);
+		Complex32F v1 = eigen.getEigenvalue(1);
 
-		DenseMatrix64F a0,a1;
+		DenseMatrix32F a0,a1;
 
 		if( v0.getMagnitude2() > v1.getMagnitude2() ) {
 			a0 = eigen.getEigenVector(0);

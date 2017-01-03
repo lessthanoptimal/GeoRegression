@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ import org.ejml.data.FixedMatrix3x3_64F;
 import org.ejml.factory.DecompositionFactory_D64;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 import org.ejml.ops.CommonOps_D64;
-import org.ejml.ops.ConvertMatrixType_F64;
+import org.ejml.ops.ConvertMatrixStruct_F64;
 
 import java.util.List;
 
@@ -75,7 +75,7 @@ public class AverageRotationMatrix_F64 {
 		CommonOps_D64.multTransB(svd.getU(null,false),svd.getV(null,false),average);
 
 		// determinant should be +1
-		/**/double det = CommonOps_D64.det(average);
+		double det = CommonOps_D64.det(average);
 
 		if( det < 0 )
 			CommonOps_D64.scale(-1,average);
@@ -106,19 +106,19 @@ public class AverageRotationMatrix_F64 {
 
 		FixedOps3_D64.divide(F,list.size());
 
-		ConvertMatrixType_F64.convert(F,M);
+		ConvertMatrixStruct_F64.convert(F,M);
 		if( !svd.decompose(M) )
 			return false;
 
 		CommonOps_D64.multTransB(svd.getU(null,false),svd.getV(null,false),M);
 
 		// determinant should be +1
-		/**/double det = CommonOps_D64.det(M);
+		double det = CommonOps_D64.det(M);
 
 		if( det < 0 )
 			CommonOps_D64.scale(-1,M);
 
-		ConvertMatrixType_F64.convert(M,average);
+		ConvertMatrixStruct_F64.convert(M,average);
 
 		return true;
 	}

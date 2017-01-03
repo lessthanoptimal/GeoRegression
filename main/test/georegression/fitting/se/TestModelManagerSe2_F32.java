@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,10 +46,10 @@ public class TestModelManagerSe2_F32 {
 
 		alg.copyModel(model,found);
 
-		assertEquals(model.T.x,found.T.x,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.T.y,found.T.y,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.c,found.c,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.s,found.s,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(model.T.x,found.T.x,GrlConstants.TEST_F32);
+		assertEquals(model.T.y,found.T.y,GrlConstants.TEST_F32);
+		assertEquals(model.c,found.c,GrlConstants.TEST_F32);
+		assertEquals(model.s,found.s,GrlConstants.TEST_F32);
 
 	}
 

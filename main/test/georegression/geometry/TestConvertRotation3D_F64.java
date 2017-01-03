@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -57,7 +57,7 @@ public class TestConvertRotation3D_F64 {
 
 		DenseMatrix64F rod = ConvertRotation3D_F64.rodriguesToMatrix( r, null );
 
-		assertTrue( MatrixFeatures_D64.isIdentical( rotZ, rod, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( MatrixFeatures_D64.isIdentical( rotZ, rod, GrlConstants.TEST_F64) );
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class TestConvertRotation3D_F64 {
 
 		DenseMatrix64F difference = new DenseMatrix64F(3,3);
 		CommonOps_D64.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures_D64.isIdentity(difference,Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
+		assertTrue(MatrixFeatures_D64.isIdentity(difference, GrlConstants.TEST_SQ_F64));
 	}
 
 	@Test
@@ -91,7 +91,7 @@ public class TestConvertRotation3D_F64 {
 		DenseMatrix64F C = new DenseMatrix64F(3,3);
 		CommonOps_D64.multTransA(A,B,C);
 
-		assertTrue(MatrixFeatures_D64.isIdentity(C, GrlConstants.DOUBLE_TEST_TOL));
+		assertTrue(MatrixFeatures_D64.isIdentity(C, GrlConstants.TEST_F64));
 	}
 
 	@Test
@@ -108,7 +108,7 @@ public class TestConvertRotation3D_F64 {
 		DenseMatrix64F C = new DenseMatrix64F(3,3);
 		CommonOps_D64.multTransA(A,B,C);
 
-		assertTrue(MatrixFeatures_D64.isIdentity(C, GrlConstants.DOUBLE_TEST_TOL));
+		assertTrue(MatrixFeatures_D64.isIdentity(C, GrlConstants.TEST_F64));
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class TestConvertRotation3D_F64 {
 
 		DenseMatrix64F difference = new DenseMatrix64F(3,3);
 		CommonOps_D64.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures_D64.isIdentity(difference,Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
+		assertTrue(MatrixFeatures_D64.isIdentity(difference, GrlConstants.TEST_SQ_F64));
 	}
 
 	@Test
@@ -173,7 +173,7 @@ public class TestConvertRotation3D_F64 {
 		DenseMatrix64F result = new DenseMatrix64F(3,3);
 		CommonOps_D64.multTransB(R,found,result);
 
-		assertTrue(MatrixFeatures_D64.isIdentity(result,Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
+		assertTrue(MatrixFeatures_D64.isIdentity(result, GrlConstants.TEST_SQ_F64));
 	}
 
 	@Test
@@ -188,7 +188,7 @@ public class TestConvertRotation3D_F64 {
 		}
 
 		// see how well it handles underflow
-		checkMatrixToRodrigues( new Rodrigues_F64( 50*GrlConstants.DOUBLE_TEST_TOL, -1, -1, -1 ) );
+		checkMatrixToRodrigues( new Rodrigues_F64( 50*GrlConstants.TEST_F64, -1, -1, -1 ) );
 
 		// test known pathological cases
 		checkMatrixToRodrigues( new Rodrigues_F64( 0, 1, 1, 1 ), new Rodrigues_F64( 0, 1, 0, 0 ) );
@@ -218,11 +218,11 @@ public class TestConvertRotation3D_F64 {
 
 		// if the lines are parallel the dot product will be 1 or -1
 		double dot = found.unitAxisRotation.dot( rodInput.unitAxisRotation);
-		assertEquals( 1, Math.abs( dot ), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1, Math.abs( dot ), GrlConstants.TEST_F64);
 
 		// if the rotation vector is in the opposite direction then the found angle will be
 		// the negative of the input.  both are equivalent
-		assertTrue(UtilAngle.dist(rodInput.theta * dot, found.theta) <= GrlConstants.DOUBLE_TEST_TOL);
+		assertTrue(UtilAngle.dist(rodInput.theta * dot, found.theta) <= GrlConstants.TEST_F64);
 	}
 
 	private void checkMatrixToRodrigues( double eulerX , double eulerY , double eulerZ ) {
@@ -230,7 +230,7 @@ public class TestConvertRotation3D_F64 {
 		DenseMatrix64F M = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,eulerX,eulerY,eulerZ,null);
 		Rodrigues_F64 rod = ConvertRotation3D_F64.matrixToRodrigues(M, (Rodrigues_F64)null);
 		DenseMatrix64F found = ConvertRotation3D_F64.rodriguesToMatrix(rod,null);
-		assertTrue(MatrixFeatures_D64.isIdentical(M,found,1e-6));
+		assertTrue(MatrixFeatures_D64.isIdentical(M,found,GrlConstants.TEST_F64));
 	}
 
 	private void checkMatrixToRodrigues( Rodrigues_F64 input,
@@ -243,11 +243,11 @@ public class TestConvertRotation3D_F64 {
 		Rodrigues_F64 found = ConvertRotation3D_F64.matrixToRodrigues( rod, (Rodrigues_F64)null );
 
 		// if the lines are parallel the dot product will be 1 or -1
-		assertEquals( 1, Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 1, Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), GrlConstants.TEST_F64);
 
 		// if the rotation vector is in the opposite direction then the found angle will be
 		// the negative of the input.  both are equivalent
-		assertEquals( expected.theta, found.theta, 10.0*GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.theta, found.theta, 10.0*GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -262,7 +262,7 @@ public class TestConvertRotation3D_F64 {
 
 		Rodrigues_F64 found = ConvertRotation3D_F64.matrixToRodrigues( R, (Rodrigues_F64)null );
 
-		assertEquals(0,found.getTheta(),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,found.getTheta(),GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -274,7 +274,7 @@ public class TestConvertRotation3D_F64 {
 
 		Rodrigues_F64 found = ConvertRotation3D_F64.matrixToRodrigues( R, (Rodrigues_F64)null );
 
-		assertEquals(0,found.getTheta(),50*GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(0,found.getTheta(),50*GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -287,8 +287,8 @@ public class TestConvertRotation3D_F64 {
 		GeometryMath_F64.mult( R, pt_y, pt_y );
 		GeometryMath_F64.mult( R, pt_z, pt_z );
 
-		assertTrue( pt_y.isIdentical( 0, 0, 1.5, GrlConstants.DOUBLE_TEST_TOL ) );
-		assertTrue( pt_z.isIdentical( 0, -1.5, 0, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( pt_y.isIdentical( 0, 0, 1.5, GrlConstants.TEST_F64) );
+		assertTrue( pt_z.isIdentical( 0, -1.5, 0, GrlConstants.TEST_F64) );
 	}
 
 	@Test
@@ -301,8 +301,8 @@ public class TestConvertRotation3D_F64 {
 		GeometryMath_F64.mult( R, pt_x, pt_x );
 		GeometryMath_F64.mult( R, pt_z, pt_z );
 
-		assertTrue( pt_x.isIdentical( 0, 0, -1.5, GrlConstants.DOUBLE_TEST_TOL ) );
-		assertTrue( pt_z.isIdentical( 1.5, 0, 0, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( pt_x.isIdentical( 0, 0, -1.5, GrlConstants.TEST_F64) );
+		assertTrue( pt_z.isIdentical( 1.5, 0, 0, GrlConstants.TEST_F64) );
 	}
 
 	@Test
@@ -315,8 +315,8 @@ public class TestConvertRotation3D_F64 {
 		GeometryMath_F64.mult( R, pt_x, pt_x );
 		GeometryMath_F64.mult( R, pt_y, pt_y );
 
-		assertTrue( pt_x.isIdentical( 0, 1.5, 0, GrlConstants.DOUBLE_TEST_TOL ) );
-		assertTrue( pt_y.isIdentical( -1.5, 0, 0, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( pt_x.isIdentical( 0, 1.5, 0, GrlConstants.TEST_F64) );
+		assertTrue( pt_y.isIdentical( -1.5, 0, 0, GrlConstants.TEST_F64) );
 	}
 
 	@Test
@@ -334,7 +334,7 @@ public class TestConvertRotation3D_F64 {
 
 		DenseMatrix64F difference = new DenseMatrix64F(3,3);
 		CommonOps_D64.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures_D64.isIdentity(difference,Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
+		assertTrue(MatrixFeatures_D64.isIdentity(difference, GrlConstants.TEST_SQ_F64));
 	}
 
 	/**
@@ -346,7 +346,7 @@ public class TestConvertRotation3D_F64 {
 
 		DenseMatrix64F R = ConvertRotation3D_F64.approximateRotationMatrix( Q, null );
 
-		assertTrue( MatrixFeatures_D64.isOrthogonal( R, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( MatrixFeatures_D64.isOrthogonal( R, GrlConstants.TEST_F64) );
 	}
 
 	/**
@@ -356,9 +356,12 @@ public class TestConvertRotation3D_F64 {
 	public void approximateRotationMatrix_nochange() {
 		DenseMatrix64F Q = RandomMatrices_D64.createOrthogonal( 3, 3, rand );
 
+		if( CommonOps_D64.det(Q) < 0 )
+			CommonOps_D64.changeSign(Q);
+
 		DenseMatrix64F R = ConvertRotation3D_F64.approximateRotationMatrix( Q, null );
 
-		assertTrue( MatrixFeatures_D64.isIdentical( Q, R, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( MatrixFeatures_D64.isIdentical( Q, R, GrlConstants.TEST_F64) );
 	}
 
 	@Test
@@ -386,7 +389,7 @@ public class TestConvertRotation3D_F64 {
 
 		GeometryMath_F64.mult(matEuler,a,found);
 
-		assertTrue(expected.distance(found) < GrlConstants.DOUBLE_TEST_TOL);
+		assertTrue(expected.distance(found) < GrlConstants.TEST_F64);
 	}
 
 	private static DenseMatrix64F rotateAxis( int which , double angle ) {
@@ -413,7 +416,7 @@ public class TestConvertRotation3D_F64 {
 
 		DenseMatrix64F result = new DenseMatrix64F(3,3);
 		CommonOps_D64.multTransB(expected,found,result);
-		assertTrue(MatrixFeatures_D64.isIdentity(result, Math.sqrt(GrlConstants.DOUBLE_TEST_TOL)));
+		assertTrue(MatrixFeatures_D64.isIdentity(result, Math.sqrt(GrlConstants.TEST_F64)));
 	}
 
 	/**
@@ -432,7 +435,7 @@ public class TestConvertRotation3D_F64 {
 
 		Point3D_F64 p = new Point3D_F64( 1, 0, 0 );
 		GeometryMath_F64.mult( R, p, p );
-		GeometryUnitTest.assertEquals( p, 0, 1, 0, GrlConstants.DOUBLE_TEST_TOL );
+		GeometryUnitTest.assertEquals( p, 0, 1, 0, GrlConstants.TEST_F64);
 
 
 		// rotate around y-axis 90 degrees
@@ -443,7 +446,7 @@ public class TestConvertRotation3D_F64 {
 
 		p.set( 1, 0, 0 );
 		GeometryMath_F64.mult( R, p, p );
-		GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.DOUBLE_TEST_TOL );
+		GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.TEST_F64);
 
 		for (int i = 0; i < 30; i++) {
 			Rodrigues_F64 rod = new Rodrigues_F64();
@@ -458,7 +461,7 @@ public class TestConvertRotation3D_F64 {
 
 			DenseMatrix64F difference = new DenseMatrix64F(3,3);
 			CommonOps_D64.multTransB(expected,found,difference);
-			assertTrue(MatrixFeatures_D64.isIdentity(difference,GrlConstants.DOUBLE_TEST_TOL));
+			assertTrue(MatrixFeatures_D64.isIdentity(difference,GrlConstants.TEST_F64));
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,14 +37,14 @@ public class TestCovarianceToEllipse_F64 {
 
 		alg.setCovariance(100,0,9);
 
-		assertEquals(10,alg.getMajorAxis(), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3 ,alg.getMinorAxis(), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0,alg.getAngle(), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(10,alg.getMajorAxis(), GrlConstants.TEST_F64);
+		assertEquals(3 ,alg.getMinorAxis(), GrlConstants.TEST_F64);
+		assertEquals(0,alg.getAngle(), GrlConstants.TEST_F64);
 
 		alg.setCovariance(9,0,100);
-		assertEquals(10,alg.getMajorAxis(), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3 ,alg.getMinorAxis(), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(Math.PI/2.0,alg.getAngle(), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(10,alg.getMajorAxis(), GrlConstants.TEST_F64);
+		assertEquals(3 ,alg.getMinorAxis(), GrlConstants.TEST_F64);
+		assertEquals(Math.PI/2.0,alg.getAngle(), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -55,8 +55,8 @@ public class TestCovarianceToEllipse_F64 {
 		for (int i = 0; i < 10; i++) {
 			double angle = (double)(0.5*Math.PI*i/9.0);
 
-			/**/double c = Math.cos(angle);
-			/**/double s = Math.sin(angle);
+			double c = Math.cos(angle);
+			double s = Math.sin(angle);
 
 			DenseMatrix64F Q = new DenseMatrix64F(2,2,true,100,0,0,9);
 			DenseMatrix64F R = new DenseMatrix64F(2,2,true,c,-s,s,c);
@@ -67,9 +67,9 @@ public class TestCovarianceToEllipse_F64 {
 
 			alg.setCovariance((double)Q.get(0,0),(double)Q.get(0,1),(double)Q.get(1,1));
 
-			assertEquals(10,alg.getMajorAxis(), GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(3 ,alg.getMinorAxis(), GrlConstants.DOUBLE_TEST_TOL);
-			assertEquals(0, UtilAngle.distHalf(angle,alg.getAngle()), GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(10,alg.getMajorAxis(), GrlConstants.TEST_F64);
+			assertEquals(3 ,alg.getMinorAxis(), GrlConstants.TEST_F64);
+			assertEquals(0, UtilAngle.distHalf(angle,alg.getAngle()), GrlConstants.TEST_F64);
 		}
 	}
 }

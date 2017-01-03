@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -54,7 +54,7 @@ public class TestClosestPoint3D_F64 {
 
 		Point3D_F64 foundB = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
 
-		assertTrue( b.isIdentical( foundB, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( b.isIdentical( foundB, GrlConstants.TEST_F64) );
 		checkIsClosest(foundB,lineA,lineB);
 
 		// check two arbitrary lines
@@ -83,8 +83,8 @@ public class TestClosestPoint3D_F64 {
 
 		assertTrue(ClosestPoint3D_F64.closestPoints(lineA, lineB, param));
 
-		assertEquals( a.distance(b) , param[0] , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals(c.distance(b), param[1], GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals( a.distance(b) , param[0] , GrlConstants.TEST_F64);
+		assertEquals(c.distance(b), param[1], GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -104,7 +104,7 @@ public class TestClosestPoint3D_F64 {
 		// see if they are perpendicular and therefor c foundB is the closest point
 		double d = p.dot( va );
 
-		assertEquals( 0, d, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, d, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class TestClosestPoint3D_F64 {
 		Vector3D_F64 p = new Vector3D_F64( pt, c );
 
 		// see if they are perpendicular and therefor c foundB is the closest point
-		assertEquals( 0, p.dot(va), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, p.dot(va), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -137,23 +137,23 @@ public class TestClosestPoint3D_F64 {
 		PlaneNormal3D_F64 n = new PlaneNormal3D_F64(3,4,-5,3,4,-5);
 
 		found = ClosestPoint3D_F64.closestPoint(n,new Point3D_F64(0,0,0),null);
-		assertEquals(3,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4,found.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-5,found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(3,found.x, GrlConstants.TEST_F64);
+		assertEquals(4,found.y, GrlConstants.TEST_F64);
+		assertEquals(-5,found.z, GrlConstants.TEST_F64);
 
 		// move it closer, but the point shouldn't change
 		Vector3D_F64 v = n.n;
 		v.normalize();
 		found = ClosestPoint3D_F64.closestPoint(n,new Point3D_F64(v.x,v.y,v.z),null);
-		assertEquals(3,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4,found.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-5,found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(3,found.x, GrlConstants.TEST_F64);
+		assertEquals(4,found.y, GrlConstants.TEST_F64);
+		assertEquals(-5,found.z, GrlConstants.TEST_F64);
 
 		// other side of normal
 		found = ClosestPoint3D_F64.closestPoint(n,new Point3D_F64(3+v.x,4+v.y,v.z-5),null);
-		assertEquals(3,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4,found.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-5,found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(3,found.x, GrlConstants.TEST_F64);
+		assertEquals(4,found.y, GrlConstants.TEST_F64);
+		assertEquals(-5,found.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -164,23 +164,23 @@ public class TestClosestPoint3D_F64 {
 		PlaneGeneral3D_F64 g = UtilPlane3D_F64.convert(n, null);
 
 		found = ClosestPoint3D_F64.closestPoint(g,new Point3D_F64(0,0,0),null);
-		assertEquals(3,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4,found.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-5,found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(3,found.x, GrlConstants.TEST_F64);
+		assertEquals(4,found.y, GrlConstants.TEST_F64);
+		assertEquals(-5,found.z, GrlConstants.TEST_F64);
 
 		// move it closer, but the point shouldn't change
 		Vector3D_F64 v = n.n;
 		v.normalize();
 		found = ClosestPoint3D_F64.closestPoint(g,new Point3D_F64(v.x,v.y,v.z),null);
-		assertEquals(3,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4,found.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-5,found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(3,found.x, GrlConstants.TEST_F64);
+		assertEquals(4,found.y, GrlConstants.TEST_F64);
+		assertEquals(-5,found.z, GrlConstants.TEST_F64);
 
 		// other side of normal
 		found = ClosestPoint3D_F64.closestPoint(g,new Point3D_F64(3+v.x,4+v.y,v.z-5),null);
-		assertEquals(3,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4,found.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-5,found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(3,found.x, GrlConstants.TEST_F64);
+		assertEquals(4,found.y, GrlConstants.TEST_F64);
+		assertEquals(-5,found.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -190,9 +190,9 @@ public class TestClosestPoint3D_F64 {
 		Point3D_F64 expected = ClosestPoint3D_F64.closestPoint(g,new Point3D_F64(0,0,0),null);
 		Point3D_F64 found = ClosestPoint3D_F64.closestPointOrigin(g,null);
 
-		assertEquals(expected.x,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.y,found.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.z,found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected.x,found.x, GrlConstants.TEST_F64);
+		assertEquals(expected.y,found.y, GrlConstants.TEST_F64);
+		assertEquals(expected.z,found.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -251,9 +251,9 @@ public class TestClosestPoint3D_F64 {
 
 		ClosestPoint3D_F64.closestPoint(P0,P1,P2,P,found);
 
-		assertEquals(0.2,found.x,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.5,found.y,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0,found.z,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.2,found.x,GrlConstants.TEST_F64);
+		assertEquals(0.5,found.y,GrlConstants.TEST_F64);
+		assertEquals(0,found.z,GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -265,8 +265,8 @@ public class TestClosestPoint3D_F64 {
 		double t_above = ClosestPoint3D_F64.closestPointT(l,above);
 		double t_below = ClosestPoint3D_F64.closestPointT(l,below);
 
-		assertEquals(1.5,t_above,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-2.0,t_below,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1.5,t_above,GrlConstants.TEST_F64);
+		assertEquals(-2.0,t_below,GrlConstants.TEST_F64);
 	}
 
 	private void checkIsClosest( LineSegment3D_F64 line ,  Point3D_F64 target  ) {
@@ -277,8 +277,8 @@ public class TestClosestPoint3D_F64 {
 
 		double t = UtilLine3D_F64.computeT(para,pointOnLine);
 
-		double t0 = t - Math.sqrt(GrlConstants.DOUBLE_TEST_TOL);
-		double t1 = t + Math.sqrt(GrlConstants.DOUBLE_TEST_TOL);
+		double t0 = t - Math.sqrt(GrlConstants.TEST_F64);
+		double t1 = t + Math.sqrt(GrlConstants.TEST_F64);
 
 		if( t0 < 0 ) t0 = 0;
 		if( t1 > 1 ) t1 = 1;
@@ -301,12 +301,12 @@ public class TestClosestPoint3D_F64 {
 
 		for( int i = 0; i < 3; i++ ) {
 			double orig = work.getIndex(i);
-			work.setIndex(i, orig + Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
+			work.setIndex(i, orig + Math.sqrt(GrlConstants.TEST_F64));
 			double d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found+" "+d,found < d+10*GrlConstants.DOUBLE_TEST_TOL);
-			work.setIndex(i, orig - Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
+			assertTrue(found+" "+d,found < d+10*GrlConstants.TEST_F64);
+			work.setIndex(i, orig - Math.sqrt(GrlConstants.TEST_F64));
 			d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found + " " + d, found <=d+10*GrlConstants.DOUBLE_TEST_TOL);
+			assertTrue(found + " " + d, found <=d+10*GrlConstants.TEST_F64);
 			work.setIndex(i,orig);
 		}
 	}
@@ -318,12 +318,12 @@ public class TestClosestPoint3D_F64 {
 
 		for( int i = 0; i < 3; i++ ) {
 			double orig = work.getIndex(i);
-			work.setIndex(i,orig + Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
+			work.setIndex(i,orig + Math.sqrt(GrlConstants.TEST_F64));
 			double d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found+" "+d,found <= d+10*GrlConstants.DOUBLE_TEST_TOL);
-			work.setIndex(i,orig - Math.sqrt(GrlConstants.DOUBLE_TEST_TOL));
+			assertTrue(found+" "+d,found <= d+10*GrlConstants.TEST_F64);
+			work.setIndex(i,orig - Math.sqrt(GrlConstants.TEST_F64));
 			d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found+" "+d,found <= d+10*GrlConstants.DOUBLE_TEST_TOL);
+			assertTrue(found+" "+d,found <= d+10*GrlConstants.TEST_F64);
 			work.setIndex(i,orig);
 		}
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -55,10 +55,10 @@ public class TestCylinderToPointSignedDistanceJacobian_F64 {
 		function.setPoints(points);
 		jacobian.setPoints(points);
 
-//		DerivativeChecker.jacobianPrint(function, jacobian, param, 100.0*GrlConstants.DOUBLE_TEST_TOL,
-//				GrlConstants.DOUBLE_TEST_TOL);
-		assertTrue(DerivativeChecker.jacobian(function, jacobian, param, 100.0 * GrlConstants.DOUBLE_TEST_TOL,
-				GrlConstants.DOUBLE_TEST_TOL));
+//		DerivativeChecker.jacobianPrint(function, jacobian, param, 100.0*GrlConstants.TEST_F64,
+//				GrlConstants.TEST_F64);
+		assertTrue(DerivativeChecker.jacobian(function, jacobian, param, 100.0 * GrlConstants.TEST_F64,
+				GrlConstants.TEST_F64));
 	}
 
 	@Test

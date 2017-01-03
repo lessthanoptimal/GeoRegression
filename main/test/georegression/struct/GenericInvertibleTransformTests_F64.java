@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -48,12 +48,12 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 
 		// it should modify the point
 		apply( tran1, orig, before );
-		assertFalse( orig.isIdentical( before, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertFalse( orig.isIdentical( before, GrlConstants.TEST_F64) );
 
 		// after reset it shouldn't modify the point
 		tran1.reset();
 		apply( tran1, orig, before );
-		assertTrue( orig.isIdentical( before, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( orig.isIdentical( before, GrlConstants.TEST_F64) );
 	}
 
 	/**
@@ -73,12 +73,12 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 
 		T found = apply( tran12, orig, null );
 
-		assertTrue( found.isIdentical( expected, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( found.isIdentical( expected, GrlConstants.TEST_F64) );
 
 		// do the same, but providing a place for it to write the result
 		tran12 = tran1.concat( tran2, createRandomTransform() );
 		found = apply( tran12, orig, null );
-		assertTrue( found.isIdentical( expected, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( found.isIdentical( expected, GrlConstants.TEST_F64) );
 
 	}
 
@@ -95,14 +95,14 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 		InvertibleTransform aInv = a.invert( null );
 		T found = apply( aInv, tran, null );
 
-		assertTrue( found.isIdentical( orig, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( found.isIdentical( orig, GrlConstants.TEST_F64) );
 
 		// do the same, but providing a place for it to write the result
 		aInv = a.invert( createRandomTransform() );
 
 		found = apply( aInv, tran, null );
 
-		assertTrue( found.isIdentical( orig, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( found.isIdentical( orig, GrlConstants.TEST_F64) );
 	}
 
 	/**
@@ -119,6 +119,6 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 		assertTrue( aInv == a.invert( aInv ) );
 		T found = apply( aInv, tran, null );
 
-		assertTrue( found.isIdentical( orig, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( found.isIdentical( orig, GrlConstants.TEST_F64) );
 	}
 }

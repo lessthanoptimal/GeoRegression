@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -57,12 +57,12 @@ public class TestFitPlane3D_F64 {
 				(foundCenter.x-center.x)*axisZ.x +
 				(foundCenter.y-center.y)*axisZ.y +
 				(foundCenter.z-center.z)*axisZ.z,
-				GrlConstants.DOUBLE_TEST_TOL);
+				GrlConstants.TEST_F64);
 
 		// see if the found normal is valid
 		foundNorm.normalize();
 		double dot = foundNorm.dot(axisZ);
-		assertEquals(0, Math.abs(dot) - 1, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, Math.abs(dot) - 1, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -79,7 +79,7 @@ public class TestFitPlane3D_F64 {
 		// see if the found normal is valid
 		foundNorm.normalize();
 		double dot = foundNorm.dot(axisZ);
-		assertEquals(0, Math.abs(dot) - 1, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, Math.abs(dot) - 1, GrlConstants.TEST_F64);
 	}
 
 	private void createCloud() {

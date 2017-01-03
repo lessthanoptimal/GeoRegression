@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -68,9 +68,9 @@ public class AverageQuaternion_F64 {
 
 		// the largest eigenvector is the quaternion
 		int largest = 0;
-		/**/double largestMag = eig.getEigenvalue(0).getMagnitude2();
+		double largestMag = eig.getEigenvalue(0).getMagnitude2();
 		for (int i = 1; i < 4; i++) {
-			/**/double mag = eig.getEigenvalue(i).getMagnitude2();
+			double mag = eig.getEigenvalue(i).getMagnitude2();
 			if( mag > largestMag ) {
 				largestMag = mag;
 				largest = i;

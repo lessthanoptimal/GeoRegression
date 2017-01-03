@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -43,8 +43,8 @@ public class TestClosestPoint2D_F64 {
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
 		Point2D_F64 found = ClosestPoint2D_F64.closestPoint( general, pt, null );
-		assertEquals( 2, found.getX(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 1, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 2, found.getX(), GrlConstants.TEST_F64);
+		assertEquals( 1, found.getY(), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -53,8 +53,8 @@ public class TestClosestPoint2D_F64 {
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
 		Point2D_F64 found = ClosestPoint2D_F64.closestPoint( line, pt, null );
-		assertEquals( 2, found.getX(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 1, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 2, found.getX(), GrlConstants.TEST_F64);
+		assertEquals( 1, found.getY(), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -63,7 +63,7 @@ public class TestClosestPoint2D_F64 {
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
 		double found = ClosestPoint2D_F64.closestPointT( line, pt );
-		assertEquals( -1, found, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -1, found, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -72,19 +72,19 @@ public class TestClosestPoint2D_F64 {
 		// test middle
 		ls = new LineSegment2D_F64(1,2,4,5);
 		found = ClosestPoint2D_F64.closestPoint(ls,new Point2D_F64(2-0.1,3+0.1),null);
-		assertEquals(2,found.x,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3,found.y,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2,found.x,GrlConstants.TEST_F64);
+		assertEquals(3,found.y,GrlConstants.TEST_F64);
 
 
 		// test before a
 		found = ClosestPoint2D_F64.closestPoint(ls,new Point2D_F64(0,0),null);
-		assertEquals(1,found.x,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2,found.y,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1,found.x,GrlConstants.TEST_F64);
+		assertEquals(2,found.y,GrlConstants.TEST_F64);
 
 		// test after b
 		found = ClosestPoint2D_F64.closestPoint(ls,new Point2D_F64(10,20),null);
-		assertEquals(4,found.x,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,found.y,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(4,found.x,GrlConstants.TEST_F64);
+		assertEquals(5,found.y,GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -96,11 +96,11 @@ public class TestClosestPoint2D_F64 {
 		Point2D_F64 found = ClosestPoint2D_F64.closestPoint(ellipse,p);
 
 		// compare to a known algorithm
-		ClosestPointEllipseAngle_F64 alg = new ClosestPointEllipseAngle_F64( GrlConstants.DOUBLE_TEST_TOL , 100 );
+		ClosestPointEllipseAngle_F64 alg = new ClosestPointEllipseAngle_F64( GrlConstants.TEST_F64, 100 );
 		alg.setEllipse(ellipse);
 		alg.process(p);
 
-		assertEquals(alg.getClosest().x,found.x,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(alg.getClosest().y,found.y,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(alg.getClosest().x,found.x,GrlConstants.TEST_F64);
+		assertEquals(alg.getClosest().y,found.y,GrlConstants.TEST_F64);
 	}
 }

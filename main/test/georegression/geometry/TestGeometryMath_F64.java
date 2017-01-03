@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -61,9 +61,9 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.mult( V, x, found1 );
 
-		assertEquals( found0.x, found1.x, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( found0.y, found1.y, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( found0.z, found1.z, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( found0.x, found1.x, GrlConstants.TEST_F64);
+		assertEquals( found0.y, found1.y, GrlConstants.TEST_F64);
+		assertEquals( found0.z, found1.z, GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class TestGeometryMath_F64 {
 		DenseMatrix64F V1 = GeometryMath_F64.crossMatrix( v, null );
 		DenseMatrix64F V2 = GeometryMath_F64.crossMatrix( a, b, c, null );
 
-		assertTrue( MatrixFeatures_D64.isIdentical( V1 ,V2 , GrlConstants.DOUBLE_TEST_TOL ));
+		assertTrue( MatrixFeatures_D64.isIdentical( V1 ,V2 , GrlConstants.TEST_F64));
 	}
 
 	@Test
@@ -89,15 +89,15 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.cross( a, b, c );
 
-		assertEquals( 0, c.x, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 0, c.y, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 1, c.z, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, c.x, GrlConstants.TEST_F64);
+		assertEquals( 0, c.y, GrlConstants.TEST_F64);
+		assertEquals( 1, c.z, GrlConstants.TEST_F64);
 
 		GeometryMath_F64.cross( b, a, c );
 
-		assertEquals( 0, c.x, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 0, c.y, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( -1, c.z, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0, c.x, GrlConstants.TEST_F64);
+		assertEquals( 0, c.y, GrlConstants.TEST_F64);
+		assertEquals( -1, c.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -110,9 +110,9 @@ public class TestGeometryMath_F64 {
 		GeometryMath_F64.cross( a, b, expected );
 		GeometryMath_F64.cross( a.x, a.y, a.z, b.x, b.y, b.z, found );
 
-		assertEquals( expected.x, found.x, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.y, found.y, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.z, found.z, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.x, found.x, GrlConstants.TEST_F64);
+		assertEquals( expected.y, found.y, GrlConstants.TEST_F64);
+		assertEquals( expected.z, found.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -126,9 +126,9 @@ public class TestGeometryMath_F64 {
 		GeometryMath_F64.cross( a, b, expected );
 		GeometryMath_F64.cross( aa, b, found );
 
-		assertEquals( expected.x, found.x , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.y, found.y , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.z, found.z , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.x, found.x , GrlConstants.TEST_F64);
+		assertEquals( expected.y, found.y , GrlConstants.TEST_F64);
+		assertEquals( expected.z, found.z , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -143,9 +143,9 @@ public class TestGeometryMath_F64 {
 		GeometryMath_F64.cross( a, b, expected );
 		GeometryMath_F64.cross( aa, bb, found );
 
-		assertEquals( expected.x, found.x , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.y, found.y , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.z, found.z , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.x, found.x , GrlConstants.TEST_F64);
+		assertEquals( expected.y, found.y , GrlConstants.TEST_F64);
+		assertEquals( expected.z, found.z , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -156,9 +156,9 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.add( a , b , c );
 
-		assertEquals( 4 , c.getX() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 3 , c.getY() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 7 , c.getZ() , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 4 , c.getX() , GrlConstants.TEST_F64);
+		assertEquals( 3 , c.getY() , GrlConstants.TEST_F64);
+		assertEquals( 7 , c.getZ() , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -169,9 +169,9 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.add( 2, a , -1 , b , c );
 
-		assertEquals( -1 , c.getX() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals(  3 , c.getY() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals(  2 , c.getZ() , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -1 , c.getX() , GrlConstants.TEST_F64);
+		assertEquals(  3 , c.getY() , GrlConstants.TEST_F64);
+		assertEquals(  2 , c.getZ() , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -183,9 +183,9 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.addMult( a , M , b , c );
 
-		assertEquals( 10 , c.getX() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 11 , c.getY() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 12 , c.getZ() , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 10 , c.getX() , GrlConstants.TEST_F64);
+		assertEquals( 11 , c.getY() , GrlConstants.TEST_F64);
+		assertEquals( 12 , c.getZ() , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -196,9 +196,9 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.sub( a , b , c );
 
-		assertEquals( -2 , c.getX() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 1 , c.getY() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( -1 , c.getZ() , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -2 , c.getX() , GrlConstants.TEST_F64);
+		assertEquals( 1 , c.getY() , GrlConstants.TEST_F64);
+		assertEquals( -1 , c.getZ() , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -217,8 +217,8 @@ public class TestGeometryMath_F64 {
 		double x = c*a.x - s*a.y;
 		double y = s*a.x + c*a.y;
 
-		assertEquals(x,b.x, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals(y,b.y, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(x,b.x, GrlConstants.TEST_F64);
+		assertEquals(y,b.y, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -237,8 +237,8 @@ public class TestGeometryMath_F64 {
 		double x = c*a.x - s*a.y;
 		double y = s*a.x + c*a.y;
 
-		assertEquals(x,b.x, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals(y,b.y, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(x,b.x, GrlConstants.TEST_F64);
+		assertEquals(y,b.y, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -249,9 +249,9 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.mult( M , a , c );
 
-		assertEquals( 12 , c.getX() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 24 , c.getY() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 36 , c.getZ() , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 12 , c.getX() , GrlConstants.TEST_F64);
+		assertEquals( 24 , c.getY() , GrlConstants.TEST_F64);
+		assertEquals( 36 , c.getZ() , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -262,8 +262,8 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.mult( M , a , c );
 
-		assertEquals( 12.0/36.0 , c.getX() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 24.0/36.0 , c.getY() , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 12.0/36.0 , c.getX() , GrlConstants.TEST_F64);
+		assertEquals( 24.0/36.0 , c.getY() , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -278,9 +278,9 @@ public class TestGeometryMath_F64 {
 		Vector3D_F64 found = new Vector3D_F64();
 		GeometryMath_F64.mult( M , a2 , found );
 
-		assertEquals( expected.x , found.x , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.y , found.y , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.z , found.z , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.x , found.x , GrlConstants.TEST_F64);
+		assertEquals( expected.y , found.y , GrlConstants.TEST_F64);
+		assertEquals( expected.z , found.z , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -297,8 +297,8 @@ public class TestGeometryMath_F64 {
 
 		double z = expected.z;
 
-		assertEquals( expected.x/z , found.x , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.y/z , found.y , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.x/z , found.x , GrlConstants.TEST_F64);
+		assertEquals( expected.y/z , found.y , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -309,9 +309,9 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.multTran( M , a , c );
 
-		assertEquals( 28 , c.getX() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 32 , c.getY() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 36 , c.getZ() , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 28 , c.getX() , GrlConstants.TEST_F64);
+		assertEquals( 32 , c.getY() , GrlConstants.TEST_F64);
+		assertEquals( 36 , c.getZ() , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -322,9 +322,9 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.multTran( M , a , c );
 
-		assertEquals( 14 , c.getX() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 16 , c.getY() , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 18 , c.getZ() , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 14 , c.getX() , GrlConstants.TEST_F64);
+		assertEquals( 16 , c.getY() , GrlConstants.TEST_F64);
+		assertEquals( 18 , c.getZ() , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -338,7 +338,7 @@ public class TestGeometryMath_F64 {
 
 		DenseMatrix64F found = GeometryMath_F64.multCrossA(a,b,null);
 
-		assertTrue(MatrixFeatures_D64.isIdentical(expected,found,GrlConstants.DOUBLE_TEST_TOL));
+		assertTrue(MatrixFeatures_D64.isIdentical(expected,found,GrlConstants.TEST_F64));
 	}
 
 	@Test
@@ -352,7 +352,7 @@ public class TestGeometryMath_F64 {
 
 		DenseMatrix64F found = GeometryMath_F64.multCrossA(a,b,null);
 
-		assertTrue(MatrixFeatures_D64.isIdentical(expected,found,GrlConstants.DOUBLE_TEST_TOL));
+		assertTrue(MatrixFeatures_D64.isIdentical(expected,found,GrlConstants.TEST_F64));
 	}
 
 	@Test
@@ -363,7 +363,7 @@ public class TestGeometryMath_F64 {
 
 		double found = GeometryMath_F64.innerProd( a, M, b );
 
-		assertEquals( 156, found, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 156, found, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -374,7 +374,7 @@ public class TestGeometryMath_F64 {
 
 		double found = GeometryMath_F64.innerProdTranM( a, M, b );
 
-		assertEquals( 126, found, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 126, found, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -385,7 +385,7 @@ public class TestGeometryMath_F64 {
 
 		double found = GeometryMath_F64.innerProd( a, M, b );
 
-		assertEquals( 13, found, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 13, found, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -398,7 +398,7 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.outerProd( a, b , M );
 
-		assertTrue( MatrixFeatures_D64.isIdentical(expected,M,GrlConstants.DOUBLE_TEST_TOL) );
+		assertTrue( MatrixFeatures_D64.isIdentical(expected,M,GrlConstants.TEST_F64) );
 	}
 
 	@Test
@@ -413,7 +413,7 @@ public class TestGeometryMath_F64 {
 
 		GeometryMath_F64.addOuterProd( A , -1 , a, b , found );
 
-		assertTrue( MatrixFeatures_D64.isIdentical(expected,found,GrlConstants.DOUBLE_TEST_TOL) );
+		assertTrue( MatrixFeatures_D64.isIdentical(expected,found,GrlConstants.TEST_F64) );
 	}
 
 	@Test
@@ -422,7 +422,7 @@ public class TestGeometryMath_F64 {
 		Vector3D_F64 b = new Vector3D_F64( 4, 3, 2 );
 		double found = GeometryMath_F64.dot( a, b );
 
-		assertEquals( 8, found, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 8, found, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -430,9 +430,9 @@ public class TestGeometryMath_F64 {
 		Vector3D_F64 a = new Vector3D_F64( 1, -2, 3 );
 		GeometryMath_F64.scale( a, 2 );
 
-		assertEquals( 2, a.x, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( -4, a.y, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 6, a.z, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 2, a.x, GrlConstants.TEST_F64);
+		assertEquals( -4, a.y, GrlConstants.TEST_F64);
+		assertEquals( 6, a.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -440,9 +440,9 @@ public class TestGeometryMath_F64 {
 		Vector3D_F64 a = new Vector3D_F64( 1, -2, 3 );
 		GeometryMath_F64.divide( a, 2 );
 
-		assertEquals( 0.5, a.x, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( -1.0, a.y, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 1.5, a.z, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 0.5, a.x, GrlConstants.TEST_F64);
+		assertEquals( -1.0, a.y, GrlConstants.TEST_F64);
+		assertEquals( 1.5, a.z, GrlConstants.TEST_F64);
 	}
 
 
@@ -451,9 +451,9 @@ public class TestGeometryMath_F64 {
 		Vector3D_F64 a = new Vector3D_F64( 1, -2, 3 );
 		GeometryMath_F64.changeSign( a );
 
-		assertEquals( -1, a.x, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 2, a.y, GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( -3, a.z, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( -1, a.x, GrlConstants.TEST_F64);
+		assertEquals( 2, a.y, GrlConstants.TEST_F64);
+		assertEquals( -3, a.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -461,9 +461,9 @@ public class TestGeometryMath_F64 {
 		Vector3D_F64 a = new Vector3D_F64( 1, -2, 3 );
 		DenseMatrix64F found = GeometryMath_F64.toMatrix(a,null);
 
-		assertEquals(1,found.get(0),GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-2,found.get(1),GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3,found.get(2),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1,found.get(0),GrlConstants.TEST_F64);
+		assertEquals(-2,found.get(1),GrlConstants.TEST_F64);
+		assertEquals(3,found.get(2),GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -472,8 +472,8 @@ public class TestGeometryMath_F64 {
 		Vector3D_F64 b = new Vector3D_F64();
 		GeometryMath_F64.toTuple3D(a, b);
 
-		assertEquals(b.x,a.get(0),GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(b.y,a.get(1),GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(b.z,a.get(2),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(b.x,a.get(0),GrlConstants.TEST_F64);
+		assertEquals(b.y,a.get(1),GrlConstants.TEST_F64);
+		assertEquals(b.z,a.get(2),GrlConstants.TEST_F64);
 	}
 }

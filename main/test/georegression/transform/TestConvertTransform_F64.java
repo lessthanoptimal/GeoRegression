@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -43,7 +43,7 @@ public class TestConvertTransform_F64 {
 		Point2D_F64 expected = SePointOps_F64.transform(a,pt,null);
 		Point2D_F64 found = AffinePointOps_F64.transform(b, pt, null);
 
-		GeometryUnitTest.assertEquals(expected,found, GrlConstants.DOUBLE_TEST_TOL);
+		GeometryUnitTest.assertEquals(expected,found, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class TestConvertTransform_F64 {
 		Point2D_F64 expected = SePointOps_F64.transform(a,pt,null);
 		Point2D_F64 found = HomographyPointOps_F64.transform(b, pt, null);
 
-		GeometryUnitTest.assertEquals(expected, found, GrlConstants.DOUBLE_TEST_TOL);
+		GeometryUnitTest.assertEquals(expected, found, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -67,6 +67,6 @@ public class TestConvertTransform_F64 {
 		Point2D_F64 expected = AffinePointOps_F64.transform(a, pt, null);
 		Point2D_F64 found = HomographyPointOps_F64.transform(b, pt, null);
 
-		GeometryUnitTest.assertEquals(expected, found, GrlConstants.DOUBLE_TEST_TOL);
+		GeometryUnitTest.assertEquals(expected, found, GrlConstants.TEST_F64);
 	}
 }

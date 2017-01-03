@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,6 +23,7 @@ import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
+import org.ejml.ops.ConvertMatrixData;
 
 /**
  * Functions for converting between 32bit and 64bit structures
@@ -36,7 +37,7 @@ public class ConvertFloatType {
 			dst = new Se3_F32();
 		}
 
-		dst.getR().set(src.getR());
+		ConvertMatrixData.convert(dst.getR(), src.getR());
 		convert(src.T,dst.T);
 
 		return dst;
@@ -47,7 +48,7 @@ public class ConvertFloatType {
 			dst = new Se3_F64();
 		}
 
-		dst.getR().set(src.getR());
+		ConvertMatrixData.convert(dst.getR(), src.getR());
 		convert(src.T,dst.T);
 
 		return dst;

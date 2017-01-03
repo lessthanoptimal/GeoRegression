@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -129,9 +129,9 @@ public class TwistOps_F64 {
 		double wv_y = wz*vx - wx*vz;
 		double wv_z = wx*vy - wy*vx;
 
-		/**/double left_x = (1 - R.data[0])*wv_x -      R.data[1]*wv_y  -      R.data[2]*wv_z;
-		/**/double left_y =     -R.data[3]*wv_x  + (1 - R.data[4])*wv_y -      R.data[5]*wv_z;
-		/**/double left_z =     -R.data[6]*wv_x  -      R.data[7]*wv_y  + (1 - R.data[8])*wv_z;
+		double left_x = (1 - R.data[0])*wv_x -      R.data[1]*wv_y  -      R.data[2]*wv_z;
+		double left_y =     -R.data[3]*wv_x  + (1 - R.data[4])*wv_y -      R.data[5]*wv_z;
+		double left_z =     -R.data[6]*wv_x  -      R.data[7]*wv_y  + (1 - R.data[8])*wv_z;
 
 		double right_x = (wx*wx*vx + wx*wy*vy + wx*wz*vz)*theta;
 		double right_y = (wy*wx*vx + wy*wy*vy + wy*wz*vz)*theta;
@@ -157,7 +157,7 @@ public class TwistOps_F64 {
 		if( twist == null )
 			twist = new TwistCoordinate_F64();
 
-		if(MatrixFeatures_D64.isIdentity(motion.R, GrlConstants.DOUBLE_TEST_TOL)) {
+		if(MatrixFeatures_D64.isIdentity(motion.R, GrlConstants.TEST_F64)) {
 			twist.w.set(0,0,0);
 			twist.v.set(motion.T);
 		} else {

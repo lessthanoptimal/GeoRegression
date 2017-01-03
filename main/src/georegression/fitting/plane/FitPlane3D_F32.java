@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,9 +20,9 @@ package georegression.fitting.plane;
 
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory_D64;
-import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
+import org.ejml.data.DenseMatrix32F;
+import org.ejml.factory.DecompositionFactory_D32;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition_F32;
 
 import java.util.List;
 
@@ -33,10 +33,10 @@ import java.util.List;
  */
 public class FitPlane3D_F32 {
 
-	SingularValueDecomposition_F64<DenseMatrix64F> svd = DecompositionFactory_D64.svd(3,10,false, true, false);
+	SingularValueDecomposition_F32<DenseMatrix32F> svd = DecompositionFactory_D32.svd(3,10,false, true, false);
 
-	DenseMatrix64F A = new DenseMatrix64F(3,3);
-	DenseMatrix64F V = new DenseMatrix64F(3,3);
+	DenseMatrix32F A = new DenseMatrix32F(3,3);
+	DenseMatrix32F V = new DenseMatrix32F(3,3);
 
 	/**
 	 * SVD based method for fitting a plane to a set of points.  The plane's equation is returned
@@ -94,12 +94,12 @@ public class FitPlane3D_F32 {
 		if( !svd.decompose(A) )
 			return false;
 
-		/**/double sv[] = svd.getSingularValues();
+		float sv[] = svd.getSingularValues();
 
 		int smallestIndex = -1;
-		/**/double smallestValue = Float.MAX_VALUE;
+		float smallestValue = Float.MAX_VALUE;
 		for( int i = 0; i < 3; i++ ) {
-			/**/double v = sv[i];
+			float v = sv[i];
 			if( v < smallestValue ) {
 				smallestValue = v;
 				smallestIndex = i;

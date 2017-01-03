@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -43,8 +43,8 @@ public class TestInvertibleTransformSequence {
 		Se2_F64 found = new Se2_F64();
 		path.computeTransform( found );
 
-		assertEquals( 3, found.getX(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 4, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 3, found.getX(), GrlConstants.TEST_F64);
+		assertEquals( 4, found.getY(), GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -61,8 +61,8 @@ public class TestInvertibleTransformSequence {
 		Se2_F64 found = new Se2_F64();
 		path.computeTransform( found );
 
-		assertEquals( 2, found.getX(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 7, found.getY(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( Math.PI, found.getYaw(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( 2, found.getX(), GrlConstants.TEST_F64);
+		assertEquals( 7, found.getY(), GrlConstants.TEST_F64);
+		assertEquals( Math.PI, found.getYaw(), GrlConstants.TEST_F64);
 	}
 }

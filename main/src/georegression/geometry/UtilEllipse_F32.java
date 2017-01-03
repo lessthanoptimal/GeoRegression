@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -384,7 +384,7 @@ public class UtilEllipse_F32 {
 										Point2D_F32 tangentB0 , Point2D_F32 tangentB1 ,
 										Point2D_F32 tangentB2 , Point2D_F32 tangentB3 )
 	{
-		TangentLinesTwoEllipses_F32 alg = new TangentLinesTwoEllipses_F32(GrlConstants.FLOAT_TEST_TOL,10);
+		TangentLinesTwoEllipses_F32 alg = new TangentLinesTwoEllipses_F32(GrlConstants.TEST_F32,10);
 
 		return alg.process(ellipseA, ellipseB,
 				tangentA0, tangentA1, tangentA2, tangentA3,

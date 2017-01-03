@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,7 +23,7 @@ import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.EulerType;
 import georegression.struct.se.Se3_F32;
-import org.ejml.ops.MatrixFeatures_D64;
+import org.ejml.ops.MatrixFeatures_D32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -44,7 +44,7 @@ public class TestInterpolateLinearSe3_F32 {
 
 		for( int i = 0; i < 10; i++ ) {
 			alg.interpolate(i/(float)9, b);
-			GeometryUnitTest.assertEquals(a, b, GrlConstants.FLOAT_TEST_TOL, GrlConstants.FLOAT_TEST_TOL*1000);
+			GeometryUnitTest.assertEquals(a, b, GrlConstants.TEST_F32, GrlConstants.TEST_F32 *1000);
 		}
 	}
 
@@ -65,10 +65,10 @@ public class TestInterpolateLinearSe3_F32 {
 			float expectedY = 2 + 2*t;
 			float expectedZ = 3 + 1*t;
 
-			assertEquals(expectedX,c.T.x, GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(expectedY,c.T.y, GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(expectedZ,c.T.z, GrlConstants.FLOAT_TEST_TOL);
-			assertTrue(MatrixFeatures_D64.isIdentical(c.getR(),a.getR(),GrlConstants.FLOAT_TEST_TOL));
+			assertEquals(expectedX,c.T.x, GrlConstants.TEST_F32);
+			assertEquals(expectedY,c.T.y, GrlConstants.TEST_F32);
+			assertEquals(expectedZ,c.T.z, GrlConstants.TEST_F32);
+			assertTrue(MatrixFeatures_D32.isIdentical(c.getR(),a.getR(),GrlConstants.TEST_F32));
 		}
 	}
 
@@ -89,13 +89,13 @@ public class TestInterpolateLinearSe3_F32 {
 
 			float euler[] = ConvertRotation3D_F32.matrixToEuler(c.getR(),EulerType.XYZ,(float[])null);
 
-			assertEquals(1,c.T.x, GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(2,c.T.y, GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(3,c.T.z, GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(1,c.T.x, GrlConstants.TEST_F32);
+			assertEquals(2,c.T.y, GrlConstants.TEST_F32);
+			assertEquals(3,c.T.z, GrlConstants.TEST_F32);
 
-			assertEquals(0.1f + t * 0.8f, euler[0], GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(0,euler[1],GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(0,euler[2],GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(0.1f + t * 0.8f, euler[0], GrlConstants.TEST_F32);
+			assertEquals(0,euler[1],GrlConstants.TEST_F32);
+			assertEquals(0,euler[2],GrlConstants.TEST_F32);
 		}
 	}
 
@@ -115,13 +115,13 @@ public class TestInterpolateLinearSe3_F32 {
 
 			float euler[] = ConvertRotation3D_F32.matrixToEuler(c.getR(),EulerType.XYZ,(float[])null);
 
-			assertEquals(1+3*t,c.T.x, GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(2+2*t,c.T.y, GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(3+1*t,c.T.z, GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(1+3*t,c.T.x, GrlConstants.TEST_F32);
+			assertEquals(2+2*t,c.T.y, GrlConstants.TEST_F32);
+			assertEquals(3+1*t,c.T.z, GrlConstants.TEST_F32);
 
-			assertEquals(0.1f+t*0.8f,euler[0],GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(0,euler[1],GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(0,euler[2],GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(0.1f+t*0.8f,euler[0],GrlConstants.TEST_F32);
+			assertEquals(0,euler[1],GrlConstants.TEST_F32);
+			assertEquals(0,euler[2],GrlConstants.TEST_F32);
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,24 +34,24 @@ public class TestBox3D_F32 {
 		Box3D_F32 boxA = new Box3D_F32(1,2,3,4,5,6);
 		Box3D_F32 box = new Box3D_F32(boxA);
 
-		assertEquals(1,box.p0.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,box.p0.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,box.p0.z, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(4,box.p1.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,box.p1.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6,box.p1.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,box.p0.x, GrlConstants.TEST_F32);
+		assertEquals(2,box.p0.y, GrlConstants.TEST_F32);
+		assertEquals(3,box.p0.z, GrlConstants.TEST_F32);
+		assertEquals(4,box.p1.x, GrlConstants.TEST_F32);
+		assertEquals(5,box.p1.y, GrlConstants.TEST_F32);
+		assertEquals(6,box.p1.z, GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void constructor_floats() {
 		Box3D_F32 box = new Box3D_F32(1,2,3,4,5,6);
 
-		assertEquals(1,box.p0.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,box.p0.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,box.p0.z, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(4,box.p1.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,box.p1.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6,box.p1.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,box.p0.x, GrlConstants.TEST_F32);
+		assertEquals(2,box.p0.y, GrlConstants.TEST_F32);
+		assertEquals(3,box.p0.z, GrlConstants.TEST_F32);
+		assertEquals(4,box.p1.x, GrlConstants.TEST_F32);
+		assertEquals(5,box.p1.y, GrlConstants.TEST_F32);
+		assertEquals(6,box.p1.z, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -59,12 +59,12 @@ public class TestBox3D_F32 {
 		Box3D_F32 box = new Box3D_F32();
 		box.set(1,2,3,4,5,6);
 
-		assertEquals(1,box.p0.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,box.p0.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,box.p0.z, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(4,box.p1.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,box.p1.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6,box.p1.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,box.p0.x, GrlConstants.TEST_F32);
+		assertEquals(2,box.p0.y, GrlConstants.TEST_F32);
+		assertEquals(3,box.p0.z, GrlConstants.TEST_F32);
+		assertEquals(4,box.p1.x, GrlConstants.TEST_F32);
+		assertEquals(5,box.p1.y, GrlConstants.TEST_F32);
+		assertEquals(6,box.p1.z, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -73,12 +73,12 @@ public class TestBox3D_F32 {
 		Box3D_F32 box = new Box3D_F32();
 		box.set(boxA);
 
-		assertEquals(1,box.p0.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,box.p0.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,box.p0.z, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(4,box.p1.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,box.p1.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6,box.p1.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,box.p0.x, GrlConstants.TEST_F32);
+		assertEquals(2,box.p0.y, GrlConstants.TEST_F32);
+		assertEquals(3,box.p0.z, GrlConstants.TEST_F32);
+		assertEquals(4,box.p1.x, GrlConstants.TEST_F32);
+		assertEquals(5,box.p1.y, GrlConstants.TEST_F32);
+		assertEquals(6,box.p1.z, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -86,37 +86,37 @@ public class TestBox3D_F32 {
 		Box3D_F32 box = new Box3D_F32(1,2,3,4,5,6);
 
 		float expected = 3*3*3;
-		assertEquals(expected,box.area(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected,box.area(),GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void getLengthX() {
 		Box3D_F32 box = new Box3D_F32(1,2,3,4,6,8);
 
-		assertEquals(3,box.getLengthX(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3,box.getLengthX(),GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void getLengthY() {
 		Box3D_F32 box = new Box3D_F32(1,2,3,4,6,8);
 
-		assertEquals(4,box.getLengthY(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,box.getLengthY(),GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void getLengthZ() {
 		Box3D_F32 box = new Box3D_F32(1,2,3,4,6,8);
 
-		assertEquals(5,box.getLengthZ(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,box.getLengthZ(),GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void center() {
 		Point3D_F32 center = new Box3D_F32(1,2,3,4,5,6).center(null);
 
-		assertEquals(2.5f,center.x,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3.5f,center.y,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(4.5f,center.z,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2.5f,center.x,GrlConstants.TEST_F32);
+		assertEquals(3.5f,center.y,GrlConstants.TEST_F32);
+		assertEquals(4.5f,center.z,GrlConstants.TEST_F32);
 	}
 
 }

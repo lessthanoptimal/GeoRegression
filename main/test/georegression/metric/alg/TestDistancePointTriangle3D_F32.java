@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -60,8 +60,8 @@ public class TestDistancePointTriangle3D_F32 {
 
 	@Test
 	public void region0() {
-		assertEquals(2, distance(0.1f, 0.2f, 2), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2, distance(0.1f, 0.2f, -2), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2, distance(0.1f, 0.2f, 2), GrlConstants.TEST_F32);
+		assertEquals(2, distance(0.1f, 0.2f, -2), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -69,8 +69,8 @@ public class TestDistancePointTriangle3D_F32 {
 		Point3D_F32 P = new Point3D_F32(2,1,2);
 		float d = Distance3D_F32.distance(L12,P);
 
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -78,8 +78,8 @@ public class TestDistancePointTriangle3D_F32 {
 		Point3D_F32 P = new Point3D_F32(-0.2f,7.2f,2);
 		float d = P1.distance(P);
 
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -87,8 +87,8 @@ public class TestDistancePointTriangle3D_F32 {
 		Point3D_F32 P = new Point3D_F32(-0.1f,1.5f,0);
 		float d = Distance3D_F32.distance(L01,P);
 
-		assertEquals(d, distance(P.x, P.y, P.z), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(d, distance(P.x, P.y, P.z), GrlConstants.TEST_F32);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -96,8 +96,8 @@ public class TestDistancePointTriangle3D_F32 {
 		Point3D_F32 P = new Point3D_F32(-0.2f,-0.5f,2);
 		float d = P0.distance(P);
 
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -105,8 +105,8 @@ public class TestDistancePointTriangle3D_F32 {
 		Point3D_F32 P = new Point3D_F32(0.6f,0.5f,2);
 		float d = Distance3D_F32.distance(L20,P);
 
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -114,8 +114,8 @@ public class TestDistancePointTriangle3D_F32 {
 		Point3D_F32 P = new Point3D_F32(1.5f,1,2);
 		float d = P2.distance(P);
 
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
+		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F32);
 	}
 
 	public float distance( float x , float y , float z ) {

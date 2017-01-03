@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,19 +36,19 @@ public class TestInterpolateLinearSe2_F32 {
 
 		Se2_F32 found = new Se2_F32();
 		InterpolateLinearSe2_F32.interpolate(a,b,0,found);
-		assertEquals(1, found.T.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,found.T.y,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0,found.getYaw(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, found.T.x, GrlConstants.TEST_F32);
+		assertEquals(2,found.T.y,GrlConstants.TEST_F32);
+		assertEquals(0,found.getYaw(),GrlConstants.TEST_F32);
 
 		InterpolateLinearSe2_F32.interpolate(a,b,1,found);
-		assertEquals(4,found.T.x,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6,found.T.y,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0,found.getYaw(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,found.T.x,GrlConstants.TEST_F32);
+		assertEquals(6,found.T.y,GrlConstants.TEST_F32);
+		assertEquals(0,found.getYaw(),GrlConstants.TEST_F32);
 
 		InterpolateLinearSe2_F32.interpolate(a,b,0.25f,found);
-		assertEquals(1+0.25f*3,found.T.x,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2+0.25f*4,found.T.y,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0,found.getYaw(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1+0.25f*3,found.T.x,GrlConstants.TEST_F32);
+		assertEquals(2+0.25f*4,found.T.y,GrlConstants.TEST_F32);
+		assertEquals(0,found.getYaw(),GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -58,13 +58,13 @@ public class TestInterpolateLinearSe2_F32 {
 
 		Se2_F32 found = new Se2_F32();
 		InterpolateLinearSe2_F32.interpolate(a,b,0, found);
-		assertEquals(1,found.getYaw(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,found.getYaw(),GrlConstants.TEST_F32);
 
 		InterpolateLinearSe2_F32.interpolate(a,b,1, found);
-		assertEquals(1.5f,found.getYaw(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1.5f,found.getYaw(),GrlConstants.TEST_F32);
 
 		InterpolateLinearSe2_F32.interpolate(a,b,0.25f, found);
-		assertEquals(1+0.25f*0.5f,found.getYaw(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1+0.25f*0.5f,found.getYaw(),GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -74,13 +74,13 @@ public class TestInterpolateLinearSe2_F32 {
 
 		Se2_F32 found = new Se2_F32();
 		InterpolateLinearSe2_F32.interpolate(a,b,0,found);
-		assertEquals(0.2f,found.getYaw(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.2f,found.getYaw(),GrlConstants.TEST_F32);
 
 		InterpolateLinearSe2_F32.interpolate(a,b,1.0f,found);
-		assertEquals(-0.1f,found.getYaw(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-0.1f,found.getYaw(),GrlConstants.TEST_F32);
 
 		InterpolateLinearSe2_F32.interpolate(a,b,0.25f,found);
-		assertEquals(0.2f-0.25f*0.3f,found.getYaw(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.2f-0.25f*0.3f,found.getYaw(),GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -90,8 +90,8 @@ public class TestInterpolateLinearSe2_F32 {
 
 		Se2_F32 found = new Se2_F32();
 		InterpolateLinearSe2_F32.interpolate(a,b,0.25f,found);
-		assertEquals(UtilAngle.bound( (float)Math.PI - 0.1f + 0.25f * 0.3f),found.getYaw(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(UtilAngle.bound( (float)Math.PI - 0.1f + 0.25f * 0.3f),found.getYaw(),GrlConstants.TEST_F32);
 		InterpolateLinearSe2_F32.interpolate(a,b,0.5f,found);
-		assertEquals(UtilAngle.bound( (float)Math.PI - 0.1f + 0.5f * 0.3f), found.getYaw(), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(UtilAngle.bound( (float)Math.PI - 0.1f + 0.5f * 0.3f), found.getYaw(), GrlConstants.TEST_F32);
 	}
 }

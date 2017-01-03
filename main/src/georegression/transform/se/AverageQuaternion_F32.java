@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,9 +19,9 @@
 package georegression.transform.se;
 
 import georegression.struct.so.Quaternion_F32;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory_D64;
-import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
+import org.ejml.data.DenseMatrix32F;
+import org.ejml.factory.DecompositionFactory_D32;
+import org.ejml.interfaces.decomposition.EigenDecomposition_F32;
 
 import java.util.List;
 
@@ -34,9 +34,9 @@ import java.util.List;
  */
 public class AverageQuaternion_F32 {
 
-	DenseMatrix64F M = new DenseMatrix64F(4,4);
+	DenseMatrix32F M = new DenseMatrix32F(4,4);
 
-	EigenDecomposition_F64<DenseMatrix64F> eig = DecompositionFactory_D64.eig(4,true,true);
+	EigenDecomposition_F32<DenseMatrix32F> eig = DecompositionFactory_D32.eig(4,true,true);
 
 	public boolean process(List<Quaternion_F32> list , Quaternion_F32 average ) {
 
@@ -68,16 +68,16 @@ public class AverageQuaternion_F32 {
 
 		// the largest eigenvector is the quaternion
 		int largest = 0;
-		/**/double largestMag = eig.getEigenvalue(0).getMagnitude2();
+		float largestMag = eig.getEigenvalue(0).getMagnitude2();
 		for (int i = 1; i < 4; i++) {
-			/**/double mag = eig.getEigenvalue(i).getMagnitude2();
+			float mag = eig.getEigenvalue(i).getMagnitude2();
 			if( mag > largestMag ) {
 				largestMag = mag;
 				largest = i;
 			}
 		}
 
-		DenseMatrix64F v = eig.getEigenVector(largest);
+		DenseMatrix32F v = eig.getEigenVector(largest);
 
 		// this will be a normalized quaternion due to properties of eigenvectors
 		average.w = (float) v.get(0);

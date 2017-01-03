@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -45,17 +45,17 @@ public class TestTwistOps_F64 {
 
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
-				assertEquals(original.R.get(row,col), H.get(row,col), GrlConstants.DOUBLE_TEST_TOL);
+				assertEquals(original.R.get(row,col), H.get(row,col), GrlConstants.TEST_F64);
 			}
 		}
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(original.T.getIndex(i), H.get(i,3), GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(original.T.getIndex(i), H.get(i,3), GrlConstants.TEST_F64);
 		}
 		for (int i = 0; i < 3; i++) {
-			assertEquals(0, H.get(3,i), GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0, H.get(3,i), GrlConstants.TEST_F64);
 		}
-		assertEquals(1, H.get(3,3), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1, H.get(3,3), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -70,15 +70,15 @@ public class TestTwistOps_F64 {
 		DenseMatrix64F crossW = GeometryMath_F64.crossMatrix(twist.w,null);
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
-				assertEquals(crossW.get(row,col), H.get(row,col), GrlConstants.DOUBLE_TEST_TOL);
+				assertEquals(crossW.get(row,col), H.get(row,col), GrlConstants.TEST_F64);
 			}
 		}
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(twist.v.getIndex(i), H.get(i,3), GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(twist.v.getIndex(i), H.get(i,3), GrlConstants.TEST_F64);
 		}
 		for (int i = 0; i < 4; i++) {
-			assertEquals(0, H.get(3,i), GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0, H.get(3,i), GrlConstants.TEST_F64);
 		}
 	}
 
@@ -95,8 +95,8 @@ public class TestTwistOps_F64 {
 
 		Se3_F64 found = TwistOps_F64.exponential(twist,rod.theta,null);
 
-		assertTrue(MatrixFeatures_D64.isIdentical(expected.R,found.R, GrlConstants.DOUBLE_TEST_TOL));
-		assertTrue(found.T.norm()<= GrlConstants.DOUBLE_TEST_TOL);
+		assertTrue(MatrixFeatures_D64.isIdentical(expected.R,found.R, GrlConstants.TEST_F64));
+		assertTrue(found.T.norm()<= GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -111,8 +111,8 @@ public class TestTwistOps_F64 {
 
 		Se3_F64 found = TwistOps_F64.exponential(twist,0.45,null);
 
-		assertTrue(MatrixFeatures_D64.isIdentical(expected.R,found.R, GrlConstants.DOUBLE_TEST_TOL));
-		assertTrue(found.T.isIdentical(expected.T, GrlConstants.DOUBLE_TEST_TOL));
+		assertTrue(MatrixFeatures_D64.isIdentical(expected.R,found.R, GrlConstants.TEST_F64));
+		assertTrue(found.T.isIdentical(expected.T, GrlConstants.TEST_F64));
 	}
 
 	/**
@@ -135,8 +135,8 @@ public class TestTwistOps_F64 {
 		foundTwist.w.divide(theta);
 		foundTwist.v.divide(theta);
 
-		assertTrue(foundTwist.v.isIdentical(twist.v, GrlConstants.DOUBLE_TEST_TOL) );
-		assertTrue(foundTwist.w.isIdentical(twist.w, GrlConstants.DOUBLE_TEST_TOL) );
+		assertTrue(foundTwist.v.isIdentical(twist.v, GrlConstants.TEST_F64) );
+		assertTrue(foundTwist.w.isIdentical(twist.w, GrlConstants.TEST_F64) );
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class TestTwistOps_F64 {
 
 		TwistCoordinate_F64 twist1 = new TwistCoordinate_F64();
 		twist1.w.set(-1,1,2);
-		twist1.w.scale(GrlConstants.DOUBLE_TEST_TOL_SQRT);
+		twist1.w.scale(GrlConstants.TEST_SQ_F64);
 		twist1.v.set(2,0.1,-0.7);
 
 		double theta1 = 0.7;
@@ -159,8 +159,8 @@ public class TestTwistOps_F64 {
 
 		DenseMatrix64F diffR = new SimpleMatrix(motion1.R).transpose().mult(new SimpleMatrix(motion2.R)).getMatrix();
 
-		assertTrue(MatrixFeatures_D64.isIdentity(diffR, GrlConstants.DOUBLE_TEST_TOL) );
-		assertTrue(motion1.T.isIdentical(motion1.T, GrlConstants.DOUBLE_TEST_TOL) );
+		assertTrue(MatrixFeatures_D64.isIdentity(diffR, GrlConstants.TEST_F64) );
+		assertTrue(motion1.T.isIdentical(motion1.T, GrlConstants.TEST_F64) );
 
 	}
 }

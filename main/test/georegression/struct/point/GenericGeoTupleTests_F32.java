@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -64,9 +64,9 @@ public class GenericGeoTupleTests_F32<T extends GeoTuple_F32> {
 		T a = (T) seed.createNewInstance();
 
 		for( int i = 0; i < a.getDimension(); i++ ) {
-			assertEquals( 0, a.getIndex( i ), GrlConstants.FLOAT_TEST_TOL );
+			assertEquals( 0, a.getIndex( i ), GrlConstants.TEST_F32);
 			a.setIndex( i, 2 );
-			assertEquals( 2, a.getIndex( i ), GrlConstants.FLOAT_TEST_TOL );
+			assertEquals( 2, a.getIndex( i ), GrlConstants.TEST_F32);
 		}
 	}
 
@@ -79,7 +79,7 @@ public class GenericGeoTupleTests_F32<T extends GeoTuple_F32> {
 		}
 
 		float expected = (float)Math.sqrt( total );
-		assertEquals( expected, a.norm(), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected, a.norm(), GrlConstants.TEST_F32);
 	}
 
 	public void checkNormSq() {
@@ -90,7 +90,7 @@ public class GenericGeoTupleTests_F32<T extends GeoTuple_F32> {
 			total += ( i + 1 ) * ( i + 1 );
 		}
 
-		assertEquals( total, a.normSq(), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( total, a.normSq(), GrlConstants.TEST_F32);
 	}
 
 	public void checkCopy() {

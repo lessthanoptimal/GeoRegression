@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -60,8 +60,8 @@ public class TestFitSphereToPoints_F64 {
 		Sphere3D_F64 found = new Sphere3D_F64();
 		alg.fitModel(points, sphere, found);
 
-		assertEquals(0,sphere.center.distance(found.center),GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(sphere.radius,found.radius,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,sphere.center.distance(found.center),GrlConstants.TEST_F64);
+		assertEquals(sphere.radius,found.radius,GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -84,8 +84,8 @@ public class TestFitSphereToPoints_F64 {
 		Sphere3D_F64 found = new Sphere3D_F64();
 		alg.fitModel(points, initial, found);
 
-		assertEquals(0,sphere.center.distance(found.center),GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(sphere.radius, found.radius, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,sphere.center.distance(found.center),GrlConstants.TEST_F64);
+		assertEquals(sphere.radius, found.radius, GrlConstants.TEST_F64);
 	}
 
 	public static Point3D_F64 createPt( Sphere3D_F64 sphere , double phi , double theta ) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,9 +34,9 @@ public class TestGeoTuple3D_F32 {
 
 		a.plusIP(b);
 
-		assertEquals(5,a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(7,a.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(9, a.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,a.x, GrlConstants.TEST_F32);
+		assertEquals(7,a.y, GrlConstants.TEST_F32);
+		assertEquals(9, a.z, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -46,13 +46,13 @@ public class TestGeoTuple3D_F32 {
 
 		Dummy c = a.plus(b);
 
-		assertEquals(1,a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,a.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,a.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,a.x, GrlConstants.TEST_F32);
+		assertEquals(2,a.y, GrlConstants.TEST_F32);
+		assertEquals(3,a.z, GrlConstants.TEST_F32);
 
-		assertEquals(5,c.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(7,c.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(9,c.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(5,c.x, GrlConstants.TEST_F32);
+		assertEquals(7,c.y, GrlConstants.TEST_F32);
+		assertEquals(9,c.z, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -61,9 +61,9 @@ public class TestGeoTuple3D_F32 {
 
 		a.timesIP(2.5f);
 
-		assertEquals(2.5f,a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,a.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(7.5f,a.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2.5f,a.x, GrlConstants.TEST_F32);
+		assertEquals(5,a.y, GrlConstants.TEST_F32);
+		assertEquals(7.5f,a.z, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -72,9 +72,9 @@ public class TestGeoTuple3D_F32 {
 
 		a.scale(2.5f);
 
-		assertEquals(2.5f,a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,a.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(7.5f,a.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2.5f,a.x, GrlConstants.TEST_F32);
+		assertEquals(5,a.y, GrlConstants.TEST_F32);
+		assertEquals(7.5f,a.z, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -83,13 +83,13 @@ public class TestGeoTuple3D_F32 {
 
 		Dummy b = a.times(2.5f);
 
-		assertEquals(1,a.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,a.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,a.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,a.x, GrlConstants.TEST_F32);
+		assertEquals(2,a.y, GrlConstants.TEST_F32);
+		assertEquals(3,a.z, GrlConstants.TEST_F32);
 
-		assertEquals(2.5f,b.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,b.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(7.5f, b.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2.5f,b.x, GrlConstants.TEST_F32);
+		assertEquals(5,b.y, GrlConstants.TEST_F32);
+		assertEquals(7.5f, b.z, GrlConstants.TEST_F32);
 	}
 
 	public static class Dummy extends GeoTuple3D_F32<Dummy> {

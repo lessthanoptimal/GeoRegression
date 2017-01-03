@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,16 +35,16 @@ public class TestDistance2D_I32 {
 		// test inside the line
 		double found = Distance2D_I32.distance( new LineSegment2D_I32( -2, 0, 3, 5 ), new Point2D_I32( 2, 0 ) );
 		double expected = (double) UtilTrig_F64.distance(0, 2, 2, 0);
-		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
 
 		// test before the first end point
 		found = Distance2D_I32.distance( new LineSegment2D_I32( -2, 0, 3, 5 ), new Point2D_I32( -5, -5 ) );
 		expected = UtilTrig_F64.distance( -2, 0, -5, -5 );
-		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
 
 		// test after the second end point
 		found = Distance2D_I32.distance( new LineSegment2D_I32( -2, 0, 3, 5 ), new Point2D_I32( 10, 0 ) );
 		expected = UtilTrig_F64.distance( 3, 5, 10, 0 );
-		assertEquals( expected, found, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -117,7 +117,7 @@ public class MotionSe2PointSVD_F64 implements MotionTransformPoint<Se2_F64, Poin
 
 		// There are situations where R might not have a determinant of one and is instead
 		// a reflection is returned
-		/**/double det = CommonOps_D64.det(R);
+		double det = CommonOps_D64.det(R);
 		if( det < 0 ) {
 			for( int i = 0; i < 2; i++ )
 				V.set( i, 1, -V.get( i, 1 ) );

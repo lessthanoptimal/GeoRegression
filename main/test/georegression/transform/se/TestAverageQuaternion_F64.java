@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -47,7 +47,7 @@ public class TestAverageQuaternion_F64 {
 	public void one() {
 		Quaternion_F64 q = ConvertRotation3D_F64.eulerToQuaternion(EulerType.XYZ,0.1,-0.5,1.5,null);
 
-		List<Quaternion_F64> list = new ArrayList<Quaternion_F64>();
+		List<Quaternion_F64> list = new ArrayList<>();
 		list.add(q);
 
 		AverageQuaternion_F64 alg = new AverageQuaternion_F64();
@@ -55,14 +55,14 @@ public class TestAverageQuaternion_F64 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(q,found, GrlConstants.DOUBLE_TEST_TOL);
+		checkEquals(q,found, GrlConstants.TEST_F64);
 	}
 
 	@Test
 	public void two_same() {
 		Quaternion_F64 q = ConvertRotation3D_F64.eulerToQuaternion(EulerType.XYZ,0.1,-0.5,1.5,null);
 
-		List<Quaternion_F64> list = new ArrayList<Quaternion_F64>();
+		List<Quaternion_F64> list = new ArrayList<>();
 		list.add(q);
 		list.add(q);
 
@@ -71,7 +71,7 @@ public class TestAverageQuaternion_F64 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(q,found, GrlConstants.DOUBLE_TEST_TOL);
+		checkEquals(q,found, GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class TestAverageQuaternion_F64 {
 		double rotY = -0.5;
 		double rotZ = 1.5;
 
-		List<Quaternion_F64> list = new ArrayList<Quaternion_F64>();
+		List<Quaternion_F64> list = new ArrayList<>();
 		for (int i = 0; i < 40; i++) {
 			double noise = rand.nextGaussian()*0.03;
 			list.add( ConvertRotation3D_F64.eulerToQuaternion(EulerType.XYZ,rotX,rotY+noise,rotZ,null));
@@ -96,7 +96,7 @@ public class TestAverageQuaternion_F64 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(expected, found, Math.pow(GrlConstants.DOUBLE_TEST_TOL,0.3));
+		checkEquals(expected, found, Math.pow(GrlConstants.TEST_F64,0.3));
 	}
 
 	/**
@@ -112,6 +112,6 @@ public class TestAverageQuaternion_F64 {
 
 		Rodrigues_F64 error = ConvertRotation3D_F64.matrixToRodrigues(diff,null);
 
-		assertTrue( Math.abs(error.theta) <= errorTol );
+		assertTrue( Math.abs(error.theta) <= 10*errorTol );
 	}
 }

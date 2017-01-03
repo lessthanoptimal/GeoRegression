@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -94,11 +94,11 @@ public class TestRefineEllipseEuclideanLeastSquares {
 
 		EllipseRotated_F64 found = alg.getFound();
 
-		assertEquals( rotated.center.x , found.center.x , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( rotated.center.y , found.center.y , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( rotated.a , found.a , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( rotated.b , found.b , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( rotated.phi , found.phi , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( rotated.center.x , found.center.x , GrlConstants.TEST_F64);
+		assertEquals( rotated.center.y , found.center.y , GrlConstants.TEST_F64);
+		assertEquals( rotated.a , found.a , GrlConstants.TEST_F64);
+		assertEquals( rotated.b , found.b , GrlConstants.TEST_F64);
+		assertEquals( rotated.phi , found.phi , GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -121,12 +121,12 @@ public class TestRefineEllipseEuclideanLeastSquares {
 
 		EllipseRotated_F64 found = alg.getFound();
 
-		assertEquals( trueModel.center.x , found.center.x , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( trueModel.center.y , found.center.y , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( trueModel.a , found.a , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( trueModel.b , found.b , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( trueModel.center.x , found.center.x , GrlConstants.TEST_F64);
+		assertEquals( trueModel.center.y , found.center.y , GrlConstants.TEST_F64);
+		assertEquals( trueModel.a , found.a , GrlConstants.TEST_F64);
+		assertEquals( trueModel.b , found.b , GrlConstants.TEST_F64);
 		if( !isCircle )
-			assertEquals( trueModel.phi , found.phi , GrlConstants.DOUBLE_TEST_TOL );
+			assertEquals( trueModel.phi , found.phi , GrlConstants.TEST_F64);
 	}
 
 	public void checkNoisy( double x0 , double y0, double a, double b, double phi , double sigma ) {

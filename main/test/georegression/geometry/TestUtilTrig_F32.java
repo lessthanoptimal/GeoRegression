@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,7 +36,7 @@ public class TestUtilTrig_F32 {
 		Point2D_F32 b = new Point2D_F32(2,7);
 		
 		float found = UtilTrig_F32.dot(a,b);
-		assertEquals(-2+14,found, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-2+14,found, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -45,6 +45,6 @@ public class TestUtilTrig_F32 {
 		Point3D_F32 b = new Point3D_F32(2,7,0.5f);
 
 		float found = UtilTrig_F32.dot(a,b);
-		assertEquals(-2+14+1.5f,found, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-2+14+1.5f,found, GrlConstants.TEST_F32);
 	}
 }

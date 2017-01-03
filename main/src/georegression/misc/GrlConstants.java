@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,13 +37,13 @@ public class GrlConstants {
 	public static double PId2 = Math.PI/2.0;
 
 	// identifies the library version
-	public static String VERSION = "0.12";
+	public static String VERSION = "0.13";
 
 	// standard tolerances used in unit tests
-	public static float FLOAT_TEST_TOL = 1e-4f;
-	public static double DOUBLE_TEST_TOL = 1e-8;
-	public static double DOUBLE_TEST_TOL_SQRT = Math.sqrt(DOUBLE_TEST_TOL);
-	public static float FLOAT_TEST_TOL_SQRT = (float)Math.sqrt(FLOAT_TEST_TOL);
+	public static float TEST_F32 = 1e-4f;
+	public static double TEST_F64 = 1e-8;
+	public static double TEST_SQ_F64 = Math.sqrt(TEST_F64);
+	public static float TEST_SQ_F32 = (float)Math.sqrt(TEST_F32);
 
 	// tolerances for convergence
 	public static float FCONV_TOL_A = 1e-5f;

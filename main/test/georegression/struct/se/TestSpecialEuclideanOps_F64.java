@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -53,8 +53,8 @@ public class TestSpecialEuclideanOps_F64 {
 		SePointOps_F64.transform(se,original,expected);
 		AffinePointOps_F64.transform(affine, original, found);
 
-		assertEquals(expected.x,found.x,GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.y,found.y,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected.x,found.x,GrlConstants.TEST_F64);
+		assertEquals(expected.y,found.y,GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -98,9 +98,9 @@ public class TestSpecialEuclideanOps_F64 {
 		DenseMatrix64F found = new DenseMatrix64F( 3, 1 );
 		CommonOps_D64.mult( H, pt_m, found );
 
-		assertEquals( expected.x, found.get( 0, 0 ), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( expected.y, found.get( 1, 0 ), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 1, found.get( 2, 0 ), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( expected.x, found.get( 0, 0 ), GrlConstants.TEST_F64);
+		assertEquals( expected.y, found.get( 1, 0 ), GrlConstants.TEST_F64);
+		assertEquals( 1, found.get( 2, 0 ), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -111,11 +111,11 @@ public class TestSpecialEuclideanOps_F64 {
 
 		Se3_F64 found = SpecialEuclideanOps_F64.toSe3( H, null );
 
-		assertEquals( se.getX(), found.getX(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( se.getY(), found.getY(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( se.getZ(), found.getZ(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( se.getX(), found.getX(), GrlConstants.TEST_F64);
+		assertEquals( se.getY(), found.getY(), GrlConstants.TEST_F64);
+		assertEquals( se.getZ(), found.getZ(), GrlConstants.TEST_F64);
 
-		assertTrue( MatrixFeatures_D64.isIdentical( se.getR(), found.getR(), GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( MatrixFeatures_D64.isIdentical( se.getR(), found.getR(), GrlConstants.TEST_F64) );
 	}
 
 	@Test
@@ -126,10 +126,10 @@ public class TestSpecialEuclideanOps_F64 {
 
 		Se2_F64 found = SpecialEuclideanOps_F64.toSe2( H, null );
 
-		assertEquals( se.getX(), found.getX(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( se.getY(), found.getY(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( se.getCosineYaw(), found.getCosineYaw(), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( se.getSineYaw(), found.getSineYaw(), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( se.getX(), found.getX(), GrlConstants.TEST_F64);
+		assertEquals( se.getY(), found.getY(), GrlConstants.TEST_F64);
+		assertEquals( se.getCosineYaw(), found.getCosineYaw(), GrlConstants.TEST_F64);
+		assertEquals( se.getSineYaw(), found.getSineYaw(), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -147,6 +147,6 @@ public class TestSpecialEuclideanOps_F64 {
 		found.y += -3;
 		found.z += 4.4;
 
-		assertTrue( found.isIdentical( expected, GrlConstants.DOUBLE_TEST_TOL ) );
+		assertTrue( found.isIdentical( expected, GrlConstants.TEST_F64) );
 	}
 }

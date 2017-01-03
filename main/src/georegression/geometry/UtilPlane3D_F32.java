@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ import georegression.struct.plane.PlaneTangent3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DenseMatrix32F;
 
 /**
  * @author Peter Abeles
@@ -230,7 +230,7 @@ public class UtilPlane3D_F32 {
 		axisY.normalize();
 		axisZ.normalize();
 
-		DenseMatrix64F R = planeToWorld.R;
+		DenseMatrix32F R = planeToWorld.R;
 		R.data[0] = axisX.x; R.data[1] = axisY.x; R.data[2] = axisZ.x;
 		R.data[3] = axisX.y; R.data[4] = axisY.y; R.data[5] = axisZ.y;
 		R.data[6] = axisX.z; R.data[7] = axisY.z; R.data[8] = axisZ.z;

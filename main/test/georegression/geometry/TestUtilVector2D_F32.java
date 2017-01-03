@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,15 +34,15 @@ public class TestUtilVector2D_F32 {
 
 		Vector2D_F32 a = new Vector2D_F32(1,0);
 
-		assertEquals(Math.PI/2.0f,UtilVector2D_F32.acute(a,new Vector2D_F32(0, 1)), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(Math.PI, UtilVector2D_F32.acute(a,new Vector2D_F32(-1, 0)), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(Math.PI/2.0f,UtilVector2D_F32.acute(a,new Vector2D_F32(0, 1)), GrlConstants.TEST_F32);
+		assertEquals(Math.PI, UtilVector2D_F32.acute(a,new Vector2D_F32(-1, 0)), GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void acute_pts() {
 
-		assertEquals(Math.PI/2.0f, UtilVector2D_F32.acute(1,0, 0, 1), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(Math.PI    , UtilVector2D_F32.acute(1,0,-1, 0), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(Math.PI/2.0f, UtilVector2D_F32.acute(1,0, 0, 1), GrlConstants.TEST_F32);
+		assertEquals(Math.PI    , UtilVector2D_F32.acute(1,0,-1, 0), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -53,7 +53,7 @@ public class TestUtilVector2D_F32 {
 
 		Vector2D_F32 out = UtilVector2D_F32.minus(a,b,null);
 
-		assertEquals(a.x-b.x,out.x,GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(a.y-b.y,out.y,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(a.x-b.x,out.x,GrlConstants.TEST_F32);
+		assertEquals(a.y-b.y,out.y,GrlConstants.TEST_F32);
 	}
 }

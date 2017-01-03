@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -40,10 +40,10 @@ public class TestCodecPlaneGeneral3D_F32 {
 		alg.encode(plane,param);
 		alg.decode(param,found);
 
-		assertEquals(plane.A,found.A, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(plane.B,found.B, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(plane.C,found.C, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(plane.D,found.D, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(plane.A,found.A, GrlConstants.TEST_F32);
+		assertEquals(plane.B,found.B, GrlConstants.TEST_F32);
+		assertEquals(plane.C,found.C, GrlConstants.TEST_F32);
+		assertEquals(plane.D,found.D, GrlConstants.TEST_F32);
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -70,14 +70,14 @@ public class TestMatrix3x3_F32 {
 		m.set(1,2,3,4,5,6,7,8,9);
 		m.scale(2);
 
-		assertEquals(2,m.a11, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(4,m.a12, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6,m.a13, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(8,m.a21, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(10,m.a22, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(12,m.a23, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(14,m.a31, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(16,m.a32, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(18,m.a33, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,m.a11, GrlConstants.TEST_F32);
+		assertEquals(4,m.a12, GrlConstants.TEST_F32);
+		assertEquals(6,m.a13, GrlConstants.TEST_F32);
+		assertEquals(8,m.a21, GrlConstants.TEST_F32);
+		assertEquals(10,m.a22, GrlConstants.TEST_F32);
+		assertEquals(12,m.a23, GrlConstants.TEST_F32);
+		assertEquals(14,m.a31, GrlConstants.TEST_F32);
+		assertEquals(16,m.a32, GrlConstants.TEST_F32);
+		assertEquals(18,m.a33, GrlConstants.TEST_F32);
 	}
 }

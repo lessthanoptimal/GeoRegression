@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,8 +23,8 @@ import georegression.geometry.GeometryMath_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.MatrixFeatures_D64;
+import org.ejml.data.DenseMatrix32F;
+import org.ejml.ops.MatrixFeatures_D32;
 import org.ejml.simple.SimpleMatrix;
 import org.junit.Test;
 
@@ -41,21 +41,21 @@ public class TestTwistOps_F32 {
 		Se3_F32 original = new Se3_F32();
 		original.T.set(1,2,3);
 
-		DenseMatrix64F H = TwistOps_F32.homogenous(original,null);
+		DenseMatrix32F H = TwistOps_F32.homogenous(original,null);
 
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
-				assertEquals(original.R.get(row,col), H.get(row,col), GrlConstants.FLOAT_TEST_TOL);
+				assertEquals(original.R.get(row,col), H.get(row,col), GrlConstants.TEST_F32);
 			}
 		}
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(original.T.getIndex(i), H.get(i,3), GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(original.T.getIndex(i), H.get(i,3), GrlConstants.TEST_F32);
 		}
 		for (int i = 0; i < 3; i++) {
-			assertEquals(0, H.get(3,i), GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(0, H.get(3,i), GrlConstants.TEST_F32);
 		}
-		assertEquals(1, H.get(3,3), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, H.get(3,3), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -65,20 +65,20 @@ public class TestTwistOps_F32 {
 		twist.w.normalize();
 		twist.v.set(2,0.1f,-0.7f);
 
-		DenseMatrix64F H = TwistOps_F32.homogenous(twist,null);
+		DenseMatrix32F H = TwistOps_F32.homogenous(twist,null);
 
-		DenseMatrix64F crossW = GeometryMath_F32.crossMatrix(twist.w,null);
+		DenseMatrix32F crossW = GeometryMath_F32.crossMatrix(twist.w,null);
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
-				assertEquals(crossW.get(row,col), H.get(row,col), GrlConstants.FLOAT_TEST_TOL);
+				assertEquals(crossW.get(row,col), H.get(row,col), GrlConstants.TEST_F32);
 			}
 		}
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(twist.v.getIndex(i), H.get(i,3), GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(twist.v.getIndex(i), H.get(i,3), GrlConstants.TEST_F32);
 		}
 		for (int i = 0; i < 4; i++) {
-			assertEquals(0, H.get(3,i), GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(0, H.get(3,i), GrlConstants.TEST_F32);
 		}
 	}
 
@@ -95,8 +95,8 @@ public class TestTwistOps_F32 {
 
 		Se3_F32 found = TwistOps_F32.exponential(twist,rod.theta,null);
 
-		assertTrue(MatrixFeatures_D64.isIdentical(expected.R,found.R, GrlConstants.FLOAT_TEST_TOL));
-		assertTrue(found.T.norm()<= GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(MatrixFeatures_D32.isIdentical(expected.R,found.R, GrlConstants.TEST_F32));
+		assertTrue(found.T.norm()<= GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -111,8 +111,8 @@ public class TestTwistOps_F32 {
 
 		Se3_F32 found = TwistOps_F32.exponential(twist,0.45f,null);
 
-		assertTrue(MatrixFeatures_D64.isIdentical(expected.R,found.R, GrlConstants.FLOAT_TEST_TOL));
-		assertTrue(found.T.isIdentical(expected.T, GrlConstants.FLOAT_TEST_TOL));
+		assertTrue(MatrixFeatures_D32.isIdentical(expected.R,found.R, GrlConstants.TEST_F32));
+		assertTrue(found.T.isIdentical(expected.T, GrlConstants.TEST_F32));
 	}
 
 	/**
@@ -135,8 +135,8 @@ public class TestTwistOps_F32 {
 		foundTwist.w.divide(theta);
 		foundTwist.v.divide(theta);
 
-		assertTrue(foundTwist.v.isIdentical(twist.v, GrlConstants.FLOAT_TEST_TOL) );
-		assertTrue(foundTwist.w.isIdentical(twist.w, GrlConstants.FLOAT_TEST_TOL) );
+		assertTrue(foundTwist.v.isIdentical(twist.v, GrlConstants.TEST_F32) );
+		assertTrue(foundTwist.w.isIdentical(twist.w, GrlConstants.TEST_F32) );
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class TestTwistOps_F32 {
 
 		TwistCoordinate_F32 twist1 = new TwistCoordinate_F32();
 		twist1.w.set(-1,1,2);
-		twist1.w.scale(GrlConstants.FLOAT_TEST_TOL_SQRT);
+		twist1.w.scale(GrlConstants.TEST_SQ_F32);
 		twist1.v.set(2,0.1f,-0.7f);
 
 		float theta1 = 0.7f;
@@ -157,10 +157,10 @@ public class TestTwistOps_F32 {
 
 		Se3_F32 motion2 = TwistOps_F32.exponential(twist2,1.0f,null);
 
-		DenseMatrix64F diffR = new SimpleMatrix(motion1.R).transpose().mult(new SimpleMatrix(motion2.R)).getMatrix();
+		DenseMatrix32F diffR = new SimpleMatrix(motion1.R).transpose().mult(new SimpleMatrix(motion2.R)).getMatrix();
 
-		assertTrue(MatrixFeatures_D64.isIdentity(diffR, GrlConstants.FLOAT_TEST_TOL) );
-		assertTrue(motion1.T.isIdentical(motion1.T, GrlConstants.FLOAT_TEST_TOL) );
+		assertTrue(MatrixFeatures_D32.isIdentity(diffR, GrlConstants.TEST_F32) );
+		assertTrue(motion1.T.isIdentical(motion1.T, GrlConstants.TEST_F32) );
 
 	}
 }

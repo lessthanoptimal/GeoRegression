@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -280,9 +280,9 @@ public class ConvertRotation3D_F64 {
 	 */
 	private static double get( DenseMatrix64F M , int index ) {
 		if( index < 0 ) {
-			return (double)-M.data[-index-1];
+			return -M.data[-index-1];
 		} else {
-			return (double)M.data[index-1];
+			return M.data[index-1];
 		}
 	}
 
@@ -303,15 +303,15 @@ public class ConvertRotation3D_F64 {
 		//
 		// Designed to minimize numerical error by not dividing by very small numbers
 
-		double m00 = (double)R.unsafe_get(0,0);
-		double m01 = (double)R.unsafe_get(0,1);
-		double m02 = (double)R.unsafe_get(0,2);
-		double m10 = (double)R.unsafe_get(1,0);
-		double m11 = (double)R.unsafe_get(1,1);
-		double m12 = (double)R.unsafe_get(1,2);
-		double m20 = (double)R.unsafe_get(2,0);
-		double m21 = (double)R.unsafe_get(2,1);
-		double m22 = (double)R.unsafe_get(2,2);
+		double m00 = R.unsafe_get(0,0);
+		double m01 = R.unsafe_get(0,1);
+		double m02 = R.unsafe_get(0,2);
+		double m10 = R.unsafe_get(1,0);
+		double m11 = R.unsafe_get(1,1);
+		double m12 = R.unsafe_get(1,2);
+		double m20 = R.unsafe_get(2,0);
+		double m21 = R.unsafe_get(2,1);
+		double m22 = R.unsafe_get(2,2);
 
 		double trace = m00 + m11 + m22;
 
@@ -358,7 +358,7 @@ public class ConvertRotation3D_F64 {
 		// parts of this are from wikipedia
 		// http://en.wikipedia.org/wiki/Rotation_representation_%28mathematics%29#Rotation_matrix_.E2.86.94_Euler_axis.2Fangle
 
-		double diagSum = ( (double)(R.unsafe_get( 0, 0 ) + R.unsafe_get( 1, 1 ) + R.unsafe_get( 2, 2 )) - 1.0 ) / 2.0;
+		double diagSum = ( (R.unsafe_get( 0, 0 ) + R.unsafe_get( 1, 1 ) + R.unsafe_get( 2, 2 )) - 1.0 ) / 2.0;
 
 		double absDiagSum = Math.abs(diagSum);
 		
@@ -369,9 +369,9 @@ public class ConvertRotation3D_F64 {
 
 			// in cases where bottom is close to zero that means theta is also close to zero and the vector
 			// doesn't matter that much
-			rodrigues.unitAxisRotation.x = (double)(R.unsafe_get(2, 1) - R.unsafe_get(1, 2)) / bottom;
-			rodrigues.unitAxisRotation.y = (double)(R.unsafe_get(0, 2) - R.unsafe_get(2, 0)) / bottom;
-			rodrigues.unitAxisRotation.z = (double)(R.unsafe_get(1, 0) - R.unsafe_get(0, 1)) / bottom;
+			rodrigues.unitAxisRotation.x = (R.unsafe_get(2, 1) - R.unsafe_get(1, 2)) / bottom;
+			rodrigues.unitAxisRotation.y = (R.unsafe_get(0, 2) - R.unsafe_get(2, 0)) / bottom;
+			rodrigues.unitAxisRotation.z = (R.unsafe_get(1, 0) - R.unsafe_get(0, 1)) / bottom;
 
 			// in extreme underflow situations the result can be unnormalized
 			rodrigues.unitAxisRotation.normalize();
@@ -703,7 +703,7 @@ public class ConvertRotation3D_F64 {
 		CommonOps_D64.mult( svd.getU( null,false ), svd.getV( null,true ), R );
 
 		// svd does not guarantee that U anv V have positive determinants.
-		double det = (double)CommonOps_D64.det( R );
+		double det = CommonOps_D64.det( R );
 
 		if( det < 0 )
 			CommonOps_D64.scale( -1, R );

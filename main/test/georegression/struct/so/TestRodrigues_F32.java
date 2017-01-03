@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -39,9 +39,9 @@ public class TestRodrigues_F32 {
 		Rodrigues_F32 b = new Rodrigues_F32();
 		b.setParamVector(v.x*theta,v.y*theta,v.z*theta);
 		
-		assertEquals(a.theta,b.theta, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(a.unitAxisRotation.x,b.unitAxisRotation.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(a.unitAxisRotation.y,b.unitAxisRotation.y, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(a.unitAxisRotation.z,b.unitAxisRotation.z, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(a.theta,b.theta, GrlConstants.TEST_F32);
+		assertEquals(a.unitAxisRotation.x,b.unitAxisRotation.x, GrlConstants.TEST_F32);
+		assertEquals(a.unitAxisRotation.y,b.unitAxisRotation.y, GrlConstants.TEST_F32);
+		assertEquals(a.unitAxisRotation.z,b.unitAxisRotation.z, GrlConstants.TEST_F32);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.data.FixedMatrix3x3_64F;
 import org.ejml.ops.CommonOps_D64;
-import org.ejml.ops.ConvertMatrixType_F64;
+import org.ejml.ops.ConvertMatrixStruct_F64;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -57,13 +57,13 @@ public class TestAverageRotationMatrix_F64 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(q,found, GrlConstants.DOUBLE_TEST_TOL);
+		checkEquals(q,found, GrlConstants.TEST_F64);
 	}
 
 	@Test
 	public void one_F() {
 		FixedMatrix3x3_64F q = new FixedMatrix3x3_64F();
-		ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
+		ConvertMatrixStruct_F64.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
 
 		List<FixedMatrix3x3_64F> list = new ArrayList<>();
 		list.add(q);
@@ -73,7 +73,7 @@ public class TestAverageRotationMatrix_F64 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(q,found, GrlConstants.DOUBLE_TEST_TOL);
+		checkEquals(q,found, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -89,13 +89,13 @@ public class TestAverageRotationMatrix_F64 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(q,found, GrlConstants.DOUBLE_TEST_TOL);
+		checkEquals(q,found, GrlConstants.TEST_F64);
 	}
 
 	@Test
 	public void two_same_F() {
 		FixedMatrix3x3_64F q = new FixedMatrix3x3_64F();
-		ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
+		ConvertMatrixStruct_F64.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
 
 		List<FixedMatrix3x3_64F> list = new ArrayList<>();
 		list.add(q);
@@ -106,7 +106,7 @@ public class TestAverageRotationMatrix_F64 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(q,found, GrlConstants.DOUBLE_TEST_TOL);
+		checkEquals(q,found, GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class TestAverageRotationMatrix_F64 {
 
 		assertTrue(alg.process(list, found));
 
-		checkEquals(expected, found, Math.pow(GrlConstants.DOUBLE_TEST_TOL,0.3));
+		checkEquals(expected, found, Math.pow(GrlConstants.TEST_F64,0.3));
 	}
 
 	@Test
@@ -143,18 +143,18 @@ public class TestAverageRotationMatrix_F64 {
 		for (int i = 0; i < 40; i++) {
 			double noise = rand.nextGaussian() * 0.03;
 			FixedMatrix3x3_64F q = new FixedMatrix3x3_64F();
-			ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ,null),q);
+			ConvertMatrixStruct_F64.convert(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ,null),q);
 			list.add(q);
 		}
 		FixedMatrix3x3_64F expected = new FixedMatrix3x3_64F();
-		ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),expected);
+		ConvertMatrixStruct_F64.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),expected);
 
 		AverageRotationMatrix_F64 alg = new AverageRotationMatrix_F64();
 		FixedMatrix3x3_64F found = new FixedMatrix3x3_64F();
 
 		assertTrue(alg.process(list, found));
 
-		checkEquals(expected, found, Math.pow(GrlConstants.DOUBLE_TEST_TOL,0.3));
+		checkEquals(expected, found, Math.pow(GrlConstants.TEST_F64,0.3));
 	}
 
 	public static void checkEquals( DenseMatrix64F expected , DenseMatrix64F found , double errorTol ) {
@@ -170,8 +170,8 @@ public class TestAverageRotationMatrix_F64 {
 		DenseMatrix64F E = new DenseMatrix64F(3,3);
 		DenseMatrix64F F = new DenseMatrix64F(3,3);
 
-		ConvertMatrixType_F64.convert(expected,E);
-		ConvertMatrixType_F64.convert(found,F);
+		ConvertMatrixStruct_F64.convert(expected,E);
+		ConvertMatrixStruct_F64.convert(found,F);
 
 		DenseMatrix64F diff = new DenseMatrix64F(3,3);
 		CommonOps_D64.multTransA(E,F,diff);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -54,8 +54,8 @@ public class TestUtilPoint2D_F64 {
 
 		Point2D_F64 found = UtilPoint2D_F64.mean(list, null);
 
-		assertEquals(X/20, found.x , GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(Y/20, found.y , GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(X/20, found.x , GrlConstants.TEST_F64);
+		assertEquals(Y/20, found.y , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -73,8 +73,8 @@ public class TestUtilPoint2D_F64 {
 
 		Point2D_F64 found = UtilPoint2D_F64.mean(list,0,list.length, null);
 
-		assertEquals(X/20, found.x , GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(Y/20, found.y , GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(X/20, found.x , GrlConstants.TEST_F64);
+		assertEquals(Y/20, found.y , GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -86,8 +86,8 @@ public class TestUtilPoint2D_F64 {
 
 		UtilPoint2D_F64.mean(a,b,ave);
 
-		assertEquals((a.x+b.x)/2.0, ave.x , GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals((a.y+b.y)/2.0, ave.y , GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals((a.x+b.x)/2.0, ave.x , GrlConstants.TEST_F64);
+		assertEquals((a.y+b.y)/2.0, ave.y , GrlConstants.TEST_F64);
 	}
 
 	@Test
