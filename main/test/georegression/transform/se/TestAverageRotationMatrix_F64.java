@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,8 +24,8 @@ import georegression.struct.EulerType;
 import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.data.FixedMatrix3x3_64F;
-import org.ejml.ops.CommonOps;
-import org.ejml.ops.ConvertMatrixType;
+import org.ejml.ops.CommonOps_D64;
+import org.ejml.ops.ConvertMatrixType_F64;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class TestAverageRotationMatrix_F64 {
 	public void one_M() {
 		DenseMatrix64F q = eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null);
 
-		List<DenseMatrix64F> list = new ArrayList<DenseMatrix64F>();
+		List<DenseMatrix64F> list = new ArrayList<>();
 		list.add(q);
 
 		AverageRotationMatrix_F64 alg = new AverageRotationMatrix_F64();
@@ -63,9 +63,9 @@ public class TestAverageRotationMatrix_F64 {
 	@Test
 	public void one_F() {
 		FixedMatrix3x3_64F q = new FixedMatrix3x3_64F();
-		ConvertMatrixType.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
+		ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
 
-		List<FixedMatrix3x3_64F> list = new ArrayList<FixedMatrix3x3_64F>();
+		List<FixedMatrix3x3_64F> list = new ArrayList<>();
 		list.add(q);
 
 		AverageRotationMatrix_F64 alg = new AverageRotationMatrix_F64();
@@ -80,7 +80,7 @@ public class TestAverageRotationMatrix_F64 {
 	public void two_same_M() {
 		DenseMatrix64F q = eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null);
 
-		List<DenseMatrix64F> list = new ArrayList<DenseMatrix64F>();
+		List<DenseMatrix64F> list = new ArrayList<>();
 		list.add(q);
 		list.add(q);
 
@@ -95,9 +95,9 @@ public class TestAverageRotationMatrix_F64 {
 	@Test
 	public void two_same_F() {
 		FixedMatrix3x3_64F q = new FixedMatrix3x3_64F();
-		ConvertMatrixType.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
+		ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
 
-		List<FixedMatrix3x3_64F> list = new ArrayList<FixedMatrix3x3_64F>();
+		List<FixedMatrix3x3_64F> list = new ArrayList<>();
 		list.add(q);
 		list.add(q);
 
@@ -118,7 +118,7 @@ public class TestAverageRotationMatrix_F64 {
 		double rotY = -0.5;
 		double rotZ = 1.5;
 
-		List<DenseMatrix64F> list = new ArrayList<DenseMatrix64F>();
+		List<DenseMatrix64F> list = new ArrayList<>();
 		for (int i = 0; i < 40; i++) {
 			double noise = rand.nextGaussian() * 0.03;
 			list.add(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ, null));
@@ -139,15 +139,15 @@ public class TestAverageRotationMatrix_F64 {
 		double rotY = -0.5;
 		double rotZ = 1.5;
 
-		List<FixedMatrix3x3_64F> list = new ArrayList<FixedMatrix3x3_64F>();
+		List<FixedMatrix3x3_64F> list = new ArrayList<>();
 		for (int i = 0; i < 40; i++) {
 			double noise = rand.nextGaussian() * 0.03;
 			FixedMatrix3x3_64F q = new FixedMatrix3x3_64F();
-			ConvertMatrixType.convert(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ,null),q);
+			ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ,null),q);
 			list.add(q);
 		}
 		FixedMatrix3x3_64F expected = new FixedMatrix3x3_64F();
-		ConvertMatrixType.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),expected);
+		ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),expected);
 
 		AverageRotationMatrix_F64 alg = new AverageRotationMatrix_F64();
 		FixedMatrix3x3_64F found = new FixedMatrix3x3_64F();
@@ -159,7 +159,7 @@ public class TestAverageRotationMatrix_F64 {
 
 	public static void checkEquals( DenseMatrix64F expected , DenseMatrix64F found , double errorTol ) {
 		DenseMatrix64F diff = new DenseMatrix64F(3,3);
-		CommonOps.multTransA(expected,found,diff);
+		CommonOps_D64.multTransA(expected,found,diff);
 
 		Rodrigues_F64 error = ConvertRotation3D_F64.matrixToRodrigues(diff,null);
 
@@ -170,11 +170,11 @@ public class TestAverageRotationMatrix_F64 {
 		DenseMatrix64F E = new DenseMatrix64F(3,3);
 		DenseMatrix64F F = new DenseMatrix64F(3,3);
 
-		ConvertMatrixType.convert(expected,E);
-		ConvertMatrixType.convert(found,F);
+		ConvertMatrixType_F64.convert(expected,E);
+		ConvertMatrixType_F64.convert(found,F);
 
 		DenseMatrix64F diff = new DenseMatrix64F(3,3);
-		CommonOps.multTransA(E,F,diff);
+		CommonOps_D64.multTransA(E,F,diff);
 
 		Rodrigues_F64 error = ConvertRotation3D_F64.matrixToRodrigues(diff,null);
 

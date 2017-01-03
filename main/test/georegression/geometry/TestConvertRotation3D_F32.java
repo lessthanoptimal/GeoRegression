@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,9 +27,9 @@ import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Rodrigues_F32;
 import org.ejml.UtilEjml;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
-import org.ejml.ops.MatrixFeatures;
-import org.ejml.ops.RandomMatrices;
+import org.ejml.ops.CommonOps_D64;
+import org.ejml.ops.MatrixFeatures_D64;
+import org.ejml.ops.RandomMatrices_D64;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -57,7 +57,7 @@ public class TestConvertRotation3D_F32 {
 
 		DenseMatrix64F rod = ConvertRotation3D_F32.rodriguesToMatrix( r, null );
 
-		assertTrue( MatrixFeatures.isIdentical( rotZ, rod, GrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( MatrixFeatures_D64.isIdentical( rotZ, rod, GrlConstants.FLOAT_TEST_TOL ) );
 	}
 
 	@Test
@@ -75,8 +75,8 @@ public class TestConvertRotation3D_F32 {
 		DenseMatrix64F found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
 		DenseMatrix64F difference = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures.isIdentity(difference,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
+		CommonOps_D64.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures_D64.isIdentity(difference,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
 	}
 
 	@Test
@@ -89,9 +89,9 @@ public class TestConvertRotation3D_F32 {
 		DenseMatrix64F B = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
 
 		DenseMatrix64F C = new DenseMatrix64F(3,3);
-		CommonOps.multTransA(A,B,C);
+		CommonOps_D64.multTransA(A,B,C);
 
-		assertTrue(MatrixFeatures.isIdentity(C, GrlConstants.FLOAT_TEST_TOL));
+		assertTrue(MatrixFeatures_D64.isIdentity(C, GrlConstants.FLOAT_TEST_TOL));
 	}
 
 	@Test
@@ -106,9 +106,9 @@ public class TestConvertRotation3D_F32 {
 		DenseMatrix64F B = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
 
 		DenseMatrix64F C = new DenseMatrix64F(3,3);
-		CommonOps.multTransA(A,B,C);
+		CommonOps_D64.multTransA(A,B,C);
 
-		assertTrue(MatrixFeatures.isIdentity(C, GrlConstants.FLOAT_TEST_TOL));
+		assertTrue(MatrixFeatures_D64.isIdentity(C, GrlConstants.FLOAT_TEST_TOL));
 	}
 
 	@Test
@@ -126,8 +126,8 @@ public class TestConvertRotation3D_F32 {
 		DenseMatrix64F found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
 		DenseMatrix64F difference = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures.isIdentity(difference,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
+		CommonOps_D64.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures_D64.isIdentity(difference,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
 	}
 
 	@Test
@@ -171,9 +171,9 @@ public class TestConvertRotation3D_F32 {
 		DenseMatrix64F found = ConvertRotation3D_F32.quaternionToMatrix(q,null);
 
 		DenseMatrix64F result = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(R,found,result);
+		CommonOps_D64.multTransB(R,found,result);
 
-		assertTrue(MatrixFeatures.isIdentity(result,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
+		assertTrue(MatrixFeatures_D64.isIdentity(result,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
 	}
 
 	@Test
@@ -230,7 +230,7 @@ public class TestConvertRotation3D_F32 {
 		DenseMatrix64F M = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,eulerX,eulerY,eulerZ,null);
 		Rodrigues_F32 rod = ConvertRotation3D_F32.matrixToRodrigues(M, (Rodrigues_F32)null);
 		DenseMatrix64F found = ConvertRotation3D_F32.rodriguesToMatrix(rod,null);
-		assertTrue(MatrixFeatures.isIdentical(M,found,1e-6));
+		assertTrue(MatrixFeatures_D64.isIdentical(M,found,1e-6));
 	}
 
 	private void checkMatrixToRodrigues( Rodrigues_F32 input,
@@ -255,7 +255,7 @@ public class TestConvertRotation3D_F32 {
 	 */
 	@Test
 	public void matrixToRodrigues_case0() {
-		DenseMatrix64F R = UtilEjml.parseMatrix(
+		DenseMatrix64F R = UtilEjml.parseD64(
 						"1.00000000000000000000e+00f -5.42066399999221260000e-14f -3.16267800000013500000e-13f \n" +
 						"5.42066400000000000000e-14f 1.00000000000000040000e+00f 2.46136444559397200000e-13f \n" +
 						"3.16267800000000000000e-13f -2.46191955710628460000e-13f 1.00000000000000040000e+00f", 3);
@@ -267,7 +267,7 @@ public class TestConvertRotation3D_F32 {
 
 	@Test
 	public void matrixToRodrigues_case1() {
-		DenseMatrix64F R = UtilEjml.parseMatrix(
+		DenseMatrix64F R = UtilEjml.parseD64(
 						"0.99999999999999000000e+00f -5.42066399999221260000e-14f -3.16267800000013500000e-13f \n" +
 						"5.42066400000000000000e-14f 0.99999999999999000000e+00f 2.46136444559397200000e-13f \n" +
 						"3.16267800000000000000e-13f -2.46191955710628460000e-13f 0.99999999999999000000e+00f", 3);
@@ -333,8 +333,8 @@ public class TestConvertRotation3D_F32 {
 		DenseMatrix64F found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
 		DenseMatrix64F difference = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures.isIdentity(difference,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
+		CommonOps_D64.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures_D64.isIdentity(difference,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
 	}
 
 	/**
@@ -342,11 +342,11 @@ public class TestConvertRotation3D_F32 {
 	 */
 	@Test
 	public void approximateRotationMatrix_random() {
-		DenseMatrix64F Q = RandomMatrices.createRandom( 3, 3, rand );
+		DenseMatrix64F Q = RandomMatrices_D64.createRandom( 3, 3, rand );
 
 		DenseMatrix64F R = ConvertRotation3D_F32.approximateRotationMatrix( Q, null );
 
-		assertTrue( MatrixFeatures.isOrthogonal( R, GrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( MatrixFeatures_D64.isOrthogonal( R, GrlConstants.FLOAT_TEST_TOL ) );
 	}
 
 	/**
@@ -354,11 +354,11 @@ public class TestConvertRotation3D_F32 {
 	 */
 	@Test
 	public void approximateRotationMatrix_nochange() {
-		DenseMatrix64F Q = RandomMatrices.createOrthogonal( 3, 3, rand );
+		DenseMatrix64F Q = RandomMatrices_D64.createOrthogonal( 3, 3, rand );
 
 		DenseMatrix64F R = ConvertRotation3D_F32.approximateRotationMatrix( Q, null );
 
-		assertTrue( MatrixFeatures.isIdentical( Q, R, GrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( MatrixFeatures_D64.isIdentical( Q, R, GrlConstants.FLOAT_TEST_TOL ) );
 	}
 
 	@Test
@@ -412,8 +412,8 @@ public class TestConvertRotation3D_F32 {
 		DenseMatrix64F found = ConvertRotation3D_F32.quaternionToMatrix(q,null);
 
 		DenseMatrix64F result = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(expected,found,result);
-		assertTrue(MatrixFeatures.isIdentity(result, (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
+		CommonOps_D64.multTransB(expected,found,result);
+		assertTrue(MatrixFeatures_D64.isIdentity(result, (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
 	}
 
 	/**
@@ -457,8 +457,8 @@ public class TestConvertRotation3D_F32 {
 			DenseMatrix64F found = ConvertRotation3D_F32.quaternionToMatrix( q, null );
 
 			DenseMatrix64F difference = new DenseMatrix64F(3,3);
-			CommonOps.multTransB(expected,found,difference);
-			assertTrue(MatrixFeatures.isIdentity(difference,GrlConstants.FLOAT_TEST_TOL));
+			CommonOps_D64.multTransB(expected,found,difference);
+			assertTrue(MatrixFeatures_D64.isIdentity(difference,GrlConstants.FLOAT_TEST_TOL));
 		}
 	}
 

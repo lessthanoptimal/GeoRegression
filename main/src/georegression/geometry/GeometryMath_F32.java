@@ -20,7 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple2D_F32;
 import georegression.struct.GeoTuple3D_F32;
-import org.ejml.alg.dense.mult.VectorVectorMult;
+import org.ejml.alg.dense.mult.VectorVectorMult_D64;
 import org.ejml.data.DenseMatrix64F;
 
 
@@ -571,7 +571,7 @@ public class GeometryMath_F32 {
 		DenseMatrix64F m1 = new DenseMatrix64F( 3, 1, true, a.x, a.y, a.z );
 		DenseMatrix64F m2 = new DenseMatrix64F( 3, 1, true, b.x, b.y, b.z );
 
-		return (float) ( VectorVectorMult.innerProdA( m1, M, m2 ) );
+		return (float) ( VectorVectorMult_D64.innerProdA( m1, M, m2 ) );
 	}
 
 	/**
@@ -592,7 +592,7 @@ public class GeometryMath_F32 {
 		DenseMatrix64F m1 = new DenseMatrix64F( 3, 1, true, a.x, a.y, a.z );
 		DenseMatrix64F m2 = new DenseMatrix64F( 3, 1, true, b.x, b.y, b.z );
 
-		return (float) ( VectorVectorMult.innerProdTranA( m1, M, m2 ) );
+		return (float) ( VectorVectorMult_D64.innerProdTranA( m1, M, m2 ) );
 	}
 
 	/**
@@ -667,7 +667,7 @@ public class GeometryMath_F32 {
 		DenseMatrix64F m1 = new DenseMatrix64F( 3, 1, true, a.x, a.y, 1 );
 		DenseMatrix64F m2 = new DenseMatrix64F( 3, 1, true, b.x, b.y, 1 );
 
-		return (float) ( VectorVectorMult.innerProdA( m1, M, m2 ) );
+		return (float) ( VectorVectorMult_D64.innerProdA( m1, M, m2 ) );
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,7 +20,7 @@ package georegression.struct.homography;
 
 
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
+import org.ejml.ops.CommonOps_D64;
 
 /**
  * Various useful functions related to homographies.
@@ -143,7 +143,7 @@ public class UtilHomography {
 
 		DenseMatrix64F A = new DenseMatrix64F(3,3);
 		convert(orig,A);
-		CommonOps.invert(A);
+		CommonOps_D64.invert(A);
 		convert(A,inverted);
 
 		return inverted;

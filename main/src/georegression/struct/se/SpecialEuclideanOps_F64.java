@@ -23,7 +23,7 @@ import georegression.struct.EulerType;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
+import org.ejml.ops.CommonOps_D64;
 
 
 /**
@@ -39,7 +39,7 @@ public class SpecialEuclideanOps_F64 {
 	 * @param se The transform which is to be set to no motion.
 	 */
 	public static void setToNoMotion( Se3_F64 se ) {
-		CommonOps.setIdentity( se.getR() );
+		CommonOps_D64.setIdentity( se.getR() );
 		se.getT().set( 0, 0, 0 );
 	}
 
@@ -80,7 +80,7 @@ public class SpecialEuclideanOps_F64 {
 			ret.set( 3, 2, 0 );
 		}
 
-		CommonOps.insert( se.getR(), ret, 0, 0 );
+		CommonOps_D64.insert( se.getR(), ret, 0, 0 );
 		Vector3D_F64 T = se.getT();
 
 		ret.set( 0, 3, T.x );
@@ -107,7 +107,7 @@ public class SpecialEuclideanOps_F64 {
 
 		ret.setTranslation( (double) H.get( 0, 3 ), (double) H.get( 1, 3 ), (double) H.get( 2, 3 ) );
 
-		CommonOps.extract( H, 0, 3, 0, 3, ret.getR(), 0, 0 );
+		CommonOps_D64.extract( H, 0, 3, 0, 3, ret.getR(), 0, 0 );
 
 		return ret;
 	}

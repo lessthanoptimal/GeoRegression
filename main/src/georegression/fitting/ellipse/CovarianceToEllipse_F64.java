@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,8 +21,8 @@ package georegression.fitting.ellipse;
 import georegression.struct.point.Vector2D_F64;
 import org.ejml.data.Complex64F;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory;
-import org.ejml.interfaces.decomposition.EigenDecomposition;
+import org.ejml.factory.DecompositionFactory_D64;
+import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
 
 /**
  * Computes a containment ellipse given a covariance
@@ -31,7 +31,7 @@ import org.ejml.interfaces.decomposition.EigenDecomposition;
  */
 public class CovarianceToEllipse_F64 {
 
-	EigenDecomposition<DenseMatrix64F> eigen = DecompositionFactory.eig(2, true);
+	EigenDecomposition_F64<DenseMatrix64F> eigen = DecompositionFactory_D64.eig(2, true);
 	DenseMatrix64F Q = new DenseMatrix64F(2,2);
 
 	// major axis

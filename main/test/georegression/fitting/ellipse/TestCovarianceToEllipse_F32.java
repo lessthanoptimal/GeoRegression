@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,7 +21,7 @@ package georegression.fitting.ellipse;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
+import org.ejml.ops.CommonOps_D64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -62,8 +62,8 @@ public class TestCovarianceToEllipse_F32 {
 			DenseMatrix64F R = new DenseMatrix64F(2,2,true,c,-s,s,c);
 			DenseMatrix64F QR = new DenseMatrix64F(2,2);
 
-			CommonOps.mult(R,Q,QR);
-			CommonOps.multTransB(QR,R,Q);
+			CommonOps_D64.mult(R,Q,QR);
+			CommonOps_D64.multTransB(QR,R,Q);
 
 			alg.setCovariance((float)Q.get(0,0),(float)Q.get(0,1),(float)Q.get(1,1));
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,7 +20,7 @@ package georegression.fitting.se;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.se.Se3_F32;
-import org.ejml.ops.MatrixFeatures;
+import org.ejml.ops.MatrixFeatures_D64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -50,7 +50,7 @@ public class TestModelManagerSe3_F32 {
 
 		alg.copyModel(model,found);
 
-		assertTrue(MatrixFeatures.isEquals(model.getR(),found.getR()));
+		assertTrue(MatrixFeatures_D64.isEquals(model.getR(),found.getR()));
 		assertEquals(model.T.x,found.T.x,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(model.T.y,found.T.y,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(model.T.z,found.T.z,GrlConstants.FLOAT_TEST_TOL);

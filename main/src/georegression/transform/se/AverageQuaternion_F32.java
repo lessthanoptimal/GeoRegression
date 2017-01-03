@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,8 +20,8 @@ package georegression.transform.se;
 
 import georegression.struct.so.Quaternion_F32;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory;
-import org.ejml.interfaces.decomposition.EigenDecomposition;
+import org.ejml.factory.DecompositionFactory_D64;
+import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class AverageQuaternion_F32 {
 
 	DenseMatrix64F M = new DenseMatrix64F(4,4);
 
-	EigenDecomposition<DenseMatrix64F> eig = DecompositionFactory.eig(4,true,true);
+	EigenDecomposition_F64<DenseMatrix64F> eig = DecompositionFactory_D64.eig(4,true,true);
 
 	public boolean process(List<Quaternion_F32> list , Quaternion_F32 average ) {
 

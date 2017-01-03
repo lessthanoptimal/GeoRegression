@@ -23,9 +23,9 @@ import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Rodrigues_F32;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory;
+import org.ejml.factory.DecompositionFactory_D64;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
-import org.ejml.ops.CommonOps;
+import org.ejml.ops.CommonOps_D64;
 
 
 /**
@@ -533,8 +533,8 @@ public class ConvertRotation3D_F32 {
 
 		DenseMatrix64F A = new DenseMatrix64F( 3, 3 );
 
-		CommonOps.mult( R_b, R_a, A );
-		CommonOps.mult( R_c, A, R );
+		CommonOps_D64.mult( R_b, R_a, A );
+		CommonOps_D64.mult( R_c, A, R );
 
 		return R;
 	}
@@ -695,18 +695,18 @@ public class ConvertRotation3D_F32 {
 		R = checkDeclare3x3( R );
 
 		SingularValueDecomposition<DenseMatrix64F> svd =
-				DecompositionFactory.svd( orig.numRows, orig.numCols ,true,true,false);
+				DecompositionFactory_D64.svd( orig.numRows, orig.numCols ,true,true,false);
 
 		if( !svd.decompose( orig ) )
 			throw new RuntimeException( "SVD Failed" );
 
-		CommonOps.mult( svd.getU( null,false ), svd.getV( null,true ), R );
+		CommonOps_D64.mult( svd.getU( null,false ), svd.getV( null,true ), R );
 
 		// svd does not guarantee that U anv V have positive determinants.
-		float det = (float)CommonOps.det( R );
+		float det = (float)CommonOps_D64.det( R );
 
 		if( det < 0 )
-			CommonOps.scale( -1, R );
+			CommonOps_D64.scale( -1, R );
 
 		return R;
 	}

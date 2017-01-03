@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,7 +24,7 @@ import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Rodrigues_F32;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
+import org.ejml.ops.CommonOps_D64;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -108,7 +108,7 @@ public class TestAverageQuaternion_F32 {
 		DenseMatrix64F F = ConvertRotation3D_F32.quaternionToMatrix(found,null);
 
 		DenseMatrix64F diff = new DenseMatrix64F(3,3);
-		CommonOps.multTransA(E,F,diff);
+		CommonOps_D64.multTransA(E,F,diff);
 
 		Rodrigues_F32 error = ConvertRotation3D_F32.matrixToRodrigues(diff,null);
 

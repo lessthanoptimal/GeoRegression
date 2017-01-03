@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,10 +24,10 @@ import georegression.geometry.UtilPoint3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.se.Se3_F32;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory;
-import org.ejml.interfaces.decomposition.SingularValueDecomposition;
-import org.ejml.ops.CommonOps;
-import org.ejml.ops.SingularOps;
+import org.ejml.factory.DecompositionFactory_D64;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
+import org.ejml.ops.CommonOps_D64;
+import org.ejml.ops.SingularOps_D64;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 	// rigid body motion
 	private Se3_F32 motion = new Se3_F32();
 
-	SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(3, 3,true,true,false);
+	SingularValueDecomposition_F64<DenseMatrix64F> svd = DecompositionFactory_D64.svd(3, 3,true,true,false);
 
 	@Override
 	public Se3_F32 getTransformSrcToDst() {
@@ -104,9 +104,9 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 		DenseMatrix64F U = svd.getU(null,false);
 		DenseMatrix64F V = svd.getV(null,false);
 
-		SingularOps.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
+		SingularOps_D64.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
 		
-		if( CommonOps.det(U) < 0 ^ CommonOps.det(V) < 0 ) {
+		if( CommonOps_D64.det(U) < 0 ^ CommonOps_D64.det(V) < 0 ) {
 			// swap sign of the column 2
 			// this only needs to happen if data is planar
 			V.data[2] = -V.data[2];
@@ -114,7 +114,7 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 			V.data[8] = -V.data[8];
 		}
 
-		CommonOps.multTransB(U, V, motion.getR());
+		CommonOps_D64.multTransB(U, V, motion.getR());
 
 		Point3D_F32 temp = new Point3D_F32();
 		GeometryMath_F32.mult(motion.getR(),meanSrc,temp);

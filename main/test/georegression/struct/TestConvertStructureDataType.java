@@ -22,8 +22,8 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.*;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
-import org.ejml.ops.MatrixFeatures;
-import org.ejml.ops.RandomMatrices;
+import org.ejml.ops.MatrixFeatures_D64;
+import org.ejml.ops.RandomMatrices_D64;
 import org.junit.Test;
 
 import java.util.Random;
@@ -41,12 +41,12 @@ public class TestConvertStructureDataType {
 	@Test
 	public void convert_Se_64_32() {
 		Se3_F64 src = new Se3_F64();
-		RandomMatrices.setRandom(src.getR(),rand);
+		RandomMatrices_D64.setRandom(src.getR(),rand);
 		src.getT().set(rand.nextDouble(),rand.nextDouble(),rand.nextDouble());
 
 		Se3_F32 dst = ConvertFloatType.convert(src,null);
 
-		assertTrue(MatrixFeatures.isIdentical(src.getR(),dst.getR(), GrlConstants.FLOAT_TEST_TOL));
+		assertTrue(MatrixFeatures_D64.isIdentical(src.getR(),dst.getR(), GrlConstants.FLOAT_TEST_TOL));
 		assertEquals(src.T.x,dst.T.x,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(src.T.y,dst.T.y,GrlConstants.FLOAT_TEST_TOL);
 		assertEquals(src.T.z,dst.T.z,GrlConstants.FLOAT_TEST_TOL);

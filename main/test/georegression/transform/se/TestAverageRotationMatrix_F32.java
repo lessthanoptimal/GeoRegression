@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,8 +24,8 @@ import georegression.struct.EulerType;
 import georegression.struct.so.Rodrigues_F32;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.data.FixedMatrix3x3_64F;
-import org.ejml.ops.CommonOps;
-import org.ejml.ops.ConvertMatrixType;
+import org.ejml.ops.CommonOps_D64;
+import org.ejml.ops.ConvertMatrixType_F64;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -63,9 +63,9 @@ public class TestAverageRotationMatrix_F32 {
 	@Test
 	public void one_F() {
 		FixedMatrix3x3_64F q = new FixedMatrix3x3_64F();
-		ConvertMatrixType.convert(eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null),q);
+		ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null),q);
 
-		List<FixedMatrix3x3_64F> list = new ArrayList<FixedMatrix3x3_64F>();
+		List<FixedMatrix3x3_64F> list = new ArrayList<>();
 		list.add(q);
 
 		AverageRotationMatrix_F32 alg = new AverageRotationMatrix_F32();
@@ -95,9 +95,9 @@ public class TestAverageRotationMatrix_F32 {
 	@Test
 	public void two_same_F() {
 		FixedMatrix3x3_64F q = new FixedMatrix3x3_64F();
-		ConvertMatrixType.convert(eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null),q);
+		ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null),q);
 
-		List<FixedMatrix3x3_64F> list = new ArrayList<FixedMatrix3x3_64F>();
+		List<FixedMatrix3x3_64F> list = new ArrayList<>();
 		list.add(q);
 		list.add(q);
 
@@ -139,15 +139,15 @@ public class TestAverageRotationMatrix_F32 {
 		float rotY = -0.5f;
 		float rotZ = 1.5f;
 
-		List<FixedMatrix3x3_64F> list = new ArrayList<FixedMatrix3x3_64F>();
+		List<FixedMatrix3x3_64F> list = new ArrayList<>();
 		for (int i = 0; i < 40; i++) {
 			float noise = (float)rand.nextGaussian() * 0.03f;
 			FixedMatrix3x3_64F q = new FixedMatrix3x3_64F();
-			ConvertMatrixType.convert(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ,null),q);
+			ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ,null),q);
 			list.add(q);
 		}
 		FixedMatrix3x3_64F expected = new FixedMatrix3x3_64F();
-		ConvertMatrixType.convert(eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null),expected);
+		ConvertMatrixType_F64.convert(eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null),expected);
 
 		AverageRotationMatrix_F32 alg = new AverageRotationMatrix_F32();
 		FixedMatrix3x3_64F found = new FixedMatrix3x3_64F();
@@ -159,7 +159,7 @@ public class TestAverageRotationMatrix_F32 {
 
 	public static void checkEquals( DenseMatrix64F expected , DenseMatrix64F found , float errorTol ) {
 		DenseMatrix64F diff = new DenseMatrix64F(3,3);
-		CommonOps.multTransA(expected,found,diff);
+		CommonOps_D64.multTransA(expected,found,diff);
 
 		Rodrigues_F32 error = ConvertRotation3D_F32.matrixToRodrigues(diff,null);
 
@@ -170,11 +170,11 @@ public class TestAverageRotationMatrix_F32 {
 		DenseMatrix64F E = new DenseMatrix64F(3,3);
 		DenseMatrix64F F = new DenseMatrix64F(3,3);
 
-		ConvertMatrixType.convert(expected,E);
-		ConvertMatrixType.convert(found,F);
+		ConvertMatrixType_F64.convert(expected,E);
+		ConvertMatrixType_F64.convert(found,F);
 
 		DenseMatrix64F diff = new DenseMatrix64F(3,3);
-		CommonOps.multTransA(E,F,diff);
+		CommonOps_D64.multTransA(E,F,diff);
 
 		Rodrigues_F32 error = ConvertRotation3D_F32.matrixToRodrigues(diff,null);
 

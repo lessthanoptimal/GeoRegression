@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,7 +23,7 @@ import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.EulerType;
 import georegression.struct.se.Se3_F64;
-import org.ejml.ops.MatrixFeatures;
+import org.ejml.ops.MatrixFeatures_D64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -68,7 +68,7 @@ public class TestInterpolateLinearSe3_F64 {
 			assertEquals(expectedX,c.T.x, GrlConstants.DOUBLE_TEST_TOL);
 			assertEquals(expectedY,c.T.y, GrlConstants.DOUBLE_TEST_TOL);
 			assertEquals(expectedZ,c.T.z, GrlConstants.DOUBLE_TEST_TOL);
-			assertTrue(MatrixFeatures.isIdentical(c.getR(),a.getR(),GrlConstants.DOUBLE_TEST_TOL));
+			assertTrue(MatrixFeatures_D64.isIdentical(c.getR(),a.getR(),GrlConstants.DOUBLE_TEST_TOL));
 		}
 	}
 

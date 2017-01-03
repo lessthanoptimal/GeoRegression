@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,7 +22,7 @@ import georegression.fitting.MotionTransformPoint;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.LinearSolverFactory;
+import org.ejml.factory.LinearSolverFactory_D64;
 import org.ejml.interfaces.linsol.LinearSolver;
 
 import java.util.List;
@@ -44,7 +44,7 @@ public class MotionAffinePoint2D_F64 implements MotionTransformPoint<Affine2D_F6
 	Affine2D_F64 model = new Affine2D_F64();
 
 	public MotionAffinePoint2D_F64() {
-		solver = LinearSolverFactory.leastSquares(100, 2);
+		solver = LinearSolverFactory_D64.leastSquares(100, 2);
 		x = new DenseMatrix64F( 3, 2 );
 		A = new DenseMatrix64F( 0, 3 );
 		y = new DenseMatrix64F( 0, 2 );

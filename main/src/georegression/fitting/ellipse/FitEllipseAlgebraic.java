@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,11 +21,11 @@ package georegression.fitting.ellipse;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.EllipseQuadratic_F64;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory;
-import org.ejml.factory.LinearSolverFactory;
+import org.ejml.factory.DecompositionFactory_D64;
+import org.ejml.factory.LinearSolverFactory_D64;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
 import org.ejml.interfaces.linsol.LinearSolver;
-import org.ejml.ops.CommonOps;
+import org.ejml.ops.CommonOps_D64;
 
 import java.util.List;
 
@@ -71,8 +71,8 @@ public class FitEllipseAlgebraic {
 	private DenseMatrix64F Ta1 = new DenseMatrix64F(3,1);
 	private DenseMatrix64F S2_tran = new DenseMatrix64F(3,3);
 
-	private LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(3);
-	private EigenDecomposition<DenseMatrix64F> eigen = DecompositionFactory.eig(3,true,false);
+	private LinearSolver<DenseMatrix64F> solver = LinearSolverFactory_D64.linear(3);
+	private EigenDecomposition<DenseMatrix64F> eigen = DecompositionFactory_D64.eig(3,true,false);
 
 	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
 
@@ -95,23 +95,23 @@ public class FitEllipseAlgebraic {
 		}
 
 		// Compute scatter matrix
-		CommonOps.multTransA(D1, D1, S1); // S1 = D1'*D1
-		CommonOps.multTransA(D1, D2, S2); // S2 = D1'*D2
-		CommonOps.multTransA(D2, D2, S3); // S3 = D2'*D2
+		CommonOps_D64.multTransA(D1, D1, S1); // S1 = D1'*D1
+		CommonOps_D64.multTransA(D1, D2, S2); // S2 = D1'*D2
+		CommonOps_D64.multTransA(D2, D2, S3); // S3 = D2'*D2
 
 		// for getting a2 from a1
 		// T = -inv(S3)*S2'
 		if( !solver.setA(S3) )
 			return false;
 
-		CommonOps.transpose(S2,S2_tran);
-		CommonOps.changeSign(S2_tran);
+		CommonOps_D64.transpose(S2,S2_tran);
+		CommonOps_D64.changeSign(S2_tran);
 		solver.solve(S2_tran, T);
 
 		// Compute reduced scatter matrix
 		// M = S1 + S2*T
-		CommonOps.mult(S2, T, M);
-		CommonOps.add(M,S1,M);
+		CommonOps_D64.mult(S2, T, M);
+		CommonOps_D64.add(M,S1,M);
 
 		// Premultiply by inv(C1). inverse of constraint matrix
 		for( int col = 0; col < 3; col++ ) {
@@ -132,7 +132,7 @@ public class FitEllipseAlgebraic {
 			return false;
 
 		// ellipse coefficients
-		CommonOps.mult(T,a1,Ta1);
+		CommonOps_D64.mult(T,a1,Ta1);
 
 		ellipse.a = a1.data[0];
 		ellipse.b = a1.data[1]/2;

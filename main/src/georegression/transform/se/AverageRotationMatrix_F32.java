@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,13 +19,13 @@
 package georegression.transform.se;
 
 import georegression.struct.so.Quaternion_F32;
-import org.ejml.alg.fixed.FixedOps3;
+import org.ejml.alg.fixed.FixedOps3_D64;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.data.FixedMatrix3x3_64F;
-import org.ejml.factory.DecompositionFactory;
-import org.ejml.interfaces.decomposition.SingularValueDecomposition;
-import org.ejml.ops.CommonOps;
-import org.ejml.ops.ConvertMatrixType;
+import org.ejml.factory.DecompositionFactory_D64;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
+import org.ejml.ops.CommonOps_D64;
+import org.ejml.ops.ConvertMatrixType_F64;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class AverageRotationMatrix_F32 {
 	DenseMatrix64F M = new DenseMatrix64F(3,3);
 	FixedMatrix3x3_64F F = new FixedMatrix3x3_64F();
 
-	SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(3,3,true,true,true);
+	SingularValueDecomposition_F64<DenseMatrix64F> svd = DecompositionFactory_D64.svd(3,3,true,true,true);
 
 	public boolean process(List<DenseMatrix64F> list , DenseMatrix64F average ) {
 
@@ -67,18 +67,18 @@ public class AverageRotationMatrix_F32 {
 			M.data[6]  += m.data[6]; M.data[7]  += m.data[7]; M.data[8]  += m.data[8];
 		}
 
-		CommonOps.divide(M,list.size());
+		CommonOps_D64.divide(M,list.size());
 
 		if( !svd.decompose(M) )
 			return false;
 
-		CommonOps.multTransB(svd.getU(null,false),svd.getV(null,false),average);
+		CommonOps_D64.multTransB(svd.getU(null,false),svd.getV(null,false),average);
 
 		// determinant should be +1
-		/**/double det = CommonOps.det(average);
+		/**/double det = CommonOps_D64.det(average);
 
 		if( det < 0 )
-			CommonOps.scale(-1,average);
+			CommonOps_D64.scale(-1,average);
 
 		return true;
 	}
@@ -90,7 +90,7 @@ public class AverageRotationMatrix_F32 {
 		if( average == null )
 			throw new IllegalArgumentException("average is null");
 
-		FixedOps3.fill(F,0);
+		FixedOps3_D64.fill(F,0);
 
 		for (int i = 0; i < list.size(); i++) {
 			FixedMatrix3x3_64F m = list.get(i);
@@ -104,21 +104,21 @@ public class AverageRotationMatrix_F32 {
 			F.a31  += m.a31; F.a32  += m.a32; F.a33  += m.a33;
 		}
 
-		FixedOps3.divide(F,list.size());
+		FixedOps3_D64.divide(F,list.size());
 
-		ConvertMatrixType.convert(F,M);
+		ConvertMatrixType_F64.convert(F,M);
 		if( !svd.decompose(M) )
 			return false;
 
-		CommonOps.multTransB(svd.getU(null,false),svd.getV(null,false),M);
+		CommonOps_D64.multTransB(svd.getU(null,false),svd.getV(null,false),M);
 
 		// determinant should be +1
-		/**/double det = CommonOps.det(M);
+		/**/double det = CommonOps_D64.det(M);
 
 		if( det < 0 )
-			CommonOps.scale(-1,M);
+			CommonOps_D64.scale(-1,M);
 
-		ConvertMatrixType.convert(M,average);
+		ConvertMatrixType_F64.convert(M,average);
 
 		return true;
 	}

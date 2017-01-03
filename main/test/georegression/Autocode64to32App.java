@@ -42,6 +42,7 @@ public class Autocode64to32App extends RecursiveConvert {
 
 		ConvertFile32From64 converter = new ConvertFile32From64(true);
 
+		converter.replacePattern("_64F", "_32F");
 		converter.replacePattern("DOUBLE_TEST_TOL", "FLOAT_TEST_TOL");
 		converter.replacePattern("GrlConstants.PI", "GrlConstants.F_PI");
 		converter.replacePattern("GrlConstants.EPS", "GrlConstants.F_EPS");

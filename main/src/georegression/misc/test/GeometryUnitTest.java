@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,7 +27,7 @@ import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
-import org.ejml.ops.MatrixFeatures;
+import org.ejml.ops.MatrixFeatures_D64;
 
 
 /**
@@ -38,13 +38,13 @@ public class GeometryUnitTest {
 	public static void assertEquals( Se3_F64 expected, Se3_F64 found, double tolTran, double tolRotation ) {
 		assertEquals( expected.getTranslation(), found.getTranslation(), tolTran );
 
-		assertTrue(MatrixFeatures.isIdentical(expected.R, found.R, tolRotation), "rotation");
+		assertTrue(MatrixFeatures_D64.isIdentical(expected.R, found.R, tolRotation), "rotation");
 	}
 
 	public static void assertEquals( Se3_F32 expected, Se3_F32 found, double tolTran, double tolRotation ) {
 		assertEquals( expected.getTranslation(), found.getTranslation(), tolTran );
 
-		assertTrue(MatrixFeatures.isIdentical(expected.R,found.R,tolRotation),"rotation");
+		assertTrue(MatrixFeatures_D64.isIdentical(expected.R,found.R,tolRotation),"rotation");
 	}
 
 	public static void assertEquals( Se2_F64 expected, Se2_F64 found, double tolTran, double tolyaw ) {

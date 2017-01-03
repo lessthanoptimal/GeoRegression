@@ -25,8 +25,8 @@ import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.so.Rodrigues_F32;
 import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
-import org.ejml.ops.MatrixFeatures;
+import org.ejml.ops.CommonOps_D64;
+import org.ejml.ops.MatrixFeatures_D64;
 
 /**
  * Operations related to twists.
@@ -50,7 +50,7 @@ public class TwistOps_F32 {
 		} else {
 			H.reshape(4,4);
 		}
-		CommonOps.insert(transform.R,H,0,0);
+		CommonOps_D64.insert(transform.R,H,0,0);
 		H.data[3] = transform.T.x;
 		H.data[7] = transform.T.y;
 		H.data[11] = transform.T.z;
@@ -105,7 +105,7 @@ public class TwistOps_F32 {
 		float w_norm = twist.w.norm();
 
 		if( w_norm == 0.0f ) {
-			CommonOps.setIdentity(motion.R);
+			CommonOps_D64.setIdentity(motion.R);
 			motion.T.x = twist.v.x*theta;
 			motion.T.y = twist.v.y*theta;
 			motion.T.z = twist.v.z*theta;
@@ -157,7 +157,7 @@ public class TwistOps_F32 {
 		if( twist == null )
 			twist = new TwistCoordinate_F32();
 
-		if(MatrixFeatures.isIdentity(motion.R, GrlConstants.FLOAT_TEST_TOL)) {
+		if(MatrixFeatures_D64.isIdentity(motion.R, GrlConstants.FLOAT_TEST_TOL)) {
 			twist.w.set(0,0,0);
 			twist.v.set(motion.T);
 		} else {
@@ -168,12 +168,12 @@ public class TwistOps_F32 {
 			float theta = rod.theta;
 
 			// A = (I-SO)*hat(w) + w*w'*theta
-			DenseMatrix64F A = CommonOps.identity(3);
-			CommonOps.subtract(A,motion.R, A);
+			DenseMatrix64F A = CommonOps_D64.identity(3);
+			CommonOps_D64.subtract(A,motion.R, A);
 
 			DenseMatrix64F w_hat = GeometryMath_F32.crossMatrix(twist.w,null);
 			DenseMatrix64F tmp = A.copy();
-			CommonOps.mult(tmp,w_hat,A);
+			CommonOps_D64.mult(tmp,w_hat,A);
 
 			Vector3D_F32 w = twist.w;
 			A.data[0] += w.x*w.x*theta; A.data[1] += w.x*w.y*theta; A.data[2] += w.x*w.z*theta;
@@ -187,7 +187,7 @@ public class TwistOps_F32 {
 
 			DenseMatrix64F x = new DenseMatrix64F(3,1);
 
-			CommonOps.solve(A,y,x);
+			CommonOps_D64.solve(A,y,x);
 
 			twist.w.scale(rod.theta);
 			twist.v.x = (float) x.data[0];
