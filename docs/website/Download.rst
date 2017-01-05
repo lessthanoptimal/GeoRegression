@@ -5,7 +5,7 @@ Download
 Stable Release
 --------------
 
-The latest stable release is available on `Source Forge <https://sourceforge.net/projects/ddogleg/>`_ with direct links provided below for your convenience:
+The latest stable release is available on `Source Forge <https://sourceforge.net/projects/georegression/>`_ with direct links provided below for your convenience:
 
 * `Source Code <http://sourceforge.net/projects/georegression/files/0.12/georegression-v0.12-src.zip/download>`_
 * `Precompiled Jar and Dependencies <http://sourceforge.net/projects/georegression/files/0.12/georegression-v0.12-libs.zip/download>`_
