@@ -35,7 +35,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestFitEllipseWeightedAlgebraic {
+public class TestFitEllipseAlgebraic_F64 {
 
 	Random rand = new Random(234);
 
@@ -45,8 +45,8 @@ public class TestFitEllipseWeightedAlgebraic {
 	}
 
 	/**
-	 * Give it points which perfectly describe an ellipse.   This isn't actually an easy case.  See comments
-	 * in random section.
+	 * Give it points which are nearly perfectly describe an ellipse.
+	 * Perfect points is actually a hard case.  See comments in random section.
 	 */
 	@Test
 	public void checkEllipse() {
@@ -59,22 +59,21 @@ public class TestFitEllipseWeightedAlgebraic {
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(x0,y0,a,b,phi);
 
 		List<Point2D_F64> points = new ArrayList<Point2D_F64>();
-		double weights[] = new double[21];
 		for( int i = 0; i < 20; i++ ) {
 			double theta = 2.0*(double)Math.PI*i/20;
-			points.add(UtilEllipse_F64.computePoint(theta, rotated, null));
-			weights[i] = 0.3;
-//			System.out.println(points.get(i).x+" "+points.get(i).y);
-		}
+			Point2D_F64 p = UtilEllipse_F64.computePoint(theta, rotated, null);
 
-		// throw in a point that's way off but has no weight and should be ignored
-		points.add( new Point2D_F64(20,34));
-		weights[20] = 0;
+			// give it just a little bit of noise so that it will converge
+			p.x += rand.nextGaussian()*GrlConstants.TEST_F64;
+			p.y += rand.nextGaussian()*GrlConstants.TEST_F64;
+
+			points.add(p);
+		}
 
 		EllipseQuadratic_F64 expected = UtilEllipse_F64.convert(rotated,null);
 
-		FitEllipseWeightedAlgebraic alg = new FitEllipseWeightedAlgebraic();
-		assertTrue(alg.process(points,weights));
+		FitEllipseAlgebraic_F64 alg = new FitEllipseAlgebraic_F64();
+		assertTrue(alg.process(points));
 
 		EllipseQuadratic_F64 found = alg.getEllipse();
 
@@ -87,58 +86,6 @@ public class TestFitEllipseWeightedAlgebraic {
 		assertEquals(expected.d,found.d, GrlConstants.TEST_F64);
 		assertEquals(expected.e,found.e, GrlConstants.TEST_F64);
 		assertEquals(expected.f,found.f, GrlConstants.TEST_F64);
-	}
-
-	/**
-	 * A bad point is given and see if the estimated error gets worse as it's weight is increased
-	 */
-	@Test
-	public void checkErrorIncreasedWithWeight() {
-		checkEllipse(0,0,3,1.5,0);
-		checkEllipse(1,2,3,1.5,0);
-		checkEllipse(1,2,3,1.5,0.25);
-	}
-	public void checkErrorIncreasedWithWeight( double x0 , double y0, double a, double b, double phi ) {
-		EllipseRotated_F64 rotated = new EllipseRotated_F64(x0,y0,a,b,phi);
-
-		double errorWeight[] = new double[]{0,0.1,0.5,2.0};
-		double error[] = new double[4];
-
-		for (int i = 0; i < error.length; i++) {
-			List<Point2D_F64> points = new ArrayList<Point2D_F64>();
-			double weights[] = new double[21];
-			for( int j = 0; j < 20; j++ ) {
-				double theta = 2.0*(double)Math.PI*j/20;
-				points.add(UtilEllipse_F64.computePoint(theta, rotated, null));
-				weights[j] = 1.0;
-			}
-
-			// throw in a point that's way off but has no weight and should be ignored
-			points.add( new Point2D_F64(20,34));
-			weights[20] = errorWeight[i];
-
-			EllipseQuadratic_F64 expected = UtilEllipse_F64.convert(rotated,null);
-
-			FitEllipseWeightedAlgebraic alg = new FitEllipseWeightedAlgebraic();
-			assertTrue(alg.process(points,weights));
-
-			EllipseQuadratic_F64 found = alg.getEllipse();
-
-			normalize(expected);
-			normalize(found);
-
-			error[i] = Math.abs(expected.a - found.a);
-			error[i] += Math.abs(expected.b - found.b);
-			error[i] += Math.abs(expected.c - found.c);
-			error[i] += Math.abs(expected.d - found.d);
-			error[i] += Math.abs(expected.e - found.e);
-			error[i] += Math.abs(expected.f - found.f);
-		}
-
-
-		assertTrue( error[1] > error[0]);
-		assertTrue( error[2] > error[1]);
-		assertTrue( error[3] > error[2]);
 	}
 
 	/**

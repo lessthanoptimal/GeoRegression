@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -50,7 +50,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class FitEllipseWeightedAlgebraic {
+public class FitEllipseAlgebraic_F64 {
 
 	// qudratic part of design matrix
 	private DenseMatrix64F D1 = new DenseMatrix64F(3,1);
@@ -76,18 +76,7 @@ public class FitEllipseWeightedAlgebraic {
 
 	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
 
-	/**
-	 * Fits the ellipse to the line
-	 *
-	 * @param points Set of points that are to be fit
-	 * @param weights Weight or importance of each point.  Each weight must be a positive number
-	 * @return true if successful or false if it failed
-	 */
-	public boolean process( List<Point2D_F64> points , double weights[] ) {
-		if( points.size() > weights.length ) {
-			throw new IllegalArgumentException("Weights must be as long as the number of points. "+
-					points.size()+" vs "+weights.length);
-		}
+	public boolean process( List<Point2D_F64> points ) {
 		int N = points.size();
 
 		// Construct the design matrices.  linear and quadratic
@@ -95,15 +84,14 @@ public class FitEllipseWeightedAlgebraic {
 		int index = 0;
 		for( int i = 0; i < N; i++ ) {
 			Point2D_F64 p = points.get(i);
-			double w = weights[i];
 
 			// fill in each row one at a time
-			D1.data[index]   = w*p.x*p.x;
-			D2.data[index++] = w*p.x;
-			D1.data[index]   = w*p.x*p.y;
-			D2.data[index++] = w*p.y;
-			D1.data[index]   = w*p.y*p.y;
-			D2.data[index++] = w;
+			D1.data[index]   = p.x*p.x;
+			D2.data[index++] = p.x;
+			D1.data[index]   = p.x*p.y;
+			D2.data[index++] = p.y;
+			D1.data[index]   = p.y*p.y;
+			D2.data[index++] = 1;
 		}
 
 		// Compute scatter matrix
