@@ -25,6 +25,10 @@ import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
+import georegression.struct.shapes.EllipseQuadratic_F32;
+import georegression.struct.shapes.EllipseQuadratic_F64;
+import georegression.struct.shapes.EllipseRotated_F32;
+import georegression.struct.shapes.EllipseRotated_F64;
 import org.ejml.ops.ConvertMatrixData;
 
 /**
@@ -188,6 +192,62 @@ public class ConvertFloatType {
 
 		dst.x = src.x;
 		dst.y = src.y;
+
+		return dst;
+	}
+
+	public static EllipseRotated_F32 convert(EllipseRotated_F64 src , EllipseRotated_F32 dst ) {
+		if( dst == null ) {
+			dst = new EllipseRotated_F32();
+		}
+
+		convert(src.center, dst.center);
+		dst.a = (float)src.a;
+		dst.b = (float)src.b;
+		dst.phi = (float)src.phi;
+
+		return dst;
+	}
+
+	public static EllipseRotated_F64 convert( EllipseRotated_F32 src , EllipseRotated_F64 dst ) {
+		if( dst == null ) {
+			dst = new EllipseRotated_F64();
+		}
+
+		convert(src.center, dst.center);
+		dst.a = src.a;
+		dst.b = src.b;
+		dst.phi = src.phi;
+
+		return dst;
+	}
+
+	public static EllipseQuadratic_F32 convert(EllipseQuadratic_F64 src , EllipseQuadratic_F32 dst ) {
+		if( dst == null ) {
+			dst = new EllipseQuadratic_F32();
+		}
+
+		dst.a = (float)src.a;
+		dst.b = (float)src.b;
+		dst.c = (float)src.c;
+		dst.d = (float)src.d;
+		dst.e = (float)src.e;
+		dst.f = (float)src.f;
+
+		return dst;
+	}
+
+	public static EllipseQuadratic_F64 convert( EllipseQuadratic_F32 src , EllipseQuadratic_F64 dst ) {
+		if( dst == null ) {
+			dst = new EllipseQuadratic_F64();
+		}
+
+		dst.a = src.a;
+		dst.b = src.b;
+		dst.c = src.c;
+		dst.d = src.d;
+		dst.e = src.e;
+		dst.f = src.f;
 
 		return dst;
 	}
