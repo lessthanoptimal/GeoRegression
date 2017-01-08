@@ -23,7 +23,7 @@ import georegression.geometry.GeometryMath_F32;
 import georegression.geometry.UtilPoint3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.se.Se3_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.factory.DecompositionFactory_D32;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F32;
 import org.ejml.ops.CommonOps_D32;
@@ -48,7 +48,7 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 	// rigid body motion
 	private Se3_F32 motion = new Se3_F32();
 
-	SingularValueDecomposition_F32<DenseMatrix32F> svd = DecompositionFactory_D32.svd(3, 3,true,true,false);
+	SingularValueDecomposition_F32<RowMatrix_F32> svd = DecompositionFactory_D32.svd(3, 3,true,true,false);
 
 	@Override
 	public Se3_F32 getTransformSrcToDst() {
@@ -96,13 +96,13 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 			s33 += dtz*dfz;
 		}
 
-		DenseMatrix32F Sigma = new DenseMatrix32F( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
+		RowMatrix_F32 Sigma = new RowMatrix_F32( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
 
 		if( !svd.decompose(Sigma) )
 			throw new RuntimeException("SVD failed!?");
 
-		DenseMatrix32F U = svd.getU(null,false);
-		DenseMatrix32F V = svd.getV(null,false);
+		RowMatrix_F32 U = svd.getU(null,false);
+		RowMatrix_F32 V = svd.getV(null,false);
 
 		SingularOps_D32.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
 		

@@ -22,7 +22,7 @@ import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.EulerType;
 import georegression.struct.point.Vector3D_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.junit.Test;
 
 import java.util.Random;
@@ -60,7 +60,7 @@ public class TestConvertCoordinates3D_F32 {
 	}
 
 	private void latlonToUnitVector(float lat, float lon) {
-		DenseMatrix32F M = ConvertRotation3D_F32.eulerToMatrix(EulerType.YXZ,lat,0,lon,null);
+		RowMatrix_F32 M = ConvertRotation3D_F32.eulerToMatrix(EulerType.YXZ,lat,0,lon,null);
 
 		Vector3D_F32 expected = new Vector3D_F32();
 		GeometryMath_F32.mult(M,new Vector3D_F32(1,0,0),expected);

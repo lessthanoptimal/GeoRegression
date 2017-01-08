@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,7 +22,7 @@ import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.EulerType;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Vector3D_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.ops.CommonOps_D64;
 
 
@@ -71,9 +71,9 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
-	public static DenseMatrix64F toHomogeneous( Se3_F64 se, DenseMatrix64F ret ) {
+	public static RowMatrix_F64 toHomogeneous( Se3_F64 se, RowMatrix_F64 ret ) {
 		if( ret == null )
-			ret = new DenseMatrix64F( 4, 4 );
+			ret = new RowMatrix_F64( 4, 4 );
 		else {
 			ret.set( 3, 0, 0 );
 			ret.set( 3, 1, 0 );
@@ -98,7 +98,7 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F64 transform.
 	 */
-	public static Se3_F64 toSe3(DenseMatrix64F H, Se3_F64 ret ) {
+	public static Se3_F64 toSe3(RowMatrix_F64 H, Se3_F64 ret ) {
 		if( H.numCols != 4 || H.numRows != 4 )
 			throw new IllegalArgumentException( "The homogeneous matrix must be 4 by 4 by definition." );
 
@@ -119,9 +119,9 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
-	public static DenseMatrix64F toHomogeneous( Se2_F64 se, DenseMatrix64F ret ) {
+	public static RowMatrix_F64 toHomogeneous( Se2_F64 se, RowMatrix_F64 ret ) {
 		if( ret == null )
-			ret = new DenseMatrix64F( 3, 3 );
+			ret = new RowMatrix_F64( 3, 3 );
 		else {
 			ret.set( 2, 0, 0 );
 			ret.set( 2, 1, 0 );
@@ -148,7 +148,7 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F64 transform.
 	 */
-	public static Se2_F64 toSe2( DenseMatrix64F H, Se2_F64 ret ) {
+	public static Se2_F64 toSe2( RowMatrix_F64 H, Se2_F64 ret ) {
 		if( H.numCols != 3 || H.numRows != 3 )
 			throw new IllegalArgumentException( "The homogeneous matrix must be 3 by 3 by definition." );
 

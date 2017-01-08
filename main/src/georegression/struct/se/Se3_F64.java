@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,7 +20,7 @@ package georegression.struct.se;
 
 import georegression.geometry.GeometryMath_F64;
 import georegression.struct.point.Vector3D_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.ops.CommonOps_D64;
 
 
@@ -36,7 +36,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	public static final long serialVersionUID = 1L;
 
 	// rotation matrix
-	public DenseMatrix64F R;
+	public RowMatrix_F64 R;
 	// translation vector
 	public Vector3D_F64 T;
 
@@ -54,7 +54,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param R Rotation matrix.
 	 * @param T Translation.
 	 */
-	public Se3_F64( DenseMatrix64F R, Vector3D_F64 T ) {
+	public Se3_F64( RowMatrix_F64 R, Vector3D_F64 T ) {
 		this( R, T, false );
 	}
 
@@ -66,7 +66,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param T	  Translation.
 	 * @param assign If a reference is saved (true) or a copy made (false).
 	 */
-	public Se3_F64( DenseMatrix64F R, Vector3D_F64 T, boolean assign ) {
+	public Se3_F64( RowMatrix_F64 R, Vector3D_F64 T, boolean assign ) {
 		if( assign ) {
 			this.R = R;
 			this.T = T;
@@ -91,7 +91,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 *
 	 * @param R New rotation.
 	 */
-	public void setRotation( DenseMatrix64F R ) {
+	public void setRotation( RowMatrix_F64 R ) {
 		this.R.set( R );
 	}
 
@@ -117,7 +117,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * Returns the rotation matrix
 	 * @return rotation matrix
 	 */
-	public DenseMatrix64F getRotation() {
+	public RowMatrix_F64 getRotation() {
 		return R;
 	}
 
@@ -129,7 +129,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		return T;
 	}
 
-	public DenseMatrix64F getR() {
+	public RowMatrix_F64 getR() {
 		return R;
 	}
 

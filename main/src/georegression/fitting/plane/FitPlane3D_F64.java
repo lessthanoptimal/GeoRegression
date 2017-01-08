@@ -20,7 +20,7 @@ package georegression.fitting.plane;
 
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.factory.DecompositionFactory_D64;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 
@@ -33,10 +33,10 @@ import java.util.List;
  */
 public class FitPlane3D_F64 {
 
-	SingularValueDecomposition_F64<DenseMatrix64F> svd = DecompositionFactory_D64.svd(3,10,false, true, false);
+	SingularValueDecomposition_F64<RowMatrix_F64> svd = DecompositionFactory_D64.svd(3,10,false, true, false);
 
-	DenseMatrix64F A = new DenseMatrix64F(3,3);
-	DenseMatrix64F V = new DenseMatrix64F(3,3);
+	RowMatrix_F64 A = new RowMatrix_F64(3,3);
+	RowMatrix_F64 V = new RowMatrix_F64(3,3);
 
 	/**
 	 * SVD based method for fitting a plane to a set of points.  The plane's equation is returned

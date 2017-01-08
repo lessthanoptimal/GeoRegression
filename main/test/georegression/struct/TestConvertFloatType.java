@@ -22,8 +22,8 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.*;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix32F;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F32;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.ops.RandomMatrices_D64;
 import org.junit.Test;
 
@@ -95,7 +95,7 @@ public class TestConvertFloatType {
 		assertEquals(src.y, dst.y, GrlConstants.TEST_F32);
 	}
 
-	public static boolean isIdentical(DenseMatrix64F a, DenseMatrix32F b, double tol) {
+	public static boolean isIdentical(RowMatrix_F64 a, RowMatrix_F32 b, double tol) {
 		if (a.numRows != b.numRows || a.numCols != b.numCols) {
 			return false;
 		}

@@ -20,7 +20,7 @@ package georegression.fitting.ellipse;
 
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.EllipseQuadratic_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.factory.DecompositionFactory_D32;
 import org.ejml.factory.LinearSolverFactory_D32;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
@@ -53,26 +53,26 @@ import java.util.List;
 public class FitEllipseWeightedAlgebraic_F32 {
 
 	// qudratic part of design matrix
-	private DenseMatrix32F D1 = new DenseMatrix32F(3,1);
+	private RowMatrix_F32 D1 = new RowMatrix_F32(3,1);
 	// linear part of design matrix
-	private DenseMatrix32F D2 = new DenseMatrix32F(3,1);
+	private RowMatrix_F32 D2 = new RowMatrix_F32(3,1);
 
 	// quadratic part of scatter matrix
-	private DenseMatrix32F S1 = new DenseMatrix32F(3,3);
+	private RowMatrix_F32 S1 = new RowMatrix_F32(3,3);
 	// combined part of scatter matrix
-	private DenseMatrix32F S2 = new DenseMatrix32F(3,3);
+	private RowMatrix_F32 S2 = new RowMatrix_F32(3,3);
 	//linear part of scatter matrix
-	private DenseMatrix32F S3 = new DenseMatrix32F(3,3);
+	private RowMatrix_F32 S3 = new RowMatrix_F32(3,3);
 	// Reduced scatter matrix
-	private DenseMatrix32F M = new DenseMatrix32F(3,3);
+	private RowMatrix_F32 M = new RowMatrix_F32(3,3);
 
 	// storage for intermediate steps
-	private DenseMatrix32F T = new DenseMatrix32F(3,3);
-	private DenseMatrix32F Ta1 = new DenseMatrix32F(3,1);
-	private DenseMatrix32F S2_tran = new DenseMatrix32F(3,3);
+	private RowMatrix_F32 T = new RowMatrix_F32(3,3);
+	private RowMatrix_F32 Ta1 = new RowMatrix_F32(3,1);
+	private RowMatrix_F32 S2_tran = new RowMatrix_F32(3,3);
 
-	private LinearSolver<DenseMatrix32F> solver = LinearSolverFactory_D32.linear(3);
-	private EigenDecomposition<DenseMatrix32F> eigen = DecompositionFactory_D32.eig(3,true,false);
+	private LinearSolver<RowMatrix_F32> solver = LinearSolverFactory_D32.linear(3);
+	private EigenDecomposition<RowMatrix_F32> eigen = DecompositionFactory_D32.eig(3,true,false);
 
 	private EllipseQuadratic_F32 ellipse = new EllipseQuadratic_F32();
 
@@ -139,7 +139,7 @@ public class FitEllipseWeightedAlgebraic_F32 {
 		if( !eigen.decompose(M) )
 			return false;
 
-		DenseMatrix32F a1 = selectBestEigenVector();
+		RowMatrix_F32 a1 = selectBestEigenVector();
 		if( a1 == null )
 			return false;
 
@@ -156,13 +156,13 @@ public class FitEllipseWeightedAlgebraic_F32 {
 		return true;
 	}
 
-	private DenseMatrix32F selectBestEigenVector() {
+	private RowMatrix_F32 selectBestEigenVector() {
 
 		int bestIndex = -1;
 		float bestCond = Float.MAX_VALUE;
 
 		for( int i = 0; i < eigen.getNumberOfEigenvalues(); i++ ) {
-			DenseMatrix32F v = eigen.getEigenVector(i);
+			RowMatrix_F32 v = eigen.getEigenVector(i);
 
 			if( v == null ) // TODO WTF?!?!
 				continue;

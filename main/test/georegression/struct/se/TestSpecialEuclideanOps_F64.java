@@ -27,7 +27,7 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.transform.affine.AffinePointOps_F64;
 import georegression.transform.se.SePointOps_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.ops.CommonOps_D64;
 import org.ejml.ops.MatrixFeatures_D64;
 import org.junit.Test;
@@ -61,12 +61,12 @@ public class TestSpecialEuclideanOps_F64 {
 	public void toHomogeneous_3D() {
 		Se3_F64 se = SpecialEuclideanOps_F64.setEulerXYZ( 0.1, 2, -0.3, 2, -3, 4.4, null );
 
-		DenseMatrix64F H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
+		RowMatrix_F64 H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
 
 		assertEquals( 4, H.numCols );
 		assertEquals( 4, H.numRows );
 
-		DenseMatrix64F R = se.getR();
+		RowMatrix_F64 R = se.getR();
 
 		for( int i = 0; i < 3; i++ ) {
 			for( int j = 0; j < 3; j++ ) {
@@ -85,17 +85,17 @@ public class TestSpecialEuclideanOps_F64 {
 		Point2D_F64 pt = new Point2D_F64( 3.4, -9.21 );
 		Se2_F64 se = new Se2_F64( -3, 6.9, -1.3 );
 
-		DenseMatrix64F H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
+		RowMatrix_F64 H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
 
 		Point2D_F64 expected = SePointOps_F64.transform( se, pt, null );
 
 		// convert the point into homogeneous matrix notation
-		DenseMatrix64F pt_m = new DenseMatrix64F( 3, 1 );
+		RowMatrix_F64 pt_m = new RowMatrix_F64( 3, 1 );
 		pt_m.set( 0, 0, pt.x );
 		pt_m.set( 1, 0, pt.y );
 		pt_m.set( 2, 0, 1 );
 
-		DenseMatrix64F found = new DenseMatrix64F( 3, 1 );
+		RowMatrix_F64 found = new RowMatrix_F64( 3, 1 );
 		CommonOps_D64.mult( H, pt_m, found );
 
 		assertEquals( expected.x, found.get( 0, 0 ), GrlConstants.TEST_F64);
@@ -107,7 +107,7 @@ public class TestSpecialEuclideanOps_F64 {
 	public void toSe3_F64() {
 		Se3_F64 se = SpecialEuclideanOps_F64.setEulerXYZ( 0.1, 2, -0.3, 2, -3, 4.4, null );
 
-		DenseMatrix64F H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
+		RowMatrix_F64 H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
 
 		Se3_F64 found = SpecialEuclideanOps_F64.toSe3( H, null );
 
@@ -122,7 +122,7 @@ public class TestSpecialEuclideanOps_F64 {
 	public void toSe2() {
 		Se2_F64 se = new Se2_F64( -3, 6.9, -1.3 );
 
-		DenseMatrix64F H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
+		RowMatrix_F64 H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
 
 		Se2_F64 found = SpecialEuclideanOps_F64.toSe2( H, null );
 
@@ -140,7 +140,7 @@ public class TestSpecialEuclideanOps_F64 {
 
 		Point3D_F64 expected = SePointOps_F64.transform( se, orig, null );
 
-		DenseMatrix64F R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0.1, 2, -0.3, se.getR() );
+		RowMatrix_F64 R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0.1, 2, -0.3, se.getR() );
 
 		Point3D_F64 found = GeometryMath_F64.mult( R, orig, (Point3D_F64) null );
 		found.x += 2;

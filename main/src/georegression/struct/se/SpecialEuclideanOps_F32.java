@@ -22,7 +22,7 @@ import georegression.geometry.ConvertRotation3D_F32;
 import georegression.struct.EulerType;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.point.Vector3D_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.ops.CommonOps_D32;
 
 
@@ -71,9 +71,9 @@ public class SpecialEuclideanOps_F32 {
 	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
-	public static DenseMatrix32F toHomogeneous( Se3_F32 se, DenseMatrix32F ret ) {
+	public static RowMatrix_F32 toHomogeneous( Se3_F32 se, RowMatrix_F32 ret ) {
 		if( ret == null )
-			ret = new DenseMatrix32F( 4, 4 );
+			ret = new RowMatrix_F32( 4, 4 );
 		else {
 			ret.set( 3, 0, 0 );
 			ret.set( 3, 1, 0 );
@@ -98,7 +98,7 @@ public class SpecialEuclideanOps_F32 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F32 transform.
 	 */
-	public static Se3_F32 toSe3(DenseMatrix32F H, Se3_F32 ret ) {
+	public static Se3_F32 toSe3(RowMatrix_F32 H, Se3_F32 ret ) {
 		if( H.numCols != 4 || H.numRows != 4 )
 			throw new IllegalArgumentException( "The homogeneous matrix must be 4 by 4 by definition." );
 
@@ -119,9 +119,9 @@ public class SpecialEuclideanOps_F32 {
 	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
-	public static DenseMatrix32F toHomogeneous( Se2_F32 se, DenseMatrix32F ret ) {
+	public static RowMatrix_F32 toHomogeneous( Se2_F32 se, RowMatrix_F32 ret ) {
 		if( ret == null )
-			ret = new DenseMatrix32F( 3, 3 );
+			ret = new RowMatrix_F32( 3, 3 );
 		else {
 			ret.set( 2, 0, 0 );
 			ret.set( 2, 1, 0 );
@@ -148,7 +148,7 @@ public class SpecialEuclideanOps_F32 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F32 transform.
 	 */
-	public static Se2_F32 toSe2( DenseMatrix32F H, Se2_F32 ret ) {
+	public static Se2_F32 toSe2( RowMatrix_F32 H, Se2_F32 ret ) {
 		if( H.numCols != 3 || H.numRows != 3 )
 			throw new IllegalArgumentException( "The homogeneous matrix must be 3 by 3 by definition." );
 

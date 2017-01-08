@@ -28,7 +28,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.transform.se.SePointOps_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public abstract class GeneralMotionSe3Tests_F64 {
 	@Test
 	public void noiseless() {
 		for( int i = 0; i < 100; i++ ) {
-			DenseMatrix64F R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rand.nextGaussian(),
+			RowMatrix_F64 R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian(), null);
 			Vector3D_F64 T = new Vector3D_F64( rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian() );
@@ -74,7 +74,7 @@ public abstract class GeneralMotionSe3Tests_F64 {
 	@Test
 	public void noiselessPlanar() {
 		for( int i = 0; i < 100; i++ ) {
-			DenseMatrix64F R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rand.nextGaussian(),
+			RowMatrix_F64 R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian(), null );
 			Vector3D_F64 T = new Vector3D_F64( rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian() );

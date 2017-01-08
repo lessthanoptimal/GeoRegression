@@ -19,7 +19,7 @@
 package georegression.struct.homography;
 
 
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -31,7 +31,7 @@ public class TestUtilHomography_F32 {
 
 	@Test
 	public void convert_matrix_F32() {
-		DenseMatrix32F a = new DenseMatrix32F(3,3,true,1,2,3,4,5,6,7,8,9);
+		RowMatrix_F32 a = new RowMatrix_F32(3,3,true,1,2,3,4,5,6,7,8,9);
 
 		Homography2D_F32 h = UtilHomography_F32.convert(a,null);
 
@@ -50,7 +50,7 @@ public class TestUtilHomography_F32 {
 	public void convert_F32_matrix() {
 		Homography2D_F32 h = new Homography2D_F32(1,2,3,4,5,6,7,8,9);
 
-		DenseMatrix32F a = UtilHomography_F32.convert(h,null);
+		RowMatrix_F32 a = UtilHomography_F32.convert(h,null);
 
 		assertTrue(h.a11 == a.get(0,0));
 		assertTrue(h.a12 == a.get(0,1));

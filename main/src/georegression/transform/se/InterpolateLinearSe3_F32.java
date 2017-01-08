@@ -22,7 +22,7 @@ import georegression.geometry.ConvertRotation3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.ops.CommonOps_D32;
 
 /**
@@ -50,7 +50,7 @@ public class InterpolateLinearSe3_F32 {
 	Vector3D_F32 translation = new Vector3D_F32();
 
 	// difference between the initial transform and the end or the output
-	DenseMatrix32F R = new DenseMatrix32F(3,3);
+	RowMatrix_F32 R = new RowMatrix_F32(3,3);
 
 	/**
 	 * Specify the two transforms which values are to be interpolated between

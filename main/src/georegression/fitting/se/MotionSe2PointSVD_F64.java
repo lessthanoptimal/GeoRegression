@@ -23,7 +23,7 @@ import georegression.geometry.GeometryMath_F64;
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se2_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.factory.DecompositionFactory_D64;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
 import org.ejml.ops.CommonOps_D64;
@@ -55,11 +55,11 @@ public class MotionSe2PointSVD_F64 implements MotionTransformPoint<Se2_F64, Poin
 	Point2D_F64 meanFrom = new Point2D_F64();
 	Point2D_F64 meanTo = new Point2D_F64();
 
-	SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory_D64.svd(2,2,true,true,false);
-	DenseMatrix64F Sigma = new DenseMatrix64F(2,2);
-	DenseMatrix64F U = new DenseMatrix64F(2,2);
-	DenseMatrix64F V = new DenseMatrix64F(2,2);
-	DenseMatrix64F R = new DenseMatrix64F(2,2);
+	SingularValueDecomposition<RowMatrix_F64> svd = DecompositionFactory_D64.svd(2,2,true,true,false);
+	RowMatrix_F64 Sigma = new RowMatrix_F64(2,2);
+	RowMatrix_F64 U = new RowMatrix_F64(2,2);
+	RowMatrix_F64 V = new RowMatrix_F64(2,2);
+	RowMatrix_F64 R = new RowMatrix_F64(2,2);
 
 	@Override
 	public Se2_F64 getTransformSrcToDst() {

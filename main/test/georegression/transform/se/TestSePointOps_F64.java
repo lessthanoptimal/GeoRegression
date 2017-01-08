@@ -26,7 +26,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -131,7 +131,7 @@ public class TestSePointOps_F64 {
 
 	@Test
 	public void transform_3d_single() {
-		DenseMatrix64F R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
+		RowMatrix_F64 R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
 		Point3D_F64 P = new Point3D_F64( 1, 7, 9 );
@@ -148,7 +148,7 @@ public class TestSePointOps_F64 {
 
 	@Test
 	public void transformReverse_3d_single() {
-		DenseMatrix64F R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
+		RowMatrix_F64 R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
 		Point3D_F64 P = new Point3D_F64( 10, 9, 2 );

@@ -25,7 +25,7 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.shapes.Sphere3D_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -93,9 +93,9 @@ public class TestFitSphereToPoints_F32 {
 		p.set(0,0,sphere.radius);
 
 		Rodrigues_F32 rodX = new Rodrigues_F32(phi,new Vector3D_F32(1,0,0));
-		DenseMatrix32F rotX = ConvertRotation3D_F32.rodriguesToMatrix(rodX, null);
+		RowMatrix_F32 rotX = ConvertRotation3D_F32.rodriguesToMatrix(rodX, null);
 		Rodrigues_F32 rodZ = new Rodrigues_F32(theta,new Vector3D_F32(0,0,1));
-		DenseMatrix32F rotZ = ConvertRotation3D_F32.rodriguesToMatrix(rodZ, null);
+		RowMatrix_F32 rotZ = ConvertRotation3D_F32.rodriguesToMatrix(rodZ, null);
 
 		GeometryMath_F32.mult(rotX, p, p);
 		GeometryMath_F32.mult(rotZ, p, p);

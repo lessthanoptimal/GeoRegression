@@ -20,7 +20,7 @@ package georegression.struct.se;
 
 import georegression.geometry.GeometryMath_F32;
 import georegression.struct.point.Vector3D_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.ops.CommonOps_D32;
 
 
@@ -36,7 +36,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	public static final long serialVersionUID = 1L;
 
 	// rotation matrix
-	public DenseMatrix32F R;
+	public RowMatrix_F32 R;
 	// translation vector
 	public Vector3D_F32 T;
 
@@ -54,7 +54,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * @param R Rotation matrix.
 	 * @param T Translation.
 	 */
-	public Se3_F32( DenseMatrix32F R, Vector3D_F32 T ) {
+	public Se3_F32( RowMatrix_F32 R, Vector3D_F32 T ) {
 		this( R, T, false );
 	}
 
@@ -66,7 +66,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * @param T	  Translation.
 	 * @param assign If a reference is saved (true) or a copy made (false).
 	 */
-	public Se3_F32( DenseMatrix32F R, Vector3D_F32 T, boolean assign ) {
+	public Se3_F32( RowMatrix_F32 R, Vector3D_F32 T, boolean assign ) {
 		if( assign ) {
 			this.R = R;
 			this.T = T;
@@ -91,7 +91,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 *
 	 * @param R New rotation.
 	 */
-	public void setRotation( DenseMatrix32F R ) {
+	public void setRotation( RowMatrix_F32 R ) {
 		this.R.set( R );
 	}
 
@@ -117,7 +117,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * Returns the rotation matrix
 	 * @return rotation matrix
 	 */
-	public DenseMatrix32F getRotation() {
+	public RowMatrix_F32 getRotation() {
 		return R;
 	}
 
@@ -129,7 +129,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		return T;
 	}
 
-	public DenseMatrix32F getR() {
+	public RowMatrix_F32 getR() {
 		return R;
 	}
 

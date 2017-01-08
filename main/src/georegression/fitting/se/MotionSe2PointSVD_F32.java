@@ -23,7 +23,7 @@ import georegression.geometry.GeometryMath_F32;
 import georegression.geometry.UtilPoint2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.se.Se2_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.factory.DecompositionFactory_D32;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
 import org.ejml.ops.CommonOps_D32;
@@ -55,11 +55,11 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 	Point2D_F32 meanFrom = new Point2D_F32();
 	Point2D_F32 meanTo = new Point2D_F32();
 
-	SingularValueDecomposition<DenseMatrix32F> svd = DecompositionFactory_D32.svd(2,2,true,true,false);
-	DenseMatrix32F Sigma = new DenseMatrix32F(2,2);
-	DenseMatrix32F U = new DenseMatrix32F(2,2);
-	DenseMatrix32F V = new DenseMatrix32F(2,2);
-	DenseMatrix32F R = new DenseMatrix32F(2,2);
+	SingularValueDecomposition<RowMatrix_F32> svd = DecompositionFactory_D32.svd(2,2,true,true,false);
+	RowMatrix_F32 Sigma = new RowMatrix_F32(2,2);
+	RowMatrix_F32 U = new RowMatrix_F32(2,2);
+	RowMatrix_F32 V = new RowMatrix_F32(2,2);
+	RowMatrix_F32 R = new RowMatrix_F32(2,2);
 
 	@Override
 	public Se2_F32 getTransformSrcToDst() {

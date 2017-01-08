@@ -23,7 +23,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.homography.UtilHomography_F64;
 import georegression.struct.point.Point2D_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.junit.Test;
 
 import java.util.Random;
@@ -36,7 +36,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestHomographyPointOps_F64 {
 
-	DenseMatrix64F M = new DenseMatrix64F(3,3);
+	RowMatrix_F64 M = new RowMatrix_F64(3,3);
 	Homography2D_F64 tran = new Homography2D_F64();
 
 	public TestHomographyPointOps_F64() {

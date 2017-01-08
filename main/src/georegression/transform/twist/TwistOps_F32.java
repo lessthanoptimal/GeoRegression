@@ -24,7 +24,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.ops.CommonOps_D32;
 import org.ejml.ops.MatrixFeatures_D32;
 
@@ -44,9 +44,9 @@ public class TwistOps_F32 {
 	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
-	public static DenseMatrix32F homogenous( Se3_F32 transform , DenseMatrix32F H ) {
+	public static RowMatrix_F32 homogenous( Se3_F32 transform , RowMatrix_F32 H ) {
 		if( H == null ) {
-			H = new DenseMatrix32F(4,4);
+			H = new RowMatrix_F32(4,4);
 		} else {
 			H.reshape(4,4);
 		}
@@ -68,9 +68,9 @@ public class TwistOps_F32 {
 	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
-	public static DenseMatrix32F homogenous( TwistCoordinate_F32 twist , DenseMatrix32F H ) {
+	public static RowMatrix_F32 homogenous( TwistCoordinate_F32 twist , RowMatrix_F32 H ) {
 		if( H == null ) {
-			H = new DenseMatrix32F(4,4);
+			H = new RowMatrix_F32(4,4);
 		} else {
 			H.reshape(4,4);
 			H.data[12] = 0; H.data[13] = 0; H.data[14] = 0; H.data[15] = 0;
@@ -112,7 +112,7 @@ public class TwistOps_F32 {
 			return motion;
 		}
 
-		DenseMatrix32F R = motion.getR();
+		RowMatrix_F32 R = motion.getR();
 
 		// First handle the SO region.  This Rodrigues equation
 		float wx = twist.w.x/w_norm, wy = twist.w.y/w_norm, wz = twist.w.z/w_norm;
@@ -168,11 +168,11 @@ public class TwistOps_F32 {
 			float theta = rod.theta;
 
 			// A = (I-SO)*hat(w) + w*w'*theta
-			DenseMatrix32F A = CommonOps_D32.identity(3);
+			RowMatrix_F32 A = CommonOps_D32.identity(3);
 			CommonOps_D32.subtract(A,motion.R, A);
 
-			DenseMatrix32F w_hat = GeometryMath_F32.crossMatrix(twist.w,null);
-			DenseMatrix32F tmp = A.copy();
+			RowMatrix_F32 w_hat = GeometryMath_F32.crossMatrix(twist.w,null);
+			RowMatrix_F32 tmp = A.copy();
 			CommonOps_D32.mult(tmp,w_hat,A);
 
 			Vector3D_F32 w = twist.w;
@@ -180,12 +180,12 @@ public class TwistOps_F32 {
 			A.data[3] += w.y*w.x*theta; A.data[4] += w.y*w.y*theta; A.data[5] += w.y*w.z*theta;
 			A.data[6] += w.z*w.x*theta; A.data[7] += w.z*w.y*theta; A.data[8] += w.z*w.z*theta;
 
-			DenseMatrix32F y = new DenseMatrix32F(3,1);
+			RowMatrix_F32 y = new RowMatrix_F32(3,1);
 			y.data[0] = motion.T.x;
 			y.data[1] = motion.T.y;
 			y.data[2] = motion.T.z;
 
-			DenseMatrix32F x = new DenseMatrix32F(3,1);
+			RowMatrix_F32 x = new RowMatrix_F32(3,1);
 
 			CommonOps_D32.solve(A,y,x);
 

@@ -19,7 +19,7 @@
 package georegression.struct.homography;
 
 
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -31,7 +31,7 @@ public class TestUtilHomography_F64 {
 
 	@Test
 	public void convert_matrix_F64() {
-		DenseMatrix64F a = new DenseMatrix64F(3,3,true,1,2,3,4,5,6,7,8,9);
+		RowMatrix_F64 a = new RowMatrix_F64(3,3,true,1,2,3,4,5,6,7,8,9);
 
 		Homography2D_F64 h = UtilHomography_F64.convert(a,null);
 
@@ -50,7 +50,7 @@ public class TestUtilHomography_F64 {
 	public void convert_F64_matrix() {
 		Homography2D_F64 h = new Homography2D_F64(1,2,3,4,5,6,7,8,9);
 
-		DenseMatrix64F a = UtilHomography_F64.convert(h,null);
+		RowMatrix_F64 a = UtilHomography_F64.convert(h,null);
 
 		assertTrue(h.a11 == a.get(0,0));
 		assertTrue(h.a12 == a.get(0,1));

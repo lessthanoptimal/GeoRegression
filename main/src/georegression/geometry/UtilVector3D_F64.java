@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,7 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.point.Vector3D_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 
 import java.util.Random;
 
@@ -92,9 +92,9 @@ public class UtilVector3D_F64 {
 	 * @param R If not null the vectors are stored here.
 	 * @return Matrix.
 	 */
-	public static DenseMatrix64F createMatrix( DenseMatrix64F R, Vector3D_F64... v ) {
+	public static RowMatrix_F64 createMatrix( RowMatrix_F64 R, Vector3D_F64... v ) {
 		if( R == null ) {
-			R = new DenseMatrix64F( 3, v.length );
+			R = new RowMatrix_F64( 3, v.length );
 		}
 
 		for( int i = 0; i < v.length; i++ ) {
@@ -112,7 +112,7 @@ public class UtilVector3D_F64 {
 	 * @param m A 3x1 or 1x3 matrix
 	 * @return Equivalent 3D vector
 	 */
-	public static Vector3D_F64 convert( DenseMatrix64F m ) {
+	public static Vector3D_F64 convert( RowMatrix_F64 m ) {
 
 		Vector3D_F64 v = new Vector3D_F64();
 		v.x = (double) m.data[0];

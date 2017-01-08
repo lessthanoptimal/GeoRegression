@@ -20,7 +20,7 @@ package georegression.fitting.plane;
 
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.factory.DecompositionFactory_D32;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F32;
 
@@ -33,10 +33,10 @@ import java.util.List;
  */
 public class FitPlane3D_F32 {
 
-	SingularValueDecomposition_F32<DenseMatrix32F> svd = DecompositionFactory_D32.svd(3,10,false, true, false);
+	SingularValueDecomposition_F32<RowMatrix_F32> svd = DecompositionFactory_D32.svd(3,10,false, true, false);
 
-	DenseMatrix32F A = new DenseMatrix32F(3,3);
-	DenseMatrix32F V = new DenseMatrix32F(3,3);
+	RowMatrix_F32 A = new RowMatrix_F32(3,3);
+	RowMatrix_F32 V = new RowMatrix_F32(3,3);
 
 	/**
 	 * SVD based method for fitting a plane to a set of points.  The plane's equation is returned

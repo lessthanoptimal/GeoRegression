@@ -24,7 +24,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.so.Rodrigues_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.ops.CommonOps_D64;
 import org.ejml.ops.MatrixFeatures_D64;
 
@@ -44,9 +44,9 @@ public class TwistOps_F64 {
 	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
-	public static DenseMatrix64F homogenous( Se3_F64 transform , DenseMatrix64F H ) {
+	public static RowMatrix_F64 homogenous( Se3_F64 transform , RowMatrix_F64 H ) {
 		if( H == null ) {
-			H = new DenseMatrix64F(4,4);
+			H = new RowMatrix_F64(4,4);
 		} else {
 			H.reshape(4,4);
 		}
@@ -68,9 +68,9 @@ public class TwistOps_F64 {
 	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
-	public static DenseMatrix64F homogenous( TwistCoordinate_F64 twist , DenseMatrix64F H ) {
+	public static RowMatrix_F64 homogenous( TwistCoordinate_F64 twist , RowMatrix_F64 H ) {
 		if( H == null ) {
-			H = new DenseMatrix64F(4,4);
+			H = new RowMatrix_F64(4,4);
 		} else {
 			H.reshape(4,4);
 			H.data[12] = 0; H.data[13] = 0; H.data[14] = 0; H.data[15] = 0;
@@ -112,7 +112,7 @@ public class TwistOps_F64 {
 			return motion;
 		}
 
-		DenseMatrix64F R = motion.getR();
+		RowMatrix_F64 R = motion.getR();
 
 		// First handle the SO region.  This Rodrigues equation
 		double wx = twist.w.x/w_norm, wy = twist.w.y/w_norm, wz = twist.w.z/w_norm;
@@ -168,11 +168,11 @@ public class TwistOps_F64 {
 			double theta = rod.theta;
 
 			// A = (I-SO)*hat(w) + w*w'*theta
-			DenseMatrix64F A = CommonOps_D64.identity(3);
+			RowMatrix_F64 A = CommonOps_D64.identity(3);
 			CommonOps_D64.subtract(A,motion.R, A);
 
-			DenseMatrix64F w_hat = GeometryMath_F64.crossMatrix(twist.w,null);
-			DenseMatrix64F tmp = A.copy();
+			RowMatrix_F64 w_hat = GeometryMath_F64.crossMatrix(twist.w,null);
+			RowMatrix_F64 tmp = A.copy();
 			CommonOps_D64.mult(tmp,w_hat,A);
 
 			Vector3D_F64 w = twist.w;
@@ -180,12 +180,12 @@ public class TwistOps_F64 {
 			A.data[3] += w.y*w.x*theta; A.data[4] += w.y*w.y*theta; A.data[5] += w.y*w.z*theta;
 			A.data[6] += w.z*w.x*theta; A.data[7] += w.z*w.y*theta; A.data[8] += w.z*w.z*theta;
 
-			DenseMatrix64F y = new DenseMatrix64F(3,1);
+			RowMatrix_F64 y = new RowMatrix_F64(3,1);
 			y.data[0] = motion.T.x;
 			y.data[1] = motion.T.y;
 			y.data[2] = motion.T.z;
 
-			DenseMatrix64F x = new DenseMatrix64F(3,1);
+			RowMatrix_F64 x = new RowMatrix_F64(3,1);
 
 			CommonOps_D64.solve(A,y,x);
 

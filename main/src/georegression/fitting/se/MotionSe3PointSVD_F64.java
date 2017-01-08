@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,7 +23,7 @@ import georegression.geometry.GeometryMath_F64;
 import georegression.geometry.UtilPoint3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.factory.DecompositionFactory_D64;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 import org.ejml.ops.CommonOps_D64;
@@ -48,7 +48,7 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 	// rigid body motion
 	private Se3_F64 motion = new Se3_F64();
 
-	SingularValueDecomposition_F64<DenseMatrix64F> svd = DecompositionFactory_D64.svd(3, 3,true,true,false);
+	SingularValueDecomposition_F64<RowMatrix_F64> svd = DecompositionFactory_D64.svd(3, 3,true,true,false);
 
 	@Override
 	public Se3_F64 getTransformSrcToDst() {
@@ -96,13 +96,13 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 			s33 += dtz*dfz;
 		}
 
-		DenseMatrix64F Sigma = new DenseMatrix64F( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
+		RowMatrix_F64 Sigma = new RowMatrix_F64( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
 
 		if( !svd.decompose(Sigma) )
 			throw new RuntimeException("SVD failed!?");
 
-		DenseMatrix64F U = svd.getU(null,false);
-		DenseMatrix64F V = svd.getV(null,false);
+		RowMatrix_F64 U = svd.getU(null,false);
+		RowMatrix_F64 V = svd.getV(null,false);
 
 		SingularOps_D64.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
 		

@@ -20,7 +20,7 @@ package georegression.fitting.ellipse;
 
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.ops.CommonOps_D32;
 import org.junit.Test;
 
@@ -58,9 +58,9 @@ public class TestCovarianceToEllipse_F32 {
 			float c = (float)Math.cos(angle);
 			float s = (float)Math.sin(angle);
 
-			DenseMatrix32F Q = new DenseMatrix32F(2,2,true,100,0,0,9);
-			DenseMatrix32F R = new DenseMatrix32F(2,2,true,c,-s,s,c);
-			DenseMatrix32F QR = new DenseMatrix32F(2,2);
+			RowMatrix_F32 Q = new RowMatrix_F32(2,2,true,100,0,0,9);
+			RowMatrix_F32 R = new RowMatrix_F32(2,2,true,c,-s,s,c);
+			RowMatrix_F32 QR = new RowMatrix_F32(2,2);
 
 			CommonOps_D32.mult(R,Q,QR);
 			CommonOps_D32.multTransB(QR,R,Q);

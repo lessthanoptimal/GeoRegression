@@ -19,7 +19,7 @@
 package georegression.struct.homography;
 
 
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.ops.CommonOps_D32;
 
 /**
@@ -36,7 +36,7 @@ public class UtilHomography_F32 {
 	 * @param ret Storage for output.  If null then a new instance is created.
 	 * @return Equivalent homography.
 	 */
-	public static Homography2D_F32 convert( DenseMatrix32F m , Homography2D_F32 ret ) {
+	public static Homography2D_F32 convert( RowMatrix_F32 m , Homography2D_F32 ret ) {
 		if( m.numCols != 3 || m.numRows != 3)
 			throw new IllegalArgumentException("Expected a 3 by 3 matrix.");
 
@@ -63,9 +63,9 @@ public class UtilHomography_F32 {
 	 * @param ret Storage for output.  If null then a new instance is created.
 	 * @return Equivalent matrix.
 	 */
-	public static DenseMatrix32F convert( Homography2D_F32 m , DenseMatrix32F ret ) {
+	public static RowMatrix_F32 convert( Homography2D_F32 m , RowMatrix_F32 ret ) {
 		if( ret == null ) {
-			ret = new DenseMatrix32F(3,3);
+			ret = new RowMatrix_F32(3,3);
 		} else if( ret.numCols != 3 || ret.numRows != 3)
 			throw new IllegalArgumentException("Expected a 3 by 3 matrix.");
 
@@ -87,7 +87,7 @@ public class UtilHomography_F32 {
 		if( inverted == null )
 			inverted = new Homography2D_F32();
 
-		DenseMatrix32F A = new DenseMatrix32F(3,3);
+		RowMatrix_F32 A = new RowMatrix_F32(3,3);
 		convert(orig,A);
 		CommonOps_D32.invert(A);
 		convert(A,inverted);

@@ -22,8 +22,8 @@ import georegression.geometry.ConvertRotation3D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.DenseMatrix32F;
-import org.ejml.data.FixedMatrix3x3_32F;
+import org.ejml.data.FixedMatrix3x3_F32;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.ops.CommonOps_D32;
 import org.ejml.ops.ConvertMatrixStruct_F32;
 import org.junit.Test;
@@ -47,13 +47,13 @@ public class TestAverageRotationMatrix_F32 {
 	 */
 	@Test
 	public void one_M() {
-		DenseMatrix32F q = eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null);
+		RowMatrix_F32 q = eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null);
 
-		List<DenseMatrix32F> list = new ArrayList<>();
+		List<RowMatrix_F32> list = new ArrayList<>();
 		list.add(q);
 
 		AverageRotationMatrix_F32 alg = new AverageRotationMatrix_F32();
-		DenseMatrix32F found = new DenseMatrix32F(3,3);
+		RowMatrix_F32 found = new RowMatrix_F32(3,3);
 
 		assertTrue( alg.process(list,found) );
 
@@ -62,14 +62,14 @@ public class TestAverageRotationMatrix_F32 {
 
 	@Test
 	public void one_F() {
-		FixedMatrix3x3_32F q = new FixedMatrix3x3_32F();
+		FixedMatrix3x3_F32 q = new FixedMatrix3x3_F32();
 		ConvertMatrixStruct_F32.convert(eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null),q);
 
-		List<FixedMatrix3x3_32F> list = new ArrayList<>();
+		List<FixedMatrix3x3_F32> list = new ArrayList<>();
 		list.add(q);
 
 		AverageRotationMatrix_F32 alg = new AverageRotationMatrix_F32();
-		FixedMatrix3x3_32F found = new FixedMatrix3x3_32F();
+		FixedMatrix3x3_F32 found = new FixedMatrix3x3_F32();
 
 		assertTrue( alg.process(list,found) );
 
@@ -78,14 +78,14 @@ public class TestAverageRotationMatrix_F32 {
 
 	@Test
 	public void two_same_M() {
-		DenseMatrix32F q = eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null);
+		RowMatrix_F32 q = eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null);
 
-		List<DenseMatrix32F> list = new ArrayList<>();
+		List<RowMatrix_F32> list = new ArrayList<>();
 		list.add(q);
 		list.add(q);
 
 		AverageRotationMatrix_F32 alg = new AverageRotationMatrix_F32();
-		DenseMatrix32F found = new DenseMatrix32F(3,3);
+		RowMatrix_F32 found = new RowMatrix_F32(3,3);
 
 		assertTrue( alg.process(list,found) );
 
@@ -94,15 +94,15 @@ public class TestAverageRotationMatrix_F32 {
 
 	@Test
 	public void two_same_F() {
-		FixedMatrix3x3_32F q = new FixedMatrix3x3_32F();
+		FixedMatrix3x3_F32 q = new FixedMatrix3x3_F32();
 		ConvertMatrixStruct_F32.convert(eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null),q);
 
-		List<FixedMatrix3x3_32F> list = new ArrayList<>();
+		List<FixedMatrix3x3_F32> list = new ArrayList<>();
 		list.add(q);
 		list.add(q);
 
 		AverageRotationMatrix_F32 alg = new AverageRotationMatrix_F32();
-		FixedMatrix3x3_32F found = new FixedMatrix3x3_32F();
+		FixedMatrix3x3_F32 found = new FixedMatrix3x3_F32();
 
 		assertTrue( alg.process(list,found) );
 
@@ -118,15 +118,15 @@ public class TestAverageRotationMatrix_F32 {
 		float rotY = -0.5f;
 		float rotZ = 1.5f;
 
-		List<DenseMatrix32F> list = new ArrayList<>();
+		List<RowMatrix_F32> list = new ArrayList<>();
 		for (int i = 0; i < 40; i++) {
 			float noise = (float)rand.nextGaussian() * 0.03f;
 			list.add(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ, null));
 		}
-		DenseMatrix32F expected = eulerToMatrix(EulerType.XYZ, 0.1f, -0.5f, 1.5f, null);
+		RowMatrix_F32 expected = eulerToMatrix(EulerType.XYZ, 0.1f, -0.5f, 1.5f, null);
 
 		AverageRotationMatrix_F32 alg = new AverageRotationMatrix_F32();
-		DenseMatrix32F found = new DenseMatrix32F(3, 3);
+		RowMatrix_F32 found = new RowMatrix_F32(3, 3);
 
 		assertTrue(alg.process(list, found));
 
@@ -139,26 +139,26 @@ public class TestAverageRotationMatrix_F32 {
 		float rotY = -0.5f;
 		float rotZ = 1.5f;
 
-		List<FixedMatrix3x3_32F> list = new ArrayList<>();
+		List<FixedMatrix3x3_F32> list = new ArrayList<>();
 		for (int i = 0; i < 40; i++) {
 			float noise = (float)rand.nextGaussian() * 0.03f;
-			FixedMatrix3x3_32F q = new FixedMatrix3x3_32F();
+			FixedMatrix3x3_F32 q = new FixedMatrix3x3_F32();
 			ConvertMatrixStruct_F32.convert(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ,null),q);
 			list.add(q);
 		}
-		FixedMatrix3x3_32F expected = new FixedMatrix3x3_32F();
+		FixedMatrix3x3_F32 expected = new FixedMatrix3x3_F32();
 		ConvertMatrixStruct_F32.convert(eulerToMatrix(EulerType.XYZ,0.1f,-0.5f,1.5f,null),expected);
 
 		AverageRotationMatrix_F32 alg = new AverageRotationMatrix_F32();
-		FixedMatrix3x3_32F found = new FixedMatrix3x3_32F();
+		FixedMatrix3x3_F32 found = new FixedMatrix3x3_F32();
 
 		assertTrue(alg.process(list, found));
 
 		checkEquals(expected, found, (float)Math.pow(GrlConstants.TEST_F32,0.3f));
 	}
 
-	public static void checkEquals( DenseMatrix32F expected , DenseMatrix32F found , float errorTol ) {
-		DenseMatrix32F diff = new DenseMatrix32F(3,3);
+	public static void checkEquals( RowMatrix_F32 expected , RowMatrix_F32 found , float errorTol ) {
+		RowMatrix_F32 diff = new RowMatrix_F32(3,3);
 		CommonOps_D32.multTransA(expected,found,diff);
 
 		Rodrigues_F32 error = ConvertRotation3D_F32.matrixToRodrigues(diff,null);
@@ -166,14 +166,14 @@ public class TestAverageRotationMatrix_F32 {
 		assertTrue( (float)Math.abs(error.theta) <= errorTol );
 	}
 
-	public static void checkEquals( FixedMatrix3x3_32F expected , FixedMatrix3x3_32F found , float errorTol ) {
-		DenseMatrix32F E = new DenseMatrix32F(3,3);
-		DenseMatrix32F F = new DenseMatrix32F(3,3);
+	public static void checkEquals( FixedMatrix3x3_F32 expected , FixedMatrix3x3_F32 found , float errorTol ) {
+		RowMatrix_F32 E = new RowMatrix_F32(3,3);
+		RowMatrix_F32 F = new RowMatrix_F32(3,3);
 
 		ConvertMatrixStruct_F32.convert(expected,E);
 		ConvertMatrixStruct_F32.convert(found,F);
 
-		DenseMatrix32F diff = new DenseMatrix32F(3,3);
+		RowMatrix_F32 diff = new RowMatrix_F32(3,3);
 		CommonOps_D32.multTransA(E,F,diff);
 
 		Rodrigues_F32 error = ConvertRotation3D_F32.matrixToRodrigues(diff,null);

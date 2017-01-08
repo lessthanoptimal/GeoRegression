@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,7 +22,7 @@ import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.so.Rodrigues_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.ops.CommonOps_D64;
 
 /**
@@ -50,7 +50,7 @@ public class InterpolateLinearSe3_F64 {
 	Vector3D_F64 translation = new Vector3D_F64();
 
 	// difference between the initial transform and the end or the output
-	DenseMatrix64F R = new DenseMatrix64F(3,3);
+	RowMatrix_F64 R = new RowMatrix_F64(3,3);
 
 	/**
 	 * Specify the two transforms which values are to be interpolated between

@@ -23,7 +23,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.ops.CommonOps_D32;
 import org.junit.Test;
 
@@ -104,10 +104,10 @@ public class TestAverageQuaternion_F32 {
 	 */
 	public static void checkEquals( Quaternion_F32 expected , Quaternion_F32 found , float errorTol ) {
 
-		DenseMatrix32F E = ConvertRotation3D_F32.quaternionToMatrix(expected,null);
-		DenseMatrix32F F = ConvertRotation3D_F32.quaternionToMatrix(found,null);
+		RowMatrix_F32 E = ConvertRotation3D_F32.quaternionToMatrix(expected,null);
+		RowMatrix_F32 F = ConvertRotation3D_F32.quaternionToMatrix(found,null);
 
-		DenseMatrix32F diff = new DenseMatrix32F(3,3);
+		RowMatrix_F32 diff = new RowMatrix_F32(3,3);
 		CommonOps_D32.multTransA(E,F,diff);
 
 		Rodrigues_F32 error = ConvertRotation3D_F32.matrixToRodrigues(diff,null);

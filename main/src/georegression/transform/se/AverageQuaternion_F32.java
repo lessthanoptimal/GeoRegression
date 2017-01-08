@@ -19,7 +19,7 @@
 package georegression.transform.se;
 
 import georegression.struct.so.Quaternion_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.factory.DecompositionFactory_D32;
 import org.ejml.interfaces.decomposition.EigenDecomposition_F32;
 
@@ -34,9 +34,9 @@ import java.util.List;
  */
 public class AverageQuaternion_F32 {
 
-	DenseMatrix32F M = new DenseMatrix32F(4,4);
+	RowMatrix_F32 M = new RowMatrix_F32(4,4);
 
-	EigenDecomposition_F32<DenseMatrix32F> eig = DecompositionFactory_D32.eig(4,true,true);
+	EigenDecomposition_F32<RowMatrix_F32> eig = DecompositionFactory_D32.eig(4,true,true);
 
 	public boolean process(List<Quaternion_F32> list , Quaternion_F32 average ) {
 
@@ -77,7 +77,7 @@ public class AverageQuaternion_F32 {
 			}
 		}
 
-		DenseMatrix32F v = eig.getEigenVector(largest);
+		RowMatrix_F32 v = eig.getEigenVector(largest);
 
 		// this will be a normalized quaternion due to properties of eigenvectors
 		average.w = (float) v.get(0);

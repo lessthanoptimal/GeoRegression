@@ -27,7 +27,7 @@ import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.transform.affine.AffinePointOps_F32;
 import georegression.transform.se.SePointOps_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.ops.CommonOps_D32;
 import org.ejml.ops.MatrixFeatures_D32;
 import org.junit.Test;
@@ -61,12 +61,12 @@ public class TestSpecialEuclideanOps_F32 {
 	public void toHomogeneous_3D() {
 		Se3_F32 se = SpecialEuclideanOps_F32.setEulerXYZ( 0.1f, 2, -0.3f, 2, -3, 4.4f, null );
 
-		DenseMatrix32F H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
+		RowMatrix_F32 H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
 
 		assertEquals( 4, H.numCols );
 		assertEquals( 4, H.numRows );
 
-		DenseMatrix32F R = se.getR();
+		RowMatrix_F32 R = se.getR();
 
 		for( int i = 0; i < 3; i++ ) {
 			for( int j = 0; j < 3; j++ ) {
@@ -85,17 +85,17 @@ public class TestSpecialEuclideanOps_F32 {
 		Point2D_F32 pt = new Point2D_F32( 3.4f, -9.21f );
 		Se2_F32 se = new Se2_F32( -3, 6.9f, -1.3f );
 
-		DenseMatrix32F H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
+		RowMatrix_F32 H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
 
 		Point2D_F32 expected = SePointOps_F32.transform( se, pt, null );
 
 		// convert the point into homogeneous matrix notation
-		DenseMatrix32F pt_m = new DenseMatrix32F( 3, 1 );
+		RowMatrix_F32 pt_m = new RowMatrix_F32( 3, 1 );
 		pt_m.set( 0, 0, pt.x );
 		pt_m.set( 1, 0, pt.y );
 		pt_m.set( 2, 0, 1 );
 
-		DenseMatrix32F found = new DenseMatrix32F( 3, 1 );
+		RowMatrix_F32 found = new RowMatrix_F32( 3, 1 );
 		CommonOps_D32.mult( H, pt_m, found );
 
 		assertEquals( expected.x, found.get( 0, 0 ), GrlConstants.TEST_F32);
@@ -107,7 +107,7 @@ public class TestSpecialEuclideanOps_F32 {
 	public void toSe3_F32() {
 		Se3_F32 se = SpecialEuclideanOps_F32.setEulerXYZ( 0.1f, 2, -0.3f, 2, -3, 4.4f, null );
 
-		DenseMatrix32F H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
+		RowMatrix_F32 H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
 
 		Se3_F32 found = SpecialEuclideanOps_F32.toSe3( H, null );
 
@@ -122,7 +122,7 @@ public class TestSpecialEuclideanOps_F32 {
 	public void toSe2() {
 		Se2_F32 se = new Se2_F32( -3, 6.9f, -1.3f );
 
-		DenseMatrix32F H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
+		RowMatrix_F32 H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
 
 		Se2_F32 found = SpecialEuclideanOps_F32.toSe2( H, null );
 
@@ -140,7 +140,7 @@ public class TestSpecialEuclideanOps_F32 {
 
 		Point3D_F32 expected = SePointOps_F32.transform( se, orig, null );
 
-		DenseMatrix32F R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0.1f, 2, -0.3f, se.getR() );
+		RowMatrix_F32 R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0.1f, 2, -0.3f, se.getR() );
 
 		Point3D_F32 found = GeometryMath_F32.mult( R, orig, (Point3D_F32) null );
 		found.x += 2;

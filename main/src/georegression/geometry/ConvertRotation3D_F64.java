@@ -22,7 +22,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F64;
 import georegression.struct.so.Rodrigues_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.factory.DecompositionFactory_D64;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
 import org.ejml.ops.CommonOps_D64;
@@ -42,7 +42,7 @@ public class ConvertRotation3D_F64 {
 	 * @param R where the results will be stored.  If null a new matrix is declared internally.
 	 * @return rotation matrix.
 	 */
-	public static DenseMatrix64F rodriguesToMatrix( Rodrigues_F64 rodrigues, DenseMatrix64F R ) {
+	public static RowMatrix_F64 rodriguesToMatrix( Rodrigues_F64 rodrigues, RowMatrix_F64 R ) {
 		return rodriguesToMatrix(
 				rodrigues.unitAxisRotation.x,
 				rodrigues.unitAxisRotation.y,
@@ -61,8 +61,8 @@ public class ConvertRotation3D_F64 {
 	 * @param R (Optional) storage for 3x3 rotation matrix.  If null one will be declared internally.
 	 * @return Rotation matrix.
 	 */
-	public static DenseMatrix64F rodriguesToMatrix( double axisX , double axisY , double axisZ , double theta,
-													DenseMatrix64F R ) {
+	public static RowMatrix_F64 rodriguesToMatrix( double axisX , double axisY , double axisZ , double theta,
+													RowMatrix_F64 R ) {
 		R = checkDeclare3x3( R );
 
 		//noinspection UnnecessaryLocalVariable
@@ -95,7 +95,7 @@ public class ConvertRotation3D_F64 {
 	 */
 	public static double[] rodriguesToEuler(Rodrigues_F64 rodrigues , EulerType type , double []euler )
 	{
-		DenseMatrix64F R = rodriguesToMatrix(rodrigues,null);
+		RowMatrix_F64 R = rodriguesToMatrix(rodrigues,null);
 		return matrixToEuler(R,type,euler);
 	}
 
@@ -152,7 +152,7 @@ public class ConvertRotation3D_F64 {
 	 */
 	public static double[] quaternionToEuler(Quaternion_F64 q , EulerType type , double []euler )
 	{
-		DenseMatrix64F R = quaternionToMatrix(q,null);
+		RowMatrix_F64 R = quaternionToMatrix(q,null);
 		return matrixToEuler(R,type,euler);
 	}
 
@@ -164,7 +164,7 @@ public class ConvertRotation3D_F64 {
 	 * @param euler (Output) Optional storage for Euler rotation
 	 * @return The Euler rotation.
 	 */
-	public static double[] matrixToEuler(DenseMatrix64F R , EulerType type , double[] euler ) {
+	public static double[] matrixToEuler(RowMatrix_F64 R , EulerType type , double[] euler ) {
 		if( euler == null )
 			euler = new double[3];
 
@@ -226,7 +226,7 @@ public class ConvertRotation3D_F64 {
 
 	private static void TanSinTan( int y0 , int x0 , int sin1 , int y2 , int x2 ,
 								   int cos0a , int cos0b , int sin0a , int sin0b,
-								   DenseMatrix64F R , double euler[] ) {
+								   RowMatrix_F64 R , double euler[] ) {
 
 		double val_y0 = get(R,y0);
 		double val_x0 = get(R,x0);
@@ -253,7 +253,7 @@ public class ConvertRotation3D_F64 {
 
 	private static void TanCosTan( int y0 , int x0 , int cos1 , int y2 , int x2 ,
 								   int cos0a , int cos0b , int sin0a , int sin0b,
-								  DenseMatrix64F R , double euler[] ) {
+								  RowMatrix_F64 R , double euler[] ) {
 
 		double val_y0 = get(R,y0);
 		double val_x0 = get(R,x0);
@@ -278,7 +278,7 @@ public class ConvertRotation3D_F64 {
 	/**
 	 * If the index is negative it returns the negative of the value at -index.  Starts at 0
 	 */
-	private static double get( DenseMatrix64F M , int index ) {
+	private static double get( RowMatrix_F64 M , int index ) {
 		if( index < 0 ) {
 			return -M.data[-index-1];
 		} else {
@@ -293,7 +293,7 @@ public class ConvertRotation3D_F64 {
 	 * @param quat (Output) Optional storage for quaternion.  If null a new class will be used.
 	 * @return unit quaternion representation of the rotation matrix.
 	 */
-	public static Quaternion_F64 matrixToQuaternion( DenseMatrix64F R, Quaternion_F64 quat ) {
+	public static Quaternion_F64 matrixToQuaternion( RowMatrix_F64 R, Quaternion_F64 quat ) {
 
 		if( quat == null )
 			quat = new Quaternion_F64();
@@ -351,7 +351,7 @@ public class ConvertRotation3D_F64 {
 	 * @param rodrigues Storage used for solution.  If null a new instance is declared.
 	 * @return The found axis and rotation angle.
 	 */
-	public static Rodrigues_F64 matrixToRodrigues( DenseMatrix64F R, Rodrigues_F64 rodrigues ) {
+	public static Rodrigues_F64 matrixToRodrigues( RowMatrix_F64 R, Rodrigues_F64 rodrigues ) {
 		if( rodrigues == null ) {
 			rodrigues = new Rodrigues_F64();
 		}
@@ -423,9 +423,9 @@ public class ConvertRotation3D_F64 {
 	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	public static DenseMatrix64F rotX( double ang, DenseMatrix64F R ) {
+	public static RowMatrix_F64 rotX( double ang, RowMatrix_F64 R ) {
 		if( R == null )
-			R = new DenseMatrix64F( 3, 3 );
+			R = new RowMatrix_F64( 3, 3 );
 
 		setRotX( ang, R );
 
@@ -438,7 +438,7 @@ public class ConvertRotation3D_F64 {
 	 * @param ang the angle it rotates a point by in radians.
 	 * @param R (Output) Storage for rotation matrix.  Modified.
 	 */
-	public static void setRotX( double ang, DenseMatrix64F R ) {
+	public static void setRotX( double ang, RowMatrix_F64 R ) {
 		double c = Math.cos( ang );
 		double s = Math.sin( ang );
 
@@ -456,7 +456,7 @@ public class ConvertRotation3D_F64 {
 	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	public static DenseMatrix64F rotY( double ang, DenseMatrix64F R ) {
+	public static RowMatrix_F64 rotY( double ang, RowMatrix_F64 R ) {
 		R = checkDeclare3x3( R );
 
 		setRotY( ang, R );
@@ -470,7 +470,7 @@ public class ConvertRotation3D_F64 {
 	 * @param ang the angle it rotates a point by in radians.
 	 * @param r   A 3 by 3 matrix. Is modified.
 	 */
-	public static void setRotY( double ang, DenseMatrix64F r ) {
+	public static void setRotY( double ang, RowMatrix_F64 r ) {
 		double c = Math.cos( ang );
 		double s = Math.sin( ang );
 
@@ -488,7 +488,7 @@ public class ConvertRotation3D_F64 {
 	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	public static DenseMatrix64F rotZ( double ang, DenseMatrix64F R ) {
+	public static RowMatrix_F64 rotZ( double ang, RowMatrix_F64 R ) {
 		R = checkDeclare3x3( R );
 
 		setRotZ( ang, R );
@@ -502,7 +502,7 @@ public class ConvertRotation3D_F64 {
 	 * @param ang the angle it rotates a point by in radians.
 	 * @param r   A 3 by 3 matrix. Is modified.
 	 */
-	public static void setRotZ( double ang, DenseMatrix64F r ) {
+	public static void setRotZ( double ang, RowMatrix_F64 r ) {
 		double c = Math.cos( ang );
 		double s = Math.sin( ang );
 
@@ -522,16 +522,16 @@ public class ConvertRotation3D_F64 {
 	 * @param R (Output) Optional storage for output rotation matrix
 	 * @return Rotation matrix
 	 */
-	public static DenseMatrix64F eulerToMatrix( EulerType type ,
+	public static RowMatrix_F64 eulerToMatrix( EulerType type ,
 												double rotA, double rotB, double rotC,
-												DenseMatrix64F R ) {
+												RowMatrix_F64 R ) {
 		R = checkDeclare3x3( R );
 
-		DenseMatrix64F R_a = rotationAboutAxis( type.getAxisA(), rotA, null );
-		DenseMatrix64F R_b = rotationAboutAxis( type.getAxisB(), rotB, null );
-		DenseMatrix64F R_c = rotationAboutAxis( type.getAxisC(), rotC, null );
+		RowMatrix_F64 R_a = rotationAboutAxis( type.getAxisA(), rotA, null );
+		RowMatrix_F64 R_b = rotationAboutAxis( type.getAxisB(), rotB, null );
+		RowMatrix_F64 R_c = rotationAboutAxis( type.getAxisC(), rotC, null );
 
-		DenseMatrix64F A = new DenseMatrix64F( 3, 3 );
+		RowMatrix_F64 A = new RowMatrix_F64( 3, 3 );
 
 		CommonOps_D64.mult( R_b, R_a, A );
 		CommonOps_D64.mult( R_c, A, R );
@@ -652,7 +652,7 @@ public class ConvertRotation3D_F64 {
 	 * @param angle The angle it is rotated by in radians.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	private static DenseMatrix64F rotationAboutAxis(int axis, double angle, DenseMatrix64F R ) {
+	private static RowMatrix_F64 rotationAboutAxis(int axis, double angle, RowMatrix_F64 R ) {
 		switch( axis ) {
 			case 0:
 				return ConvertRotation3D_F64.rotX( angle, R );
@@ -691,10 +691,10 @@ public class ConvertRotation3D_F64 {
 	 * @param R (Optional) Storage for the approximated rotation matrix.  Modified.
 	 * @return Rotation matrix
 	 */
-	public static DenseMatrix64F approximateRotationMatrix( DenseMatrix64F orig, DenseMatrix64F R ) {
+	public static RowMatrix_F64 approximateRotationMatrix( RowMatrix_F64 orig, RowMatrix_F64 R ) {
 		R = checkDeclare3x3( R );
 
-		SingularValueDecomposition<DenseMatrix64F> svd =
+		SingularValueDecomposition<RowMatrix_F64> svd =
 				DecompositionFactory_D64.svd( orig.numRows, orig.numCols ,true,true,false);
 
 		if( !svd.decompose( orig ) )
@@ -723,7 +723,7 @@ public class ConvertRotation3D_F64 {
 	 * @param R Storage for rotation matrix.  If null a new matrix is created. Modified.
 	 * @return Rotation matrix
 	 */
-	public static DenseMatrix64F quaternionToMatrix( Quaternion_F64 quat, DenseMatrix64F R ) {
+	public static RowMatrix_F64 quaternionToMatrix( Quaternion_F64 quat, RowMatrix_F64 R ) {
 		R = checkDeclare3x3( R );
 
 		final double q0 = quat.w;
@@ -746,9 +746,9 @@ public class ConvertRotation3D_F64 {
 		return R;
 	}
 
-	private static DenseMatrix64F checkDeclare3x3( DenseMatrix64F R ) {
+	private static RowMatrix_F64 checkDeclare3x3( RowMatrix_F64 R ) {
 		if( R == null ) {
-			R = new DenseMatrix64F( 3, 3 );
+			R = new RowMatrix_F64( 3, 3 );
 		} else {
 			if( R.numRows != 3 || R.numCols != 3 )
 				throw new IllegalArgumentException( "Expected 3 by 3 matrix." );

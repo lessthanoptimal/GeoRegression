@@ -30,7 +30,7 @@ import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.transform.se.SePointOps_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.ops.MatrixFeatures_D64;
 import org.junit.Test;
 
@@ -80,7 +80,7 @@ public class TestFitSpecialEuclideanOps_F64 {
 	 */
 	@Test
 	public void fitPoints3D_list() {
-		DenseMatrix64F R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0.1, 1.0, -1.5 , null );
+		RowMatrix_F64 R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0.1, 1.0, -1.5 , null );
 		Se3_F64 tran = new Se3_F64( R , new Vector3D_F64( 1 , 2 , 3));
 
 		List<Point3D_F64> from = UtilPoint3D_F64.random( -10, 10, 30, rand );

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,8 +19,8 @@
 package georegression.fitting.ellipse;
 
 import georegression.struct.point.Vector2D_F64;
-import org.ejml.data.Complex64F;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.Complex_F64;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.factory.DecompositionFactory_D64;
 import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
 
@@ -31,8 +31,8 @@ import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
  */
 public class CovarianceToEllipse_F64 {
 
-	EigenDecomposition_F64<DenseMatrix64F> eigen = DecompositionFactory_D64.eig(2, true);
-	DenseMatrix64F Q = new DenseMatrix64F(2,2);
+	EigenDecomposition_F64<RowMatrix_F64> eigen = DecompositionFactory_D64.eig(2, true);
+	RowMatrix_F64 Q = new RowMatrix_F64(2,2);
 
 	// major axis
 	Vector2D_F64 x = new Vector2D_F64();
@@ -67,10 +67,10 @@ public class CovarianceToEllipse_F64 {
 			return false;
 		}
 
-		Complex64F v0 = eigen.getEigenvalue(0);
-		Complex64F v1 = eigen.getEigenvalue(1);
+		Complex_F64 v0 = eigen.getEigenvalue(0);
+		Complex_F64 v1 = eigen.getEigenvalue(1);
 
-		DenseMatrix64F a0,a1;
+		RowMatrix_F64 a0,a1;
 
 		if( v0.getMagnitude2() > v1.getMagnitude2() ) {
 			a0 = eigen.getEigenVector(0);

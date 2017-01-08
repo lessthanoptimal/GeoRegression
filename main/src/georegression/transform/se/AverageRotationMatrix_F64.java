@@ -20,8 +20,8 @@ package georegression.transform.se;
 
 import georegression.struct.so.Quaternion_F64;
 import org.ejml.alg.fixed.FixedOps3_D64;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.data.FixedMatrix3x3_64F;
+import org.ejml.data.FixedMatrix3x3_F64;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.factory.DecompositionFactory_D64;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 import org.ejml.ops.CommonOps_D64;
@@ -41,12 +41,12 @@ import java.util.List;
  */
 public class AverageRotationMatrix_F64 {
 
-	DenseMatrix64F M = new DenseMatrix64F(3,3);
-	FixedMatrix3x3_64F F = new FixedMatrix3x3_64F();
+	RowMatrix_F64 M = new RowMatrix_F64(3,3);
+	FixedMatrix3x3_F64 F = new FixedMatrix3x3_F64();
 
-	SingularValueDecomposition_F64<DenseMatrix64F> svd = DecompositionFactory_D64.svd(3,3,true,true,true);
+	SingularValueDecomposition_F64<RowMatrix_F64> svd = DecompositionFactory_D64.svd(3,3,true,true,true);
 
-	public boolean process(List<DenseMatrix64F> list , DenseMatrix64F average ) {
+	public boolean process(List<RowMatrix_F64> list , RowMatrix_F64 average ) {
 
 		if( list.isEmpty() )
 			throw new IllegalArgumentException("Input list is empty");
@@ -56,7 +56,7 @@ public class AverageRotationMatrix_F64 {
 		M.zero();
 
 		for (int i = 0; i < list.size(); i++) {
-			DenseMatrix64F m = list.get(i);
+			RowMatrix_F64 m = list.get(i);
 
 			// unroll to make it faster.  M = M + m
 			// row 0
@@ -83,7 +83,7 @@ public class AverageRotationMatrix_F64 {
 		return true;
 	}
 
-	public boolean process(List<FixedMatrix3x3_64F> list , FixedMatrix3x3_64F average ) {
+	public boolean process(List<FixedMatrix3x3_F64> list , FixedMatrix3x3_F64 average ) {
 
 		if( list.isEmpty() )
 			throw new IllegalArgumentException("Input list is empty");
@@ -93,7 +93,7 @@ public class AverageRotationMatrix_F64 {
 		FixedOps3_D64.fill(F,0);
 
 		for (int i = 0; i < list.size(); i++) {
-			FixedMatrix3x3_64F m = list.get(i);
+			FixedMatrix3x3_F64 m = list.get(i);
 
 			// unroll to make it faster.  M = M + m
 			// row 0

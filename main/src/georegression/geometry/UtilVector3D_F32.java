@@ -20,7 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple3D_F32;
 import georegression.struct.point.Vector3D_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 
 import java.util.Random;
 
@@ -92,9 +92,9 @@ public class UtilVector3D_F32 {
 	 * @param R If not null the vectors are stored here.
 	 * @return Matrix.
 	 */
-	public static DenseMatrix32F createMatrix( DenseMatrix32F R, Vector3D_F32... v ) {
+	public static RowMatrix_F32 createMatrix( RowMatrix_F32 R, Vector3D_F32... v ) {
 		if( R == null ) {
-			R = new DenseMatrix32F( 3, v.length );
+			R = new RowMatrix_F32( 3, v.length );
 		}
 
 		for( int i = 0; i < v.length; i++ ) {
@@ -112,7 +112,7 @@ public class UtilVector3D_F32 {
 	 * @param m A 3x1 or 1x3 matrix
 	 * @return Equivalent 3D vector
 	 */
-	public static Vector3D_F32 convert( DenseMatrix32F m ) {
+	public static Vector3D_F32 convert( RowMatrix_F32 m ) {
 
 		Vector3D_F32 v = new Vector3D_F32();
 		v.x = (float) m.data[0];

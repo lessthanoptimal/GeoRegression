@@ -30,7 +30,7 @@ import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se3_F32;
 import georegression.transform.se.SePointOps_F32;
-import org.ejml.data.DenseMatrix32F;
+import org.ejml.data.RowMatrix_F32;
 import org.ejml.ops.MatrixFeatures_D32;
 import org.junit.Test;
 
@@ -80,7 +80,7 @@ public class TestFitSpecialEuclideanOps_F32 {
 	 */
 	@Test
 	public void fitPoints3D_list() {
-		DenseMatrix32F R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0.1f, 1.0f, -1.5f , null );
+		RowMatrix_F32 R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0.1f, 1.0f, -1.5f , null );
 		Se3_F32 tran = new Se3_F32( R , new Vector3D_F32( 1 , 2 , 3));
 
 		List<Point3D_F32> from = UtilPoint3D_F32.random( -10, 10, 30, rand );

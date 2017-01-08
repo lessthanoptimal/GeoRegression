@@ -23,7 +23,7 @@ import georegression.geometry.GeometryMath_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.so.Rodrigues_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.ops.MatrixFeatures_D64;
 import org.ejml.simple.SimpleMatrix;
 import org.junit.Test;
@@ -41,7 +41,7 @@ public class TestTwistOps_F64 {
 		Se3_F64 original = new Se3_F64();
 		original.T.set(1,2,3);
 
-		DenseMatrix64F H = TwistOps_F64.homogenous(original,null);
+		RowMatrix_F64 H = TwistOps_F64.homogenous(original,null);
 
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
@@ -65,9 +65,9 @@ public class TestTwistOps_F64 {
 		twist.w.normalize();
 		twist.v.set(2,0.1,-0.7);
 
-		DenseMatrix64F H = TwistOps_F64.homogenous(twist,null);
+		RowMatrix_F64 H = TwistOps_F64.homogenous(twist,null);
 
-		DenseMatrix64F crossW = GeometryMath_F64.crossMatrix(twist.w,null);
+		RowMatrix_F64 crossW = GeometryMath_F64.crossMatrix(twist.w,null);
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
 				assertEquals(crossW.get(row,col), H.get(row,col), GrlConstants.TEST_F64);
@@ -157,7 +157,7 @@ public class TestTwistOps_F64 {
 
 		Se3_F64 motion2 = TwistOps_F64.exponential(twist2,1.0,null);
 
-		DenseMatrix64F diffR = new SimpleMatrix(motion1.R).transpose().mult(new SimpleMatrix(motion2.R)).getMatrix();
+		RowMatrix_F64 diffR = new SimpleMatrix(motion1.R).transpose().mult(new SimpleMatrix(motion2.R)).getMatrix();
 
 		assertTrue(MatrixFeatures_D64.isIdentity(diffR, GrlConstants.TEST_F64) );
 		assertTrue(motion1.T.isIdentical(motion1.T, GrlConstants.TEST_F64) );

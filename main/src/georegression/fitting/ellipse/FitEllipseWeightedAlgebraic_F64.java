@@ -20,7 +20,7 @@ package georegression.fitting.ellipse;
 
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.EllipseQuadratic_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.RowMatrix_F64;
 import org.ejml.factory.DecompositionFactory_D64;
 import org.ejml.factory.LinearSolverFactory_D64;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
@@ -53,26 +53,26 @@ import java.util.List;
 public class FitEllipseWeightedAlgebraic_F64 {
 
 	// qudratic part of design matrix
-	private DenseMatrix64F D1 = new DenseMatrix64F(3,1);
+	private RowMatrix_F64 D1 = new RowMatrix_F64(3,1);
 	// linear part of design matrix
-	private DenseMatrix64F D2 = new DenseMatrix64F(3,1);
+	private RowMatrix_F64 D2 = new RowMatrix_F64(3,1);
 
 	// quadratic part of scatter matrix
-	private DenseMatrix64F S1 = new DenseMatrix64F(3,3);
+	private RowMatrix_F64 S1 = new RowMatrix_F64(3,3);
 	// combined part of scatter matrix
-	private DenseMatrix64F S2 = new DenseMatrix64F(3,3);
+	private RowMatrix_F64 S2 = new RowMatrix_F64(3,3);
 	//linear part of scatter matrix
-	private DenseMatrix64F S3 = new DenseMatrix64F(3,3);
+	private RowMatrix_F64 S3 = new RowMatrix_F64(3,3);
 	// Reduced scatter matrix
-	private DenseMatrix64F M = new DenseMatrix64F(3,3);
+	private RowMatrix_F64 M = new RowMatrix_F64(3,3);
 
 	// storage for intermediate steps
-	private DenseMatrix64F T = new DenseMatrix64F(3,3);
-	private DenseMatrix64F Ta1 = new DenseMatrix64F(3,1);
-	private DenseMatrix64F S2_tran = new DenseMatrix64F(3,3);
+	private RowMatrix_F64 T = new RowMatrix_F64(3,3);
+	private RowMatrix_F64 Ta1 = new RowMatrix_F64(3,1);
+	private RowMatrix_F64 S2_tran = new RowMatrix_F64(3,3);
 
-	private LinearSolver<DenseMatrix64F> solver = LinearSolverFactory_D64.linear(3);
-	private EigenDecomposition<DenseMatrix64F> eigen = DecompositionFactory_D64.eig(3,true,false);
+	private LinearSolver<RowMatrix_F64> solver = LinearSolverFactory_D64.linear(3);
+	private EigenDecomposition<RowMatrix_F64> eigen = DecompositionFactory_D64.eig(3,true,false);
 
 	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
 
@@ -139,7 +139,7 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		if( !eigen.decompose(M) )
 			return false;
 
-		DenseMatrix64F a1 = selectBestEigenVector();
+		RowMatrix_F64 a1 = selectBestEigenVector();
 		if( a1 == null )
 			return false;
 
@@ -156,13 +156,13 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		return true;
 	}
 
-	private DenseMatrix64F selectBestEigenVector() {
+	private RowMatrix_F64 selectBestEigenVector() {
 
 		int bestIndex = -1;
 		double bestCond = Double.MAX_VALUE;
 
 		for( int i = 0; i < eigen.getNumberOfEigenvalues(); i++ ) {
-			DenseMatrix64F v = eigen.getEigenVector(i);
+			RowMatrix_F64 v = eigen.getEigenVector(i);
 
 			if( v == null ) // TODO WTF?!?!
 				continue;
