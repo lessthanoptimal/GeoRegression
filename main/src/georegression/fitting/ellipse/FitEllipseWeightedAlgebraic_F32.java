@@ -21,11 +21,11 @@ package georegression.fitting.ellipse;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.EllipseQuadratic_F32;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.factory.DecompositionFactory_D32;
-import org.ejml.factory.LinearSolverFactory_D32;
+import org.ejml.factory.DecompositionFactory_R32;
+import org.ejml.factory.LinearSolverFactory_R32;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
 import org.ejml.interfaces.linsol.LinearSolver;
-import org.ejml.ops.CommonOps_D32;
+import org.ejml.ops.CommonOps_R32;
 
 import java.util.List;
 
@@ -71,8 +71,8 @@ public class FitEllipseWeightedAlgebraic_F32 {
 	private RowMatrix_F32 Ta1 = new RowMatrix_F32(3,1);
 	private RowMatrix_F32 S2_tran = new RowMatrix_F32(3,3);
 
-	private LinearSolver<RowMatrix_F32> solver = LinearSolverFactory_D32.linear(3);
-	private EigenDecomposition<RowMatrix_F32> eigen = DecompositionFactory_D32.eig(3,true,false);
+	private LinearSolver<RowMatrix_F32> solver = LinearSolverFactory_R32.linear(3);
+	private EigenDecomposition<RowMatrix_F32> eigen = DecompositionFactory_R32.eig(3,true,false);
 
 	private EllipseQuadratic_F32 ellipse = new EllipseQuadratic_F32();
 
@@ -107,23 +107,23 @@ public class FitEllipseWeightedAlgebraic_F32 {
 		}
 
 		// Compute scatter matrix
-		CommonOps_D32.multTransA(D1, D1, S1); // S1 = D1'*D1
-		CommonOps_D32.multTransA(D1, D2, S2); // S2 = D1'*D2
-		CommonOps_D32.multTransA(D2, D2, S3); // S3 = D2'*D2
+		CommonOps_R32.multTransA(D1, D1, S1); // S1 = D1'*D1
+		CommonOps_R32.multTransA(D1, D2, S2); // S2 = D1'*D2
+		CommonOps_R32.multTransA(D2, D2, S3); // S3 = D2'*D2
 
 		// for getting a2 from a1
 		// T = -inv(S3)*S2'
 		if( !solver.setA(S3) )
 			return false;
 
-		CommonOps_D32.transpose(S2,S2_tran);
-		CommonOps_D32.changeSign(S2_tran);
+		CommonOps_R32.transpose(S2,S2_tran);
+		CommonOps_R32.changeSign(S2_tran);
 		solver.solve(S2_tran, T);
 
 		// Compute reduced scatter matrix
 		// M = S1 + S2*T
-		CommonOps_D32.mult(S2, T, M);
-		CommonOps_D32.add(M,S1,M);
+		CommonOps_R32.mult(S2, T, M);
+		CommonOps_R32.add(M,S1,M);
 
 		// Premultiply by inv(C1). inverse of constraint matrix
 		for( int col = 0; col < 3; col++ ) {
@@ -144,7 +144,7 @@ public class FitEllipseWeightedAlgebraic_F32 {
 			return false;
 
 		// ellipse coefficients
-		CommonOps_D32.mult(T,a1,Ta1);
+		CommonOps_R32.mult(T,a1,Ta1);
 
 		ellipse.a = a1.data[0];
 		ellipse.b = a1.data[1]/2;

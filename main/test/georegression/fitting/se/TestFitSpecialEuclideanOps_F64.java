@@ -31,7 +31,7 @@ import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.MatrixFeatures_D64;
+import org.ejml.ops.MatrixFeatures_R64;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -96,7 +96,7 @@ public class TestFitSpecialEuclideanOps_F64 {
 		Se3_F64 found = FitSpecialEuclideanOps_F64.fitPoints3D( from , to );
 
 		// the exact same algorithm should be called and they should produce the same results
-		assertTrue( MatrixFeatures_D64.isIdentical( expected.getR() , found.getR() , GrlConstants.TEST_F64));
+		assertTrue( MatrixFeatures_R64.isIdentical( expected.getR() , found.getR() , GrlConstants.TEST_F64));
 		assertTrue( expected.getT().isIdentical(found.getT() , GrlConstants.TEST_F64));
 	}
 }

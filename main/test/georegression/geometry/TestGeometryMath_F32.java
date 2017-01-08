@@ -24,9 +24,9 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector2D_F32;
 import georegression.struct.point.Vector3D_F32;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.CommonOps_D32;
-import org.ejml.ops.MatrixFeatures_D32;
-import org.ejml.ops.RandomMatrices_D32;
+import org.ejml.ops.CommonOps_R32;
+import org.ejml.ops.MatrixFeatures_R32;
+import org.ejml.ops.RandomMatrices_R32;
 import org.junit.Test;
 
 import java.util.Random;
@@ -78,7 +78,7 @@ public class TestGeometryMath_F32 {
 		RowMatrix_F32 V1 = GeometryMath_F32.crossMatrix( v, null );
 		RowMatrix_F32 V2 = GeometryMath_F32.crossMatrix( a, b, c, null );
 
-		assertTrue( MatrixFeatures_D32.isIdentical( V1 ,V2 , GrlConstants.TEST_F32));
+		assertTrue( MatrixFeatures_R32.isIdentical( V1 ,V2 , GrlConstants.TEST_F32));
 	}
 
 	@Test
@@ -330,29 +330,29 @@ public class TestGeometryMath_F32 {
 	@Test
 	public void multCrossA_2D() {
 		Point2D_F32 a = new Point2D_F32(3,2);
-		RowMatrix_F32 b = RandomMatrices_D32.createRandom(3,3,rand);
+		RowMatrix_F32 b = RandomMatrices_R32.createRandom(3,3,rand);
 
 		RowMatrix_F32 a_hat = GeometryMath_F32.crossMatrix(a.x,a.y,1,null);
 		RowMatrix_F32 expected = new RowMatrix_F32(3,3);
-		CommonOps_D32.mult(a_hat,b,expected);
+		CommonOps_R32.mult(a_hat,b,expected);
 
 		RowMatrix_F32 found = GeometryMath_F32.multCrossA(a,b,null);
 
-		assertTrue(MatrixFeatures_D32.isIdentical(expected,found,GrlConstants.TEST_F32));
+		assertTrue(MatrixFeatures_R32.isIdentical(expected,found,GrlConstants.TEST_F32));
 	}
 
 	@Test
 	public void multCrossA_3D() {
 		Point3D_F32 a = new Point3D_F32(1,2,3);
-		RowMatrix_F32 b = RandomMatrices_D32.createRandom(3,3,rand);
+		RowMatrix_F32 b = RandomMatrices_R32.createRandom(3,3,rand);
 
 		RowMatrix_F32 a_hat = GeometryMath_F32.crossMatrix(a.x,a.y,a.z,null);
 		RowMatrix_F32 expected = new RowMatrix_F32(3,3);
-		CommonOps_D32.mult(a_hat,b,expected);
+		CommonOps_R32.mult(a_hat,b,expected);
 
 		RowMatrix_F32 found = GeometryMath_F32.multCrossA(a,b,null);
 
-		assertTrue(MatrixFeatures_D32.isIdentical(expected,found,GrlConstants.TEST_F32));
+		assertTrue(MatrixFeatures_R32.isIdentical(expected,found,GrlConstants.TEST_F32));
 	}
 
 	@Test
@@ -398,7 +398,7 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.outerProd( a, b , M );
 
-		assertTrue( MatrixFeatures_D32.isIdentical(expected,M,GrlConstants.TEST_F32) );
+		assertTrue( MatrixFeatures_R32.isIdentical(expected,M,GrlConstants.TEST_F32) );
 	}
 
 	@Test
@@ -413,7 +413,7 @@ public class TestGeometryMath_F32 {
 
 		GeometryMath_F32.addOuterProd( A , -1 , a, b , found );
 
-		assertTrue( MatrixFeatures_D32.isIdentical(expected,found,GrlConstants.TEST_F32) );
+		assertTrue( MatrixFeatures_R32.isIdentical(expected,found,GrlConstants.TEST_F32) );
 	}
 
 	@Test

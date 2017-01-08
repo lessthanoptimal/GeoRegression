@@ -20,7 +20,7 @@ package georegression.transform.se;
 
 import georegression.struct.so.Quaternion_F32;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.factory.DecompositionFactory_D32;
+import org.ejml.factory.DecompositionFactory_R32;
 import org.ejml.interfaces.decomposition.EigenDecomposition_F32;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class AverageQuaternion_F32 {
 
 	RowMatrix_F32 M = new RowMatrix_F32(4,4);
 
-	EigenDecomposition_F32<RowMatrix_F32> eig = DecompositionFactory_D32.eig(4,true,true);
+	EigenDecomposition_F32<RowMatrix_F32> eig = DecompositionFactory_R32.eig(4,true,true);
 
 	public boolean process(List<Quaternion_F32> list , Quaternion_F32 average ) {
 

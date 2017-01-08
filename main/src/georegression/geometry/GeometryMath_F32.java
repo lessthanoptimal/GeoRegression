@@ -20,7 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple2D_F32;
 import georegression.struct.GeoTuple3D_F32;
-import org.ejml.alg.dense.mult.VectorVectorMult_D32;
+import org.ejml.alg.dense.mult.VectorVectorMult_R32;
 import org.ejml.data.RowMatrix_F32;
 
 
@@ -571,7 +571,7 @@ public class GeometryMath_F32 {
 		RowMatrix_F32 m1 = new RowMatrix_F32( 3, 1, true, a.x, a.y, a.z );
 		RowMatrix_F32 m2 = new RowMatrix_F32( 3, 1, true, b.x, b.y, b.z );
 
-		return (float) ( VectorVectorMult_D32.innerProdA( m1, M, m2 ) );
+		return (float) ( VectorVectorMult_R32.innerProdA( m1, M, m2 ) );
 	}
 
 	/**
@@ -592,7 +592,7 @@ public class GeometryMath_F32 {
 		RowMatrix_F32 m1 = new RowMatrix_F32( 3, 1, true, a.x, a.y, a.z );
 		RowMatrix_F32 m2 = new RowMatrix_F32( 3, 1, true, b.x, b.y, b.z );
 
-		return (float) ( VectorVectorMult_D32.innerProdTranA( m1, M, m2 ) );
+		return (float) ( VectorVectorMult_R32.innerProdTranA( m1, M, m2 ) );
 	}
 
 	/**
@@ -667,7 +667,7 @@ public class GeometryMath_F32 {
 		RowMatrix_F32 m1 = new RowMatrix_F32( 3, 1, true, a.x, a.y, 1 );
 		RowMatrix_F32 m2 = new RowMatrix_F32( 3, 1, true, b.x, b.y, 1 );
 
-		return (float) ( VectorVectorMult_D32.innerProdA( m1, M, m2 ) );
+		return (float) ( VectorVectorMult_R32.innerProdA( m1, M, m2 ) );
 	}
 
 	/**

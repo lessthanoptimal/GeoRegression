@@ -24,7 +24,7 @@ import georegression.struct.EulerType;
 import georegression.struct.so.Rodrigues_F32;
 import org.ejml.data.FixedMatrix3x3_F32;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.CommonOps_D32;
+import org.ejml.ops.CommonOps_R32;
 import org.ejml.ops.ConvertMatrixStruct_F32;
 import org.junit.Test;
 
@@ -159,7 +159,7 @@ public class TestAverageRotationMatrix_F32 {
 
 	public static void checkEquals( RowMatrix_F32 expected , RowMatrix_F32 found , float errorTol ) {
 		RowMatrix_F32 diff = new RowMatrix_F32(3,3);
-		CommonOps_D32.multTransA(expected,found,diff);
+		CommonOps_R32.multTransA(expected,found,diff);
 
 		Rodrigues_F32 error = ConvertRotation3D_F32.matrixToRodrigues(diff,null);
 
@@ -174,7 +174,7 @@ public class TestAverageRotationMatrix_F32 {
 		ConvertMatrixStruct_F32.convert(found,F);
 
 		RowMatrix_F32 diff = new RowMatrix_F32(3,3);
-		CommonOps_D32.multTransA(E,F,diff);
+		CommonOps_R32.multTransA(E,F,diff);
 
 		Rodrigues_F32 error = ConvertRotation3D_F32.matrixToRodrigues(diff,null);
 

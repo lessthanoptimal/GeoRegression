@@ -22,7 +22,7 @@ import georegression.fitting.MotionTransformPoint;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.point.Point2D_F32;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.factory.LinearSolverFactory_D32;
+import org.ejml.factory.LinearSolverFactory_R32;
 import org.ejml.interfaces.linsol.LinearSolver;
 
 import java.util.List;
@@ -44,7 +44,7 @@ public class MotionAffinePoint2D_F32 implements MotionTransformPoint<Affine2D_F3
 	Affine2D_F32 model = new Affine2D_F32();
 
 	public MotionAffinePoint2D_F32() {
-		solver = LinearSolverFactory_D32.leastSquares(100, 2);
+		solver = LinearSolverFactory_R32.leastSquares(100, 2);
 		x = new RowMatrix_F32( 3, 2 );
 		A = new RowMatrix_F32( 0, 3 );
 		y = new RowMatrix_F32( 0, 2 );

@@ -23,7 +23,7 @@ import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.CommonOps_D64;
+import org.ejml.ops.CommonOps_R64;
 
 /**
  * <p>
@@ -64,7 +64,7 @@ public class InterpolateLinearSe3_F64 {
 		translation.y = end.T.y - initial.T.y;
 		translation.z = end.T.z - initial.T.z;
 
-		CommonOps_D64.multTransA(initial.getR(), end.getR(), R);
+		CommonOps_R64.multTransA(initial.getR(), end.getR(), R);
 
 		ConvertRotation3D_F64.matrixToRodrigues(R,rotation);
 		rotMagnitude = rotation.theta;
@@ -84,7 +84,7 @@ public class InterpolateLinearSe3_F64 {
 		output.T.y = initial.T.y + where*translation.y;
 		output.T.z = initial.T.z + where*translation.z;
 
-		CommonOps_D64.mult(initial.R,R,output.R);
+		CommonOps_R64.mult(initial.R,R,output.R);
 	}
 
 }

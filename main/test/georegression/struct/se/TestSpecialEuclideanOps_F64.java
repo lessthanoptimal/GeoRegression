@@ -28,8 +28,8 @@ import georegression.struct.point.Point3D_F64;
 import georegression.transform.affine.AffinePointOps_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.CommonOps_D64;
-import org.ejml.ops.MatrixFeatures_D64;
+import org.ejml.ops.CommonOps_R64;
+import org.ejml.ops.MatrixFeatures_R64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -96,7 +96,7 @@ public class TestSpecialEuclideanOps_F64 {
 		pt_m.set( 2, 0, 1 );
 
 		RowMatrix_F64 found = new RowMatrix_F64( 3, 1 );
-		CommonOps_D64.mult( H, pt_m, found );
+		CommonOps_R64.mult( H, pt_m, found );
 
 		assertEquals( expected.x, found.get( 0, 0 ), GrlConstants.TEST_F64);
 		assertEquals( expected.y, found.get( 1, 0 ), GrlConstants.TEST_F64);
@@ -115,7 +115,7 @@ public class TestSpecialEuclideanOps_F64 {
 		assertEquals( se.getY(), found.getY(), GrlConstants.TEST_F64);
 		assertEquals( se.getZ(), found.getZ(), GrlConstants.TEST_F64);
 
-		assertTrue( MatrixFeatures_D64.isIdentical( se.getR(), found.getR(), GrlConstants.TEST_F64) );
+		assertTrue( MatrixFeatures_R64.isIdentical( se.getR(), found.getR(), GrlConstants.TEST_F64) );
 	}
 
 	@Test

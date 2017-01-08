@@ -23,7 +23,7 @@ import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.EulerType;
 import georegression.struct.se.Se3_F32;
-import org.ejml.ops.MatrixFeatures_D32;
+import org.ejml.ops.MatrixFeatures_R32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -68,7 +68,7 @@ public class TestInterpolateLinearSe3_F32 {
 			assertEquals(expectedX,c.T.x, GrlConstants.TEST_F32);
 			assertEquals(expectedY,c.T.y, GrlConstants.TEST_F32);
 			assertEquals(expectedZ,c.T.z, GrlConstants.TEST_F32);
-			assertTrue(MatrixFeatures_D32.isIdentical(c.getR(),a.getR(),GrlConstants.TEST_F32));
+			assertTrue(MatrixFeatures_R32.isIdentical(c.getR(),a.getR(),GrlConstants.TEST_F32));
 		}
 	}
 

@@ -25,8 +25,8 @@ import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.CommonOps_D64;
-import org.ejml.ops.MatrixFeatures_D64;
+import org.ejml.ops.CommonOps_R64;
+import org.ejml.ops.MatrixFeatures_R64;
 
 /**
  * Operations related to twists.
@@ -50,7 +50,7 @@ public class TwistOps_F64 {
 		} else {
 			H.reshape(4,4);
 		}
-		CommonOps_D64.insert(transform.R,H,0,0);
+		CommonOps_R64.insert(transform.R,H,0,0);
 		H.data[3] = transform.T.x;
 		H.data[7] = transform.T.y;
 		H.data[11] = transform.T.z;
@@ -105,7 +105,7 @@ public class TwistOps_F64 {
 		double w_norm = twist.w.norm();
 
 		if( w_norm == 0.0 ) {
-			CommonOps_D64.setIdentity(motion.R);
+			CommonOps_R64.setIdentity(motion.R);
 			motion.T.x = twist.v.x*theta;
 			motion.T.y = twist.v.y*theta;
 			motion.T.z = twist.v.z*theta;
@@ -157,7 +157,7 @@ public class TwistOps_F64 {
 		if( twist == null )
 			twist = new TwistCoordinate_F64();
 
-		if(MatrixFeatures_D64.isIdentity(motion.R, GrlConstants.TEST_F64)) {
+		if(MatrixFeatures_R64.isIdentity(motion.R, GrlConstants.TEST_F64)) {
 			twist.w.set(0,0,0);
 			twist.v.set(motion.T);
 		} else {
@@ -168,12 +168,12 @@ public class TwistOps_F64 {
 			double theta = rod.theta;
 
 			// A = (I-SO)*hat(w) + w*w'*theta
-			RowMatrix_F64 A = CommonOps_D64.identity(3);
-			CommonOps_D64.subtract(A,motion.R, A);
+			RowMatrix_F64 A = CommonOps_R64.identity(3);
+			CommonOps_R64.subtract(A,motion.R, A);
 
 			RowMatrix_F64 w_hat = GeometryMath_F64.crossMatrix(twist.w,null);
 			RowMatrix_F64 tmp = A.copy();
-			CommonOps_D64.mult(tmp,w_hat,A);
+			CommonOps_R64.mult(tmp,w_hat,A);
 
 			Vector3D_F64 w = twist.w;
 			A.data[0] += w.x*w.x*theta; A.data[1] += w.x*w.y*theta; A.data[2] += w.x*w.z*theta;
@@ -187,7 +187,7 @@ public class TwistOps_F64 {
 
 			RowMatrix_F64 x = new RowMatrix_F64(3,1);
 
-			CommonOps_D64.solve(A,y,x);
+			CommonOps_R64.solve(A,y,x);
 
 			twist.w.scale(rod.theta);
 			twist.v.x = (double) x.data[0];

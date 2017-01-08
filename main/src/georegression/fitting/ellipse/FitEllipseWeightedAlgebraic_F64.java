@@ -21,11 +21,11 @@ package georegression.fitting.ellipse;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.EllipseQuadratic_F64;
 import org.ejml.data.RowMatrix_F64;
-import org.ejml.factory.DecompositionFactory_D64;
-import org.ejml.factory.LinearSolverFactory_D64;
+import org.ejml.factory.DecompositionFactory_R64;
+import org.ejml.factory.LinearSolverFactory_R64;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
 import org.ejml.interfaces.linsol.LinearSolver;
-import org.ejml.ops.CommonOps_D64;
+import org.ejml.ops.CommonOps_R64;
 
 import java.util.List;
 
@@ -71,8 +71,8 @@ public class FitEllipseWeightedAlgebraic_F64 {
 	private RowMatrix_F64 Ta1 = new RowMatrix_F64(3,1);
 	private RowMatrix_F64 S2_tran = new RowMatrix_F64(3,3);
 
-	private LinearSolver<RowMatrix_F64> solver = LinearSolverFactory_D64.linear(3);
-	private EigenDecomposition<RowMatrix_F64> eigen = DecompositionFactory_D64.eig(3,true,false);
+	private LinearSolver<RowMatrix_F64> solver = LinearSolverFactory_R64.linear(3);
+	private EigenDecomposition<RowMatrix_F64> eigen = DecompositionFactory_R64.eig(3,true,false);
 
 	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
 
@@ -107,23 +107,23 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		}
 
 		// Compute scatter matrix
-		CommonOps_D64.multTransA(D1, D1, S1); // S1 = D1'*D1
-		CommonOps_D64.multTransA(D1, D2, S2); // S2 = D1'*D2
-		CommonOps_D64.multTransA(D2, D2, S3); // S3 = D2'*D2
+		CommonOps_R64.multTransA(D1, D1, S1); // S1 = D1'*D1
+		CommonOps_R64.multTransA(D1, D2, S2); // S2 = D1'*D2
+		CommonOps_R64.multTransA(D2, D2, S3); // S3 = D2'*D2
 
 		// for getting a2 from a1
 		// T = -inv(S3)*S2'
 		if( !solver.setA(S3) )
 			return false;
 
-		CommonOps_D64.transpose(S2,S2_tran);
-		CommonOps_D64.changeSign(S2_tran);
+		CommonOps_R64.transpose(S2,S2_tran);
+		CommonOps_R64.changeSign(S2_tran);
 		solver.solve(S2_tran, T);
 
 		// Compute reduced scatter matrix
 		// M = S1 + S2*T
-		CommonOps_D64.mult(S2, T, M);
-		CommonOps_D64.add(M,S1,M);
+		CommonOps_R64.mult(S2, T, M);
+		CommonOps_R64.add(M,S1,M);
 
 		// Premultiply by inv(C1). inverse of constraint matrix
 		for( int col = 0; col < 3; col++ ) {
@@ -144,7 +144,7 @@ public class FitEllipseWeightedAlgebraic_F64 {
 			return false;
 
 		// ellipse coefficients
-		CommonOps_D64.mult(T,a1,Ta1);
+		CommonOps_R64.mult(T,a1,Ta1);
 
 		ellipse.a = a1.data[0];
 		ellipse.b = a1.data[1]/2;

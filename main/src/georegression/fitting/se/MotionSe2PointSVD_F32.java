@@ -24,9 +24,9 @@ import georegression.geometry.UtilPoint2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.se.Se2_F32;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.factory.DecompositionFactory_D32;
+import org.ejml.factory.DecompositionFactory_R32;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
-import org.ejml.ops.CommonOps_D32;
+import org.ejml.ops.CommonOps_R32;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 	Point2D_F32 meanFrom = new Point2D_F32();
 	Point2D_F32 meanTo = new Point2D_F32();
 
-	SingularValueDecomposition<RowMatrix_F32> svd = DecompositionFactory_D32.svd(2,2,true,true,false);
+	SingularValueDecomposition<RowMatrix_F32> svd = DecompositionFactory_R32.svd(2,2,true,true,false);
 	RowMatrix_F32 Sigma = new RowMatrix_F32(2,2);
 	RowMatrix_F32 U = new RowMatrix_F32(2,2);
 	RowMatrix_F32 V = new RowMatrix_F32(2,2);
@@ -113,16 +113,16 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 		svd.getU(U,false);
 		svd.getV(V, false);
 
-		CommonOps_D32.multTransB(V,U,R);
+		CommonOps_R32.multTransB(V,U,R);
 
 		// There are situations where R might not have a determinant of one and is instead
 		// a reflection is returned
-		float det = CommonOps_D32.det(R);
+		float det = CommonOps_R32.det(R);
 		if( det < 0 ) {
 			for( int i = 0; i < 2; i++ )
 				V.set( i, 1, -V.get( i, 1 ) );
-			CommonOps_D32.multTransB(V,U,R);
-			det = CommonOps_D32.det(R);
+			CommonOps_R32.multTransB(V,U,R);
+			det = CommonOps_R32.det(R);
 			if( det < 0 ) {
 				throw new RuntimeException( "Crap" );
 			}

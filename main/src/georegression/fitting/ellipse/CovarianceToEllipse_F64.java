@@ -21,7 +21,7 @@ package georegression.fitting.ellipse;
 import georegression.struct.point.Vector2D_F64;
 import org.ejml.data.Complex_F64;
 import org.ejml.data.RowMatrix_F64;
-import org.ejml.factory.DecompositionFactory_D64;
+import org.ejml.factory.DecompositionFactory_R64;
 import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
 
 /**
@@ -31,7 +31,7 @@ import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
  */
 public class CovarianceToEllipse_F64 {
 
-	EigenDecomposition_F64<RowMatrix_F64> eigen = DecompositionFactory_D64.eig(2, true);
+	EigenDecomposition_F64<RowMatrix_F64> eigen = DecompositionFactory_R64.eig(2, true);
 	RowMatrix_F64 Q = new RowMatrix_F64(2,2);
 
 	// major axis

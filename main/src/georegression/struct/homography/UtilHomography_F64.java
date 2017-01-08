@@ -20,7 +20,7 @@ package georegression.struct.homography;
 
 
 import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.CommonOps_D64;
+import org.ejml.ops.CommonOps_R64;
 
 /**
  * Various useful functions related to homographies.
@@ -89,7 +89,7 @@ public class UtilHomography_F64 {
 
 		RowMatrix_F64 A = new RowMatrix_F64(3,3);
 		convert(orig,A);
-		CommonOps_D64.invert(A);
+		CommonOps_R64.invert(A);
 		convert(A,inverted);
 
 		return inverted;

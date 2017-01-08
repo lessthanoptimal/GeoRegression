@@ -24,10 +24,10 @@ import georegression.geometry.UtilPoint3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.se.Se3_F32;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.factory.DecompositionFactory_D32;
+import org.ejml.factory.DecompositionFactory_R32;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F32;
-import org.ejml.ops.CommonOps_D32;
-import org.ejml.ops.SingularOps_D32;
+import org.ejml.ops.CommonOps_R32;
+import org.ejml.ops.SingularOps_R32;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 	// rigid body motion
 	private Se3_F32 motion = new Se3_F32();
 
-	SingularValueDecomposition_F32<RowMatrix_F32> svd = DecompositionFactory_D32.svd(3, 3,true,true,false);
+	SingularValueDecomposition_F32<RowMatrix_F32> svd = DecompositionFactory_R32.svd(3, 3,true,true,false);
 
 	@Override
 	public Se3_F32 getTransformSrcToDst() {
@@ -104,9 +104,9 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 		RowMatrix_F32 U = svd.getU(null,false);
 		RowMatrix_F32 V = svd.getV(null,false);
 
-		SingularOps_D32.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
+		SingularOps_R32.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
 		
-		if( CommonOps_D32.det(U) < 0 ^ CommonOps_D32.det(V) < 0 ) {
+		if( CommonOps_R32.det(U) < 0 ^ CommonOps_R32.det(V) < 0 ) {
 			// swap sign of the column 2
 			// this only needs to happen if data is planar
 			V.data[2] = -V.data[2];
@@ -114,7 +114,7 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 			V.data[8] = -V.data[8];
 		}
 
-		CommonOps_D32.multTransB(U, V, motion.getR());
+		CommonOps_R32.multTransB(U, V, motion.getR());
 
 		Point3D_F32 temp = new Point3D_F32();
 		GeometryMath_F32.mult(motion.getR(),meanSrc,temp);

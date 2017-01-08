@@ -21,7 +21,7 @@ package georegression.fitting.ellipse;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.CommonOps_D32;
+import org.ejml.ops.CommonOps_R32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -62,8 +62,8 @@ public class TestCovarianceToEllipse_F32 {
 			RowMatrix_F32 R = new RowMatrix_F32(2,2,true,c,-s,s,c);
 			RowMatrix_F32 QR = new RowMatrix_F32(2,2);
 
-			CommonOps_D32.mult(R,Q,QR);
-			CommonOps_D32.multTransB(QR,R,Q);
+			CommonOps_R32.mult(R,Q,QR);
+			CommonOps_R32.multTransB(QR,R,Q);
 
 			alg.setCovariance((float)Q.get(0,0),(float)Q.get(0,1),(float)Q.get(1,1));
 

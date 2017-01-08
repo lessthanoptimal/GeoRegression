@@ -28,8 +28,8 @@ import georegression.struct.point.Point3D_F32;
 import georegression.transform.affine.AffinePointOps_F32;
 import georegression.transform.se.SePointOps_F32;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.CommonOps_D32;
-import org.ejml.ops.MatrixFeatures_D32;
+import org.ejml.ops.CommonOps_R32;
+import org.ejml.ops.MatrixFeatures_R32;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -96,7 +96,7 @@ public class TestSpecialEuclideanOps_F32 {
 		pt_m.set( 2, 0, 1 );
 
 		RowMatrix_F32 found = new RowMatrix_F32( 3, 1 );
-		CommonOps_D32.mult( H, pt_m, found );
+		CommonOps_R32.mult( H, pt_m, found );
 
 		assertEquals( expected.x, found.get( 0, 0 ), GrlConstants.TEST_F32);
 		assertEquals( expected.y, found.get( 1, 0 ), GrlConstants.TEST_F32);
@@ -115,7 +115,7 @@ public class TestSpecialEuclideanOps_F32 {
 		assertEquals( se.getY(), found.getY(), GrlConstants.TEST_F32);
 		assertEquals( se.getZ(), found.getZ(), GrlConstants.TEST_F32);
 
-		assertTrue( MatrixFeatures_D32.isIdentical( se.getR(), found.getR(), GrlConstants.TEST_F32) );
+		assertTrue( MatrixFeatures_R32.isIdentical( se.getR(), found.getR(), GrlConstants.TEST_F32) );
 	}
 
 	@Test

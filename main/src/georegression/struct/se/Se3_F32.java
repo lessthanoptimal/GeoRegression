@@ -21,7 +21,7 @@ package georegression.struct.se;
 import georegression.geometry.GeometryMath_F32;
 import georegression.struct.point.Vector3D_F32;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.CommonOps_D32;
+import org.ejml.ops.CommonOps_R32;
 
 
 /**
@@ -44,7 +44,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * Creates a new transform that does nothing.
 	 */
 	public Se3_F32() {
-		R = CommonOps_D32.identity( 3 );
+		R = CommonOps_R32.identity( 3 );
 		T = new Vector3D_F32();
 	}
 
@@ -164,7 +164,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		if( result == null )
 			result = new Se3_F32();
 
-		CommonOps_D32.mult( second.getR(), getR(), result.getR() );
+		CommonOps_R32.mult( second.getR(), getR(), result.getR() );
 		GeometryMath_F32.mult( second.getR(), getT(), result.getT() );
 		GeometryMath_F32.add( second.getT(), result.getT(), result.getT() );
 
@@ -186,14 +186,14 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		GeometryMath_F32.changeSign( inverse.T );
 
 		// R^T
-		CommonOps_D32.transpose( R, inverse.R );
+		CommonOps_R32.transpose( R, inverse.R );
 
 		return inverse;
 	}
 
 	@Override
 	public void reset() {
-		CommonOps_D32.setIdentity( R );
+		CommonOps_R32.setIdentity( R );
 		T.set( 0, 0, 0 );
 	}
 

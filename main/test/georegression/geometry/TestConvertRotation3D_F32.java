@@ -27,9 +27,9 @@ import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Rodrigues_F32;
 import org.ejml.UtilEjml;
 import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.CommonOps_D32;
-import org.ejml.ops.MatrixFeatures_D32;
-import org.ejml.ops.RandomMatrices_D32;
+import org.ejml.ops.CommonOps_R32;
+import org.ejml.ops.MatrixFeatures_R32;
+import org.ejml.ops.RandomMatrices_R32;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -57,7 +57,7 @@ public class TestConvertRotation3D_F32 {
 
 		RowMatrix_F32 rod = ConvertRotation3D_F32.rodriguesToMatrix( r, null );
 
-		assertTrue( MatrixFeatures_D32.isIdentical( rotZ, rod, GrlConstants.TEST_F32) );
+		assertTrue( MatrixFeatures_R32.isIdentical( rotZ, rod, GrlConstants.TEST_F32) );
 	}
 
 	@Test
@@ -75,8 +75,8 @@ public class TestConvertRotation3D_F32 {
 		RowMatrix_F32 found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
 		RowMatrix_F32 difference = new RowMatrix_F32(3,3);
-		CommonOps_D32.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures_D32.isIdentity(difference, GrlConstants.TEST_SQ_F32));
+		CommonOps_R32.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures_R32.isIdentity(difference, GrlConstants.TEST_SQ_F32));
 	}
 
 	@Test
@@ -89,9 +89,9 @@ public class TestConvertRotation3D_F32 {
 		RowMatrix_F32 B = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
 
 		RowMatrix_F32 C = new RowMatrix_F32(3,3);
-		CommonOps_D32.multTransA(A,B,C);
+		CommonOps_R32.multTransA(A,B,C);
 
-		assertTrue(MatrixFeatures_D32.isIdentity(C, GrlConstants.TEST_F32));
+		assertTrue(MatrixFeatures_R32.isIdentity(C, GrlConstants.TEST_F32));
 	}
 
 	@Test
@@ -106,9 +106,9 @@ public class TestConvertRotation3D_F32 {
 		RowMatrix_F32 B = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
 
 		RowMatrix_F32 C = new RowMatrix_F32(3,3);
-		CommonOps_D32.multTransA(A,B,C);
+		CommonOps_R32.multTransA(A,B,C);
 
-		assertTrue(MatrixFeatures_D32.isIdentity(C, GrlConstants.TEST_F32));
+		assertTrue(MatrixFeatures_R32.isIdentity(C, GrlConstants.TEST_F32));
 	}
 
 	@Test
@@ -126,8 +126,8 @@ public class TestConvertRotation3D_F32 {
 		RowMatrix_F32 found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
 		RowMatrix_F32 difference = new RowMatrix_F32(3,3);
-		CommonOps_D32.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures_D32.isIdentity(difference, GrlConstants.TEST_SQ_F32));
+		CommonOps_R32.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures_R32.isIdentity(difference, GrlConstants.TEST_SQ_F32));
 	}
 
 	@Test
@@ -171,9 +171,9 @@ public class TestConvertRotation3D_F32 {
 		RowMatrix_F32 found = ConvertRotation3D_F32.quaternionToMatrix(q,null);
 
 		RowMatrix_F32 result = new RowMatrix_F32(3,3);
-		CommonOps_D32.multTransB(R,found,result);
+		CommonOps_R32.multTransB(R,found,result);
 
-		assertTrue(MatrixFeatures_D32.isIdentity(result, GrlConstants.TEST_SQ_F32));
+		assertTrue(MatrixFeatures_R32.isIdentity(result, GrlConstants.TEST_SQ_F32));
 	}
 
 	@Test
@@ -230,7 +230,7 @@ public class TestConvertRotation3D_F32 {
 		RowMatrix_F32 M = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,eulerX,eulerY,eulerZ,null);
 		Rodrigues_F32 rod = ConvertRotation3D_F32.matrixToRodrigues(M, (Rodrigues_F32)null);
 		RowMatrix_F32 found = ConvertRotation3D_F32.rodriguesToMatrix(rod,null);
-		assertTrue(MatrixFeatures_D32.isIdentical(M,found,GrlConstants.TEST_F32));
+		assertTrue(MatrixFeatures_R32.isIdentical(M,found,GrlConstants.TEST_F32));
 	}
 
 	private void checkMatrixToRodrigues( Rodrigues_F32 input,
@@ -255,7 +255,7 @@ public class TestConvertRotation3D_F32 {
 	 */
 	@Test
 	public void matrixToRodrigues_case0() {
-		RowMatrix_F32 R = UtilEjml.parseD32(
+		RowMatrix_F32 R = UtilEjml.parse_R32(
 						"1.00000000000000000000e+00f -5.42066399999221260000e-14f -3.16267800000013500000e-13f \n" +
 						"5.42066400000000000000e-14f 1.00000000000000040000e+00f 2.46136444559397200000e-13f \n" +
 						"3.16267800000000000000e-13f -2.46191955710628460000e-13f 1.00000000000000040000e+00f", 3);
@@ -267,7 +267,7 @@ public class TestConvertRotation3D_F32 {
 
 	@Test
 	public void matrixToRodrigues_case1() {
-		RowMatrix_F32 R = UtilEjml.parseD32(
+		RowMatrix_F32 R = UtilEjml.parse_R32(
 						"0.99999999999999000000e+00f -5.42066399999221260000e-14f -3.16267800000013500000e-13f \n" +
 						"5.42066400000000000000e-14f 0.99999999999999000000e+00f 2.46136444559397200000e-13f \n" +
 						"3.16267800000000000000e-13f -2.46191955710628460000e-13f 0.99999999999999000000e+00f", 3);
@@ -333,8 +333,8 @@ public class TestConvertRotation3D_F32 {
 		RowMatrix_F32 found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
 		RowMatrix_F32 difference = new RowMatrix_F32(3,3);
-		CommonOps_D32.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures_D32.isIdentity(difference, GrlConstants.TEST_SQ_F32));
+		CommonOps_R32.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures_R32.isIdentity(difference, GrlConstants.TEST_SQ_F32));
 	}
 
 	/**
@@ -342,11 +342,11 @@ public class TestConvertRotation3D_F32 {
 	 */
 	@Test
 	public void approximateRotationMatrix_random() {
-		RowMatrix_F32 Q = RandomMatrices_D32.createRandom( 3, 3, rand );
+		RowMatrix_F32 Q = RandomMatrices_R32.createRandom( 3, 3, rand );
 
 		RowMatrix_F32 R = ConvertRotation3D_F32.approximateRotationMatrix( Q, null );
 
-		assertTrue( MatrixFeatures_D32.isOrthogonal( R, GrlConstants.TEST_F32) );
+		assertTrue( MatrixFeatures_R32.isOrthogonal( R, GrlConstants.TEST_F32) );
 	}
 
 	/**
@@ -354,14 +354,14 @@ public class TestConvertRotation3D_F32 {
 	 */
 	@Test
 	public void approximateRotationMatrix_nochange() {
-		RowMatrix_F32 Q = RandomMatrices_D32.createOrthogonal( 3, 3, rand );
+		RowMatrix_F32 Q = RandomMatrices_R32.createOrthogonal( 3, 3, rand );
 
-		if( CommonOps_D32.det(Q) < 0 )
-			CommonOps_D32.changeSign(Q);
+		if( CommonOps_R32.det(Q) < 0 )
+			CommonOps_R32.changeSign(Q);
 
 		RowMatrix_F32 R = ConvertRotation3D_F32.approximateRotationMatrix( Q, null );
 
-		assertTrue( MatrixFeatures_D32.isIdentical( Q, R, GrlConstants.TEST_F32) );
+		assertTrue( MatrixFeatures_R32.isIdentical( Q, R, GrlConstants.TEST_F32) );
 	}
 
 	@Test
@@ -415,8 +415,8 @@ public class TestConvertRotation3D_F32 {
 		RowMatrix_F32 found = ConvertRotation3D_F32.quaternionToMatrix(q,null);
 
 		RowMatrix_F32 result = new RowMatrix_F32(3,3);
-		CommonOps_D32.multTransB(expected,found,result);
-		assertTrue(MatrixFeatures_D32.isIdentity(result, (float)Math.sqrt(GrlConstants.TEST_F32)));
+		CommonOps_R32.multTransB(expected,found,result);
+		assertTrue(MatrixFeatures_R32.isIdentity(result, (float)Math.sqrt(GrlConstants.TEST_F32)));
 	}
 
 	/**
@@ -460,8 +460,8 @@ public class TestConvertRotation3D_F32 {
 			RowMatrix_F32 found = ConvertRotation3D_F32.quaternionToMatrix( q, null );
 
 			RowMatrix_F32 difference = new RowMatrix_F32(3,3);
-			CommonOps_D32.multTransB(expected,found,difference);
-			assertTrue(MatrixFeatures_D32.isIdentity(difference,GrlConstants.TEST_F32));
+			CommonOps_R32.multTransB(expected,found,difference);
+			assertTrue(MatrixFeatures_R32.isIdentity(difference,GrlConstants.TEST_F32));
 		}
 	}
 

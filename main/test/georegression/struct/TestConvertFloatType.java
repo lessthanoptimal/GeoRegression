@@ -24,7 +24,7 @@ import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.RowMatrix_F32;
 import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.RandomMatrices_D64;
+import org.ejml.ops.RandomMatrices_R64;
 import org.junit.Test;
 
 import java.util.Random;
@@ -42,7 +42,7 @@ public class TestConvertFloatType {
 	@Test
 	public void convert_Se_64_32() {
 		Se3_F64 src = new Se3_F64();
-		RandomMatrices_D64.setRandom(src.getR(), rand);
+		RandomMatrices_R64.setRandom(src.getR(), rand);
 		src.getT().set(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
 
 		Se3_F32 dst = ConvertFloatType.convert(src, null);
