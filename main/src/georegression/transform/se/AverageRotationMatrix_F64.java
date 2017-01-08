@@ -19,7 +19,7 @@
 package georegression.transform.se;
 
 import georegression.struct.so.Quaternion_F64;
-import org.ejml.alg.fixed.FixedOps3_R64;
+import org.ejml.alg.fixed.FixedOps3_F64;
 import org.ejml.data.FixedMatrix3x3_F64;
 import org.ejml.data.RowMatrix_F64;
 import org.ejml.factory.DecompositionFactory_R64;
@@ -90,7 +90,7 @@ public class AverageRotationMatrix_F64 {
 		if( average == null )
 			throw new IllegalArgumentException("average is null");
 
-		FixedOps3_R64.fill(F,0);
+		FixedOps3_F64.fill(F,0);
 
 		for (int i = 0; i < list.size(); i++) {
 			FixedMatrix3x3_F64 m = list.get(i);
@@ -104,7 +104,7 @@ public class AverageRotationMatrix_F64 {
 			F.a31  += m.a31; F.a32  += m.a32; F.a33  += m.a33;
 		}
 
-		FixedOps3_R64.divide(F,list.size());
+		FixedOps3_F64.divide(F,list.size());
 
 		ConvertMatrixStruct_F64.convert(F,M);
 		if( !svd.decompose(M) )
