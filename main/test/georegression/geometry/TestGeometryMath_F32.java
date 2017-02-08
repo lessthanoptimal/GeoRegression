@@ -23,10 +23,10 @@ import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector2D_F32;
 import georegression.struct.point.Vector3D_F32;
-import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.CommonOps_R32;
-import org.ejml.ops.MatrixFeatures_R32;
-import org.ejml.ops.RandomMatrices_R32;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
+import org.ejml.dense.row.MatrixFeatures_FDRM;
+import org.ejml.dense.row.RandomMatrices_FDRM;
 import org.junit.Test;
 
 import java.util.Random;
@@ -57,7 +57,7 @@ public class TestGeometryMath_F32 {
 		Vector3D_F32 found1 = new Vector3D_F32();
 
 		GeometryMath_F32.cross( v, x, found0 );
-		RowMatrix_F32 V = GeometryMath_F32.crossMatrix( a, b, c, null );
+		FMatrixRMaj V = GeometryMath_F32.crossMatrix( a, b, c, null );
 
 		GeometryMath_F32.mult( V, x, found1 );
 
@@ -75,10 +75,10 @@ public class TestGeometryMath_F32 {
 
 		Vector3D_F32 v = new Vector3D_F32( a, b, c );
 
-		RowMatrix_F32 V1 = GeometryMath_F32.crossMatrix( v, null );
-		RowMatrix_F32 V2 = GeometryMath_F32.crossMatrix( a, b, c, null );
+		FMatrixRMaj V1 = GeometryMath_F32.crossMatrix( v, null );
+		FMatrixRMaj V2 = GeometryMath_F32.crossMatrix( a, b, c, null );
 
-		assertTrue( MatrixFeatures_R32.isIdentical( V1 ,V2 , GrlConstants.TEST_F32));
+		assertTrue( MatrixFeatures_FDRM.isIdentical( V1 ,V2 , GrlConstants.TEST_F32));
 	}
 
 	@Test
@@ -179,7 +179,7 @@ public class TestGeometryMath_F32 {
 		Vector3D_F32 a = new Vector3D_F32( 1, 2, 3 );
 		Vector3D_F32 b = new Vector3D_F32( 2, 3, 4 );
 		Vector3D_F32 c = new Vector3D_F32();
-		RowMatrix_F32 M = new RowMatrix_F32( 3,3,true,1,1,1,1,1,1,1,1,1);
+		FMatrixRMaj M = new FMatrixRMaj( 3,3,true,1,1,1,1,1,1,1,1,1);
 
 		GeometryMath_F32.addMult( a , M , b , c );
 
@@ -244,7 +244,7 @@ public class TestGeometryMath_F32 {
 	@Test
 	public void mult_3d_3d() {
 		Vector3D_F32 a = new Vector3D_F32( -1, 2, 3 );
-		RowMatrix_F32 M = new RowMatrix_F32(3,3,true,1,2,3,4,5,6,7,8,9);
+		FMatrixRMaj M = new FMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F32 c = new Vector3D_F32();
 
 		GeometryMath_F32.mult( M , a , c );
@@ -257,7 +257,7 @@ public class TestGeometryMath_F32 {
 	@Test
 	public void mult_3d_2d() {
 		Vector3D_F32 a = new Vector3D_F32( -1, 2, 3 );
-		RowMatrix_F32 M = new RowMatrix_F32(3,3,true,1,2,3,4,5,6,7,8,9);
+		FMatrixRMaj M = new FMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector2D_F32 c = new Vector2D_F32();
 
 		GeometryMath_F32.mult( M , a , c );
@@ -269,7 +269,7 @@ public class TestGeometryMath_F32 {
 	@Test
 	public void mult_2d_3d() {
 		Vector3D_F32 a3 = new Vector3D_F32( -1, 2, 1 );
-		RowMatrix_F32 M = new RowMatrix_F32(3,3,true,1,2,3,4,5,6,7,8,9);
+		FMatrixRMaj M = new FMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F32 expected = new Vector3D_F32();
 
 		GeometryMath_F32.mult( M , a3 , expected );
@@ -286,7 +286,7 @@ public class TestGeometryMath_F32 {
 	@Test
 	public void mult_2d_2d() {
 		Vector3D_F32 a3 = new Vector3D_F32( -1, 2, 1 );
-		RowMatrix_F32 M = new RowMatrix_F32(3,3,true,1,2,3,4,5,6,7,8,9);
+		FMatrixRMaj M = new FMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F32 expected = new Vector3D_F32();
 
 		GeometryMath_F32.mult( M , a3 , expected );
@@ -304,7 +304,7 @@ public class TestGeometryMath_F32 {
 	@Test
 	public void multTran_3d_3d() {
 		Vector3D_F32 a = new Vector3D_F32( -1, 2, 3 );
-		RowMatrix_F32 M = new RowMatrix_F32(3,3,true,1,2,3,4,5,6,7,8,9);
+		FMatrixRMaj M = new FMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F32 c = new Vector3D_F32();
 
 		GeometryMath_F32.multTran( M , a , c );
@@ -317,7 +317,7 @@ public class TestGeometryMath_F32 {
 	@Test
 	public void multTran_2d_3d() {
 		Vector2D_F32 a = new Vector2D_F32( -1, 2 );
-		RowMatrix_F32 M = new RowMatrix_F32(3,3,true,1,2,3,4,5,6,7,8,9);
+		FMatrixRMaj M = new FMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F32 c = new Vector3D_F32();
 
 		GeometryMath_F32.multTran( M , a , c );
@@ -330,36 +330,36 @@ public class TestGeometryMath_F32 {
 	@Test
 	public void multCrossA_2D() {
 		Point2D_F32 a = new Point2D_F32(3,2);
-		RowMatrix_F32 b = RandomMatrices_R32.createRandom(3,3,rand);
+		FMatrixRMaj b = RandomMatrices_FDRM.rectangle(3,3,rand);
 
-		RowMatrix_F32 a_hat = GeometryMath_F32.crossMatrix(a.x,a.y,1,null);
-		RowMatrix_F32 expected = new RowMatrix_F32(3,3);
-		CommonOps_R32.mult(a_hat,b,expected);
+		FMatrixRMaj a_hat = GeometryMath_F32.crossMatrix(a.x,a.y,1,null);
+		FMatrixRMaj expected = new FMatrixRMaj(3,3);
+		CommonOps_FDRM.mult(a_hat,b,expected);
 
-		RowMatrix_F32 found = GeometryMath_F32.multCrossA(a,b,null);
+		FMatrixRMaj found = GeometryMath_F32.multCrossA(a,b,null);
 
-		assertTrue(MatrixFeatures_R32.isIdentical(expected,found,GrlConstants.TEST_F32));
+		assertTrue(MatrixFeatures_FDRM.isIdentical(expected,found,GrlConstants.TEST_F32));
 	}
 
 	@Test
 	public void multCrossA_3D() {
 		Point3D_F32 a = new Point3D_F32(1,2,3);
-		RowMatrix_F32 b = RandomMatrices_R32.createRandom(3,3,rand);
+		FMatrixRMaj b = RandomMatrices_FDRM.rectangle(3,3,rand);
 
-		RowMatrix_F32 a_hat = GeometryMath_F32.crossMatrix(a.x,a.y,a.z,null);
-		RowMatrix_F32 expected = new RowMatrix_F32(3,3);
-		CommonOps_R32.mult(a_hat,b,expected);
+		FMatrixRMaj a_hat = GeometryMath_F32.crossMatrix(a.x,a.y,a.z,null);
+		FMatrixRMaj expected = new FMatrixRMaj(3,3);
+		CommonOps_FDRM.mult(a_hat,b,expected);
 
-		RowMatrix_F32 found = GeometryMath_F32.multCrossA(a,b,null);
+		FMatrixRMaj found = GeometryMath_F32.multCrossA(a,b,null);
 
-		assertTrue(MatrixFeatures_R32.isIdentical(expected,found,GrlConstants.TEST_F32));
+		assertTrue(MatrixFeatures_FDRM.isIdentical(expected,found,GrlConstants.TEST_F32));
 	}
 
 	@Test
 	public void innerProd_3D() {
 		Vector3D_F32 a = new Vector3D_F32( 2, -2, 3 );
 		Vector3D_F32 b = new Vector3D_F32( 4, 3, 2 );
-		RowMatrix_F32 M = new RowMatrix_F32( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+		FMatrixRMaj M = new FMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
 
 		float found = GeometryMath_F32.innerProd( a, M, b );
 
@@ -370,7 +370,7 @@ public class TestGeometryMath_F32 {
 	public void innerProdTranM() {
 		Vector3D_F32 a = new Vector3D_F32( 2, -2, 3 );
 		Vector3D_F32 b = new Vector3D_F32( 4, 3, 2 );
-		RowMatrix_F32 M = new RowMatrix_F32( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+		FMatrixRMaj M = new FMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
 
 		float found = GeometryMath_F32.innerProdTranM( a, M, b );
 
@@ -381,7 +381,7 @@ public class TestGeometryMath_F32 {
 	public void innerProd_2D() {
 		Vector2D_F32 a = new Vector2D_F32( 2, -2 );
 		Vector2D_F32 b = new Vector2D_F32( 4, 3 );
-		RowMatrix_F32 M = new RowMatrix_F32( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+		FMatrixRMaj M = new FMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
 
 		float found = GeometryMath_F32.innerProd( a, M, b );
 
@@ -392,28 +392,28 @@ public class TestGeometryMath_F32 {
 	public void outerProd_3D() {
 		Vector3D_F32 a = new Vector3D_F32( 2, -2 , 5);
 		Vector3D_F32 b = new Vector3D_F32( 4, 3 , 9);
-		RowMatrix_F32 M = new RowMatrix_F32( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+		FMatrixRMaj M = new FMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
 
-		RowMatrix_F32 expected = new RowMatrix_F32(3,3,true,8 , 6 ,18 , -8 ,-6,-18,20,15,45);
+		FMatrixRMaj expected = new FMatrixRMaj(3,3,true,8 , 6 ,18 , -8 ,-6,-18,20,15,45);
 
 		GeometryMath_F32.outerProd( a, b , M );
 
-		assertTrue( MatrixFeatures_R32.isIdentical(expected,M,GrlConstants.TEST_F32) );
+		assertTrue( MatrixFeatures_FDRM.isIdentical(expected,M,GrlConstants.TEST_F32) );
 	}
 
 	@Test
 	public void addOuterProd_3D() {
 		Vector3D_F32 a = new Vector3D_F32( 2, -2 , 5);
 		Vector3D_F32 b = new Vector3D_F32( 4, 3 , 9);
-		RowMatrix_F32 A = new RowMatrix_F32( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+		FMatrixRMaj A = new FMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
 
-		RowMatrix_F32 found = new RowMatrix_F32( 3, 3);
+		FMatrixRMaj found = new FMatrixRMaj( 3, 3);
 
-		RowMatrix_F32 expected = new RowMatrix_F32(3,3,true,-7,-4,-15,12 , 11,24,-13,-7,-36);
+		FMatrixRMaj expected = new FMatrixRMaj(3,3,true,-7,-4,-15,12 , 11,24,-13,-7,-36);
 
 		GeometryMath_F32.addOuterProd( A , -1 , a, b , found );
 
-		assertTrue( MatrixFeatures_R32.isIdentical(expected,found,GrlConstants.TEST_F32) );
+		assertTrue( MatrixFeatures_FDRM.isIdentical(expected,found,GrlConstants.TEST_F32) );
 	}
 
 	@Test
@@ -459,7 +459,7 @@ public class TestGeometryMath_F32 {
 	@Test
 	public void toMatrix() {
 		Vector3D_F32 a = new Vector3D_F32( 1, -2, 3 );
-		RowMatrix_F32 found = GeometryMath_F32.toMatrix(a,null);
+		FMatrixRMaj found = GeometryMath_F32.toMatrix(a,null);
 
 		assertEquals(1,found.get(0),GrlConstants.TEST_F32);
 		assertEquals(-2,found.get(1),GrlConstants.TEST_F32);
@@ -468,7 +468,7 @@ public class TestGeometryMath_F32 {
 
 	@Test
 	public void toTuple3D() {
-		RowMatrix_F32 a = new RowMatrix_F32(3,1,true,1,-2,3);
+		FMatrixRMaj a = new FMatrixRMaj(3,1,true,1,-2,3);
 		Vector3D_F32 b = new Vector3D_F32();
 		GeometryMath_F32.toTuple3D(a, b);
 

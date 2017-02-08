@@ -26,7 +26,7 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.shapes.Cylinder3D_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.RowMatrix_F32;
+import org.ejml.data.FMatrixRMaj;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -127,7 +127,7 @@ public class TestFitCylinderToPoints_F32 {
 		angle = (float)Math.acos( angle / (cylinder.line.slope.norm()));
 
 		Rodrigues_F32 rod = new Rodrigues_F32(angle,cross);
-		RowMatrix_F32 R = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
+		FMatrixRMaj R = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
 
 		GeometryMath_F32.mult(R, p, p);
 		p.x += cylinder.line.p.x;

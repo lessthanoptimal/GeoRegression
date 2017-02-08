@@ -20,12 +20,12 @@ package georegression.fitting.ellipse;
 
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.EllipseQuadratic_F64;
-import org.ejml.data.RowMatrix_F64;
-import org.ejml.factory.DecompositionFactory_R64;
-import org.ejml.factory.LinearSolverFactory_R64;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
+import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
 import org.ejml.interfaces.linsol.LinearSolver;
-import org.ejml.ops.CommonOps_R64;
 
 import java.util.List;
 
@@ -53,26 +53,26 @@ import java.util.List;
 public class FitEllipseWeightedAlgebraic_F64 {
 
 	// qudratic part of design matrix
-	private RowMatrix_F64 D1 = new RowMatrix_F64(3,1);
+	private DMatrixRMaj D1 = new DMatrixRMaj(3,1);
 	// linear part of design matrix
-	private RowMatrix_F64 D2 = new RowMatrix_F64(3,1);
+	private DMatrixRMaj D2 = new DMatrixRMaj(3,1);
 
 	// quadratic part of scatter matrix
-	private RowMatrix_F64 S1 = new RowMatrix_F64(3,3);
+	private DMatrixRMaj S1 = new DMatrixRMaj(3,3);
 	// combined part of scatter matrix
-	private RowMatrix_F64 S2 = new RowMatrix_F64(3,3);
+	private DMatrixRMaj S2 = new DMatrixRMaj(3,3);
 	//linear part of scatter matrix
-	private RowMatrix_F64 S3 = new RowMatrix_F64(3,3);
+	private DMatrixRMaj S3 = new DMatrixRMaj(3,3);
 	// Reduced scatter matrix
-	private RowMatrix_F64 M = new RowMatrix_F64(3,3);
+	private DMatrixRMaj M = new DMatrixRMaj(3,3);
 
 	// storage for intermediate steps
-	private RowMatrix_F64 T = new RowMatrix_F64(3,3);
-	private RowMatrix_F64 Ta1 = new RowMatrix_F64(3,1);
-	private RowMatrix_F64 S2_tran = new RowMatrix_F64(3,3);
+	private DMatrixRMaj T = new DMatrixRMaj(3,3);
+	private DMatrixRMaj Ta1 = new DMatrixRMaj(3,1);
+	private DMatrixRMaj S2_tran = new DMatrixRMaj(3,3);
 
-	private LinearSolver<RowMatrix_F64> solver = LinearSolverFactory_R64.linear(3);
-	private EigenDecomposition<RowMatrix_F64> eigen = DecompositionFactory_R64.eig(3,true,false);
+	private LinearSolver<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(3);
+	private EigenDecomposition<DMatrixRMaj> eigen = DecompositionFactory_DDRM.eig(3,true,false);
 
 	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
 
@@ -107,23 +107,23 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		}
 
 		// Compute scatter matrix
-		CommonOps_R64.multTransA(D1, D1, S1); // S1 = D1'*D1
-		CommonOps_R64.multTransA(D1, D2, S2); // S2 = D1'*D2
-		CommonOps_R64.multTransA(D2, D2, S3); // S3 = D2'*D2
+		CommonOps_DDRM.multTransA(D1, D1, S1); // S1 = D1'*D1
+		CommonOps_DDRM.multTransA(D1, D2, S2); // S2 = D1'*D2
+		CommonOps_DDRM.multTransA(D2, D2, S3); // S3 = D2'*D2
 
 		// for getting a2 from a1
 		// T = -inv(S3)*S2'
 		if( !solver.setA(S3) )
 			return false;
 
-		CommonOps_R64.transpose(S2,S2_tran);
-		CommonOps_R64.changeSign(S2_tran);
+		CommonOps_DDRM.transpose(S2,S2_tran);
+		CommonOps_DDRM.changeSign(S2_tran);
 		solver.solve(S2_tran, T);
 
 		// Compute reduced scatter matrix
 		// M = S1 + S2*T
-		CommonOps_R64.mult(S2, T, M);
-		CommonOps_R64.add(M,S1,M);
+		CommonOps_DDRM.mult(S2, T, M);
+		CommonOps_DDRM.add(M,S1,M);
 
 		// Premultiply by inv(C1). inverse of constraint matrix
 		for( int col = 0; col < 3; col++ ) {
@@ -139,12 +139,12 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		if( !eigen.decompose(M) )
 			return false;
 
-		RowMatrix_F64 a1 = selectBestEigenVector();
+		DMatrixRMaj a1 = selectBestEigenVector();
 		if( a1 == null )
 			return false;
 
 		// ellipse coefficients
-		CommonOps_R64.mult(T,a1,Ta1);
+		CommonOps_DDRM.mult(T,a1,Ta1);
 
 		ellipse.a = a1.data[0];
 		ellipse.b = a1.data[1]/2;
@@ -156,13 +156,13 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		return true;
 	}
 
-	private RowMatrix_F64 selectBestEigenVector() {
+	private DMatrixRMaj selectBestEigenVector() {
 
 		int bestIndex = -1;
 		double bestCond = Double.MAX_VALUE;
 
 		for( int i = 0; i < eigen.getNumberOfEigenvalues(); i++ ) {
-			RowMatrix_F64 v = eigen.getEigenVector(i);
+			DMatrixRMaj v = eigen.getEigenVector(i);
 
 			if( v == null ) // TODO WTF?!?!
 				continue;

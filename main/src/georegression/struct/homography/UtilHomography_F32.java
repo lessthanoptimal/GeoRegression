@@ -19,8 +19,8 @@
 package georegression.struct.homography;
 
 
-import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.CommonOps_R32;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
 
 /**
  * Various useful functions related to homographies.
@@ -36,7 +36,7 @@ public class UtilHomography_F32 {
 	 * @param ret Storage for output.  If null then a new instance is created.
 	 * @return Equivalent homography.
 	 */
-	public static Homography2D_F32 convert( RowMatrix_F32 m , Homography2D_F32 ret ) {
+	public static Homography2D_F32 convert( FMatrixRMaj m , Homography2D_F32 ret ) {
 		if( m.numCols != 3 || m.numRows != 3)
 			throw new IllegalArgumentException("Expected a 3 by 3 matrix.");
 
@@ -63,9 +63,9 @@ public class UtilHomography_F32 {
 	 * @param ret Storage for output.  If null then a new instance is created.
 	 * @return Equivalent matrix.
 	 */
-	public static RowMatrix_F32 convert( Homography2D_F32 m , RowMatrix_F32 ret ) {
+	public static FMatrixRMaj convert( Homography2D_F32 m , FMatrixRMaj ret ) {
 		if( ret == null ) {
-			ret = new RowMatrix_F32(3,3);
+			ret = new FMatrixRMaj(3,3);
 		} else if( ret.numCols != 3 || ret.numRows != 3)
 			throw new IllegalArgumentException("Expected a 3 by 3 matrix.");
 
@@ -87,9 +87,9 @@ public class UtilHomography_F32 {
 		if( inverted == null )
 			inverted = new Homography2D_F32();
 
-		RowMatrix_F32 A = new RowMatrix_F32(3,3);
+		FMatrixRMaj A = new FMatrixRMaj(3,3);
 		convert(orig,A);
-		CommonOps_R32.invert(A);
+		CommonOps_FDRM.invert(A);
 		convert(A,inverted);
 
 		return inverted;

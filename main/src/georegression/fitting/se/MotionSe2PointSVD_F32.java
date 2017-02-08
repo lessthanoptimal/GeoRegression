@@ -23,10 +23,10 @@ import georegression.geometry.GeometryMath_F32;
 import georegression.geometry.UtilPoint2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.se.Se2_F32;
-import org.ejml.data.RowMatrix_F32;
-import org.ejml.factory.DecompositionFactory_R32;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_FDRM;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
-import org.ejml.ops.CommonOps_R32;
 
 import java.util.List;
 
@@ -55,11 +55,11 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 	Point2D_F32 meanFrom = new Point2D_F32();
 	Point2D_F32 meanTo = new Point2D_F32();
 
-	SingularValueDecomposition<RowMatrix_F32> svd = DecompositionFactory_R32.svd(2,2,true,true,false);
-	RowMatrix_F32 Sigma = new RowMatrix_F32(2,2);
-	RowMatrix_F32 U = new RowMatrix_F32(2,2);
-	RowMatrix_F32 V = new RowMatrix_F32(2,2);
-	RowMatrix_F32 R = new RowMatrix_F32(2,2);
+	SingularValueDecomposition<FMatrixRMaj> svd = DecompositionFactory_FDRM.svd(2,2,true,true,false);
+	FMatrixRMaj Sigma = new FMatrixRMaj(2,2);
+	FMatrixRMaj U = new FMatrixRMaj(2,2);
+	FMatrixRMaj V = new FMatrixRMaj(2,2);
+	FMatrixRMaj R = new FMatrixRMaj(2,2);
 
 	@Override
 	public Se2_F32 getTransformSrcToDst() {
@@ -113,16 +113,16 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 		svd.getU(U,false);
 		svd.getV(V, false);
 
-		CommonOps_R32.multTransB(V,U,R);
+		CommonOps_FDRM.multTransB(V,U,R);
 
 		// There are situations where R might not have a determinant of one and is instead
 		// a reflection is returned
-		float det = CommonOps_R32.det(R);
+		float det = CommonOps_FDRM.det(R);
 		if( det < 0 ) {
 			for( int i = 0; i < 2; i++ )
 				V.set( i, 1, -V.get( i, 1 ) );
-			CommonOps_R32.multTransB(V,U,R);
-			det = CommonOps_R32.det(R);
+			CommonOps_FDRM.multTransB(V,U,R);
+			det = CommonOps_FDRM.det(R);
 			if( det < 0 ) {
 				throw new RuntimeException( "Crap" );
 			}

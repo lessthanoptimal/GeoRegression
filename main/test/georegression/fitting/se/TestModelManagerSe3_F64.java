@@ -20,7 +20,7 @@ package georegression.fitting.se;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.se.Se3_F64;
-import org.ejml.ops.MatrixFeatures_R64;
+import org.ejml.dense.row.MatrixFeatures_DDRM;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -50,7 +50,7 @@ public class TestModelManagerSe3_F64 {
 
 		alg.copyModel(model,found);
 
-		assertTrue(MatrixFeatures_R64.isEquals(model.getR(),found.getR()));
+		assertTrue(MatrixFeatures_DDRM.isEquals(model.getR(),found.getR()));
 		assertEquals(model.T.x,found.T.x,GrlConstants.TEST_F64);
 		assertEquals(model.T.y,found.T.y,GrlConstants.TEST_F64);
 		assertEquals(model.T.z,found.T.z,GrlConstants.TEST_F64);

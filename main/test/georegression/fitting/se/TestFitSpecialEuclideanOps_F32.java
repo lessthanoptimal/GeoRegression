@@ -30,8 +30,8 @@ import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se3_F32;
 import georegression.transform.se.SePointOps_F32;
-import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.MatrixFeatures_R32;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.MatrixFeatures_FDRM;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class TestFitSpecialEuclideanOps_F32 {
 	 */
 	@Test
 	public void fitPoints3D_list() {
-		RowMatrix_F32 R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0.1f, 1.0f, -1.5f , null );
+		FMatrixRMaj R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0.1f, 1.0f, -1.5f , null );
 		Se3_F32 tran = new Se3_F32( R , new Vector3D_F32( 1 , 2 , 3));
 
 		List<Point3D_F32> from = UtilPoint3D_F32.random( -10, 10, 30, rand );
@@ -96,7 +96,7 @@ public class TestFitSpecialEuclideanOps_F32 {
 		Se3_F32 found = FitSpecialEuclideanOps_F32.fitPoints3D( from , to );
 
 		// the exact same algorithm should be called and they should produce the same results
-		assertTrue( MatrixFeatures_R32.isIdentical( expected.getR() , found.getR() , GrlConstants.TEST_F32));
+		assertTrue( MatrixFeatures_FDRM.isIdentical( expected.getR() , found.getR() , GrlConstants.TEST_F32));
 		assertTrue( expected.getT().isIdentical(found.getT() , GrlConstants.TEST_F32));
 	}
 }

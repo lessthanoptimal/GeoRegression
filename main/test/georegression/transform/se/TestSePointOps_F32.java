@@ -26,7 +26,7 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se3_F32;
-import org.ejml.data.RowMatrix_F32;
+import org.ejml.data.FMatrixRMaj;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -131,7 +131,7 @@ public class TestSePointOps_F32 {
 
 	@Test
 	public void transform_3d_single() {
-		RowMatrix_F32 R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0, (float)Math.PI / 2, 0, null );
+		FMatrixRMaj R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0, (float)Math.PI / 2, 0, null );
 		Vector3D_F32 T = new Vector3D_F32( 1, 2, 3 );
 
 		Point3D_F32 P = new Point3D_F32( 1, 7, 9 );
@@ -148,7 +148,7 @@ public class TestSePointOps_F32 {
 
 	@Test
 	public void transformReverse_3d_single() {
-		RowMatrix_F32 R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0, (float)Math.PI / 2, 0, null );
+		FMatrixRMaj R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0, (float)Math.PI / 2, 0, null );
 		Vector3D_F32 T = new Vector3D_F32( 1, 2, 3 );
 
 		Point3D_F32 P = new Point3D_F32( 10, 9, 2 );

@@ -20,8 +20,8 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.GeoTuple3D_F64;
-import org.ejml.alg.dense.mult.VectorVectorMult_R64;
-import org.ejml.data.RowMatrix_F64;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.mult.VectorVectorMult_DDRM;
 
 
 /**
@@ -45,9 +45,9 @@ public class GeometryMath_F64 {
 	 * @param ret If not null the results are stored here, otherwise a new matrix is created.
 	 * @return Skew symmetric cross product matrix.
 	 */
-	public static RowMatrix_F64 crossMatrix( double x0, double x1, double x2, RowMatrix_F64 ret ) {
+	public static DMatrixRMaj crossMatrix( double x0, double x1, double x2, DMatrixRMaj ret ) {
 		if( ret == null ) {
-			ret = new RowMatrix_F64( 3, 3 );
+			ret = new DMatrixRMaj( 3, 3 );
 		} else {
 			ret.zero();
 		}
@@ -69,9 +69,9 @@ public class GeometryMath_F64 {
 	 * @param ret If not null the results are stored here, otherwise a new matrix is created.
 	 * @return Skew symmetric cross product matrix.
 	 */
-	public static RowMatrix_F64 crossMatrix( GeoTuple3D_F64 v, RowMatrix_F64 ret ) {
+	public static DMatrixRMaj crossMatrix( GeoTuple3D_F64 v, DMatrixRMaj ret ) {
 		if( ret == null ) {
-			ret = new RowMatrix_F64( 3, 3 );
+			ret = new DMatrixRMaj( 3, 3 );
 		} else {
 			ret.zero();
 		}
@@ -217,7 +217,7 @@ public class GeometryMath_F64 {
 	 * @param p1
 	 * @param ret
 	 */
-	public static <T extends GeoTuple3D_F64> T addMult( T p0, RowMatrix_F64 M, T p1, T ret ) {
+	public static <T extends GeoTuple3D_F64> T addMult( T p0, DMatrixRMaj M, T p1, T ret ) {
 		ret = mult( M, p1, ret );
 		ret.x += p0.x;
 		ret.y += p0.y;
@@ -292,7 +292,7 @@ public class GeometryMath_F64 {
 	 * @param pt
 	 * @param result Storage for output.  Can be the same instance as param 'pt'.  Modified.
 	 */
-	public static <T extends GeoTuple3D_F64> T mult( RowMatrix_F64 M, T pt, T result ) {
+	public static <T extends GeoTuple3D_F64> T mult( DMatrixRMaj M, T pt, T result ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -322,7 +322,7 @@ public class GeometryMath_F64 {
 	 * by dividing the x and y values by the found z.
 	 * </p>
 	 */
-	public static <T extends GeoTuple2D_F64> T mult( RowMatrix_F64 M, GeoTuple3D_F64 pt, T mod ) {
+	public static <T extends GeoTuple2D_F64> T mult( DMatrixRMaj M, GeoTuple3D_F64 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -351,7 +351,7 @@ public class GeometryMath_F64 {
 	 * a 3d point.
 	 * </p>
 	 */
-	public static void mult( RowMatrix_F64 M, GeoTuple2D_F64 pt, GeoTuple3D_F64 mod ) {
+	public static void mult( DMatrixRMaj M, GeoTuple2D_F64 pt, GeoTuple3D_F64 mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -376,7 +376,7 @@ public class GeometryMath_F64 {
 	 * @param mod Storage for the computation.  If null a new point is declared.  Can be same instance as pt.
 	 * @return Result of computation.
 	 */
-	public static <T extends GeoTuple2D_F64> T mult( RowMatrix_F64 M, T pt, T mod ) {
+	public static <T extends GeoTuple2D_F64> T mult( DMatrixRMaj M, T pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -407,12 +407,12 @@ public class GeometryMath_F64 {
 	 * @param result Storage for results.  Can be null.
 	 * @return Results.
 	 */
-	public static RowMatrix_F64 multCrossA( GeoTuple2D_F64 A , RowMatrix_F64 M, RowMatrix_F64 result ) {
+	public static DMatrixRMaj multCrossA( GeoTuple2D_F64 A , DMatrixRMaj M, DMatrixRMaj result ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
 		if( result == null ) {
-			result = new RowMatrix_F64(3,3);
+			result = new DMatrixRMaj(3,3);
 		}
 
 		double x = A.x;
@@ -447,12 +447,12 @@ public class GeometryMath_F64 {
 	 * @param result Storage for results.  Can be null.
 	 * @return Results.
 	 */
-	public static RowMatrix_F64 multCrossA( GeoTuple3D_F64 A , RowMatrix_F64 M, RowMatrix_F64 result ) {
+	public static DMatrixRMaj multCrossA( GeoTuple3D_F64 A , DMatrixRMaj M, DMatrixRMaj result ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
 		if( result == null ) {
-			result = new RowMatrix_F64(3,3);
+			result = new DMatrixRMaj(3,3);
 		}
 
 		double x = A.x;
@@ -481,7 +481,7 @@ public class GeometryMath_F64 {
 	 *
 	 *
 	 */
-	public static <T extends GeoTuple3D_F64> T multTran( RowMatrix_F64 M, T pt, T mod ) {
+	public static <T extends GeoTuple3D_F64> T multTran( DMatrixRMaj M, T pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
 
@@ -509,7 +509,7 @@ public class GeometryMath_F64 {
 	 * @param mod 2D point in homogeneous coordinates.  Implicit z = 1
 	 * @return 2D point in homogeneous coordinates.  Implicit z = 1
 	 */
-	public static <T extends GeoTuple3D_F64> T multTran( RowMatrix_F64 M, GeoTuple2D_F64 pt, T mod ) {
+	public static <T extends GeoTuple3D_F64> T multTran( DMatrixRMaj M, GeoTuple2D_F64 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
 
@@ -536,7 +536,7 @@ public class GeometryMath_F64 {
 	 * @param mod 2D point in homogeneous coordinates.  Implicit z = 1
 	 * @return 2D point in homogeneous coordinates.  Implicit z = 1
 	 */
-	public static <T extends GeoTuple2D_F64> T multTran( RowMatrix_F64 M, GeoTuple2D_F64 pt, T mod ) {
+	public static <T extends GeoTuple2D_F64> T multTran( DMatrixRMaj M, GeoTuple2D_F64 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
 
@@ -564,14 +564,14 @@ public class GeometryMath_F64 {
 	 * @param b 3D point.
 	 * @return scalar number
 	 */
-	public static double innerProd( GeoTuple3D_F64 a, RowMatrix_F64 M, GeoTuple3D_F64 b ) {
+	public static double innerProd( GeoTuple3D_F64 a, DMatrixRMaj M, GeoTuple3D_F64 b ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "M must be 3 by 3." );
 
-		RowMatrix_F64 m1 = new RowMatrix_F64( 3, 1, true, a.x, a.y, a.z );
-		RowMatrix_F64 m2 = new RowMatrix_F64( 3, 1, true, b.x, b.y, b.z );
+		DMatrixRMaj m1 = new DMatrixRMaj( 3, 1, true, a.x, a.y, a.z );
+		DMatrixRMaj m2 = new DMatrixRMaj( 3, 1, true, b.x, b.y, b.z );
 
-		return (double) ( VectorVectorMult_R64.innerProdA( m1, M, m2 ) );
+		return (double) ( VectorVectorMult_DDRM.innerProdA( m1, M, m2 ) );
 	}
 
 	/**
@@ -585,14 +585,14 @@ public class GeometryMath_F64 {
 	 * @param b 3D point.
 	 * @return scalar number
 	 */
-	public static double innerProdTranM( GeoTuple3D_F64 a, RowMatrix_F64 M, GeoTuple3D_F64 b ) {
+	public static double innerProdTranM( GeoTuple3D_F64 a, DMatrixRMaj M, GeoTuple3D_F64 b ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "M must be 3 by 3." );
 
-		RowMatrix_F64 m1 = new RowMatrix_F64( 3, 1, true, a.x, a.y, a.z );
-		RowMatrix_F64 m2 = new RowMatrix_F64( 3, 1, true, b.x, b.y, b.z );
+		DMatrixRMaj m1 = new DMatrixRMaj( 3, 1, true, a.x, a.y, a.z );
+		DMatrixRMaj m2 = new DMatrixRMaj( 3, 1, true, b.x, b.y, b.z );
 
-		return (double) ( VectorVectorMult_R64.innerProdTranA( m1, M, m2 ) );
+		return (double) ( VectorVectorMult_DDRM.innerProdTranA( m1, M, m2 ) );
 	}
 
 	/**
@@ -604,9 +604,9 @@ public class GeometryMath_F64 {
 	 * @param ret 3 x 3 matrix or null.
 	 * @return outer product of two 3d vectors
 	 */
-	public static RowMatrix_F64 outerProd(GeoTuple3D_F64 a, GeoTuple3D_F64 b, RowMatrix_F64 ret) {
+	public static DMatrixRMaj outerProd(GeoTuple3D_F64 a, GeoTuple3D_F64 b, DMatrixRMaj ret) {
 		if( ret == null )
-			ret = new RowMatrix_F64(3,3);
+			ret = new DMatrixRMaj(3,3);
 
 		ret.data[0] = a.x*b.x;
 		ret.data[1] = a.x*b.y;
@@ -631,9 +631,9 @@ public class GeometryMath_F64 {
 	 * @param ret 3 x 3 matrix or null.
 	 * @return outer product of two 3d vectors
 	 */
-	public static RowMatrix_F64 addOuterProd(RowMatrix_F64 A , double scalar , GeoTuple3D_F64 b, GeoTuple3D_F64 c, RowMatrix_F64 ret) {
+	public static DMatrixRMaj addOuterProd(DMatrixRMaj A , double scalar , GeoTuple3D_F64 b, GeoTuple3D_F64 c, DMatrixRMaj ret) {
 		if( ret == null )
-			ret = new RowMatrix_F64(3,3);
+			ret = new DMatrixRMaj(3,3);
 
 		ret.data[0] = A.data[0] + scalar*b.x*c.x;
 		ret.data[1] = A.data[1] + scalar*b.x*c.y;
@@ -660,14 +660,14 @@ public class GeometryMath_F64 {
 	 * @param b 2D point.
 	 * @return scalar number,
 	 */
-	public static double innerProd( GeoTuple2D_F64 a, RowMatrix_F64 M, GeoTuple2D_F64 b ) {
+	public static double innerProd( GeoTuple2D_F64 a, DMatrixRMaj M, GeoTuple2D_F64 b ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "M must be 3 by 3." );
 
-		RowMatrix_F64 m1 = new RowMatrix_F64( 3, 1, true, a.x, a.y, 1 );
-		RowMatrix_F64 m2 = new RowMatrix_F64( 3, 1, true, b.x, b.y, 1 );
+		DMatrixRMaj m1 = new DMatrixRMaj( 3, 1, true, a.x, a.y, 1 );
+		DMatrixRMaj m2 = new DMatrixRMaj( 3, 1, true, b.x, b.y, 1 );
 
-		return (double) ( VectorVectorMult_R64.innerProdA( m1, M, m2 ) );
+		return (double) ( VectorVectorMult_DDRM.innerProdA( m1, M, m2 ) );
 	}
 
 	/**
@@ -726,15 +726,15 @@ public class GeometryMath_F64 {
 	}
 
 	/**
-	 * Converts a GeoTuple3D_F64 into RowMatrix_F64
+	 * Converts a GeoTuple3D_F64 into DMatrixRMaj
 	 *
 	 * @param in Input vector
 	 * @param out Output matrix.  If null a new matrix will be declared
 	 * @return Converted matrix
 	 */
-	public static RowMatrix_F64 toMatrix(GeoTuple3D_F64 in, RowMatrix_F64 out) {
+	public static DMatrixRMaj toMatrix(GeoTuple3D_F64 in, DMatrixRMaj out) {
 		if( out == null )
-			out = new RowMatrix_F64(3,1);
+			out = new DMatrixRMaj(3,1);
 		else if( out.getNumElements() != 3 )
 			throw new IllegalArgumentException("Vector with 3 elements expected");
 
@@ -746,12 +746,12 @@ public class GeometryMath_F64 {
 	}
 
 	/**
-	 * Converts a RowMatrix_F64 into  GeoTuple3D_F64
+	 * Converts a DMatrixRMaj into  GeoTuple3D_F64
 	 *
 	 * @param in Input matrix
 	 * @param out Output vector.
 	 */
-	public static void toTuple3D(RowMatrix_F64 in, GeoTuple3D_F64 out) {
+	public static void toTuple3D(DMatrixRMaj in, GeoTuple3D_F64 out) {
 
 		out.x = (double)in.get(0);
 		out.y = (double)in.get(1);

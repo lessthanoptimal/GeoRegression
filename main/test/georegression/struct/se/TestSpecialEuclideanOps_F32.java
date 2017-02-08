@@ -27,9 +27,9 @@ import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.transform.affine.AffinePointOps_F32;
 import georegression.transform.se.SePointOps_F32;
-import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.CommonOps_R32;
-import org.ejml.ops.MatrixFeatures_R32;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
+import org.ejml.dense.row.MatrixFeatures_FDRM;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -61,12 +61,12 @@ public class TestSpecialEuclideanOps_F32 {
 	public void toHomogeneous_3D() {
 		Se3_F32 se = SpecialEuclideanOps_F32.setEulerXYZ( 0.1f, 2, -0.3f, 2, -3, 4.4f, null );
 
-		RowMatrix_F32 H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
+		FMatrixRMaj H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
 
 		assertEquals( 4, H.numCols );
 		assertEquals( 4, H.numRows );
 
-		RowMatrix_F32 R = se.getR();
+		FMatrixRMaj R = se.getR();
 
 		for( int i = 0; i < 3; i++ ) {
 			for( int j = 0; j < 3; j++ ) {
@@ -85,18 +85,18 @@ public class TestSpecialEuclideanOps_F32 {
 		Point2D_F32 pt = new Point2D_F32( 3.4f, -9.21f );
 		Se2_F32 se = new Se2_F32( -3, 6.9f, -1.3f );
 
-		RowMatrix_F32 H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
+		FMatrixRMaj H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
 
 		Point2D_F32 expected = SePointOps_F32.transform( se, pt, null );
 
 		// convert the point into homogeneous matrix notation
-		RowMatrix_F32 pt_m = new RowMatrix_F32( 3, 1 );
+		FMatrixRMaj pt_m = new FMatrixRMaj( 3, 1 );
 		pt_m.set( 0, 0, pt.x );
 		pt_m.set( 1, 0, pt.y );
 		pt_m.set( 2, 0, 1 );
 
-		RowMatrix_F32 found = new RowMatrix_F32( 3, 1 );
-		CommonOps_R32.mult( H, pt_m, found );
+		FMatrixRMaj found = new FMatrixRMaj( 3, 1 );
+		CommonOps_FDRM.mult( H, pt_m, found );
 
 		assertEquals( expected.x, found.get( 0, 0 ), GrlConstants.TEST_F32);
 		assertEquals( expected.y, found.get( 1, 0 ), GrlConstants.TEST_F32);
@@ -107,7 +107,7 @@ public class TestSpecialEuclideanOps_F32 {
 	public void toSe3_F32() {
 		Se3_F32 se = SpecialEuclideanOps_F32.setEulerXYZ( 0.1f, 2, -0.3f, 2, -3, 4.4f, null );
 
-		RowMatrix_F32 H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
+		FMatrixRMaj H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
 
 		Se3_F32 found = SpecialEuclideanOps_F32.toSe3( H, null );
 
@@ -115,14 +115,14 @@ public class TestSpecialEuclideanOps_F32 {
 		assertEquals( se.getY(), found.getY(), GrlConstants.TEST_F32);
 		assertEquals( se.getZ(), found.getZ(), GrlConstants.TEST_F32);
 
-		assertTrue( MatrixFeatures_R32.isIdentical( se.getR(), found.getR(), GrlConstants.TEST_F32) );
+		assertTrue( MatrixFeatures_FDRM.isIdentical( se.getR(), found.getR(), GrlConstants.TEST_F32) );
 	}
 
 	@Test
 	public void toSe2() {
 		Se2_F32 se = new Se2_F32( -3, 6.9f, -1.3f );
 
-		RowMatrix_F32 H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
+		FMatrixRMaj H = SpecialEuclideanOps_F32.toHomogeneous( se, null );
 
 		Se2_F32 found = SpecialEuclideanOps_F32.toSe2( H, null );
 
@@ -140,7 +140,7 @@ public class TestSpecialEuclideanOps_F32 {
 
 		Point3D_F32 expected = SePointOps_F32.transform( se, orig, null );
 
-		RowMatrix_F32 R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0.1f, 2, -0.3f, se.getR() );
+		FMatrixRMaj R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, 0.1f, 2, -0.3f, se.getR() );
 
 		Point3D_F32 found = GeometryMath_F32.mult( R, orig, (Point3D_F32) null );
 		found.x += 2;

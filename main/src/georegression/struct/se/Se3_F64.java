@@ -20,8 +20,8 @@ package georegression.struct.se;
 
 import georegression.geometry.GeometryMath_F64;
 import georegression.struct.point.Vector3D_F64;
-import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.CommonOps_R64;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
 
 
 /**
@@ -36,7 +36,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	public static final long serialVersionUID = 1L;
 
 	// rotation matrix
-	public RowMatrix_F64 R;
+	public DMatrixRMaj R;
 	// translation vector
 	public Vector3D_F64 T;
 
@@ -44,7 +44,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * Creates a new transform that does nothing.
 	 */
 	public Se3_F64() {
-		R = CommonOps_R64.identity( 3 );
+		R = CommonOps_DDRM.identity( 3 );
 		T = new Vector3D_F64();
 	}
 
@@ -54,7 +54,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param R Rotation matrix.
 	 * @param T Translation.
 	 */
-	public Se3_F64( RowMatrix_F64 R, Vector3D_F64 T ) {
+	public Se3_F64( DMatrixRMaj R, Vector3D_F64 T ) {
 		this( R, T, false );
 	}
 
@@ -66,7 +66,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param T	  Translation.
 	 * @param assign If a reference is saved (true) or a copy made (false).
 	 */
-	public Se3_F64( RowMatrix_F64 R, Vector3D_F64 T, boolean assign ) {
+	public Se3_F64( DMatrixRMaj R, Vector3D_F64 T, boolean assign ) {
 		if( assign ) {
 			this.R = R;
 			this.T = T;
@@ -91,7 +91,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 *
 	 * @param R New rotation.
 	 */
-	public void setRotation( RowMatrix_F64 R ) {
+	public void setRotation( DMatrixRMaj R ) {
 		this.R.set( R );
 	}
 
@@ -117,7 +117,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * Returns the rotation matrix
 	 * @return rotation matrix
 	 */
-	public RowMatrix_F64 getRotation() {
+	public DMatrixRMaj getRotation() {
 		return R;
 	}
 
@@ -129,7 +129,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		return T;
 	}
 
-	public RowMatrix_F64 getR() {
+	public DMatrixRMaj getR() {
 		return R;
 	}
 
@@ -164,7 +164,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		if( result == null )
 			result = new Se3_F64();
 
-		CommonOps_R64.mult( second.getR(), getR(), result.getR() );
+		CommonOps_DDRM.mult( second.getR(), getR(), result.getR() );
 		GeometryMath_F64.mult( second.getR(), getT(), result.getT() );
 		GeometryMath_F64.add( second.getT(), result.getT(), result.getT() );
 
@@ -186,14 +186,14 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		GeometryMath_F64.changeSign( inverse.T );
 
 		// R^T
-		CommonOps_R64.transpose( R, inverse.R );
+		CommonOps_DDRM.transpose( R, inverse.R );
 
 		return inverse;
 	}
 
 	@Override
 	public void reset() {
-		CommonOps_R64.setIdentity( R );
+		CommonOps_DDRM.setIdentity( R );
 		T.set( 0, 0, 0 );
 	}
 

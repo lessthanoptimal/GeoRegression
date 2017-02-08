@@ -25,7 +25,7 @@ import georegression.struct.plane.PlaneTangent3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.RowMatrix_F64;
+import org.ejml.data.DMatrixRMaj;
 
 /**
  * @author Peter Abeles
@@ -230,7 +230,7 @@ public class UtilPlane3D_F64 {
 		axisY.normalize();
 		axisZ.normalize();
 
-		RowMatrix_F64 R = planeToWorld.R;
+		DMatrixRMaj R = planeToWorld.R;
 		R.data[0] = axisX.x; R.data[1] = axisY.x; R.data[2] = axisZ.x;
 		R.data[3] = axisX.y; R.data[4] = axisY.y; R.data[5] = axisZ.y;
 		R.data[6] = axisX.z; R.data[7] = axisY.z; R.data[8] = axisZ.z;

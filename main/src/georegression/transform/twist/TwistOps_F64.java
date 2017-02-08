@@ -24,9 +24,9 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.so.Rodrigues_F64;
-import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.CommonOps_R64;
-import org.ejml.ops.MatrixFeatures_R64;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.MatrixFeatures_DDRM;
 
 /**
  * Operations related to twists.
@@ -44,13 +44,13 @@ public class TwistOps_F64 {
 	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
-	public static RowMatrix_F64 homogenous( Se3_F64 transform , RowMatrix_F64 H ) {
+	public static DMatrixRMaj homogenous( Se3_F64 transform , DMatrixRMaj H ) {
 		if( H == null ) {
-			H = new RowMatrix_F64(4,4);
+			H = new DMatrixRMaj(4,4);
 		} else {
 			H.reshape(4,4);
 		}
-		CommonOps_R64.insert(transform.R,H,0,0);
+		CommonOps_DDRM.insert(transform.R,H,0,0);
 		H.data[3] = transform.T.x;
 		H.data[7] = transform.T.y;
 		H.data[11] = transform.T.z;
@@ -68,9 +68,9 @@ public class TwistOps_F64 {
 	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
-	public static RowMatrix_F64 homogenous( TwistCoordinate_F64 twist , RowMatrix_F64 H ) {
+	public static DMatrixRMaj homogenous( TwistCoordinate_F64 twist , DMatrixRMaj H ) {
 		if( H == null ) {
-			H = new RowMatrix_F64(4,4);
+			H = new DMatrixRMaj(4,4);
 		} else {
 			H.reshape(4,4);
 			H.data[12] = 0; H.data[13] = 0; H.data[14] = 0; H.data[15] = 0;
@@ -105,14 +105,14 @@ public class TwistOps_F64 {
 		double w_norm = twist.w.norm();
 
 		if( w_norm == 0.0 ) {
-			CommonOps_R64.setIdentity(motion.R);
+			CommonOps_DDRM.setIdentity(motion.R);
 			motion.T.x = twist.v.x*theta;
 			motion.T.y = twist.v.y*theta;
 			motion.T.z = twist.v.z*theta;
 			return motion;
 		}
 
-		RowMatrix_F64 R = motion.getR();
+		DMatrixRMaj R = motion.getR();
 
 		// First handle the SO region.  This Rodrigues equation
 		double wx = twist.w.x/w_norm, wy = twist.w.y/w_norm, wz = twist.w.z/w_norm;
@@ -157,7 +157,7 @@ public class TwistOps_F64 {
 		if( twist == null )
 			twist = new TwistCoordinate_F64();
 
-		if(MatrixFeatures_R64.isIdentity(motion.R, GrlConstants.TEST_F64)) {
+		if(MatrixFeatures_DDRM.isIdentity(motion.R, GrlConstants.TEST_F64)) {
 			twist.w.set(0,0,0);
 			twist.v.set(motion.T);
 		} else {
@@ -168,26 +168,26 @@ public class TwistOps_F64 {
 			double theta = rod.theta;
 
 			// A = (I-SO)*hat(w) + w*w'*theta
-			RowMatrix_F64 A = CommonOps_R64.identity(3);
-			CommonOps_R64.subtract(A,motion.R, A);
+			DMatrixRMaj A = CommonOps_DDRM.identity(3);
+			CommonOps_DDRM.subtract(A,motion.R, A);
 
-			RowMatrix_F64 w_hat = GeometryMath_F64.crossMatrix(twist.w,null);
-			RowMatrix_F64 tmp = A.copy();
-			CommonOps_R64.mult(tmp,w_hat,A);
+			DMatrixRMaj w_hat = GeometryMath_F64.crossMatrix(twist.w,null);
+			DMatrixRMaj tmp = A.copy();
+			CommonOps_DDRM.mult(tmp,w_hat,A);
 
 			Vector3D_F64 w = twist.w;
 			A.data[0] += w.x*w.x*theta; A.data[1] += w.x*w.y*theta; A.data[2] += w.x*w.z*theta;
 			A.data[3] += w.y*w.x*theta; A.data[4] += w.y*w.y*theta; A.data[5] += w.y*w.z*theta;
 			A.data[6] += w.z*w.x*theta; A.data[7] += w.z*w.y*theta; A.data[8] += w.z*w.z*theta;
 
-			RowMatrix_F64 y = new RowMatrix_F64(3,1);
+			DMatrixRMaj y = new DMatrixRMaj(3,1);
 			y.data[0] = motion.T.x;
 			y.data[1] = motion.T.y;
 			y.data[2] = motion.T.z;
 
-			RowMatrix_F64 x = new RowMatrix_F64(3,1);
+			DMatrixRMaj x = new DMatrixRMaj(3,1);
 
-			CommonOps_R64.solve(A,y,x);
+			CommonOps_DDRM.solve(A,y,x);
 
 			twist.w.scale(rod.theta);
 			twist.v.x = (double) x.data[0];

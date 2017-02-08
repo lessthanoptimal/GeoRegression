@@ -22,10 +22,10 @@ import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.RowMatrix_F32;
-import org.ejml.factory.DecompositionFactory_R32;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_FDRM;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
-import org.ejml.ops.CommonOps_R32;
 
 
 /**
@@ -42,7 +42,7 @@ public class ConvertRotation3D_F32 {
 	 * @param R where the results will be stored.  If null a new matrix is declared internally.
 	 * @return rotation matrix.
 	 */
-	public static RowMatrix_F32 rodriguesToMatrix( Rodrigues_F32 rodrigues, RowMatrix_F32 R ) {
+	public static FMatrixRMaj rodriguesToMatrix( Rodrigues_F32 rodrigues, FMatrixRMaj R ) {
 		return rodriguesToMatrix(
 				rodrigues.unitAxisRotation.x,
 				rodrigues.unitAxisRotation.y,
@@ -61,8 +61,8 @@ public class ConvertRotation3D_F32 {
 	 * @param R (Optional) storage for 3x3 rotation matrix.  If null one will be declared internally.
 	 * @return Rotation matrix.
 	 */
-	public static RowMatrix_F32 rodriguesToMatrix( float axisX , float axisY , float axisZ , float theta,
-													RowMatrix_F32 R ) {
+	public static FMatrixRMaj rodriguesToMatrix( float axisX , float axisY , float axisZ , float theta,
+													FMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
 		//noinspection UnnecessaryLocalVariable
@@ -95,7 +95,7 @@ public class ConvertRotation3D_F32 {
 	 */
 	public static float[] rodriguesToEuler(Rodrigues_F32 rodrigues , EulerType type , float []euler )
 	{
-		RowMatrix_F32 R = rodriguesToMatrix(rodrigues,null);
+		FMatrixRMaj R = rodriguesToMatrix(rodrigues,null);
 		return matrixToEuler(R,type,euler);
 	}
 
@@ -152,7 +152,7 @@ public class ConvertRotation3D_F32 {
 	 */
 	public static float[] quaternionToEuler(Quaternion_F32 q , EulerType type , float []euler )
 	{
-		RowMatrix_F32 R = quaternionToMatrix(q,null);
+		FMatrixRMaj R = quaternionToMatrix(q,null);
 		return matrixToEuler(R,type,euler);
 	}
 
@@ -164,7 +164,7 @@ public class ConvertRotation3D_F32 {
 	 * @param euler (Output) Optional storage for Euler rotation
 	 * @return The Euler rotation.
 	 */
-	public static float[] matrixToEuler(RowMatrix_F32 R , EulerType type , float[] euler ) {
+	public static float[] matrixToEuler(FMatrixRMaj R , EulerType type , float[] euler ) {
 		if( euler == null )
 			euler = new float[3];
 
@@ -226,7 +226,7 @@ public class ConvertRotation3D_F32 {
 
 	private static void TanSinTan( int y0 , int x0 , int sin1 , int y2 , int x2 ,
 								   int cos0a , int cos0b , int sin0a , int sin0b,
-								   RowMatrix_F32 R , float euler[] ) {
+								   FMatrixRMaj R , float euler[] ) {
 
 		float val_y0 = get(R,y0);
 		float val_x0 = get(R,x0);
@@ -253,7 +253,7 @@ public class ConvertRotation3D_F32 {
 
 	private static void TanCosTan( int y0 , int x0 , int cos1 , int y2 , int x2 ,
 								   int cos0a , int cos0b , int sin0a , int sin0b,
-								  RowMatrix_F32 R , float euler[] ) {
+								  FMatrixRMaj R , float euler[] ) {
 
 		float val_y0 = get(R,y0);
 		float val_x0 = get(R,x0);
@@ -278,7 +278,7 @@ public class ConvertRotation3D_F32 {
 	/**
 	 * If the index is negative it returns the negative of the value at -index.  Starts at 0
 	 */
-	private static float get( RowMatrix_F32 M , int index ) {
+	private static float get( FMatrixRMaj M , int index ) {
 		if( index < 0 ) {
 			return -M.data[-index-1];
 		} else {
@@ -293,7 +293,7 @@ public class ConvertRotation3D_F32 {
 	 * @param quat (Output) Optional storage for quaternion.  If null a new class will be used.
 	 * @return unit quaternion representation of the rotation matrix.
 	 */
-	public static Quaternion_F32 matrixToQuaternion( RowMatrix_F32 R, Quaternion_F32 quat ) {
+	public static Quaternion_F32 matrixToQuaternion( FMatrixRMaj R, Quaternion_F32 quat ) {
 
 		if( quat == null )
 			quat = new Quaternion_F32();
@@ -351,7 +351,7 @@ public class ConvertRotation3D_F32 {
 	 * @param rodrigues Storage used for solution.  If null a new instance is declared.
 	 * @return The found axis and rotation angle.
 	 */
-	public static Rodrigues_F32 matrixToRodrigues( RowMatrix_F32 R, Rodrigues_F32 rodrigues ) {
+	public static Rodrigues_F32 matrixToRodrigues( FMatrixRMaj R, Rodrigues_F32 rodrigues ) {
 		if( rodrigues == null ) {
 			rodrigues = new Rodrigues_F32();
 		}
@@ -423,9 +423,9 @@ public class ConvertRotation3D_F32 {
 	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	public static RowMatrix_F32 rotX( float ang, RowMatrix_F32 R ) {
+	public static FMatrixRMaj rotX( float ang, FMatrixRMaj R ) {
 		if( R == null )
-			R = new RowMatrix_F32( 3, 3 );
+			R = new FMatrixRMaj( 3, 3 );
 
 		setRotX( ang, R );
 
@@ -438,7 +438,7 @@ public class ConvertRotation3D_F32 {
 	 * @param ang the angle it rotates a point by in radians.
 	 * @param R (Output) Storage for rotation matrix.  Modified.
 	 */
-	public static void setRotX( float ang, RowMatrix_F32 R ) {
+	public static void setRotX( float ang, FMatrixRMaj R ) {
 		float c = (float)Math.cos( ang );
 		float s = (float)Math.sin( ang );
 
@@ -456,7 +456,7 @@ public class ConvertRotation3D_F32 {
 	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	public static RowMatrix_F32 rotY( float ang, RowMatrix_F32 R ) {
+	public static FMatrixRMaj rotY( float ang, FMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
 		setRotY( ang, R );
@@ -470,7 +470,7 @@ public class ConvertRotation3D_F32 {
 	 * @param ang the angle it rotates a point by in radians.
 	 * @param r   A 3 by 3 matrix. Is modified.
 	 */
-	public static void setRotY( float ang, RowMatrix_F32 r ) {
+	public static void setRotY( float ang, FMatrixRMaj r ) {
 		float c = (float)Math.cos( ang );
 		float s = (float)Math.sin( ang );
 
@@ -488,7 +488,7 @@ public class ConvertRotation3D_F32 {
 	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	public static RowMatrix_F32 rotZ( float ang, RowMatrix_F32 R ) {
+	public static FMatrixRMaj rotZ( float ang, FMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
 		setRotZ( ang, R );
@@ -502,7 +502,7 @@ public class ConvertRotation3D_F32 {
 	 * @param ang the angle it rotates a point by in radians.
 	 * @param r   A 3 by 3 matrix. Is modified.
 	 */
-	public static void setRotZ( float ang, RowMatrix_F32 r ) {
+	public static void setRotZ( float ang, FMatrixRMaj r ) {
 		float c = (float)Math.cos( ang );
 		float s = (float)Math.sin( ang );
 
@@ -522,19 +522,19 @@ public class ConvertRotation3D_F32 {
 	 * @param R (Output) Optional storage for output rotation matrix
 	 * @return Rotation matrix
 	 */
-	public static RowMatrix_F32 eulerToMatrix( EulerType type ,
+	public static FMatrixRMaj eulerToMatrix( EulerType type ,
 												float rotA, float rotB, float rotC,
-												RowMatrix_F32 R ) {
+												FMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
-		RowMatrix_F32 R_a = rotationAboutAxis( type.getAxisA(), rotA, null );
-		RowMatrix_F32 R_b = rotationAboutAxis( type.getAxisB(), rotB, null );
-		RowMatrix_F32 R_c = rotationAboutAxis( type.getAxisC(), rotC, null );
+		FMatrixRMaj R_a = rotationAboutAxis( type.getAxisA(), rotA, null );
+		FMatrixRMaj R_b = rotationAboutAxis( type.getAxisB(), rotB, null );
+		FMatrixRMaj R_c = rotationAboutAxis( type.getAxisC(), rotC, null );
 
-		RowMatrix_F32 A = new RowMatrix_F32( 3, 3 );
+		FMatrixRMaj A = new FMatrixRMaj( 3, 3 );
 
-		CommonOps_R32.mult( R_b, R_a, A );
-		CommonOps_R32.mult( R_c, A, R );
+		CommonOps_FDRM.mult( R_b, R_a, A );
+		CommonOps_FDRM.mult( R_c, A, R );
 
 		return R;
 	}
@@ -652,7 +652,7 @@ public class ConvertRotation3D_F32 {
 	 * @param angle The angle it is rotated by in radians.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	private static RowMatrix_F32 rotationAboutAxis(int axis, float angle, RowMatrix_F32 R ) {
+	private static FMatrixRMaj rotationAboutAxis(int axis, float angle, FMatrixRMaj R ) {
 		switch( axis ) {
 			case 0:
 				return ConvertRotation3D_F32.rotX( angle, R );
@@ -691,22 +691,22 @@ public class ConvertRotation3D_F32 {
 	 * @param R (Optional) Storage for the approximated rotation matrix.  Modified.
 	 * @return Rotation matrix
 	 */
-	public static RowMatrix_F32 approximateRotationMatrix( RowMatrix_F32 orig, RowMatrix_F32 R ) {
+	public static FMatrixRMaj approximateRotationMatrix( FMatrixRMaj orig, FMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
-		SingularValueDecomposition<RowMatrix_F32> svd =
-				DecompositionFactory_R32.svd( orig.numRows, orig.numCols ,true,true,false);
+		SingularValueDecomposition<FMatrixRMaj> svd =
+				DecompositionFactory_FDRM.svd( orig.numRows, orig.numCols ,true,true,false);
 
 		if( !svd.decompose( orig ) )
 			throw new RuntimeException( "SVD Failed" );
 
-		CommonOps_R32.mult( svd.getU( null,false ), svd.getV( null,true ), R );
+		CommonOps_FDRM.mult( svd.getU( null,false ), svd.getV( null,true ), R );
 
 		// svd does not guarantee that U anv V have positive determinants.
-		float det = CommonOps_R32.det( R );
+		float det = CommonOps_FDRM.det( R );
 
 		if( det < 0 )
-			CommonOps_R32.scale( -1, R );
+			CommonOps_FDRM.scale( -1, R );
 
 		return R;
 	}
@@ -723,7 +723,7 @@ public class ConvertRotation3D_F32 {
 	 * @param R Storage for rotation matrix.  If null a new matrix is created. Modified.
 	 * @return Rotation matrix
 	 */
-	public static RowMatrix_F32 quaternionToMatrix( Quaternion_F32 quat, RowMatrix_F32 R ) {
+	public static FMatrixRMaj quaternionToMatrix( Quaternion_F32 quat, FMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
 		final float q0 = quat.w;
@@ -746,9 +746,9 @@ public class ConvertRotation3D_F32 {
 		return R;
 	}
 
-	private static RowMatrix_F32 checkDeclare3x3( RowMatrix_F32 R ) {
+	private static FMatrixRMaj checkDeclare3x3( FMatrixRMaj R ) {
 		if( R == null ) {
-			R = new RowMatrix_F32( 3, 3 );
+			R = new FMatrixRMaj( 3, 3 );
 		} else {
 			if( R.numRows != 3 || R.numCols != 3 )
 				throw new IllegalArgumentException( "Expected 3 by 3 matrix." );

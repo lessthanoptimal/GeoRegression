@@ -22,7 +22,7 @@ import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F64;
 import georegression.struct.so.Rodrigues_F64;
-import org.ejml.data.RowMatrix_F64;
+import org.ejml.data.DMatrixRMaj;
 
 /**
  * Simple example of how to convert a rotation matrix into equivalent formats.
@@ -33,7 +33,7 @@ public class ExampleRotationParameterizations {
 	public static void main(String[] args) {
 
 		// Euler to rotation matrix
-		RowMatrix_F64 R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,0.5,-1,-0.45,null);
+		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,0.5,-1,-0.45,null);
 
 		// matrix to Rodrigues
 		Rodrigues_F64 rod = ConvertRotation3D_F64.matrixToRodrigues(R,(Rodrigues_F64)null);
@@ -42,7 +42,7 @@ public class ExampleRotationParameterizations {
 		Quaternion_F64 quat = ConvertRotation3D_F64.rodriguesToQuaternion(rod,null);
 
 		// Quaternion to Rotation Matrix
-		RowMatrix_F64 T = ConvertRotation3D_F64.quaternionToMatrix(quat,null);
+		DMatrixRMaj T = ConvertRotation3D_F64.quaternionToMatrix(quat,null);
 
 		// see if you get the same answer
 		R.print();

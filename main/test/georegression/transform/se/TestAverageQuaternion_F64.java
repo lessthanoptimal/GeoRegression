@@ -23,8 +23,8 @@ import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F64;
 import georegression.struct.so.Rodrigues_F64;
-import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.CommonOps_R64;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -104,11 +104,11 @@ public class TestAverageQuaternion_F64 {
 	 */
 	public static void checkEquals( Quaternion_F64 expected , Quaternion_F64 found , double errorTol ) {
 
-		RowMatrix_F64 E = ConvertRotation3D_F64.quaternionToMatrix(expected,null);
-		RowMatrix_F64 F = ConvertRotation3D_F64.quaternionToMatrix(found,null);
+		DMatrixRMaj E = ConvertRotation3D_F64.quaternionToMatrix(expected,null);
+		DMatrixRMaj F = ConvertRotation3D_F64.quaternionToMatrix(found,null);
 
-		RowMatrix_F64 diff = new RowMatrix_F64(3,3);
-		CommonOps_R64.multTransA(E,F,diff);
+		DMatrixRMaj diff = new DMatrixRMaj(3,3);
+		CommonOps_DDRM.multTransA(E,F,diff);
 
 		Rodrigues_F64 error = ConvertRotation3D_F64.matrixToRodrigues(diff,null);
 

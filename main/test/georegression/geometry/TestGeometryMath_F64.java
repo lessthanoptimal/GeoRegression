@@ -23,10 +23,10 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector2D_F64;
 import georegression.struct.point.Vector3D_F64;
-import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.CommonOps_R64;
-import org.ejml.ops.MatrixFeatures_R64;
-import org.ejml.ops.RandomMatrices_R64;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.MatrixFeatures_DDRM;
+import org.ejml.dense.row.RandomMatrices_DDRM;
 import org.junit.Test;
 
 import java.util.Random;
@@ -57,7 +57,7 @@ public class TestGeometryMath_F64 {
 		Vector3D_F64 found1 = new Vector3D_F64();
 
 		GeometryMath_F64.cross( v, x, found0 );
-		RowMatrix_F64 V = GeometryMath_F64.crossMatrix( a, b, c, null );
+		DMatrixRMaj V = GeometryMath_F64.crossMatrix( a, b, c, null );
 
 		GeometryMath_F64.mult( V, x, found1 );
 
@@ -75,10 +75,10 @@ public class TestGeometryMath_F64 {
 
 		Vector3D_F64 v = new Vector3D_F64( a, b, c );
 
-		RowMatrix_F64 V1 = GeometryMath_F64.crossMatrix( v, null );
-		RowMatrix_F64 V2 = GeometryMath_F64.crossMatrix( a, b, c, null );
+		DMatrixRMaj V1 = GeometryMath_F64.crossMatrix( v, null );
+		DMatrixRMaj V2 = GeometryMath_F64.crossMatrix( a, b, c, null );
 
-		assertTrue( MatrixFeatures_R64.isIdentical( V1 ,V2 , GrlConstants.TEST_F64));
+		assertTrue( MatrixFeatures_DDRM.isIdentical( V1 ,V2 , GrlConstants.TEST_F64));
 	}
 
 	@Test
@@ -179,7 +179,7 @@ public class TestGeometryMath_F64 {
 		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 2, 3, 4 );
 		Vector3D_F64 c = new Vector3D_F64();
-		RowMatrix_F64 M = new RowMatrix_F64( 3,3,true,1,1,1,1,1,1,1,1,1);
+		DMatrixRMaj M = new DMatrixRMaj( 3,3,true,1,1,1,1,1,1,1,1,1);
 
 		GeometryMath_F64.addMult( a , M , b , c );
 
@@ -244,7 +244,7 @@ public class TestGeometryMath_F64 {
 	@Test
 	public void mult_3d_3d() {
 		Vector3D_F64 a = new Vector3D_F64( -1, 2, 3 );
-		RowMatrix_F64 M = new RowMatrix_F64(3,3,true,1,2,3,4,5,6,7,8,9);
+		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F64 c = new Vector3D_F64();
 
 		GeometryMath_F64.mult( M , a , c );
@@ -257,7 +257,7 @@ public class TestGeometryMath_F64 {
 	@Test
 	public void mult_3d_2d() {
 		Vector3D_F64 a = new Vector3D_F64( -1, 2, 3 );
-		RowMatrix_F64 M = new RowMatrix_F64(3,3,true,1,2,3,4,5,6,7,8,9);
+		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector2D_F64 c = new Vector2D_F64();
 
 		GeometryMath_F64.mult( M , a , c );
@@ -269,7 +269,7 @@ public class TestGeometryMath_F64 {
 	@Test
 	public void mult_2d_3d() {
 		Vector3D_F64 a3 = new Vector3D_F64( -1, 2, 1 );
-		RowMatrix_F64 M = new RowMatrix_F64(3,3,true,1,2,3,4,5,6,7,8,9);
+		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F64 expected = new Vector3D_F64();
 
 		GeometryMath_F64.mult( M , a3 , expected );
@@ -286,7 +286,7 @@ public class TestGeometryMath_F64 {
 	@Test
 	public void mult_2d_2d() {
 		Vector3D_F64 a3 = new Vector3D_F64( -1, 2, 1 );
-		RowMatrix_F64 M = new RowMatrix_F64(3,3,true,1,2,3,4,5,6,7,8,9);
+		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F64 expected = new Vector3D_F64();
 
 		GeometryMath_F64.mult( M , a3 , expected );
@@ -304,7 +304,7 @@ public class TestGeometryMath_F64 {
 	@Test
 	public void multTran_3d_3d() {
 		Vector3D_F64 a = new Vector3D_F64( -1, 2, 3 );
-		RowMatrix_F64 M = new RowMatrix_F64(3,3,true,1,2,3,4,5,6,7,8,9);
+		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F64 c = new Vector3D_F64();
 
 		GeometryMath_F64.multTran( M , a , c );
@@ -317,7 +317,7 @@ public class TestGeometryMath_F64 {
 	@Test
 	public void multTran_2d_3d() {
 		Vector2D_F64 a = new Vector2D_F64( -1, 2 );
-		RowMatrix_F64 M = new RowMatrix_F64(3,3,true,1,2,3,4,5,6,7,8,9);
+		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F64 c = new Vector3D_F64();
 
 		GeometryMath_F64.multTran( M , a , c );
@@ -330,36 +330,36 @@ public class TestGeometryMath_F64 {
 	@Test
 	public void multCrossA_2D() {
 		Point2D_F64 a = new Point2D_F64(3,2);
-		RowMatrix_F64 b = RandomMatrices_R64.createRandom(3,3,rand);
+		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
 
-		RowMatrix_F64 a_hat = GeometryMath_F64.crossMatrix(a.x,a.y,1,null);
-		RowMatrix_F64 expected = new RowMatrix_F64(3,3);
-		CommonOps_R64.mult(a_hat,b,expected);
+		DMatrixRMaj a_hat = GeometryMath_F64.crossMatrix(a.x,a.y,1,null);
+		DMatrixRMaj expected = new DMatrixRMaj(3,3);
+		CommonOps_DDRM.mult(a_hat,b,expected);
 
-		RowMatrix_F64 found = GeometryMath_F64.multCrossA(a,b,null);
+		DMatrixRMaj found = GeometryMath_F64.multCrossA(a,b,null);
 
-		assertTrue(MatrixFeatures_R64.isIdentical(expected,found,GrlConstants.TEST_F64));
+		assertTrue(MatrixFeatures_DDRM.isIdentical(expected,found,GrlConstants.TEST_F64));
 	}
 
 	@Test
 	public void multCrossA_3D() {
 		Point3D_F64 a = new Point3D_F64(1,2,3);
-		RowMatrix_F64 b = RandomMatrices_R64.createRandom(3,3,rand);
+		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
 
-		RowMatrix_F64 a_hat = GeometryMath_F64.crossMatrix(a.x,a.y,a.z,null);
-		RowMatrix_F64 expected = new RowMatrix_F64(3,3);
-		CommonOps_R64.mult(a_hat,b,expected);
+		DMatrixRMaj a_hat = GeometryMath_F64.crossMatrix(a.x,a.y,a.z,null);
+		DMatrixRMaj expected = new DMatrixRMaj(3,3);
+		CommonOps_DDRM.mult(a_hat,b,expected);
 
-		RowMatrix_F64 found = GeometryMath_F64.multCrossA(a,b,null);
+		DMatrixRMaj found = GeometryMath_F64.multCrossA(a,b,null);
 
-		assertTrue(MatrixFeatures_R64.isIdentical(expected,found,GrlConstants.TEST_F64));
+		assertTrue(MatrixFeatures_DDRM.isIdentical(expected,found,GrlConstants.TEST_F64));
 	}
 
 	@Test
 	public void innerProd_3D() {
 		Vector3D_F64 a = new Vector3D_F64( 2, -2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 4, 3, 2 );
-		RowMatrix_F64 M = new RowMatrix_F64( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+		DMatrixRMaj M = new DMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
 
 		double found = GeometryMath_F64.innerProd( a, M, b );
 
@@ -370,7 +370,7 @@ public class TestGeometryMath_F64 {
 	public void innerProdTranM() {
 		Vector3D_F64 a = new Vector3D_F64( 2, -2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 4, 3, 2 );
-		RowMatrix_F64 M = new RowMatrix_F64( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+		DMatrixRMaj M = new DMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
 
 		double found = GeometryMath_F64.innerProdTranM( a, M, b );
 
@@ -381,7 +381,7 @@ public class TestGeometryMath_F64 {
 	public void innerProd_2D() {
 		Vector2D_F64 a = new Vector2D_F64( 2, -2 );
 		Vector2D_F64 b = new Vector2D_F64( 4, 3 );
-		RowMatrix_F64 M = new RowMatrix_F64( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+		DMatrixRMaj M = new DMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
 
 		double found = GeometryMath_F64.innerProd( a, M, b );
 
@@ -392,28 +392,28 @@ public class TestGeometryMath_F64 {
 	public void outerProd_3D() {
 		Vector3D_F64 a = new Vector3D_F64( 2, -2 , 5);
 		Vector3D_F64 b = new Vector3D_F64( 4, 3 , 9);
-		RowMatrix_F64 M = new RowMatrix_F64( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+		DMatrixRMaj M = new DMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
 
-		RowMatrix_F64 expected = new RowMatrix_F64(3,3,true,8 , 6 ,18 , -8 ,-6,-18,20,15,45);
+		DMatrixRMaj expected = new DMatrixRMaj(3,3,true,8 , 6 ,18 , -8 ,-6,-18,20,15,45);
 
 		GeometryMath_F64.outerProd( a, b , M );
 
-		assertTrue( MatrixFeatures_R64.isIdentical(expected,M,GrlConstants.TEST_F64) );
+		assertTrue( MatrixFeatures_DDRM.isIdentical(expected,M,GrlConstants.TEST_F64) );
 	}
 
 	@Test
 	public void addOuterProd_3D() {
 		Vector3D_F64 a = new Vector3D_F64( 2, -2 , 5);
 		Vector3D_F64 b = new Vector3D_F64( 4, 3 , 9);
-		RowMatrix_F64 A = new RowMatrix_F64( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+		DMatrixRMaj A = new DMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
 
-		RowMatrix_F64 found = new RowMatrix_F64( 3, 3);
+		DMatrixRMaj found = new DMatrixRMaj( 3, 3);
 
-		RowMatrix_F64 expected = new RowMatrix_F64(3,3,true,-7,-4,-15,12 , 11,24,-13,-7,-36);
+		DMatrixRMaj expected = new DMatrixRMaj(3,3,true,-7,-4,-15,12 , 11,24,-13,-7,-36);
 
 		GeometryMath_F64.addOuterProd( A , -1 , a, b , found );
 
-		assertTrue( MatrixFeatures_R64.isIdentical(expected,found,GrlConstants.TEST_F64) );
+		assertTrue( MatrixFeatures_DDRM.isIdentical(expected,found,GrlConstants.TEST_F64) );
 	}
 
 	@Test
@@ -459,7 +459,7 @@ public class TestGeometryMath_F64 {
 	@Test
 	public void toMatrix() {
 		Vector3D_F64 a = new Vector3D_F64( 1, -2, 3 );
-		RowMatrix_F64 found = GeometryMath_F64.toMatrix(a,null);
+		DMatrixRMaj found = GeometryMath_F64.toMatrix(a,null);
 
 		assertEquals(1,found.get(0),GrlConstants.TEST_F64);
 		assertEquals(-2,found.get(1),GrlConstants.TEST_F64);
@@ -468,7 +468,7 @@ public class TestGeometryMath_F64 {
 
 	@Test
 	public void toTuple3D() {
-		RowMatrix_F64 a = new RowMatrix_F64(3,1,true,1,-2,3);
+		DMatrixRMaj a = new DMatrixRMaj(3,1,true,1,-2,3);
 		Vector3D_F64 b = new Vector3D_F64();
 		GeometryMath_F64.toTuple3D(a, b);
 

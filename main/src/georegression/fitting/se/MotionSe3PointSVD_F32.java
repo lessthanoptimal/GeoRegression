@@ -23,11 +23,11 @@ import georegression.geometry.GeometryMath_F32;
 import georegression.geometry.UtilPoint3D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.se.Se3_F32;
-import org.ejml.data.RowMatrix_F32;
-import org.ejml.factory.DecompositionFactory_R32;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
+import org.ejml.dense.row.SingularOps_FDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_FDRM;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F32;
-import org.ejml.ops.CommonOps_R32;
-import org.ejml.ops.SingularOps_R32;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 	// rigid body motion
 	private Se3_F32 motion = new Se3_F32();
 
-	SingularValueDecomposition_F32<RowMatrix_F32> svd = DecompositionFactory_R32.svd(3, 3,true,true,false);
+	SingularValueDecomposition_F32<FMatrixRMaj> svd = DecompositionFactory_FDRM.svd(3, 3,true,true,false);
 
 	@Override
 	public Se3_F32 getTransformSrcToDst() {
@@ -96,17 +96,17 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 			s33 += dtz*dfz;
 		}
 
-		RowMatrix_F32 Sigma = new RowMatrix_F32( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
+		FMatrixRMaj Sigma = new FMatrixRMaj( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
 
 		if( !svd.decompose(Sigma) )
 			throw new RuntimeException("SVD failed!?");
 
-		RowMatrix_F32 U = svd.getU(null,false);
-		RowMatrix_F32 V = svd.getV(null,false);
+		FMatrixRMaj U = svd.getU(null,false);
+		FMatrixRMaj V = svd.getV(null,false);
 
-		SingularOps_R32.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
+		SingularOps_FDRM.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
 		
-		if( CommonOps_R32.det(U) < 0 ^ CommonOps_R32.det(V) < 0 ) {
+		if( CommonOps_FDRM.det(U) < 0 ^ CommonOps_FDRM.det(V) < 0 ) {
 			// swap sign of the column 2
 			// this only needs to happen if data is planar
 			V.data[2] = -V.data[2];
@@ -114,7 +114,7 @@ public class MotionSe3PointSVD_F32 implements MotionTransformPoint<Se3_F32, Poin
 			V.data[8] = -V.data[8];
 		}
 
-		CommonOps_R32.multTransB(U, V, motion.getR());
+		CommonOps_FDRM.multTransB(U, V, motion.getR());
 
 		Point3D_F32 temp = new Point3D_F32();
 		GeometryMath_F32.mult(motion.getR(),meanSrc,temp);

@@ -28,7 +28,7 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
 import georegression.transform.se.SePointOps_F32;
-import org.ejml.data.RowMatrix_F32;
+import org.ejml.data.FMatrixRMaj;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public abstract class GeneralMotionSe3Tests_F32 {
 	@Test
 	public void noiseless() {
 		for( int i = 0; i < 100; i++ ) {
-			RowMatrix_F32 R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, (float)rand.nextGaussian(),
+			FMatrixRMaj R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, (float)rand.nextGaussian(),
 					(float)rand.nextGaussian(), (float)rand.nextGaussian(), null);
 			Vector3D_F32 T = new Vector3D_F32( (float)rand.nextGaussian(),
 					(float)rand.nextGaussian(), (float)rand.nextGaussian() );
@@ -74,7 +74,7 @@ public abstract class GeneralMotionSe3Tests_F32 {
 	@Test
 	public void noiselessPlanar() {
 		for( int i = 0; i < 100; i++ ) {
-			RowMatrix_F32 R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, (float)rand.nextGaussian(),
+			FMatrixRMaj R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ, (float)rand.nextGaussian(),
 					(float)rand.nextGaussian(), (float)rand.nextGaussian(), null );
 			Vector3D_F32 T = new Vector3D_F32( (float)rand.nextGaussian(),
 					(float)rand.nextGaussian(), (float)rand.nextGaussian() );

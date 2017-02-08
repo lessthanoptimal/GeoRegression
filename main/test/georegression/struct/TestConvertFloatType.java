@@ -19,12 +19,14 @@
 package georegression.struct;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.affine.Affine2D_F32;
+import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.*;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.RowMatrix_F32;
-import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.RandomMatrices_R64;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.RandomMatrices_DDRM;
 import org.junit.Test;
 
 import java.util.Random;
@@ -42,7 +44,7 @@ public class TestConvertFloatType {
 	@Test
 	public void convert_Se_64_32() {
 		Se3_F64 src = new Se3_F64();
-		RandomMatrices_R64.setRandom(src.getR(), rand);
+		RandomMatrices_DDRM.fillUniform(src.getR(), rand);
 		src.getT().set(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
 
 		Se3_F32 dst = ConvertFloatType.convert(src, null);
@@ -51,6 +53,34 @@ public class TestConvertFloatType {
 		assertEquals(src.T.x, dst.T.x, GrlConstants.TEST_F32);
 		assertEquals(src.T.y, dst.T.y, GrlConstants.TEST_F32);
 		assertEquals(src.T.z, dst.T.z, GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void convert_Affine2D_64_32() {
+		Affine2D_F64 src = new Affine2D_F64(1,2,3,4,5,6);
+
+		Affine2D_F32 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.a11, dst.a11, GrlConstants.TEST_F32);
+		assertEquals(src.a12, dst.a12, GrlConstants.TEST_F32);
+		assertEquals(src.a21, dst.a21, GrlConstants.TEST_F32);
+		assertEquals(src.a22, dst.a22, GrlConstants.TEST_F32);
+		assertEquals(src.tx, dst.tx, GrlConstants.TEST_F32);
+		assertEquals(src.ty, dst.ty, GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void convert_Affine2D_32_64() {
+		Affine2D_F32 src = new Affine2D_F32(1,2,3,4,5,6);
+
+		Affine2D_F64 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.a11, dst.a11, GrlConstants.TEST_F32);
+		assertEquals(src.a12, dst.a12, GrlConstants.TEST_F32);
+		assertEquals(src.a21, dst.a21, GrlConstants.TEST_F32);
+		assertEquals(src.a22, dst.a22, GrlConstants.TEST_F32);
+		assertEquals(src.tx, dst.tx, GrlConstants.TEST_F32);
+		assertEquals(src.ty, dst.ty, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -95,7 +125,7 @@ public class TestConvertFloatType {
 		assertEquals(src.y, dst.y, GrlConstants.TEST_F32);
 	}
 
-	public static boolean isIdentical(RowMatrix_F64 a, RowMatrix_F32 b, double tol) {
+	public static boolean isIdentical(DMatrixRMaj a, FMatrixRMaj b, double tol) {
 		if (a.numRows != b.numRows || a.numCols != b.numCols) {
 			return false;
 		}

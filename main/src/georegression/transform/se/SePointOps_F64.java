@@ -24,7 +24,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.RowMatrix_F64;
+import org.ejml.data.DMatrixRMaj;
 
 import java.util.List;
 
@@ -190,7 +190,7 @@ public class SePointOps_F64 {
 		if( tranPt == null )
 			tranPt = new Point3D_F64();
 
-		RowMatrix_F64 R = se.getR();
+		DMatrixRMaj R = se.getR();
 		Vector3D_F64 T = se.getT();
 
 		GeometryMath_F64.mult( R, origPt, tranPt );
@@ -217,7 +217,7 @@ public class SePointOps_F64 {
 		if( tranPt == null )
 			tranPt = new Point3D_F64();
 
-		RowMatrix_F64 R = se.getR();
+		DMatrixRMaj R = se.getR();
 		Vector3D_F64 T = se.getT();
 
 		GeometryMath_F64.sub( origPt, T, tranPt );

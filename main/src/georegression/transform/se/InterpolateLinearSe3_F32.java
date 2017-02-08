@@ -22,8 +22,8 @@ import georegression.geometry.ConvertRotation3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.RowMatrix_F32;
-import org.ejml.ops.CommonOps_R32;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
 
 /**
  * <p>
@@ -50,7 +50,7 @@ public class InterpolateLinearSe3_F32 {
 	Vector3D_F32 translation = new Vector3D_F32();
 
 	// difference between the initial transform and the end or the output
-	RowMatrix_F32 R = new RowMatrix_F32(3,3);
+	FMatrixRMaj R = new FMatrixRMaj(3,3);
 
 	/**
 	 * Specify the two transforms which values are to be interpolated between
@@ -64,7 +64,7 @@ public class InterpolateLinearSe3_F32 {
 		translation.y = end.T.y - initial.T.y;
 		translation.z = end.T.z - initial.T.z;
 
-		CommonOps_R32.multTransA(initial.getR(), end.getR(), R);
+		CommonOps_FDRM.multTransA(initial.getR(), end.getR(), R);
 
 		ConvertRotation3D_F32.matrixToRodrigues(R,rotation);
 		rotMagnitude = rotation.theta;
@@ -84,7 +84,7 @@ public class InterpolateLinearSe3_F32 {
 		output.T.y = initial.T.y + where*translation.y;
 		output.T.z = initial.T.z + where*translation.z;
 
-		CommonOps_R32.mult(initial.R,R,output.R);
+		CommonOps_FDRM.mult(initial.R,R,output.R);
 	}
 
 }

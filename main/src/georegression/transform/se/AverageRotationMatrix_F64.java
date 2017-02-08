@@ -19,13 +19,13 @@
 package georegression.transform.se;
 
 import georegression.struct.so.Quaternion_F64;
-import org.ejml.alg.fixed.FixedOps3_F64;
-import org.ejml.data.FixedMatrix3x3_F64;
-import org.ejml.data.RowMatrix_F64;
-import org.ejml.factory.DecompositionFactory_R64;
+import org.ejml.data.DMatrix3x3;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.fixed.CommonOps_DDF3;
+import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
-import org.ejml.ops.CommonOps_R64;
-import org.ejml.ops.ConvertMatrixStruct_F64;
+import org.ejml.ops.ConvertDMatrixStruct;
 
 import java.util.List;
 
@@ -41,12 +41,12 @@ import java.util.List;
  */
 public class AverageRotationMatrix_F64 {
 
-	RowMatrix_F64 M = new RowMatrix_F64(3,3);
-	FixedMatrix3x3_F64 F = new FixedMatrix3x3_F64();
+	DMatrixRMaj M = new DMatrixRMaj(3,3);
+	DMatrix3x3 F = new DMatrix3x3();
 
-	SingularValueDecomposition_F64<RowMatrix_F64> svd = DecompositionFactory_R64.svd(3,3,true,true,true);
+	SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(3,3,true,true,true);
 
-	public boolean process(List<RowMatrix_F64> list , RowMatrix_F64 average ) {
+	public boolean process(List<DMatrixRMaj> list , DMatrixRMaj average ) {
 
 		if( list.isEmpty() )
 			throw new IllegalArgumentException("Input list is empty");
@@ -56,7 +56,7 @@ public class AverageRotationMatrix_F64 {
 		M.zero();
 
 		for (int i = 0; i < list.size(); i++) {
-			RowMatrix_F64 m = list.get(i);
+			DMatrixRMaj m = list.get(i);
 
 			// unroll to make it faster.  M = M + m
 			// row 0
@@ -67,33 +67,33 @@ public class AverageRotationMatrix_F64 {
 			M.data[6]  += m.data[6]; M.data[7]  += m.data[7]; M.data[8]  += m.data[8];
 		}
 
-		CommonOps_R64.divide(M,list.size());
+		CommonOps_DDRM.divide(M,list.size());
 
 		if( !svd.decompose(M) )
 			return false;
 
-		CommonOps_R64.multTransB(svd.getU(null,false),svd.getV(null,false),average);
+		CommonOps_DDRM.multTransB(svd.getU(null,false),svd.getV(null,false),average);
 
 		// determinant should be +1
-		double det = CommonOps_R64.det(average);
+		double det = CommonOps_DDRM.det(average);
 
 		if( det < 0 )
-			CommonOps_R64.scale(-1,average);
+			CommonOps_DDRM.scale(-1,average);
 
 		return true;
 	}
 
-	public boolean process(List<FixedMatrix3x3_F64> list , FixedMatrix3x3_F64 average ) {
+	public boolean process(List<DMatrix3x3> list , DMatrix3x3 average ) {
 
 		if( list.isEmpty() )
 			throw new IllegalArgumentException("Input list is empty");
 		if( average == null )
 			throw new IllegalArgumentException("average is null");
 
-		FixedOps3_F64.fill(F,0);
+		CommonOps_DDF3.fill(F,0);
 
 		for (int i = 0; i < list.size(); i++) {
-			FixedMatrix3x3_F64 m = list.get(i);
+			DMatrix3x3 m = list.get(i);
 
 			// unroll to make it faster.  M = M + m
 			// row 0
@@ -104,21 +104,21 @@ public class AverageRotationMatrix_F64 {
 			F.a31  += m.a31; F.a32  += m.a32; F.a33  += m.a33;
 		}
 
-		FixedOps3_F64.divide(F,list.size());
+		CommonOps_DDF3.divide(F,list.size());
 
-		ConvertMatrixStruct_F64.convert(F,M);
+		ConvertDMatrixStruct.convert(F,M);
 		if( !svd.decompose(M) )
 			return false;
 
-		CommonOps_R64.multTransB(svd.getU(null,false),svd.getV(null,false),M);
+		CommonOps_DDRM.multTransB(svd.getU(null,false),svd.getV(null,false),M);
 
 		// determinant should be +1
-		double det = CommonOps_R64.det(M);
+		double det = CommonOps_DDRM.det(M);
 
 		if( det < 0 )
-			CommonOps_R64.scale(-1,M);
+			CommonOps_DDRM.scale(-1,M);
 
-		ConvertMatrixStruct_F64.convert(M,average);
+		ConvertDMatrixStruct.convert(M,average);
 
 		return true;
 	}

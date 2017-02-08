@@ -30,8 +30,8 @@ import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.transform.se.SePointOps_F64;
-import org.ejml.data.RowMatrix_F64;
-import org.ejml.ops.MatrixFeatures_R64;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.MatrixFeatures_DDRM;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class TestFitSpecialEuclideanOps_F64 {
 	 */
 	@Test
 	public void fitPoints3D_list() {
-		RowMatrix_F64 R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0.1, 1.0, -1.5 , null );
+		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0.1, 1.0, -1.5 , null );
 		Se3_F64 tran = new Se3_F64( R , new Vector3D_F64( 1 , 2 , 3));
 
 		List<Point3D_F64> from = UtilPoint3D_F64.random( -10, 10, 30, rand );
@@ -96,7 +96,7 @@ public class TestFitSpecialEuclideanOps_F64 {
 		Se3_F64 found = FitSpecialEuclideanOps_F64.fitPoints3D( from , to );
 
 		// the exact same algorithm should be called and they should produce the same results
-		assertTrue( MatrixFeatures_R64.isIdentical( expected.getR() , found.getR() , GrlConstants.TEST_F64));
+		assertTrue( MatrixFeatures_DDRM.isIdentical( expected.getR() , found.getR() , GrlConstants.TEST_F64));
 		assertTrue( expected.getT().isIdentical(found.getT() , GrlConstants.TEST_F64));
 	}
 }

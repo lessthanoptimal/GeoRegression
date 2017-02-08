@@ -27,8 +27,8 @@ import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
-import org.ejml.ops.MatrixFeatures_R32;
-import org.ejml.ops.MatrixFeatures_R64;
+import org.ejml.dense.row.MatrixFeatures_DDRM;
+import org.ejml.dense.row.MatrixFeatures_FDRM;
 
 
 /**
@@ -39,13 +39,13 @@ public class GeometryUnitTest {
 	public static void assertEquals( Se3_F64 expected, Se3_F64 found, double tolTran, double tolRotation ) {
 		assertEquals( expected.getTranslation(), found.getTranslation(), tolTran );
 
-		assertTrue(MatrixFeatures_R64.isIdentical(expected.R, found.R, tolRotation), "rotation");
+		assertTrue(MatrixFeatures_DDRM.isIdentical(expected.R, found.R, tolRotation), "rotation");
 	}
 
 	public static void assertEquals( Se3_F32 expected, Se3_F32 found, float tolTran, float tolRotation ) {
 		assertEquals( expected.getTranslation(), found.getTranslation(), tolTran );
 
-		assertTrue(MatrixFeatures_R32.isIdentical(expected.R,found.R,tolRotation),"rotation");
+		assertTrue(MatrixFeatures_FDRM.isIdentical(expected.R,found.R,tolRotation),"rotation");
 	}
 
 	public static void assertEquals( Se2_F64 expected, Se2_F64 found, double tolTran, double tolyaw ) {

@@ -18,6 +18,8 @@
 
 package georegression.struct;
 
+import georegression.struct.affine.Affine2D_F32;
+import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.homography.Homography2D_F32;
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.*;
@@ -100,6 +102,32 @@ public class ConvertFloatType {
 		}
 
 		ConvertMatrixData.convert(src, dst);
+
+		return dst;
+	}
+
+	public static Affine2D_F32 convert(Affine2D_F64 src , Affine2D_F32 dst ) {
+		if( dst == null ) {
+			dst = new Affine2D_F32();
+		}
+
+		dst.a11 = (float)src.a11; dst.a12 = (float)src.a12;
+		dst.a21 = (float)src.a21; dst.a22 = (float)src.a22;
+
+		dst.tx = (float)src.tx; dst.ty = (float)src.ty;
+
+		return dst;
+	}
+
+	public static Affine2D_F64 convert(Affine2D_F32 src , Affine2D_F64 dst ) {
+		if( dst == null ) {
+			dst = new Affine2D_F64();
+		}
+
+		dst.a11 = src.a11; dst.a12 = src.a12;
+		dst.a21 = src.a21; dst.a22 = src.a22;
+
+		dst.tx = src.tx; dst.ty = src.ty;
 
 		return dst;
 	}
