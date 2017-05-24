@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -31,8 +31,8 @@ public class ConvertCoordinates3D_F32 {
 	/**
 	 * Converts latitude and longitude coordinates into a unit vector
 	 *
-	 * @param lat Radian value from -pi/2 to pi/2
-	 * @param lon Radian value from pi to -pi
+	 * @param lat Radian value from pi to -pi
+	 * @param lon Radian value from -pi/2 to pi/2
 	 * @param vector (output) Storage for unit vector.  If null is passed in a new instance will be created.
 	 * @return Unit vector
 	 */
@@ -40,9 +40,9 @@ public class ConvertCoordinates3D_F32 {
 		if( vector == null )
 			vector = (T)new Vector3D_F32();
 
-		vector.x = (float)Math.cos(lat) * (float)Math.cos(lon);
-		vector.y = (float)Math.cos(lat) * (float)Math.sin(lon);
-		vector.z = (float)-Math.sin(lat);
+		vector.x = (float)Math.cos(lon) * (float)Math.cos(lat);
+		vector.y = (float)Math.cos(lon) * (float)Math.sin(lat);
+		vector.z = (float)-Math.sin(lon);
 
 		return vector;
 	}

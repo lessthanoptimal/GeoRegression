@@ -60,7 +60,7 @@ public class TestConvertCoordinates3D_F32 {
 	}
 
 	private void latlonToUnitVector(float lat, float lon) {
-		FMatrixRMaj M = ConvertRotation3D_F32.eulerToMatrix(EulerType.YXZ,lat,0,lon,null);
+		FMatrixRMaj M = ConvertRotation3D_F32.eulerToMatrix(EulerType.YXZ,lon,0,lat,null);
 
 		Vector3D_F32 expected = new Vector3D_F32();
 		GeometryMath_F32.mult(M,new Vector3D_F32(1,0,0),expected);

@@ -10,6 +10,8 @@ Version : 0.13
 - Uses new F32 operations in EJML
   * Before it was forced to do math in F64 even if a data structure was F32
 - F32 verson of ellipse fitting operations
+- ConvertCoordinates3D_F64
+  * Latitude and longitude were swapped
 
 ---------------------------------------------
 Date    : 2016/11/30

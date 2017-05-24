@@ -60,7 +60,7 @@ public class TestConvertCoordinates3D_F64 {
 	}
 
 	private void latlonToUnitVector(double lat, double lon) {
-		DMatrixRMaj M = ConvertRotation3D_F64.eulerToMatrix(EulerType.YXZ,lat,0,lon,null);
+		DMatrixRMaj M = ConvertRotation3D_F64.eulerToMatrix(EulerType.YXZ,lon,0,lat,null);
 
 		Vector3D_F64 expected = new Vector3D_F64();
 		GeometryMath_F64.mult(M,new Vector3D_F64(1,0,0),expected);
