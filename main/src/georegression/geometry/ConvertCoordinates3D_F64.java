@@ -40,9 +40,9 @@ public class ConvertCoordinates3D_F64 {
 		if( vector == null )
 			vector = (T)new Vector3D_F64();
 
-		vector.x = Math.cos(lon) * Math.cos(lat);
-		vector.y = Math.cos(lon) * Math.sin(lat);
-		vector.z = -Math.sin(lon);
+		vector.x = Math.cos(lat) * Math.cos(lon);
+		vector.y = Math.cos(lat) * Math.sin(lon);
+		vector.z = -Math.sin(lat);
 
 		return vector;
 	}

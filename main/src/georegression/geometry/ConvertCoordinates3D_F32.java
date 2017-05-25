@@ -40,9 +40,9 @@ public class ConvertCoordinates3D_F32 {
 		if( vector == null )
 			vector = (T)new Vector3D_F32();
 
-		vector.x = (float)Math.cos(lon) * (float)Math.cos(lat);
-		vector.y = (float)Math.cos(lon) * (float)Math.sin(lat);
-		vector.z = (float)-Math.sin(lon);
+		vector.x = (float)Math.cos(lat) * (float)Math.cos(lon);
+		vector.y = (float)Math.cos(lat) * (float)Math.sin(lon);
+		vector.z = (float)-Math.sin(lat);
 
 		return vector;
 	}
