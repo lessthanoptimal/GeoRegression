@@ -188,6 +188,10 @@ task alljavadoc(type: Javadoc) {
     classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
 
     destinationDir = file("${buildDir}/docs/javadoc")
+
+    // Hack for Java 8u121 and beyond. Comment out if running an earlier version of Java
+    options.addBooleanOption("-allow-script-in-comments", true)
+
     configure(options) {
         docTitle = "GeoRegression v$project.version"
         links = [ 'http://docs.oracle.com/javase/7/docs/api/',
