@@ -4,7 +4,7 @@ allprojects {
     apply plugin: 'eclipse'
 
     group = 'org.georegression'
-    version = '0.13'
+    version = '0.14-SNAPSHOT'
 }
 
 subprojects {
@@ -143,29 +143,31 @@ subprojects {
 
 // Creates a directory with all the compiled jars and the dependencies
 def mainProjects = [':georegression',":experimental"]
-task createLibraryDirectory( dependsOn: mainProjects.collect {[ it+':jar',it+':sourcesJar']}.flatten() ) << {
+task createLibraryDirectory( dependsOn: mainProjects.collect {[ it+':jar',it+':sourcesJar']}.flatten() ) {
 
-    ext.listExternal = files(mainProjects.collect{ project(it).configurations.compile })
-    ext.listInternal = files(mainProjects.collect{ project(it).tasks.jar.archivePath })
-    ext.listSource = files(mainProjects.collect{ project(it).tasks.sourcesJar.archivePath })
+    doLast {
+        ext.listExternal = files(mainProjects.collect { project(it).configurations.compile })
+        ext.listInternal = files(mainProjects.collect { project(it).tasks.jar.archivePath })
+        ext.listSource = files(mainProjects.collect { project(it).tasks.sourcesJar.archivePath })
 
-    ext.listExternal = ext.listExternal - ext.listInternal
+        ext.listExternal = ext.listExternal - ext.listInternal
 
-    file('libraries').deleteDir()
-    file('libraries').mkdir()
+        file('libraries').deleteDir()
+        file('libraries').mkdir()
 
-    copy {
-        from ext.listExternal
-        into 'libraries'
-    }
+        copy {
+            from ext.listExternal
+            into 'libraries'
+        }
 
-    copy {
-        from ext.listInternal
-        from ext.listSource
-        into 'libraries'
+        copy {
+            from ext.listInternal
+            from ext.listSource
+            into 'libraries'
 
-        rename { String fileName ->
-            "GeoRegression-" + fileName
+            rename { String fileName ->
+                "GeoRegression-" + fileName
+            }
         }
     }
 }
