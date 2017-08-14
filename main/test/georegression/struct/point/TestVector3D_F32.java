@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -45,7 +45,7 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 		Vector3D_F32 b = new Vector3D_F32( 3, 4, 5 );
 
 		float found = a.dot( b );
-		assertEquals( 26, found, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 26, found, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 
 			GeometryMath_F32.sub(a, b, expected);
 			found.minus(a,b);
-			GeometryUnitTest.assertEquals(expected,found,GrlConstants.FLOAT_TEST_TOL);
+			GeometryUnitTest.assertEquals(expected,found,GrlConstants.TEST_F32);
 		}
 	}
 
@@ -73,7 +73,7 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 
 			GeometryMath_F32.cross(a, b, expected);
 			found.cross(a,b);
-			GeometryUnitTest.assertEquals(expected,found,GrlConstants.FLOAT_TEST_TOL);
+			GeometryUnitTest.assertEquals(expected,found,GrlConstants.TEST_F32);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 			Vector3D_F32 expected = new Vector3D_F32();
 
 			GeometryMath_F32.cross(a, b, expected);
-			GeometryUnitTest.assertEquals(expected,a.cross(b),GrlConstants.FLOAT_TEST_TOL);
+			GeometryUnitTest.assertEquals(expected,a.cross(b),GrlConstants.TEST_F32);
 		}
 	}
 
@@ -95,8 +95,8 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 		float n = a.norm();
 		a.normalize();
 
-		assertEquals( 1.0f, a.norm(), GrlConstants.FLOAT_TEST_TOL );
-		GeometryUnitTest.assertEquals( a, 1.0f / n, 2.0f / n, 3.0f / n, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 1.0f, a.norm(), GrlConstants.TEST_F32);
+		GeometryUnitTest.assertEquals( a, 1.0f / n, 2.0f / n, 3.0f / n, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -104,8 +104,8 @@ public class TestVector3D_F32 extends GenericGeoTupleTests3D_F32 {
 
 		Vector3D_F32 a = new Vector3D_F32(1,0,0);
 
-		assertEquals(Math.PI/2.0f,a.acute(new Vector3D_F32(0, 1, 0)),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(Math.PI/2.0f,a.acute(new Vector3D_F32(0, 0, 1)),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(Math.PI,a.acute(new Vector3D_F32(-1, 0, 0)),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(Math.PI/2.0f,a.acute(new Vector3D_F32(0, 1, 0)),GrlConstants.TEST_F32);
+		assertEquals(Math.PI/2.0f,a.acute(new Vector3D_F32(0, 0, 1)),GrlConstants.TEST_F32);
+		assertEquals(Math.PI,a.acute(new Vector3D_F32(-1, 0, 0)),GrlConstants.TEST_F32);
 	}
 }

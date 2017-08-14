@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,9 +21,9 @@ package georegression.transform.homography;
 import georegression.geometry.GeometryMath_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.homography.Homography2D_F32;
-import georegression.struct.homography.UtilHomography;
+import georegression.struct.homography.UtilHomography_F32;
 import georegression.struct.point.Point2D_F32;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.FMatrixRMaj;
 import org.junit.Test;
 
 import java.util.Random;
@@ -36,7 +36,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestHomographyPointOps_F32 {
 
-	DenseMatrix64F M = new DenseMatrix64F(3,3);
+	FMatrixRMaj M = new FMatrixRMaj(3,3);
 	Homography2D_F32 tran = new Homography2D_F32();
 
 	public TestHomographyPointOps_F32() {
@@ -52,7 +52,7 @@ public class TestHomographyPointOps_F32 {
 		tran.a32 = (float)rand.nextGaussian();
 		tran.a33 = (float)rand.nextGaussian();
 
-		UtilHomography.convert(tran,M);
+		UtilHomography_F32.convert(tran,M);
 	}
 
 	@Test
@@ -65,12 +65,12 @@ public class TestHomographyPointOps_F32 {
 
 		GeometryMath_F32.mult(M,src,expected);
 		
-		assertEquals(expected.x,dst.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(expected.y,dst.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.x,dst.x, GrlConstants.TEST_F32);
+		assertEquals(expected.y,dst.y, GrlConstants.TEST_F32);
 	}
 
 	@Test
-	public void transform_DD_F32() {
+	public void transform_FD_F32() {
 		Point2D_F32 src = new Point2D_F32(1,2);
 		Point2D_F32 dst = new Point2D_F32();
 		Point2D_F32 expected = new Point2D_F32();
@@ -79,7 +79,7 @@ public class TestHomographyPointOps_F32 {
 
 		GeometryMath_F32.mult(M,src,expected);
 
-		assertEquals(expected.x,dst.x, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(expected.y,dst.y, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected.x,dst.x, GrlConstants.TEST_F32);
+		assertEquals(expected.y,dst.y, GrlConstants.TEST_F32);
 	}
 }

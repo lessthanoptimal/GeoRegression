@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,11 +23,11 @@ import georegression.geometry.GeometryMath_F64;
 import georegression.geometry.UtilPoint3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory;
-import org.ejml.interfaces.decomposition.SingularValueDecomposition;
-import org.ejml.ops.CommonOps;
-import org.ejml.ops.SingularOps;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.SingularOps_DDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 	// rigid body motion
 	private Se3_F64 motion = new Se3_F64();
 
-	SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(3, 3,true,true,false);
+	SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(3, 3,true,true,false);
 
 	@Override
 	public Se3_F64 getTransformSrcToDst() {
@@ -96,17 +96,17 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 			s33 += dtz*dfz;
 		}
 
-		DenseMatrix64F Sigma = new DenseMatrix64F( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
+		DMatrixRMaj Sigma = new DMatrixRMaj( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
 
 		if( !svd.decompose(Sigma) )
 			throw new RuntimeException("SVD failed!?");
 
-		DenseMatrix64F U = svd.getU(null,false);
-		DenseMatrix64F V = svd.getV(null,false);
+		DMatrixRMaj U = svd.getU(null,false);
+		DMatrixRMaj V = svd.getV(null,false);
 
-		SingularOps.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
+		SingularOps_DDRM.descendingOrder(U,false,svd.getSingularValues(),3,V,false);
 		
-		if( CommonOps.det(U) < 0 ^ CommonOps.det(V) < 0 ) {
+		if( CommonOps_DDRM.det(U) < 0 ^ CommonOps_DDRM.det(V) < 0 ) {
 			// swap sign of the column 2
 			// this only needs to happen if data is planar
 			V.data[2] = -V.data[2];
@@ -114,7 +114,7 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 			V.data[8] = -V.data[8];
 		}
 
-		CommonOps.multTransB(U, V, motion.getR());
+		CommonOps_DDRM.multTransB(U, V, motion.getR());
 
 		Point3D_F64 temp = new Point3D_F64();
 		GeometryMath_F64.mult(motion.getR(),meanSrc,temp);

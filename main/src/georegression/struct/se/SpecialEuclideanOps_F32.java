@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,8 +22,8 @@ import georegression.geometry.ConvertRotation3D_F32;
 import georegression.struct.EulerType;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.point.Vector3D_F32;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
 
 
 /**
@@ -39,7 +39,7 @@ public class SpecialEuclideanOps_F32 {
 	 * @param se The transform which is to be set to no motion.
 	 */
 	public static void setToNoMotion( Se3_F32 se ) {
-		CommonOps.setIdentity( se.getR() );
+		CommonOps_FDRM.setIdentity( se.getR() );
 		se.getT().set( 0, 0, 0 );
 	}
 
@@ -71,16 +71,16 @@ public class SpecialEuclideanOps_F32 {
 	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
-	public static DenseMatrix64F toHomogeneous( Se3_F32 se, DenseMatrix64F ret ) {
+	public static FMatrixRMaj toHomogeneous( Se3_F32 se, FMatrixRMaj ret ) {
 		if( ret == null )
-			ret = new DenseMatrix64F( 4, 4 );
+			ret = new FMatrixRMaj( 4, 4 );
 		else {
 			ret.set( 3, 0, 0 );
 			ret.set( 3, 1, 0 );
 			ret.set( 3, 2, 0 );
 		}
 
-		CommonOps.insert( se.getR(), ret, 0, 0 );
+		CommonOps_FDRM.insert( se.getR(), ret, 0, 0 );
 		Vector3D_F32 T = se.getT();
 
 		ret.set( 0, 3, T.x );
@@ -98,7 +98,7 @@ public class SpecialEuclideanOps_F32 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F32 transform.
 	 */
-	public static Se3_F32 toSe3_F32( DenseMatrix64F H, Se3_F32 ret ) {
+	public static Se3_F32 toSe3(FMatrixRMaj H, Se3_F32 ret ) {
 		if( H.numCols != 4 || H.numRows != 4 )
 			throw new IllegalArgumentException( "The homogeneous matrix must be 4 by 4 by definition." );
 
@@ -107,7 +107,7 @@ public class SpecialEuclideanOps_F32 {
 
 		ret.setTranslation( (float) H.get( 0, 3 ), (float) H.get( 1, 3 ), (float) H.get( 2, 3 ) );
 
-		CommonOps.extract( H, 0, 3, 0, 3, ret.getR(), 0, 0 );
+		CommonOps_FDRM.extract( H, 0, 3, 0, 3, ret.getR(), 0, 0 );
 
 		return ret;
 	}
@@ -119,9 +119,9 @@ public class SpecialEuclideanOps_F32 {
 	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
-	public static DenseMatrix64F toHomogeneous( Se2_F32 se, DenseMatrix64F ret ) {
+	public static FMatrixRMaj toHomogeneous( Se2_F32 se, FMatrixRMaj ret ) {
 		if( ret == null )
-			ret = new DenseMatrix64F( 3, 3 );
+			ret = new FMatrixRMaj( 3, 3 );
 		else {
 			ret.set( 2, 0, 0 );
 			ret.set( 2, 1, 0 );
@@ -148,7 +148,7 @@ public class SpecialEuclideanOps_F32 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F32 transform.
 	 */
-	public static Se2_F32 toSe2( DenseMatrix64F H, Se2_F32 ret ) {
+	public static Se2_F32 toSe2( FMatrixRMaj H, Se2_F32 ret ) {
 		if( H.numCols != 3 || H.numRows != 3 )
 			throw new IllegalArgumentException( "The homogeneous matrix must be 3 by 3 by definition." );
 

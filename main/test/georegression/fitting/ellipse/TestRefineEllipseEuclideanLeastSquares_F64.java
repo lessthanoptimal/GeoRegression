@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,7 +35,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestRefineEllipseEuclideanLeastSquares {
+public class TestRefineEllipseEuclideanLeastSquares_F64 {
 
 	Random rand = new Random(234);
 
@@ -88,17 +88,17 @@ public class TestRefineEllipseEuclideanLeastSquares {
 //			System.out.println(points.get(i).x+" "+points.get(i).y);
 		}
 
-		RefineEllipseEuclideanLeastSquares alg = new RefineEllipseEuclideanLeastSquares();
+		RefineEllipseEuclideanLeastSquares_F64 alg = new RefineEllipseEuclideanLeastSquares_F64();
 
 		assertTrue(alg.refine(rotated, points));
 
 		EllipseRotated_F64 found = alg.getFound();
 
-		assertEquals( rotated.center.x , found.center.x , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( rotated.center.y , found.center.y , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( rotated.a , found.a , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( rotated.b , found.b , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( rotated.phi , found.phi , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( rotated.center.x , found.center.x , GrlConstants.TEST_F64);
+		assertEquals( rotated.center.y , found.center.y , GrlConstants.TEST_F64);
+		assertEquals( rotated.a , found.a , GrlConstants.TEST_F64);
+		assertEquals( rotated.b , found.b , GrlConstants.TEST_F64);
+		assertEquals( rotated.phi , found.phi , GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -111,22 +111,30 @@ public class TestRefineEllipseEuclideanLeastSquares {
 		List<Point2D_F64> points = new ArrayList<Point2D_F64>();
 		for( int i = 0; i < 20; i++ ) {
 			double theta = 2.0*(double)Math.PI*i/20;
-			points.add(UtilEllipse_F64.computePoint(theta, trueModel, null));
+
+			// well naerly perfect data to avoid numerical instability
+			Point2D_F64 p = UtilEllipse_F64.computePoint(theta, trueModel, null);
+
+			// give it just a little bit of noise so that it will converge
+			p.x += rand.nextGaussian()*GrlConstants.TEST_F64;
+			p.y += rand.nextGaussian()*GrlConstants.TEST_F64;
+
+			points.add(p);
 //			System.out.println(points.get(i).x+" "+points.get(i).y);
 		}
 
-		RefineEllipseEuclideanLeastSquares alg = new RefineEllipseEuclideanLeastSquares();
+		RefineEllipseEuclideanLeastSquares_F64 alg = new RefineEllipseEuclideanLeastSquares_F64();
 
 		assertTrue(alg.refine(rotated, points));
 
 		EllipseRotated_F64 found = alg.getFound();
 
-		assertEquals( trueModel.center.x , found.center.x , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( trueModel.center.y , found.center.y , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( trueModel.a , found.a , GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( trueModel.b , found.b , GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( trueModel.center.x , found.center.x , GrlConstants.TEST_F64);
+		assertEquals( trueModel.center.y , found.center.y , GrlConstants.TEST_F64);
+		assertEquals( trueModel.a , found.a , GrlConstants.TEST_F64);
+		assertEquals( trueModel.b , found.b , GrlConstants.TEST_F64);
 		if( !isCircle )
-			assertEquals( trueModel.phi , found.phi , GrlConstants.DOUBLE_TEST_TOL );
+			assertEquals( trueModel.phi , found.phi , GrlConstants.TEST_F64);
 	}
 
 	public void checkNoisy( double x0 , double y0, double a, double b, double phi , double sigma ) {
@@ -143,11 +151,11 @@ public class TestRefineEllipseEuclideanLeastSquares {
 //			System.out.println(points.get(i).x+" "+points.get(i).y);
 		}
 
-		RefineEllipseEuclideanLeastSquares alg = new RefineEllipseEuclideanLeastSquares();
+		RefineEllipseEuclideanLeastSquares_F64 alg = new RefineEllipseEuclideanLeastSquares_F64();
 
 		assertTrue(alg.refine(rotated, points));
 
-		double after = alg.optimizer.getFunctionValue();
+		/**/double after = alg.optimizer.getFunctionValue();
 		assertTrue(after<alg.initialError);
 	}
 
@@ -163,14 +171,14 @@ public class TestRefineEllipseEuclideanLeastSquares {
 
 		model = new EllipseRotated_F64(0.5,2.1,2.9,1.5,0.15);
 
-		RefineEllipseEuclideanLeastSquares alg = new RefineEllipseEuclideanLeastSquares();
+		RefineEllipseEuclideanLeastSquares_F64 alg = new RefineEllipseEuclideanLeastSquares_F64();
 
 		alg.refine(model,points);
 
-		RefineEllipseEuclideanLeastSquares.Error error = alg.createError();
-		RefineEllipseEuclideanLeastSquares.Jacobian jacobian = alg.createJacobian();
+		RefineEllipseEuclideanLeastSquares_F64.Error error = alg.createError();
+		RefineEllipseEuclideanLeastSquares_F64.Jacobian jacobian = alg.createJacobian();
 
-		DerivativeChecker.jacobian(error,jacobian,alg.initialParam,1e-5);
+		DerivativeChecker.jacobian(error,jacobian,alg.initialParam,GrlConstants.TEST_SQ_F64);
 	}
 
 }

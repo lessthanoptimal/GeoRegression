@@ -1,5 +1,5 @@
 - Make sure all unit tests pass
-  * gradle test
+  * ./gradlew test
 - Update GrlConstants.VERSION
 - Update change.txt
 - Update version in build.gradle
@@ -8,6 +8,9 @@
   - remove .git
 - Create jar file "gradle createLibraryDirectory"
 - Update documentation on website
+  rm -rf build/doc/javadoc
+  ./gradlew javadocWeb
+  zip api.zip build/docs/javadoc
 
 -----
 Push to central:

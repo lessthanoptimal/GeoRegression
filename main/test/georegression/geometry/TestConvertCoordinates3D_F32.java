@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,12 +22,10 @@ import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.EulerType;
 import georegression.struct.point.Vector3D_F32;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.FMatrixRMaj;
 import org.junit.Test;
 
 import java.util.Random;
-
-import static org.junit.Assert.fail;
 
 /**
  * @author Peter Abeles
@@ -62,13 +60,13 @@ public class TestConvertCoordinates3D_F32 {
 	}
 
 	private void latlonToUnitVector(float lat, float lon) {
-		DenseMatrix64F M = ConvertRotation3D_F32.eulerToMatrix(EulerType.YXZ,lat,0,lon,null);
+		FMatrixRMaj M = ConvertRotation3D_F32.eulerToMatrix(EulerType.YXZ,lat,0,lon,null);
 
 		Vector3D_F32 expected = new Vector3D_F32();
 		GeometryMath_F32.mult(M,new Vector3D_F32(1,0,0),expected);
 
 		Vector3D_F32 found = ConvertCoordinates3D_F32.latlonToUnitVector(lat,lon,(Vector3D_F32)null);
 
-		GeometryUnitTest.assertEquals(expected, found, GrlConstants.FLOAT_TEST_TOL);
+		GeometryUnitTest.assertEquals(expected, found, GrlConstants.TEST_F32);
 	}
 }

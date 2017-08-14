@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,8 +20,8 @@ package georegression.struct.se;
 
 import georegression.geometry.GeometryMath_F32;
 import georegression.struct.point.Vector3D_F32;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
 
 
 /**
@@ -36,7 +36,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	public static final long serialVersionUID = 1L;
 
 	// rotation matrix
-	public DenseMatrix64F R;
+	public FMatrixRMaj R;
 	// translation vector
 	public Vector3D_F32 T;
 
@@ -44,7 +44,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * Creates a new transform that does nothing.
 	 */
 	public Se3_F32() {
-		R = CommonOps.identity( 3 );
+		R = CommonOps_FDRM.identity( 3 );
 		T = new Vector3D_F32();
 	}
 
@@ -54,7 +54,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * @param R Rotation matrix.
 	 * @param T Translation.
 	 */
-	public Se3_F32( DenseMatrix64F R, Vector3D_F32 T ) {
+	public Se3_F32( FMatrixRMaj R, Vector3D_F32 T ) {
 		this( R, T, false );
 	}
 
@@ -66,7 +66,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * @param T	  Translation.
 	 * @param assign If a reference is saved (true) or a copy made (false).
 	 */
-	public Se3_F32( DenseMatrix64F R, Vector3D_F32 T, boolean assign ) {
+	public Se3_F32( FMatrixRMaj R, Vector3D_F32 T, boolean assign ) {
 		if( assign ) {
 			this.R = R;
 			this.T = T;
@@ -91,7 +91,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 *
 	 * @param R New rotation.
 	 */
-	public void setRotation( DenseMatrix64F R ) {
+	public void setRotation( FMatrixRMaj R ) {
 		this.R.set( R );
 	}
 
@@ -117,7 +117,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 	 * Returns the rotation matrix
 	 * @return rotation matrix
 	 */
-	public DenseMatrix64F getRotation() {
+	public FMatrixRMaj getRotation() {
 		return R;
 	}
 
@@ -129,7 +129,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		return T;
 	}
 
-	public DenseMatrix64F getR() {
+	public FMatrixRMaj getR() {
 		return R;
 	}
 
@@ -164,7 +164,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		if( result == null )
 			result = new Se3_F32();
 
-		CommonOps.mult( second.getR(), getR(), result.getR() );
+		CommonOps_FDRM.mult( second.getR(), getR(), result.getR() );
 		GeometryMath_F32.mult( second.getR(), getT(), result.getT() );
 		GeometryMath_F32.add( second.getT(), result.getT(), result.getT() );
 
@@ -186,14 +186,14 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		GeometryMath_F32.changeSign( inverse.T );
 
 		// R^T
-		CommonOps.transpose( R, inverse.R );
+		CommonOps_FDRM.transpose( R, inverse.R );
 
 		return inverse;
 	}
 
 	@Override
 	public void reset() {
-		CommonOps.setIdentity( R );
+		CommonOps_FDRM.setIdentity( R );
 		T.set( 0, 0, 0 );
 	}
 
@@ -208,7 +208,7 @@ public class Se3_F32 implements SpecialEuclidean<Se3_F32> {
 		String ret = "Se3_F32: T = "+T.toString()+"\n";
 		ret += R;
 
-		return ret+"\n";
+		return ret;
 	}
 
 	public void print() {

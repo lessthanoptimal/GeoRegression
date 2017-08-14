@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -42,14 +42,14 @@ public class TestDistance2D_F32 {
 	public void distance_parametric_line() {
 		float found = Distance2D_F32.distance( new LineParametric2D_F32( -2, 0, 1, 1 ), new Point2D_F32( 4, -2 ) );
 		float expected = (float) UtilTrig_F32.distance( 0, 2, 4, -2 );
-		assertEquals( expected, found, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void distanceSq_parametric_line() {
 		float found = Distance2D_F32.distanceSq(new LineParametric2D_F32(-2, 0, 1, 1), new Point2D_F32(4, -2));
 		float expected = (float) UtilTrig_F32.distanceSq(0, 2, 4, -2);
-		assertEquals( expected, found, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -57,17 +57,17 @@ public class TestDistance2D_F32 {
 		// test inside the line
 		float found = Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), new Point2D_F32( 2, 0 ) );
 		float expected = (float) UtilTrig_F32.distance( 0, 2, 2, 0 );
-		assertEquals( expected, found, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.TEST_F32);
 
 		// test before the first end point
 		found = Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), new Point2D_F32( -5, -5 ) );
 		expected = UtilTrig_F32.distance( -2, 0, -5, -5 );
-		assertEquals( expected, found, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.TEST_F32);
 
 		// test after the second end point
 		found = Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), new Point2D_F32( 10, 0 ) );
 		expected = UtilTrig_F32.distance( 3, 5, 10, 0 );
-		assertEquals( expected, found, GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected, found, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -79,7 +79,7 @@ public class TestDistance2D_F32 {
 
 		float found = Distance2D_F32.distance( general , new Point2D_F32( 4, -2 ) );
 		float expected = (float) UtilTrig_F32.distance( 0, 2, 4, -2 );
-		assertEquals(expected, found, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected, found, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -93,11 +93,11 @@ public class TestDistance2D_F32 {
 		// test a point and its reflection.  Should be same distance and positive
 		float found = Distance2D_F32.distanceNorm(general, new Point2D_F32(4, -2));
 		float expected = (float) UtilTrig_F32.distance( 0, 2, 4, -2 );
-		assertEquals(expected, found, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected, found, GrlConstants.TEST_F32);
 
 		// the reflection should also be positive
 		found = Distance2D_F32.distanceNorm(general, new Point2D_F32(-4, 6));
-		assertEquals(expected, found, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected, found, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -106,25 +106,25 @@ public class TestDistance2D_F32 {
 		LineSegment2D_F32 a = new LineSegment2D_F32(0,0,10,0);
 		LineSegment2D_F32 b = new LineSegment2D_F32(5,2,5,10);
 
-		assertEquals(2,Distance2D_F32.distance(a,b),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,Distance2D_F32.distance(b,a),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,Distance2D_F32.distance(a,b),GrlConstants.TEST_F32);
+		assertEquals(2,Distance2D_F32.distance(b,a),GrlConstants.TEST_F32);
 
 		// the two lines intersect
 		b.set(5, -1, 5, 1);
-		assertEquals(0, Distance2D_F32.distance(a, b), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0, Distance2D_F32.distance(b, a), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0, Distance2D_F32.distance(a, b), GrlConstants.TEST_F32);
+		assertEquals(0, Distance2D_F32.distance(b, a), GrlConstants.TEST_F32);
 
 		// two lines are parallel but don't intersect
 		b.set(12, 2, 2, 20);
 		float expected = (float)Math.sqrt(2*2*2);
-		assertEquals(expected, Distance2D_F32.distance(a, b), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(expected, Distance2D_F32.distance(b, a), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected, Distance2D_F32.distance(a, b), GrlConstants.TEST_F32);
+		assertEquals(expected, Distance2D_F32.distance(b, a), GrlConstants.TEST_F32);
 
 		// general case where the end points are the closest
 		//        one of these cases was tested above already
 		b.set(5,-2,5,-10);
-		assertEquals(2,Distance2D_F32.distance(a,b),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(2,Distance2D_F32.distance(b,a),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,Distance2D_F32.distance(a,b),GrlConstants.TEST_F32);
+		assertEquals(2,Distance2D_F32.distance(b,a),GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -132,13 +132,13 @@ public class TestDistance2D_F32 {
 		Quadrilateral_F32 quad = new Quadrilateral_F32(2,0, 2,10, 10,10, 10,0);
 
 		// test a point to the left and right of a side.  should be the same
-		assertEquals(3,Distance2D_F32.distance(quad,new Point2D_F32(-1,3)),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,Distance2D_F32.distance(quad,new Point2D_F32(5,3)),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3,Distance2D_F32.distance(quad,new Point2D_F32(-1,3)),GrlConstants.TEST_F32);
+		assertEquals(3,Distance2D_F32.distance(quad,new Point2D_F32(5,3)),GrlConstants.TEST_F32);
 
 		// try the other sides
-		assertEquals(4,Distance2D_F32.distance(quad,new Point2D_F32(5,14)),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,Distance2D_F32.distance(quad,new Point2D_F32(15,5)),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6,Distance2D_F32.distance(quad,new Point2D_F32(6,-6)),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,Distance2D_F32.distance(quad,new Point2D_F32(5,14)),GrlConstants.TEST_F32);
+		assertEquals(5,Distance2D_F32.distance(quad,new Point2D_F32(15,5)),GrlConstants.TEST_F32);
+		assertEquals(6,Distance2D_F32.distance(quad,new Point2D_F32(6,-6)),GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -146,13 +146,13 @@ public class TestDistance2D_F32 {
 		Polygon2D_F32 poly = new Polygon2D_F32(2,0, 2,10, 10,10, 10,0);
 
 		// test a point to the left and right of a side.  should be the same
-		assertEquals(3,Distance2D_F32.distance(poly,new Point2D_F32(-1,3)),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3,Distance2D_F32.distance(poly,new Point2D_F32(5,3)),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(3,Distance2D_F32.distance(poly,new Point2D_F32(-1,3)),GrlConstants.TEST_F32);
+		assertEquals(3,Distance2D_F32.distance(poly,new Point2D_F32(5,3)),GrlConstants.TEST_F32);
 
 		// try the other sides
-		assertEquals(4,Distance2D_F32.distance(poly,new Point2D_F32(5,14)),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(5,Distance2D_F32.distance(poly,new Point2D_F32(15,5)),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(6,Distance2D_F32.distance(poly,new Point2D_F32(6,-6)),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(4,Distance2D_F32.distance(poly,new Point2D_F32(5,14)),GrlConstants.TEST_F32);
+		assertEquals(5,Distance2D_F32.distance(poly,new Point2D_F32(15,5)),GrlConstants.TEST_F32);
+		assertEquals(6,Distance2D_F32.distance(poly,new Point2D_F32(6,-6)),GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -162,23 +162,23 @@ public class TestDistance2D_F32 {
 		float expected = Distance2D_F32.distance(line,new Point2D_F32());
 		float found = Distance2D_F32.distanceOrigin(line);
 
-		assertEquals(expected,found,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(expected,found,GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void distance_ellipserotated_point() {
 		EllipseRotated_F32 ellipse = new EllipseRotated_F32(4,5,4,3, GrlConstants.F_PId2);
 
-		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4+3,5)), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4-3,5)), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4+3,5)), GrlConstants.TEST_F32);
+		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4-3,5)), GrlConstants.TEST_F32);
 
-		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4,5-4)), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4,5+4)), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4,5-4)), GrlConstants.TEST_F32);
+		assertEquals(0, Distance2D_F32.distance(ellipse,new Point2D_F32(4,5+4)), GrlConstants.TEST_F32);
 
-		assertEquals(1, Distance2D_F32.distance(ellipse,new Point2D_F32(4+2,5)), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(1, Distance2D_F32.distance(ellipse,new Point2D_F32(4-2,5)), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, Distance2D_F32.distance(ellipse,new Point2D_F32(4+2,5)), GrlConstants.TEST_F32);
+		assertEquals(1, Distance2D_F32.distance(ellipse,new Point2D_F32(4-2,5)), GrlConstants.TEST_F32);
 
-		assertEquals(1.1f, Distance2D_F32.distance(ellipse,new Point2D_F32(4+4.1f,5)), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(1.1f, Distance2D_F32.distance(ellipse,new Point2D_F32(4-4.1f,5)), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1.1f, Distance2D_F32.distance(ellipse,new Point2D_F32(4+4.1f,5)), GrlConstants.TEST_F32);
+		assertEquals(1.1f, Distance2D_F32.distance(ellipse,new Point2D_F32(4-4.1f,5)), GrlConstants.TEST_F32);
 	}
 }

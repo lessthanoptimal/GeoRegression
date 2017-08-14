@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -92,30 +92,30 @@ public class TestUtilAngle {
 
 	@Test
 	public void testDistanceCCW_F64() {
-		assertEquals( PI * 1.5, distanceCCW(-0.75 * PI, 0.75 * PI), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( PI * 0.5, distanceCCW( 0.75 * PI, -0.75 * PI), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 0, distanceCCW(1,1), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( PI * 1.5, distanceCCW(-0.75 * PI, 0.75 * PI), GrlConstants.TEST_F64);
+		assertEquals( PI * 0.5, distanceCCW( 0.75 * PI, -0.75 * PI), GrlConstants.TEST_F64);
+		assertEquals( 0, distanceCCW(1,1), GrlConstants.TEST_F64);
 	}
 
 	@Test
 	public void testDistanceCCW_F32() {
-		assertEquals( F_PI * 1.5f, distanceCCW(-0.75f * F_PI, 0.75f * F_PI), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals( F_PI * 0.5f, distanceCCW( 0.75f * F_PI, -0.75f * F_PI), GrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 0f, distanceCCW(1f,1f), GrlConstants.FLOAT_TEST_TOL  );
+		assertEquals( F_PI * 1.5f, distanceCCW(-0.75f * F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
+		assertEquals( F_PI * 0.5f, distanceCCW( 0.75f * F_PI, -0.75f * F_PI), GrlConstants.TEST_F32);
+		assertEquals( 0f, distanceCCW(1f,1f), GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void testDistanceCW_F64() {
-		assertEquals( PI * 0.5, distanceCW(-0.75 * PI, 0.75 * PI), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( PI * 1.5, distanceCW(0.75 * PI, -0.75 * PI), GrlConstants.DOUBLE_TEST_TOL );
-		assertEquals( 0, distanceCW(1, 1), GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals( PI * 0.5, distanceCW(-0.75 * PI, 0.75 * PI), GrlConstants.TEST_F64);
+		assertEquals( PI * 1.5, distanceCW(0.75 * PI, -0.75 * PI), GrlConstants.TEST_F64);
+		assertEquals( 0, distanceCW(1, 1), GrlConstants.TEST_F64);
 	}
 
 	@Test
 	public void testDistanceCW_F32() {
-		assertEquals( F_PI * 0.5f, distanceCW(-0.75f * F_PI, 0.75f * F_PI), GrlConstants.FLOAT_TEST_TOL );
-		assertEquals( F_PI * 1.5f, distanceCW(0.75f * F_PI, -0.75f * F_PI), GrlConstants.FLOAT_TEST_TOL );
-		assertEquals( 0, distanceCW(1f, 1f), GrlConstants.FLOAT_TEST_TOL  );
+		assertEquals( F_PI * 0.5f, distanceCW(-0.75f * F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
+		assertEquals( F_PI * 1.5f, distanceCW(0.75f * F_PI, -0.75f * F_PI), GrlConstants.TEST_F32);
+		assertEquals( 0, distanceCW(1f, 1f), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -177,63 +177,63 @@ public class TestUtilAngle {
 
 	@Test
 	public void wrapZeroToOne_F64() {
-		assertEquals(0.00, UtilAngle.wrapZeroToOne(2.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.00, UtilAngle.wrapZeroToOne(1.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.00, UtilAngle.wrapZeroToOne(0.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.50, UtilAngle.wrapZeroToOne(1.5), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.00, UtilAngle.wrapZeroToOne(-1.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.00, UtilAngle.wrapZeroToOne(-6.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.25, UtilAngle.wrapZeroToOne(0.25), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.50, UtilAngle.wrapZeroToOne(0.50), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.75, UtilAngle.wrapZeroToOne(-0.25), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.75, UtilAngle.wrapZeroToOne(-5.25), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.50, UtilAngle.wrapZeroToOne(-0.50), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.wrapZeroToOne(2.0), GrlConstants.TEST_F64);
+		assertEquals(0.00, UtilAngle.wrapZeroToOne(1.0), GrlConstants.TEST_F64);
+		assertEquals(0.00, UtilAngle.wrapZeroToOne(0.0), GrlConstants.TEST_F64);
+		assertEquals(0.50, UtilAngle.wrapZeroToOne(1.5), GrlConstants.TEST_F64);
+		assertEquals(0.00, UtilAngle.wrapZeroToOne(-1.0), GrlConstants.TEST_F64);
+		assertEquals(0.00, UtilAngle.wrapZeroToOne(-6.0), GrlConstants.TEST_F64);
+		assertEquals(0.25, UtilAngle.wrapZeroToOne(0.25), GrlConstants.TEST_F64);
+		assertEquals(0.50, UtilAngle.wrapZeroToOne(0.50), GrlConstants.TEST_F64);
+		assertEquals(0.75, UtilAngle.wrapZeroToOne(-0.25), GrlConstants.TEST_F64);
+		assertEquals(0.75, UtilAngle.wrapZeroToOne(-5.25), GrlConstants.TEST_F64);
+		assertEquals(0.50, UtilAngle.wrapZeroToOne(-0.50), GrlConstants.TEST_F64);
 	}
 
 	@Test
 	public void wrapZeroToOne_F32() {
-		assertEquals(0.00f, UtilAngle.wrapZeroToOne(2.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.00f, UtilAngle.wrapZeroToOne(1.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.00f, UtilAngle.wrapZeroToOne(0.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.50f, UtilAngle.wrapZeroToOne(1.5f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.00f, UtilAngle.wrapZeroToOne(-1.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.00f, UtilAngle.wrapZeroToOne(-6.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.25f, UtilAngle.wrapZeroToOne(0.25f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.50f, UtilAngle.wrapZeroToOne(0.50f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.75f, UtilAngle.wrapZeroToOne(-0.25f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.75f, UtilAngle.wrapZeroToOne(-5.25f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.50f, UtilAngle.wrapZeroToOne(-0.50f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.wrapZeroToOne(2.0f), GrlConstants.TEST_F32);
+		assertEquals(0.00f, UtilAngle.wrapZeroToOne(1.0f), GrlConstants.TEST_F32);
+		assertEquals(0.00f, UtilAngle.wrapZeroToOne(0.0f), GrlConstants.TEST_F32);
+		assertEquals(0.50f, UtilAngle.wrapZeroToOne(1.5f), GrlConstants.TEST_F32);
+		assertEquals(0.00f, UtilAngle.wrapZeroToOne(-1.0f), GrlConstants.TEST_F32);
+		assertEquals(0.00f, UtilAngle.wrapZeroToOne(-6.0f), GrlConstants.TEST_F32);
+		assertEquals(0.25f, UtilAngle.wrapZeroToOne(0.25f), GrlConstants.TEST_F32);
+		assertEquals(0.50f, UtilAngle.wrapZeroToOne(0.50f), GrlConstants.TEST_F32);
+		assertEquals(0.75f, UtilAngle.wrapZeroToOne(-0.25f), GrlConstants.TEST_F32);
+		assertEquals(0.75f, UtilAngle.wrapZeroToOne(-5.25f), GrlConstants.TEST_F32);
+		assertEquals(0.50f, UtilAngle.wrapZeroToOne(-0.50f), GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void reflectZeroToOne_F64() {
-		assertEquals(0.00, UtilAngle.reflectZeroToOne(2.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(1.00, UtilAngle.reflectZeroToOne(1.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.00, UtilAngle.reflectZeroToOne(0.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.50, UtilAngle.reflectZeroToOne(1.5), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.25, UtilAngle.reflectZeroToOne(1.75), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.25, UtilAngle.reflectZeroToOne(-0.25), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.25, UtilAngle.reflectZeroToOne(0.25), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.50, UtilAngle.reflectZeroToOne(0.50), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.50, UtilAngle.reflectZeroToOne(-0.50), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(1.00, UtilAngle.reflectZeroToOne(-1.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.00, UtilAngle.reflectZeroToOne(-6.0), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0.75, UtilAngle.reflectZeroToOne(-5.25), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.00, UtilAngle.reflectZeroToOne(2.0), GrlConstants.TEST_F64);
+		assertEquals(1.00, UtilAngle.reflectZeroToOne(1.0), GrlConstants.TEST_F64);
+		assertEquals(0.00, UtilAngle.reflectZeroToOne(0.0), GrlConstants.TEST_F64);
+		assertEquals(0.50, UtilAngle.reflectZeroToOne(1.5), GrlConstants.TEST_F64);
+		assertEquals(0.25, UtilAngle.reflectZeroToOne(1.75), GrlConstants.TEST_F64);
+		assertEquals(0.25, UtilAngle.reflectZeroToOne(-0.25), GrlConstants.TEST_F64);
+		assertEquals(0.25, UtilAngle.reflectZeroToOne(0.25), GrlConstants.TEST_F64);
+		assertEquals(0.50, UtilAngle.reflectZeroToOne(0.50), GrlConstants.TEST_F64);
+		assertEquals(0.50, UtilAngle.reflectZeroToOne(-0.50), GrlConstants.TEST_F64);
+		assertEquals(1.00, UtilAngle.reflectZeroToOne(-1.0), GrlConstants.TEST_F64);
+		assertEquals(0.00, UtilAngle.reflectZeroToOne(-6.0), GrlConstants.TEST_F64);
+		assertEquals(0.75, UtilAngle.reflectZeroToOne(-5.25), GrlConstants.TEST_F64);
 	}
 
 	@Test
 	public void reflectZeroToOne_F32() {
-		assertEquals(0.00f, UtilAngle.reflectZeroToOne(2.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(1.00f, UtilAngle.reflectZeroToOne(1.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.00f, UtilAngle.reflectZeroToOne(0.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.50f, UtilAngle.reflectZeroToOne(1.5f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.25f, UtilAngle.reflectZeroToOne(1.75f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.25f, UtilAngle.reflectZeroToOne(-0.25f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.25f, UtilAngle.reflectZeroToOne(0.25f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.50f, UtilAngle.reflectZeroToOne(0.50f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.50f, UtilAngle.reflectZeroToOne(-0.50f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(1.00f, UtilAngle.reflectZeroToOne(-1.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.00f, UtilAngle.reflectZeroToOne(-6.0f), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0.75f, UtilAngle.reflectZeroToOne(-5.25f), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0.00f, UtilAngle.reflectZeroToOne(2.0f), GrlConstants.TEST_F32);
+		assertEquals(1.00f, UtilAngle.reflectZeroToOne(1.0f), GrlConstants.TEST_F32);
+		assertEquals(0.00f, UtilAngle.reflectZeroToOne(0.0f), GrlConstants.TEST_F32);
+		assertEquals(0.50f, UtilAngle.reflectZeroToOne(1.5f), GrlConstants.TEST_F32);
+		assertEquals(0.25f, UtilAngle.reflectZeroToOne(1.75f), GrlConstants.TEST_F32);
+		assertEquals(0.25f, UtilAngle.reflectZeroToOne(-0.25f), GrlConstants.TEST_F32);
+		assertEquals(0.25f, UtilAngle.reflectZeroToOne(0.25f), GrlConstants.TEST_F32);
+		assertEquals(0.50f, UtilAngle.reflectZeroToOne(0.50f), GrlConstants.TEST_F32);
+		assertEquals(0.50f, UtilAngle.reflectZeroToOne(-0.50f), GrlConstants.TEST_F32);
+		assertEquals(1.00f, UtilAngle.reflectZeroToOne(-1.0f), GrlConstants.TEST_F32);
+		assertEquals(0.00f, UtilAngle.reflectZeroToOne(-6.0f), GrlConstants.TEST_F32);
+		assertEquals(0.75f, UtilAngle.reflectZeroToOne(-5.25f), GrlConstants.TEST_F32);
 	}
 }

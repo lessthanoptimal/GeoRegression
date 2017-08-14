@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,17 +18,14 @@
 
 package georegression.struct;
 
-import java.io.Serializable;
+import org.ejml.data.DMatrix3x3;
 
 /**
  * Matrix with a fixed size of 3 by 3.
  *
  * @author Peter Abeles
  */
-public class Matrix3x3_F64 implements Serializable {
-	public double a11,a12,a13;
-	public double a21,a22,a23;
-	public double a31,a32,a33;
+public class Matrix3x3_F64 extends DMatrix3x3 {
 
 	public void zero() {
 		a11=a12=a13=a21=a22=a23=a31=a32=a33=0;

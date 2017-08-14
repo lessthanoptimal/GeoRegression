@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,15 +46,15 @@ public class TestModelManagerHomography2D_F32 {
 
 		alg.copyModel(model,found);
 
-		assertEquals(model.a11,found.a11, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.a12,found.a12, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.a13,found.a13, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.a21,found.a21, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.a22,found.a22, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.a23,found.a23, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.a31,found.a31, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.a32,found.a32, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.a33,found.a33, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(model.a11,found.a11, GrlConstants.TEST_F32);
+		assertEquals(model.a12,found.a12, GrlConstants.TEST_F32);
+		assertEquals(model.a13,found.a13, GrlConstants.TEST_F32);
+		assertEquals(model.a21,found.a21, GrlConstants.TEST_F32);
+		assertEquals(model.a22,found.a22, GrlConstants.TEST_F32);
+		assertEquals(model.a23,found.a23, GrlConstants.TEST_F32);
+		assertEquals(model.a31,found.a31, GrlConstants.TEST_F32);
+		assertEquals(model.a32,found.a32, GrlConstants.TEST_F32);
+		assertEquals(model.a33,found.a33, GrlConstants.TEST_F32);
 
 	}
 

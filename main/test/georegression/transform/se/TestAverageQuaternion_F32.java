@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,8 +23,8 @@ import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class TestAverageQuaternion_F32 {
 	public void one() {
 		Quaternion_F32 q = ConvertRotation3D_F32.eulerToQuaternion(EulerType.XYZ,0.1f,-0.5f,1.5f,null);
 
-		List<Quaternion_F32> list = new ArrayList<Quaternion_F32>();
+		List<Quaternion_F32> list = new ArrayList<>();
 		list.add(q);
 
 		AverageQuaternion_F32 alg = new AverageQuaternion_F32();
@@ -55,14 +55,14 @@ public class TestAverageQuaternion_F32 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(q,found, GrlConstants.FLOAT_TEST_TOL);
+		checkEquals(q,found, GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void two_same() {
 		Quaternion_F32 q = ConvertRotation3D_F32.eulerToQuaternion(EulerType.XYZ,0.1f,-0.5f,1.5f,null);
 
-		List<Quaternion_F32> list = new ArrayList<Quaternion_F32>();
+		List<Quaternion_F32> list = new ArrayList<>();
 		list.add(q);
 		list.add(q);
 
@@ -71,7 +71,7 @@ public class TestAverageQuaternion_F32 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(q,found, GrlConstants.FLOAT_TEST_TOL);
+		checkEquals(q,found, GrlConstants.TEST_F32);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class TestAverageQuaternion_F32 {
 		float rotY = -0.5f;
 		float rotZ = 1.5f;
 
-		List<Quaternion_F32> list = new ArrayList<Quaternion_F32>();
+		List<Quaternion_F32> list = new ArrayList<>();
 		for (int i = 0; i < 40; i++) {
 			float noise = (float)rand.nextGaussian()*0.03f;
 			list.add( ConvertRotation3D_F32.eulerToQuaternion(EulerType.XYZ,rotX,rotY+noise,rotZ,null));
@@ -96,7 +96,7 @@ public class TestAverageQuaternion_F32 {
 
 		assertTrue( alg.process(list,found) );
 
-		checkEquals(expected, found, (float)Math.pow(GrlConstants.FLOAT_TEST_TOL,0.3f));
+		checkEquals(expected, found, (float)Math.pow(GrlConstants.TEST_F32,0.3f));
 	}
 
 	/**
@@ -104,14 +104,14 @@ public class TestAverageQuaternion_F32 {
 	 */
 	public static void checkEquals( Quaternion_F32 expected , Quaternion_F32 found , float errorTol ) {
 
-		DenseMatrix64F E = ConvertRotation3D_F32.quaternionToMatrix(expected,null);
-		DenseMatrix64F F = ConvertRotation3D_F32.quaternionToMatrix(found,null);
+		FMatrixRMaj E = ConvertRotation3D_F32.quaternionToMatrix(expected,null);
+		FMatrixRMaj F = ConvertRotation3D_F32.quaternionToMatrix(found,null);
 
-		DenseMatrix64F diff = new DenseMatrix64F(3,3);
-		CommonOps.multTransA(E,F,diff);
+		FMatrixRMaj diff = new FMatrixRMaj(3,3);
+		CommonOps_FDRM.multTransA(E,F,diff);
 
 		Rodrigues_F32 error = ConvertRotation3D_F32.matrixToRodrigues(diff,null);
 
-		assertTrue( (float)Math.abs(error.theta) <= errorTol );
+		assertTrue( (float)Math.abs(error.theta) <= 10*errorTol );
 	}
 }

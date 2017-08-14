@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -40,9 +40,9 @@ public class TestCodecCylinder3D_F64 {
 		alg.encode(cylinder,param);
 		alg.decode(param,found);
 
-		assertEquals(0, cylinder.line.p.distance(found.line.p), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0, cylinder.line.slope.distance(found.line.slope), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(cylinder.radius,found.radius, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, cylinder.line.p.distance(found.line.p), GrlConstants.TEST_F64);
+		assertEquals(0, cylinder.line.slope.distance(found.line.slope), GrlConstants.TEST_F64);
+		assertEquals(cylinder.radius,found.radius, GrlConstants.TEST_F64);
 	}
 
 }

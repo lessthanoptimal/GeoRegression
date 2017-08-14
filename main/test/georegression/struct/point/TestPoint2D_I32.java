@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,7 +41,7 @@ public class TestPoint2D_I32 {
 		Point2D_I32 a = new Point2D_I32(1,2);
 		Point2D_I32 b = new Point2D_I32(3,5);
 
-		assertEquals(Math.sqrt(2*2 + 3*3),a.distance(b), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(Math.sqrt(2*2 + 3*3),a.distance(b), GrlConstants.TEST_F64);
 	}
 
 	@Test

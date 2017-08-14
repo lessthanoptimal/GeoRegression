@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,24 +33,24 @@ public class TestBoxLength3D_F64 {
 		BoxLength3D_F64 boxA = new BoxLength3D_F64(1,2,3,4,5,6);
 		BoxLength3D_F64 box = new BoxLength3D_F64(boxA);
 
-		assertEquals(1,box.p.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2,box.p.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3,box.p.z, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4,box.lengthX, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,box.lengthY, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(6,box.lengthZ, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1,box.p.x, GrlConstants.TEST_F64);
+		assertEquals(2,box.p.y, GrlConstants.TEST_F64);
+		assertEquals(3,box.p.z, GrlConstants.TEST_F64);
+		assertEquals(4,box.lengthX, GrlConstants.TEST_F64);
+		assertEquals(5,box.lengthY, GrlConstants.TEST_F64);
+		assertEquals(6,box.lengthZ, GrlConstants.TEST_F64);
 	}
 
 	@Test
 	public void constructor_floats() {
 		BoxLength3D_F64 box = new BoxLength3D_F64(1,2,3,4,5,6);
 
-		assertEquals(1,box.p.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2,box.p.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3,box.p.z, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4,box.lengthX, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,box.lengthY, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(6, box.lengthZ, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1,box.p.x, GrlConstants.TEST_F64);
+		assertEquals(2,box.p.y, GrlConstants.TEST_F64);
+		assertEquals(3,box.p.z, GrlConstants.TEST_F64);
+		assertEquals(4,box.lengthX, GrlConstants.TEST_F64);
+		assertEquals(5,box.lengthY, GrlConstants.TEST_F64);
+		assertEquals(6, box.lengthZ, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -58,12 +58,12 @@ public class TestBoxLength3D_F64 {
 		BoxLength3D_F64 box = new BoxLength3D_F64();
 		box.set(1,2,3,4,5,6);
 
-		assertEquals(1, box.p.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2,box.p.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3,box.p.z, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4,box.lengthX, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,box.lengthY, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(6, box.lengthZ, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1, box.p.x, GrlConstants.TEST_F64);
+		assertEquals(2,box.p.y, GrlConstants.TEST_F64);
+		assertEquals(3,box.p.z, GrlConstants.TEST_F64);
+		assertEquals(4,box.lengthX, GrlConstants.TEST_F64);
+		assertEquals(5,box.lengthY, GrlConstants.TEST_F64);
+		assertEquals(6, box.lengthZ, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -72,12 +72,12 @@ public class TestBoxLength3D_F64 {
 		BoxLength3D_F64 box = new BoxLength3D_F64();
 		box.set(boxA);
 
-		assertEquals(1,box.p.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(2,box.p.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(3,box.p.z, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4,box.lengthX, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5,box.lengthY, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(6, box.lengthZ, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1,box.p.x, GrlConstants.TEST_F64);
+		assertEquals(2,box.p.y, GrlConstants.TEST_F64);
+		assertEquals(3,box.p.z, GrlConstants.TEST_F64);
+		assertEquals(4,box.lengthX, GrlConstants.TEST_F64);
+		assertEquals(5,box.lengthY, GrlConstants.TEST_F64);
+		assertEquals(6, box.lengthZ, GrlConstants.TEST_F64);
 	}
 
 }

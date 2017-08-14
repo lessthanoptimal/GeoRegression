@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,8 +20,8 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple2D_F32;
 import georegression.struct.GeoTuple3D_F32;
-import org.ejml.alg.dense.mult.VectorVectorMult;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.mult.VectorVectorMult_FDRM;
 
 
 /**
@@ -45,9 +45,9 @@ public class GeometryMath_F32 {
 	 * @param ret If not null the results are stored here, otherwise a new matrix is created.
 	 * @return Skew symmetric cross product matrix.
 	 */
-	public static DenseMatrix64F crossMatrix( float x0, float x1, float x2, DenseMatrix64F ret ) {
+	public static FMatrixRMaj crossMatrix( float x0, float x1, float x2, FMatrixRMaj ret ) {
 		if( ret == null ) {
-			ret = new DenseMatrix64F( 3, 3 );
+			ret = new FMatrixRMaj( 3, 3 );
 		} else {
 			ret.zero();
 		}
@@ -69,9 +69,9 @@ public class GeometryMath_F32 {
 	 * @param ret If not null the results are stored here, otherwise a new matrix is created.
 	 * @return Skew symmetric cross product matrix.
 	 */
-	public static DenseMatrix64F crossMatrix( GeoTuple3D_F32 v, DenseMatrix64F ret ) {
+	public static FMatrixRMaj crossMatrix( GeoTuple3D_F32 v, FMatrixRMaj ret ) {
 		if( ret == null ) {
-			ret = new DenseMatrix64F( 3, 3 );
+			ret = new FMatrixRMaj( 3, 3 );
 		} else {
 			ret.zero();
 		}
@@ -217,7 +217,7 @@ public class GeometryMath_F32 {
 	 * @param p1
 	 * @param ret
 	 */
-	public static <T extends GeoTuple3D_F32> T addMult( T p0, DenseMatrix64F M, T p1, T ret ) {
+	public static <T extends GeoTuple3D_F32> T addMult( T p0, FMatrixRMaj M, T p1, T ret ) {
 		ret = mult( M, p1, ret );
 		ret.x += p0.x;
 		ret.y += p0.y;
@@ -292,7 +292,7 @@ public class GeometryMath_F32 {
 	 * @param pt
 	 * @param result Storage for output.  Can be the same instance as param 'pt'.  Modified.
 	 */
-	public static <T extends GeoTuple3D_F32> T mult( DenseMatrix64F M, T pt, T result ) {
+	public static <T extends GeoTuple3D_F32> T mult( FMatrixRMaj M, T pt, T result ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -322,7 +322,7 @@ public class GeometryMath_F32 {
 	 * by dividing the x and y values by the found z.
 	 * </p>
 	 */
-	public static <T extends GeoTuple2D_F32> T mult( DenseMatrix64F M, GeoTuple3D_F32 pt, T mod ) {
+	public static <T extends GeoTuple2D_F32> T mult( FMatrixRMaj M, GeoTuple3D_F32 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -351,7 +351,7 @@ public class GeometryMath_F32 {
 	 * a 3d point.
 	 * </p>
 	 */
-	public static void mult( DenseMatrix64F M, GeoTuple2D_F32 pt, GeoTuple3D_F32 mod ) {
+	public static void mult( FMatrixRMaj M, GeoTuple2D_F32 pt, GeoTuple3D_F32 mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -376,7 +376,7 @@ public class GeometryMath_F32 {
 	 * @param mod Storage for the computation.  If null a new point is declared.  Can be same instance as pt.
 	 * @return Result of computation.
 	 */
-	public static <T extends GeoTuple2D_F32> T mult( DenseMatrix64F M, T pt, T mod ) {
+	public static <T extends GeoTuple2D_F32> T mult( FMatrixRMaj M, T pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
@@ -407,20 +407,20 @@ public class GeometryMath_F32 {
 	 * @param result Storage for results.  Can be null.
 	 * @return Results.
 	 */
-	public static DenseMatrix64F multCrossA( GeoTuple2D_F32 A , DenseMatrix64F M, DenseMatrix64F result ) {
+	public static FMatrixRMaj multCrossA( GeoTuple2D_F32 A , FMatrixRMaj M, FMatrixRMaj result ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
 		if( result == null ) {
-			result = new DenseMatrix64F(3,3);
+			result = new FMatrixRMaj(3,3);
 		}
 
-		/**/double x = A.x;
-		/**/double y = A.y;
+		float x = A.x;
+		float y = A.y;
 
-		/**/double a11 = M.data[0]; /**/double a12 = M.data[1]; /**/double a13 = M.data[2];
-		/**/double a21 = M.data[3]; /**/double a22 = M.data[4]; /**/double a23 = M.data[5];
-		/**/double a31 = M.data[6]; /**/double a32 = M.data[7]; /**/double a33 = M.data[8];
+		float a11 = M.data[0]; float a12 = M.data[1]; float a13 = M.data[2];
+		float a21 = M.data[3]; float a22 = M.data[4]; float a23 = M.data[5];
+		float a31 = M.data[6]; float a32 = M.data[7]; float a33 = M.data[8];
 
 		result.data[0] = -a21 + a31*y;
 		result.data[1] = -a22 + a32*y;
@@ -447,21 +447,21 @@ public class GeometryMath_F32 {
 	 * @param result Storage for results.  Can be null.
 	 * @return Results.
 	 */
-	public static DenseMatrix64F multCrossA( GeoTuple3D_F32 A , DenseMatrix64F M, DenseMatrix64F result ) {
+	public static FMatrixRMaj multCrossA( GeoTuple3D_F32 A , FMatrixRMaj M, FMatrixRMaj result ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
 		if( result == null ) {
-			result = new DenseMatrix64F(3,3);
+			result = new FMatrixRMaj(3,3);
 		}
 
-		/**/double x = A.x;
-		/**/double y = A.y;
-		/**/double z = A.z;
+		float x = A.x;
+		float y = A.y;
+		float z = A.z;
 
-		/**/double a11 = M.data[0]; /**/double a12 = M.data[1]; /**/double a13 = M.data[2];
-		/**/double a21 = M.data[3]; /**/double a22 = M.data[4]; /**/double a23 = M.data[5];
-		/**/double a31 = M.data[6]; /**/double a32 = M.data[7]; /**/double a33 = M.data[8];
+		float a11 = M.data[0]; float a12 = M.data[1]; float a13 = M.data[2];
+		float a21 = M.data[3]; float a22 = M.data[4]; float a23 = M.data[5];
+		float a31 = M.data[6]; float a32 = M.data[7]; float a33 = M.data[8];
 
 		result.data[0] = -a21*z + a31*y;
 		result.data[1] = -a22*z + a32*y;
@@ -481,7 +481,7 @@ public class GeometryMath_F32 {
 	 *
 	 *
 	 */
-	public static <T extends GeoTuple3D_F32> T multTran( DenseMatrix64F M, T pt, T mod ) {
+	public static <T extends GeoTuple3D_F32> T multTran( FMatrixRMaj M, T pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
 
@@ -509,7 +509,7 @@ public class GeometryMath_F32 {
 	 * @param mod 2D point in homogeneous coordinates.  Implicit z = 1
 	 * @return 2D point in homogeneous coordinates.  Implicit z = 1
 	 */
-	public static <T extends GeoTuple3D_F32> T multTran( DenseMatrix64F M, GeoTuple2D_F32 pt, T mod ) {
+	public static <T extends GeoTuple3D_F32> T multTran( FMatrixRMaj M, GeoTuple2D_F32 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
 
@@ -536,7 +536,7 @@ public class GeometryMath_F32 {
 	 * @param mod 2D point in homogeneous coordinates.  Implicit z = 1
 	 * @return 2D point in homogeneous coordinates.  Implicit z = 1
 	 */
-	public static <T extends GeoTuple2D_F32> T multTran( DenseMatrix64F M, GeoTuple2D_F32 pt, T mod ) {
+	public static <T extends GeoTuple2D_F32> T multTran( FMatrixRMaj M, GeoTuple2D_F32 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "Rotation matrices are 3 by 3." );
 
@@ -564,14 +564,14 @@ public class GeometryMath_F32 {
 	 * @param b 3D point.
 	 * @return scalar number
 	 */
-	public static float innerProd( GeoTuple3D_F32 a, DenseMatrix64F M, GeoTuple3D_F32 b ) {
+	public static float innerProd( GeoTuple3D_F32 a, FMatrixRMaj M, GeoTuple3D_F32 b ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "M must be 3 by 3." );
 
-		DenseMatrix64F m1 = new DenseMatrix64F( 3, 1, true, a.x, a.y, a.z );
-		DenseMatrix64F m2 = new DenseMatrix64F( 3, 1, true, b.x, b.y, b.z );
+		FMatrixRMaj m1 = new FMatrixRMaj( 3, 1, true, a.x, a.y, a.z );
+		FMatrixRMaj m2 = new FMatrixRMaj( 3, 1, true, b.x, b.y, b.z );
 
-		return (float) ( VectorVectorMult.innerProdA( m1, M, m2 ) );
+		return (float) ( VectorVectorMult_FDRM.innerProdA( m1, M, m2 ) );
 	}
 
 	/**
@@ -585,14 +585,14 @@ public class GeometryMath_F32 {
 	 * @param b 3D point.
 	 * @return scalar number
 	 */
-	public static float innerProdTranM( GeoTuple3D_F32 a, DenseMatrix64F M, GeoTuple3D_F32 b ) {
+	public static float innerProdTranM( GeoTuple3D_F32 a, FMatrixRMaj M, GeoTuple3D_F32 b ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "M must be 3 by 3." );
 
-		DenseMatrix64F m1 = new DenseMatrix64F( 3, 1, true, a.x, a.y, a.z );
-		DenseMatrix64F m2 = new DenseMatrix64F( 3, 1, true, b.x, b.y, b.z );
+		FMatrixRMaj m1 = new FMatrixRMaj( 3, 1, true, a.x, a.y, a.z );
+		FMatrixRMaj m2 = new FMatrixRMaj( 3, 1, true, b.x, b.y, b.z );
 
-		return (float) ( VectorVectorMult.innerProdTranA( m1, M, m2 ) );
+		return (float) ( VectorVectorMult_FDRM.innerProdTranA( m1, M, m2 ) );
 	}
 
 	/**
@@ -604,9 +604,9 @@ public class GeometryMath_F32 {
 	 * @param ret 3 x 3 matrix or null.
 	 * @return outer product of two 3d vectors
 	 */
-	public static DenseMatrix64F outerProd(GeoTuple3D_F32 a, GeoTuple3D_F32 b, DenseMatrix64F ret) {
+	public static FMatrixRMaj outerProd(GeoTuple3D_F32 a, GeoTuple3D_F32 b, FMatrixRMaj ret) {
 		if( ret == null )
-			ret = new DenseMatrix64F(3,3);
+			ret = new FMatrixRMaj(3,3);
 
 		ret.data[0] = a.x*b.x;
 		ret.data[1] = a.x*b.y;
@@ -631,9 +631,9 @@ public class GeometryMath_F32 {
 	 * @param ret 3 x 3 matrix or null.
 	 * @return outer product of two 3d vectors
 	 */
-	public static DenseMatrix64F addOuterProd(DenseMatrix64F A , float scalar , GeoTuple3D_F32 b, GeoTuple3D_F32 c, DenseMatrix64F ret) {
+	public static FMatrixRMaj addOuterProd(FMatrixRMaj A , float scalar , GeoTuple3D_F32 b, GeoTuple3D_F32 c, FMatrixRMaj ret) {
 		if( ret == null )
-			ret = new DenseMatrix64F(3,3);
+			ret = new FMatrixRMaj(3,3);
 
 		ret.data[0] = A.data[0] + scalar*b.x*c.x;
 		ret.data[1] = A.data[1] + scalar*b.x*c.y;
@@ -660,14 +660,14 @@ public class GeometryMath_F32 {
 	 * @param b 2D point.
 	 * @return scalar number,
 	 */
-	public static float innerProd( GeoTuple2D_F32 a, DenseMatrix64F M, GeoTuple2D_F32 b ) {
+	public static float innerProd( GeoTuple2D_F32 a, FMatrixRMaj M, GeoTuple2D_F32 b ) {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "M must be 3 by 3." );
 
-		DenseMatrix64F m1 = new DenseMatrix64F( 3, 1, true, a.x, a.y, 1 );
-		DenseMatrix64F m2 = new DenseMatrix64F( 3, 1, true, b.x, b.y, 1 );
+		FMatrixRMaj m1 = new FMatrixRMaj( 3, 1, true, a.x, a.y, 1 );
+		FMatrixRMaj m2 = new FMatrixRMaj( 3, 1, true, b.x, b.y, 1 );
 
-		return (float) ( VectorVectorMult.innerProdA( m1, M, m2 ) );
+		return (float) ( VectorVectorMult_FDRM.innerProdA( m1, M, m2 ) );
 	}
 
 	/**
@@ -699,6 +699,18 @@ public class GeometryMath_F32 {
 	}
 
 	/**
+	 * Divides each element by 'v'
+	 *
+	 * @param p tuple
+	 * @param v divisor
+	 */
+	public static void divide( GeoTuple3D_F32 p , float v ) {
+		p.x /= v;
+		p.y /= v;
+		p.z /= v;
+	}
+
+	/**
 	 * <p>
 	 * Changes the sign of the vector:<br>
 	 * <br>
@@ -714,15 +726,15 @@ public class GeometryMath_F32 {
 	}
 
 	/**
-	 * Converts a GeoTuple3D_F32 into DenseMatrix64F
+	 * Converts a GeoTuple3D_F32 into FMatrixRMaj
 	 *
 	 * @param in Input vector
 	 * @param out Output matrix.  If null a new matrix will be declared
 	 * @return Converted matrix
 	 */
-	public static DenseMatrix64F toMatrix(GeoTuple3D_F32 in, DenseMatrix64F out) {
+	public static FMatrixRMaj toMatrix(GeoTuple3D_F32 in, FMatrixRMaj out) {
 		if( out == null )
-			out = new DenseMatrix64F(3,1);
+			out = new FMatrixRMaj(3,1);
 		else if( out.getNumElements() != 3 )
 			throw new IllegalArgumentException("Vector with 3 elements expected");
 
@@ -734,12 +746,12 @@ public class GeometryMath_F32 {
 	}
 
 	/**
-	 * Converts a DenseMatrix64F into  GeoTuple3D_F32
+	 * Converts a FMatrixRMaj into  GeoTuple3D_F32
 	 *
 	 * @param in Input matrix
 	 * @param out Output vector.
 	 */
-	public static void toTuple3D(DenseMatrix64F in, GeoTuple3D_F32 out) {
+	public static void toTuple3D(FMatrixRMaj in, GeoTuple3D_F32 out) {
 
 		out.x = (float)in.get(0);
 		out.y = (float)in.get(1);

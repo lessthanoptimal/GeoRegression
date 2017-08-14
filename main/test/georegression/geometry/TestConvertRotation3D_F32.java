@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,10 +26,10 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.so.Quaternion_F32;
 import georegression.struct.so.Rodrigues_F32;
 import org.ejml.UtilEjml;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
-import org.ejml.ops.MatrixFeatures;
-import org.ejml.ops.RandomMatrices;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
+import org.ejml.dense.row.MatrixFeatures_FDRM;
+import org.ejml.dense.row.RandomMatrices_FDRM;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -51,13 +51,13 @@ public class TestConvertRotation3D_F32 {
 
 	@Test
 	public void rodriguesToMatrix() {
-		DenseMatrix64F rotZ = ConvertRotation3D_F32.rotZ( 0.5f, null );
+		FMatrixRMaj rotZ = ConvertRotation3D_F32.rotZ( 0.5f, null );
 
 		Rodrigues_F32 r = new Rodrigues_F32( 0.5f, 0, 0, 1 );
 
-		DenseMatrix64F rod = ConvertRotation3D_F32.rodriguesToMatrix( r, null );
+		FMatrixRMaj rod = ConvertRotation3D_F32.rodriguesToMatrix( r, null );
 
-		assertTrue( MatrixFeatures.isIdentical( rotZ, rod, GrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( MatrixFeatures_FDRM.isIdentical( rotZ, rod, GrlConstants.TEST_F32) );
 	}
 
 	@Test
@@ -67,16 +67,16 @@ public class TestConvertRotation3D_F32 {
 
 	public static void rodriguesToEuler(EulerType type , float rotA , float rotB , float rotC )
 	{
-		DenseMatrix64F expected = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
+		FMatrixRMaj expected = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
 
 		Rodrigues_F32 rod = ConvertRotation3D_F32.matrixToRodrigues(expected,(Rodrigues_F32)null);
 
 		float[] euler = ConvertRotation3D_F32.rodriguesToEuler(rod,type,null);
-		DenseMatrix64F found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
+		FMatrixRMaj found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
-		DenseMatrix64F difference = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures.isIdentity(difference,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
+		FMatrixRMaj difference = new FMatrixRMaj(3,3);
+		CommonOps_FDRM.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures_FDRM.isIdentity(difference, GrlConstants.TEST_SQ_F32));
 	}
 
 	@Test
@@ -85,13 +85,13 @@ public class TestConvertRotation3D_F32 {
 
 		Quaternion_F32 quat = ConvertRotation3D_F32.rodriguesToQuaternion(rod, null);
 
-		DenseMatrix64F A = ConvertRotation3D_F32.quaternionToMatrix(quat, null);
-		DenseMatrix64F B = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
+		FMatrixRMaj A = ConvertRotation3D_F32.quaternionToMatrix(quat, null);
+		FMatrixRMaj B = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
 
-		DenseMatrix64F C = new DenseMatrix64F(3,3);
-		CommonOps.multTransA(A,B,C);
+		FMatrixRMaj C = new FMatrixRMaj(3,3);
+		CommonOps_FDRM.multTransA(A,B,C);
 
-		assertTrue(MatrixFeatures.isIdentity(C, GrlConstants.FLOAT_TEST_TOL));
+		assertTrue(MatrixFeatures_FDRM.isIdentity(C, GrlConstants.TEST_F32));
 	}
 
 	@Test
@@ -102,13 +102,13 @@ public class TestConvertRotation3D_F32 {
 		Rodrigues_F32 rod = ConvertRotation3D_F32.quaternionToRodrigues(quat,null);
 
 		quat.normalize();
-		DenseMatrix64F A = ConvertRotation3D_F32.quaternionToMatrix(quat, null);
-		DenseMatrix64F B = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
+		FMatrixRMaj A = ConvertRotation3D_F32.quaternionToMatrix(quat, null);
+		FMatrixRMaj B = ConvertRotation3D_F32.rodriguesToMatrix(rod, null);
 
-		DenseMatrix64F C = new DenseMatrix64F(3,3);
-		CommonOps.multTransA(A,B,C);
+		FMatrixRMaj C = new FMatrixRMaj(3,3);
+		CommonOps_FDRM.multTransA(A,B,C);
 
-		assertTrue(MatrixFeatures.isIdentity(C, GrlConstants.FLOAT_TEST_TOL));
+		assertTrue(MatrixFeatures_FDRM.isIdentity(C, GrlConstants.TEST_F32));
 	}
 
 	@Test
@@ -118,16 +118,16 @@ public class TestConvertRotation3D_F32 {
 
 	public static void quaternionToEuler(EulerType type , float rotA , float rotB , float rotC )
 	{
-		DenseMatrix64F expected = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
+		FMatrixRMaj expected = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
 
 		Quaternion_F32 q = ConvertRotation3D_F32.matrixToQuaternion(expected,null);
 		float euler[] = ConvertRotation3D_F32.quaternionToEuler(q,type,null);
 
-		DenseMatrix64F found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
+		FMatrixRMaj found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
-		DenseMatrix64F difference = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures.isIdentity(difference,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
+		FMatrixRMaj difference = new FMatrixRMaj(3,3);
+		CommonOps_FDRM.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures_FDRM.isIdentity(difference, GrlConstants.TEST_SQ_F32));
 	}
 
 	@Test
@@ -160,20 +160,20 @@ public class TestConvertRotation3D_F32 {
 			float rotY = 2.0f*rand.nextFloat() * (float)Math.PI - (float)Math.PI;
 			float rotZ = 2.0f*rand.nextFloat() * (float)Math.PI - (float)Math.PI;
 
-			DenseMatrix64F R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,rotX,rotY,rotZ,null);
+			FMatrixRMaj R = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,rotX,rotY,rotZ,null);
 			matrixToQuaternion(R);
 		}
 	}
 
-	public void matrixToQuaternion( DenseMatrix64F R ) {
+	public void matrixToQuaternion( FMatrixRMaj R ) {
 		Quaternion_F32 q = ConvertRotation3D_F32.matrixToQuaternion(R,null);
 		q.normalize();
-		DenseMatrix64F found = ConvertRotation3D_F32.quaternionToMatrix(q,null);
+		FMatrixRMaj found = ConvertRotation3D_F32.quaternionToMatrix(q,null);
 
-		DenseMatrix64F result = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(R,found,result);
+		FMatrixRMaj result = new FMatrixRMaj(3,3);
+		CommonOps_FDRM.multTransB(R,found,result);
 
-		assertTrue(MatrixFeatures.isIdentity(result,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
+		assertTrue(MatrixFeatures_FDRM.isIdentity(result, GrlConstants.TEST_SQ_F32));
 	}
 
 	@Test
@@ -188,7 +188,7 @@ public class TestConvertRotation3D_F32 {
 		}
 
 		// see how well it handles underflow
-		checkMatrixToRodrigues( new Rodrigues_F32( 50*GrlConstants.FLOAT_TEST_TOL, -1, -1, -1 ) );
+		checkMatrixToRodrigues( new Rodrigues_F32( 50*GrlConstants.TEST_F32, -1, -1, -1 ) );
 
 		// test known pathological cases
 		checkMatrixToRodrigues( new Rodrigues_F32( 0, 1, 1, 1 ), new Rodrigues_F32( 0, 1, 0, 0 ) );
@@ -211,43 +211,43 @@ public class TestConvertRotation3D_F32 {
 
 	private void checkMatrixToRodrigues( Rodrigues_F32 rodInput ) {
 		// create the matrix using rodrigues
-		DenseMatrix64F rod = ConvertRotation3D_F32.rodriguesToMatrix( rodInput, null );
+		FMatrixRMaj rod = ConvertRotation3D_F32.rodriguesToMatrix( rodInput, null );
 
 		// see if the vectors are the same
 		Rodrigues_F32 found = ConvertRotation3D_F32.matrixToRodrigues( rod, (Rodrigues_F32)null );
 
 		// if the lines are parallel the dot product will be 1 or -1
 		float dot = found.unitAxisRotation.dot( rodInput.unitAxisRotation);
-		assertEquals( 1, (float)Math.abs( dot ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 1, (float)Math.abs( dot ), GrlConstants.TEST_F32);
 
 		// if the rotation vector is in the opposite direction then the found angle will be
 		// the negative of the input.  both are equivalent
-		assertTrue(UtilAngle.dist(rodInput.theta * dot, found.theta) <= GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(UtilAngle.dist(rodInput.theta * dot, found.theta) <= GrlConstants.TEST_F32);
 	}
 
 	private void checkMatrixToRodrigues( float eulerX , float eulerY , float eulerZ ) {
 
-		DenseMatrix64F M = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,eulerX,eulerY,eulerZ,null);
+		FMatrixRMaj M = ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,eulerX,eulerY,eulerZ,null);
 		Rodrigues_F32 rod = ConvertRotation3D_F32.matrixToRodrigues(M, (Rodrigues_F32)null);
-		DenseMatrix64F found = ConvertRotation3D_F32.rodriguesToMatrix(rod,null);
-		assertTrue(MatrixFeatures.isIdentical(M,found,1e-6));
+		FMatrixRMaj found = ConvertRotation3D_F32.rodriguesToMatrix(rod,null);
+		assertTrue(MatrixFeatures_FDRM.isIdentical(M,found,GrlConstants.TEST_F32));
 	}
 
 	private void checkMatrixToRodrigues( Rodrigues_F32 input,
 										 Rodrigues_F32 expected ) {
 
 		// create the matrix using rodrigues
-		DenseMatrix64F rod = ConvertRotation3D_F32.rodriguesToMatrix( input, null );
+		FMatrixRMaj rod = ConvertRotation3D_F32.rodriguesToMatrix( input, null );
 
 		// see if the vectors are the same
 		Rodrigues_F32 found = ConvertRotation3D_F32.matrixToRodrigues( rod, (Rodrigues_F32)null );
 
 		// if the lines are parallel the dot product will be 1 or -1
-		assertEquals( 1, (float)Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 1, (float)Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), GrlConstants.TEST_F32);
 
 		// if the rotation vector is in the opposite direction then the found angle will be
 		// the negative of the input.  both are equivalent
-		assertEquals( expected.theta, found.theta, 10.0f*GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( expected.theta, found.theta, 10.0f*GrlConstants.TEST_F32);
 	}
 
 	/**
@@ -255,26 +255,26 @@ public class TestConvertRotation3D_F32 {
 	 */
 	@Test
 	public void matrixToRodrigues_case0() {
-		DenseMatrix64F R = UtilEjml.parseMatrix(
+		FMatrixRMaj R = UtilEjml.parse_FDRM(
 						"1.00000000000000000000e+00f -5.42066399999221260000e-14f -3.16267800000013500000e-13f \n" +
 						"5.42066400000000000000e-14f 1.00000000000000040000e+00f 2.46136444559397200000e-13f \n" +
 						"3.16267800000000000000e-13f -2.46191955710628460000e-13f 1.00000000000000040000e+00f", 3);
 
 		Rodrigues_F32 found = ConvertRotation3D_F32.matrixToRodrigues( R, (Rodrigues_F32)null );
 
-		assertEquals(0,found.getTheta(),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,found.getTheta(),GrlConstants.TEST_F32);
 	}
 
 	@Test
 	public void matrixToRodrigues_case1() {
-		DenseMatrix64F R = UtilEjml.parseMatrix(
+		FMatrixRMaj R = UtilEjml.parse_FDRM(
 						"0.99999999999999000000e+00f -5.42066399999221260000e-14f -3.16267800000013500000e-13f \n" +
 						"5.42066400000000000000e-14f 0.99999999999999000000e+00f 2.46136444559397200000e-13f \n" +
 						"3.16267800000000000000e-13f -2.46191955710628460000e-13f 0.99999999999999000000e+00f", 3);
 
 		Rodrigues_F32 found = ConvertRotation3D_F32.matrixToRodrigues( R, (Rodrigues_F32)null );
 
-		assertEquals(0,found.getTheta(),50*GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(0,found.getTheta(),50*GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -282,13 +282,13 @@ public class TestConvertRotation3D_F32 {
 		Point3D_F32 pt_y = new Point3D_F32( 0, 1.5f, 0 );
 		Point3D_F32 pt_z = new Point3D_F32( 0, 0, 1.5f );
 
-		DenseMatrix64F R = ConvertRotation3D_F32.rotX( (float)Math.PI / 2.0f, null );
+		FMatrixRMaj R = ConvertRotation3D_F32.rotX( (float)Math.PI / 2.0f, null );
 
 		GeometryMath_F32.mult( R, pt_y, pt_y );
 		GeometryMath_F32.mult( R, pt_z, pt_z );
 
-		assertTrue( pt_y.isIdentical( 0, 0, 1.5f, GrlConstants.FLOAT_TEST_TOL ) );
-		assertTrue( pt_z.isIdentical( 0, -1.5f, 0, GrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( pt_y.isIdentical( 0, 0, 1.5f, GrlConstants.TEST_F32) );
+		assertTrue( pt_z.isIdentical( 0, -1.5f, 0, GrlConstants.TEST_F32) );
 	}
 
 	@Test
@@ -296,13 +296,13 @@ public class TestConvertRotation3D_F32 {
 		Point3D_F32 pt_x = new Point3D_F32( 1.5f, 0, 0 );
 		Point3D_F32 pt_z = new Point3D_F32( 0, 0, 1.5f );
 
-		DenseMatrix64F R = ConvertRotation3D_F32.rotY( (float)Math.PI / 2.0f, null );
+		FMatrixRMaj R = ConvertRotation3D_F32.rotY( (float)Math.PI / 2.0f, null );
 
 		GeometryMath_F32.mult( R, pt_x, pt_x );
 		GeometryMath_F32.mult( R, pt_z, pt_z );
 
-		assertTrue( pt_x.isIdentical( 0, 0, -1.5f, GrlConstants.FLOAT_TEST_TOL ) );
-		assertTrue( pt_z.isIdentical( 1.5f, 0, 0, GrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( pt_x.isIdentical( 0, 0, -1.5f, GrlConstants.TEST_F32) );
+		assertTrue( pt_z.isIdentical( 1.5f, 0, 0, GrlConstants.TEST_F32) );
 	}
 
 	@Test
@@ -310,13 +310,13 @@ public class TestConvertRotation3D_F32 {
 		Point3D_F32 pt_x = new Point3D_F32( 1.5f, 0, 0 );
 		Point3D_F32 pt_y = new Point3D_F32( 0, 1.5f, 0 );
 
-		DenseMatrix64F R = ConvertRotation3D_F32.rotZ( (float)Math.PI / 2.0f, null );
+		FMatrixRMaj R = ConvertRotation3D_F32.rotZ( (float)Math.PI / 2.0f, null );
 
 		GeometryMath_F32.mult( R, pt_x, pt_x );
 		GeometryMath_F32.mult( R, pt_y, pt_y );
 
-		assertTrue( pt_x.isIdentical( 0, 1.5f, 0, GrlConstants.FLOAT_TEST_TOL ) );
-		assertTrue( pt_y.isIdentical( -1.5f, 0, 0, GrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( pt_x.isIdentical( 0, 1.5f, 0, GrlConstants.TEST_F32) );
+		assertTrue( pt_y.isIdentical( -1.5f, 0, 0, GrlConstants.TEST_F32) );
 	}
 
 	@Test
@@ -326,15 +326,15 @@ public class TestConvertRotation3D_F32 {
 
 	public static void matrixToEuler(EulerType type , float rotA , float rotB , float rotC )
 	{
-		DenseMatrix64F expected = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
+		FMatrixRMaj expected = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
 
 		float euler[] = ConvertRotation3D_F32.matrixToEuler(expected,type,(float[])null);
 
-		DenseMatrix64F found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
+		FMatrixRMaj found = ConvertRotation3D_F32.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
-		DenseMatrix64F difference = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(expected,found,difference);
-		assertTrue(MatrixFeatures.isIdentity(difference,Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
+		FMatrixRMaj difference = new FMatrixRMaj(3,3);
+		CommonOps_FDRM.multTransB(expected,found,difference);
+		assertTrue(MatrixFeatures_FDRM.isIdentity(difference, GrlConstants.TEST_SQ_F32));
 	}
 
 	/**
@@ -342,11 +342,11 @@ public class TestConvertRotation3D_F32 {
 	 */
 	@Test
 	public void approximateRotationMatrix_random() {
-		DenseMatrix64F Q = RandomMatrices.createRandom( 3, 3, rand );
+		FMatrixRMaj Q = RandomMatrices_FDRM.rectangle( 3, 3, rand );
 
-		DenseMatrix64F R = ConvertRotation3D_F32.approximateRotationMatrix( Q, null );
+		FMatrixRMaj R = ConvertRotation3D_F32.approximateRotationMatrix( Q, null );
 
-		assertTrue( MatrixFeatures.isOrthogonal( R, GrlConstants.FLOAT_TEST_TOL ) );
+		assertTrue( MatrixFeatures_FDRM.isOrthogonal( R, GrlConstants.TEST_F32) );
 	}
 
 	/**
@@ -354,11 +354,14 @@ public class TestConvertRotation3D_F32 {
 	 */
 	@Test
 	public void approximateRotationMatrix_nochange() {
-		DenseMatrix64F Q = RandomMatrices.createOrthogonal( 3, 3, rand );
+		FMatrixRMaj Q = RandomMatrices_FDRM.orthogonal( 3, 3, rand );
 
-		DenseMatrix64F R = ConvertRotation3D_F32.approximateRotationMatrix( Q, null );
+		if( CommonOps_FDRM.det(Q) < 0 )
+			CommonOps_FDRM.changeSign(Q);
 
-		assertTrue( MatrixFeatures.isIdentical( Q, R, GrlConstants.FLOAT_TEST_TOL ) );
+		FMatrixRMaj R = ConvertRotation3D_F32.approximateRotationMatrix( Q, null );
+
+		assertTrue( MatrixFeatures_FDRM.isIdentical( Q, R, GrlConstants.TEST_F32) );
 	}
 
 	@Test
@@ -368,11 +371,11 @@ public class TestConvertRotation3D_F32 {
 
 	public static void eulerToMatrix(EulerType type , float rotA , float rotB , float rotC ) {
 
-		DenseMatrix64F matA = rotateAxis(type.getAxisA(),rotA);
-		DenseMatrix64F matB = rotateAxis(type.getAxisB(),rotB);
-		DenseMatrix64F matC = rotateAxis(type.getAxisC(),rotC);
+		FMatrixRMaj matA = rotateAxis(type.getAxisA(),rotA);
+		FMatrixRMaj matB = rotateAxis(type.getAxisB(),rotB);
+		FMatrixRMaj matC = rotateAxis(type.getAxisC(),rotC);
 
-		DenseMatrix64F matEuler = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
+		FMatrixRMaj matEuler = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
 
 		Point3D_F32 a = new Point3D_F32(1,2,3);
 
@@ -386,10 +389,10 @@ public class TestConvertRotation3D_F32 {
 
 		GeometryMath_F32.mult(matEuler,a,found);
 
-		assertTrue(expected.distance(found) < GrlConstants.FLOAT_TEST_TOL);
+		assertTrue(expected.distance(found) < GrlConstants.TEST_F32);
 	}
 
-	private static DenseMatrix64F rotateAxis( int which , float angle ) {
+	private static FMatrixRMaj rotateAxis( int which , float angle ) {
 		if( which == 0 )
 			return ConvertRotation3D_F32.rotX(angle,null);
 		else if( which == 1 )
@@ -404,16 +407,16 @@ public class TestConvertRotation3D_F32 {
 	}
 
 	public static void eulerToQuaternion(EulerType type , float rotA , float rotB , float rotC ) {
-		DenseMatrix64F expected = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
+		FMatrixRMaj expected = ConvertRotation3D_F32.eulerToMatrix(type,rotA,rotB,rotC,null);
 
 		Quaternion_F32 q = new Quaternion_F32();
 		ConvertRotation3D_F32.eulerToQuaternion(type,rotA,rotB,rotC,q);
 
-		DenseMatrix64F found = ConvertRotation3D_F32.quaternionToMatrix(q,null);
+		FMatrixRMaj found = ConvertRotation3D_F32.quaternionToMatrix(q,null);
 
-		DenseMatrix64F result = new DenseMatrix64F(3,3);
-		CommonOps.multTransB(expected,found,result);
-		assertTrue(MatrixFeatures.isIdentity(result, (float)Math.sqrt(GrlConstants.FLOAT_TEST_TOL)));
+		FMatrixRMaj result = new FMatrixRMaj(3,3);
+		CommonOps_FDRM.multTransB(expected,found,result);
+		assertTrue(MatrixFeatures_FDRM.isIdentity(result, (float)Math.sqrt(GrlConstants.TEST_F32)));
 	}
 
 	/**
@@ -428,11 +431,11 @@ public class TestConvertRotation3D_F32 {
 		// rotate around z-axis 90 degrees
 		Quaternion_F32 q = ConvertRotation3D_F32.rodriguesToQuaternion( new Rodrigues_F32( (float)Math.PI / 2.0f, 0, 0, 1 ), null );
 
-		DenseMatrix64F R = ConvertRotation3D_F32.quaternionToMatrix( q, null );
+		FMatrixRMaj R = ConvertRotation3D_F32.quaternionToMatrix( q, null );
 
 		Point3D_F32 p = new Point3D_F32( 1, 0, 0 );
 		GeometryMath_F32.mult( R, p, p );
-		GeometryUnitTest.assertEquals( p, 0, 1, 0, GrlConstants.FLOAT_TEST_TOL );
+		GeometryUnitTest.assertEquals( p, 0, 1, 0, GrlConstants.TEST_F32);
 
 
 		// rotate around y-axis 90 degrees
@@ -443,7 +446,7 @@ public class TestConvertRotation3D_F32 {
 
 		p.set( 1, 0, 0 );
 		GeometryMath_F32.mult( R, p, p );
-		GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.FLOAT_TEST_TOL );
+		GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.TEST_F32);
 
 		for (int i = 0; i < 30; i++) {
 			Rodrigues_F32 rod = new Rodrigues_F32();
@@ -453,12 +456,12 @@ public class TestConvertRotation3D_F32 {
 
 			q = ConvertRotation3D_F32.rodriguesToQuaternion( rod, null );
 			q.normalize();
-			DenseMatrix64F expected = ConvertRotation3D_F32.rodriguesToMatrix( rod, null );
-			DenseMatrix64F found = ConvertRotation3D_F32.quaternionToMatrix( q, null );
+			FMatrixRMaj expected = ConvertRotation3D_F32.rodriguesToMatrix( rod, null );
+			FMatrixRMaj found = ConvertRotation3D_F32.quaternionToMatrix( q, null );
 
-			DenseMatrix64F difference = new DenseMatrix64F(3,3);
-			CommonOps.multTransB(expected,found,difference);
-			assertTrue(MatrixFeatures.isIdentity(difference,GrlConstants.FLOAT_TEST_TOL));
+			FMatrixRMaj difference = new FMatrixRMaj(3,3);
+			CommonOps_FDRM.multTransB(expected,found,difference);
+			assertTrue(MatrixFeatures_FDRM.isIdentity(difference,GrlConstants.TEST_F32));
 		}
 	}
 

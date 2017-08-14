@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -61,7 +61,7 @@ public class TestClosestPointEllipseAngle_F32 {
 	public void checkSolution( float x0 , float y0, float a, float b, float phi , float x , float y ) {
 		EllipseRotated_F32 ellipse = new EllipseRotated_F32(x0,y0,a,b,phi);
 
-		ClosestPointEllipseAngle_F32 alg = new ClosestPointEllipseAngle_F32(GrlConstants.FLOAT_TEST_TOL,200);
+		ClosestPointEllipseAngle_F32 alg = new ClosestPointEllipseAngle_F32(GrlConstants.TEST_F32,200);
 
 		Point2D_F32 p = new Point2D_F32(x,y);
 		alg.setEllipse(ellipse);
@@ -70,7 +70,7 @@ public class TestClosestPointEllipseAngle_F32 {
 		Point2D_F32 found = alg.getClosest();
 
 		// is it on the ellipse?
-		assertEquals(1, UtilEllipse_F32.evaluate(found.x,found.y,ellipse),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1, UtilEllipse_F32.evaluate(found.x,found.y,ellipse),GrlConstants.TEST_F32);
 
 		// skip local test for center
 		if( x0 == x && y0 == y )

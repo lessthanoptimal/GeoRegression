@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -152,7 +152,7 @@ public class MotionSe3PointCrossCovariance_F32 implements MotionTransformPoint<S
 	 * parameterized as a quaternion.
 	 */
 	private void extractQuaternionFromQ( SimpleMatrix q ) {
-		SimpleEVD evd = q.eig();
+		SimpleEVD<SimpleMatrix> evd = q.eig();
 		int indexMax = evd.getIndexMax();
 
 		SimpleMatrix v_max = evd.getEigenVector( indexMax );

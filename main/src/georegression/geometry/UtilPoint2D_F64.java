@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -249,7 +249,7 @@ public class UtilPoint2D_F64 {
 		int order[] = new int[ points.size() ];
 
 		QuickSort_F64 sorter = new QuickSort_F64();
-		sorter.sort(angles,points.size(),order);
+		sorter.sort(angles,0,points.size(),order);
 
 		List<Point2D_F64> out = new ArrayList<Point2D_F64>(points.size());
 		for (int i = 0; i < points.size(); i++) {

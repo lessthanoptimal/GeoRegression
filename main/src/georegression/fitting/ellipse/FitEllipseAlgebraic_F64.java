@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,12 +20,12 @@ package georegression.fitting.ellipse;
 
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.EllipseQuadratic_F64;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory;
-import org.ejml.factory.LinearSolverFactory;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
+import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
 import org.ejml.interfaces.linsol.LinearSolver;
-import org.ejml.ops.CommonOps;
 
 import java.util.List;
 
@@ -50,44 +50,33 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class FitEllipseWeightedAlgebraic {
+public class FitEllipseAlgebraic_F64 {
 
 	// qudratic part of design matrix
-	private DenseMatrix64F D1 = new DenseMatrix64F(3,1);
+	private DMatrixRMaj D1 = new DMatrixRMaj(3,1);
 	// linear part of design matrix
-	private DenseMatrix64F D2 = new DenseMatrix64F(3,1);
+	private DMatrixRMaj D2 = new DMatrixRMaj(3,1);
 
 	// quadratic part of scatter matrix
-	private DenseMatrix64F S1 = new DenseMatrix64F(3,3);
+	private DMatrixRMaj S1 = new DMatrixRMaj(3,3);
 	// combined part of scatter matrix
-	private DenseMatrix64F S2 = new DenseMatrix64F(3,3);
+	private DMatrixRMaj S2 = new DMatrixRMaj(3,3);
 	//linear part of scatter matrix
-	private DenseMatrix64F S3 = new DenseMatrix64F(3,3);
+	private DMatrixRMaj S3 = new DMatrixRMaj(3,3);
 	// Reduced scatter matrix
-	private DenseMatrix64F M = new DenseMatrix64F(3,3);
+	private DMatrixRMaj M = new DMatrixRMaj(3,3);
 
 	// storage for intermediate steps
-	private DenseMatrix64F T = new DenseMatrix64F(3,3);
-	private DenseMatrix64F Ta1 = new DenseMatrix64F(3,1);
-	private DenseMatrix64F S2_tran = new DenseMatrix64F(3,3);
+	private DMatrixRMaj T = new DMatrixRMaj(3,3);
+	private DMatrixRMaj Ta1 = new DMatrixRMaj(3,1);
+	private DMatrixRMaj S2_tran = new DMatrixRMaj(3,3);
 
-	private LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.linear(3);
-	private EigenDecomposition<DenseMatrix64F> eigen = DecompositionFactory.eig(3,true,false);
+	private LinearSolver<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(3);
+	private EigenDecomposition<DMatrixRMaj> eigen = DecompositionFactory_DDRM.eig(3,true,false);
 
 	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
 
-	/**
-	 * Fits the ellipse to the line
-	 *
-	 * @param points Set of points that are to be fit
-	 * @param weights Weight or importance of each point.  Each weight must be a positive number
-	 * @return true if successful or false if it failed
-	 */
-	public boolean process( List<Point2D_F64> points , double weights[] ) {
-		if( points.size() > weights.length ) {
-			throw new IllegalArgumentException("Weights must be as long as the number of points. "+
-					points.size()+" vs "+weights.length);
-		}
+	public boolean process( List<Point2D_F64> points ) {
 		int N = points.size();
 
 		// Construct the design matrices.  linear and quadratic
@@ -95,35 +84,34 @@ public class FitEllipseWeightedAlgebraic {
 		int index = 0;
 		for( int i = 0; i < N; i++ ) {
 			Point2D_F64 p = points.get(i);
-			double w = weights[i];
 
 			// fill in each row one at a time
-			D1.data[index]   = w*p.x*p.x;
-			D2.data[index++] = w*p.x;
-			D1.data[index]   = w*p.x*p.y;
-			D2.data[index++] = w*p.y;
-			D1.data[index]   = w*p.y*p.y;
-			D2.data[index++] = w;
+			D1.data[index]   = p.x*p.x;
+			D2.data[index++] = p.x;
+			D1.data[index]   = p.x*p.y;
+			D2.data[index++] = p.y;
+			D1.data[index]   = p.y*p.y;
+			D2.data[index++] = 1;
 		}
 
 		// Compute scatter matrix
-		CommonOps.multTransA(D1, D1, S1); // S1 = D1'*D1
-		CommonOps.multTransA(D1, D2, S2); // S2 = D1'*D2
-		CommonOps.multTransA(D2, D2, S3); // S3 = D2'*D2
+		CommonOps_DDRM.multTransA(D1, D1, S1); // S1 = D1'*D1
+		CommonOps_DDRM.multTransA(D1, D2, S2); // S2 = D1'*D2
+		CommonOps_DDRM.multTransA(D2, D2, S3); // S3 = D2'*D2
 
 		// for getting a2 from a1
 		// T = -inv(S3)*S2'
 		if( !solver.setA(S3) )
 			return false;
 
-		CommonOps.transpose(S2,S2_tran);
-		CommonOps.changeSign(S2_tran);
+		CommonOps_DDRM.transpose(S2,S2_tran);
+		CommonOps_DDRM.changeSign(S2_tran);
 		solver.solve(S2_tran, T);
 
 		// Compute reduced scatter matrix
 		// M = S1 + S2*T
-		CommonOps.mult(S2, T, M);
-		CommonOps.add(M,S1,M);
+		CommonOps_DDRM.mult(S2, T, M);
+		CommonOps_DDRM.add(M,S1,M);
 
 		// Premultiply by inv(C1). inverse of constraint matrix
 		for( int col = 0; col < 3; col++ ) {
@@ -139,12 +127,12 @@ public class FitEllipseWeightedAlgebraic {
 		if( !eigen.decompose(M) )
 			return false;
 
-		DenseMatrix64F a1 = selectBestEigenVector();
+		DMatrixRMaj a1 = selectBestEigenVector();
 		if( a1 == null )
 			return false;
 
 		// ellipse coefficients
-		CommonOps.mult(T,a1,Ta1);
+		CommonOps_DDRM.mult(T,a1,Ta1);
 
 		ellipse.a = a1.data[0];
 		ellipse.b = a1.data[1]/2;
@@ -156,13 +144,13 @@ public class FitEllipseWeightedAlgebraic {
 		return true;
 	}
 
-	private DenseMatrix64F selectBestEigenVector() {
+	private DMatrixRMaj selectBestEigenVector() {
 
 		int bestIndex = -1;
 		double bestCond = Double.MAX_VALUE;
 
 		for( int i = 0; i < eigen.getNumberOfEigenvalues(); i++ ) {
-			DenseMatrix64F v = eigen.getEigenVector(i);
+			DMatrixRMaj v = eigen.getEigenVector(i);
 
 			if( v == null ) // TODO WTF?!?!
 				continue;

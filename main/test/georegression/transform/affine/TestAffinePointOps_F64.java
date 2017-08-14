@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,8 +41,8 @@ public class TestAffinePointOps_F64 {
 
 		Vector2D_F64 found = AffinePointOps_F64.transform(transform,input,(Vector2D_F64)null);
 
-		assertEquals(expectedX,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expectedY,found.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expectedX,found.x, GrlConstants.TEST_F64);
+		assertEquals(expectedY,found.y, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -55,8 +55,8 @@ public class TestAffinePointOps_F64 {
 
 		Point2D_F64 found = AffinePointOps_F64.transform(transform,input,(Point2D_F64)null);
 
-		assertEquals(expectedX,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expectedY, found.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expectedX,found.x, GrlConstants.TEST_F64);
+		assertEquals(expectedY, found.y, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -70,7 +70,7 @@ public class TestAffinePointOps_F64 {
 
 		Point2D_F64 found = AffinePointOps_F64.transform(transform,x,y,(Point2D_F64)null);
 
-		assertEquals(expectedX,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expectedY, found.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expectedX,found.x, GrlConstants.TEST_F64);
+		assertEquals(expectedY, found.y, GrlConstants.TEST_F64);
 	}
 }

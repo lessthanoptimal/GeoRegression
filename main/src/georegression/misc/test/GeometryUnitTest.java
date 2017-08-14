@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,7 +27,8 @@ import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
-import org.ejml.ops.MatrixFeatures;
+import org.ejml.dense.row.MatrixFeatures_DDRM;
+import org.ejml.dense.row.MatrixFeatures_FDRM;
 
 
 /**
@@ -38,13 +39,13 @@ public class GeometryUnitTest {
 	public static void assertEquals( Se3_F64 expected, Se3_F64 found, double tolTran, double tolRotation ) {
 		assertEquals( expected.getTranslation(), found.getTranslation(), tolTran );
 
-		assertTrue(MatrixFeatures.isIdentical(expected.R, found.R, tolRotation), "rotation");
+		assertTrue(MatrixFeatures_DDRM.isIdentical(expected.R, found.R, tolRotation), "rotation");
 	}
 
-	public static void assertEquals( Se3_F32 expected, Se3_F32 found, double tolTran, double tolRotation ) {
+	public static void assertEquals( Se3_F32 expected, Se3_F32 found, float tolTran, float tolRotation ) {
 		assertEquals( expected.getTranslation(), found.getTranslation(), tolTran );
 
-		assertTrue(MatrixFeatures.isIdentical(expected.R,found.R,tolRotation),"rotation");
+		assertTrue(MatrixFeatures_FDRM.isIdentical(expected.R,found.R,tolRotation),"rotation");
 	}
 
 	public static void assertEquals( Se2_F64 expected, Se2_F64 found, double tolTran, double tolyaw ) {
@@ -52,7 +53,7 @@ public class GeometryUnitTest {
 		assertEquals( expected.getYaw(), found.getYaw(), tolyaw, "yaw" );
 	}
 
-	public static void assertEquals( Se2_F32 expected, Se2_F32 found, double tolTran, double tolyaw ) {
+	public static void assertEquals( Se2_F32 expected, Se2_F32 found, float tolTran, float tolyaw ) {
 		assertEquals( expected.getTranslation(), found.getTranslation(), tolTran );
 		assertEquals( expected.getYaw(), found.getYaw(), tolyaw, "yaw" );
 	}
@@ -90,7 +91,7 @@ public class GeometryUnitTest {
 		assertEquals( expected.getY(), found.getY(), tol, "y-axis is not equals." );
 	}
 
-	public static void assertEquals( GeoTuple2D_F32 expected, GeoTuple2D_F32 found, double tol ) {
+	public static void assertEquals( GeoTuple2D_F32 expected, GeoTuple2D_F32 found, float tol ) {
 		assertEquals( expected.getX(), found.getX(), tol, "x-axis is not equals." );
 		assertEquals( expected.getY(), found.getY(), tol, "y-axis is not equals." );
 	}
@@ -132,13 +133,7 @@ public class GeometryUnitTest {
 		assertEquals( a.getZ(), z, tol, "z-axis is not equals." );
 	}
 
-	public static void assertEquals( GeoTuple3D_F32 expected, GeoTuple3D_F32 found, double tol ) {
-		assertEquals( expected.getX(), found.getX(), tol, "x-axis is equal." );
-		assertEquals( expected.getY(), found.getY(), tol, "y-axis is equal." );
-		assertEquals( expected.getZ(), found.getZ(), tol, "z-axis is equal." );
-	}
-
-	public static void assertNotEquals( GeoTuple3D_F32 expected, GeoTuple3D_F32 found, double tol ) {
+	public static void assertNotEquals( GeoTuple3D_F32 expected, GeoTuple3D_F32 found, float tol ) {
 		if( Math.abs(expected.getX() - found.getX()) <= tol &&
 				Math.abs(expected.getY() - found.getY()) <= tol &&
 				Math.abs(expected.getZ() - found.getZ()) <= tol ) {

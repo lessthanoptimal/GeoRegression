@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,10 +23,10 @@ import georegression.geometry.GeometryMath_F32;
 import georegression.geometry.UtilPoint2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.se.Se2_F32;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.DecompositionFactory;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_FDRM;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
-import org.ejml.ops.CommonOps;
 
 import java.util.List;
 
@@ -55,11 +55,11 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 	Point2D_F32 meanFrom = new Point2D_F32();
 	Point2D_F32 meanTo = new Point2D_F32();
 
-	SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(2,2,true,true,false);
-	DenseMatrix64F Sigma = new DenseMatrix64F(2,2);
-	DenseMatrix64F U = new DenseMatrix64F(2,2);
-	DenseMatrix64F V = new DenseMatrix64F(2,2);
-	DenseMatrix64F R = new DenseMatrix64F(2,2);
+	SingularValueDecomposition<FMatrixRMaj> svd = DecompositionFactory_FDRM.svd(2,2,true,true,false);
+	FMatrixRMaj Sigma = new FMatrixRMaj(2,2);
+	FMatrixRMaj U = new FMatrixRMaj(2,2);
+	FMatrixRMaj V = new FMatrixRMaj(2,2);
+	FMatrixRMaj R = new FMatrixRMaj(2,2);
 
 	@Override
 	public Se2_F32 getTransformSrcToDst() {
@@ -113,16 +113,16 @@ public class MotionSe2PointSVD_F32 implements MotionTransformPoint<Se2_F32, Poin
 		svd.getU(U,false);
 		svd.getV(V, false);
 
-		CommonOps.multTransB(V,U,R);
+		CommonOps_FDRM.multTransB(V,U,R);
 
 		// There are situations where R might not have a determinant of one and is instead
 		// a reflection is returned
-		/**/double det = CommonOps.det(R);
+		float det = CommonOps_FDRM.det(R);
 		if( det < 0 ) {
 			for( int i = 0; i < 2; i++ )
 				V.set( i, 1, -V.get( i, 1 ) );
-			CommonOps.multTransB(V,U,R);
-			det = CommonOps.det(R);
+			CommonOps_FDRM.multTransB(V,U,R);
+			det = CommonOps_FDRM.det(R);
 			if( det < 0 ) {
 				throw new RuntimeException( "Crap" );
 			}

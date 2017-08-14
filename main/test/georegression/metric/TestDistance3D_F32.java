@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,25 +46,25 @@ public class TestDistance3D_F32 {
 		LineParametric3D_F32 l0 = new LineParametric3D_F32(0,0,0,1,0,0);
 		LineParametric3D_F32 l1 = new LineParametric3D_F32(0,0,0,0,1,0);
 
-		assertEquals(0,Distance3D_F32.distance( l0,l1 ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(0,Distance3D_F32.distance( l0,l1 ), GrlConstants.TEST_F32);
 
 		// test the lines separated over the z-axis
 		l0 = new LineParametric3D_F32(0,0,0,1,0,0);
 		l1 = new LineParametric3D_F32(0,0,2,0,1,0);
 
-		assertEquals(2,Distance3D_F32.distance( l0,l1 ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(2,Distance3D_F32.distance( l0,l1 ), GrlConstants.TEST_F32);
 
 		// test parallel but no closest point
 		l0 = new LineParametric3D_F32(0,0,0,1,0,0);
 		l1 = new LineParametric3D_F32(0,0,2,1,0,0);
 
-		assertEquals(2,Distance3D_F32.distance( l0,l1 ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(2,Distance3D_F32.distance( l0,l1 ), GrlConstants.TEST_F32);
 
 		// test identical lines
 		l0 = new LineParametric3D_F32(0,0,0,1,0,0);
 		l1 = new LineParametric3D_F32(0,0,0,1,0,0);
 
-		assertEquals(0,Distance3D_F32.distance( l0,l1 ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(0,Distance3D_F32.distance( l0,l1 ), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -73,11 +73,11 @@ public class TestDistance3D_F32 {
 		LineParametric3D_F32 l = new LineParametric3D_F32(1,2,3,0,1,0);
 		Point3D_F32 p = new Point3D_F32( 3 , 2 , 3);
 
-		assertEquals(2,Distance3D_F32.distance( l,p ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(2,Distance3D_F32.distance( l,p ), GrlConstants.TEST_F32);
 
 		// a point on the line
 		l.getSlope().set( 1 , 0 , 0 );
-		assertEquals(0,Distance3D_F32.distance( l,p ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(0,Distance3D_F32.distance( l,p ), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -86,22 +86,22 @@ public class TestDistance3D_F32 {
 		LineSegment3D_F32 l = new LineSegment3D_F32(1,2,3,1,3,3);
 		Point3D_F32 p = new Point3D_F32( 3 , 2 , 3);
 
-		assertEquals(2,Distance3D_F32.distance( l,p ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(2,Distance3D_F32.distance( l,p ), GrlConstants.TEST_F32);
 
 		// a point on the line
 		p.set(1,2.5f,3);
-		assertEquals(0,Distance3D_F32.distance( l,p ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals(0,Distance3D_F32.distance( l,p ), GrlConstants.TEST_F32);
 
 		// point past l.a
 		p.set(3,-1,3);
-		assertEquals( p.distance(l.a) , Distance3D_F32.distance( l,p ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( p.distance(l.a) , Distance3D_F32.distance( l,p ), GrlConstants.TEST_F32);
 		// point past l.b
 		p.set(3,5,3);
-		assertEquals( p.distance(l.b) , Distance3D_F32.distance( l,p ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( p.distance(l.b) , Distance3D_F32.distance( l,p ), GrlConstants.TEST_F32);
 
 		// this was a bug
 		l = new LineSegment3D_F32(0,0,0,0,2,0);
-		assertEquals( 0 , Distance3D_F32.distance( l,new Point3D_F32(0,1.5f,0) ), GrlConstants.FLOAT_TEST_TOL );
+		assertEquals( 0 , Distance3D_F32.distance( l,new Point3D_F32(0,1.5f,0) ), GrlConstants.TEST_F32);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class TestDistance3D_F32 {
 						0.8728715609439697f , 0.4364357804719848f , -0.21821789023599247f );
 		Point3D_F32 p = new Point3D_F32( 1.0f ,-0.5f ,3.0f );
 
-		assertEquals(0,Distance3D_F32.distance(line,p), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,Distance3D_F32.distance(line,p), GrlConstants.TEST_F32);
 	}
 
 
@@ -127,21 +127,21 @@ public class TestDistance3D_F32 {
 		// distance from origin
 		float expected = (float)Math.sqrt(3*3 + 4*4 + 5*5);
 		float found = Distance3D_F32.distance(g,new Point3D_F32(0,0,0));
-		assertEquals(-expected,found, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-expected,found, GrlConstants.TEST_F32);
 
 		// on the plane
 		found = Distance3D_F32.distance(g,new Point3D_F32(3,4,-5));
-		assertEquals(0,found, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,found, GrlConstants.TEST_F32);
 
 		// move it away from the plane
 		Vector3D_F32 v = n.n;
 		v.normalize();
 		found = Distance3D_F32.distance(g,new Point3D_F32(v.x,v.y,v.z));
-		assertEquals(-(expected-1),found, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-(expected-1),found, GrlConstants.TEST_F32);
 
 		// make it to the other side and see if the sign changes
 		found = Distance3D_F32.distance(g,new Point3D_F32(v.x+3,v.y+4,v.z-5));
-		assertEquals(1,found, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(1,found, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -157,8 +157,8 @@ public class TestDistance3D_F32 {
 		assertTrue(ro>4.5f);
 		assertTrue(ri<4.5f);
 
-		assertEquals(ro-4.5f,Distance3D_F32.distance(sphere,outside), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(ri-4.5f,Distance3D_F32.distance(sphere,inside), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(ro-4.5f,Distance3D_F32.distance(sphere,outside), GrlConstants.TEST_F32);
+		assertEquals(ri-4.5f,Distance3D_F32.distance(sphere,inside), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -174,8 +174,8 @@ public class TestDistance3D_F32 {
 		assertTrue(ro>3.5f);
 		assertTrue(ri<3.5f);
 
-		assertEquals(ro-3.5f,Distance3D_F32.distance(cylinder,outside), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(ri-3.5f,Distance3D_F32.distance(cylinder,inside), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(ro-3.5f,Distance3D_F32.distance(cylinder,outside), GrlConstants.TEST_F32);
+		assertEquals(ri-3.5f,Distance3D_F32.distance(cylinder,inside), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -184,10 +184,10 @@ public class TestDistance3D_F32 {
 
 		float found = Distance3D_F32.distance(triangle,new Point3D_F32(0.2f,0.5f,2));
 
-		assertEquals(2,found,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(2,found,GrlConstants.TEST_F32);
 
 		found = Distance3D_F32.distance(triangle,new Point3D_F32(0.2f,0.5f,-2));
 
-		assertEquals(-2,found,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(-2,found,GrlConstants.TEST_F32);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,7 +35,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestFitEllipseWeightedAlgebraic {
+public class TestFitEllipseWeightedAlgebraic_F64 {
 
 	Random rand = new Random(234);
 
@@ -45,8 +45,8 @@ public class TestFitEllipseWeightedAlgebraic {
 	}
 
 	/**
-	 * Give it points which perfectly describe an ellipse.   This isn't actually an easy case.  See comments
-	 * in random section.
+	 * Give it points which are nearly perfectly describe an ellipse.
+	 * Perfect points is actually a hard case.  See comments in random section.
 	 */
 	@Test
 	public void checkEllipse() {
@@ -62,7 +62,13 @@ public class TestFitEllipseWeightedAlgebraic {
 		double weights[] = new double[21];
 		for( int i = 0; i < 20; i++ ) {
 			double theta = 2.0*(double)Math.PI*i/20;
-			points.add(UtilEllipse_F64.computePoint(theta, rotated, null));
+			Point2D_F64 p = UtilEllipse_F64.computePoint(theta, rotated, null);
+
+			// give it just a little bit of noise so that it will converge
+			p.x += rand.nextGaussian()*GrlConstants.TEST_F64;
+			p.y += rand.nextGaussian()*GrlConstants.TEST_F64;
+
+			points.add(p);
 			weights[i] = 0.3;
 //			System.out.println(points.get(i).x+" "+points.get(i).y);
 		}
@@ -73,7 +79,7 @@ public class TestFitEllipseWeightedAlgebraic {
 
 		EllipseQuadratic_F64 expected = UtilEllipse_F64.convert(rotated,null);
 
-		FitEllipseWeightedAlgebraic alg = new FitEllipseWeightedAlgebraic();
+		FitEllipseWeightedAlgebraic_F64 alg = new FitEllipseWeightedAlgebraic_F64();
 		assertTrue(alg.process(points,weights));
 
 		EllipseQuadratic_F64 found = alg.getEllipse();
@@ -81,12 +87,12 @@ public class TestFitEllipseWeightedAlgebraic {
 		normalize(expected);
 		normalize(found);
 
-		assertEquals(expected.a,found.a, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.b,found.b, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.c,found.c, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.d,found.d, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.e,found.e, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(expected.f,found.f, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected.a,found.a, GrlConstants.TEST_F64);
+		assertEquals(expected.b,found.b, GrlConstants.TEST_F64);
+		assertEquals(expected.c,found.c, GrlConstants.TEST_F64);
+		assertEquals(expected.d,found.d, GrlConstants.TEST_F64);
+		assertEquals(expected.e,found.e, GrlConstants.TEST_F64);
+		assertEquals(expected.f,found.f, GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -119,7 +125,7 @@ public class TestFitEllipseWeightedAlgebraic {
 
 			EllipseQuadratic_F64 expected = UtilEllipse_F64.convert(rotated,null);
 
-			FitEllipseWeightedAlgebraic alg = new FitEllipseWeightedAlgebraic();
+			FitEllipseWeightedAlgebraic_F64 alg = new FitEllipseWeightedAlgebraic_F64();
 			assertTrue(alg.process(points,weights));
 
 			EllipseQuadratic_F64 found = alg.getEllipse();

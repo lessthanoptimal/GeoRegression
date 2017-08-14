@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,7 +41,7 @@ public class TestUtilPoint3D_F64 {
 	@Test
 	public void distanceSq() {
 		double found = UtilPoint3D_F64.distanceSq(1, 2, 3, 4, -3, -4);
-		assertEquals(83, found, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(83, found, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class TestUtilPoint3D_F64 {
 		Box3D_F64 cube = new Box3D_F64();
 		UtilPoint3D_F64.boundingBox(list, cube);
 
-		assertEquals(0,cube.getP0().distance(list.get(0)),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,cube.getP0().distance(list.get(0)),GrlConstants.TEST_F64);
 		assertEquals(0,cube.getP1().distance(new Point3D_F64(2,3,5)),1e-8);
 	}
 }

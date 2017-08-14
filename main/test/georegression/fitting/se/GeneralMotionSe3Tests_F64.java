@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -28,7 +28,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.transform.se.SePointOps_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public abstract class GeneralMotionSe3Tests_F64 {
 	@Test
 	public void noiseless() {
 		for( int i = 0; i < 100; i++ ) {
-			DenseMatrix64F R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rand.nextGaussian(),
+			DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian(), null);
 			Vector3D_F64 T = new Vector3D_F64( rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian() );
@@ -67,14 +67,14 @@ public abstract class GeneralMotionSe3Tests_F64 {
 
 			Se3_F64 foundSrcToDst = alg.getTransformSrcToDst();
 
-			checkTransform( src, dst, foundSrcToDst, GrlConstants.DOUBLE_TEST_TOL );
+			checkTransform( src, dst, foundSrcToDst, GrlConstants.TEST_F64);
 		}
 	}
 
 	@Test
 	public void noiselessPlanar() {
 		for( int i = 0; i < 100; i++ ) {
-			DenseMatrix64F R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rand.nextGaussian(),
+			DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian(), null );
 			Vector3D_F64 T = new Vector3D_F64( rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian() );
@@ -96,7 +96,7 @@ public abstract class GeneralMotionSe3Tests_F64 {
 //			R.print();
 //			tranFound.getR().print();
 			
-			checkTransform( from, to, tranFound, GrlConstants.DOUBLE_TEST_TOL );
+			checkTransform( from, to, tranFound, GrlConstants.TEST_F64);
 		}
 	}
 

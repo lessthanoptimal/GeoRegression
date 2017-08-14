@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,8 +18,9 @@
 
 package georegression.fitting.ellipse;
 
-import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
+import georegression.misc.GrlConstants;
+import georegression.struct.point.Point2D_F32;
+import georegression.struct.shapes.EllipseRotated_F32;
 import org.ddogleg.optimization.FactoryOptimization;
 import org.ddogleg.optimization.UnconstrainedLeastSquares;
 import org.ddogleg.optimization.functions.FunctionNtoM;
@@ -43,45 +44,45 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class RefineEllipseEuclideanLeastSquares {
+public class RefineEllipseEuclideanLeastSquares_F32 {
 
 	// optimization routine
 	protected UnconstrainedLeastSquares optimizer;
 	// convergence parameters
-	double ftol=1e-12,gtol=1e-12;
+	float ftol= GrlConstants.FCONV_TOL_B,gtol=GrlConstants.FCONV_TOL_B;
 	int maxIterations=500;
 
 	// used to find initial theta
-	ClosestPointEllipseAngle_F64 closestPoint = new ClosestPointEllipseAngle_F64(1e-12,100);
+	ClosestPointEllipseAngle_F32 closestPoint = new ClosestPointEllipseAngle_F32(GrlConstants.FCONV_TOL_B,100);
 
 	// passed in observations
-	List<Point2D_F64> points;
+	List<Point2D_F32> points;
 
 	// storage for optimized parameters
-	EllipseRotated_F64 found = new EllipseRotated_F64();
+	EllipseRotated_F32 found = new EllipseRotated_F32();
 
 	// initial set of parameters
-	double initialParam[] = new double[0];
+	/**/double initialParam[] = new /**/double[0];
 
 	// error using the initial parameters
-	double initialError;
+	/**/double initialError;
 
-	public RefineEllipseEuclideanLeastSquares( UnconstrainedLeastSquares optimizer ) {
+	public RefineEllipseEuclideanLeastSquares_F32(UnconstrainedLeastSquares optimizer ) {
 		this.optimizer = optimizer;
 	}
 
 	/**
 	 * Defaults to a robust solver since this problem often encounters singularities.
 	 */
-	public RefineEllipseEuclideanLeastSquares() {
+	public RefineEllipseEuclideanLeastSquares_F32() {
 		this(FactoryOptimization.leastSquaresLM(1e-3, true));
 	}
 
-	public void setFtol(double ftol) {
+	public void setFtol(float ftol) {
 		this.ftol = ftol;
 	}
 
-	public void setGtol(double gtol) {
+	public void setGtol(float gtol) {
 		this.gtol = gtol;
 	}
 
@@ -93,13 +94,13 @@ public class RefineEllipseEuclideanLeastSquares {
 		return optimizer;
 	}
 
-	public boolean refine( EllipseRotated_F64 initial , List<Point2D_F64> points ) {
+	public boolean refine( EllipseRotated_F32 initial , List<Point2D_F32> points ) {
 		this.points = points;
 
 		// create initial parameters
 		int numParam = 5 + points.size();
 		if( numParam > initialParam.length ) {
-			initialParam = new double[ numParam ];
+			initialParam = new /**/double[ numParam ];
 		}
 		initialParam[0] = initial.center.x;
 		initialParam[1] = initial.center.y;
@@ -124,22 +125,22 @@ public class RefineEllipseEuclideanLeastSquares {
 		}
 
 		// decode found results
-		double[] foundParam = optimizer.getParameters();
-		found.center.x = foundParam[0];
-		found.center.y = foundParam[1];
-		found.a = foundParam[2];
-		found.b = foundParam[3];
-		found.phi = foundParam[4];
+		/**/double[] foundParam = optimizer.getParameters();
+		found.center.x = (float)foundParam[0];
+		found.center.y = (float)foundParam[1];
+		found.a = (float)foundParam[2];
+		found.b = (float)foundParam[3];
+		found.phi = (float)foundParam[4];
 
 		return true;
 	}
 
-	public EllipseRotated_F64 getFound() {
+	public EllipseRotated_F32 getFound() {
 		return found;
 	}
 
-	public double getFitError() {
-		return optimizer.getFunctionValue();
+	public float getFitError() {
+		return (float)optimizer.getFunctionValue();
 	}
 
 	protected Error createError() {
@@ -166,26 +167,26 @@ public class RefineEllipseEuclideanLeastSquares {
 		}
 
 		@Override
-		public void process(double[] input, double[] output) {
-			double x0  = input[0];
-			double y0  = input[1];
-			double a   = input[2];
-			double b   = input[3];
-			double phi = input[4];
+		public void process( /**/double[] input, /**/double[] output) {
+			/**/double x0  = input[0];
+			/**/double y0  = input[1];
+			/**/double a   = input[2];
+			/**/double b   = input[3];
+			/**/double phi = input[4];
 
-			double c = Math.cos(phi);
-			double s = Math.sin(phi);
+			/**/double c = /**/Math.cos(phi);
+			/**/double s = /**/Math.sin(phi);
 
 			int indexOut = 0;
 			for( int i = 0; i < points.size(); i++ ) {
-				Point2D_F64 p = points.get(i);
-				double theta = input[5+i];
+				Point2D_F32 p = points.get(i);
+				/**/double theta = input[5+i];
 
-				double x = a*Math.cos(theta);
-				double y = b*Math.sin(theta);
+				/**/double x = a*/**/Math.cos(theta);
+				/**/double y = b*/**/Math.sin(theta);
 
-				double xx = x0 + c*x - s*y;
-				double yy = y0 + s*x + c*y;
+				/**/double xx = x0 + c*x - s*y;
+				/**/double yy = y0 + s*x + c*y;
 
 				output[indexOut++] = p.x - xx;
 				output[indexOut++] = p.y - yy;
@@ -206,13 +207,13 @@ public class RefineEllipseEuclideanLeastSquares {
 		}
 
 		@Override
-		public void process(double[] input, double[] output) {
-			double a   = input[2];
-			double b   = input[3];
-			double phi = input[4];
+		public void process( /**/double[] input, /**/double[] output) {
+			/**/double a   = input[2];
+			/**/double b   = input[3];
+			/**/double phi = input[4];
 
-			double cp = Math.cos(phi);
-			double sp = Math.sin(phi);
+			/**/double cp = /**/Math.cos(phi);
+			/**/double sp = /**/Math.sin(phi);
 
 			int M = getNumOfOutputsM();
 			int N = getNumOfInputsN();
@@ -222,11 +223,10 @@ public class RefineEllipseEuclideanLeastSquares {
 				output[i] = 0;
 
 			for( int i = 0; i < points.size(); i++ ) {
-				Point2D_F64 p = points.get(i);
-				double theta = input[5+i];
+				/**/double theta = input[5+i];
 
-				double ct = Math.cos(theta);
-				double st = Math.sin(theta);
+				/**/double ct = /**/Math.cos(theta);
+				/**/double st = /**/Math.sin(theta);
 
 				int indexX = 2*i*N;
 				int indexY = indexX + N;

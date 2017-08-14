@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,13 +37,13 @@ public class TestUtilLine3D_F32 {
 
 		LineParametric3D_F32 lp = UtilLine3D_F32.convert(ls,null);
 
-		assertEquals(lp.p.x,1, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(lp.p.y,2, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(lp.p.z,3, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(lp.p.x,1, GrlConstants.TEST_F32);
+		assertEquals(lp.p.y,2, GrlConstants.TEST_F32);
+		assertEquals(lp.p.z,3, GrlConstants.TEST_F32);
 
-		assertEquals(lp.slope.x,5, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(lp.slope.y,6, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(lp.slope.z,7, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(lp.slope.x,5, GrlConstants.TEST_F32);
+		assertEquals(lp.slope.y,6, GrlConstants.TEST_F32);
+		assertEquals(lp.slope.z,7, GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -56,7 +56,7 @@ public class TestUtilLine3D_F32 {
 		Point3D_F32 p0 = line.getPointOnLine(t0);
 		Point3D_F32 p1 = line.getPointOnLine(t1);
 
-		assertEquals(t0,UtilLine3D_F32.computeT(line,p0),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(t1,UtilLine3D_F32.computeT(line,p1),GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(t0,UtilLine3D_F32.computeT(line,p0),GrlConstants.TEST_F32);
+		assertEquals(t1,UtilLine3D_F32.computeT(line,p1),GrlConstants.TEST_F32);
 	}
 }

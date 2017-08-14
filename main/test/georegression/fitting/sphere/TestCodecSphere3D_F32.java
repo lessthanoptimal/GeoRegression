@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -40,8 +40,8 @@ public class TestCodecSphere3D_F32 {
 		alg.encode(sphere,param);
 		alg.decode(param,found);
 
-		assertEquals(0, sphere.center.distance(found.center), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(sphere.radius,found.radius, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0, sphere.center.distance(found.center), GrlConstants.TEST_F32);
+		assertEquals(sphere.radius,found.radius, GrlConstants.TEST_F32);
 	}
 
 }

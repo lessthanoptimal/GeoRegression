@@ -1,6 +1,17 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2017/08/13
+Version : 0.13
+
+- 32bit auto coding switched over to using auto64fto32f library
+- Added basic support for twist coordinates and conversion to their exponential format
+- added divide to tuple3
+- Uses new F32 operations in EJML
+  * Before it was forced to do math in F64 even if a data structure was F32
+- F32 verson of ellipse fitting operations
+
+---------------------------------------------
 Date    : 2016/11/30
 Version : 0.12
 

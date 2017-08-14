@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -61,7 +61,7 @@ public class TestClosestPointEllipseAngle_F64 {
 	public void checkSolution( double x0 , double y0, double a, double b, double phi , double x , double y ) {
 		EllipseRotated_F64 ellipse = new EllipseRotated_F64(x0,y0,a,b,phi);
 
-		ClosestPointEllipseAngle_F64 alg = new ClosestPointEllipseAngle_F64(GrlConstants.DOUBLE_TEST_TOL,200);
+		ClosestPointEllipseAngle_F64 alg = new ClosestPointEllipseAngle_F64(GrlConstants.TEST_F64,200);
 
 		Point2D_F64 p = new Point2D_F64(x,y);
 		alg.setEllipse(ellipse);
@@ -70,7 +70,7 @@ public class TestClosestPointEllipseAngle_F64 {
 		Point2D_F64 found = alg.getClosest();
 
 		// is it on the ellipse?
-		assertEquals(1, UtilEllipse_F64.evaluate(found.x,found.y,ellipse),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(1, UtilEllipse_F64.evaluate(found.x,found.y,ellipse),GrlConstants.TEST_F64);
 
 		// skip local test for center
 		if( x0 == x && y0 == y )

@@ -1,0 +1,9 @@
+
+Works on sphinx 1.4.9
+         sphinx-bootstrap-theme-0.4.12
+
+sudo pip install Sphinx
+sudo pip install sphinx_bootstrap_theme
+
+make html
+then open _build in  browser

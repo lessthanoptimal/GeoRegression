@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -47,7 +47,6 @@ public class ExampleTransformFitting {
 		// Create a random point cloud and transform it
 		List<Point3D_F64> fromPts = new ArrayList<Point3D_F64>();
 		List<Point3D_F64> toPts = new ArrayList<Point3D_F64>();
-
 
 		for( int i = 0; i < 50; i++ ) {
 			double x = rand.nextGaussian();

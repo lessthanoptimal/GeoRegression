@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.shapes.Sphere3D_F32;
 import georegression.struct.so.Rodrigues_F32;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.FMatrixRMaj;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -60,8 +60,8 @@ public class TestFitSphereToPoints_F32 {
 		Sphere3D_F32 found = new Sphere3D_F32();
 		alg.fitModel(points, sphere, found);
 
-		assertEquals(0,sphere.center.distance(found.center),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(sphere.radius,found.radius,GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,sphere.center.distance(found.center),GrlConstants.TEST_F32);
+		assertEquals(sphere.radius,found.radius,GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -84,8 +84,8 @@ public class TestFitSphereToPoints_F32 {
 		Sphere3D_F32 found = new Sphere3D_F32();
 		alg.fitModel(points, initial, found);
 
-		assertEquals(0,sphere.center.distance(found.center),GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(sphere.radius, found.radius, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(0,sphere.center.distance(found.center),GrlConstants.TEST_F32);
+		assertEquals(sphere.radius, found.radius, GrlConstants.TEST_F32);
 	}
 
 	public static Point3D_F32 createPt( Sphere3D_F32 sphere , float phi , float theta ) {
@@ -93,9 +93,9 @@ public class TestFitSphereToPoints_F32 {
 		p.set(0,0,sphere.radius);
 
 		Rodrigues_F32 rodX = new Rodrigues_F32(phi,new Vector3D_F32(1,0,0));
-		DenseMatrix64F rotX = ConvertRotation3D_F32.rodriguesToMatrix(rodX, null);
+		FMatrixRMaj rotX = ConvertRotation3D_F32.rodriguesToMatrix(rodX, null);
 		Rodrigues_F32 rodZ = new Rodrigues_F32(theta,new Vector3D_F32(0,0,1));
-		DenseMatrix64F rotZ = ConvertRotation3D_F32.rodriguesToMatrix(rodZ, null);
+		FMatrixRMaj rotZ = ConvertRotation3D_F32.rodriguesToMatrix(rodZ, null);
 
 		GeometryMath_F32.mult(rotX, p, p);
 		GeometryMath_F32.mult(rotZ, p, p);

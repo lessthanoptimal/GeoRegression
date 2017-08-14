@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,8 +20,8 @@ package georegression.fitting.ellipse;
 
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.ops.CommonOps;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -37,14 +37,14 @@ public class TestCovarianceToEllipse_F32 {
 
 		alg.setCovariance(100,0,9);
 
-		assertEquals(10,alg.getMajorAxis(), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3 ,alg.getMinorAxis(), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(0,alg.getAngle(), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(10,alg.getMajorAxis(), GrlConstants.TEST_F32);
+		assertEquals(3 ,alg.getMinorAxis(), GrlConstants.TEST_F32);
+		assertEquals(0,alg.getAngle(), GrlConstants.TEST_F32);
 
 		alg.setCovariance(9,0,100);
-		assertEquals(10,alg.getMajorAxis(), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(3 ,alg.getMinorAxis(), GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(Math.PI/2.0f,alg.getAngle(), GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(10,alg.getMajorAxis(), GrlConstants.TEST_F32);
+		assertEquals(3 ,alg.getMinorAxis(), GrlConstants.TEST_F32);
+		assertEquals(Math.PI/2.0f,alg.getAngle(), GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -55,21 +55,21 @@ public class TestCovarianceToEllipse_F32 {
 		for (int i = 0; i < 10; i++) {
 			float angle = (float)(0.5f*Math.PI*i/9.0f);
 
-			/**/double c = (float)Math.cos(angle);
-			/**/double s = (float)Math.sin(angle);
+			float c = (float)Math.cos(angle);
+			float s = (float)Math.sin(angle);
 
-			DenseMatrix64F Q = new DenseMatrix64F(2,2,true,100,0,0,9);
-			DenseMatrix64F R = new DenseMatrix64F(2,2,true,c,-s,s,c);
-			DenseMatrix64F QR = new DenseMatrix64F(2,2);
+			FMatrixRMaj Q = new FMatrixRMaj(2,2,true,100,0,0,9);
+			FMatrixRMaj R = new FMatrixRMaj(2,2,true,c,-s,s,c);
+			FMatrixRMaj QR = new FMatrixRMaj(2,2);
 
-			CommonOps.mult(R,Q,QR);
-			CommonOps.multTransB(QR,R,Q);
+			CommonOps_FDRM.mult(R,Q,QR);
+			CommonOps_FDRM.multTransB(QR,R,Q);
 
 			alg.setCovariance((float)Q.get(0,0),(float)Q.get(0,1),(float)Q.get(1,1));
 
-			assertEquals(10,alg.getMajorAxis(), GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(3 ,alg.getMinorAxis(), GrlConstants.FLOAT_TEST_TOL);
-			assertEquals(0, UtilAngle.distHalf(angle,alg.getAngle()), GrlConstants.FLOAT_TEST_TOL);
+			assertEquals(10,alg.getMajorAxis(), GrlConstants.TEST_F32);
+			assertEquals(3 ,alg.getMinorAxis(), GrlConstants.TEST_F32);
+			assertEquals(0, UtilAngle.distHalf(angle,alg.getAngle()), GrlConstants.TEST_F32);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.sphere;
 
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
 import org.ddogleg.fitting.modelset.ModelFitter;
@@ -47,8 +48,8 @@ public class FitSphereToPoints_F64 implements ModelFitter<Sphere3D_F64,Point3D_F
 	private int maxIterations;
 
 	// tolerances for optimization
-	private /**/double ftol;
-	private /**/double gtol;
+	private double ftol;
+	private double gtol;
 
 	// used to convert double[] into shape parameters
 	private CodecSphere3D_F64 codec = new CodecSphere3D_F64();
@@ -62,7 +63,7 @@ public class FitSphereToPoints_F64 implements ModelFitter<Sphere3D_F64,Point3D_F
 	 * @param gtol Convergence tolerance. See {@link UnconstrainedLeastSquares}.
 	 */
 	public FitSphereToPoints_F64(UnconstrainedLeastSquares optimizer,
-								 int maxIterations, /**/double ftol, /**/double gtol) {
+								 int maxIterations, double ftol, double gtol) {
 		this.optimizer = optimizer;
 		this.maxIterations = maxIterations;
 		this.ftol = ftol;
@@ -74,7 +75,7 @@ public class FitSphereToPoints_F64 implements ModelFitter<Sphere3D_F64,Point3D_F
 	 * @param maxIterations Maximum number of iterations.  Try 100
 	 */
 	public FitSphereToPoints_F64( int maxIterations ) {
-		this(FactoryOptimization.leastSquaresLM(1e-3,false),maxIterations,1e-12,0);
+		this(FactoryOptimization.leastSquaresLM(1e-3,false),maxIterations, GrlConstants.DCONV_TOL_B,0);
 	}
 
 	@Override

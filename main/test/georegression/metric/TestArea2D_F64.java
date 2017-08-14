@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,14 +41,14 @@ public class TestArea2D_F64 {
 
 		double found = Area2D_F64.triangle(a,b,c);
 
-		assertEquals(expected,found,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(expected,found,GrlConstants.TEST_F64);
 	}
 
 	@Test
 	public void quadrilateral() {
 		Quadrilateral_F64 q = new Quadrilateral_F64(0,0,2,0,2,3,0,3);
 
-		assertEquals(2*3,Area2D_F64.quadrilateral(q), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2*3,Area2D_F64.quadrilateral(q), GrlConstants.TEST_F64);
 
 		// see if it can handle the convex case
 		q = new Quadrilateral_F64(0,0,2,0,1,1,0,4);
@@ -56,7 +56,7 @@ public class TestArea2D_F64 {
 		double expected = Area2D_F64.triangle(q.a,q.b,q.c) + Area2D_F64.triangle(q.a,q.c,q.d);
 
 		for (int i = 0; i < 4; i++) {
-			assertEquals(expected,Area2D_F64.quadrilateral(q), GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(expected,Area2D_F64.quadrilateral(q), GrlConstants.TEST_F64);
 			Point2D_F64 tmp = q.a;
 			q.a = q.b;
 			q.b = q.c;
@@ -71,23 +71,23 @@ public class TestArea2D_F64 {
 	@Test
 	public void polygonSimple_convex() {
 		Polygon2D_F64 t = new Polygon2D_F64(0,0,5,0,0,3);
-		assertEquals(0.5*5*3,Area2D_F64.polygonSimple(t), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.5*5*3,Area2D_F64.polygonSimple(t), GrlConstants.TEST_F64);
 
 		Polygon2D_F64 q = new Polygon2D_F64(0,0,2,0,2,3,0,3);
-		assertEquals(2*3,Area2D_F64.polygonSimple(q), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2*3,Area2D_F64.polygonSimple(q), GrlConstants.TEST_F64);
 
 		Polygon2D_F64 p = new Polygon2D_F64(0,0,2,0,2,3,1,5,0,3);
 		double pt = Area2D_F64.triangle(p.get(2),p.get(3),p.get(4));
-		assertEquals(2*3+pt,Area2D_F64.polygonSimple(p), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2*3+pt,Area2D_F64.polygonSimple(p), GrlConstants.TEST_F64);
 
 		t.flip();
-		assertEquals(0.5 * 5 * 3, Area2D_F64.polygonSimple(t), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0.5 * 5 * 3, Area2D_F64.polygonSimple(t), GrlConstants.TEST_F64);
 
 		q.flip();
-		assertEquals(2 * 3, Area2D_F64.polygonSimple(q), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2 * 3, Area2D_F64.polygonSimple(q), GrlConstants.TEST_F64);
 
 		p.flip();
-		assertEquals(2*3+pt, Area2D_F64.polygonSimple(p), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2*3+pt, Area2D_F64.polygonSimple(p), GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -99,17 +99,17 @@ public class TestArea2D_F64 {
 		double area_inside = Area2D_F64.polygonSimple(t_inside);
 
 		Polygon2D_F64 t = new Polygon2D_F64(0,0, 5,0, 5,5, 3,3, 0,5);
-		assertEquals(5*5-area_inside,Area2D_F64.polygonSimple(t), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(5*5-area_inside,Area2D_F64.polygonSimple(t), GrlConstants.TEST_F64);
 
 		double area_q_full = Area2D_F64.polygonSimple(new Polygon2D_F64(0,3, 5,5, 5,0));
 		Polygon2D_F64 q = new Polygon2D_F64(0,3, 5,5,  3,3, 5,0);
-		assertEquals(area_q_full - area_inside,Area2D_F64.polygonSimple(q), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(area_q_full - area_inside,Area2D_F64.polygonSimple(q), GrlConstants.TEST_F64);
 
 		t.flip();
-		assertEquals(5*5-area_inside, Area2D_F64.polygonSimple(t), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(5*5-area_inside, Area2D_F64.polygonSimple(t), GrlConstants.TEST_F64);
 
 		q.flip();
-		assertEquals(area_q_full - area_inside, Area2D_F64.polygonSimple(q), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(area_q_full - area_inside, Area2D_F64.polygonSimple(q), GrlConstants.TEST_F64);
 	}
 
 }

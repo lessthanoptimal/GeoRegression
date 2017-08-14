@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -58,7 +58,7 @@ public class TestMotionSe2PointSVD_F64 {
 //        tranFound.getTranslation().print();
 //        tran.getTranslation().print();
 
-		checkTransform( src, dst, foundSrcToDst, GrlConstants.DOUBLE_TEST_TOL );
+		checkTransform( src, dst, foundSrcToDst, GrlConstants.TEST_F64);
 	}
 
 	public static void checkTransform( List<Point2D_F64> src, List<Point2D_F64> dst, Se2_F64 foundSrcToDst, double tol ) {

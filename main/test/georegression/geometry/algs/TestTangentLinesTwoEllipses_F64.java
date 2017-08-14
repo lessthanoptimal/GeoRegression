@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,13 +22,9 @@ import georegression.geometry.UtilEllipse_F64;
 import georegression.geometry.UtilVector2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
-import georegression.struct.point.Vector2D_F32;
 import georegression.struct.point.Vector2D_F64;
 import georegression.struct.shapes.EllipseRotated_F64;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -44,7 +40,7 @@ public class TestTangentLinesTwoEllipses_F64 {
 
 	@Test
 	public void process() {
-		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.DOUBLE_TEST_TOL, 20);
+		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.TEST_F64, 20);
 
 		for( int i = 0; i < 20; i++ ) {
 			double theta = i*GrlConstants.PI/20 - GrlConstants.PI/2.0;
@@ -68,7 +64,7 @@ public class TestTangentLinesTwoEllipses_F64 {
 
 	@Test
 	public void initialize() {
-		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.DOUBLE_TEST_TOL, 20);
+		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.TEST_F64, 20);
 
 		EllipseRotated_F64 ellipseA = new EllipseRotated_F64(0,10,5,4,0);
 		EllipseRotated_F64 ellipseB = new EllipseRotated_F64(0,0,4,3, Math.PI/2.0);
@@ -83,21 +79,21 @@ public class TestTangentLinesTwoEllipses_F64 {
 	private void checkResults(EllipseRotated_F64 ellipseA, EllipseRotated_F64 ellipseB ,
 							  boolean completeTest ) {
 		// make sure all the points are unique
-		assertFalse(tangentA0.distance(tangentA1) <= GrlConstants.DOUBLE_TEST_TOL );
-		assertFalse(tangentA0.distance(tangentA2) <= GrlConstants.DOUBLE_TEST_TOL );
-		assertFalse(tangentA0.distance(tangentA3) <= GrlConstants.DOUBLE_TEST_TOL );
-		assertFalse(tangentA1.distance(tangentA2) <= GrlConstants.DOUBLE_TEST_TOL );
-		assertFalse(tangentA1.distance(tangentA3) <= GrlConstants.DOUBLE_TEST_TOL );
-		assertFalse(tangentA2.distance(tangentA3) <= GrlConstants.DOUBLE_TEST_TOL );
+		assertFalse(tangentA0.distance(tangentA1) <= GrlConstants.TEST_F64);
+		assertFalse(tangentA0.distance(tangentA2) <= GrlConstants.TEST_F64);
+		assertFalse(tangentA0.distance(tangentA3) <= GrlConstants.TEST_F64);
+		assertFalse(tangentA1.distance(tangentA2) <= GrlConstants.TEST_F64);
+		assertFalse(tangentA1.distance(tangentA3) <= GrlConstants.TEST_F64);
+		assertFalse(tangentA2.distance(tangentA3) <= GrlConstants.TEST_F64);
 
-		assertFalse(tangentB0.distance(tangentB1) <= GrlConstants.DOUBLE_TEST_TOL );
+		assertFalse(tangentB0.distance(tangentB1) <= GrlConstants.TEST_F64);
 
 		if( completeTest ) {
-			assertFalse(tangentB0.distance(tangentB2) <= GrlConstants.DOUBLE_TEST_TOL );
-			assertFalse(tangentB0.distance(tangentB3) <= GrlConstants.DOUBLE_TEST_TOL );
-			assertFalse(tangentB1.distance(tangentB2) <= GrlConstants.DOUBLE_TEST_TOL );
-			assertFalse(tangentB1.distance(tangentB3) <= GrlConstants.DOUBLE_TEST_TOL );
-			assertFalse(tangentB2.distance(tangentB3) <= GrlConstants.DOUBLE_TEST_TOL );
+			assertFalse(tangentB0.distance(tangentB2) <= GrlConstants.TEST_F64);
+			assertFalse(tangentB0.distance(tangentB3) <= GrlConstants.TEST_F64);
+			assertFalse(tangentB1.distance(tangentB2) <= GrlConstants.TEST_F64);
+			assertFalse(tangentB1.distance(tangentB3) <= GrlConstants.TEST_F64);
+			assertFalse(tangentB2.distance(tangentB3) <= GrlConstants.TEST_F64);
 
 			// make sure each pair is tangent
 			checkIsTangent(tangentA0, tangentB0, ellipseA, ellipseB);
@@ -123,14 +119,14 @@ public class TestTangentLinesTwoEllipses_F64 {
 		Vector2D_F64 slopeA = UtilEllipse_F64.computeTangent(ta,ellipseA,null);
 		Vector2D_F64 slopeB = UtilEllipse_F64.computeTangent(tb,ellipseB,null);
 
-		assertTrue(UtilVector2D_F64.identicalSign(slopeX,slopeY, slopeA.x, slopeA.y, GrlConstants.DOUBLE_TEST_TOL_SQRT ));
-		assertTrue(UtilVector2D_F64.identicalSign(slopeX,slopeY, slopeB.x, slopeB.y, GrlConstants.DOUBLE_TEST_TOL_SQRT ));
+		assertTrue(UtilVector2D_F64.identicalSign(slopeX,slopeY, slopeA.x, slopeA.y, GrlConstants.TEST_SQ_F64));
+		assertTrue(UtilVector2D_F64.identicalSign(slopeX,slopeY, slopeB.x, slopeB.y, GrlConstants.TEST_SQ_F64));
 
 	}
 
 	@Test
 	public void selectTangent() {
-		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.DOUBLE_TEST_TOL, 20);
+		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.TEST_F64, 20);
 
 		EllipseRotated_F64 ellipse = new EllipseRotated_F64(0,10,2,2,0);
 
@@ -141,13 +137,13 @@ public class TestTangentLinesTwoEllipses_F64 {
 		alg.centerLine.set(0,0,0,10);
 		assertTrue(alg.selectTangent(a,srcA,ellipse,found, false));
 
-		assertEquals(2, found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(10, found.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2, found.x, GrlConstants.TEST_F64);
+		assertEquals(10, found.y, GrlConstants.TEST_F64);
 
-		assertEquals(1.5*1.5, alg.sumDifference, GrlConstants.DOUBLE_TEST_TOL );
+		assertEquals(1.5*1.5, alg.sumDifference, GrlConstants.TEST_F64);
 
 		assertTrue(alg.selectTangent(a,srcA,ellipse,found, true));
-		assertNotEquals(2, found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertNotEquals(10, found.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertNotEquals(2, found.x, GrlConstants.TEST_F64);
+		assertNotEquals(10, found.y, GrlConstants.TEST_F64);
 	}
 }

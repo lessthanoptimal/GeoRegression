@@ -4,9 +4,8 @@ allprojects {
     apply plugin: 'eclipse'
 
     group = 'org.georegression'
-    version = '0.12'
+    version = '0.13'
 }
-
 
 subprojects {
 
@@ -50,9 +49,9 @@ subprojects {
     }
 
     dependencies {
-        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.10'
+        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.11'
 
-        testCompile group: 'junit', name: 'junit', version: '4.11'
+        testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 
     test {
@@ -116,8 +115,8 @@ subprojects {
                         url 'http://georegression.org'
 
                         scm {
-                            connection 'scm:git:git@github.com:lessthanoptimal/ddogleg.git'
-                            developerConnection 'scm:git:git@github.com:lessthanoptimal/ddogleg.git'
+                            connection 'scm:git:git@github.com:lessthanoptimal/georegression.git'
+                            developerConnection 'scm:git:git@github.com:lessthanoptimal/georegression.git'
                             url 'https://github.com/lessthanoptimal/GeoRegression'
                         }
 
@@ -188,13 +187,34 @@ task alljavadoc(type: Javadoc) {
     classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
 
     destinationDir = file("${buildDir}/docs/javadoc")
+
     configure(options) {
+        failOnError = false
         docTitle = "GeoRegression v$project.version"
         links = [ 'http://docs.oracle.com/javase/7/docs/api/',
                   'http://ejml.org/javadoc/',
                   'http://ddogleg.org/javadoc/' ]
-//        header = file('docs/header.txt').text
-//        bottom = file('docs/bottom.txt').text // the quotes messes up javadoc still create bug report
+    }
+}
+
+task javadocWeb(type: Javadoc) {
+    // only include source code in src directory to avoid including 3rd party code which some projects do as a hack
+    source = javadocProjects.collect { project(it).fileTree('src').include('**/*.java') }
+//    source = javadocProjects.collect { project(it).sourceSets.main.allJava }
+    classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
+
+    destinationDir = file("${buildDir}/docs/javadoc")
+
+    // Hack for Java 8u121 and beyond. Comment out if running an earlier version of Java
+    options.addBooleanOption("-allow-script-in-comments", true)
+
+    configure(options) {
+        failOnError = false
+        docTitle = "GeoRegression v$project.version"
+        links = [ 'http://docs.oracle.com/javase/7/docs/api/',
+                  'http://ejml.org/javadoc/',
+                  'http://ddogleg.org/javadoc/' ]
+        bottom = file('docs/bottom.txt').text
     }
 }
 
@@ -213,5 +233,5 @@ task alljavadoc(type: Javadoc) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.14.1'
+    gradleVersion = '4.0.1'
 }

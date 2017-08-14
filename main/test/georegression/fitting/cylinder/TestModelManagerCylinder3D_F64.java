@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,15 +46,15 @@ public class TestModelManagerCylinder3D_F64 {
 
 		alg.copyModel(model,found);
 
-		assertEquals(model.line.p.x, found.line.p.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(model.line.p.y,found.line.p.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(model.line.p.z,found.line.p.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.line.p.x, found.line.p.x, GrlConstants.TEST_F64);
+		assertEquals(model.line.p.y,found.line.p.y, GrlConstants.TEST_F64);
+		assertEquals(model.line.p.z,found.line.p.z, GrlConstants.TEST_F64);
 
-		assertEquals(model.line.slope.x,found.line.slope.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(model.line.slope.y,found.line.slope.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(model.line.slope.z,found.line.slope.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.line.slope.x,found.line.slope.x, GrlConstants.TEST_F64);
+		assertEquals(model.line.slope.y,found.line.slope.y, GrlConstants.TEST_F64);
+		assertEquals(model.line.slope.z,found.line.slope.z, GrlConstants.TEST_F64);
 
-		assertEquals(model.radius,found.radius, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(model.radius,found.radius, GrlConstants.TEST_F64);
 	}
 
 }

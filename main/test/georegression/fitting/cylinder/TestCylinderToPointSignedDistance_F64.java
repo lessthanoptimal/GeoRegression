@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -64,7 +64,7 @@ public class TestCylinderToPointSignedDistance_F64 {
 
 		for( int i = 0; i < points.size(); i++ ) {
 			double expected = Distance3D_F64.distance(cylinder, points.get(i));
-			assertEquals(expected,(double) output[i], GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(expected,(double) output[i], GrlConstants.TEST_F64);
 		}
 	}
 

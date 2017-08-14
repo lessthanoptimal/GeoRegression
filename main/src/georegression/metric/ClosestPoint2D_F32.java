@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -148,7 +148,7 @@ public class ClosestPoint2D_F32 {
 	 * @return Closest point on the ellipse
 	 */
 	public static Point2D_F32 closestPoint( EllipseRotated_F32 ellipse , Point2D_F32 p ) {
-		ClosestPointEllipseAngle_F32 alg = new ClosestPointEllipseAngle_F32(GrlConstants.FLOAT_TEST_TOL,30);
+		ClosestPointEllipseAngle_F32 alg = new ClosestPointEllipseAngle_F32(GrlConstants.TEST_F32,30);
 		alg.setEllipse(ellipse);
 		alg.process(p);
 		return alg.getClosest();

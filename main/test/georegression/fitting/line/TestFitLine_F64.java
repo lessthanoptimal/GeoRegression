@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -53,8 +53,8 @@ public class TestFitLine_F64 {
 
 		LinePolar2D_F64 found = FitLine_F64.polar(pts,null);
 
-		assertEquals(r,found.distance, GrlConstants.DOUBLE_TEST_TOL);
-		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(r,found.distance, GrlConstants.TEST_F64);
+		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -83,8 +83,8 @@ public class TestFitLine_F64 {
 
 		LinePolar2D_F64 found = FitLine_F64.polar(pts,weights,null);
 
-		assertEquals(r,found.distance, GrlConstants.DOUBLE_TEST_TOL);
-		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(r,found.distance, GrlConstants.TEST_F64);
+		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.TEST_F64);
 	}
 
 	/**

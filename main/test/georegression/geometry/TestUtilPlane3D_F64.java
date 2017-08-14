@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -54,7 +54,7 @@ public class TestUtilPlane3D_F64 {
 
 		for( Point3D_F64 p : points ) {
 			double found = UtilPlane3D_F64.evaluate(test,p);
-			assertEquals(0,found, GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0,found, GrlConstants.TEST_F64);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class TestUtilPlane3D_F64 {
 
 		for( Point3D_F64 p : points ) {
 			double found = UtilPlane3D_F64.evaluate(general,p);
-			assertEquals(0,found, GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0,found, GrlConstants.TEST_F64);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class TestUtilPlane3D_F64 {
 		// the points should still be on the plane
 		for( Point3D_F64 p : points ) {
 			double found = UtilPlane3D_F64.evaluate(conv,p);
-			assertEquals(0,found, GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0,found, GrlConstants.TEST_F64);
 		}
 	}
 
@@ -101,10 +101,10 @@ public class TestUtilPlane3D_F64 {
 
 		UtilPlane3D_F64.hessianNormalForm(a);
 
-		assertEquals(2/n,a.A, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-3/n,a.B, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(4/n,a.C, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(5/n,a.D, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2/n,a.A, GrlConstants.TEST_F64);
+		assertEquals(-3/n,a.B, GrlConstants.TEST_F64);
+		assertEquals(4/n,a.C, GrlConstants.TEST_F64);
+		assertEquals(5/n,a.D, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -120,7 +120,7 @@ public class TestUtilPlane3D_F64 {
 
 		for( Point3D_F64 p : points ) {
 			double found = UtilPlane3D_F64.evaluate(test,p);
-			assertEquals(0,found, GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0,found, GrlConstants.TEST_F64);
 		}
 	}
 
@@ -135,7 +135,7 @@ public class TestUtilPlane3D_F64 {
 
 		for( Point3D_F64 p : points ) {
 			double found = UtilPlane3D_F64.evaluate(input,p);
-			assertEquals(0,found, GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0,found, GrlConstants.TEST_F64);
 		}
 	}
 
@@ -148,12 +148,12 @@ public class TestUtilPlane3D_F64 {
 					(double)rand.nextGaussian(),(double)rand.nextGaussian(),(double)rand.nextGaussian());
 			PlaneNormal3D_F64 b = new PlaneNormal3D_F64(a);
 
-			b.p.x +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
-			b.p.y +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
-			b.p.z +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
-			b.n.x +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
-			b.n.y +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
-			b.n.z +=(rand.nextDouble()-0.5)*GrlConstants.DOUBLE_TEST_TOL;
+			b.p.x +=(rand.nextDouble()-0.5)*GrlConstants.TEST_F64;
+			b.p.y +=(rand.nextDouble()-0.5)*GrlConstants.TEST_F64;
+			b.p.z +=(rand.nextDouble()-0.5)*GrlConstants.TEST_F64;
+			b.n.x +=(rand.nextDouble()-0.5)*GrlConstants.TEST_F64;
+			b.n.y +=(rand.nextDouble()-0.5)*GrlConstants.TEST_F64;
+			b.n.z +=(rand.nextDouble()-0.5)*GrlConstants.TEST_F64;
 
 			// change scaling
 			double scale = rand.nextGaussian()*2;
@@ -161,7 +161,7 @@ public class TestUtilPlane3D_F64 {
 			b.n.y *= scale;
 			b.n.z *= scale;
 
-			assertTrue(UtilPlane3D_F64.equals(a, b, GrlConstants.DOUBLE_TEST_TOL*50));
+			assertTrue(UtilPlane3D_F64.equals(a, b, GrlConstants.TEST_F64 *50));
 
 			b.p.x +=(rand.nextDouble()-0.5);
 			b.p.y +=(rand.nextDouble()-0.5);
@@ -170,7 +170,7 @@ public class TestUtilPlane3D_F64 {
 			b.n.y +=(rand.nextDouble()-0.5);
 			b.n.z +=(rand.nextDouble()-0.5);
 
-			assertFalse(UtilPlane3D_F64.equals(a, b, GrlConstants.DOUBLE_TEST_TOL*50));
+			assertFalse(UtilPlane3D_F64.equals(a, b, GrlConstants.TEST_F64 *50));
 		}
 	}
 
@@ -230,9 +230,9 @@ public class TestUtilPlane3D_F64 {
 
 			// see if it created a valid transform
 			SePointOps_F64.transformReverse(planeToWorld,l3,k3);
-			assertEquals(0,k3.distance(p3), GrlConstants.DOUBLE_TEST_TOL );
+			assertEquals(0,k3.distance(p3), GrlConstants.TEST_F64);
 
-			assertEquals(0,UtilPlane3D_F64.evaluate(planeG,l3), GrlConstants.DOUBLE_TEST_TOL);
+			assertEquals(0,UtilPlane3D_F64.evaluate(planeG,l3), GrlConstants.TEST_F64);
 		}
 	}
 

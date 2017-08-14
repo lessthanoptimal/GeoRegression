@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -48,9 +48,9 @@ public class TestIntersection3D_F64 {
 		Point3D_F64 found = new Point3D_F64();
 		assertTrue(Intersection3D_F64.intersect(plane, line, found));
 
-		assertEquals(2,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0,found.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0,found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2,found.x, GrlConstants.TEST_F64);
+		assertEquals(0,found.y, GrlConstants.TEST_F64);
+		assertEquals(0,found.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -63,9 +63,9 @@ public class TestIntersection3D_F64 {
 		Point3D_F64 found = new Point3D_F64();
 		assertTrue(Intersection3D_F64.intersect(general, line, found));
 
-		assertEquals(2,found.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0,found.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0,found.z, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(2,found.x, GrlConstants.TEST_F64);
+		assertEquals(0,found.y, GrlConstants.TEST_F64);
+		assertEquals(0,found.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -78,8 +78,8 @@ public class TestIntersection3D_F64 {
 		Intersection3D_F64.intersect(a,b,line);
 
 		// see if the origin of the line lies on both planes
-		assertEquals(0, UtilPlane3D_F64.evaluate(a,line.p), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0, UtilPlane3D_F64.evaluate(b,line.p), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, UtilPlane3D_F64.evaluate(a,line.p), GrlConstants.TEST_F64);
+		assertEquals(0, UtilPlane3D_F64.evaluate(b,line.p), GrlConstants.TEST_F64);
 
 		// now try another point on the line
 		double x = line.p.x + line.slope.x;
@@ -87,8 +87,8 @@ public class TestIntersection3D_F64 {
 		double z = line.p.z + line.slope.z;
 		Point3D_F64 p = new Point3D_F64(x,y,z);
 
-		assertEquals(0, UtilPlane3D_F64.evaluate(a,p), GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(0, UtilPlane3D_F64.evaluate(b,p), GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0, UtilPlane3D_F64.evaluate(a,p), GrlConstants.TEST_F64);
+		assertEquals(0, UtilPlane3D_F64.evaluate(b,p), GrlConstants.TEST_F64);
 
 	}
 
@@ -115,7 +115,7 @@ public class TestIntersection3D_F64 {
 		// unique intersection
 		ls.set(2,0.5,1,  2,0.5,-1);
 		assertEquals(1,Intersection3D_F64.intersection(triangle,ls,p));
-		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.TEST_F64);
 
 		// infinite intersections
 		ls.set(0, 0, 0, 4, 0, 0);
@@ -237,8 +237,8 @@ public class TestIntersection3D_F64 {
 		// Now a positive case
 		assertTrue(Intersection3D_F64.intersect(
 				new LineParametric3D_F64(0,0,2,1,0,0),new Sphere3D_F64(0,0,2,2),a,b));
-		assertTrue( a.distance(new Point3D_F64( 2,0,2)) <= GrlConstants.DOUBLE_TEST_TOL);
-		assertTrue( b.distance(new Point3D_F64(-2,0,2)) <= GrlConstants.DOUBLE_TEST_TOL);
+		assertTrue( a.distance(new Point3D_F64( 2,0,2)) <= GrlConstants.TEST_F64);
+		assertTrue( b.distance(new Point3D_F64(-2,0,2)) <= GrlConstants.TEST_F64);
 
 	}
 }

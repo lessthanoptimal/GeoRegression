@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,8 +46,8 @@ public class TestModelManagerLinePolar2D_F32 {
 
 		alg.copyModel(model,found);
 
-		assertEquals(model.angle,found.angle, GrlConstants.FLOAT_TEST_TOL);
-		assertEquals(model.distance,found.distance, GrlConstants.FLOAT_TEST_TOL);
+		assertEquals(model.angle,found.angle, GrlConstants.TEST_F32);
+		assertEquals(model.distance,found.distance, GrlConstants.TEST_F32);
 	}
 
 }

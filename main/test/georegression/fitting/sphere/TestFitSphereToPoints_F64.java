@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
 import georegression.struct.so.Rodrigues_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -60,8 +60,8 @@ public class TestFitSphereToPoints_F64 {
 		Sphere3D_F64 found = new Sphere3D_F64();
 		alg.fitModel(points, sphere, found);
 
-		assertEquals(0,sphere.center.distance(found.center),GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(sphere.radius,found.radius,GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,sphere.center.distance(found.center),GrlConstants.TEST_F64);
+		assertEquals(sphere.radius,found.radius,GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -84,8 +84,8 @@ public class TestFitSphereToPoints_F64 {
 		Sphere3D_F64 found = new Sphere3D_F64();
 		alg.fitModel(points, initial, found);
 
-		assertEquals(0,sphere.center.distance(found.center),GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(sphere.radius, found.radius, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(0,sphere.center.distance(found.center),GrlConstants.TEST_F64);
+		assertEquals(sphere.radius, found.radius, GrlConstants.TEST_F64);
 	}
 
 	public static Point3D_F64 createPt( Sphere3D_F64 sphere , double phi , double theta ) {
@@ -93,9 +93,9 @@ public class TestFitSphereToPoints_F64 {
 		p.set(0,0,sphere.radius);
 
 		Rodrigues_F64 rodX = new Rodrigues_F64(phi,new Vector3D_F64(1,0,0));
-		DenseMatrix64F rotX = ConvertRotation3D_F64.rodriguesToMatrix(rodX, null);
+		DMatrixRMaj rotX = ConvertRotation3D_F64.rodriguesToMatrix(rodX, null);
 		Rodrigues_F64 rodZ = new Rodrigues_F64(theta,new Vector3D_F64(0,0,1));
-		DenseMatrix64F rotZ = ConvertRotation3D_F64.rodriguesToMatrix(rodZ, null);
+		DMatrixRMaj rotZ = ConvertRotation3D_F64.rodriguesToMatrix(rodZ, null);
 
 		GeometryMath_F64.mult(rotX, p, p);
 		GeometryMath_F64.mult(rotZ, p, p);

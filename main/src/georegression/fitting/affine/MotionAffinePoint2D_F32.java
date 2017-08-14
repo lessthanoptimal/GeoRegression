@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,8 +21,8 @@ package georegression.fitting.affine;
 import georegression.fitting.MotionTransformPoint;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.point.Point2D_F32;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.factory.LinearSolverFactory;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.factory.LinearSolverFactory_FDRM;
 import org.ejml.interfaces.linsol.LinearSolver;
 
 import java.util.List;
@@ -36,18 +36,18 @@ import java.util.List;
  */
 public class MotionAffinePoint2D_F32 implements MotionTransformPoint<Affine2D_F32, Point2D_F32> {
 
-	private LinearSolver<DenseMatrix64F> solver;
-	private DenseMatrix64F A;
-	protected DenseMatrix64F x;
-	private DenseMatrix64F y;
+	private LinearSolver<FMatrixRMaj> solver;
+	private FMatrixRMaj A;
+	protected FMatrixRMaj x;
+	private FMatrixRMaj y;
 
 	Affine2D_F32 model = new Affine2D_F32();
 
 	public MotionAffinePoint2D_F32() {
-		solver = LinearSolverFactory.leastSquares(100, 2);
-		x = new DenseMatrix64F( 3, 2 );
-		A = new DenseMatrix64F( 0, 3 );
-		y = new DenseMatrix64F( 0, 2 );
+		solver = LinearSolverFactory_FDRM.leastSquares(100, 2);
+		x = new FMatrixRMaj( 3, 2 );
+		A = new FMatrixRMaj( 0, 3 );
+		y = new FMatrixRMaj( 0, 2 );
 	}
 
 	@Override

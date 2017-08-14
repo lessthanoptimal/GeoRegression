@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -56,7 +56,7 @@ public class TestMotionAffinePoint2D_F32 {
 
 		Affine2D_F32 tranFound = alg.getTransformSrcToDst();
 
-		checkTransform( from, to, tranFound, GrlConstants.FLOAT_TEST_TOL );
+		checkTransform( from, to, tranFound, GrlConstants.TEST_F32);
 	}
 
 	public static void checkTransform( List<Point2D_F32> from, List<Point2D_F32> to, Affine2D_F32 tranFound, float tol ) {

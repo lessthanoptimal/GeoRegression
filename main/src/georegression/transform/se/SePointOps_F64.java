@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,7 +24,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
-import org.ejml.data.DenseMatrix64F;
+import org.ejml.data.DMatrixRMaj;
 
 import java.util.List;
 
@@ -190,7 +190,7 @@ public class SePointOps_F64 {
 		if( tranPt == null )
 			tranPt = new Point3D_F64();
 
-		DenseMatrix64F R = se.getR();
+		DMatrixRMaj R = se.getR();
 		Vector3D_F64 T = se.getT();
 
 		GeometryMath_F64.mult( R, origPt, tranPt );
@@ -217,7 +217,7 @@ public class SePointOps_F64 {
 		if( tranPt == null )
 			tranPt = new Point3D_F64();
 
-		DenseMatrix64F R = se.getR();
+		DMatrixRMaj R = se.getR();
 		Vector3D_F64 T = se.getT();
 
 		GeometryMath_F64.sub( origPt, T, tranPt );

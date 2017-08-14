@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -31,16 +31,16 @@ public class TestRectangle2D_F64 {
 	public void enforceExtents() {
 		Rectangle2D_F64 a = new Rectangle2D_F64(-1,-2,50,10);
 		a.enforceExtents();
-		assertEquals(-1,a.p0.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-2,a.p0.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(50,a.p1.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(10,a.p1.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(-1,a.p0.x, GrlConstants.TEST_F64);
+		assertEquals(-2,a.p0.y, GrlConstants.TEST_F64);
+		assertEquals(50,a.p1.x, GrlConstants.TEST_F64);
+		assertEquals(10,a.p1.y, GrlConstants.TEST_F64);
 
 		a = new Rectangle2D_F64(50,10,-1,-2);
 		a.enforceExtents();
-		assertEquals(-1,a.p0.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(-2,a.p0.y, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(50,a.p1.x, GrlConstants.DOUBLE_TEST_TOL);
-		assertEquals(10,a.p1.y, GrlConstants.DOUBLE_TEST_TOL);
+		assertEquals(-1,a.p0.x, GrlConstants.TEST_F64);
+		assertEquals(-2,a.p0.y, GrlConstants.TEST_F64);
+		assertEquals(50,a.p1.x, GrlConstants.TEST_F64);
+		assertEquals(10,a.p1.y, GrlConstants.TEST_F64);
 	}
 }
