@@ -8,7 +8,7 @@ Stable Release
 The latest stable release is available on `Source Forge <https://sourceforge.net/projects/georegression/>`_ with direct links provided below for your convenience:
 
 * `Source Code <http://sourceforge.net/projects/georegression/files/0.13/georegression-v0.13-src.zip/download>`_
-* `Precompiled Jar and Dependencies <http://sourceforge.net/projects/georegression/files/0.12=3/georegression-v0.13-libs.zip/download>`_
+* `Precompiled Jar and Dependencies <http://sourceforge.net/projects/georegression/files/0.13/georegression-v0.13-libs.zip/download>`_
 
 Bleeding Edge
 -------------

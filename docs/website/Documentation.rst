@@ -29,7 +29,7 @@ GeoRegression is easy to compile using the provided Gradle script.  In Linux typ
 Gradle::
 
   $ cd georegression/
-  $ gradle createLibraryDirectory
+  $ ./gradlew createLibraryDirectory
   :compileJava
   :processResources UP-TO-DATE
   :classes
