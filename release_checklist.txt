@@ -10,7 +10,7 @@
 - Update documentation on website
   rm -rf build/doc/javadoc
   ./gradlew javadocWeb
-  zip api.zip build/docs/javadoc
+  zip -r api.zip build/docs/javadoc
 
 -----
 Push to central:
