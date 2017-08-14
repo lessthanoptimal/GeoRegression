@@ -25,7 +25,7 @@ import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
-import org.ejml.interfaces.linsol.LinearSolverDense;
+import org.ejml.interfaces.linsol.LinearSolver;
 
 import java.util.List;
 
@@ -71,7 +71,7 @@ public class FitEllipseWeightedAlgebraic_F64 {
 	private DMatrixRMaj Ta1 = new DMatrixRMaj(3,1);
 	private DMatrixRMaj S2_tran = new DMatrixRMaj(3,3);
 
-	private LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(3);
+	private LinearSolver<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(3);
 	private EigenDecomposition<DMatrixRMaj> eigen = DecompositionFactory_DDRM.eig(3,true,false);
 
 	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();

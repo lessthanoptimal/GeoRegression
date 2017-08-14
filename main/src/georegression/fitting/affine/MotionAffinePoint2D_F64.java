@@ -23,7 +23,7 @@ import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
-import org.ejml.interfaces.linsol.LinearSolverDense;
+import org.ejml.interfaces.linsol.LinearSolver;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class MotionAffinePoint2D_F64 implements MotionTransformPoint<Affine2D_F64, Point2D_F64> {
 
-	private LinearSolverDense<DMatrixRMaj> solver;
+	private LinearSolver<DMatrixRMaj> solver;
 	private DMatrixRMaj A;
 	protected DMatrixRMaj x;
 	private DMatrixRMaj y;
