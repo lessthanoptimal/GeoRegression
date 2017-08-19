@@ -41,19 +41,21 @@ public class FitLine_I32 {
 	 * </p>
 	 *
 	 * @param points Set of points on the line.
+	 * @param start First index in the list
+	 * @param length number of variables used in the list
 	 * @param ret Storage for the line.  If null a new line will be declared.
 	 * @return Best fit line
 	 */
-	public static LinePolar2D_F32 polar(List<Point2D_I32> points , LinePolar2D_F32 ret ) {
+	public static LinePolar2D_F32 polar(List<Point2D_I32> points , int start , int length , LinePolar2D_F32 ret ) {
 		if( ret == null )
 			ret = new LinePolar2D_F32();
 
 		int sumX = 0;
 		int sumY = 0;
 
-		final int N = points.size();
+		final int N = length;
 		for( int i = 0; i < N; i++ ) {
-			Point2D_I32 p = points.get(i);
+			Point2D_I32 p = points.get(start+i);
 			sumX += p.x;
 			sumY += p.y;
 		}
@@ -64,7 +66,7 @@ public class FitLine_I32 {
 		float bottom = 0;
 
 		for( int i = 0; i < N; i++ ) {
-			Point2D_I32 p = points.get(i);
+			Point2D_I32 p = points.get(start+i);
 			float dx = meanX - p.x;
 			float dy = meanY - p.y;
 
@@ -93,16 +95,16 @@ public class FitLine_I32 {
 	 * @param ret Storage for the line.  If null a new line will be declared.
 	 * @return Best fit line
 	 */
-	public static LinePolar2D_F64 polar(List<Point2D_I32> points , LinePolar2D_F64 ret ) {
+	public static LinePolar2D_F64 polar(List<Point2D_I32> points  , int start , int length ,  LinePolar2D_F64 ret ) {
 		if( ret == null )
 			ret = new LinePolar2D_F64();
 
 		int sumX = 0;
 		int sumY = 0;
 
-		final int N = points.size();
+		final int N = length;
 		for( int i = 0; i < N; i++ ) {
-			Point2D_I32 p = points.get(i);
+			Point2D_I32 p = points.get(start+i);
 			sumX += p.x;
 			sumY += p.y;
 		}
@@ -113,7 +115,7 @@ public class FitLine_I32 {
 		double bottom = 0;
 
 		for( int i = 0; i < N; i++ ) {
-			Point2D_I32 p = points.get(i);
+			Point2D_I32 p = points.get(start+i);
 			double dx = meanX - p.x;
 			double dy = meanY - p.y;
 

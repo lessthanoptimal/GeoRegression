@@ -46,6 +46,7 @@ public class TestFitLine_I32 {
 	public void polar_F64() {
 		List<Point2D_I32> pts = new ArrayList<>();
 
+		pts.add(new Point2D_I32(100,200)); // add an outlier that should be ignored
 		for( int i = 0; i < 20; i++ ) {
 			Point2D_I32 p = new Point2D_I32();
 			p.x = i;
@@ -57,7 +58,7 @@ public class TestFitLine_I32 {
 		double distanceFromZero = Distance2D_F64.distance(general,new Point2D_F64(0,0));
 		double angle = Math.atan(1.0/3.0);
 
-		LinePolar2D_F64 found = FitLine_I32.polar(pts,(LinePolar2D_F64)null);
+		LinePolar2D_F64 found = FitLine_I32.polar(pts,1,20,(LinePolar2D_F64)null);
 
 		assertEquals(distanceFromZero,found.distance, GrlConstants.TEST_F64);
 		assertTrue(UtilAngle.dist(angle, found.angle) <= GrlConstants.TEST_F64);
@@ -67,6 +68,7 @@ public class TestFitLine_I32 {
 	public void polar_F32() {
 		List<Point2D_I32> pts = new ArrayList<>();
 
+		pts.add(new Point2D_I32(100,200)); // add an outlier that should be ignored
 		for( int i = 0; i < 20; i++ ) {
 			Point2D_I32 p = new Point2D_I32();
 			p.x = i;
@@ -78,7 +80,7 @@ public class TestFitLine_I32 {
 		float distanceFromZero = Distance2D_F32.distance(general,new Point2D_F32(0,0));
 		float angle = (float)Math.atan(1.0/3.0);
 
-		LinePolar2D_F32 found = FitLine_I32.polar(pts,(LinePolar2D_F32)null);
+		LinePolar2D_F32 found = FitLine_I32.polar(pts,1,20,(LinePolar2D_F32)null);
 
 		assertEquals(distanceFromZero,found.distance, GrlConstants.TEST_F32);
 		assertTrue(UtilAngle.dist(angle, found.angle) <= GrlConstants.TEST_F32);
