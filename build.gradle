@@ -4,9 +4,8 @@ allprojects {
     apply plugin: 'eclipse'
 
     group = 'org.georegression'
-    version = '0.13-SNAPSHOT'
+    version = '0.14-SNAPSHOT'
 }
-
 
 subprojects {
 
@@ -50,7 +49,7 @@ subprojects {
     }
 
     dependencies {
-        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.12-SNAPSHOT'
+        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.11'
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
@@ -144,29 +143,31 @@ subprojects {
 
 // Creates a directory with all the compiled jars and the dependencies
 def mainProjects = [':georegression',":experimental"]
-task createLibraryDirectory( dependsOn: mainProjects.collect {[ it+':jar',it+':sourcesJar']}.flatten() ) << {
+task createLibraryDirectory( dependsOn: mainProjects.collect {[ it+':jar',it+':sourcesJar']}.flatten() ) {
 
-    ext.listExternal = files(mainProjects.collect{ project(it).configurations.compile })
-    ext.listInternal = files(mainProjects.collect{ project(it).tasks.jar.archivePath })
-    ext.listSource = files(mainProjects.collect{ project(it).tasks.sourcesJar.archivePath })
+    doLast {
+        ext.listExternal = files(mainProjects.collect { project(it).configurations.compile })
+        ext.listInternal = files(mainProjects.collect { project(it).tasks.jar.archivePath })
+        ext.listSource = files(mainProjects.collect { project(it).tasks.sourcesJar.archivePath })
 
-    ext.listExternal = ext.listExternal - ext.listInternal
+        ext.listExternal = ext.listExternal - ext.listInternal
 
-    file('libraries').deleteDir()
-    file('libraries').mkdir()
+        file('libraries').deleteDir()
+        file('libraries').mkdir()
 
-    copy {
-        from ext.listExternal
-        into 'libraries'
-    }
+        copy {
+            from ext.listExternal
+            into 'libraries'
+        }
 
-    copy {
-        from ext.listInternal
-        from ext.listSource
-        into 'libraries'
+        copy {
+            from ext.listInternal
+            from ext.listSource
+            into 'libraries'
 
-        rename { String fileName ->
-            "GeoRegression-" + fileName
+            rename { String fileName ->
+                "GeoRegression-" + fileName
+            }
         }
     }
 }
@@ -188,13 +189,34 @@ task alljavadoc(type: Javadoc) {
     classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
 
     destinationDir = file("${buildDir}/docs/javadoc")
+
     configure(options) {
+        failOnError = false
         docTitle = "GeoRegression v$project.version"
         links = [ 'http://docs.oracle.com/javase/7/docs/api/',
                   'http://ejml.org/javadoc/',
                   'http://ddogleg.org/javadoc/' ]
-//        header = file('docs/header.txt').text
-//        bottom = file('docs/bottom.txt').text // the quotes messes up javadoc still create bug report
+    }
+}
+
+task javadocWeb(type: Javadoc) {
+    // only include source code in src directory to avoid including 3rd party code which some projects do as a hack
+    source = javadocProjects.collect { project(it).fileTree('src').include('**/*.java') }
+//    source = javadocProjects.collect { project(it).sourceSets.main.allJava }
+    classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
+
+    destinationDir = file("${buildDir}/docs/javadoc")
+
+    // Hack for Java 8u121 and beyond. Comment out if running an earlier version of Java
+    options.addBooleanOption("-allow-script-in-comments", true)
+
+    configure(options) {
+        failOnError = false
+        docTitle = "GeoRegression v$project.version"
+        links = [ 'http://docs.oracle.com/javase/7/docs/api/',
+                  'http://ejml.org/javadoc/',
+                  'http://ddogleg.org/javadoc/' ]
+        bottom = file('docs/bottom.txt').text
     }
 }
 
