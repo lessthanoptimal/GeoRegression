@@ -2,6 +2,13 @@ YEAR-MONTH-DAY
 
 ---------------------------------------------
 Date    :
+Version : 0.14
+
+- Updated for changes in EJML
+- Added I32 line fit 2D code
+
+---------------------------------------------
+Date    : 2017/08/13
 Version : 0.13
 
 - 32bit auto coding switched over to using auto64fto32f library

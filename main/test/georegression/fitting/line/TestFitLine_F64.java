@@ -41,7 +41,7 @@ public class TestFitLine_F64 {
 		double r = 1.5;
 		double theta = 0.75;
 
-		List<Point2D_F64> pts = new ArrayList<Point2D_F64>();
+		List<Point2D_F64> pts = new ArrayList<>();
 
 		for( int i = 0; i < 20; i++ ) {
 			Point2D_F64 p = new Point2D_F64();
@@ -54,7 +54,7 @@ public class TestFitLine_F64 {
 		LinePolar2D_F64 found = FitLine_F64.polar(pts,null);
 
 		assertEquals(r,found.distance, GrlConstants.TEST_F64);
-		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.TEST_F64);
+		assertTrue(UtilAngle.dist(theta, found.angle) <= GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class TestFitLine_F64 {
 		LinePolar2D_F64 found = FitLine_F64.polar(pts,weights,null);
 
 		assertEquals(r,found.distance, GrlConstants.TEST_F64);
-		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.TEST_F64);
+		assertTrue(UtilAngle.dist(theta, found.angle) <= GrlConstants.TEST_F64);
 	}
 
 	/**
