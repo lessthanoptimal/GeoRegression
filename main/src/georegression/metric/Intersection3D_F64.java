@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -164,9 +164,9 @@ public class Intersection3D_F64 {
 	 * [1] http://geomalgorithms.com/a06-_intersect-2.html
 	 * </p>
 	 *
-	 * @param T Triangle in 3D space
-	 * @param R Line segment in 3D space.
-	 * @param output Storage for the intersection, if there is one
+	 * @param T (Input) Triangle in 3D space
+	 * @param R (Input) Line segment in 3D space.
+	 * @param output (Output) Storage for the intersection, if there is one
 	 * @param u   (internal use) triangle vectors
 	 * @param v   (internal use) triangle vectors
 	 * @param n   (internal use) triangle vectors

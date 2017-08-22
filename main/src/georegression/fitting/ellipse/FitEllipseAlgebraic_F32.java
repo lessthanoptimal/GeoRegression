@@ -25,7 +25,7 @@ import org.ejml.dense.row.CommonOps_FDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_FDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_FDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
-import org.ejml.interfaces.linsol.LinearSolver;
+import org.ejml.interfaces.linsol.LinearSolverDense;
 
 import java.util.List;
 
@@ -71,7 +71,7 @@ public class FitEllipseAlgebraic_F32 {
 	private FMatrixRMaj Ta1 = new FMatrixRMaj(3,1);
 	private FMatrixRMaj S2_tran = new FMatrixRMaj(3,3);
 
-	private LinearSolver<FMatrixRMaj> solver = LinearSolverFactory_FDRM.linear(3);
+	private LinearSolverDense<FMatrixRMaj> solver = LinearSolverFactory_FDRM.linear(3);
 	private EigenDecomposition<FMatrixRMaj> eigen = DecompositionFactory_FDRM.eig(3,true,false);
 
 	private EllipseQuadratic_F32 ellipse = new EllipseQuadratic_F32();
