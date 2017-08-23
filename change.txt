@@ -6,6 +6,14 @@ Version : 0.14
 
 - Updated for changes in EJML
 - Added I32 line fit 2D code
+- UtilVector3D
+  * Added perpendicularCanonical()
+- UtilPlane3D
+  * Added selectAxis2D()
+  * Added point3Dto2D()
+  * Added point2Dto3D()
+- Intersection3D
+  * Added intersection(Triangle3D,LineParametric3D)
 
 ---------------------------------------------
 Date    : 2017/08/13

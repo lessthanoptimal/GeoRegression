@@ -213,6 +213,104 @@ public class Intersection3D_F64 {
 		output.z = R.a.z + r*dir.z;
 
 		// is I inside T?
+		if( containedPlane(T,output,u,v,n,w0)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * <p>Finds the intersection between a 3D triangle and a line.  Code ported from [1].  Internal
+	 * working variables are provided in this interface to reduce memory creation/destruction.</p>
+	 *
+	 * <p>
+	 * [1] http://geomalgorithms.com/a06-_intersect-2.html
+	 * </p>
+	 *
+	 * @param T (Input) Triangle in 3D space
+	 * @param R (Input) Line segment in 3D space.
+	 * @param output (Output) Storage for the intersection, if there is one
+	 * @return -1 = triangle is degenerate (a segment or point)
+	 *          0 =  disjoint (no intersect)
+	 *          1 =  intersect in unique point. Positive direction or zero
+	 *          2 =  are in the same plane
+	 *          3 =  intersect in unique point. Negative direction
+	 **/
+	public static int intersection( Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output) {
+		return intersection(T,R,output,
+				new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64());
+	}
+
+	/**
+	 * <p>Finds the intersection between a 3D triangle and a line.  Code ported from [1].  Internal
+	 * working variables are provided in this interface to reduce memory creation/destruction.</p>
+	 *
+	 * <p>
+	 * [1] http://geomalgorithms.com/a06-_intersect-2.html
+	 * </p>
+	 *
+	 * @param T (Input) Triangle in 3D space
+	 * @param R (Input) Line segment in 3D space.
+	 * @param output (Output) Storage for the intersection, if there is one
+	 * @param u   (internal use) triangle vectors
+	 * @param v   (internal use) triangle vectors
+	 * @param n   (internal use) triangle vectors
+	 * @param w0  (internal use) ray vector
+	 * @return -1 = triangle is degenerate (a segment or point)
+	 *          0 =  disjoint (no intersect)
+	 *          1 =  intersect in unique point. Positive direction or zero
+	 *          2 =  are in the same plane
+	 *          3 =  intersect in unique point. Negative direction
+	 **/
+	public static int intersection( Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output ,
+									Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
+									Vector3D_F64 w0 ) {
+		double r, a, b;              // params to calc ray-plane intersect
+
+		// get triangle edge vectors and plane normal
+		u.minus(T.v1,T.v0);   // NOTE: these could be precomputed
+		v.minus(T.v2,T.v0);
+		n.cross(u,v);
+
+		if ( n.normSq() == 0 )        // triangle is degenerate
+			return -1;                  // do not deal with this case
+
+		Vector3D_F64 dir = R.slope;
+		w0.minus(R.p,T.v0);
+		a = -n.dot(w0);
+		b = n.dot(dir);
+		if (Math.abs(b) < GrlConstants.EPS) { // ray is  parallel to triangle plane
+			if (a == 0)                       // ray lies in triangle plane
+				return 2;
+			else return 0;                    // ray disjoint from plane
+		}
+
+		// get intersect point of ray with triangle plane
+		r = a / b;
+
+		// intersect point of ray and plane
+		output.x = R.p.x + r*dir.x;
+		output.y = R.p.y + r*dir.y;
+		output.z = R.p.z + r*dir.z;
+
+		// is I inside T?
+		if( containedPlane(T,output,u,v,n,w0)) {
+			if( r >= 0 )
+				return 1;
+			else
+				return 3;
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * Determines if the point on the same plane as T is contained inside of T
+	 */
+	private static boolean containedPlane( Triangle3D_F64 T , Point3D_F64 output,
+										   Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
+										   Vector3D_F64 w0 ) {
 		double uu, uv, vv, wu, wv, D;
 		uu = u.dot(u);
 		uv = u.dot(v);
@@ -226,12 +324,9 @@ public class Intersection3D_F64 {
 		double s, t;
 		s = (uv * wv - vv * wu) / D;
 		if (s < 0.0 || s > 1.0)        // I is outside T
-			return 0;
+			return false;
 		t = (uv * wu - uu * wv) / D;
-		if (t < 0.0 || (s + t) > 1.0)  // I is outside T
-			return 0;
-
-		return 1;                      // I is in T
+		return !(t < 0.0) && !((s + t) > 1.0);  // I is outside T
 	}
 
 	/**

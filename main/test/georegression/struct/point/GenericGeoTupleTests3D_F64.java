@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
  * @author Peter Abeles
  */
 @SuppressWarnings({"unchecked"})
-public class GenericGeoTupleTests3D_F64<T extends GeoTuple3D_F64> extends GenericGeoTupleTests_F64<T> {
+public class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> extends GenericGeoTupleTests_F64<T> {
 
 	Random rand = new Random(234234);
 	private T seed;

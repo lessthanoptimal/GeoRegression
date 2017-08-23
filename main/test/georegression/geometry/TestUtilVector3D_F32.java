@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F32;
+import org.ejml.UtilEjml;
 import org.junit.Test;
 
 import java.util.Random;
@@ -64,5 +65,54 @@ public class TestUtilVector3D_F32 {
 				UtilVector3D_F32.acute(new Vector3D_F32(1,0,0),new Vector3D_F32(0,0,1)),GrlConstants.TEST_F32);
 		assertEquals(Math.PI,
 				UtilVector3D_F32.acute(new Vector3D_F32(1,0,0),new Vector3D_F32(-1,0,0)),GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void perpendicularCanonical() {
+//		perpendicularCanonical(new Vector3D_F32(1,0,0));
+//		perpendicularCanonical(new Vector3D_F32(0,-2,0));
+		perpendicularCanonical(new Vector3D_F32(0,0,3));
+		perpendicularCanonical(new Vector3D_F32(0,0,0));
+		perpendicularCanonical(new Vector3D_F32(0.1f,-0.6f,0));
+		perpendicularCanonical(new Vector3D_F32(0.1f,-0.6f,2));
+
+		// test very small
+		perpendicularCanonical(new Vector3D_F32(10.2e-14f,2.1e-14f,-9.3e-14f));
+
+		for (int i = 0; i < 100; i++) {
+			Vector3D_F32 v = new Vector3D_F32();
+			v.x = (float)rand.nextGaussian();
+			v.y = (float)rand.nextGaussian();
+			v.z = (float)rand.nextGaussian();
+
+			perpendicularCanonical(v);
+		}
+	}
+
+	public void perpendicularCanonical(Vector3D_F32 A ) {
+		Vector3D_F32 found = UtilVector3D_F32.perpendicularCanonical(A,null);
+
+		assertFalse(UtilEjml.isUncountable(found.x));
+		assertFalse(UtilEjml.isUncountable(found.y));
+		assertFalse(UtilEjml.isUncountable(found.z));
+
+		float scale = (float)Math.abs(A.x);
+		scale = (float)Math.max(scale,Math.abs(A.y));
+		scale = (float)Math.max(scale,Math.abs(A.z));
+
+		if( scale == 0 ) {
+			assertTrue(0 == found.x);
+			assertTrue(0 == found.y);
+			assertTrue(0 == found.z);
+		} else {
+			A.scale(1.0f / scale);
+
+			scale = (float)Math.abs(found.x);
+			scale = (float)Math.max(scale, (float)Math.abs(found.y));
+			scale = (float)Math.max(scale, (float)Math.abs(found.z));
+			found.scale(1.0f / scale);
+
+			assertTrue(Math.abs(A.dot(found)) <= GrlConstants.F_EPS);
+		}
 	}
 }

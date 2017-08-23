@@ -53,6 +53,38 @@ public class UtilVector3D_F64 {
 	}
 
 	/**
+	 * Selects a vector which will be perpendicular.
+	 *
+	 * @param A (Input) A vector
+	 * @param output (Optional) storage for output
+	 * @return Perpendicular vector
+	 */
+	public static Vector3D_F64 perpendicularCanonical( Vector3D_F64 A , Vector3D_F64 output ) {
+		if( output == null )
+			output = new Vector3D_F64();
+
+		// normalize for scaling
+		double scale = Math.abs(A.x)+Math.abs(A.y)+Math.abs(A.z);
+
+		if( scale == 0 ) {
+			output.set(0,0,0);
+		} else {
+			double x = A.x / scale;
+			double y = A.y / scale;
+			double z = A.z / scale;
+
+			// For numerical stability ensure that the largest variable is swapped
+			if (Math.abs(x) > Math.abs(y)) {
+				output.set(z, 0, -x);
+			} else {
+				output.set(0, z,-y);
+			}
+		}
+
+		return output;
+	}
+
+	/**
 	 * Checks to see if the two vectors are identical to within tolerance. Each axis is checked
 	 * individually.
 	 *

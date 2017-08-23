@@ -123,6 +123,37 @@ public class TestIntersection3D_F32 {
 	}
 
 	@Test
+	public void intersection_triangle_line() {
+		LineParametric3D_F32 line = new LineParametric3D_F32();
+		Point3D_F32 p = new Point3D_F32();
+
+
+		// degenerate triangle
+		Triangle3D_F32 triangle = new Triangle3D_F32(1,1,1,2,2,2,3,3,3);
+		assertEquals(-1,Intersection3D_F32.intersection(triangle,line,p));
+
+		// no intersection
+		triangle.set(1,0,0,  3,0,0,  3,2,0);
+		line.set(0,0,0,  0,0,10); // completely miss
+		assertEquals(0, Intersection3D_F32.intersection(triangle, line, p));
+		line.set(0,0,0,  0,0,10); // hits the plain but not the triangle
+		assertEquals(0, Intersection3D_F32.intersection(triangle, line, p));
+
+		// unique intersection - positive
+		line.set(2,0.5f,1,  0,0,-2);
+		assertEquals(1,Intersection3D_F32.intersection(triangle,line,p));
+		assertEquals(0,p.distance(new Point3D_F32(2,0.5f,0)),GrlConstants.TEST_F32);
+		// unique intersection - negative
+		line.set(2,0.5f,-1,  0,0,2);
+		assertEquals(1,Intersection3D_F32.intersection(triangle,line,p));
+		assertEquals(0,p.distance(new Point3D_F32(2,0.5f,0)),GrlConstants.TEST_F32);
+
+		// infinite intersections
+		line.set(0, 0, 0, 4, 0, 0);
+		assertEquals(2,Intersection3D_F32.intersection(triangle, line, p));
+	}
+
+	@Test
 	public void contained_boxLength_point() {
 		BoxLength3D_F32 box = new BoxLength3D_F32(2,3,4,1,1.5f,2.5f);
 

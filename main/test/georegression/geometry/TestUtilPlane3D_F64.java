@@ -27,6 +27,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.transform.se.SePointOps_F64;
+import org.ejml.UtilEjml;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -236,4 +237,52 @@ public class TestUtilPlane3D_F64 {
 		}
 	}
 
+	@Test
+	public void selectAxis2D() {
+
+		Vector3D_F64 z = new Vector3D_F64(-1.2,5.6,9.9);
+		Vector3D_F64 x = new Vector3D_F64();
+		Vector3D_F64 y = new Vector3D_F64();
+
+		UtilPlane3D_F64.selectAxis2D(z,x,y);
+
+		assertEquals(0,z.dot(x), UtilEjml.TEST_F64);
+		assertEquals(0,z.dot(y), UtilEjml.TEST_F64);
+		assertEquals(0,x.dot(y), UtilEjml.TEST_F64);
+
+		assertEquals( 1 , x.norm(), UtilEjml.TEST_F64);
+		assertEquals( 1 , y.norm(), UtilEjml.TEST_F64);
+
+		Vector3D_F64 found = new Vector3D_F64();
+		found.cross(x,y);
+
+		assertTrue(found.dot(z) > 0 ); // make sure it's right handed
+	}
+
+	@Test
+	public void point3Dto2D_point2Dto3D() {
+
+		Point3D_F64 c = new Point3D_F64(5.1,-3.1,3);
+		Vector3D_F64 z = new Vector3D_F64(-1.2,5.6,9.9);
+
+		Vector3D_F64 x = new Vector3D_F64();
+		Vector3D_F64 y = new Vector3D_F64();
+
+		Point3D_F64 p3 = new Point3D_F64();
+		Point2D_F64 p2 = new Point2D_F64();
+
+		UtilPlane3D_F64.selectAxis2D(z,x,y);
+
+		// pick a point on the plane
+		p3.x = c.x + x.x;
+		p3.y = c.y + x.y;
+		p3.z = c.z + x.z;
+
+		UtilPlane3D_F64.point3Dto2D(c,x,y,p3,p2);
+
+		Point3D_F64 found = new Point3D_F64();
+		UtilPlane3D_F64.point2Dto3D(c,x,y,p2,found);
+
+		assertTrue(found.distance(p3) <= UtilEjml.TEST_F64);
+	}
 }

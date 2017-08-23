@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
  * @author Peter Abeles
  */
 @SuppressWarnings({"unchecked"})
-public abstract class GenericInvertibleTransformTests_F32<T extends GeoTuple_F32> {
+public abstract class GenericInvertibleTransformTests_F32 <T extends GeoTuple_F32> {
 
 	public abstract T createRandomPoint();
 

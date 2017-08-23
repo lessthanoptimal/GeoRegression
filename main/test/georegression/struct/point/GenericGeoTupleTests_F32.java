@@ -29,7 +29,7 @@ import static org.junit.Assert.assertTrue;
  * @author Peter Abeles
  */
 @SuppressWarnings({"unchecked"})
-public class GenericGeoTupleTests_F32<T extends GeoTuple_F32> {
+public class GenericGeoTupleTests_F32 <T extends GeoTuple_F32> {
 
 	private T seed;
 

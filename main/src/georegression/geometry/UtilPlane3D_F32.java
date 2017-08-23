@@ -22,6 +22,7 @@ import georegression.metric.ClosestPoint3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.plane.PlaneTangent3D_F32;
+import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
@@ -145,6 +146,62 @@ public class UtilPlane3D_F32 {
 	}
 
 	/**
+	 * There are an infinite number of possible 2D coordinate axises for a plane. This selects one which
+	 * will be right handed using
+	 * {@link UtilVector3D_F32#perpendicularCanonical(Vector3D_F32, Vector3D_F32)} and a cross product.
+	 *
+	 * @param normal (Input) The plane's normal or z-axis
+	 * @param axisX (Output) Selected x-axis. Normalized
+	 * @param axisY (output) Selected y-axis. Normalized
+	 */
+	public static void selectAxis2D( Vector3D_F32 normal , Vector3D_F32 axisX , Vector3D_F32 axisY ) {
+		UtilVector3D_F32.perpendicularCanonical(normal,axisX);
+		axisX.normalize();
+		axisY.cross(normal,axisX);
+		axisY.normalize();
+	}
+
+	/**
+	 * Projects the point onto the 2D coordinate system specified by the provided x-axis. If the chose of
+	 * x-axis is arbitrary {@link UtilVector3D_F32#perpendicularCanonical(Vector3D_F32, Vector3D_F32)} is recommended
+	 * as a way to select
+	 *
+	 * @param pointOnPlane (Input) A point on the plane.
+	 * @param axisX (Input) Vector which defines the x-axis
+	 * @param axisY (Input) Vector which defines the y-axis
+	 * @param A (Input) 3D vector you wish to project. MUST BE ON THE PlANE
+	 * @param output (Output) 2D projected vector.
+	 */
+	public static void point3Dto2D(Point3D_F32 pointOnPlane ,
+								   Vector3D_F32 axisX , Vector3D_F32 axisY,
+								   Point3D_F32 A , Point2D_F32 output ) {
+
+		float x = A.x - pointOnPlane.x;
+		float y = A.y - pointOnPlane.y;
+		float z = A.z - pointOnPlane.z;
+
+		output.x = x*axisX.x + y*axisX.y + z*axisX.z;
+		output.y = x*axisY.x + y*axisY.y + z*axisY.z;
+	}
+
+	/**
+	 * Given a point on the plane's 2D coordinate system, convert it back into a 3D point.
+	 * @param origin (Input) Point that defines the 2D coordinate system's origin.
+	 * @param axisX (Input) axis which defines the 2D x-axis
+	 * @param axisY (Input) axis which defines the 2D y-axis
+	 * @param A (Input) 2D point that is to be converted
+	 * @param output (Output) 3D point
+	 */
+	public static void point2Dto3D(Point3D_F32 origin ,
+								   Vector3D_F32 axisX , Vector3D_F32 axisY,
+								   Point2D_F32 A , Point3D_F32 output ) {
+
+		output.x = origin.x + axisX.x*A.x + axisY.y*A.y;
+		output.y = origin.y + axisX.y*A.x + axisY.y*A.y;
+		output.z = origin.z + axisX.z*A.x + axisY.y*A.y;
+	}
+
+	/**
 	 * Returns true if the two plane equations are equal to within tolerance.  Planes are converted into
 	 * generalized format and normalized to take in account scale ambiguity.
 	 *
@@ -205,30 +262,20 @@ public class UtilPlane3D_F32 {
 			planeToWorld = new Se3_F32();
 
 		Vector3D_F32 axisZ = new Vector3D_F32(plane.A,plane.B,plane.C);
+
+		axisZ.normalize();
 		Vector3D_F32 axisX = new Vector3D_F32();
 		Vector3D_F32 axisY = new Vector3D_F32();
+		UtilPlane3D_F32.selectAxis2D(axisZ,axisX,axisY);
 
-		// pick an arbitrary perpendicular axis to be the x-axis
-		if( axisZ.x != 0 ) {
-			axisX.x = axisZ.y;
-			axisX.y = -axisZ.x;
-			axisX.z = axisZ.z;
-		} else if( axisZ.y != 0 ) {
-			axisX.x = -axisZ.y;
-			axisX.y = 0;
-			axisX.z = axisZ.z;
-		} else if( axisZ.z != 0 ) {
-			axisX.x = 0;
-			axisX.y = axisZ.z;
-			axisX.z = 0;
-		}
+		return planeToWorld(plane,axisX,axisY,axisZ,planeToWorld);
+	}
 
-		axisY.cross(axisX,axisZ);
-		axisX.cross(axisY,axisZ);
-
-		axisX.normalize();
-		axisY.normalize();
-		axisZ.normalize();
+	public static Se3_F32 planeToWorld( PlaneGeneral3D_F32 plane ,
+										Vector3D_F32 axisX , Vector3D_F32 axisY,Vector3D_F32 axisZ,
+										Se3_F32 planeToWorld ) {
+		if( planeToWorld == null )
+			planeToWorld = new Se3_F32();
 
 		FMatrixRMaj R = planeToWorld.R;
 		R.data[0] = axisX.x; R.data[1] = axisY.x; R.data[2] = axisZ.x;
