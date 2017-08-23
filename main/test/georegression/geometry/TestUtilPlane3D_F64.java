@@ -96,6 +96,11 @@ public class TestUtilPlane3D_F64 {
 	}
 
 	@Test
+	public void convert_se3_plane() {
+		fail("Implement");
+	}
+
+	@Test
 	public void hessianNormalForm() {
 		PlaneGeneral3D_F64 a = new PlaneGeneral3D_F64(2,-3,4,5);
 		double n = Math.sqrt(2*2 + 3*3 + 4*4);

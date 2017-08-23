@@ -20,17 +20,18 @@ package georegression.metric;
 
 
 import georegression.geometry.GeometryMath_F64;
+import georegression.geometry.UtilPlane3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
+import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
-import georegression.struct.shapes.Box3D_F64;
-import georegression.struct.shapes.BoxLength3D_F64;
-import georegression.struct.shapes.Sphere3D_F64;
-import georegression.struct.shapes.Triangle3D_F64;
+import georegression.struct.se.Se3_F64;
+import georegression.struct.shapes.*;
+import georegression.transform.se.SePointOps_F64;
 
 /**
  * @author Peter Abeles
@@ -257,11 +258,11 @@ public class Intersection3D_F64 {
 	 * @param v   (internal use) triangle vectors
 	 * @param n   (internal use) triangle vectors
 	 * @param w0  (internal use) ray vector
-	 * @return -1 = triangle is degenerate (a segment or point)
+	 * @return <pre>-1 = triangle is degenerate (a segment or point)
 	 *          0 =  disjoint (no intersect)
 	 *          1 =  intersect in unique point. Positive direction or zero
 	 *          2 =  are in the same plane
-	 *          3 =  intersect in unique point. Negative direction
+	 *          3 =  intersect in unique point. Negative direction</pre>
 	 **/
 	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output ,
 								Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
@@ -303,6 +304,89 @@ public class Intersection3D_F64 {
 		} else {
 			return 0;
 		}
+	}
+
+	/**
+	 * Detects if a 2D convex polygon that has been moved into a 3D world is intersected by the 3D line.
+	 * <pre>
+	 * Transformation:
+	 * 1) Each 2D point is converted into 3D: X=(x,y,0)
+	 * 2) X' = R*X + T, where (R,T) are a rigid body transform from poly to world frames
+	 * </pre>
+	 *
+	 * @param polygon (Input)
+	 * @param polyToWorld (Input)
+	 * @param line (Input)
+	 * @param output (Output)
+	 * @param T (internal use)
+	 * @param plane (internal use)
+	 * @param u (internal use)
+	 * @param v (internal use)
+	 * @param w0 (internal use)
+	 * @return <pre>-1 = triangle is degenerate (a segment or point)
+	 *          0 =  disjoint (no intersect)
+	 *          1 =  intersect in unique point. Positive direction or zero
+	 *          2 =  are in the same plane
+	 *          3 =  intersect in unique point. Negative direction</pre>
+	 */
+	public static int intersectConvex(Polygon2D_F64 polygon , Se3_F64 polyToWorld ,
+									  LineParametric3D_F64 line , Point3D_F64 output,
+									  Triangle3D_F64 T , PlaneNormal3D_F64 plane ,
+									  Vector3D_F64 u, Vector3D_F64 v, Vector3D_F64 w0) {
+
+		// extract definition of the plane from polyToWorld
+		UtilPlane3D_F64.convert(polyToWorld,plane);
+
+		// see if the line intersects the plane and record where
+		double dx = plane.p.x - line.p.x;
+		double dy = plane.p.y - line.p.y;
+		double dz = plane.p.z - line.p.z;
+
+		double top = dx*plane.n.x + dy*plane.n.y + dz*plane.n.z;
+		double bottom = line.slope.dot(plane.n);
+
+		if (Math.abs(bottom) < GrlConstants.EPS) { // ray is  parallel to triangle plane
+			if (top == 0)                       // ray lies in triangle plane
+				return 2;
+			else return 0;                    // ray disjoint from plane
+		}
+
+		double d = top/bottom;
+
+		output.x = line.p.x + d*line.slope.x;
+		output.y = line.p.y + d*line.slope.y;
+		output.z = line.p.z + d*line.slope.z;
+
+		// go through all the inner triangles and see if there's an intersection
+		Point2D_F64 p0 = polygon.get(0);
+		Point2D_F64 p1 = polygon.get(1);
+
+		T.v0.set(p0.x,p0.y,0);
+		T.v1.set(p1.x,p1.y,0);
+		SePointOps_F64.transform(polyToWorld,T.v0,T.v0);
+		SePointOps_F64.transform(polyToWorld,T.v1,T.v1);
+
+		w0.minus(plane.p,T.v0); // v0 does not change
+
+		for (int i = 2; i < polygon.size(); i++) {
+			Point2D_F64 p = polygon.get(i);
+			T.v2.set(p.x,p.y,0);
+			SePointOps_F64.transform(polyToWorld,T.v2,T.v2);
+
+			u.minus(T.v1,T.v0);
+			v.minus(T.v2,T.v0);
+
+
+			if( containedPlane(T,output,u,v,plane.n,w0) ) {
+				if( d >= 0 )
+					return 1;
+				else
+					return 3;
+			}
+
+			T.v1.set(T.v2);
+		}
+		return 0;
 	}
 
 	/**

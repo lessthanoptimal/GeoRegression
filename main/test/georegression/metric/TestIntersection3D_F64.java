@@ -154,6 +154,11 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
+	public void intersect_poly2Dconvex_line() {
+		fail("Implement");
+	}
+
+	@Test
 	public void contained_boxLength_point() {
 		BoxLength3D_F64 box = new BoxLength3D_F64(2,3,4,1,1.5,2.5);
 
