@@ -151,8 +151,8 @@ public class Intersection3D_F32 {
 	 *          1 =  intersect in unique point I1<br>
 	 *          2 =  are in the same plane
 	 **/
-	public static int intersection( Triangle3D_F32 T , LineSegment3D_F32 R , Point3D_F32 output ) {
-		return intersection(T,R,output,
+	public static int intersect(Triangle3D_F32 T , LineSegment3D_F32 R , Point3D_F32 output ) {
+		return intersect(T,R,output,
 				new Vector3D_F32(),new Vector3D_F32(),new Vector3D_F32(),new Vector3D_F32(),new Vector3D_F32());
 	}
 
@@ -177,9 +177,9 @@ public class Intersection3D_F32 {
 	 *          1 =  intersect in unique point I1
 	 *          2 =  are in the same plane
 	 **/
-	public static int intersection( Triangle3D_F32 T , LineSegment3D_F32 R , Point3D_F32 output ,
-									Vector3D_F32 u , Vector3D_F32 v , Vector3D_F32 n,
-									Vector3D_F32 dir , Vector3D_F32 w0 ) {
+	public static int intersect(Triangle3D_F32 T , LineSegment3D_F32 R , Point3D_F32 output ,
+								Vector3D_F32 u , Vector3D_F32 v , Vector3D_F32 n,
+								Vector3D_F32 dir , Vector3D_F32 w0 ) {
 		float r, a, b;              // params to calc ray-plane intersect
 
 		// get triangle edge vectors and plane normal
@@ -237,8 +237,8 @@ public class Intersection3D_F32 {
 	 *          2 =  are in the same plane
 	 *          3 =  intersect in unique point. Negative direction
 	 **/
-	public static int intersection( Triangle3D_F32 T , LineParametric3D_F32 R , Point3D_F32 output) {
-		return intersection(T,R,output,
+	public static int intersect(Triangle3D_F32 T , LineParametric3D_F32 R , Point3D_F32 output) {
+		return intersect(T,R,output,
 				new Vector3D_F32(),new Vector3D_F32(),new Vector3D_F32(),new Vector3D_F32());
 	}
 
@@ -263,9 +263,9 @@ public class Intersection3D_F32 {
 	 *          2 =  are in the same plane
 	 *          3 =  intersect in unique point. Negative direction
 	 **/
-	public static int intersection( Triangle3D_F32 T , LineParametric3D_F32 R , Point3D_F32 output ,
-									Vector3D_F32 u , Vector3D_F32 v , Vector3D_F32 n,
-									Vector3D_F32 w0 ) {
+	public static int intersect(Triangle3D_F32 T , LineParametric3D_F32 R , Point3D_F32 output ,
+								Vector3D_F32 u , Vector3D_F32 v , Vector3D_F32 n,
+								Vector3D_F32 w0 ) {
 		float r, a, b;              // params to calc ray-plane intersect
 
 		// get triangle edge vectors and plane normal

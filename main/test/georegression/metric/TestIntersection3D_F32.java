@@ -99,27 +99,27 @@ public class TestIntersection3D_F32 {
 
 		// degenerate triangle
 		Triangle3D_F32 triangle = new Triangle3D_F32(1,1,1,2,2,2,3,3,3);
-		assertEquals(-1,Intersection3D_F32.intersection(triangle,ls,p));
+		assertEquals(-1,Intersection3D_F32.intersect(triangle,ls,p));
 
 		// no intersection
 		triangle.set(1,0,0,  3,0,0,  3,2,0);
 		ls.set(0,0,0,  0,0,10); // completely miss
-		assertEquals(0, Intersection3D_F32.intersection(triangle, ls, p));
+		assertEquals(0, Intersection3D_F32.intersect(triangle, ls, p));
 		ls.set(0,0,0,  0,0,10); // hits the plain but not the triangle
-		assertEquals(0, Intersection3D_F32.intersection(triangle, ls, p));
+		assertEquals(0, Intersection3D_F32.intersect(triangle, ls, p));
 		ls.set(2,0.5f,-1,  2,0.5f,-0.5f); // would hit, but is too short
-		assertEquals(0, Intersection3D_F32.intersection(triangle, ls, p));
+		assertEquals(0, Intersection3D_F32.intersect(triangle, ls, p));
 		ls.set(2,0.5f,-0.5f,  2,0.5f,-1); // would hit, but is too short
-		assertEquals(0,Intersection3D_F32.intersection(triangle,ls,p));
+		assertEquals(0,Intersection3D_F32.intersect(triangle,ls,p));
 
 		// unique intersection
 		ls.set(2,0.5f,1,  2,0.5f,-1);
-		assertEquals(1,Intersection3D_F32.intersection(triangle,ls,p));
+		assertEquals(1,Intersection3D_F32.intersect(triangle,ls,p));
 		assertEquals(0,p.distance(new Point3D_F32(2,0.5f,0)),GrlConstants.TEST_F32);
 
 		// infinite intersections
 		ls.set(0, 0, 0, 4, 0, 0);
-		assertEquals(2,Intersection3D_F32.intersection(triangle, ls, p));
+		assertEquals(2,Intersection3D_F32.intersect(triangle, ls, p));
 	}
 
 	@Test
@@ -130,27 +130,27 @@ public class TestIntersection3D_F32 {
 
 		// degenerate triangle
 		Triangle3D_F32 triangle = new Triangle3D_F32(1,1,1,2,2,2,3,3,3);
-		assertEquals(-1,Intersection3D_F32.intersection(triangle,line,p));
+		assertEquals(-1,Intersection3D_F32.intersect(triangle,line,p));
 
 		// no intersection
 		triangle.set(1,0,0,  3,0,0,  3,2,0);
 		line.set(0,0,0,  0,0,10); // completely miss
-		assertEquals(0, Intersection3D_F32.intersection(triangle, line, p));
+		assertEquals(0, Intersection3D_F32.intersect(triangle, line, p));
 		line.set(0,0,0,  0,0,10); // hits the plain but not the triangle
-		assertEquals(0, Intersection3D_F32.intersection(triangle, line, p));
+		assertEquals(0, Intersection3D_F32.intersect(triangle, line, p));
 
 		// unique intersection - positive
 		line.set(2,0.5f,1,  0,0,-2);
-		assertEquals(1,Intersection3D_F32.intersection(triangle,line,p));
+		assertEquals(1,Intersection3D_F32.intersect(triangle,line,p));
 		assertEquals(0,p.distance(new Point3D_F32(2,0.5f,0)),GrlConstants.TEST_F32);
 		// unique intersection - negative
 		line.set(2,0.5f,-1,  0,0,2);
-		assertEquals(1,Intersection3D_F32.intersection(triangle,line,p));
+		assertEquals(1,Intersection3D_F32.intersect(triangle,line,p));
 		assertEquals(0,p.distance(new Point3D_F32(2,0.5f,0)),GrlConstants.TEST_F32);
 
 		// infinite intersections
 		line.set(0, 0, 0, 4, 0, 0);
-		assertEquals(2,Intersection3D_F32.intersection(triangle, line, p));
+		assertEquals(2,Intersection3D_F32.intersect(triangle, line, p));
 	}
 
 	@Test
