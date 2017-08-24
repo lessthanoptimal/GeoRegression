@@ -106,22 +106,22 @@ public class UtilPlane3D_F64 {
 	}
 
 	/**
-	 * Defines a plane using a 3D rigid body transform. +z is the 3rd column in the rotation matrix. The plane's
-	 * point is the translation.
-	 * @param input (Input) SE3 transform
+	 * Defines a plane using a 3D rigid body transform. +z is the 3rd column the rotation matrix. The plane's
+	 * point is the translation. The plane reference frame is the x-y plane.
+	 * @param planeToWorld (Input) SE3 transform from the plane into the "world" frame.
 	 * @param output (Output) Plane
 	 * @return Plane
 	 */
-	public static PlaneNormal3D_F64 convert( Se3_F64 input , PlaneNormal3D_F64 output ) {
+	public static PlaneNormal3D_F64 convert( Se3_F64 planeToWorld , PlaneNormal3D_F64 output ) {
 		if( output == null )
 			output = new PlaneNormal3D_F64();
 
 		// the value of input is a vector normal to the plane and a point on the plane.
-		output.n.x = input.R.unsafe_get(0,0);
-		output.n.y = input.R.unsafe_get(0,1);
-		output.n.z = input.R.unsafe_get(0,2);
+		output.n.x = planeToWorld.R.unsafe_get(0,2);
+		output.n.y = planeToWorld.R.unsafe_get(1,2);
+		output.n.z = planeToWorld.R.unsafe_get(2,2);
 
-		output.p.set(input.T.x,input.T.y,input.T.z);
+		output.p.set(planeToWorld.T.x,planeToWorld.T.y,planeToWorld.T.z);
 
 		return output;
 	}

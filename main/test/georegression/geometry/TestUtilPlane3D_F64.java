@@ -19,6 +19,7 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.EulerType;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.plane.PlaneTangent3D_F64;
@@ -97,7 +98,31 @@ public class TestUtilPlane3D_F64 {
 
 	@Test
 	public void convert_se3_plane() {
-		fail("Implement");
+		Se3_F64 p2w = new Se3_F64();
+
+		convert_se3_plane(p2w);
+		p2w.T.set(2,6,-3);
+		convert_se3_plane(p2w);
+		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,0.2,3,-4.5,p2w.R);
+		convert_se3_plane(p2w);
+	}
+
+	private void convert_se3_plane( Se3_F64 p2w ){
+
+		List<Point3D_F64> points = new ArrayList<>();
+		points.add(new Point3D_F64(0,0,0));
+		points.add(new Point3D_F64(10,0,0));
+		points.add(new Point3D_F64(0,1,0));
+		points.add(new Point3D_F64(-0.2,0,0));
+		points.add(new Point3D_F64(-3,2,0));
+		points.add(new Point3D_F64(6,1000,0));
+
+		// if the extracted plane is correct then all these points should be on it
+		PlaneNormal3D_F64 plane = UtilPlane3D_F64.convert(p2w,null);
+		for( Point3D_F64 p : points ) {
+			SePointOps_F64.transform(p2w,p,p);
+			assertEquals(0,UtilPlane3D_F64.evaluate(plane,p) , GrlConstants.TEST_F64);
+		}
 	}
 
 	@Test
