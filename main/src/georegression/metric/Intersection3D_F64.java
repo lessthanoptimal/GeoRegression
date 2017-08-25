@@ -234,11 +234,11 @@ public class Intersection3D_F64 {
 	 * @param output (Output) Storage for the intersection, if there is one
 	 * @return <ul style="list-style-type:none">
 	 *         <li>-1 = triangle is degenerate (a segment or point)</li>
-	 *          <li>-0 =  disjoint (no intersect)</li>
-	 *          <li>-1 =  intersect in unique point. Positive direction or zero</li>
-	 *          <li>-2 =  are in the same plane</li>
-	 *          <li>-3 =  intersect in unique point. Negative direction<</li>
-	 *          /ul>
+	 *          <li>0 =  disjoint (no intersect)</li>
+	 *          <li>1 =  intersect in unique point. Positive direction or zero</li>
+	 *          <li>2 =  are in the same plane</li>
+	 *          <li>3 =  intersect in unique point. Negative direction<</li>
+	 *          </ul>
 	 **/
 	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output) {
 		return intersect(T,R,output,
@@ -262,11 +262,11 @@ public class Intersection3D_F64 {
 	 * @param w0  (internal use) ray vector
 	 * @return <ul style="list-style-type:none">
 	 *         <li>-1 = triangle is degenerate (a segment or point)</li>
-	 *          <li>-0 =  disjoint (no intersect)</li>
-	 *          <li>-1 =  intersect in unique point. Positive direction or zero</li>
-	 *          <li>-2 =  are in the same plane</li>
-	 *          <li>-3 =  intersect in unique point. Negative direction<</li>
-	 *          /ul>
+	 *          <li>0 =  disjoint (no intersect)</li>
+	 *          <li>1 =  intersect in unique point. Positive direction or zero</li>
+	 *          <li>2 =  are in the same plane</li>
+	 *          <li>3 =  intersect in unique point. Negative direction<</li>
+	 *          </ul>
 	 **/
 	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output ,
 								Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
@@ -327,11 +327,11 @@ public class Intersection3D_F64 {
 	 * @param w0 (internal use)
 	 * @return <ul style="list-style-type:none">
 	 *         <li>-1 = triangle is degenerate (a segment or point)</li>
-	 *          <li>-0 =  disjoint (no intersect)</li>
-	 *          <li>-1 =  intersect in unique point. Positive direction or zero</li>
-	 *          <li>-2 =  are in the same plane</li>
-	 *          <li>-3 =  intersect in unique point. Negative direction<</li>
-	 *          /ul>
+	 *          <li>0 =  disjoint (no intersect)</li>
+	 *          <li>1 =  intersect in unique point. Positive direction or zero</li>
+	 *          <li>2 =  are in the same plane</li>
+	 *          <li>3 =  intersect in unique point. Negative direction<</li>
+	 *          </ul>
 	 */
 	public static int intersectConvex(FastQueue<Point3D_F64> polygon,
 									  LineParametric3D_F64 line , Point3D_F64 output,
@@ -372,22 +372,30 @@ public class Intersection3D_F64 {
 		output.z = line.p.z + r*dir.z;
 
 		// See if it's inside any of the triangles
-		for (int i = 3; i < polygon.size; i++) {
-			v1 = polygon.get(i-2);
-			v2 = polygon.get(2-1);
-
-			u.minus(v1,v0);
-			v.minus(v2,v0);
-
+		for (int i = 2; i < polygon.size; i++) {
 			// is I inside T?
-			if( containedPlane(v0,output,u,v,w0)) {
+			if (containedPlane(v0, output, u, v, w0)) {
 				if (r >= 0)
 					return 1;
 				else
 					return 3;
 			}
+
+			if (i < polygon.size - 1) {
+				u.minus(polygon.get(i), v0);
+				v.minus(polygon.get(i+1), v0);
+			}
 		}
 		return 0;
+	}
+
+	/**
+	 * @see #intersectConvex(FastQueue, LineParametric3D_F64, Point3D_F64, Vector3D_F64, Vector3D_F64, Vector3D_F64, Vector3D_F64)
+	 */
+	public static int intersectConvex(FastQueue<Point3D_F64> polygon,
+									  LineParametric3D_F64 line , Point3D_F64 output) {
+		return intersectConvex(polygon,line,output,new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64(),
+				new Vector3D_F64());
 	}
 
 	/**
