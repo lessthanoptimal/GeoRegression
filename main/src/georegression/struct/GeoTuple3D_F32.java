@@ -162,6 +162,12 @@ public abstract class GeoTuple3D_F32 <T extends GeoTuple3D_F32> extends GeoTuple
 		z *= scalar;
 	}
 
+	public void divideIP( float scalar ) {
+		x /= scalar;
+		y /= scalar;
+		z /= scalar;
+	}
+
 	/**
 	 * Scalar multiplication
 	 * @param scalar value which is it multiplied by
@@ -181,6 +187,14 @@ public abstract class GeoTuple3D_F32 <T extends GeoTuple3D_F32> extends GeoTuple
 
 	public float normSq() {
 		return x * x + y * y + z * z;
+	}
+
+	public float distance( float x , float y , float z ) {
+		float dx = x - this.x;
+		float dy = y - this.y;
+		float dz = z - this.z;
+
+		return (float)Math.sqrt( dx * dx + dy * dy + dz * dz );
 	}
 
 	@Override

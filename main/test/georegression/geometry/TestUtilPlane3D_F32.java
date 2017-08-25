@@ -19,6 +19,7 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.EulerType;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.plane.PlaneTangent3D_F32;
@@ -92,6 +93,35 @@ public class TestUtilPlane3D_F32 {
 		for( Point3D_F32 p : points ) {
 			float found = UtilPlane3D_F32.evaluate(conv,p);
 			assertEquals(0,found, GrlConstants.TEST_F32);
+		}
+	}
+
+	@Test
+	public void convert_se3_plane() {
+		Se3_F32 p2w = new Se3_F32();
+
+		convert_se3_plane(p2w);
+		p2w.T.set(2,6,-3);
+		convert_se3_plane(p2w);
+		ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,0.2f,3,-4.5f,p2w.R);
+		convert_se3_plane(p2w);
+	}
+
+	private void convert_se3_plane( Se3_F32 p2w ){
+
+		List<Point3D_F32> points = new ArrayList<>();
+		points.add(new Point3D_F32(0,0,0));
+		points.add(new Point3D_F32(10,0,0));
+		points.add(new Point3D_F32(0,1,0));
+		points.add(new Point3D_F32(-0.2f,0,0));
+		points.add(new Point3D_F32(-3,2,0));
+		points.add(new Point3D_F32(6,1000,0));
+
+		// if the extracted plane is correct then all these points should be on it
+		PlaneNormal3D_F32 plane = UtilPlane3D_F32.convert(p2w,null);
+		for( Point3D_F32 p : points ) {
+			SePointOps_F32.transform(p2w,p,p);
+			assertEquals(0,UtilPlane3D_F32.evaluate(plane,p) , GrlConstants.TEST_F32);
 		}
 	}
 

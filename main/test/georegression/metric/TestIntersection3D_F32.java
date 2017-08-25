@@ -18,17 +18,23 @@
 
 package georegression.metric;
 
+import georegression.geometry.ConvertRotation3D_F32;
+import georegression.geometry.GeometryMath_F32;
 import georegression.geometry.UtilPlane3D_F32;
 import georegression.misc.GrlConstants;
+import georegression.struct.EulerType;
 import georegression.struct.line.LineParametric3D_F32;
 import georegression.struct.line.LineSegment3D_F32;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.point.Point3D_F32;
+import georegression.struct.se.Se3_F32;
 import georegression.struct.shapes.Box3D_F32;
 import georegression.struct.shapes.BoxLength3D_F32;
 import georegression.struct.shapes.Sphere3D_F32;
 import georegression.struct.shapes.Triangle3D_F32;
+import georegression.transform.se.SePointOps_F32;
+import org.ddogleg.struct.FastQueue;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -151,6 +157,52 @@ public class TestIntersection3D_F32 {
 		// infinite intersections
 		line.set(0, 0, 0, 4, 0, 0);
 		assertEquals(2,Intersection3D_F32.intersect(triangle, line, p));
+	}
+
+	@Test
+	public void intersect_poly_line() {
+		// Simple test cases
+		FastQueue<Point3D_F32> polygon = new FastQueue<>(Point3D_F32.class,true);
+
+		polygon.add( new Point3D_F32(-1,-1,2));
+		polygon.add( new Point3D_F32(-1,1,2));
+		polygon.add( new Point3D_F32(1,1,2));
+		polygon.add( new Point3D_F32(1,-1,2));
+
+		// hit two different parts of the polygon
+		LineParametric3D_F32 line = new LineParametric3D_F32(-0.5f,0.5f,0,0,0,1);
+		Point3D_F32 found = new Point3D_F32();
+//		assertEquals(1,Intersection3D_F32.intersectConvex(polygon,line,found));
+//		assertTrue(found.distance(-0.5f,0.5f,2) <= GrlConstants.TEST_F32);
+		line.p.set(0.5f,-0.5f,0);
+		assertEquals(1,Intersection3D_F32.intersectConvex(polygon,line,found));
+		assertTrue(found.distance(0.5f,-0.5f,2) <= GrlConstants.TEST_F32);
+		// point the line in the other direction
+		line.slope.set(0,0,-1);
+		assertEquals(3,Intersection3D_F32.intersectConvex(polygon,line,found));
+		assertTrue(found.distance(0.5f,-0.5f,2) <= GrlConstants.TEST_F32);
+		// miss the target entirely
+		line.slope.set(0,50,0.001f);
+		assertEquals(0,Intersection3D_F32.intersectConvex(polygon,line,found));
+
+		// rotate everything
+		Se3_F32 se = new Se3_F32();
+		se.T.set(-4,2,1.2f);
+		ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,1.2f,0.5f,3.4f,se.R);
+
+		line.p.set(0.5f,-0.5f,0);
+		line.slope.set(0,0,1);
+		SePointOps_F32.transform(se,line.p,line.p);
+		GeometryMath_F32.mult(se.R,line.slope,line.slope);
+
+		for (int i = 0; i < polygon.size; i++) {
+			SePointOps_F32.transform(se,polygon.get(i),polygon.get(i));
+		}
+
+		Point3D_F32 expected = new Point3D_F32(0.5f,-0.5f,2);
+		SePointOps_F32.transform(se,expected,expected);
+		assertEquals(1,Intersection3D_F32.intersectConvex(polygon,line,found));
+		assertTrue(found.distance(expected) <= GrlConstants.TEST_F32);
 	}
 
 	@Test
