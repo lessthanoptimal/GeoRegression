@@ -20,18 +20,18 @@ package georegression.metric;
 
 
 import georegression.geometry.GeometryMath_F64;
-import georegression.geometry.UtilPlane3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
-import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
-import georegression.struct.se.Se3_F64;
-import georegression.struct.shapes.*;
-import georegression.transform.se.SePointOps_F64;
+import georegression.struct.shapes.Box3D_F64;
+import georegression.struct.shapes.BoxLength3D_F64;
+import georegression.struct.shapes.Sphere3D_F64;
+import georegression.struct.shapes.Triangle3D_F64;
+import org.ddogleg.struct.FastQueue;
 
 /**
  * @author Peter Abeles
@@ -214,7 +214,7 @@ public class Intersection3D_F64 {
 		output.z = R.a.z + r*dir.z;
 
 		// is I inside T?
-		if( containedPlane(T,output,u,v,n,w0)) {
+		if( containedPlane(T.v0,output,u,v,w0)) {
 			return 1;
 		} else {
 			return 0;
@@ -232,11 +232,13 @@ public class Intersection3D_F64 {
 	 * @param T (Input) Triangle in 3D space
 	 * @param R (Input) Line segment in 3D space.
 	 * @param output (Output) Storage for the intersection, if there is one
-	 * @return -1 = triangle is degenerate (a segment or point)
-	 *          0 =  disjoint (no intersect)
-	 *          1 =  intersect in unique point. Positive direction or zero
-	 *          2 =  are in the same plane
-	 *          3 =  intersect in unique point. Negative direction
+	 * @return <ul style="list-style-type:none">
+	 *         <li>-1 = triangle is degenerate (a segment or point)</li>
+	 *          <li>-0 =  disjoint (no intersect)</li>
+	 *          <li>-1 =  intersect in unique point. Positive direction or zero</li>
+	 *          <li>-2 =  are in the same plane</li>
+	 *          <li>-3 =  intersect in unique point. Negative direction<</li>
+	 *          /ul>
 	 **/
 	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output) {
 		return intersect(T,R,output,
@@ -258,11 +260,13 @@ public class Intersection3D_F64 {
 	 * @param v   (internal use) triangle vectors
 	 * @param n   (internal use) triangle vectors
 	 * @param w0  (internal use) ray vector
-	 * @return <pre>-1 = triangle is degenerate (a segment or point)
-	 *          0 =  disjoint (no intersect)
-	 *          1 =  intersect in unique point. Positive direction or zero
-	 *          2 =  are in the same plane
-	 *          3 =  intersect in unique point. Negative direction</pre>
+	 * @return <ul style="list-style-type:none">
+	 *         <li>-1 = triangle is degenerate (a segment or point)</li>
+	 *          <li>-0 =  disjoint (no intersect)</li>
+	 *          <li>-1 =  intersect in unique point. Positive direction or zero</li>
+	 *          <li>-2 =  are in the same plane</li>
+	 *          <li>-3 =  intersect in unique point. Negative direction<</li>
+	 *          /ul>
 	 **/
 	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output ,
 								Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
@@ -296,7 +300,7 @@ public class Intersection3D_F64 {
 		output.z = R.p.z + r*dir.z;
 
 		// is I inside T?
-		if( containedPlane(T,output,u,v,n,w0)) {
+		if( containedPlane(T.v0,output,u,v,w0)) {
 			if( r >= 0 )
 				return 1;
 			else
@@ -314,92 +318,90 @@ public class Intersection3D_F64 {
 	 * 2) X' = R*X + T, where (R,T) are a rigid body transform from poly to world frames
 	 * </pre>
 	 *
-	 * @param polygon (Input)
-	 * @param polyToWorld (Input)
-	 * @param line (Input)
-	 * @param output (Output)
-	 * @param T (internal use)
-	 * @param plane (internal use)
+	 * @param polygon (Input) Convex polygon. All points must lie on a plane.
+	 * @param line (Input) Line.
+	 * @param output (Output) Point of intersection (if any)
+	 * @param n (internal use)
 	 * @param u (internal use)
 	 * @param v (internal use)
 	 * @param w0 (internal use)
-	 * @return <pre>-1 = triangle is degenerate (a segment or point)
-	 *          0 =  disjoint (no intersect)
-	 *          1 =  intersect in unique point. Positive direction or zero
-	 *          2 =  are in the same plane
-	 *          3 =  intersect in unique point. Negative direction</pre>
+	 * @return <ul style="list-style-type:none">
+	 *         <li>-1 = triangle is degenerate (a segment or point)</li>
+	 *          <li>-0 =  disjoint (no intersect)</li>
+	 *          <li>-1 =  intersect in unique point. Positive direction or zero</li>
+	 *          <li>-2 =  are in the same plane</li>
+	 *          <li>-3 =  intersect in unique point. Negative direction<</li>
+	 *          /ul>
 	 */
-	public static int intersectConvex(Polygon2D_F64 polygon , Se3_F64 polyToWorld ,
+	public static int intersectConvex(FastQueue<Point3D_F64> polygon,
 									  LineParametric3D_F64 line , Point3D_F64 output,
-									  Triangle3D_F64 T , PlaneNormal3D_F64 plane ,
-									  Vector3D_F64 u, Vector3D_F64 v, Vector3D_F64 w0) {
+									  Vector3D_F64 n, Vector3D_F64 u, Vector3D_F64 v, Vector3D_F64 w0) {
+		if( polygon.size < 3 )
+			throw new IllegalArgumentException("There must be 3 or more points");
 
-		// extract definition of the plane from polyToWorld
-		UtilPlane3D_F64.convert(polyToWorld,plane);
+		double r, a, b;              // params to calc ray-plane intersect
 
-		// see if the line intersects the plane and record where
-		double dx = plane.p.x - line.p.x;
-		double dy = plane.p.y - line.p.y;
-		double dz = plane.p.z - line.p.z;
+		Point3D_F64 v0 = polygon.get(0);
+		Point3D_F64 v1 = polygon.get(1);
+		Point3D_F64 v2 = polygon.get(2);
 
-		double top = dx*plane.n.x + dy*plane.n.y + dz*plane.n.z;
-		double bottom = line.slope.dot(plane.n);
+		// get triangle edge vectors and plane normal
+		u.minus(v1,v0);   // NOTE: these could be precomputed
+		v.minus(v2,v0);
+		n.cross(u,v);
 
-		if (Math.abs(bottom) < GrlConstants.EPS) { // ray is  parallel to triangle plane
-			if (top == 0)                       // ray lies in triangle plane
+		if ( n.normSq() == 0 )        // triangle is degenerate
+			return -1;                  // do not deal with this case
+
+		Vector3D_F64 dir = line.slope;
+		w0.minus(line.p,v0);
+		a = -n.dot(w0);
+		b = n.dot(dir);
+		if (Math.abs(b) < GrlConstants.EPS) { // ray is  parallel to triangle plane
+			if (a == 0)                       // ray lies in triangle plane
 				return 2;
 			else return 0;                    // ray disjoint from plane
 		}
 
-		double d = top/bottom;
+		// get intersect point of ray with triangle plane
+		r = a / b;
 
-		output.x = line.p.x + d*line.slope.x;
-		output.y = line.p.y + d*line.slope.y;
-		output.z = line.p.z + d*line.slope.z;
+		// intersect point of ray and plane
+		output.x = line.p.x + r*dir.x;
+		output.y = line.p.y + r*dir.y;
+		output.z = line.p.z + r*dir.z;
 
-		// go through all the inner triangles and see if there's an intersection
-		Point2D_F64 p0 = polygon.get(0);
-		Point2D_F64 p1 = polygon.get(1);
+		// See if it's inside any of the triangles
+		for (int i = 3; i < polygon.size; i++) {
+			v1 = polygon.get(i-2);
+			v2 = polygon.get(2-1);
 
-		T.v0.set(p0.x,p0.y,0);
-		T.v1.set(p1.x,p1.y,0);
-		SePointOps_F64.transform(polyToWorld,T.v0,T.v0);
-		SePointOps_F64.transform(polyToWorld,T.v1,T.v1);
+			u.minus(v1,v0);
+			v.minus(v2,v0);
 
-		w0.minus(plane.p,T.v0); // v0 does not change
-
-		for (int i = 2; i < polygon.size(); i++) {
-			Point2D_F64 p = polygon.get(i);
-			T.v2.set(p.x,p.y,0);
-			SePointOps_F64.transform(polyToWorld,T.v2,T.v2);
-
-			u.minus(T.v1,T.v0);
-			v.minus(T.v2,T.v0);
-
-
-			if( containedPlane(T,output,u,v,plane.n,w0) ) {
-				if( d >= 0 )
+			// is I inside T?
+			if( containedPlane(v0,output,u,v,w0)) {
+				if (r >= 0)
 					return 1;
 				else
 					return 3;
 			}
-
-			T.v1.set(T.v2);
 		}
 		return 0;
 	}
 
 	/**
-	 * Determines if the point on the same plane as T is contained inside of T
+	 * Determines if the point on the same plane as T is contained inside of T.
 	 */
-	private static boolean containedPlane( Triangle3D_F64 T , Point3D_F64 output,
-										   Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
+	private static boolean containedPlane( Point3D_F64 T_v0,
+										   Point3D_F64 output,
+										   Vector3D_F64 u , Vector3D_F64 v ,
 										   Vector3D_F64 w0 ) {
 		double uu, uv, vv, wu, wv, D;
 		uu = u.dot(u);
 		uv = u.dot(v);
 		vv = v.dot(v);
-		w0.minus(output,T.v0);
+		w0.minus(output,T_v0);
 		wu = w0.dot(u);
 		wv = w0.dot(v);
 		D = uv * uv - uu * vv;
