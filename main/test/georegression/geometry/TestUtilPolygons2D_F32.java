@@ -347,4 +347,18 @@ public class TestUtilPolygons2D_F32 {
 		assertEquals(0, output.get(0).x, TEST_F32);
 		assertEquals(4, output.get(1).x, TEST_F32);
 	}
+
+	@Test
+	public void getSideLength() {
+		Polygon2D_F32 output = new Polygon2D_F32(3);
+
+		output.get(0).set(0,0);
+		output.get(1).set(2,0);
+		output.get(2).set(2,3);
+
+		assertEquals(2,output.getSideLength(0), TEST_F32);
+		assertEquals(3,output.getSideLength(1), TEST_F32);
+		assertEquals(Math.sqrt(2*2+3*3),output.getSideLength(2), TEST_F32);
+
+	}
 }

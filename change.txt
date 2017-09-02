@@ -16,6 +16,8 @@ Version : 0.14
   * Added intersection(Triangle3D,LineParametric3D)
 - Intersection2D
   * Added intersection of two lines defined by 4 points.
+- Polygon2D
+  * Added getSideLength()
 
 ---------------------------------------------
 Date    : 2017/08/13

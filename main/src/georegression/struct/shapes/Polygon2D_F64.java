@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -77,6 +77,17 @@ public class Polygon2D_F64 implements Serializable {
 
 	public void set( int index , double x , double y ) {
 		vertexes.data[index].set(x,y);
+	}
+
+	/**
+	 * Resturns the length of the specified side that is composed of point index and index+1
+	 * @return Euclidean length of the side
+	 */
+	public double getSideLength( int index ) {
+		Point2D_F64 a = vertexes.get( index );
+		Point2D_F64 b = vertexes.get( (index+1)%vertexes.size );
+
+		return (double)a.distance(b);
 	}
 
 	public Point2D_F64 get( int index ) {
