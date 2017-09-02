@@ -14,6 +14,8 @@ Version : 0.14
   * Added point2Dto3D()
 - Intersection3D
   * Added intersection(Triangle3D,LineParametric3D)
+- Intersection2D
+  * Added intersection of two lines defined by 4 points.
 
 ---------------------------------------------
 Date    : 2017/08/13

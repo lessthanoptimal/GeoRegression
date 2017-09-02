@@ -25,6 +25,7 @@ import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Vector2D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.shapes.*;
 import georegression.transform.se.SePointOps_F64;
@@ -274,6 +275,26 @@ public class TestIntersection2D_F64 {
 		LineParametric2D_F64 c = new LineParametric2D_F64(-8,2,0,1);
 
 		assertTrue(Double.isNaN(Intersection2D_F64.intersection(b, c)));
+	}
+
+	@Test
+	public void intersection_l_to_l_points() {
+		Point2D_F64 a0 = new Point2D_F64(3,20);
+		Point2D_F64 a1 = new Point2D_F64(10,20);
+		Point2D_F64 b0 = new Point2D_F64(7,5);
+		Point2D_F64 b1 = new Point2D_F64(8,30);
+
+		LineParametric2D_F64 a = new LineParametric2D_F64(a0,new Vector2D_F64(a1.x-a0.x,a1.y-a0.y));
+		LineParametric2D_F64 b = new LineParametric2D_F64(b0,new Vector2D_F64(b1.x-b0.x,b1.y-b0.y));
+
+		Point2D_F64 expected = Intersection2D_F64.intersection(a,b,null);
+		Point2D_F64 found = Intersection2D_F64.intersection(a0,a1,b0,b1,null);
+
+		assertTrue(expected!=null);
+		assertTrue(found!=null);
+		assertEquals(expected.x, found.x, GrlConstants.TEST_F64);
+		assertEquals(expected.y, found.y, GrlConstants.TEST_F64);
+
 	}
 	
 	@Test
