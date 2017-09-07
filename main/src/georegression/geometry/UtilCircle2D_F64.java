@@ -54,29 +54,63 @@ public class UtilCircle2D_F64 {
 	 */
 	public static boolean circle(Point2D_F64 x0 , Point2D_F64 x1 , Point2D_F64 x2 , Circle2D_F64 circle ) {
 
-		// define the bottom 3 rows of a 4x4 matrix
-		double a21 = x0.normSq(), a22 = x0.x,a23=x0.y;//,a24 = 1;
-		double a31 = x1.normSq(), a32 = x1.x,a33=x1.y;//,a34 = 1;
-		double a41 = x2.normSq(), a42 = x2.x,a43=x2.y;//,a44 = 1;
+		// points that lie on line a and b
+		double xa = (x0.x+x1.x)/2.0;
+		double ya = (x0.y+x1.y)/2.0;
+		double xb = (x1.x+x2.x)/2.0;
+		double yb = (x1.y+x2.y)/2.0;
 
-//		double M11 = det(a22,a23,a24, a32,a33,a34, a42,a43,a44);
-//		double M12 = det(a21,a23,a24, a31,a33,a34, a41,a43,a44);
-//		double M13 = det(a21,a22,a24, a31,a32,a34, a41,a42,a44);
-//		double M14 = det(a21,a22,a23, a31,a32,a33, a41,a42,a43);
+		// slopes of lines a and b
+		double m2 = x0.x-x1.x;
+		double m1 = x1.y-x0.y;
 
-		// simplified by removing multiply by 1
-		double M11 = a22*(a33-a43) - a23*(a32-a42) + (a32*a43 - a42*a33);
-		double M12 = a21*(a33-a43) - a23*(a31-a41) + (a31*a43 - a41*a33);
-		double M13 = a21*(a32-a42) - a22*(a31-a41) + (a31*a42 - a41*a32);
-		double M14 = a21*(a32*a43 - a33*a42) - a22*(a31*a43 - a33*a41) + a23*(a31*a42 - a41*a32);
+		double n2 = x2.x-x1.x;
+		double n1 = x1.y-x2.y;
 
-		if( M11 == 0 )
+		// find the intersection of the lines
+		double bottom = m2*n1-n2*m1;
+		if( bottom == 0 )
 			return false;
 
-		circle.center.x = 0.5*M12/M11;
-		circle.center.y = -0.5*M13/M11;
-		circle.radius = Math.sqrt(circle.center.normSq() + M14/M11);
+		double alpha = (-m2*(xb-xa) + m1*(yb-ya))/bottom;
+
+		circle.center.x = xb + n1*alpha;
+		circle.center.y = yb + n2*alpha;
+		circle.radius = circle.center.distance(x0);
 
 		return true;
+	}
+
+	/**
+	 * Radius squares of the circle that passes through these three points.
+	 * @param x0 Point
+	 * @param x1 Point
+	 * @param x2 Point
+	 * @return Radius squares of circle or NaN if colinear
+	 */
+	public static double circleRadiusSq(Point2D_F64 x0 , Point2D_F64 x1 , Point2D_F64 x2) {
+		// points that lie on line a and b
+		double xa = (x0.x+x1.x)/2.0;
+		double ya = (x0.y+x1.y)/2.0;
+		double xb = (x1.x+x2.x)/2.0;
+		double yb = (x1.y+x2.y)/2.0;
+
+		// slopes of lines a and b
+		double m2 = x0.x-x1.x;
+		double m1 = x1.y-x0.y;
+
+		double n2 = x2.x-x1.x;
+		double n1 = x1.y-x2.y;
+
+		// find the intersection of the lines
+		double bottom = m2*n1-n2*m1;
+		if( bottom == 0 )
+			return Double.NaN;
+
+		double alpha = (-m2*(xb-xa) + m1*(yb-ya))/bottom;
+
+		double dx = xb + n1*alpha - x0.x;
+		double dy = yb + n2*alpha - x0.y;
+		return dx*dx + dy*dy;
 	}
 }

@@ -54,4 +54,21 @@ public class TestUtilCircle2D_F64 {
 		assertEquals(0,UtilCircle2D_F64.evaluate(x1.x,x1.y,circle), GrlConstants.TEST_SQ_F64);
 		assertEquals(0,UtilCircle2D_F64.evaluate(x2.x,x2.y,circle), GrlConstants.TEST_SQ_F64);
 	}
+
+	@Test
+	public void circleRadiusSq_3pts() {
+		Point2D_F64 x0 = new Point2D_F64(5,4);
+		Point2D_F64 x1 = new Point2D_F64(3,8);
+		Point2D_F64 x2 = new Point2D_F64(-3,-1);
+
+		Circle2D_F64 circle = new Circle2D_F64();
+
+		UtilCircle2D_F64.circle(x0,x1,x2,circle);
+
+		double expected = circle.radius*circle.radius;
+
+		double found = UtilCircle2D_F64.circleRadiusSq(x0,x1,x2);
+
+		assertEquals(expected,found, GrlConstants.TEST_SQ_F64);
+	}
 }
