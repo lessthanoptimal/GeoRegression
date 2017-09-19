@@ -18,6 +18,8 @@ Version : 0.14
   * Added intersection of two lines defined by 4 points.
 - Polygon2D
   * Added getSideLength()
+- UtilCircle2D
+  * circle from 3 points
 
 ---------------------------------------------
 Date    : 2017/08/13
