@@ -9,7 +9,7 @@
 - Create jar file "gradle createLibraryDirectory"
 - Update project website
   cd docs/website
-  Documentation.rst Download.rst index.rst
+  Documentation.rst Download.rst index.rst conf.py
   examples might need to be updated too
 - Update JavaDoc
   rm -rf build/doc/javadoc
