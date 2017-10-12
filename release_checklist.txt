@@ -7,7 +7,11 @@
 - Create .zip of source code
   - remove .git
 - Create jar file "gradle createLibraryDirectory"
-- Update documentation on website
+- Update project website
+  cd docs/website
+  Documentation.rst Download.rst
+  examples might need to be updated too
+- Update JavaDoc
   rm -rf build/doc/javadoc
   ./gradlew javadocWeb
   zip -r api.zip build/docs/javadoc
