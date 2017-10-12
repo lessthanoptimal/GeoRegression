@@ -37,7 +37,7 @@ public class GrlConstants {
 	public static double PId2 = Math.PI/2.0;
 
 	// identifies the library version
-	public static String VERSION = "0.13";
+	public static String VERSION = "0.14";
 
 	// standard tolerances used in unit tests
 	public static float TEST_F32 = 1e-4f;
