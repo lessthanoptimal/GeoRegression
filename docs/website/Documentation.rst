@@ -12,7 +12,7 @@ Full documentation of the API is contained in the `JavaDoc <http://georegression
 Example Code
 ------------
 
-Several examples are included with the source code and can be found in the `georegression/examples/ <https://github.com/lessthanoptimal/GeoRegression/tree/v0.13/examples/src/georegression/examples docu>`_ directory. For your convenience several examples have been added to this website, see links below. To view the latest examples, browse the GIT repository.
+Several examples are included with the source code and can be found in the `georegression/examples/ <https://github.com/lessthanoptimal/GeoRegression/tree/v0.14/examples/src/georegression/examples docu>`_ directory. For your convenience several examples have been added to this website, see links below. To view the latest examples, browse the GIT repository.
 
 List of Example Code:
 
