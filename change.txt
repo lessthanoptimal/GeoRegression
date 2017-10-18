@@ -4,7 +4,7 @@ YEAR-MONTH-DAY
 Date    :
 Version : 0.15
 
-
+- Added distance(x,y) to Point2D_I32
 
 ---------------------------------------------
 Date    : 2017/10/12
