@@ -25,6 +25,7 @@ import org.ddogleg.optimization.FactoryOptimization;
 import org.ddogleg.optimization.UnconstrainedLeastSquares;
 import org.ddogleg.optimization.functions.FunctionNtoM;
 import org.ddogleg.optimization.functions.FunctionNtoMxN;
+import org.ejml.data.DMatrixRMaj;
 
 import java.util.List;
 
@@ -194,7 +195,7 @@ public class RefineEllipseEuclideanLeastSquares_F32 {
 		}
 	}
 
-	public class Jacobian implements FunctionNtoMxN {
+	public class Jacobian implements FunctionNtoMxN< /**/DMatrixRMaj > {
 
 		@Override
 		public int getNumOfInputsN() {
@@ -207,7 +208,7 @@ public class RefineEllipseEuclideanLeastSquares_F32 {
 		}
 
 		@Override
-		public void process( /**/double[] input, /**/double[] output) {
+		public void process( /**/double[] input, /**/DMatrixRMaj output) {
 			/**/double a   = input[2];
 			/**/double b   = input[3];
 			/**/double phi = input[4];
@@ -220,7 +221,7 @@ public class RefineEllipseEuclideanLeastSquares_F32 {
 
 			int total = M*N;
 			for( int i = 0; i < total; i++ )
-				output[i] = 0;
+				output.data[i] = 0;
 
 			for( int i = 0; i < points.size(); i++ ) {
 				/**/double theta = input[5+i];
@@ -232,25 +233,30 @@ public class RefineEllipseEuclideanLeastSquares_F32 {
 				int indexY = indexX + N;
 
 				// partial x0
-				output[indexX++] = -1;
-				output[indexY++] = 0;
+				output.data[indexX++] = -1;
+				output.data[indexY++] = 0;
 				// partial y0
-				output[indexX++] = 0;
-				output[indexY++] = -1;
+				output.data[indexX++] = 0;
+				output.data[indexY++] = -1;
 				// partial a
-				output[indexX++] = -cp*ct;
-				output[indexY++] = -sp*ct;
+				output.data[indexX++] = -cp*ct;
+				output.data[indexY++] = -sp*ct;
 				// partial b
-				output[indexX++] =  sp*st;
-				output[indexY++] = -cp*st;
+				output.data[indexX++] =  sp*st;
+				output.data[indexY++] = -cp*st;
 				// partial phi
-				output[indexX++] =  a*sp*ct + b*cp*st;
-				output[indexY++] = -a*cp*ct + b*sp*st;
+				output.data[indexX++] =  a*sp*ct + b*cp*st;
+				output.data[indexY++] = -a*cp*ct + b*sp*st;
 
 				// partial theta(i)
-				output[ indexX + i] = a*cp*st + b*sp*cp;
-				output[ indexY + i] = a*sp*st - b*cp*cp;
+				output.data[ indexX + i] = a*cp*st + b*sp*cp;
+				output.data[ indexY + i] = a*sp*st - b*cp*cp;
 			}
+		}
+
+		@Override
+		public /**/DMatrixRMaj declareMatrixMxN() {
+			return new /**/DMatrixRMaj(getNumOfOutputsM(),getNumOfInputsN());
 		}
 	}
 }

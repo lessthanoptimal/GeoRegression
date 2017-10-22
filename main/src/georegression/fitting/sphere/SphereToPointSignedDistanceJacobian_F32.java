@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.fitting.sphere;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.shapes.Sphere3D_F32;
 import org.ddogleg.optimization.functions.FunctionNtoMxN;
+import org.ejml.data.DMatrixRMaj;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ import java.util.List;
  */
 // DESIGN NOTE: Could speed up by coupling it to the distance function.  That way distance would only need
 //              to be computed once.
-public class SphereToPointSignedDistanceJacobian_F32 implements FunctionNtoMxN {
+public class SphereToPointSignedDistanceJacobian_F32 implements FunctionNtoMxN< /**/DMatrixRMaj > {
 
 	// model of the sphere
 	private Sphere3D_F32 sphere = new Sphere3D_F32();
@@ -57,7 +58,7 @@ public class SphereToPointSignedDistanceJacobian_F32 implements FunctionNtoMxN {
 	}
 
 	@Override
-	public void process( /**/double[] input, /**/double[] output) {
+	public void process( /**/double[] input, /**/DMatrixRMaj output) {
 		codec.decode(input,sphere);
 
 		int index = 0;
@@ -65,10 +66,15 @@ public class SphereToPointSignedDistanceJacobian_F32 implements FunctionNtoMxN {
 			Point3D_F32 p = points.get(i);
 			float euclidean = sphere.center.distance(p);
 
-			output[index++] = (sphere.center.x - p.x)/euclidean;
-			output[index++] = (sphere.center.y - p.y)/euclidean;
-			output[index++] = (sphere.center.z - p.z)/euclidean;
-			output[index++] = -1;
+			output.data[index++] = (sphere.center.x - p.x)/euclidean;
+			output.data[index++] = (sphere.center.y - p.y)/euclidean;
+			output.data[index++] = (sphere.center.z - p.z)/euclidean;
+			output.data[index++] = -1;
 		}
+	}
+
+	@Override
+	public /**/DMatrixRMaj declareMatrixMxN() {
+		return new /**/DMatrixRMaj(getNumOfOutputsM(),getNumOfInputsN());
 	}
 }
