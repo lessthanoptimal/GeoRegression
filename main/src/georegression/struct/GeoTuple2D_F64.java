@@ -221,5 +221,11 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 		System.out.println( this );
 	}
 
-
+	@Override
+	public boolean equals(Object obj) {
+		if( this.getClass() != obj.getClass() )
+			return false;
+		GeoTuple2D_F64 p = (GeoTuple2D_F64)obj;
+		return x==p.x&&y==p.y;
+	}
 }

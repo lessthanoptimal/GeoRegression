@@ -120,4 +120,20 @@ public abstract class GeoTuple_F64 <T extends GeoTuple_F64> extends GeoTuple<T> 
 	public abstract double getIndex( int index );
 
 	public abstract void setIndex( int index, double value );
+
+	@Override
+	public boolean equals(Object obj) {
+		if( this.getClass() != obj.getClass() )
+			return false;
+		GeoTuple_F64 p = (GeoTuple_F64)obj;
+		final int N = getDimension();
+
+		if( N != p.getDimension() )
+			return false;
+		for( int i = 0; i < N; i++ ) {
+			if( getIndex(i) != p.getIndex(i))
+				return false;
+		}
+		return true;
+	}
 }

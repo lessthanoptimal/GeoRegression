@@ -234,4 +234,12 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 	public void setZ( double z ) {
 		this.z = z;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if( this.getClass() != obj.getClass() )
+			return false;
+		GeoTuple3D_F64 p = (GeoTuple3D_F64)obj;
+		return x==p.x&&y==p.y&&z==p.z;
+	}
 }

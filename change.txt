@@ -5,6 +5,9 @@ Date    :
 Version : 0.15
 
 - Added distance(x,y) to Point2D_I32
+- Added equals() support to the following
+  * GeoTuple
+  * Rectangle2D
 
 ---------------------------------------------
 Date    : 2017/10/12

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -103,5 +103,13 @@ public class Point3D_I32 extends GeoTuple<Point3D_I32> {
 	@Override
 	public Point3D_I32 createNewInstance() {
 		return new Point3D_I32();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if( this.getClass() != obj.getClass() )
+			return false;
+		Point3D_I32 p = (Point3D_I32)obj;
+		return x==p.x&&y==p.y&&z==p.z;
 	}
 }

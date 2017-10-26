@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -117,7 +117,18 @@ public class Rectangle2D_I32 {
 		this.y1 = y1;
 	}
 
+	@Override
 	public String toString() {
 		return "RectangleCorner2D_I32( "+x0+" "+y0+" "+x1+" "+y1+" )";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			Rectangle2D_I32 r = (Rectangle2D_I32)obj;
+			return x0==r.x0&&y0==r.y0&&x1==r.x1&&y1==r.y1;
+		} catch( RuntimeException e){
+			return false;
+		}
 	}
 }

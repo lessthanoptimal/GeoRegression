@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,8 @@ package georegression.struct.point;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertFalse;
+
 /**
  * @author Peter Abeles
  */
@@ -32,5 +34,14 @@ public class TestPoint2D_F32 extends GenericGeoTupleTests_F32<Point2D_F32> {
 	@Test
 	public void generic() {
 		checkAll( 2 );
+	}
+
+	@Test
+	public void equals_vector() {
+		Point2D_F32 a = new Point2D_F32();
+		Vector2D_F32 b = new Vector2D_F32();
+
+		// numerically they are identical, but not the same type so this should fail
+		assertFalse(a.equals(b));
 	}
 }

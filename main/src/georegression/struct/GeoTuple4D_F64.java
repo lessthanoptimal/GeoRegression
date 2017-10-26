@@ -185,4 +185,12 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 	public void setW( double w ) {
 		this.w = w;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if( this.getClass() != obj.getClass() )
+			return false;
+		GeoTuple4D_F64 p = (GeoTuple4D_F64)obj;
+		return x==p.x&&y==p.y&&z==p.z&&w==p.w;
+	}
 }
