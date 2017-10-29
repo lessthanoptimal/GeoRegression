@@ -59,16 +59,14 @@ public class Distance2D_I32 {
 
 	/**
 	 * <p>
-	 * Returns the distance the closest point on a line segment is from the specified point.
-	 * The closest point is bounded to be along the line segment.
+	 * Returns the distance of a point to the closest point on a line.
 	 * </p>
 	 *
-	 * @param line A line segment. Not modified.
+	 * @param line A line. Not modified.
 	 * @param p The point. Not modified.
 	 * @return Distance the closest point on the line is away from the point.
 	 */
-	public static double distance( LineParametric2D_I32 line,
-								   Point2D_I32 p ) {
+	public static double distance( LineParametric2D_I32 line, Point2D_I32 p ) {
 		int a = line.slopeX;
 		int b = line.slopeY;
 
@@ -78,5 +76,26 @@ public class Distance2D_I32 {
 
 		// return the distance of the closest point on the line
 		return UtilPoint2D_F64.distance(line.p.x + t * a, line.p.y + t * b, p.x, p.y);
+	}
+
+	/**
+	 * <p>
+	 * Returns the squared distance of a point to the closest point on a line.
+	 * </p>
+	 *
+	 * @param line A line. Not modified.
+	 * @param p The point. Not modified.
+	 * @return Distance the closest point on the line is away from the point.
+	 */
+	public static double distanceSq( LineParametric2D_I32 line, Point2D_I32 p ) {
+		int a = line.slopeX;
+		int b = line.slopeY;
+
+		double t = a * ( p.x - line.p.x ) + b * ( p.y - line.p.y );
+		t /= ( a * a + b * b );
+
+
+		// return the distance of the closest point on the line
+		return UtilPoint2D_F64.distanceSq(line.p.x + t * a, line.p.y + t * b, p.x, p.y);
 	}
 }

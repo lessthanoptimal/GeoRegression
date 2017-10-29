@@ -55,4 +55,11 @@ public class TestDistance2D_I32 {
 		double expected = (double) UtilTrig_F64.distance(0, 2, 2, 0);
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
+
+	@Test
+	public void distanceSq_line_parametric() {
+		double found = Distance2D_I32.distanceSq( new LineParametric2D_I32( -2, 0, 5, 5 ), new Point2D_I32( 2, 0 ) );
+		double expected = (double) UtilTrig_F64.distanceSq(0, 2, 2, 0);
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+	}
 }
