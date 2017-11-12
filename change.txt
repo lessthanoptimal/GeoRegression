@@ -7,6 +7,7 @@ Version : 0.15
 - Distance2D
   * Added distance(x,y) to Point2D_I32
   * Added distance(line,poing) I32
+  * Added distanceSq(line,x,y)
 - Added equals() support to the following
   * GeoTuple
   * Rectangle2D

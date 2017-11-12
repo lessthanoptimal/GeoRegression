@@ -53,6 +53,13 @@ public class TestDistance2D_F32 {
 	}
 
 	@Test
+	public void distanceSq_parametric_line_points() {
+		float found = Distance2D_F32.distanceSq(new LineParametric2D_F32(-2, 0, 1, 1), 4, -2);
+		float expected = (float) UtilTrig_F32.distanceSq(0, 2, 4, -2);
+		assertEquals( expected, found, GrlConstants.TEST_F32);
+	}
+
+	@Test
 	public void distance_line_segment() {
 		// test inside the line
 		float found = Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), new Point2D_F32( 2, 0 ) );

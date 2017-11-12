@@ -73,7 +73,6 @@ public class Distance2D_I32 {
 		double t = a * ( p.x - line.p.x ) + b * ( p.y - line.p.y );
 		t /= ( a * a + b * b );
 
-
 		// return the distance of the closest point on the line
 		return UtilPoint2D_F64.distance(line.p.x + t * a, line.p.y + t * b, p.x, p.y);
 	}
@@ -93,7 +92,6 @@ public class Distance2D_I32 {
 
 		double t = a * ( p.x - line.p.x ) + b * ( p.y - line.p.y );
 		t /= ( a * a + b * b );
-
 
 		// return the distance of the closest point on the line
 		return UtilPoint2D_F64.distanceSq(line.p.x + t * a, line.p.y + t * b, p.x, p.y);

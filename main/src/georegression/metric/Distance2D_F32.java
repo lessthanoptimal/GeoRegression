@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -69,6 +69,28 @@ public class Distance2D_F32 {
 
 		float dx = p.x - a;
 		float dy = p.y - b;
+
+		return dx * dx + dy * dy;
+	}
+
+	/**
+	 * <p>
+	 * Returns the Euclidean distance squared of the closest point on the line from a point.
+	 * </p>
+	 *
+	 * @param line A line segment. Not modified.
+	 * @param x Point's x-coordinate
+	 * @param y Point's y-coordinate
+	 * @return Euclidean distance squared to the closest point on the line is away from the point.
+	 */
+	public static float distanceSq( LineParametric2D_F32 line, float x , float y ) {
+		float t = ClosestPoint2D_F32.closestPointT( line, x,y );
+
+		float a = line.slope.x * t + line.p.x;
+		float b = line.slope.y * t + line.p.y;
+
+		float dx = x - a;
+		float dy = y - b;
 
 		return dx * dx + dy * dy;
 	}

@@ -106,6 +106,24 @@ public class ClosestPoint2D_F64 {
 	}
 
 	/**
+	 * <p>
+	 * Computes the closest point along the line as a function of 't':<br>
+	 * [x, y] = [x_0, y_0] + t·[slopeX, slopeY]
+	 * </p>
+	 *
+	 * @param line The line along which the closest point is being found. Not modified.
+	 * @param x Point's x-coordinate
+	 * @param y Point's y-coordinate
+	 * @return Distance as a function of 't'
+	 */
+	public static double closestPointT( LineParametric2D_F64 line, double x, double y) {
+		double t = line.slope.x * ( x - line.p.x ) + line.slope.y * ( y - line.p.y );
+		t /= line.slope.x * line.slope.x + line.slope.y * line.slope.y;
+
+		return t;
+	}
+
+	/**
 	 * Finds the closest point on the line segment to the provided point 'p'.
 	 *
 	 * @param line Line segment
