@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -111,6 +111,16 @@ public class TestUtilPolygons2D_I32 {
 		}
 
 		return reverse;
+	}
+
+	@Test
+	public void isPositiveZ() {
+		Point2D_I32 a = new Point2D_I32(2, 2);
+		Point2D_I32 b = new Point2D_I32(4, 2);
+		Point2D_I32 c = new Point2D_I32(4, 4);
+
+		assertTrue(UtilPolygons2D_I32.isPositiveZ(c,b,a));
+		assertFalse(UtilPolygons2D_I32.isPositiveZ(a,b,c));
 	}
 
 }
