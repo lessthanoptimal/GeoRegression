@@ -136,6 +136,35 @@ public class Distance2D_F32 {
 	}
 
 	/**
+	 * <p>
+	 * Returns the Euclidean distance squared of the closest point on a line segment to the specified point.
+	 * </p>
+	 *
+	 * @param line Line segment. Not modified.
+	 * @param x Point's x-coordinate
+	 * @param y Point's y-coordinate
+	 * @return Euclidean distance squared of the closest point on a line is away from a point.
+	 */
+	public static float distanceSq( LineSegment2D_F32 line, float x , float y ) {
+		float a = line.b.x - line.a.x;
+		float b = line.b.y - line.a.y;
+
+		float t = a * ( x - line.a.x ) + b * ( y - line.a.y );
+		t /= ( a * a + b * b );
+
+		// if the point of intersection is past the end points return the distance
+		// from the closest end point
+		if( t < 0 ) {
+			return UtilPoint2D_F32.distanceSq(line.a.x, line.a.y, x, y);
+		} else if( t > 1.0f )
+			return UtilPoint2D_F32.distanceSq(line.b.x, line.b.y, x, y);
+
+		// return the distance of the closest point on the line
+		return UtilPoint2D_F32.distanceSq(line.a.x + t * a, line.a.y + t * b, x, y);
+	}
+
+
+	/**
 	 * Finds the distance between the two line segments
 	 * @param segmentA Line segment. Not modified.
 	 * @param segmentB Line segment. Not modified.
