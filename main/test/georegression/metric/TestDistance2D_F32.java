@@ -46,6 +46,13 @@ public class TestDistance2D_F32 {
 	}
 
 	@Test
+	public void distance_parametric_line_points() {
+		float found = Distance2D_F32.distance( new LineParametric2D_F32( -2, 0, 1, 1 ),  4, -2  );
+		float expected = (float) UtilTrig_F32.distance( 0, 2, 4, -2 );
+		assertEquals( expected, found, GrlConstants.TEST_F32);
+	}
+
+	@Test
 	public void distanceSq_parametric_line() {
 		float found = Distance2D_F32.distanceSq(new LineParametric2D_F32(-2, 0, 1, 1), new Point2D_F32(4, -2));
 		float expected = (float) UtilTrig_F32.distanceSq(0, 2, 4, -2);
@@ -92,6 +99,24 @@ public class TestDistance2D_F32 {
 		// test after the second end point
 		found = Distance2D_F32.distanceSq( new LineSegment2D_F32( -2, 0, 3, 5 ), new Point2D_F32( 10, 0 ) );
 		expected = UtilTrig_F32.distanceSq( 3, 5, 10, 0 );
+		assertEquals( expected, found, GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void distance_line_segment_param() {
+		// test inside the line
+		float found = Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), 2, 0 );
+		float expected = (float) UtilTrig_F32.distance( 0, 2, 2, 0 );
+		assertEquals( expected, found, GrlConstants.TEST_F32);
+
+		// test before the first end point
+		found = Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), -5, -5 );
+		expected = UtilTrig_F32.distance( -2, 0, -5, -5 );
+		assertEquals( expected, found, GrlConstants.TEST_F32);
+
+		// test after the second end point
+		found = Distance2D_F32.distance( new LineSegment2D_F32( -2, 0, 3, 5 ), 10, 0 );
+		expected = UtilTrig_F32.distance( 3, 5, 10, 0 );
 		assertEquals( expected, found, GrlConstants.TEST_F32);
 	}
 

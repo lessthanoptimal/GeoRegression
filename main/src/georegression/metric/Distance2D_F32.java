@@ -54,6 +54,20 @@ public class Distance2D_F32 {
 
 	/**
 	 * <p>
+	 * Returns the Euclidean distance of the closest point on the line from a point.
+	 * </p>
+	 *
+	 * @param line A line segment. Not modified.
+	 * @param x Point's x-coordinate
+	 * @param y Point's y-coordinate
+	 * @return Distance the closest point on the line is away from the point.
+	 */
+	public static float distance( LineParametric2D_F32 line, float x , float y ) {
+		return (float)Math.sqrt(distanceSq(line, x,y));
+	}
+
+	/**
+	 * <p>
 	 * Returns the Euclidean distance squared of the closest point on the line from a point.
 	 * </p>
 	 *
@@ -106,6 +120,20 @@ public class Distance2D_F32 {
 	 */
 	public static float distance( LineSegment2D_F32 line, Point2D_F32 p ) {
 		return (float)Math.sqrt(distanceSq(line, p));
+	}
+
+	/**
+	 * <p>
+	 * Returns the Euclidean distance of the closest point on a line segment to the specified point.
+	 * </p>
+	 *
+	 * @param line A line segment. Not modified.
+	 * @param x Point's x-coordinate
+	 * @param y Point's y-coordinate
+	 * @return Euclidean distance of the closest point on a line is away from a point.
+	 */
+	public static float distance( LineSegment2D_F32 line, float x , float y) {
+		return (float)Math.sqrt(distanceSq(line, x,y));
 	}
 
 	/**
