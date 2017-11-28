@@ -19,6 +19,8 @@
 package georegression.geometry;
 
 import georegression.geometry.algs.AndrewMonotoneConvexHull_F32;
+import georegression.metric.Distance2D_F32;
+import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.shapes.Polygon2D_F32;
 import georegression.struct.shapes.Quadrilateral_F32;
@@ -412,4 +414,66 @@ public class UtilPolygons2D_F32 {
 			}
 		}
 	}
+
+	/**
+	 * Compute the error as a function of the distance between the model and target. The target is sampled at regular
+	 * intervals and for each of these points the closest point on the model is found. The returned metric is the
+	 * average of difference between paired points.
+	 *
+	 * NOTE: A different answer will be returned depending on which polygon is the model and which one is the target.
+	 *
+	 * @param model Model polygon
+	 * @param target Target polygon
+	 * @return average of closest point error
+	 */
+	public static float averageOfClosestPointError(Polygon2D_F32 model , Polygon2D_F32 target , int numberOfSamples ) {
+		LineSegment2D_F32 line = new LineSegment2D_F32();
+
+		float cornerLocationsB[] = new float[target.size()+1];
+		float totalLength = 0;
+		for (int i = 0; i < target.size(); i++) {
+			Point2D_F32 b0 = target.get(i%target.size());
+			Point2D_F32 b1 = target.get((i+1)%target.size());
+
+			cornerLocationsB[i] = totalLength;
+			totalLength += b0.distance(b1);
+		}
+		cornerLocationsB[target.size()] = totalLength;
+
+		Point2D_F32 pointOnB = new Point2D_F32();
+		float error = 0;
+		int cornerB = 0;
+		for (int k = 0; k < numberOfSamples; k++) {
+			// Find the point on B to match to a point on A
+			float location = totalLength*k/numberOfSamples;
+
+			while (location > cornerLocationsB[cornerB + 1]) {
+				cornerB++;
+			}
+			Point2D_F32 b0 = target.get(cornerB);
+			Point2D_F32 b1 = target.get((cornerB+1)%target.size());
+
+			float locationCornerB = cornerLocationsB[cornerB];
+			float fraction = (location-locationCornerB)/(cornerLocationsB[cornerB+1]-locationCornerB);
+
+			pointOnB.x = (b1.x-b0.x)*fraction + b0.x;
+			pointOnB.y = (b1.y-b0.y)*fraction + b0.y;
+
+			// find the best fit point on A to the point in B
+			float best = Float.MAX_VALUE;
+			for (int i = 0; i < model.size()+1; i++) {
+				line.a = model.get(i%model.size());
+				line.b = model.get((i+1)%model.size());
+
+				float d = Distance2D_F32.distance(line,pointOnB);
+				if( d < best ) {
+					best = d;
+				}
+			}
+			error += best;
+		}
+
+		return error/numberOfSamples;
+	}
+
 }

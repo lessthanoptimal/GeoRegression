@@ -361,4 +361,35 @@ public class TestUtilPolygons2D_F32 {
 		assertEquals(Math.sqrt(2*2+3*3),output.getSideLength(2), TEST_F32);
 
 	}
+
+	@Test
+	public void averageOfClosestPointError() {
+		Polygon2D_F32 a = new Polygon2D_F32(4);
+
+		a.get(0).set(1,1);
+		a.get(1).set(4,1);
+		a.get(2).set(4,4);
+		a.get(3).set(1,4);
+
+		assertEquals(0,UtilPolygons2D_F32.averageOfClosestPointError(a,a,100),TEST_F32);
+
+		// same polygon just rotated order of points
+		Polygon2D_F32 b = new Polygon2D_F32(4);
+		b.get(0).set(1,4);
+		b.get(1).set(1,1);
+		b.get(2).set(4,1);
+		b.get(3).set(4,4);
+
+		assertEquals(0,UtilPolygons2D_F32.averageOfClosestPointError(a,b,100),TEST_F32);
+
+		// make b different from a
+		b.get(2).set(8,1);
+		b.get(3).set(8,4);
+
+		float errorAB = UtilPolygons2D_F32.averageOfClosestPointError(a,b,100);
+		float errorBA = UtilPolygons2D_F32.averageOfClosestPointError(b,a,100);
+
+		assertTrue(errorAB>errorBA);
+
+	}
 }
