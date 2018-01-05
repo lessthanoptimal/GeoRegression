@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -40,7 +40,7 @@ public class AndrewMonotoneConvexHull_F32 {
 	public AndrewMonotoneConvexHull_F32() {
 
 		// Sort the points based on their x value.  If the same then use y value
-		sorter = new QuickSortComparator<Point2D_F32>(new Comparator<Point2D_F32>() {
+		sorter = new QuickSortComparator<>(new Comparator<Point2D_F32>() {
 			@Override
 			public int compare(Point2D_F32 a, Point2D_F32 b) {
 				if( a.x < b.x )

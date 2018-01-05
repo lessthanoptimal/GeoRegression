@@ -511,6 +511,18 @@ public class TestIntersection2D_F64 {
 	}
 
 	@Test
+	public void intersection_poly_to_poly() {
+		Polygon2D_F64 A = new Polygon2D_F64(new double[][]{{0,0},{2,0},{2,4},{0,4}});
+		Polygon2D_F64 B = A.copy();
+
+		assertEquals(8,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+
+		// make sure the order doesn't matter
+		B.flip();
+		assertEquals(8,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+	}
+
+	@Test
 	public void line_ellipse() {
 
 		// easy cases where the ellipse is at the original aligned to the coordinate axis

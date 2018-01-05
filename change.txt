@@ -11,6 +11,9 @@ Version : 0.15
 - Added equals() support to the following
   * GeoTuple
   * Rectangle2D
+- Polygons 2D
+  * Added bounding rectangle
+  * Area of intersection between two
 
 ---------------------------------------------
 Date    : 2017/10/12

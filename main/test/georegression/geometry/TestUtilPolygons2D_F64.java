@@ -151,6 +151,19 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
+	public void bounding_polygon() {
+		Polygon2D_F64 q = new Polygon2D_F64(3, 0, 2, -3, -2, 3, 1, 5);
+		Rectangle2D_F64 out = new Rectangle2D_F64();
+
+		UtilPolygons2D_F64.bounding(q, out);
+
+		assertEquals(-2, out.p0.x, TEST_F64);
+		assertEquals(-3, out.p0.y, TEST_F64);
+		assertEquals(3, out.p1.x, TEST_F64);
+		assertEquals(5, out.p1.y, TEST_F64);
+	}
+
+	@Test
 	public void center_quadrilateral() {
 		Quadrilateral_F64 q = new Quadrilateral_F64(3, 0, 2, -3, -2, 3, 1, 5);
 

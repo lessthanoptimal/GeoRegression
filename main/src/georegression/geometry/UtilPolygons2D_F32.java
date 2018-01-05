@@ -185,6 +185,34 @@ public class UtilPolygons2D_F32 {
 	}
 
 	/**
+	 * Finds the minimum area bounding rectangle around the quadrilateral that is aligned with coordinate
+	 * system axises.
+	 *
+	 * @param polygon (Input) Polygon
+	 * @param rectangle (Output) Minimum area rectangle
+	 */
+	public static void bounding( Polygon2D_F32 polygon , Rectangle2D_F32 rectangle ) {
+
+		rectangle.p0.set(polygon.get(0));
+		rectangle.p1.set(polygon.get(0));
+
+		for (int i = 0; i < polygon.size(); i++) {
+			Point2D_F32 p = polygon.get(i);
+			if( p.x < rectangle.p0.x ) {
+				rectangle.p0.x = p.x;
+			} else if( p.x > rectangle.p1.x ) {
+				rectangle.p1.x = p.x;
+			}
+
+			if( p.y < rectangle.p0.y ) {
+				rectangle.p0.y = p.y;
+			} else if( p.y > rectangle.p1.y ) {
+				rectangle.p1.y = p.y;
+			}
+		}
+	}
+
+	/**
 	 * Computes the center or average point in the quadrilateral.
 	 *
 	 * @param quad (Input) Quadrilateral

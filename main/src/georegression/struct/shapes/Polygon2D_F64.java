@@ -37,6 +37,14 @@ public class Polygon2D_F64 implements Serializable {
 	// vertexes in the polygon
 	public FastQueue<Point2D_F64> vertexes;
 
+	public Polygon2D_F64( double[][] a ) {
+		this(a.length);
+
+		for (int i = 0; i < a.length; i++) {
+			vertexes.get(i).set(a[i][0], a[i][1]);
+		}
+	}
+
 	public Polygon2D_F64( Polygon2D_F64 a ) {
 		vertexes = new FastQueue<Point2D_F64>(a.size(),Point2D_F64.class,true);
 		for (int i = 0; i < a.size(); i++) {

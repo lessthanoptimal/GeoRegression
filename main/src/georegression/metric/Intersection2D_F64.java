@@ -19,6 +19,7 @@
 package georegression.metric;
 
 import georegression.geometry.UtilEllipse_F64;
+import georegression.geometry.algs.AreaIntersectionPolygon2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
@@ -368,6 +369,20 @@ public class Intersection2D_F64 {
 		bottom = a1 * target.slope.y - b1 * target.slope.x;
 
 		return top / bottom;
+	}
+
+	/**
+	 * Finds the area of the intersection of two polygons.
+	 *
+	 * @se AreaIntersectionPolygon2D_F64
+	 *
+	 * @param a (Input) Polygon 2D
+	 * @param b (Input) Polygon 2D
+	 * @return Area of intersection.
+	 */
+	public static double intersection( Polygon2D_F64 a , Polygon2D_F64 b ) {
+		AreaIntersectionPolygon2D_F64 alg = new AreaIntersectionPolygon2D_F64();
+		return Math.abs(alg.computeArea(a,b));
 	}
 
 	/**

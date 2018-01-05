@@ -151,6 +151,19 @@ public class TestUtilPolygons2D_F32 {
 	}
 
 	@Test
+	public void bounding_polygon() {
+		Polygon2D_F32 q = new Polygon2D_F32(3, 0, 2, -3, -2, 3, 1, 5);
+		Rectangle2D_F32 out = new Rectangle2D_F32();
+
+		UtilPolygons2D_F32.bounding(q, out);
+
+		assertEquals(-2, out.p0.x, TEST_F32);
+		assertEquals(-3, out.p0.y, TEST_F32);
+		assertEquals(3, out.p1.x, TEST_F32);
+		assertEquals(5, out.p1.y, TEST_F32);
+	}
+
+	@Test
 	public void center_quadrilateral() {
 		Quadrilateral_F32 q = new Quadrilateral_F32(3, 0, 2, -3, -2, 3, 1, 5);
 
