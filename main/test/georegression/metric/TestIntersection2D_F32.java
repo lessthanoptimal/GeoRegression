@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -508,6 +508,18 @@ public class TestIntersection2D_F32 {
 
 	private void check( Rectangle2D_F32 a , Rectangle2D_F32 b , float expected ) {
 		assertEquals(expected,Intersection2D_F32.intersectionArea(a,b),GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void intersection_poly_to_poly() {
+		Polygon2D_F32 A = new Polygon2D_F32(new float[][]{{0,0},{2,0},{2,4},{0,4}});
+		Polygon2D_F32 B = A.copy();
+
+		assertEquals(8,Intersection2D_F32.intersection(A,B), GrlConstants.TEST_SQ_F32);
+
+		// make sure the order doesn't matter
+		B.flip();
+		assertEquals(8,Intersection2D_F32.intersection(A,B), GrlConstants.TEST_SQ_F32);
 	}
 
 	@Test

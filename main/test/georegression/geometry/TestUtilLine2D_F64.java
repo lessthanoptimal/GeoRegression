@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -75,15 +75,15 @@ public class TestUtilLine2D_F64 {
 		LineSegment2D_F64 segment = new LineSegment2D_F64();
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 
-		segment.a.set(0,0);
+		segment.a.set(1,2);
 		segment.b.set(5,0);
 
 		UtilLine2D_F64.convert(segment,para);
 
-		assertEquals(para.p.x,0, GrlConstants.TEST_F64);
-		assertEquals(para.p.y,0, GrlConstants.TEST_F64);
-		assertEquals(Math.abs(para.slope.x),5, GrlConstants.TEST_F64);
-		assertEquals(para.slope.y,0, GrlConstants.TEST_F64);
+		assertEquals(para.p.x,1, GrlConstants.TEST_F64);
+		assertEquals(para.p.y,2, GrlConstants.TEST_F64);
+		assertEquals(para.slope.x,4, GrlConstants.TEST_F64);
+		assertEquals(para.slope.y,-2, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -110,6 +110,19 @@ public class TestUtilLine2D_F64 {
 		// see if the two end points lie on the general line
 		assertEquals(0,general.evaluate(a.x,a.y), GrlConstants.TEST_F64);
 		assertEquals(0,general.evaluate(b.x,b.y), GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void convert_segment2pt_parametric() {
+		Point2D_F64 a = new Point2D_F64(2,6);
+		Point2D_F64 b = new Point2D_F64(7,8);
+
+		LineParametric2D_F64 para = UtilLine2D_F64.convert(a,b,(LineParametric2D_F64) null);
+
+		assertEquals(para.p.x,2, GrlConstants.TEST_F64);
+		assertEquals(para.p.y,6, GrlConstants.TEST_F64);
+		assertEquals(para.slope.x,5, GrlConstants.TEST_F64);
+		assertEquals(para.slope.y,2, GrlConstants.TEST_F64);
 	}
 
 	@Test

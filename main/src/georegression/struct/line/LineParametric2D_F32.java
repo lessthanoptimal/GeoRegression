@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.struct.line;
 
+import georegression.geometry.UtilLine2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Vector2D_F32;
 
@@ -49,6 +50,17 @@ public class LineParametric2D_F32 implements Serializable {
 	public LineParametric2D_F32( Point2D_F32 p, Vector2D_F32 slope ) {
 		setPoint(p);
 		setSlope(slope);
+	}
+
+	/**
+	 * Creates a line defined from two points. The slope will be in the direction from a to b.
+	 *
+	 * @see UtilLine2D_F32#convert(Point2D_F32, Point2D_F32, LineParametric2D_F32)
+	 * @param a point on line
+	 * @param b point on line which isn't a
+	 */
+	public LineParametric2D_F32( Point2D_F32 a , Point2D_F32 b ) {
+		UtilLine2D_F32.convert(a,b,this);
 	}
 
 	public LineParametric2D_F32() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.metric;
 
 import georegression.geometry.UtilEllipse_F32;
+import georegression.geometry.algs.AreaIntersectionPolygon2D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
@@ -368,6 +369,20 @@ public class Intersection2D_F32 {
 		bottom = a1 * target.slope.y - b1 * target.slope.x;
 
 		return top / bottom;
+	}
+
+	/**
+	 * Finds the area of the intersection of two polygons.
+	 *
+	 * @se AreaIntersectionPolygon2D_F32
+	 *
+	 * @param a (Input) Polygon 2D
+	 * @param b (Input) Polygon 2D
+	 * @return Area of intersection.
+	 */
+	public static float intersection( Polygon2D_F32 a , Polygon2D_F32 b ) {
+		AreaIntersectionPolygon2D_F32 alg = new AreaIntersectionPolygon2D_F32();
+		return (float)Math.abs(alg.computeArea(a,b));
 	}
 
 	/**
