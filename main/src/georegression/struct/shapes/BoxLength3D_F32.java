@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -96,6 +96,31 @@ public class BoxLength3D_F32 implements Serializable {
 
 	public void setLengthZ(float lengthZ) {
 		this.lengthZ = lengthZ;
+	}
+
+	/**
+	 * Used to retrieve the corners of the box.
+	 *
+	 * @param index A value from 0 to 7
+	 * @param corner (Optional) storage for the corner. If null a new point will be declared
+	 * @return The corner.
+	 */
+	public Point3D_F32 getCorner(int index , Point3D_F32 corner ) {
+		if( corner == null )
+			corner = new Point3D_F32();
+
+		corner.set(p);
+
+		if( (index & 0x01) != 0 ) {
+			corner.x += lengthX;
+		}
+		if( (index & 0x02) != 0 ) {
+			corner.y += lengthY;
+		}
+		if( (index & 0x04) != 0 ) {
+			corner.z += lengthZ;
+		}
+		return corner;
 	}
 
 	public String toString() {

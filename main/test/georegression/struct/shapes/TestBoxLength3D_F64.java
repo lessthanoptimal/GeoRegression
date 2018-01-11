@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,9 +19,14 @@
 package georegression.struct.shapes;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.point.Point3D_F64;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -78,6 +83,32 @@ public class TestBoxLength3D_F64 {
 		assertEquals(4,box.lengthX, GrlConstants.TEST_F64);
 		assertEquals(5,box.lengthY, GrlConstants.TEST_F64);
 		assertEquals(6, box.lengthZ, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void getCorner() {
+		BoxLength3D_F64 boxA = new BoxLength3D_F64(1,2,3,4,5,6);
+
+		List<Point3D_F64> expected = new ArrayList<>();
+		expected.add( new Point3D_F64(1,2,3));
+		expected.add( new Point3D_F64(1+4,2,3));
+		expected.add( new Point3D_F64(1,2+5,3));
+		expected.add( new Point3D_F64(1,2,3+6));
+		expected.add( new Point3D_F64(1+4,2+5,3));
+		expected.add( new Point3D_F64(1+4,2,3+6));
+		expected.add( new Point3D_F64(1+4,2+5,3+6));
+		expected.add( new Point3D_F64(1,2+5,3+6));
+
+		for( Point3D_F64 e : expected ) {
+			boolean matched = false;
+			for (int i = 0; i < 8; i++) {
+				if( e.distance(boxA.getCorner(i,null)) <= GrlConstants.TEST_F64 ) {
+					matched = true;
+					break;
+				}
+			}
+			assertTrue(matched);
+		}
 	}
 
 }
