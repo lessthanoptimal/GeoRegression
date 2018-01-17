@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,7 +37,7 @@ public class GrlConstants {
 	public static double PId2 = Math.PI/2.0;
 
 	// identifies the library version
-	public static String VERSION = "0.14";
+	public static String VERSION = "0.15";
 
 	// standard tolerances used in unit tests
 	public static float TEST_F32 = 1e-4f;

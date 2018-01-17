@@ -3,14 +3,14 @@
 - Update GrlConstants.VERSION
 - Update change.txt
 - Update version in build.gradle
-- Commit and tag release
-- Create .zip of source code
-  - remove .git
-- Create jar file "gradle createLibraryDirectory"
 - Update project website
   cd docs/website
   Documentation.rst Download.rst index.rst conf.py
   examples might need to be updated too
+- Commit and tag release
+- Create .zip of source code
+  - remove .git
+- Create jar file "gradle createLibraryDirectory"
 - Update JavaDoc
   rm -rf build/doc/javadoc
   ./gradlew javadocWeb
