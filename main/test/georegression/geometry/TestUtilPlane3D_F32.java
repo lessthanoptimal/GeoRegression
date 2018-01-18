@@ -19,6 +19,7 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.EulerType;
 import georegression.struct.plane.PlaneGeneral3D_F32;
 import georegression.struct.plane.PlaneNormal3D_F32;
 import georegression.struct.plane.PlaneTangent3D_F32;
@@ -27,6 +28,7 @@ import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import georegression.struct.se.Se3_F32;
 import georegression.transform.se.SePointOps_F32;
+import org.ejml.UtilEjml;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -91,6 +93,35 @@ public class TestUtilPlane3D_F32 {
 		for( Point3D_F32 p : points ) {
 			float found = UtilPlane3D_F32.evaluate(conv,p);
 			assertEquals(0,found, GrlConstants.TEST_F32);
+		}
+	}
+
+	@Test
+	public void convert_se3_plane() {
+		Se3_F32 p2w = new Se3_F32();
+
+		convert_se3_plane(p2w);
+		p2w.T.set(2,6,-3);
+		convert_se3_plane(p2w);
+		ConvertRotation3D_F32.eulerToMatrix(EulerType.XYZ,0.2f,3,-4.5f,p2w.R);
+		convert_se3_plane(p2w);
+	}
+
+	private void convert_se3_plane( Se3_F32 p2w ){
+
+		List<Point3D_F32> points = new ArrayList<>();
+		points.add(new Point3D_F32(0,0,0));
+		points.add(new Point3D_F32(10,0,0));
+		points.add(new Point3D_F32(0,1,0));
+		points.add(new Point3D_F32(-0.2f,0,0));
+		points.add(new Point3D_F32(-3,2,0));
+		points.add(new Point3D_F32(6,1000,0));
+
+		// if the extracted plane is correct then all these points should be on it
+		PlaneNormal3D_F32 plane = UtilPlane3D_F32.convert(p2w,null);
+		for( Point3D_F32 p : points ) {
+			SePointOps_F32.transform(p2w,p,p);
+			assertEquals(0,UtilPlane3D_F32.evaluate(plane,p) , GrlConstants.TEST_F32);
 		}
 	}
 
@@ -236,4 +267,52 @@ public class TestUtilPlane3D_F32 {
 		}
 	}
 
+	@Test
+	public void selectAxis2D() {
+
+		Vector3D_F32 z = new Vector3D_F32(-1.2f,5.6f,9.9f);
+		Vector3D_F32 x = new Vector3D_F32();
+		Vector3D_F32 y = new Vector3D_F32();
+
+		UtilPlane3D_F32.selectAxis2D(z,x,y);
+
+		assertEquals(0,z.dot(x), UtilEjml.TEST_F32);
+		assertEquals(0,z.dot(y), UtilEjml.TEST_F32);
+		assertEquals(0,x.dot(y), UtilEjml.TEST_F32);
+
+		assertEquals( 1 , x.norm(), UtilEjml.TEST_F32);
+		assertEquals( 1 , y.norm(), UtilEjml.TEST_F32);
+
+		Vector3D_F32 found = new Vector3D_F32();
+		found.cross(x,y);
+
+		assertTrue(found.dot(z) > 0 ); // make sure it's right handed
+	}
+
+	@Test
+	public void point3Dto2D_point2Dto3D() {
+
+		Point3D_F32 c = new Point3D_F32(5.1f,-3.1f,3);
+		Vector3D_F32 z = new Vector3D_F32(-1.2f,5.6f,9.9f);
+
+		Vector3D_F32 x = new Vector3D_F32();
+		Vector3D_F32 y = new Vector3D_F32();
+
+		Point3D_F32 p3 = new Point3D_F32();
+		Point2D_F32 p2 = new Point2D_F32();
+
+		UtilPlane3D_F32.selectAxis2D(z,x,y);
+
+		// pick a point on the plane
+		p3.x = c.x + x.x;
+		p3.y = c.y + x.y;
+		p3.z = c.z + x.z;
+
+		UtilPlane3D_F32.point3Dto2D(c,x,y,p3,p2);
+
+		Point3D_F32 found = new Point3D_F32();
+		UtilPlane3D_F32.point2Dto3D(c,x,y,p2,found);
+
+		assertTrue(found.distance(p3) <= UtilEjml.TEST_F32);
+	}
 }

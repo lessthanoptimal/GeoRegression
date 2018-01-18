@@ -22,6 +22,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.GeoTuple_F32;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -29,7 +30,7 @@ import static org.junit.Assert.assertTrue;
  * @author Peter Abeles
  */
 @SuppressWarnings({"unchecked"})
-public class GenericGeoTupleTests_F32<T extends GeoTuple_F32> {
+public class GenericGeoTupleTests_F32 <T extends GeoTuple_F32> {
 
 	private T seed;
 
@@ -44,6 +45,7 @@ public class GenericGeoTupleTests_F32<T extends GeoTuple_F32> {
 		checkNorm();
 		checkNormSq();
 		checkCopy();
+		checkEquals();
 	}
 
 	public void checkCreateNewInstance() {
@@ -107,5 +109,19 @@ public class GenericGeoTupleTests_F32<T extends GeoTuple_F32> {
 		}
 	}
 
+	public void checkEquals() {
+		T a = (T) seed.createNewInstance();
+		T b = (T) seed.createNewInstance();
+
+		assertTrue( a != b );
+		assertTrue( a.equals(b) );
+
+		for( int i = 0; i < a.getDimension(); i++ ) {
+			a.setIndex(i, 2);
+			assertFalse(a.equals(b));
+			b.setIndex(i, 2);
+			assertTrue(a.equals(b));
+		}
+	}
 
 }

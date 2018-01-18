@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -73,6 +73,13 @@ public class Point2D_I32 extends GeoTuple<Point2D_I32> {
 		return Math.sqrt(dx*dx + dy*dy);
 	}
 
+	public double distance( int x , int y ) {
+		int dx = this.x-x;
+		int dy = this.y-y;
+
+		return Math.sqrt(dx*dx + dy*dy);
+	}
+
 	/**
 	 * <p>
 	 * Returns the Euclidean distance squared from 'this' to 'a'.  No floating point
@@ -89,6 +96,13 @@ public class Point2D_I32 extends GeoTuple<Point2D_I32> {
 	public int distance2( Point2D_I32 a ) {
 		int dx = x-a.x;
 		int dy = y-a.y;
+
+		return dx*dx + dy*dy;
+	}
+
+	public int distance2( int x , int y ) {
+		int dx = this.x-x;
+		int dy = this.y-y;
 
 		return dx*dx + dy*dy;
 	}
@@ -113,5 +127,13 @@ public class Point2D_I32 extends GeoTuple<Point2D_I32> {
 	@Override
 	public Point2D_I32 createNewInstance() {
 		return new Point2D_I32();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if( this.getClass() != obj.getClass() )
+			return false;
+		Point2D_I32 p = (Point2D_I32)obj;
+		return x==p.x&&y==p.y;
 	}
 }

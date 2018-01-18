@@ -1,0 +1,74 @@
+/*
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ *
+ * This file is part of Geometric Regression Library (GeoRegression).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package georegression.geometry;
+
+import georegression.misc.GrlConstants;
+import georegression.struct.point.Point2D_F32;
+import georegression.struct.trig.Circle2D_F32;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * @author Peter Abeles
+ */
+public class TestUtilCircle2D_F32 {
+
+	@Test
+	public void evaluate() {
+		Circle2D_F32 circle = new Circle2D_F32(5,2,3);
+
+		assertEquals(0,UtilCircle2D_F32.evaluate(2-5,3,circle),GrlConstants.TEST_F32);
+		assertEquals(0,UtilCircle2D_F32.evaluate(2+5,3,circle),GrlConstants.TEST_F32);
+		assertEquals(0,UtilCircle2D_F32.evaluate(2,3-5,circle),GrlConstants.TEST_F32);
+		assertEquals(0,UtilCircle2D_F32.evaluate(2,3+5,circle),GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void circle_3pts() {
+		Point2D_F32 x0 = new Point2D_F32(5,4);
+		Point2D_F32 x1 = new Point2D_F32(3,8);
+		Point2D_F32 x2 = new Point2D_F32(-3,-1);
+
+		Circle2D_F32 circle = new Circle2D_F32();
+
+		UtilCircle2D_F32.circle(x0,x1,x2,circle);
+
+		assertEquals(0,UtilCircle2D_F32.evaluate(x0.x,x0.y,circle), GrlConstants.TEST_SQ_F32);
+		assertEquals(0,UtilCircle2D_F32.evaluate(x1.x,x1.y,circle), GrlConstants.TEST_SQ_F32);
+		assertEquals(0,UtilCircle2D_F32.evaluate(x2.x,x2.y,circle), GrlConstants.TEST_SQ_F32);
+	}
+
+	@Test
+	public void circleRadiusSq_3pts() {
+		Point2D_F32 x0 = new Point2D_F32(5,4);
+		Point2D_F32 x1 = new Point2D_F32(3,8);
+		Point2D_F32 x2 = new Point2D_F32(-3,-1);
+
+		Circle2D_F32 circle = new Circle2D_F32();
+
+		UtilCircle2D_F32.circle(x0,x1,x2,circle);
+
+		float expected = circle.radius*circle.radius;
+
+		float found = UtilCircle2D_F32.circleRadiusSq(x0,x1,x2);
+
+		assertEquals(expected,found, GrlConstants.TEST_SQ_F32);
+	}
+}

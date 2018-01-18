@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.metric;
 
 import georegression.geometry.UtilEllipse_F32;
+import georegression.geometry.algs.AreaIntersectionPolygon2D_F32;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
@@ -306,6 +307,40 @@ public class Intersection2D_F32 {
 	}
 
 	/**
+	 * Finds the point of intersection between the two lines defined by the set sets of points passed in.
+	 * @param lineA0 Point on line A
+	 * @param lineA1 Point on line A
+	 * @param lineB0 Point on line B
+	 * @param lineB1 Point on line B
+	 * @param output (Optional) storage for point of intersection
+	 * @return Point of intersection or null if the lines are parallel
+	 */
+	public static Point2D_F32 intersection( Point2D_F32 lineA0 , Point2D_F32 lineA1 ,
+											Point2D_F32 lineB0 , Point2D_F32 lineB1 ,
+											Point2D_F32 output )
+	{
+		if( output == null )
+			output = new Point2D_F32();
+
+		float slopeAx = lineA1.x - lineA0.x;
+		float slopeAy = lineA1.y - lineA0.y;
+		float slopeBx = lineB1.x - lineB0.x;
+		float slopeBy = lineB1.y - lineB0.y;
+
+		float top = slopeAy * ( lineB0.x - lineA0.x ) + slopeAx * (lineA0.y - lineB0.y );
+		float bottom = slopeAx * slopeBy - slopeAy * slopeBx;
+
+		if( bottom == 0 )
+			return null;
+		float t = top / bottom;
+
+		output.x = lineB0.x + t*slopeBx;
+		output.y = lineB0.y + t*slopeBy;
+
+		return output;
+	}
+
+	/**
 	 * Finds the point of intersection between a line and a line segment.  The point of intersection
 	 * is specified as the distance along the parametric line.  If no intersection is found then
 	 * Float.NaN is returned.
@@ -334,6 +369,20 @@ public class Intersection2D_F32 {
 		bottom = a1 * target.slope.y - b1 * target.slope.x;
 
 		return top / bottom;
+	}
+
+	/**
+	 * Finds the area of the intersection of two polygons.
+	 *
+	 * @se AreaIntersectionPolygon2D_F32
+	 *
+	 * @param a (Input) Polygon 2D
+	 * @param b (Input) Polygon 2D
+	 * @return Area of intersection.
+	 */
+	public static float intersection( Polygon2D_F32 a , Polygon2D_F32 b ) {
+		AreaIntersectionPolygon2D_F32 alg = new AreaIntersectionPolygon2D_F32();
+		return (float)Math.abs(alg.computeArea(a,b));
 	}
 
 	/**

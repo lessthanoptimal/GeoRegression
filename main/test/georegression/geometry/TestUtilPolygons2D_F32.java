@@ -151,6 +151,19 @@ public class TestUtilPolygons2D_F32 {
 	}
 
 	@Test
+	public void bounding_polygon() {
+		Polygon2D_F32 q = new Polygon2D_F32(3, 0, 2, -3, -2, 3, 1, 5);
+		Rectangle2D_F32 out = new Rectangle2D_F32();
+
+		UtilPolygons2D_F32.bounding(q, out);
+
+		assertEquals(-2, out.p0.x, TEST_F32);
+		assertEquals(-3, out.p0.y, TEST_F32);
+		assertEquals(3, out.p1.x, TEST_F32);
+		assertEquals(5, out.p1.y, TEST_F32);
+	}
+
+	@Test
 	public void center_quadrilateral() {
 		Quadrilateral_F32 q = new Quadrilateral_F32(3, 0, 2, -3, -2, 3, 1, 5);
 
@@ -346,5 +359,50 @@ public class TestUtilPolygons2D_F32 {
 		assertEquals(4, output.size());
 		assertEquals(0, output.get(0).x, TEST_F32);
 		assertEquals(4, output.get(1).x, TEST_F32);
+	}
+
+	@Test
+	public void getSideLength() {
+		Polygon2D_F32 output = new Polygon2D_F32(3);
+
+		output.get(0).set(0,0);
+		output.get(1).set(2,0);
+		output.get(2).set(2,3);
+
+		assertEquals(2,output.getSideLength(0), TEST_F32);
+		assertEquals(3,output.getSideLength(1), TEST_F32);
+		assertEquals(Math.sqrt(2*2+3*3),output.getSideLength(2), TEST_F32);
+
+	}
+
+	@Test
+	public void averageOfClosestPointError() {
+		Polygon2D_F32 a = new Polygon2D_F32(4);
+
+		a.get(0).set(1,1);
+		a.get(1).set(4,1);
+		a.get(2).set(4,4);
+		a.get(3).set(1,4);
+
+		assertEquals(0,UtilPolygons2D_F32.averageOfClosestPointError(a,a,100),TEST_F32);
+
+		// same polygon just rotated order of points
+		Polygon2D_F32 b = new Polygon2D_F32(4);
+		b.get(0).set(1,4);
+		b.get(1).set(1,1);
+		b.get(2).set(4,1);
+		b.get(3).set(4,4);
+
+		assertEquals(0,UtilPolygons2D_F32.averageOfClosestPointError(a,b,100),TEST_F32);
+
+		// make b different from a
+		b.get(2).set(8,1);
+		b.get(3).set(8,4);
+
+		float errorAB = UtilPolygons2D_F32.averageOfClosestPointError(a,b,100);
+		float errorBA = UtilPolygons2D_F32.averageOfClosestPointError(b,a,100);
+
+		assertTrue(errorAB>errorBA);
+
 	}
 }

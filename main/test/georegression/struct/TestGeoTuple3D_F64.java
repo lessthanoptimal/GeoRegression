@@ -78,6 +78,17 @@ public class TestGeoTuple3D_F64 {
 	}
 
 	@Test
+	public void divideIP() {
+		Dummy a = new Dummy(1,2,3);
+
+		a.divideIP(2.5);
+
+		assertEquals(1.0/2.5,a.x, GrlConstants.TEST_F64);
+		assertEquals(2.0/2.5,a.y, GrlConstants.TEST_F64);
+		assertEquals(3.0/2.5,a.z, GrlConstants.TEST_F64);
+	}
+
+	@Test
 	public void times() {
 		Dummy a = new Dummy(1,2,3);
 
@@ -90,6 +101,14 @@ public class TestGeoTuple3D_F64 {
 		assertEquals(2.5,b.x, GrlConstants.TEST_F64);
 		assertEquals(5,b.y, GrlConstants.TEST_F64);
 		assertEquals(7.5, b.z, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void distance_xyz(){
+		Dummy a = new Dummy(1,2,3);
+
+		double found = a.distance(2,-1,4);
+		assertEquals(Math.sqrt(1+9+1),found,GrlConstants.TEST_F64);
 	}
 
 	public static class Dummy extends GeoTuple3D_F64<Dummy> {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -40,6 +40,13 @@ public class LineGeneral2D_F64 implements Serializable {
 	 */
 	public double A,B,C;
 
+	/**
+	 * A*x + B*y + C = 0
+	 *
+	 * @param a parameter A
+	 * @param b parameter B
+	 * @param c parameter C
+	 */
 	public LineGeneral2D_F64(double a, double b, double c) {
 		set(a,b,c);
 	}
@@ -69,6 +76,13 @@ public class LineGeneral2D_F64 implements Serializable {
 		this.C = original.C;
 	}
 
+	/**
+	 * A*x + B*y + C = 0
+	 *
+	 * @param a parameter A
+	 * @param b parameter B
+	 * @param c parameter C
+	 */
 	public void set(double a, double b, double c) {
 		this.A = a;
 		this.B = b;

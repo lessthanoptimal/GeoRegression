@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,15 +23,18 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.shapes.Cylinder3D_F64;
 import org.ddogleg.optimization.functions.FunctionNtoMxN;
+import org.ejml.data.DMatrixRMaj;
 
 import java.util.List;
+
+//NOFILTER import org.ejml.data.DMatrixRMaj;
 
 /**
  * Jacobian of {@link CylinderToPointSignedDistance_F64}.
  *
  * @author Peter Abeles
  */
-public class CylinderToPointSignedDistanceJacobian_F64 implements FunctionNtoMxN {
+public class CylinderToPointSignedDistanceJacobian_F64 implements FunctionNtoMxN< /**/DMatrixRMaj > {
 	// model of the cylinder
 	private Cylinder3D_F64 cylinder = new Cylinder3D_F64();
 
@@ -56,7 +59,7 @@ public class CylinderToPointSignedDistanceJacobian_F64 implements FunctionNtoMxN
 	}
 
 	@Override
-	public void process( /**/double[] input, /**/double[] output) {
+	public void process( /**/double[] input, /**/DMatrixRMaj output) {
 		codec.decode(input,cylinder);
 
 		Point3D_F64 cp = cylinder.line.p;
@@ -83,29 +86,34 @@ public class CylinderToPointSignedDistanceJacobian_F64 implements FunctionNtoMxN
 
 			// round off error can make distanceSq go negative when it is very close to zero
 			if( distance < 0 ) {
-				output[index++] = 0;
-				output[index++] = 0;
-				output[index++] = 0;
+				output.data[index++] = 0;
+				output.data[index++] = 0;
+				output.data[index++] = 0;
 
-				output[index++] = 0;
-				output[index++] = 0;
-				output[index++] = 0;
+				output.data[index++] = 0;
+				output.data[index++] = 0;
+				output.data[index++] = 0;
 
-				output[index++] = -1;
+				output.data[index++] = -1;
 
 			} else {
 				distance = Math.sqrt(distance);
 
-				output[index++] = (cp.x - p.x - xdots*cs.x/slopeDot)/distance;
-				output[index++] = (cp.y - p.y - xdots*cs.y/slopeDot)/distance;
-				output[index++] = (cp.z - p.z - xdots*cs.z/slopeDot)/distance;
+				output.data[index++] = (cp.x - p.x - xdots*cs.x/slopeDot)/distance;
+				output.data[index++] = (cp.y - p.y - xdots*cs.y/slopeDot)/distance;
+				output.data[index++] = (cp.z - p.z - xdots*cs.z/slopeDot)/distance;
 
-				output[index++] = -xdots*( (cp.x - p.x)/slopeDot - (xdots/slopeDot)*(cs.x/slopeDot))/distance;
-				output[index++] = -xdots*( (cp.y - p.y)/slopeDot - (xdots/slopeDot)*(cs.y/slopeDot))/distance;
-				output[index++] = -xdots*( (cp.z - p.z)/slopeDot - (xdots/slopeDot)*(cs.z/slopeDot))/distance;
+				output.data[index++] = -xdots*( (cp.x - p.x)/slopeDot - (xdots/slopeDot)*(cs.x/slopeDot))/distance;
+				output.data[index++] = -xdots*( (cp.y - p.y)/slopeDot - (xdots/slopeDot)*(cs.y/slopeDot))/distance;
+				output.data[index++] = -xdots*( (cp.z - p.z)/slopeDot - (xdots/slopeDot)*(cs.z/slopeDot))/distance;
 
-				output[index++] = -1;
+				output.data[index++] = -1;
 			}
 		}
+	}
+
+	@Override
+	public /**/DMatrixRMaj declareMatrixMxN() {
+		return new /**/DMatrixRMaj(getNumOfOutputsM(),getNumOfInputsN());
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -100,7 +100,18 @@ public class Rectangle2D_F32 implements Serializable {
 		this.p1 = p1;
 	}
 
+	@Override
 	public String toString() {
 		return getClass().getSimpleName()+"{ p0("+p0.x+" "+p0.y+") p1("+p1.x+" "+p1.y+") }";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			Rectangle2D_F32 r = (Rectangle2D_F32)obj;
+			return p0.x==r.p0.x&&p0.y==r.p0.y&&p1.x==r.p1.x&&p1.y==r.p1.y;
+		} catch( RuntimeException e){
+			return false;
+		}
 	}
 }

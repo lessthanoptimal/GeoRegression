@@ -67,6 +67,14 @@ public class TestClosestPoint2D_F32 {
 	}
 
 	@Test
+	public void closestPointT_parametric_xy() {
+		LineParametric2D_F32 line = new LineParametric2D_F32( 1, 2, -1, 1 );
+
+		float found = ClosestPoint2D_F32.closestPointT( line, 1,0 );
+		assertEquals( -1, found, GrlConstants.TEST_F32);
+	}
+
+	@Test
 	public void closestPoint_LS() {
 		LineSegment2D_F32 ls; Point2D_F32 found;
 		// test middle

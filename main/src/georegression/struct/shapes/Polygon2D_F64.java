@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,6 +36,14 @@ public class Polygon2D_F64 implements Serializable {
 
 	// vertexes in the polygon
 	public FastQueue<Point2D_F64> vertexes;
+
+	public Polygon2D_F64( double[][] a ) {
+		this(a.length);
+
+		for (int i = 0; i < a.length; i++) {
+			vertexes.get(i).set(a[i][0], a[i][1]);
+		}
+	}
 
 	public Polygon2D_F64( Polygon2D_F64 a ) {
 		vertexes = new FastQueue<Point2D_F64>(a.size(),Point2D_F64.class,true);
@@ -77,6 +85,17 @@ public class Polygon2D_F64 implements Serializable {
 
 	public void set( int index , double x , double y ) {
 		vertexes.data[index].set(x,y);
+	}
+
+	/**
+	 * Resturns the length of the specified side that is composed of point index and index+1
+	 * @return Euclidean length of the side
+	 */
+	public double getSideLength( int index ) {
+		Point2D_F64 a = vertexes.get( index );
+		Point2D_F64 b = vertexes.get( (index+1)%vertexes.size );
+
+		return (double)a.distance(b);
 	}
 
 	public Point2D_F64 get( int index ) {

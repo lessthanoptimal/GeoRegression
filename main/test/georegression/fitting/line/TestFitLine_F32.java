@@ -41,7 +41,7 @@ public class TestFitLine_F32 {
 		float r = 1.5f;
 		float theta = 0.75f;
 
-		List<Point2D_F32> pts = new ArrayList<Point2D_F32>();
+		List<Point2D_F32> pts = new ArrayList<>();
 
 		for( int i = 0; i < 20; i++ ) {
 			Point2D_F32 p = new Point2D_F32();
@@ -54,7 +54,7 @@ public class TestFitLine_F32 {
 		LinePolar2D_F32 found = FitLine_F32.polar(pts,null);
 
 		assertEquals(r,found.distance, GrlConstants.TEST_F32);
-		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.TEST_F32);
+		assertTrue(UtilAngle.dist(theta, found.angle) <= GrlConstants.TEST_F32);
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class TestFitLine_F32 {
 		LinePolar2D_F32 found = FitLine_F32.polar(pts,weights,null);
 
 		assertEquals(r,found.distance, GrlConstants.TEST_F32);
-		assertTrue(UtilAngle.dist(r, found.distance) <= GrlConstants.TEST_F32);
+		assertTrue(UtilAngle.dist(theta, found.angle) <= GrlConstants.TEST_F32);
 	}
 
 	/**

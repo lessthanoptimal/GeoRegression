@@ -1,6 +1,44 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2018/01/17
+Version : 0.15
+
+- Distance2D
+  * Added distance(x,y) to Point2D_I32
+  * Added distance(line,poing) I32
+  * Added distanceSq(line,x,y)
+- Added equals() support to the following
+  * GeoTuple
+  * Rectangle2D
+- Polygons 2D
+  * Added bounding rectangle
+  * Area of intersection between two
+- BoxLength3D
+  * added getCorner()
+
+---------------------------------------------
+Date    : 2017/10/12
+Version : 0.14
+
+- Updated for changes in EJML
+- Added I32 line fit 2D code
+- UtilVector3D
+  * Added perpendicularCanonical()
+- UtilPlane3D
+  * Added selectAxis2D()
+  * Added point3Dto2D()
+  * Added point2Dto3D()
+- Intersection3D
+  * Added intersection(Triangle3D,LineParametric3D)
+- Intersection2D
+  * Added intersection of two lines defined by 4 points.
+- Polygon2D
+  * Added getSideLength()
+- UtilCircle2D
+  * circle from 3 points
+
+---------------------------------------------
 Date    : 2017/08/13
 Version : 0.13
 

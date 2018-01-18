@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,7 +35,7 @@ import org.ddogleg.fitting.modelset.ModelCodec;
 public class CodecPlaneGeneral3D_F64 implements ModelCodec<PlaneGeneral3D_F64> {
 
 	@Override
-	public void decode(/**/double[] input, PlaneGeneral3D_F64 outputModel) {
+	public void decode( /**/double[] input, PlaneGeneral3D_F64 outputModel) {
 		outputModel.A = (double) input[0];
 		outputModel.B = (double) input[1];
 		outputModel.C = (double) input[2];

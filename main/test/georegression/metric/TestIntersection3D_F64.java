@@ -18,17 +18,23 @@
 
 package georegression.metric;
 
+import georegression.geometry.ConvertRotation3D_F64;
+import georegression.geometry.GeometryMath_F64;
 import georegression.geometry.UtilPlane3D_F64;
 import georegression.misc.GrlConstants;
+import georegression.struct.EulerType;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.se.Se3_F64;
 import georegression.struct.shapes.Box3D_F64;
 import georegression.struct.shapes.BoxLength3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
 import georegression.struct.shapes.Triangle3D_F64;
+import georegression.transform.se.SePointOps_F64;
+import org.ddogleg.struct.FastQueue;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -99,27 +105,104 @@ public class TestIntersection3D_F64 {
 
 		// degenerate triangle
 		Triangle3D_F64 triangle = new Triangle3D_F64(1,1,1,2,2,2,3,3,3);
-		assertEquals(-1,Intersection3D_F64.intersection(triangle,ls,p));
+		assertEquals(-1,Intersection3D_F64.intersect(triangle,ls,p));
 
 		// no intersection
 		triangle.set(1,0,0,  3,0,0,  3,2,0);
 		ls.set(0,0,0,  0,0,10); // completely miss
-		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
+		assertEquals(0, Intersection3D_F64.intersect(triangle, ls, p));
 		ls.set(0,0,0,  0,0,10); // hits the plain but not the triangle
-		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
+		assertEquals(0, Intersection3D_F64.intersect(triangle, ls, p));
 		ls.set(2,0.5,-1,  2,0.5,-0.5); // would hit, but is too short
-		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
+		assertEquals(0, Intersection3D_F64.intersect(triangle, ls, p));
 		ls.set(2,0.5,-0.5,  2,0.5,-1); // would hit, but is too short
-		assertEquals(0,Intersection3D_F64.intersection(triangle,ls,p));
+		assertEquals(0,Intersection3D_F64.intersect(triangle,ls,p));
 
 		// unique intersection
 		ls.set(2,0.5,1,  2,0.5,-1);
-		assertEquals(1,Intersection3D_F64.intersection(triangle,ls,p));
+		assertEquals(1,Intersection3D_F64.intersect(triangle,ls,p));
 		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.TEST_F64);
 
 		// infinite intersections
 		ls.set(0, 0, 0, 4, 0, 0);
-		assertEquals(2,Intersection3D_F64.intersection(triangle, ls, p));
+		assertEquals(2,Intersection3D_F64.intersect(triangle, ls, p));
+	}
+
+	@Test
+	public void intersection_triangle_line() {
+		LineParametric3D_F64 line = new LineParametric3D_F64();
+		Point3D_F64 p = new Point3D_F64();
+
+
+		// degenerate triangle
+		Triangle3D_F64 triangle = new Triangle3D_F64(1,1,1,2,2,2,3,3,3);
+		assertEquals(-1,Intersection3D_F64.intersect(triangle,line,p));
+
+		// no intersection
+		triangle.set(1,0,0,  3,0,0,  3,2,0);
+		line.set(0,0,0,  0,0,10); // completely miss
+		assertEquals(0, Intersection3D_F64.intersect(triangle, line, p));
+		line.set(0,0,0,  0,0,10); // hits the plain but not the triangle
+		assertEquals(0, Intersection3D_F64.intersect(triangle, line, p));
+
+		// unique intersection - positive
+		line.set(2,0.5,1,  0,0,-2);
+		assertEquals(1,Intersection3D_F64.intersect(triangle,line,p));
+		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.TEST_F64);
+		// unique intersection - negative
+		line.set(2,0.5,-1,  0,0,2);
+		assertEquals(1,Intersection3D_F64.intersect(triangle,line,p));
+		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.TEST_F64);
+
+		// infinite intersections
+		line.set(0, 0, 0, 4, 0, 0);
+		assertEquals(2,Intersection3D_F64.intersect(triangle, line, p));
+	}
+
+	@Test
+	public void intersect_poly_line() {
+		// Simple test cases
+		FastQueue<Point3D_F64> polygon = new FastQueue<>(Point3D_F64.class,true);
+
+		polygon.add( new Point3D_F64(-1,-1,2));
+		polygon.add( new Point3D_F64(-1,1,2));
+		polygon.add( new Point3D_F64(1,1,2));
+		polygon.add( new Point3D_F64(1,-1,2));
+
+		// hit two different parts of the polygon
+		LineParametric3D_F64 line = new LineParametric3D_F64(-0.5,0.5,0,0,0,1);
+		Point3D_F64 found = new Point3D_F64();
+//		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
+//		assertTrue(found.distance(-0.5,0.5,2) <= GrlConstants.TEST_F64);
+		line.p.set(0.5,-0.5,0);
+		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertTrue(found.distance(0.5,-0.5,2) <= GrlConstants.TEST_F64);
+		// point the line in the other direction
+		line.slope.set(0,0,-1);
+		assertEquals(3,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertTrue(found.distance(0.5,-0.5,2) <= GrlConstants.TEST_F64);
+		// miss the target entirely
+		line.slope.set(0,50,0.001);
+		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
+
+		// rotate everything
+		Se3_F64 se = new Se3_F64();
+		se.T.set(-4,2,1.2);
+		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,1.2,0.5,3.4,se.R);
+
+		line.p.set(0.5,-0.5,0);
+		line.slope.set(0,0,1);
+		SePointOps_F64.transform(se,line.p,line.p);
+		GeometryMath_F64.mult(se.R,line.slope,line.slope);
+
+		for (int i = 0; i < polygon.size; i++) {
+			SePointOps_F64.transform(se,polygon.get(i),polygon.get(i));
+		}
+
+		Point3D_F64 expected = new Point3D_F64(0.5,-0.5,2);
+		SePointOps_F64.transform(se,expected,expected);
+		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertTrue(found.distance(expected) <= GrlConstants.TEST_F64);
 	}
 
 	@Test

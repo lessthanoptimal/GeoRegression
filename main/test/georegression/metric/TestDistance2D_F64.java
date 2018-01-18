@@ -46,8 +46,22 @@ public class TestDistance2D_F64 {
 	}
 
 	@Test
+	public void distance_parametric_line_points() {
+		double found = Distance2D_F64.distance( new LineParametric2D_F64( -2, 0, 1, 1 ),  4, -2  );
+		double expected = (double) UtilTrig_F64.distance( 0, 2, 4, -2 );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+	}
+
+	@Test
 	public void distanceSq_parametric_line() {
 		double found = Distance2D_F64.distanceSq(new LineParametric2D_F64(-2, 0, 1, 1), new Point2D_F64(4, -2));
+		double expected = (double) UtilTrig_F64.distanceSq(0, 2, 4, -2);
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void distanceSq_parametric_line_points() {
+		double found = Distance2D_F64.distanceSq(new LineParametric2D_F64(-2, 0, 1, 1), 4, -2);
 		double expected = (double) UtilTrig_F64.distanceSq(0, 2, 4, -2);
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
@@ -67,6 +81,60 @@ public class TestDistance2D_F64 {
 		// test after the second end point
 		found = Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( 10, 0 ) );
 		expected = UtilTrig_F64.distance( 3, 5, 10, 0 );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void distanceSq_line_segment() {
+		// test inside the line
+		double found = Distance2D_F64.distanceSq( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( 2, 0 ) );
+		double expected = (double) UtilTrig_F64.distanceSq( 0, 2, 2, 0 );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+
+		// test before the first end point
+		found = Distance2D_F64.distanceSq( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( -5, -5 ) );
+		expected = UtilTrig_F64.distanceSq( -2, 0, -5, -5 );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+
+		// test after the second end point
+		found = Distance2D_F64.distanceSq( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( 10, 0 ) );
+		expected = UtilTrig_F64.distanceSq( 3, 5, 10, 0 );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void distance_line_segment_param() {
+		// test inside the line
+		double found = Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), 2, 0 );
+		double expected = (double) UtilTrig_F64.distance( 0, 2, 2, 0 );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+
+		// test before the first end point
+		found = Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), -5, -5 );
+		expected = UtilTrig_F64.distance( -2, 0, -5, -5 );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+
+		// test after the second end point
+		found = Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), 10, 0 );
+		expected = UtilTrig_F64.distance( 3, 5, 10, 0 );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void distanceSq_line_segment_param() {
+		// test inside the line
+		double found = Distance2D_F64.distanceSq( new LineSegment2D_F64( -2, 0, 3, 5 ),  2, 0  );
+		double expected = (double) UtilTrig_F64.distanceSq( 0, 2, 2, 0 );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+
+		// test before the first end point
+		found = Distance2D_F64.distanceSq( new LineSegment2D_F64( -2, 0, 3, 5 ),  -5, -5 );
+		expected = UtilTrig_F64.distanceSq( -2, 0, -5, -5 );
+		assertEquals( expected, found, GrlConstants.TEST_F64);
+
+		// test after the second end point
+		found = Distance2D_F64.distanceSq( new LineSegment2D_F64( -2, 0, 3, 5 ), 10, 0  );
+		expected = UtilTrig_F64.distanceSq( 3, 5, 10, 0 );
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 

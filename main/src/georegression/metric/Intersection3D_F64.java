@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -31,6 +31,7 @@ import georegression.struct.shapes.Box3D_F64;
 import georegression.struct.shapes.BoxLength3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
 import georegression.struct.shapes.Triangle3D_F64;
+import org.ddogleg.struct.FastQueue;
 
 /**
  * @author Peter Abeles
@@ -151,8 +152,8 @@ public class Intersection3D_F64 {
 	 *          1 =  intersect in unique point I1<br>
 	 *          2 =  are in the same plane
 	 **/
-	public static int intersection( Triangle3D_F64 T , LineSegment3D_F64 R , Point3D_F64 output ) {
-		return intersection(T,R,output,
+	public static int intersect(Triangle3D_F64 T , LineSegment3D_F64 R , Point3D_F64 output ) {
+		return intersect(T,R,output,
 				new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64());
 	}
 
@@ -164,9 +165,9 @@ public class Intersection3D_F64 {
 	 * [1] http://geomalgorithms.com/a06-_intersect-2.html
 	 * </p>
 	 *
-	 * @param T Triangle in 3D space
-	 * @param R Line segment in 3D space.
-	 * @param output Storage for the intersection, if there is one
+	 * @param T (Input) Triangle in 3D space
+	 * @param R (Input) Line segment in 3D space.
+	 * @param output (Output) Storage for the intersection, if there is one
 	 * @param u   (internal use) triangle vectors
 	 * @param v   (internal use) triangle vectors
 	 * @param n   (internal use) triangle vectors
@@ -177,9 +178,9 @@ public class Intersection3D_F64 {
 	 *          1 =  intersect in unique point I1
 	 *          2 =  are in the same plane
 	 **/
-	public static int intersection( Triangle3D_F64 T , LineSegment3D_F64 R , Point3D_F64 output ,
-									Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
-									Vector3D_F64 dir , Vector3D_F64 w0 ) {
+	public static int intersect(Triangle3D_F64 T , LineSegment3D_F64 R , Point3D_F64 output ,
+								Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
+								Vector3D_F64 dir , Vector3D_F64 w0 ) {
 		double r, a, b;              // params to calc ray-plane intersect
 
 		// get triangle edge vectors and plane normal
@@ -213,11 +214,202 @@ public class Intersection3D_F64 {
 		output.z = R.a.z + r*dir.z;
 
 		// is I inside T?
+		if( containedPlane(T.v0,output,u,v,w0)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * <p>Finds the intersection between a 3D triangle and a line.  Code ported from [1].  Internal
+	 * working variables are provided in this interface to reduce memory creation/destruction.</p>
+	 *
+	 * <p>
+	 * [1] http://geomalgorithms.com/a06-_intersect-2.html
+	 * </p>
+	 *
+	 * @param T (Input) Triangle in 3D space
+	 * @param R (Input) Line segment in 3D space.
+	 * @param output (Output) Storage for the intersection, if there is one
+	 * @return <ul style="list-style-type:none">
+	 *         <li>-1 = triangle is degenerate (a segment or point)</li>
+	 *          <li>0 =  disjoint (no intersect)</li>
+	 *          <li>1 =  intersect in unique point. Positive direction or zero</li>
+	 *          <li>2 =  are in the same plane</li>
+	 *          <li>3 =  intersect in unique point. Negative direction<</li>
+	 *          </ul>
+	 **/
+	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output) {
+		return intersect(T,R,output,
+				new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64());
+	}
+
+	/**
+	 * <p>Finds the intersection between a 3D triangle and a line.  Code ported from [1].  Internal
+	 * working variables are provided in this interface to reduce memory creation/destruction.</p>
+	 *
+	 * <p>
+	 * [1] http://geomalgorithms.com/a06-_intersect-2.html
+	 * </p>
+	 *
+	 * @param T (Input) Triangle in 3D space
+	 * @param R (Input) Line segment in 3D space.
+	 * @param output (Output) Storage for the intersection, if there is one
+	 * @param u   (internal use) triangle vectors
+	 * @param v   (internal use) triangle vectors
+	 * @param n   (internal use) triangle vectors
+	 * @param w0  (internal use) ray vector
+	 * @return <ul style="list-style-type:none">
+	 *         <li>-1 = triangle is degenerate (a segment or point)</li>
+	 *          <li>0 =  disjoint (no intersect)</li>
+	 *          <li>1 =  intersect in unique point. Positive direction or zero</li>
+	 *          <li>2 =  are in the same plane</li>
+	 *          <li>3 =  intersect in unique point. Negative direction<</li>
+	 *          </ul>
+	 **/
+	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output ,
+								Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
+								Vector3D_F64 w0 ) {
+		double r, a, b;              // params to calc ray-plane intersect
+
+		// get triangle edge vectors and plane normal
+		u.minus(T.v1,T.v0);   // NOTE: these could be precomputed
+		v.minus(T.v2,T.v0);
+		n.cross(u,v);
+
+		if ( n.normSq() == 0 )        // triangle is degenerate
+			return -1;                  // do not deal with this case
+
+		Vector3D_F64 dir = R.slope;
+		w0.minus(R.p,T.v0);
+		a = -n.dot(w0);
+		b = n.dot(dir);
+		if (Math.abs(b) < GrlConstants.EPS) { // ray is  parallel to triangle plane
+			if (a == 0)                       // ray lies in triangle plane
+				return 2;
+			else return 0;                    // ray disjoint from plane
+		}
+
+		// get intersect point of ray with triangle plane
+		r = a / b;
+
+		// intersect point of ray and plane
+		output.x = R.p.x + r*dir.x;
+		output.y = R.p.y + r*dir.y;
+		output.z = R.p.z + r*dir.z;
+
+		// is I inside T?
+		if( containedPlane(T.v0,output,u,v,w0)) {
+			if( r >= 0 )
+				return 1;
+			else
+				return 3;
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * Detects if a 2D convex polygon that has been moved into a 3D world is intersected by the 3D line.
+	 * <pre>
+	 * Transformation:
+	 * 1) Each 2D point is converted into 3D: X=(x,y,0)
+	 * 2) X' = R*X + T, where (R,T) are a rigid body transform from poly to world frames
+	 * </pre>
+	 *
+	 * @param polygon (Input) Convex polygon. All points must lie on a plane.
+	 * @param line (Input) Line.
+	 * @param output (Output) Point of intersection (if any)
+	 * @param n (internal use)
+	 * @param u (internal use)
+	 * @param v (internal use)
+	 * @param w0 (internal use)
+	 * @return <ul style="list-style-type:none">
+	 *         <li>-1 = triangle is degenerate (a segment or point)</li>
+	 *          <li>0 =  disjoint (no intersect)</li>
+	 *          <li>1 =  intersect in unique point. Positive direction or zero</li>
+	 *          <li>2 =  are in the same plane</li>
+	 *          <li>3 =  intersect in unique point. Negative direction<</li>
+	 *          </ul>
+	 */
+	public static int intersectConvex(FastQueue<Point3D_F64> polygon,
+									  LineParametric3D_F64 line , Point3D_F64 output,
+									  Vector3D_F64 n, Vector3D_F64 u, Vector3D_F64 v, Vector3D_F64 w0) {
+		if( polygon.size < 3 )
+			throw new IllegalArgumentException("There must be 3 or more points");
+
+		double r, a, b;              // params to calc ray-plane intersect
+
+		Point3D_F64 v0 = polygon.get(0);
+		Point3D_F64 v1 = polygon.get(1);
+		Point3D_F64 v2 = polygon.get(2);
+
+		// get triangle edge vectors and plane normal
+		u.minus(v1,v0);   // NOTE: these could be precomputed
+		v.minus(v2,v0);
+		n.cross(u,v);
+
+		if ( n.normSq() == 0 )        // triangle is degenerate
+			return -1;                  // do not deal with this case
+
+		Vector3D_F64 dir = line.slope;
+		w0.minus(line.p,v0);
+		a = -n.dot(w0);
+		b = n.dot(dir);
+		if (Math.abs(b) < GrlConstants.EPS) { // ray is  parallel to triangle plane
+			if (a == 0)                       // ray lies in triangle plane
+				return 2;
+			else return 0;                    // ray disjoint from plane
+		}
+
+		// get intersect point of ray with triangle plane
+		r = a / b;
+
+		// intersect point of ray and plane
+		output.x = line.p.x + r*dir.x;
+		output.y = line.p.y + r*dir.y;
+		output.z = line.p.z + r*dir.z;
+
+		// See if it's inside any of the triangles
+		for (int i = 2; i < polygon.size; i++) {
+			// is I inside T?
+			if (containedPlane(v0, output, u, v, w0)) {
+				if (r >= 0)
+					return 1;
+				else
+					return 3;
+			}
+
+			if (i < polygon.size - 1) {
+				u.minus(polygon.get(i), v0);
+				v.minus(polygon.get(i+1), v0);
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * @see #intersectConvex(FastQueue, LineParametric3D_F64, Point3D_F64, Vector3D_F64, Vector3D_F64, Vector3D_F64, Vector3D_F64)
+	 */
+	public static int intersectConvex(FastQueue<Point3D_F64> polygon,
+									  LineParametric3D_F64 line , Point3D_F64 output) {
+		return intersectConvex(polygon,line,output,new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64(),
+				new Vector3D_F64());
+	}
+
+	/**
+	 * Determines if the point on the same plane as T is contained inside of T.
+	 */
+	private static boolean containedPlane( Point3D_F64 T_v0,
+										   Point3D_F64 output,
+										   Vector3D_F64 u , Vector3D_F64 v ,
+										   Vector3D_F64 w0 ) {
 		double uu, uv, vv, wu, wv, D;
 		uu = u.dot(u);
 		uv = u.dot(v);
 		vv = v.dot(v);
-		w0.minus(output,T.v0);
+		w0.minus(output,T_v0);
 		wu = w0.dot(u);
 		wv = w0.dot(v);
 		D = uv * uv - uu * vv;
@@ -226,12 +418,9 @@ public class Intersection3D_F64 {
 		double s, t;
 		s = (uv * wv - vv * wu) / D;
 		if (s < 0.0 || s > 1.0)        // I is outside T
-			return 0;
+			return false;
 		t = (uv * wu - uu * wv) / D;
-		if (t < 0.0 || (s + t) > 1.0)  // I is outside T
-			return 0;
-
-		return 1;                      // I is in T
+		return !(t < 0.0) && !((s + t) > 1.0);  // I is outside T
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,7 @@ package georegression.metric;
 
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.geometry.UtilPoint2D_I32;
+import georegression.struct.line.LineParametric2D_I32;
 import georegression.struct.line.LineSegment2D_I32;
 import georegression.struct.point.Point2D_I32;
 
@@ -54,5 +55,45 @@ public class Distance2D_I32 {
 
 		// return the distance of the closest point on the line
 		return UtilPoint2D_F64.distance(line.a.x + t * a, line.a.y + t * b, p.x, p.y);
+	}
+
+	/**
+	 * <p>
+	 * Returns the distance of a point to the closest point on a line.
+	 * </p>
+	 *
+	 * @param line A line. Not modified.
+	 * @param p The point. Not modified.
+	 * @return Distance the closest point on the line is away from the point.
+	 */
+	public static double distance( LineParametric2D_I32 line, Point2D_I32 p ) {
+		int a = line.slopeX;
+		int b = line.slopeY;
+
+		double t = a * ( p.x - line.p.x ) + b * ( p.y - line.p.y );
+		t /= ( a * a + b * b );
+
+		// return the distance of the closest point on the line
+		return UtilPoint2D_F64.distance(line.p.x + t * a, line.p.y + t * b, p.x, p.y);
+	}
+
+	/**
+	 * <p>
+	 * Returns the squared distance of a point to the closest point on a line.
+	 * </p>
+	 *
+	 * @param line A line. Not modified.
+	 * @param p The point. Not modified.
+	 * @return Distance the closest point on the line is away from the point.
+	 */
+	public static double distanceSq( LineParametric2D_I32 line, Point2D_I32 p ) {
+		int a = line.slopeX;
+		int b = line.slopeY;
+
+		double t = a * ( p.x - line.p.x ) + b * ( p.y - line.p.y );
+		t /= ( a * a + b * b );
+
+		// return the distance of the closest point on the line
+		return UtilPoint2D_F64.distanceSq(line.p.x + t * a, line.p.y + t * b, p.x, p.y);
 	}
 }

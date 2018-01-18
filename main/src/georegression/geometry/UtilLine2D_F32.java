@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -181,6 +181,27 @@ public class UtilLine2D_F32 {
 		ret.A = a.y - b.y;
 		ret.B = b.x - a.x;
 		ret.C = -(ret.A*a.x + ret.B*a.y);
+
+		return ret;
+	}
+
+	/**
+	 * Converts a line segment into a line in parametric format. It will point from a to b. Point a and b must
+	 * be unique.
+	 *
+	 * @param a (Input) End point of line segment
+	 * @param b (Input) End point of line segment
+	 * @param ret (output) Storage for new line.. If null a new instance will be created.
+	 * @return The resulting line
+	 */
+	public static LineParametric2D_F32 convert( Point2D_F32 a , Point2D_F32 b , LineParametric2D_F32 ret )
+	{
+		if( ret == null )
+			ret = new LineParametric2D_F32();
+
+		ret.p.set(a);
+		ret.slope.x = b.x-a.x;
+		ret.slope.y = b.y-a.y;
 
 		return ret;
 	}

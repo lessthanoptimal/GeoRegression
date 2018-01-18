@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,7 +24,7 @@ package georegression.struct;
  *
  * @author Peter Abeles
  */
-public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_F64<T> {
+public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple_F64<T> {
 	public double x;
 	public double y;
 	public double z;
@@ -162,6 +162,12 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		z *= scalar;
 	}
 
+	public void divideIP( double scalar ) {
+		x /= scalar;
+		y /= scalar;
+		z /= scalar;
+	}
+
 	/**
 	 * Scalar multiplication
 	 * @param scalar value which is it multiplied by
@@ -181,6 +187,14 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 
 	public double normSq() {
 		return x * x + y * y + z * z;
+	}
+
+	public double distance( double x , double y , double z ) {
+		double dx = x - this.x;
+		double dy = y - this.y;
+		double dz = z - this.z;
+
+		return Math.sqrt( dx * dx + dy * dy + dz * dz );
 	}
 
 	@Override
@@ -219,5 +233,13 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 
 	public void setZ( double z ) {
 		this.z = z;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if( this.getClass() != obj.getClass() )
+			return false;
+		GeoTuple3D_F64 p = (GeoTuple3D_F64)obj;
+		return x==p.x&&y==p.y&&z==p.z;
 	}
 }

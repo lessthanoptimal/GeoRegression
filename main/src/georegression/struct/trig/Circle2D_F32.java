@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,4 +34,17 @@ public class Circle2D_F32 {
 	 * Center of the circle
 	 */
 	public Point2D_F32 center = new Point2D_F32();
+
+	public Circle2D_F32(float radius, Point2D_F32 center) {
+		this.radius = radius;
+		this.center.set(center);
+	}
+
+	public Circle2D_F32(float radius, float x , float y) {
+		this.radius = radius;
+		this.center.set(x,y);
+	}
+
+	public Circle2D_F32() {
+	}
 }

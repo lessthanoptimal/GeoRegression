@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,7 +24,7 @@ package georegression.struct;
  *
  * @author Peter Abeles
  */
-public abstract class GeoTuple4D_F32<T extends GeoTuple4D_F32> extends GeoTuple_F32<T> {
+public abstract class GeoTuple4D_F32 <T extends GeoTuple4D_F32> extends GeoTuple_F32<T> {
 	public float x;
 	public float y;
 	public float z;
@@ -184,5 +184,13 @@ public abstract class GeoTuple4D_F32<T extends GeoTuple4D_F32> extends GeoTuple_
 
 	public void setW( float w ) {
 		this.w = w;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if( this.getClass() != obj.getClass() )
+			return false;
+		GeoTuple4D_F32 p = (GeoTuple4D_F32)obj;
+		return x==p.x&&y==p.y&&z==p.z&&w==p.w;
 	}
 }

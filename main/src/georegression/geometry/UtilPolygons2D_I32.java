@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -88,23 +88,37 @@ public class UtilPolygons2D_I32 {
 			int j = (i+1)%N;
 			int k = (i+2)%N;
 
-			Point2D_I32 a = polygon.get(i);
-			Point2D_I32 b = polygon.get(j);
-			Point2D_I32 c = polygon.get(k);
-
-			int dx0 = a.x-b.x;
-			int dy0 = a.y-b.y;
-
-			int dx1 = c.x-b.x;
-			int dy1 = c.y-b.y;
-
-			int z = dx0 * dy1 - dy0 * dx1;
-			if( z > 0 )
+			if( isPositiveZ(polygon.get(i),polygon.get(j),polygon.get(k))) {
 				sign++;
-			else
+			} else {
 				sign--;
+			}
 		}
 
 		return sign < 0;
+	}
+
+	/**
+	 * Returns true if the cross product would result in a strictly positive z (e.g. z > 0 ). If true then
+	 * the order is clockwise.
+	 *
+	 * v0 = a-b
+	 * v1 = c-b
+	 *
+	 * @param a first point in sequence
+	 * @param b second point in sequence
+	 * @param c third point in sequence
+	 * @return true if positive z
+	 */
+	public static boolean isPositiveZ(Point2D_I32 a, Point2D_I32 b, Point2D_I32 c  ) {
+		int dx0 = a.x-b.x;
+		int dy0 = a.y-b.y;
+
+		int dx1 = c.x-b.x;
+		int dy1 = c.y-b.y;
+
+		int z = dx0 * dy1 - dy0 * dx1;
+
+		return z > 0 ;
 	}
 }

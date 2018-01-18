@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F64;
+import org.ejml.UtilEjml;
 import org.junit.Test;
 
 import java.util.Random;
@@ -64,5 +65,54 @@ public class TestUtilVector3D_F64 {
 				UtilVector3D_F64.acute(new Vector3D_F64(1,0,0),new Vector3D_F64(0,0,1)),GrlConstants.TEST_F64);
 		assertEquals(Math.PI,
 				UtilVector3D_F64.acute(new Vector3D_F64(1,0,0),new Vector3D_F64(-1,0,0)),GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void perpendicularCanonical() {
+//		perpendicularCanonical(new Vector3D_F64(1,0,0));
+//		perpendicularCanonical(new Vector3D_F64(0,-2,0));
+		perpendicularCanonical(new Vector3D_F64(0,0,3));
+		perpendicularCanonical(new Vector3D_F64(0,0,0));
+		perpendicularCanonical(new Vector3D_F64(0.1,-0.6,0));
+		perpendicularCanonical(new Vector3D_F64(0.1,-0.6,2));
+
+		// test very small
+		perpendicularCanonical(new Vector3D_F64(10.2e-14,2.1e-14,-9.3e-14));
+
+		for (int i = 0; i < 100; i++) {
+			Vector3D_F64 v = new Vector3D_F64();
+			v.x = rand.nextGaussian();
+			v.y = rand.nextGaussian();
+			v.z = rand.nextGaussian();
+
+			perpendicularCanonical(v);
+		}
+	}
+
+	public void perpendicularCanonical(Vector3D_F64 A ) {
+		Vector3D_F64 found = UtilVector3D_F64.perpendicularCanonical(A,null);
+
+		assertFalse(UtilEjml.isUncountable(found.x));
+		assertFalse(UtilEjml.isUncountable(found.y));
+		assertFalse(UtilEjml.isUncountable(found.z));
+
+		double scale = Math.abs(A.x);
+		scale = Math.max(scale,Math.abs(A.y));
+		scale = Math.max(scale,Math.abs(A.z));
+
+		if( scale == 0 ) {
+			assertTrue(0 == found.x);
+			assertTrue(0 == found.y);
+			assertTrue(0 == found.z);
+		} else {
+			A.scale(1.0 / scale);
+
+			scale = Math.abs(found.x);
+			scale = Math.max(scale, Math.abs(found.y));
+			scale = Math.max(scale, Math.abs(found.z));
+			found.scale(1.0 / scale);
+
+			assertTrue(Math.abs(A.dot(found)) <= GrlConstants.EPS);
+		}
 	}
 }
