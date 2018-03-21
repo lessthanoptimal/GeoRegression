@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,10 @@ import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.struct.FastQueue;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Describes a polygon in 2D.
@@ -73,7 +76,7 @@ public class Polygon2D_F64 implements Serializable {
 	}
 
 	public Polygon2D_F64() {
-		vertexes = new FastQueue<Point2D_F64>(Point2D_F64.class,true);
+		vertexes = new FastQueue<>(Point2D_F64.class,true);
 	}
 
 	public void set( Polygon2D_F64 orig ) {
@@ -175,6 +178,41 @@ public class Polygon2D_F64 implements Serializable {
 		storage.b.set(get(j));
 
 		return storage;
+	}
+
+	/**
+	 * Converts the polygon into a list.
+	 *
+	 * @param storage (Optional) storage to put the vertexes into
+	 * @param copy If points will be copied otherwise a reference of points will be returned
+	 * @return List of vertexes
+	 */
+	public List<Point2D_F64> convert( @Nullable List<Point2D_F64> storage , boolean copy ) {
+		if( storage == null )
+			storage = new ArrayList<>();
+		else
+			storage.clear();
+
+		if( copy ) {
+			for (int i = 0; i < vertexes.size; i++) {
+				storage.add( vertexes.get(i).copy() );
+			}
+		} else {
+			storage.addAll(vertexes.toList());
+		}
+		return storage;
+	}
+
+	/**
+	 * Sets the polygon to be the same as the list. A true copy is created and no references
+	 * to points in the list are saved.
+	 * @param list List which the polygon will be set to
+	 */
+	public void set( List<Point2D_F64> list ) {
+		vertexes.resize(list.size());
+		for (int i = 0; i < list.size(); i++) {
+			vertexes.data[i].set( list.get(i));
+		}
 	}
 
 	@Override

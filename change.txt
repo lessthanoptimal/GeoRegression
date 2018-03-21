@@ -4,6 +4,8 @@ YEAR-MONTH-DAY
 Date    : 2018/
 Version : 0.16
 
+- Polygon2D
+  * functions to convert to and from a list
 
 
 ---------------------------------------------
