@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,7 +22,10 @@ import georegression.metric.Area2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A polygon with 4 vertices, a,b,c, and d.  The vertices are in order sequential order of a,b,c,d.
@@ -160,6 +163,46 @@ public class Quadrilateral_F64 implements Serializable {
 		this.b.set(quad.b);
 		this.c.set(quad.c);
 		this.d.set(quad.d);
+	}
+
+	/**
+	 * Converts the polygon into a list.
+	 *
+	 * @param storage (Optional) storage to put the vertexes into
+	 * @param copy If points will be copied otherwise a reference of points will be returned
+	 * @return List of vertexes
+	 */
+	public List<Point2D_F64> convert(@Nullable List<Point2D_F64> storage , boolean copy ) {
+		if( storage == null )
+			storage = new ArrayList<>();
+		else
+			storage.clear();
+
+		if( copy ) {
+			for (int i = 0; i < 4; i++) {
+				storage.add( get(i).copy() );
+			}
+		} else {
+			for (int i = 0; i < 4; i++) {
+				storage.add( get(i) );
+			}
+		}
+		return storage;
+	}
+
+	/**
+	 * Sets the polygon to be the same as the list. A true copy is created and no references
+	 * to points in the list are saved.
+	 * @param list List which the polygon will be set to
+	 */
+	public void set( List<Point2D_F64> list ) {
+		if( list.size() != 4 )
+			throw new IllegalArgumentException("List must have size of 4");
+
+		a.set(list.get(0));
+		b.set(list.get(1));
+		c.set(list.get(2));
+		d.set(list.get(3));
 	}
 
 	public Quadrilateral_F64 copy() {
