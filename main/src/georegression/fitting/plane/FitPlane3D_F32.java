@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,8 +21,7 @@ package georegression.fitting.plane;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector3D_F32;
 import org.ejml.data.FMatrixRMaj;
-import org.ejml.dense.row.factory.DecompositionFactory_FDRM;
-import org.ejml.interfaces.decomposition.SingularValueDecomposition_F32;
+import org.ejml.dense.row.linsol.qr.SolveNullSpaceQR_FDRM;
 
 import java.util.List;
 
@@ -33,10 +32,10 @@ import java.util.List;
  */
 public class FitPlane3D_F32 {
 
-	SingularValueDecomposition_F32<FMatrixRMaj> svd = DecompositionFactory_FDRM.svd(3,10,false, true, false);
+	SolveNullSpaceQR_FDRM solverNull = new SolveNullSpaceQR_FDRM();
 
 	FMatrixRMaj A = new FMatrixRMaj(3,3);
-	FMatrixRMaj V = new FMatrixRMaj(3,3);
+	FMatrixRMaj nullspace = new FMatrixRMaj(3,1);
 
 	/**
 	 * SVD based method for fitting a plane to a set of points.  The plane's equation is returned
@@ -64,7 +63,7 @@ public class FitPlane3D_F32 {
 		outputCenter.y /= N;
 		outputCenter.z /= N;
 
-		return svdPoint(points,outputCenter,outputNormal);
+		return solvePoint(points,outputCenter,outputNormal);
 	}
 
 	/**
@@ -76,7 +75,7 @@ public class FitPlane3D_F32 {
 	 * @param outputNormal (Output) Vector tangent to the plane.  Normalized. Modified.
 	 * @return true if successful or false if it failed.
 	 */
-	public boolean svdPoint( List<Point3D_F32> points , Point3D_F32 pointOnPlane , Vector3D_F32 outputNormal ) {
+	public boolean solvePoint(List<Point3D_F32> points , Point3D_F32 pointOnPlane , Vector3D_F32 outputNormal ) {
 
 		final int N = points.size();
 
@@ -91,26 +90,13 @@ public class FitPlane3D_F32 {
 		}
 
 		// decompose and find the singular value
-		if( !svd.decompose(A) )
+		if( !solverNull.process(A,1,nullspace) )
 			return false;
 
-		float sv[] = svd.getSingularValues();
-
-		int smallestIndex = -1;
-		float smallestValue = Float.MAX_VALUE;
-		for( int i = 0; i < 3; i++ ) {
-			float v = sv[i];
-			if( v < smallestValue ) {
-				smallestValue = v;
-				smallestIndex = i;
-			}
-		}
-
 		// the normal is the singular vector
-		svd.getV(V,true);
-		outputNormal.x = (float) V.unsafe_get(smallestIndex,0);
-		outputNormal.y = (float) V.unsafe_get(smallestIndex,1);
-		outputNormal.z = (float) V.unsafe_get(smallestIndex,2);
+		outputNormal.x = (float) nullspace.unsafe_get(0,0);
+		outputNormal.y = (float) nullspace.unsafe_get(1,0);
+		outputNormal.z = (float) nullspace.unsafe_get(2,0);
 
 		return true;
 	}

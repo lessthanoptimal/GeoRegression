@@ -14,8 +14,8 @@ subprojects {
     apply plugin: 'maven'
     apply plugin: 'signing'
 
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     repositories {
         mavenCentral()
@@ -49,7 +49,7 @@ subprojects {
     }
 
     dependencies {
-        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.13'
+        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.14-SNAPSHOT'
         compile 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
@@ -173,13 +173,6 @@ task createLibraryDirectory( dependsOn: mainProjects.collect {[ it+':jar',it+':s
     }
 }
 
-idea {
-    project {
-        jdkName = '1.7 (64bit)'
-        languageLevel = '1.7'
-    }
-}
-
 def javadocProjects = [
         ':georegression',
 ]
@@ -214,7 +207,7 @@ task javadocWeb(type: Javadoc) {
     configure(options) {
         failOnError = false
         docTitle = "GeoRegression v$project.version"
-        links = [ 'http://docs.oracle.com/javase/7/docs/api/',
+        links = [ 'http://docs.oracle.com/javase/8/docs/api/',
                   'http://ejml.org/javadoc/',
                   'http://ddogleg.org/javadoc/' ]
         bottom = file('docs/bottom.txt').text

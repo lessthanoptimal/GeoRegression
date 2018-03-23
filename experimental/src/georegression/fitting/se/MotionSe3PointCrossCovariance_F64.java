@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -119,11 +119,11 @@ public class MotionSe3PointCrossCovariance_F64 implements MotionTransformPoint<S
 		s32 = s32 / N - m32;
 		s33 = s33 / N - m33;
 
-		SimpleMatrix Sigma = new SimpleMatrix( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
+		SimpleMatrix Sigma = new SimpleMatrix( 3, 3, true, new double[]{s11, s12, s13, s21, s22, s23, s31, s32, s33} );
 
 //        Sigma.print();
 
-		SimpleMatrix Delta = new SimpleMatrix( 3, 1, true, s23 - s32, s31 - s13, s12 - s21 );
+		SimpleMatrix Delta = new SimpleMatrix( 3, 1, true, new double[]{s23 - s32, s31 - s13, s12 - s21} );
 
 		SimpleMatrix Q = new SimpleMatrix( 4, 4 );
 		SimpleMatrix BR = Sigma.plus( Sigma.transpose() ).minus( SimpleMatrix.identity( 3 ).scale( Sigma.trace() ) );

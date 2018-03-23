@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,8 +21,7 @@ package georegression.fitting.plane;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.data.DMatrixRMaj;
-import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
-import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
+import org.ejml.dense.row.linsol.qr.SolveNullSpaceQR_DDRM;
 
 import java.util.List;
 
@@ -33,10 +32,10 @@ import java.util.List;
  */
 public class FitPlane3D_F64 {
 
-	SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(3,10,false, true, false);
+	SolveNullSpaceQR_DDRM solverNull = new SolveNullSpaceQR_DDRM();
 
 	DMatrixRMaj A = new DMatrixRMaj(3,3);
-	DMatrixRMaj V = new DMatrixRMaj(3,3);
+	DMatrixRMaj nullspace = new DMatrixRMaj(3,1);
 
 	/**
 	 * SVD based method for fitting a plane to a set of points.  The plane's equation is returned
@@ -64,7 +63,7 @@ public class FitPlane3D_F64 {
 		outputCenter.y /= N;
 		outputCenter.z /= N;
 
-		return svdPoint(points,outputCenter,outputNormal);
+		return solvePoint(points,outputCenter,outputNormal);
 	}
 
 	/**
@@ -76,7 +75,7 @@ public class FitPlane3D_F64 {
 	 * @param outputNormal (Output) Vector tangent to the plane.  Normalized. Modified.
 	 * @return true if successful or false if it failed.
 	 */
-	public boolean svdPoint( List<Point3D_F64> points , Point3D_F64 pointOnPlane , Vector3D_F64 outputNormal ) {
+	public boolean solvePoint(List<Point3D_F64> points , Point3D_F64 pointOnPlane , Vector3D_F64 outputNormal ) {
 
 		final int N = points.size();
 
@@ -91,26 +90,13 @@ public class FitPlane3D_F64 {
 		}
 
 		// decompose and find the singular value
-		if( !svd.decompose(A) )
+		if( !solverNull.process(A,1,nullspace) )
 			return false;
 
-		double sv[] = svd.getSingularValues();
-
-		int smallestIndex = -1;
-		double smallestValue = Double.MAX_VALUE;
-		for( int i = 0; i < 3; i++ ) {
-			double v = sv[i];
-			if( v < smallestValue ) {
-				smallestValue = v;
-				smallestIndex = i;
-			}
-		}
-
 		// the normal is the singular vector
-		svd.getV(V,true);
-		outputNormal.x = (double) V.unsafe_get(smallestIndex,0);
-		outputNormal.y = (double) V.unsafe_get(smallestIndex,1);
-		outputNormal.z = (double) V.unsafe_get(smallestIndex,2);
+		outputNormal.x = (double) nullspace.unsafe_get(0,0);
+		outputNormal.y = (double) nullspace.unsafe_get(1,0);
+		outputNormal.z = (double) nullspace.unsafe_get(2,0);
 
 		return true;
 	}

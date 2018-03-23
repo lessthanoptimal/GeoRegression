@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -74,7 +74,7 @@ public class TestFitPlane3D_F64 {
 
 		FitPlane3D_F64 alg = new FitPlane3D_F64();
 
-		alg.svdPoint(cloud,cloud.get(10),foundNorm);
+		alg.solvePoint(cloud,cloud.get(10),foundNorm);
 
 		// see if the found normal is valid
 		foundNorm.normalize();
