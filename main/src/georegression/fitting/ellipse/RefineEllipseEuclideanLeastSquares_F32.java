@@ -29,6 +29,9 @@ import org.ejml.data.DMatrixRMaj;
 
 import java.util.List;
 
+//CUSTOM ignore DMatrixRMaj
+//CUSTOM ignore org.ejml.data.DMatrixRMaj;
+
 /**
  * <p>
  * Minimizes the Euclidean distance between an ellipse and a set of points which it has been fit to.  Minimization

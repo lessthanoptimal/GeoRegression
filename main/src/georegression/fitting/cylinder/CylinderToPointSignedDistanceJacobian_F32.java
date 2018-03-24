@@ -27,6 +27,9 @@ import org.ejml.data.DMatrixRMaj;
 
 import java.util.List;
 
+//CUSTOM ignore DMatrixRMaj
+//CUSTOM ignore org.ejml.data.DMatrixRMaj;
+
 /**
  * Jacobian of {@link CylinderToPointSignedDistance_F32}.
  *
