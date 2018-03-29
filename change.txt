@@ -8,6 +8,9 @@ Version : 0.16
   * functions to convert to and from a list
 - Quadrilateral2D
   * functions to convert to and from a list
+- Added curves and fitting routines
+  * Quadratic
+  * Parabola
 
 
 ---------------------------------------------
