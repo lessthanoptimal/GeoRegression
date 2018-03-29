@@ -18,21 +18,31 @@
 
 package georegression.struct.curve;
 
+import georegression.struct.point.Point2D_F32;
+
 /**
- * Specifies a conic.
+ * Parametric form of parabola with 4 parameters.
  *
- * <p>A*x*x + B*x + C*y +D = 0</p>
+ * https://math.stackexchange.com/questions/2044922/parametric-form-for-a-general-parabola
  *
  * @author Peter Abeles
  */
-public class Parabola_F64 {
-
+public class ParabolaParametric_F32 {
 	/**
-	 * Coefficients.
+	 * Vertex of parabola
 	 */
-	public double A,B,C,D;
+	public float x0,y0;
+	/**
+	 * Focal length
+	 */
+	public float p;
+	/**
+	 * Sine and cosine of theta. Theta = direction of axis of symmetric
+	 */
+	public float sin,cos;
 
-	public double evaluate( double x , double y ) {
-		return A*x*x + B*x + C*y +D;
+	public void evaulate(float t , Point2D_F32 location ) {
+		location.x = x0 - 2*p*t*sin + p*t*t*cos;
+		location.y = y0 + 2*p*t*cos + p*t*t*sin;
 	}
 }

@@ -21,32 +21,30 @@ package georegression.struct.curve;
 import org.ejml.UtilEjml;
 
 /**
- * <p>A*x<sup>2</sup> + B*x*y + C*y<sup>2</sup> + D*x + E*y + F=0</p>
+ * Parabola is a specific type of conic that is defined below using 5 coefficients.
  *
- * <p>All coefficients are real numbers and A,B,C are all not zero. The discriminant is defined as
- * B<sup>2</sup> - 4*A*C.</p>
- *
- * <p><b>Ellipse:</b>  B<sup>2</sup> - 4*A*C &lt; 0</p>
- * <p><b>Parabola:</b>  B<sup>2</sup> - 4*A*C = 0</p>
- * <p><b>Hyperbola:</b>  B<sup>2</sup> - 4*A*C &gt; 0</p>
+ * <p>(A*x + C*y)<sup>2</sup> + D*x + E*y + F = 0</p>
  *
  * @author Peter Abeles
  */
-public class ConicGeneral_F64 {
-	/**
-	 * Coefficients
-	 */
-	public double A,B,C,D,E,F;
+public class ParabolaGeneral_F32 {
 
-	public double evaluate( double x , double y ) {
-		return A*x*x + B*x*y + C*y*y + D*x + E*y + F;
+	/**
+	 * Coefficients.
+	 */
+	public float A,C,D,E,F;
+
+	public float evaluate( float x , float y ) {
+		float inner = A*x + C*y;
+		return inner*inner + D*x + E*y +F;
 	}
 
 	/**
 	 * Returns true if any of its parameters have an uncountable number
 	 */
 	public boolean hasUncountable() {
-		return UtilEjml.isUncountable(A) || UtilEjml.isUncountable(B) || UtilEjml.isUncountable(C)
-				|| UtilEjml.isUncountable(D) || UtilEjml.isUncountable(E) || UtilEjml.isUncountable(F);
+		return UtilEjml.isUncountable(A) || UtilEjml.isUncountable(C)
+				|| UtilEjml.isUncountable(D) || UtilEjml.isUncountable(E) ||
+				UtilEjml.isUncountable(F);
 	}
 }

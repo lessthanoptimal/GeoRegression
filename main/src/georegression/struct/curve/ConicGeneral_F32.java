@@ -32,13 +32,13 @@ import org.ejml.UtilEjml;
  *
  * @author Peter Abeles
  */
-public class ConicGeneral_F64 {
+public class ConicGeneral_F32 {
 	/**
 	 * Coefficients
 	 */
-	public double A,B,C,D,E,F;
+	public float A,B,C,D,E,F;
 
-	public double evaluate( double x , double y ) {
+	public float evaluate( float x , float y ) {
 		return A*x*x + B*x*y + C*y*y + D*x + E*y + F;
 	}
 

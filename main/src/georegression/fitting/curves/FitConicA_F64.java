@@ -18,48 +18,53 @@
 
 package georegression.fitting.curves;
 
-import georegression.struct.curve.Parabola_F32;
-import georegression.struct.point.Point2D_F32;
-import org.ejml.data.FMatrixRMaj;
-import org.ejml.dense.row.linsol.svd.SolveNullSpaceSvd_FDRM;
+import georegression.fitting.FitShapeToPoints_F64;
+import georegression.struct.curve.ConicGeneral_F64;
+import georegression.struct.point.Point2D_F64;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.linsol.svd.SolveNullSpaceSvd_DDRM;
 import org.ejml.interfaces.SolveNullSpace;
 
 import java.util.List;
 
 /**
  * Fit's a parabola to a set of points by finding the null space of A. More numerically stable than
- * {@link FitParabolaAtA_F32} but slower.
+ * {@link FitConicAtA_F64} but slower.
  *
  * @author Peter Abeles
  */
-public class FitParabolaA_F32 {
-	private SolveNullSpace<FMatrixRMaj> solver = new SolveNullSpaceSvd_FDRM();
+public class FitConicA_F64 implements FitShapeToPoints_F64<Point2D_F64,ConicGeneral_F64>
+{
+	private SolveNullSpace<DMatrixRMaj> solver = new SolveNullSpaceSvd_DDRM();
 
-	private FMatrixRMaj A = new FMatrixRMaj(4,4);
-	private FMatrixRMaj nullspace = new FMatrixRMaj(4,1);
+	private DMatrixRMaj A = new DMatrixRMaj(6,6);
+	private DMatrixRMaj nullspace = new DMatrixRMaj(6,1);
 
 	/**
-	 * Fits the parabola to the points.  Strongly recommended that you transform the points such that they have
+	 * Fits the conic to the points.  Strongly recommended that you transform the points such that they have
 	 * zero mean and a standard deviation along x and y axis, independently.
 	 *
 	 * @param points (Input) points
-	 * @param output (Output) found parabola
+	 * @param output (Output) found conic
 	 * @return true if successful or false if it failed
 	 */
-	public boolean process(List<Point2D_F32> points , Parabola_F32 output ) {
+	@Override
+	public boolean process(List<Point2D_F64> points , ConicGeneral_F64 output ) {
 		final int N = points.size();
 		if( N < 3 )
 			throw new IllegalArgumentException("At least 3 points required");
 
-		A.reshape(N,4);
+		A.reshape(N,6);
 
 		for (int i = 0,index=0; i < N; i++) {
-			Point2D_F32 p = points.get(i);
+			Point2D_F64 p = points.get(i);
 
-			float x = p.x;
-			float y = p.y;
+			double x = p.x;
+			double y = p.y;
 
 			A.data[index++] = x*x;
+			A.data[index++] = x*y;
+			A.data[index++] = y*y;
 			A.data[index++] = x;
 			A.data[index++] = y;
 			A.data[index++] = 1;
@@ -72,33 +77,38 @@ public class FitParabolaA_F32 {
 		output.B = nullspace.data[1];
 		output.C = nullspace.data[2];
 		output.D = nullspace.data[3];
+		output.E = nullspace.data[4];
+		output.F = nullspace.data[5];
 
 		return true;
 	}
 
 	/**
-	 * Fits the parabola to the weighted set of points.  Strongly recommended that you transform the points such
+	 * Fits the conic to the weighted set of points.  Strongly recommended that you transform the points such
 	 * that they have  zero mean and a standard deviation along x and y axis, independently.
 	 *
 	 * @param points (Input) points
-	 * @param output (Output) found parabola
+	 * @param output (Output) found conic
 	 * @return true if successful or false if it failed
 	 */
-	public boolean process(List<Point2D_F32> points , float weights[], Parabola_F32 output ) {
+	@Override
+	public boolean process(List<Point2D_F64> points , double weights[], ConicGeneral_F64 output ) {
 		final int N = points.size();
 		if( N < 3 )
 			throw new IllegalArgumentException("At least 3 points required");
 
-		A.reshape(N,4);
+		A.reshape(N,6);
 
 		for (int i = 0,index=0; i < N; i++) {
-			Point2D_F32 p = points.get(i);
+			Point2D_F64 p = points.get(i);
 
-			float w= weights[i];
-			float x = p.x;
-			float y = p.y;
+			double w = weights[i];
+			double x = p.x;
+			double y = p.y;
 
 			A.data[index++] = w*x*x;
+			A.data[index++] = w*x*y;
+			A.data[index++] = w*y*y;
 			A.data[index++] = w*x;
 			A.data[index++] = w*y;
 			A.data[index++] = w;
@@ -111,20 +121,17 @@ public class FitParabolaA_F32 {
 		output.B = nullspace.data[1];
 		output.C = nullspace.data[2];
 		output.D = nullspace.data[3];
-
-		output.A = nullspace.data[0];
-		output.B = nullspace.data[1];
-		output.C = nullspace.data[2];
-		output.D = nullspace.data[3];
+		output.E = nullspace.data[4];
+		output.F = nullspace.data[5];
 
 		return true;
 	}
 
-	public SolveNullSpace<FMatrixRMaj> getSolver() {
+	public SolveNullSpace<DMatrixRMaj> getSolver() {
 		return solver;
 	}
 
-	public void setSolver(SolveNullSpace<FMatrixRMaj> solver) {
+	public void setSolver(SolveNullSpace<DMatrixRMaj> solver) {
 		this.solver = solver;
 	}
 }

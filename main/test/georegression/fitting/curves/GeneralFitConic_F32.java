@@ -18,10 +18,10 @@
 
 package georegression.fitting.curves;
 
+import georegression.fitting.FitShapeToPoints_F32;
 import georegression.misc.GrlConstants;
-import georegression.struct.curve.Parabola_F32;
+import georegression.struct.curve.ConicGeneral_F32;
 import georegression.struct.point.Point2D_F32;
-import org.ejml.UtilEjml;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -32,15 +32,17 @@ import static org.junit.Assert.*;
 /**
  * @author Peter Abeles
  */
-public class TestFitParabolaAtA_F32 {
+public abstract class GeneralFitConic_F32 {
+
+	public abstract FitShapeToPoints_F32<Point2D_F32,ConicGeneral_F32> createAlg();
 
 	/**
 	 * Fit to the minimum possible while testing several specific geometric configurations
 	 */
 	@Test
 	public void fit_points_3() {
-		FitParabolaAtA_F32 fitter = new FitParabolaAtA_F32();
-		Parabola_F32 found = new Parabola_F32();
+		FitShapeToPoints_F32<Point2D_F32,ConicGeneral_F32> fitter = createAlg();
+		ConicGeneral_F32 found = new ConicGeneral_F32();
 
 		List<Point2D_F32> points = new ArrayList<>();
 
@@ -49,7 +51,7 @@ public class TestFitParabolaAtA_F32 {
 		points.add( new Point2D_F32(-1,8));
 
 		assertTrue(fitter.process(points,found));
-
+		assertFalse(found.hasUncountable());
 		// it should fit all the points perfectly
 		for( Point2D_F32 p : points ) {
 			assertEquals(0,found.evaluate(p.x,p.y),GrlConstants.TEST_F32);
@@ -60,16 +62,9 @@ public class TestFitParabolaAtA_F32 {
 		points.get(2).set(4,4);
 
 		assertTrue(fitter.process(points,found));
-
-		assertFalse(UtilEjml.isUncountable(found.A));
-		assertFalse(UtilEjml.isUncountable(found.B));
-		assertFalse(UtilEjml.isUncountable(found.C));
-		assertFalse(UtilEjml.isUncountable(found.D));
-
+		assertFalse(found.hasUncountable());
 		// it's a line so a2 needs to be zero
-		assertEquals(0,found.A,GrlConstants.TEST_F32);
-		assertEquals(0,found.D,GrlConstants.TEST_F32); // goes through the origin
-
+		assertEquals(0,found.F,GrlConstants.TEST_F32); // goes through the origin
 		// it should fit all the points perfectly
 		for( Point2D_F32 p : points ) {
 			assertEquals(0,found.evaluate(p.x,p.y),GrlConstants.TEST_F32);
@@ -79,14 +74,7 @@ public class TestFitParabolaAtA_F32 {
 		points.get(1).set(3,1);
 		points.get(2).set(4,1);
 		assertTrue(fitter.process(points,found));
-
-		assertFalse(UtilEjml.isUncountable(found.A));
-		assertFalse(UtilEjml.isUncountable(found.B));
-		assertFalse(UtilEjml.isUncountable(found.C));
-		assertFalse(UtilEjml.isUncountable(found.D));
-
-		assertEquals(0,found.A,GrlConstants.TEST_F32);
-		assertEquals(0,found.B,GrlConstants.TEST_F32);
+		assertFalse(found.hasUncountable());
 		for( Point2D_F32 p : points ) {
 			assertEquals(0,found.evaluate(p.x,p.y),GrlConstants.TEST_F32);
 		}
@@ -95,13 +83,7 @@ public class TestFitParabolaAtA_F32 {
 		points.get(1).set(1,3);
 		points.get(2).set(1,4);
 		assertTrue(fitter.process(points,found));
-
-		assertFalse(UtilEjml.isUncountable(found.A));
-		assertFalse(UtilEjml.isUncountable(found.B));
-		assertFalse(UtilEjml.isUncountable(found.C));
-		assertFalse(UtilEjml.isUncountable(found.D));
-
-		assertEquals(0,found.C,GrlConstants.TEST_F32);
+		assertFalse(found.hasUncountable());
 		for( Point2D_F32 p : points ) {
 			assertEquals(0,found.evaluate(p.x,p.y),GrlConstants.TEST_F32);
 		}
@@ -113,9 +95,9 @@ public class TestFitParabolaAtA_F32 {
 	 */
 	@Test
 	public void fit_points_3_weighted() {
-		FitParabolaAtA_F32 fitter = new FitParabolaAtA_F32();
 		float weights[] = {0.8f,1.2f,0.2f};
-		Parabola_F32 found = new Parabola_F32();
+		FitShapeToPoints_F32<Point2D_F32,ConicGeneral_F32> fitter = createAlg();
+		ConicGeneral_F32 found = new ConicGeneral_F32();
 
 		List<Point2D_F32> points = new ArrayList<>();
 
@@ -124,7 +106,7 @@ public class TestFitParabolaAtA_F32 {
 		points.add( new Point2D_F32(-1,8));
 
 		assertTrue(fitter.process(points,weights,found));
-
+		assertFalse(found.hasUncountable());
 		// it should fit all the points perfectly
 		for( Point2D_F32 p : points ) {
 			assertEquals(0,found.evaluate(p.x,p.y),GrlConstants.TEST_F32);
@@ -135,16 +117,9 @@ public class TestFitParabolaAtA_F32 {
 		points.get(2).set(4,4);
 
 		assertTrue(fitter.process(points,weights,found));
-
-		assertFalse(UtilEjml.isUncountable(found.A));
-		assertFalse(UtilEjml.isUncountable(found.B));
-		assertFalse(UtilEjml.isUncountable(found.C));
-		assertFalse(UtilEjml.isUncountable(found.D));
-
+		assertFalse(found.hasUncountable());
 		// it's a line so a2 needs to be zero
-		assertEquals(0,found.A,GrlConstants.TEST_F32);
-		assertEquals(0,found.D,GrlConstants.TEST_F32); // goes through the origin
-
+		assertEquals(0,found.F,GrlConstants.TEST_F32); // goes through the origin
 		// it should fit all the points perfectly
 		for( Point2D_F32 p : points ) {
 			assertEquals(0,found.evaluate(p.x,p.y),GrlConstants.TEST_F32);
@@ -154,14 +129,7 @@ public class TestFitParabolaAtA_F32 {
 		points.get(1).set(3,1);
 		points.get(2).set(4,1);
 		assertTrue(fitter.process(points,weights,found));
-
-		assertFalse(UtilEjml.isUncountable(found.A));
-		assertFalse(UtilEjml.isUncountable(found.B));
-		assertFalse(UtilEjml.isUncountable(found.C));
-		assertFalse(UtilEjml.isUncountable(found.D));
-
-		assertEquals(0,found.A,GrlConstants.TEST_F32);
-		assertEquals(0,found.B,GrlConstants.TEST_F32);
+		assertFalse(found.hasUncountable());
 		for( Point2D_F32 p : points ) {
 			assertEquals(0,found.evaluate(p.x,p.y),GrlConstants.TEST_F32);
 		}
@@ -170,16 +138,9 @@ public class TestFitParabolaAtA_F32 {
 		points.get(1).set(1,3);
 		points.get(2).set(1,4);
 		assertTrue(fitter.process(points,weights,found));
-
-		assertFalse(UtilEjml.isUncountable(found.A));
-		assertFalse(UtilEjml.isUncountable(found.B));
-		assertFalse(UtilEjml.isUncountable(found.C));
-		assertFalse(UtilEjml.isUncountable(found.D));
-
-		assertEquals(0,found.C,GrlConstants.TEST_F32);
+		assertFalse(found.hasUncountable());
 		for( Point2D_F32 p : points ) {
 			assertEquals(0,found.evaluate(p.x,p.y),GrlConstants.TEST_F32);
 		}
 	}
-
 }

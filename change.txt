@@ -11,7 +11,12 @@ Version : 0.16
 - Added curves and fitting routines
   * Quadratic
   * Parabola
+  * Conic
 
+TODO convert parabola to a function of t
+TODO intersection of two parabolas
+TODO intersection of two parabolas in a specific direction of t
+TODO closest point on a parabola from a point
 
 ---------------------------------------------
 Date    : 2018/01/17

@@ -18,11 +18,12 @@
 
 package georegression.fitting.curves;
 
-import georegression.struct.curve.Parabola_F32;
+import georegression.fitting.FitShapeToPoints_F32;
+import georegression.struct.curve.ConicGeneral_F32;
 import georegression.struct.point.Point2D_F32;
-import org.ejml.data.FMatrix4x4;
+import org.ejml.data.FMatrix6x6;
 import org.ejml.data.FMatrixRMaj;
-import org.ejml.dense.fixed.CommonOps_FDF4;
+import org.ejml.dense.fixed.CommonOps_FDF6;
 import org.ejml.dense.row.linsol.svd.SolveNullSpaceSvd_FDRM;
 import org.ejml.interfaces.SolveNullSpace;
 import org.ejml.ops.ConvertFMatrixStruct;
@@ -35,27 +36,28 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class FitParabolaAtA_F32 {
+public class FitConicAtA_F32 implements FitShapeToPoints_F32<Point2D_F32,ConicGeneral_F32> {
 	private SolveNullSpace<FMatrixRMaj> solver = new SolveNullSpaceSvd_FDRM();
 
-	private FMatrix4x4 ATA = new FMatrix4x4();
-	private FMatrixRMaj tmp = new FMatrixRMaj(4,4);
-	private FMatrixRMaj nullspace = new FMatrixRMaj(4,1);
+	private FMatrix6x6 ATA = new FMatrix6x6();
+	private FMatrixRMaj tmp = new FMatrixRMaj(6,6);
+	private FMatrixRMaj nullspace = new FMatrixRMaj(6,1);
 
 	/**
-	 * Fits the parabola to the points.  Strongly recommended that you transform the points such that they have
+	 * Fits the conic to the points.  Strongly recommended that you transform the points such that they have
 	 * zero mean and a standard deviation along x and y axis, independently.
 	 *
 	 * @param points (Input) points
-	 * @param output (Output) found parabola
+	 * @param output (Output) found conic
 	 * @return true if successful or false if it failed
 	 */
-	public boolean process(List<Point2D_F32> points , Parabola_F32 output ) {
+	@Override
+	public boolean process(List<Point2D_F32> points , ConicGeneral_F32 output ) {
 		final int N = points.size();
 		if( N < 3 )
 			throw new IllegalArgumentException("At least 3 points required");
 
-		CommonOps_FDF4.fill(ATA,0);
+		CommonOps_FDF6.fill(ATA,0);
 
 		for (int i = 0; i < N; i++) {
 			Point2D_F32 p = points.get(i);
@@ -63,29 +65,60 @@ public class FitParabolaAtA_F32 {
 			float x = p.x;
 			float y = p.y;
 			float xx = x*x;
+			float xxx = xx*x;
+			float yy = y*y;
+			float yyy = yy*y;
 
 			ATA.a11 += xx*xx;
-			ATA.a12 += xx*x;
-			ATA.a13 += xx*y;
-			ATA.a14 += xx;
+			ATA.a12 += xxx*y;
+			ATA.a13 += xx*yy;
+			ATA.a14 += xxx;
+			ATA.a15 += xx*y;
+			ATA.a16 += xx;
 
-//			ATA.a22 += xx;
-			ATA.a23 += x*y;
-			ATA.a24 += x;
+			ATA.a22 += xx*yy;
+			ATA.a23 += x*yyy;
+//			ATA.a24 += xx*y;
+			ATA.a25 += x*yy;
+			ATA.a26 += x*y;
 
-			ATA.a33 += y*y;
-			ATA.a34 += y;
+			ATA.a33 += yyy*y;
+//			ATA.a34 += x*yy;
+			ATA.a35 += yyy;
+			ATA.a36 += yy;
+
+//			ATA.a44 += xx;
+			ATA.a45 += x*y;
+			ATA.a46 += x;
+
+//			ATA.a55 += yy;
+			ATA.a56 += y;
+
 		}
 		ATA.a21 = ATA.a12;
-		ATA.a22 = ATA.a14;
+		ATA.a24 = ATA.a15;
 
 		ATA.a31 = ATA.a13;
 		ATA.a32 = ATA.a23;
+		ATA.a34 = ATA.a25;
 
 		ATA.a41 = ATA.a14;
 		ATA.a42 = ATA.a24;
 		ATA.a43 = ATA.a34;
-		ATA.a44 = N;
+		ATA.a44 = ATA.a16;
+
+		ATA.a51 = ATA.a15;
+		ATA.a52 = ATA.a25;
+		ATA.a53 = ATA.a35;
+		ATA.a54 = ATA.a45;
+		ATA.a55 = ATA.a36;
+
+		ATA.a61 = ATA.a16;
+		ATA.a62 = ATA.a26;
+		ATA.a63 = ATA.a36;
+		ATA.a64 = ATA.a56;
+		ATA.a65 = ATA.a56;
+		ATA.a66 = N;
 
 		ConvertFMatrixStruct.convert(ATA,tmp);
 
@@ -96,56 +129,90 @@ public class FitParabolaAtA_F32 {
 		output.B = nullspace.data[1];
 		output.C = nullspace.data[2];
 		output.D = nullspace.data[3];
+		output.E = nullspace.data[4];
+		output.F = nullspace.data[5];
 
 		return true;
 	}
 
 	/**
-	 * Fits the parabola to the weighted set of points.  Strongly recommended that you transform the points such
+	 * Fits the conic to the weighted set of points.  Strongly recommended that you transform the points such
 	 * that they have  zero mean and a standard deviation along x and y axis, independently.
 	 *
 	 * @param points (Input) points
-	 * @param output (Output) found parabola
+	 * @param output (Output) found conic
 	 * @return true if successful or false if it failed
 	 */
-	public boolean process(List<Point2D_F32> points , float weights[], Parabola_F32 output ) {
+	@Override
+	public boolean process(List<Point2D_F32> points , float weights[], ConicGeneral_F32 output ) {
 		final int N = points.size();
 		if( N < 3 )
 			throw new IllegalArgumentException("At least 3 points required");
 
-		CommonOps_FDF4.fill(ATA,0);
+		CommonOps_FDF6.fill(ATA,0);
 
 		for (int i = 0; i < N; i++) {
 			Point2D_F32 p = points.get(i);
+
 			float w = weights[i];
 			w *= w;
-
 			float x = p.x;
 			float y = p.y;
 			float xx = x*x;
+			float xxx = xx*x;
+			float yy = y*y;
+			float yyy = yy*y;
 
 			ATA.a11 += w*xx*xx;
-			ATA.a12 += w*xx*x;
-			ATA.a13 += w*xx*y;
-			ATA.a14 += w*xx;
+			ATA.a12 += w*xxx*y;
+			ATA.a13 += w*xx*yy;
+			ATA.a14 += w*xxx;
+			ATA.a15 += w*xx*y;
+			ATA.a16 += w*xx;
 
-//			ATA.a22 += w*xx;
-			ATA.a23 += w*x*y;
-			ATA.a24 += w*x;
+			ATA.a22 += w*xx*yy;
+			ATA.a23 += w*x*yyy;
+//			ATA.a24 += w*xx*y;
+			ATA.a25 += w*x*yy;
+			ATA.a26 += w*x*y;
 
-			ATA.a33 += w*y*y;
-			ATA.a34 += w*y;
-			ATA.a44 += w;
+			ATA.a33 += w*yyy*y;
+//			ATA.a34 += w*x*yy;
+			ATA.a35 += w*yyy;
+			ATA.a36 += w*yy;
+
+//			ATA.a44 += w*xx;
+			ATA.a45 += w*x*y;
+			ATA.a46 += w*x;
+
+//			ATA.a55 += w*yy;
+			ATA.a56 += w*y;
+
+			ATA.a66 += w;
 		}
 		ATA.a21 = ATA.a12;
-		ATA.a22 = ATA.a14;
+		ATA.a24 = ATA.a15;
 
 		ATA.a31 = ATA.a13;
 		ATA.a32 = ATA.a23;
+		ATA.a34 = ATA.a25;
 
 		ATA.a41 = ATA.a14;
 		ATA.a42 = ATA.a24;
 		ATA.a43 = ATA.a34;
+		ATA.a44 = ATA.a16;
+
+		ATA.a51 = ATA.a15;
+		ATA.a52 = ATA.a25;
+		ATA.a53 = ATA.a35;
+		ATA.a54 = ATA.a45;
+		ATA.a55 = ATA.a36;
+
+		ATA.a61 = ATA.a16;
+		ATA.a62 = ATA.a26;
+		ATA.a63 = ATA.a36;
+		ATA.a64 = ATA.a56;
+		ATA.a65 = ATA.a56;
 
 		ConvertFMatrixStruct.convert(ATA,tmp);
 
@@ -156,6 +223,8 @@ public class FitParabolaAtA_F32 {
 		output.B = nullspace.data[1];
 		output.C = nullspace.data[2];
 		output.D = nullspace.data[3];
+		output.E = nullspace.data[4];
+		output.F = nullspace.data[5];
 
 		return true;
 	}
