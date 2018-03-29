@@ -21,7 +21,8 @@ package georegression.fitting.plane;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.data.DMatrixRMaj;
-import org.ejml.dense.row.linsol.qr.SolveNullSpaceQR_DDRM;
+import org.ejml.dense.row.linsol.qr.SolveNullSpaceQRP_DDRM;
+import org.ejml.interfaces.SolveNullSpace;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ import java.util.List;
  */
 public class FitPlane3D_F64 {
 
-	SolveNullSpaceQR_DDRM solverNull = new SolveNullSpaceQR_DDRM();
+	SolveNullSpace<DMatrixRMaj> solverNull = new SolveNullSpaceQRP_DDRM();
 
 	DMatrixRMaj A = new DMatrixRMaj(3,3);
 	DMatrixRMaj nullspace = new DMatrixRMaj(3,1);
