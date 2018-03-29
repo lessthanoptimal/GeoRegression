@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,8 +20,9 @@ package georegression.fitting.ellipse;
 
 import georegression.PerformerBase;
 import georegression.ProfileOperation;
+import georegression.fitting.curves.ClosestPointEllipseAngle_F64;
+import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
 
 import java.util.ArrayList;
 import java.util.List;

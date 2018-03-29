@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-package georegression.fitting.ellipse;
+package georegression.fitting.curves;
 
+import georegression.struct.curve.EllipseQuadratic_F32;
 import georegression.struct.point.Point2D_F32;
-import georegression.struct.shapes.EllipseQuadratic_F32;
 import org.ejml.data.FMatrixRMaj;
 import org.ejml.dense.row.CommonOps_FDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_FDRM;
@@ -134,12 +134,12 @@ public class FitEllipseAlgebraic_F32 {
 		// ellipse coefficients
 		CommonOps_FDRM.mult(T,a1,Ta1);
 
-		ellipse.a = a1.data[0];
-		ellipse.b = a1.data[1]/2;
-		ellipse.c = a1.data[2];
-		ellipse.d = Ta1.data[0]/2;
-		ellipse.e = Ta1.data[1]/2;
-		ellipse.f = Ta1.data[2];
+		ellipse.A = a1.data[0];
+		ellipse.B = a1.data[1]/2;
+		ellipse.C = a1.data[2];
+		ellipse.D = Ta1.data[0]/2;
+		ellipse.E = Ta1.data[1]/2;
+		ellipse.F = Ta1.data[2];
 
 		return true;
 	}

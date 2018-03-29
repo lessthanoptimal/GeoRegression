@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,10 +20,10 @@ package georegression.geometry.algs;
 
 import georegression.geometry.UtilLine2D_F32;
 import georegression.metric.Intersection2D_F32;
+import georegression.struct.curve.EllipseRotated_F32;
 import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
-import georegression.struct.shapes.EllipseRotated_F32;
 
 import static georegression.geometry.UtilEllipse_F32.tangentLines;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 
-package georegression.fitting.ellipse;
+package georegression.fitting.curves;
 
 import georegression.geometry.UtilEllipse_F64;
 import georegression.misc.GrlConstants;
+import georegression.struct.curve.EllipseQuadratic_F64;
+import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseQuadratic_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -87,12 +87,12 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 		normalize(expected);
 		normalize(found);
 
-		assertEquals(expected.a,found.a, GrlConstants.TEST_F64);
-		assertEquals(expected.b,found.b, GrlConstants.TEST_F64);
-		assertEquals(expected.c,found.c, GrlConstants.TEST_F64);
-		assertEquals(expected.d,found.d, GrlConstants.TEST_F64);
-		assertEquals(expected.e,found.e, GrlConstants.TEST_F64);
-		assertEquals(expected.f,found.f, GrlConstants.TEST_F64);
+		assertEquals(expected.A,found.A, GrlConstants.TEST_F64);
+		assertEquals(expected.B,found.B, GrlConstants.TEST_F64);
+		assertEquals(expected.C,found.C, GrlConstants.TEST_F64);
+		assertEquals(expected.D,found.D, GrlConstants.TEST_F64);
+		assertEquals(expected.E,found.E, GrlConstants.TEST_F64);
+		assertEquals(expected.F,found.F, GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -133,12 +133,12 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 			normalize(expected);
 			normalize(found);
 
-			error[i] = Math.abs(expected.a - found.a);
-			error[i] += Math.abs(expected.b - found.b);
-			error[i] += Math.abs(expected.c - found.c);
-			error[i] += Math.abs(expected.d - found.d);
-			error[i] += Math.abs(expected.e - found.e);
-			error[i] += Math.abs(expected.f - found.f);
+			error[i] = Math.abs(expected.A - found.A);
+			error[i] += Math.abs(expected.B - found.B);
+			error[i] += Math.abs(expected.C - found.C);
+			error[i] += Math.abs(expected.D - found.D);
+			error[i] += Math.abs(expected.E - found.E);
+			error[i] += Math.abs(expected.F - found.F);
 		}
 
 
@@ -168,12 +168,12 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 	}
 
 	private void normalize( EllipseQuadratic_F64 ellipse )  {
-		ellipse.a /= ellipse.f;
-		ellipse.b /= ellipse.f;
-		ellipse.c /= ellipse.f;
-		ellipse.d /= ellipse.f;
-		ellipse.e /= ellipse.f;
-		ellipse.f /= ellipse.f;
+		ellipse.A /= ellipse.F;
+		ellipse.B /= ellipse.F;
+		ellipse.C /= ellipse.F;
+		ellipse.D /= ellipse.F;
+		ellipse.E /= ellipse.F;
+		ellipse.F /= ellipse.F;
 	}
 
 }

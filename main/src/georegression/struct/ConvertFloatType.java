@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,10 @@ package georegression.struct;
 
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.affine.Affine2D_F64;
+import georegression.struct.curve.EllipseQuadratic_F32;
+import georegression.struct.curve.EllipseQuadratic_F64;
+import georegression.struct.curve.EllipseRotated_F32;
+import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.homography.Homography2D_F32;
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.*;
@@ -27,10 +31,6 @@ import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
-import georegression.struct.shapes.EllipseQuadratic_F32;
-import georegression.struct.shapes.EllipseQuadratic_F64;
-import georegression.struct.shapes.EllipseRotated_F32;
-import georegression.struct.shapes.EllipseRotated_F64;
 import org.ejml.ops.ConvertMatrixData;
 
 /**
@@ -255,12 +255,12 @@ public class ConvertFloatType {
 			dst = new EllipseQuadratic_F32();
 		}
 
-		dst.a = (float)src.a;
-		dst.b = (float)src.b;
-		dst.c = (float)src.c;
-		dst.d = (float)src.d;
-		dst.e = (float)src.e;
-		dst.f = (float)src.f;
+		dst.A = (float)src.A;
+		dst.B = (float)src.B;
+		dst.C = (float)src.C;
+		dst.D = (float)src.D;
+		dst.E = (float)src.E;
+		dst.F = (float)src.F;
 
 		return dst;
 	}
@@ -270,12 +270,12 @@ public class ConvertFloatType {
 			dst = new EllipseQuadratic_F64();
 		}
 
-		dst.a = src.a;
-		dst.b = src.b;
-		dst.c = src.c;
-		dst.d = src.d;
-		dst.e = src.e;
-		dst.f = src.f;
+		dst.A = src.A;
+		dst.B = src.B;
+		dst.C = src.C;
+		dst.D = src.D;
+		dst.E = src.E;
+		dst.F = src.F;
 
 		return dst;
 	}

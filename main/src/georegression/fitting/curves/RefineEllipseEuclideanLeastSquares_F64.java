@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-package georegression.fitting.ellipse;
+package georegression.fitting.curves;
 
 import georegression.misc.GrlConstants;
-import georegression.struct.point.Point2D_F32;
-import georegression.struct.shapes.EllipseRotated_F32;
+import georegression.struct.curve.EllipseRotated_F64;
+import georegression.struct.point.Point2D_F64;
 import org.ddogleg.optimization.FactoryOptimization;
 import org.ddogleg.optimization.UnconstrainedLeastSquares;
 import org.ddogleg.optimization.functions.FunctionNtoM;
@@ -48,22 +48,22 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class RefineEllipseEuclideanLeastSquares_F32 {
+public class RefineEllipseEuclideanLeastSquares_F64 {
 
 	// optimization routine
 	protected UnconstrainedLeastSquares optimizer;
 	// convergence parameters
-	float ftol= GrlConstants.FCONV_TOL_B,gtol=GrlConstants.FCONV_TOL_B;
+	double ftol= GrlConstants.DCONV_TOL_B,gtol=GrlConstants.DCONV_TOL_B;
 	int maxIterations=500;
 
 	// used to find initial theta
-	ClosestPointEllipseAngle_F32 closestPoint = new ClosestPointEllipseAngle_F32(GrlConstants.FCONV_TOL_B,100);
+	ClosestPointEllipseAngle_F64 closestPoint = new ClosestPointEllipseAngle_F64(GrlConstants.DCONV_TOL_B,100);
 
 	// passed in observations
-	List<Point2D_F32> points;
+	List<Point2D_F64> points;
 
 	// storage for optimized parameters
-	EllipseRotated_F32 found = new EllipseRotated_F32();
+	EllipseRotated_F64 found = new EllipseRotated_F64();
 
 	// initial set of parameters
 	/**/double initialParam[] = new /**/double[0];
@@ -71,22 +71,22 @@ public class RefineEllipseEuclideanLeastSquares_F32 {
 	// error using the initial parameters
 	/**/double initialError;
 
-	public RefineEllipseEuclideanLeastSquares_F32(UnconstrainedLeastSquares optimizer ) {
+	public RefineEllipseEuclideanLeastSquares_F64(UnconstrainedLeastSquares optimizer ) {
 		this.optimizer = optimizer;
 	}
 
 	/**
 	 * Defaults to a robust solver since this problem often encounters singularities.
 	 */
-	public RefineEllipseEuclideanLeastSquares_F32() {
+	public RefineEllipseEuclideanLeastSquares_F64() {
 		this(FactoryOptimization.leastSquaresLM(1e-3, true));
 	}
 
-	public void setFtol(float ftol) {
+	public void setFtol(double ftol) {
 		this.ftol = ftol;
 	}
 
-	public void setGtol(float gtol) {
+	public void setGtol(double gtol) {
 		this.gtol = gtol;
 	}
 
@@ -98,7 +98,7 @@ public class RefineEllipseEuclideanLeastSquares_F32 {
 		return optimizer;
 	}
 
-	public boolean refine( EllipseRotated_F32 initial , List<Point2D_F32> points ) {
+	public boolean refine( EllipseRotated_F64 initial , List<Point2D_F64> points ) {
 		this.points = points;
 
 		// create initial parameters
@@ -130,21 +130,21 @@ public class RefineEllipseEuclideanLeastSquares_F32 {
 
 		// decode found results
 		/**/double[] foundParam = optimizer.getParameters();
-		found.center.x = (float)foundParam[0];
-		found.center.y = (float)foundParam[1];
-		found.a = (float)foundParam[2];
-		found.b = (float)foundParam[3];
-		found.phi = (float)foundParam[4];
+		found.center.x = (double)foundParam[0];
+		found.center.y = (double)foundParam[1];
+		found.a = (double)foundParam[2];
+		found.b = (double)foundParam[3];
+		found.phi = (double)foundParam[4];
 
 		return true;
 	}
 
-	public EllipseRotated_F32 getFound() {
+	public EllipseRotated_F64 getFound() {
 		return found;
 	}
 
-	public float getFitError() {
-		return (float)optimizer.getFunctionValue();
+	public double getFitError() {
+		return (double)optimizer.getFunctionValue();
 	}
 
 	protected Error createError() {
@@ -183,7 +183,7 @@ public class RefineEllipseEuclideanLeastSquares_F32 {
 
 			int indexOut = 0;
 			for( int i = 0; i < points.size(); i++ ) {
-				Point2D_F32 p = points.get(i);
+				Point2D_F64 p = points.get(i);
 				/**/double theta = input[5+i];
 
 				/**/double x = a*/**/Math.cos(theta);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,11 +21,11 @@ package georegression.metric;
 import georegression.geometry.UtilLine2D_F32;
 import georegression.geometry.UtilTrig_F32;
 import georegression.misc.GrlConstants;
+import georegression.struct.curve.EllipseRotated_F32;
 import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
-import georegression.struct.shapes.EllipseRotated_F32;
 import georegression.struct.shapes.Polygon2D_F32;
 import georegression.struct.shapes.Quadrilateral_F32;
 import org.junit.Test;

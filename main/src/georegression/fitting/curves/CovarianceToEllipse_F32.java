@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,36 +16,36 @@
  * limitations under the License.
  */
 
-package georegression.fitting.ellipse;
+package georegression.fitting.curves;
 
-import georegression.struct.point.Vector2D_F64;
-import org.ejml.data.Complex_F64;
-import org.ejml.data.DMatrixRMaj;
-import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
-import org.ejml.interfaces.decomposition.EigenDecomposition_F64;
+import georegression.struct.point.Vector2D_F32;
+import org.ejml.data.Complex_F32;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.factory.DecompositionFactory_FDRM;
+import org.ejml.interfaces.decomposition.EigenDecomposition_F32;
 
 /**
  * Computes a containment ellipse given a covariance
  *
  * @author Peter Abeles
  */
-public class CovarianceToEllipse_F64 {
+public class CovarianceToEllipse_F32 {
 
-	EigenDecomposition_F64<DMatrixRMaj> eigen = DecompositionFactory_DDRM.eig(2, true);
-	DMatrixRMaj Q = new DMatrixRMaj(2,2);
+	EigenDecomposition_F32<FMatrixRMaj> eigen = DecompositionFactory_FDRM.eig(2, true);
+	FMatrixRMaj Q = new FMatrixRMaj(2,2);
 
 	// major axis
-	Vector2D_F64 x = new Vector2D_F64();
+	Vector2D_F32 x = new Vector2D_F32();
 	// minor axis
-	Vector2D_F64 y = new Vector2D_F64();
+	Vector2D_F32 y = new Vector2D_F32();
 
 	// major and minor axis length (in that order)
-	double lengthX,lengthY;
+	float lengthX,lengthY;
 
 	// number of standard deviations the ellipse should be
-	double numStdev = 1;
+	float numStdev = 1;
 
-	public void setNumStdev(double numStdev) {
+	public void setNumStdev(float numStdev) {
 		this.numStdev = numStdev;
 	}
 
@@ -56,7 +56,7 @@ public class CovarianceToEllipse_F64 {
 	 * @param a22  element in covariance matrix.
 	 * @return true if it was successful or false if something went wrong
 	 */
-	public boolean setCovariance( double a11 , double a12, double a22 ) {
+	public boolean setCovariance( float a11 , float a12, float a22 ) {
 		Q.data[0] = a11;
 		Q.data[1] = a12;
 		Q.data[2] = a12;
@@ -67,21 +67,21 @@ public class CovarianceToEllipse_F64 {
 			return false;
 		}
 
-		Complex_F64 v0 = eigen.getEigenvalue(0);
-		Complex_F64 v1 = eigen.getEigenvalue(1);
+		Complex_F32 v0 = eigen.getEigenvalue(0);
+		Complex_F32 v1 = eigen.getEigenvalue(1);
 
-		DMatrixRMaj a0,a1;
+		FMatrixRMaj a0,a1;
 
 		if( v0.getMagnitude2() > v1.getMagnitude2() ) {
 			a0 = eigen.getEigenVector(0);
 			a1 = eigen.getEigenVector(1);
-			lengthX = (double) v0.getMagnitude();
-			lengthY = (double) v1.getMagnitude();
+			lengthX = (float) v0.getMagnitude();
+			lengthY = (float) v1.getMagnitude();
 		} else {
 			a0 = eigen.getEigenVector(1);
 			a1 = eigen.getEigenVector(0);
-			lengthX = (double) v1.getMagnitude();
-			lengthY = (double) v0.getMagnitude();
+			lengthX = (float) v1.getMagnitude();
+			lengthY = (float) v0.getMagnitude();
 		}
 
 		if( a0 == null || a1 == null ) {
@@ -89,11 +89,11 @@ public class CovarianceToEllipse_F64 {
 			return false;
 		}
 
-		lengthX = Math.sqrt(lengthX);
-		lengthY = Math.sqrt(lengthY);
+		lengthX = (float)Math.sqrt(lengthX);
+		lengthY = (float)Math.sqrt(lengthY);
 
-		x.set( (double) a0.get(0) , (double) a0.get(1));
-		y.set( (double) a1.get(0) , (double) a1.get(1));
+		x.set( (float) a0.get(0) , (float) a0.get(1));
+		y.set( (float) a1.get(0) , (float) a1.get(1));
 
 		return true;
 	}
@@ -101,35 +101,35 @@ public class CovarianceToEllipse_F64 {
 	/**
 	 * @return Vector which defines the major axis
 	 */
-	public Vector2D_F64 getMajorVector() {
+	public Vector2D_F32 getMajorVector() {
 		return x;
 	}
 
 	/**
 	 * @return Vector which defines the minor axis
 	 */
-	public Vector2D_F64 getMinorVector() {
+	public Vector2D_F32 getMinorVector() {
 		return y;
 	}
 
 	/**
 	 * @return Angle between the major axis and the x-axis
 	 */
-	public double getAngle() {
-		return Math.atan2( x.y, x.x );
+	public float getAngle() {
+		return (float)Math.atan2( x.y, x.x );
 	}
 
 	/**
 	 * @return Length of the major axis
 	 */
-	public double getMajorAxis() {
+	public float getMajorAxis() {
 		return numStdev*lengthX;
 	}
 
 	/**
 	 * @return Length of the minor axis
 	 */
-	public double getMinorAxis() {
+	public float getMinorAxis() {
 		return numStdev*lengthY;
 	}
 }

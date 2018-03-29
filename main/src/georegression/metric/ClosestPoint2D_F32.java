@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,13 +18,13 @@
 
 package georegression.metric;
 
-import georegression.fitting.ellipse.ClosestPointEllipseAngle_F32;
+import georegression.fitting.curves.ClosestPointEllipseAngle_F32;
 import georegression.misc.GrlConstants;
+import georegression.struct.curve.EllipseRotated_F32;
 import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
 import georegression.struct.point.Point2D_F32;
-import georegression.struct.shapes.EllipseRotated_F32;
 
 
 /**
@@ -159,7 +159,7 @@ public class ClosestPoint2D_F32 {
 	 * Computes the closest point on an ellipse to the provided point.  If there are multiple solutions then one
 	 * is arbitrarily chosen.
 	 *
-	 * NOTE: When optimizing consider calling {@link georegression.fitting.ellipse.ClosestPointEllipseAngle_F32} directly instead.
+	 * NOTE: When optimizing consider calling {@link ClosestPointEllipseAngle_F32} directly instead.
 	 *
 	 * @param ellipse Ellipse
 	 * @param p Point

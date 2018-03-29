@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-package georegression.fitting.ellipse;
+package georegression.fitting.curves;
 
-import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseQuadratic_F64;
-import org.ejml.data.DMatrixRMaj;
-import org.ejml.dense.row.CommonOps_DDRM;
-import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
-import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
+import georegression.struct.curve.EllipseQuadratic_F32;
+import georegression.struct.point.Point2D_F32;
+import org.ejml.data.FMatrixRMaj;
+import org.ejml.dense.row.CommonOps_FDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_FDRM;
+import org.ejml.dense.row.factory.LinearSolverFactory_FDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
 import org.ejml.interfaces.linsol.LinearSolverDense;
 
@@ -50,31 +50,31 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class FitEllipseWeightedAlgebraic_F64 {
+public class FitEllipseWeightedAlgebraic_F32 {
 
 	// qudratic part of design matrix
-	private DMatrixRMaj D1 = new DMatrixRMaj(3,1);
+	private FMatrixRMaj D1 = new FMatrixRMaj(3,1);
 	// linear part of design matrix
-	private DMatrixRMaj D2 = new DMatrixRMaj(3,1);
+	private FMatrixRMaj D2 = new FMatrixRMaj(3,1);
 
 	// quadratic part of scatter matrix
-	private DMatrixRMaj S1 = new DMatrixRMaj(3,3);
+	private FMatrixRMaj S1 = new FMatrixRMaj(3,3);
 	// combined part of scatter matrix
-	private DMatrixRMaj S2 = new DMatrixRMaj(3,3);
+	private FMatrixRMaj S2 = new FMatrixRMaj(3,3);
 	//linear part of scatter matrix
-	private DMatrixRMaj S3 = new DMatrixRMaj(3,3);
+	private FMatrixRMaj S3 = new FMatrixRMaj(3,3);
 	// Reduced scatter matrix
-	private DMatrixRMaj M = new DMatrixRMaj(3,3);
+	private FMatrixRMaj M = new FMatrixRMaj(3,3);
 
 	// storage for intermediate steps
-	private DMatrixRMaj T = new DMatrixRMaj(3,3);
-	private DMatrixRMaj Ta1 = new DMatrixRMaj(3,1);
-	private DMatrixRMaj S2_tran = new DMatrixRMaj(3,3);
+	private FMatrixRMaj T = new FMatrixRMaj(3,3);
+	private FMatrixRMaj Ta1 = new FMatrixRMaj(3,1);
+	private FMatrixRMaj S2_tran = new FMatrixRMaj(3,3);
 
-	private LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(3);
-	private EigenDecomposition<DMatrixRMaj> eigen = DecompositionFactory_DDRM.eig(3,true,false);
+	private LinearSolverDense<FMatrixRMaj> solver = LinearSolverFactory_FDRM.linear(3);
+	private EigenDecomposition<FMatrixRMaj> eigen = DecompositionFactory_FDRM.eig(3,true,false);
 
-	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
+	private EllipseQuadratic_F32 ellipse = new EllipseQuadratic_F32();
 
 	/**
 	 * Fits the ellipse to the line
@@ -83,7 +83,7 @@ public class FitEllipseWeightedAlgebraic_F64 {
 	 * @param weights Weight or importance of each point.  Each weight must be a positive number
 	 * @return true if successful or false if it failed
 	 */
-	public boolean process( List<Point2D_F64> points , double weights[] ) {
+	public boolean process( List<Point2D_F32> points , float weights[] ) {
 		if( points.size() > weights.length ) {
 			throw new IllegalArgumentException("Weights must be as long as the number of points. "+
 					points.size()+" vs "+weights.length);
@@ -94,8 +94,8 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		D1.reshape(N,3); D2.reshape(N,3);
 		int index = 0;
 		for( int i = 0; i < N; i++ ) {
-			Point2D_F64 p = points.get(i);
-			double w = weights[i];
+			Point2D_F32 p = points.get(i);
+			float w = weights[i];
 
 			// fill in each row one at a time
 			D1.data[index]   = w*p.x*p.x;
@@ -107,29 +107,29 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		}
 
 		// Compute scatter matrix
-		CommonOps_DDRM.multTransA(D1, D1, S1); // S1 = D1'*D1
-		CommonOps_DDRM.multTransA(D1, D2, S2); // S2 = D1'*D2
-		CommonOps_DDRM.multTransA(D2, D2, S3); // S3 = D2'*D2
+		CommonOps_FDRM.multTransA(D1, D1, S1); // S1 = D1'*D1
+		CommonOps_FDRM.multTransA(D1, D2, S2); // S2 = D1'*D2
+		CommonOps_FDRM.multTransA(D2, D2, S3); // S3 = D2'*D2
 
 		// for getting a2 from a1
 		// T = -inv(S3)*S2'
 		if( !solver.setA(S3) )
 			return false;
 
-		CommonOps_DDRM.transpose(S2,S2_tran);
-		CommonOps_DDRM.changeSign(S2_tran);
+		CommonOps_FDRM.transpose(S2,S2_tran);
+		CommonOps_FDRM.changeSign(S2_tran);
 		solver.solve(S2_tran, T);
 
 		// Compute reduced scatter matrix
 		// M = S1 + S2*T
-		CommonOps_DDRM.mult(S2, T, M);
-		CommonOps_DDRM.add(M,S1,M);
+		CommonOps_FDRM.mult(S2, T, M);
+		CommonOps_FDRM.add(M,S1,M);
 
 		// Premultiply by inv(C1). inverse of constraint matrix
 		for( int col = 0; col < 3; col++ ) {
-			double m0 = M.unsafe_get(0, col);
-			double m1 = M.unsafe_get(1, col);
-			double m2 = M.unsafe_get(2, col);
+			float m0 = M.unsafe_get(0, col);
+			float m1 = M.unsafe_get(1, col);
+			float m2 = M.unsafe_get(2, col);
 
 			M.unsafe_set(0,col,  m2 / 2);
 			M.unsafe_set(1,col,  -m1);
@@ -139,37 +139,37 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		if( !eigen.decompose(M) )
 			return false;
 
-		DMatrixRMaj a1 = selectBestEigenVector();
+		FMatrixRMaj a1 = selectBestEigenVector();
 		if( a1 == null )
 			return false;
 
 		// ellipse coefficients
-		CommonOps_DDRM.mult(T,a1,Ta1);
+		CommonOps_FDRM.mult(T,a1,Ta1);
 
-		ellipse.a = a1.data[0];
-		ellipse.b = a1.data[1]/2;
-		ellipse.c = a1.data[2];
-		ellipse.d = Ta1.data[0]/2;
-		ellipse.e = Ta1.data[1]/2;
-		ellipse.f = Ta1.data[2];
+		ellipse.A = a1.data[0];
+		ellipse.B = a1.data[1]/2;
+		ellipse.C = a1.data[2];
+		ellipse.D = Ta1.data[0]/2;
+		ellipse.E = Ta1.data[1]/2;
+		ellipse.F = Ta1.data[2];
 
 		return true;
 	}
 
-	private DMatrixRMaj selectBestEigenVector() {
+	private FMatrixRMaj selectBestEigenVector() {
 
 		int bestIndex = -1;
-		double bestCond = Double.MAX_VALUE;
+		float bestCond = Float.MAX_VALUE;
 
 		for( int i = 0; i < eigen.getNumberOfEigenvalues(); i++ ) {
-			DMatrixRMaj v = eigen.getEigenVector(i);
+			FMatrixRMaj v = eigen.getEigenVector(i);
 
 			if( v == null ) // TODO WTF?!?!
 				continue;
 
 			// evaluate a'*C*a = 1
-			double cond = 4*v.get(0)*v.get(2) - v.get(1)*v.get(1);
-			double condError = (cond - 1)*(cond - 1);
+			float cond = 4*v.get(0)*v.get(2) - v.get(1)*v.get(1);
+			float condError = (cond - 1)*(cond - 1);
 
 			if( cond > 0 && condError < bestCond ) {
 				bestCond = condError;
@@ -183,7 +183,7 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		return eigen.getEigenVector(bestIndex);
 	}
 
-	public EllipseQuadratic_F64 getEllipse() {
+	public EllipseQuadratic_F32 getEllipse() {
 		return ellipse;
 	}
 }

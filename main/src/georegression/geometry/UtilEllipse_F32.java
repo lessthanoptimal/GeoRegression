@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,10 +20,10 @@ package georegression.geometry;
 
 import georegression.geometry.algs.TangentLinesTwoEllipses_F32;
 import georegression.misc.GrlConstants;
+import georegression.struct.curve.EllipseQuadratic_F32;
+import georegression.struct.curve.EllipseRotated_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Vector2D_F32;
-import georegression.struct.shapes.EllipseQuadratic_F32;
-import georegression.struct.shapes.EllipseRotated_F32;
 
 /**
  * Functions for extracting information from ellipses and converting between different ellipse formats.
@@ -49,12 +49,12 @@ public class UtilEllipse_F32 {
 		if( output == null )
 			output = new EllipseRotated_F32();
 
-		float a11 = input.a;
-		float a12 = input.b;
-		float a22 = input.c;
-		float b1  = 2*input.d;
-		float b2  = 2*input.e;
-		float c = input.f;
+		float a11 = input.A;
+		float a12 = input.B;
+		float a22 = input.C;
+		float b1  = 2*input.D;
+		float b2  = 2*input.E;
+		float c = input.F;
 
 		output.center.x = (a22*b1-a12*b2)/(2*(a12*a12 - a11*a22));
 		output.center.y = (a11*b2-a12*b1)/(2*(a12*a12 - a11*a22));
@@ -123,12 +123,12 @@ public class UtilEllipse_F32 {
 		float y02 = y0*y0;
 
 		// TODO simplfy using more trig identities
-		output.a = cphi2/a2 + sphi2/b2;
-		output.b = sphi*cphi/a2 - sphi*cphi/b2;
-		output.c = sphi2/a2 + cphi2/b2;
-		output.d = -x0*cphi2/a2 - y0*sphi*cphi/a2 - x0*sphi2/b2 + y0*sphi*cphi/b2;
-		output.e = -x0*sphi*cphi/a2 - y0*sphi2/a2 + x0*sphi*cphi/b2 - y0*cphi2/b2;
-		output.f = x02*cphi2/a2 + 2*x0*y0*sphi*cphi/a2 + y02*sphi2/a2 +
+		output.A = cphi2/a2 + sphi2/b2;
+		output.B = sphi*cphi/a2 - sphi*cphi/b2;
+		output.C = sphi2/a2 + cphi2/b2;
+		output.D = -x0*cphi2/a2 - y0*sphi*cphi/a2 - x0*sphi2/b2 + y0*sphi*cphi/b2;
+		output.E = -x0*sphi*cphi/a2 - y0*sphi2/a2 + x0*sphi*cphi/b2 - y0*cphi2/b2;
+		output.F = x02*cphi2/a2 + 2*x0*y0*sphi*cphi/a2 + y02*sphi2/a2 +
 				x02*sphi2/b2 - 2*x0*y0*sphi*cphi/b2 + y02*cphi2/b2 - 1;
 
 		return output;
@@ -144,7 +144,7 @@ public class UtilEllipse_F32 {
 	 * @return value of ellipse equation at point (x,y)
 	 */
 	public static float evaluate( float x , float y , EllipseQuadratic_F32 ellipse ) {
-		return ellipse.a*x*x + 2*ellipse.b*x*y + ellipse.c*y*y + 2*ellipse.d*x + 2*ellipse.e*y + ellipse.f;
+		return ellipse.A *x*x + 2*ellipse.B *x*y + ellipse.C *y*y + 2*ellipse.D *x + 2*ellipse.E *y + ellipse.F;
 	}
 
 	/**

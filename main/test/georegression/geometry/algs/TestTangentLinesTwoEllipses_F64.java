@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,9 +21,9 @@ package georegression.geometry.algs;
 import georegression.geometry.UtilEllipse_F64;
 import georegression.geometry.UtilVector2D_F64;
 import georegression.misc.GrlConstants;
+import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

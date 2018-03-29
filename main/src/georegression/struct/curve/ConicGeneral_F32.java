@@ -20,6 +20,8 @@ package georegression.struct.curve;
 
 import org.ejml.UtilEjml;
 
+import java.io.Serializable;
+
 /**
  * <p>A*x<sup>2</sup> + B*x*y + C*y<sup>2</sup> + D*x + E*y + F=0</p>
  *
@@ -30,15 +32,32 @@ import org.ejml.UtilEjml;
  * <p><b>Parabola:</b>  B<sup>2</sup> - 4*A*C = 0</p>
  * <p><b>Hyperbola:</b>  B<sup>2</sup> - 4*A*C &gt; 0</p>
  *
+ * <p>
+ * NOTE: these parameters are unique only up to a scale factor.
+ * </p>
+ *
  * @author Peter Abeles
  */
-public class ConicGeneral_F32 {
+public class ConicGeneral_F32 implements Serializable
+{
 	/**
 	 * Coefficients
 	 */
 	public float A,B,C,D,E,F;
 
-	public float evaluate( float x , float y ) {
+	public ConicGeneral_F32(float a, float b, float c, float d, float e, float f) {
+		A = a;
+		B = b;
+		C = c;
+		D = d;
+		E = e;
+		F = f;
+	}
+
+	public ConicGeneral_F32() {
+	}
+
+	public float evaluate(float x , float y ) {
 		return A*x*x + B*x*y + C*y*y + D*x + E*y + F;
 	}
 
@@ -48,5 +67,17 @@ public class ConicGeneral_F32 {
 	public boolean hasUncountable() {
 		return UtilEjml.isUncountable(A) || UtilEjml.isUncountable(B) || UtilEjml.isUncountable(C)
 				|| UtilEjml.isUncountable(D) || UtilEjml.isUncountable(E) || UtilEjml.isUncountable(F);
+	}
+
+	public boolean isEllipse( float tol ) {
+		return B*B+tol < 4*A*C;
+	}
+
+	public boolean isParabola( float tol ) {
+		return (float)Math.abs(B*B - 4*A*C) <= tol ;
+	}
+
+	public boolean isHyperbola( float tol ) {
+		return B*B-tol > 4*A*C;
 	}
 }

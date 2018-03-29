@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,14 +18,14 @@
 
 package georegression.metric;
 
-import georegression.fitting.ellipse.ClosestPointEllipseAngle_F64;
+import georegression.fitting.curves.ClosestPointEllipseAngle_F64;
 import georegression.geometry.UtilLine2D_F64;
 import georegression.misc.GrlConstants;
+import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

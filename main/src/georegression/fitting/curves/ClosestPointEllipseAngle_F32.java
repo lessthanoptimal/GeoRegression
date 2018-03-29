@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-package georegression.fitting.ellipse;
+package georegression.fitting.curves;
 
-import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
+import georegression.struct.curve.EllipseRotated_F32;
+import georegression.struct.point.Point2D_F32;
 
 /**
  * Finds the closest point on an ellipse to a point.  Point is first put into the ellipse's
@@ -28,22 +28,22 @@ import georegression.struct.shapes.EllipseRotated_F64;
  *
  * @author Peter Abeles
  */
-public class ClosestPointEllipseAngle_F64 {
+public class ClosestPointEllipseAngle_F32 {
 
 	// tolerance to test for solution.  Must be this close to zero
-	double tol;
+	float tol;
 	// maximum number of newton steps
 	int maxIterations;
 
 	// location of the closest point
-	Point2D_F64 closest = new Point2D_F64();
+	Point2D_F32 closest = new Point2D_F32();
 
-	EllipseRotated_F64 ellipse;
-	double ce;
-	double se;
+	EllipseRotated_F32 ellipse;
+	float ce;
+	float se;
 
 	// optimal value of parameterization
-	double theta;
+	float theta;
 
 	/**
 	 * Specifies convergence criteria
@@ -51,7 +51,7 @@ public class ClosestPointEllipseAngle_F64 {
 	 * @param tol Convergence tolerance.  Try 1e-8
 	 * @param maxIterations Maximum number of iterations.  Try 100
 	 */
-	public ClosestPointEllipseAngle_F64(double tol, int maxIterations) {
+	public ClosestPointEllipseAngle_F32(float tol, int maxIterations) {
 		this.tol = tol;
 		this.maxIterations = maxIterations;
 	}
@@ -60,10 +60,10 @@ public class ClosestPointEllipseAngle_F64 {
 	 * Specifies the ellipse which point distance is going to be found from
 	 * @param ellipse Ellipse description
 	 */
-	public void setEllipse( EllipseRotated_F64 ellipse ) {
+	public void setEllipse( EllipseRotated_F32 ellipse ) {
 		this.ellipse = ellipse;
-		ce = Math.cos(ellipse.phi);
-		se = Math.sin(ellipse.phi);
+		ce = (float)Math.cos(ellipse.phi);
+		se = (float)Math.sin(ellipse.phi);
 	}
 
 	/**
@@ -71,48 +71,48 @@ public class ClosestPointEllipseAngle_F64 {
 	 *
 	 * @param point Point which it is being fit to
 	 */
-	public void process( Point2D_F64 point ) {
+	public void process( Point2D_F32 point ) {
 		// put point into ellipse's coordinate system
-		double xc = point.x - ellipse.center.x;
-		double yc = point.y - ellipse.center.y;
+		float xc = point.x - ellipse.center.x;
+		float yc = point.y - ellipse.center.y;
 //
-		double x =  ce*xc + se*yc;
-		double y = -se*xc + ce*yc;
+		float x =  ce*xc + se*yc;
+		float y = -se*xc + ce*yc;
 
 		// initial guess for the angle
-		theta = Math.atan2( ellipse.a*y , ellipse.b*x);
+		theta = (float)Math.atan2( ellipse.a*y , ellipse.b*x);
 
-		double a2_m_b2 = ellipse.a*ellipse.a - ellipse.b*ellipse.b;
+		float a2_m_b2 = ellipse.a*ellipse.a - ellipse.b*ellipse.b;
 
 		// use Newton's Method to find the solution
 		int i = 0;
 		for(; i < maxIterations; i++ ) {
-			double c = Math.cos(theta);
-			double s = Math.sin(theta);
+			float c = (float)Math.cos(theta);
+			float s = (float)Math.sin(theta);
 
-			double f = a2_m_b2*c*s - x*ellipse.a*s + y*ellipse.b*c;
-			if( Math.abs(f) < tol )
+			float f = a2_m_b2*c*s - x*ellipse.a*s + y*ellipse.b*c;
+			if( (float)Math.abs(f) < tol )
 				break;
 
-			double d = a2_m_b2*(c*c - s*s) - x*ellipse.a*c - y*ellipse.b*s;
+			float d = a2_m_b2*(c*c - s*s) - x*ellipse.a*c - y*ellipse.b*s;
 
 			theta = theta - f/d;
 		}
 
 		// compute solution in ellipse coordinate frame
-		x = ellipse.a*(double)Math.cos(theta);
-		y = ellipse.b*(double)Math.sin(theta);
+		x = ellipse.a*(float)Math.cos(theta);
+		y = ellipse.b*(float)Math.sin(theta);
 
 		// put back into original coordinate system
 		closest.x = ce*x - se*y + ellipse.center.x;
 		closest.y = se*x + ce*y + ellipse.center.y;
 	}
 
-	public Point2D_F64 getClosest() {
+	public Point2D_F32 getClosest() {
 		return closest;
 	}
 
-	public double getTheta() {
+	public float getTheta() {
 		return theta;
 	}
 }

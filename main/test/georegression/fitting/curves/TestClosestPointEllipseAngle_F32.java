@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-package georegression.fitting.ellipse;
+package georegression.fitting.curves;
 
 import georegression.geometry.UtilEllipse_F32;
 import georegression.misc.GrlConstants;
+import georegression.struct.curve.EllipseRotated_F32;
 import georegression.struct.point.Point2D_F32;
-import georegression.struct.shapes.EllipseRotated_F32;
 import org.junit.Test;
 
 import java.util.Random;

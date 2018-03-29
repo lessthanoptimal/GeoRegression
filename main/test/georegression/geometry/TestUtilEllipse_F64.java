@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,11 +22,11 @@ import georegression.geometry.algs.TangentLinesTwoEllipses_F64;
 import georegression.metric.Intersection2D_F64;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
+import georegression.struct.curve.EllipseQuadratic_F64;
+import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
-import georegression.struct.shapes.EllipseQuadratic_F64;
-import georegression.struct.shapes.EllipseRotated_F64;
 import org.junit.Test;
 
 import java.util.Random;
@@ -82,12 +82,12 @@ public class TestUtilEllipse_F64 {
 
 		UtilEllipse_F64.convert(rotated,quad);
 
-		quad.a *= scale;
-		quad.b *= scale;
-		quad.c *= scale;
-		quad.d *= scale;
-		quad.e *= scale;
-		quad.f *= scale;
+		quad.A *= scale;
+		quad.B *= scale;
+		quad.C *= scale;
+		quad.D *= scale;
+		quad.E *= scale;
+		quad.F *= scale;
 
 		UtilEllipse_F64.convert(quad,found);
 

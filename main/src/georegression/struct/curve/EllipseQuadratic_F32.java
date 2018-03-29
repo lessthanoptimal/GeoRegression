@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,9 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.struct.shapes;
-
-import java.io.Serializable;
+package georegression.struct.curve;
 
 /**
  * <p>
@@ -34,29 +32,17 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public class EllipseQuadratic_F32 implements Serializable {
-	/**
-	 * coefficients
-	 */
-	public float a,b,c,d,e,f;
+public class EllipseQuadratic_F32 extends ConicGeneral_F32 {
 
 	public EllipseQuadratic_F32(float a, float b, float c, float d, float e, float f) {
-		this.a = a;
-		this.b = b;
-		this.c = c;
-		this.d = d;
-		this.e = e;
-		this.f = f;
+		this.A = a;
+		this.B = b;
+		this.C = c;
+		this.D = d;
+		this.E = e;
+		this.F = f;
 	}
 
 	public EllipseQuadratic_F32() {
-	}
-
-	/**
-	 * Checks to see if the parameters define an ellipse using the {@code a*c - b*b > 0} constraint.
-	 * @return true if it's an ellipse or false if not
-	 */
-	public boolean isEllipse() {
-		return a*c - b*b > 0;
 	}
 }

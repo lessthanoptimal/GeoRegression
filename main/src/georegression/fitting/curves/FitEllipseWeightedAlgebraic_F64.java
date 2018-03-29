@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-package georegression.fitting.ellipse;
+package georegression.fitting.curves;
 
+import georegression.struct.curve.EllipseQuadratic_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.EllipseQuadratic_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
@@ -50,7 +50,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class FitEllipseAlgebraic_F64 {
+public class FitEllipseWeightedAlgebraic_F64 {
 
 	// qudratic part of design matrix
 	private DMatrixRMaj D1 = new DMatrixRMaj(3,1);
@@ -76,7 +76,18 @@ public class FitEllipseAlgebraic_F64 {
 
 	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
 
-	public boolean process( List<Point2D_F64> points ) {
+	/**
+	 * Fits the ellipse to the line
+	 *
+	 * @param points Set of points that are to be fit
+	 * @param weights Weight or importance of each point.  Each weight must be a positive number
+	 * @return true if successful or false if it failed
+	 */
+	public boolean process( List<Point2D_F64> points , double weights[] ) {
+		if( points.size() > weights.length ) {
+			throw new IllegalArgumentException("Weights must be as long as the number of points. "+
+					points.size()+" vs "+weights.length);
+		}
 		int N = points.size();
 
 		// Construct the design matrices.  linear and quadratic
@@ -84,14 +95,15 @@ public class FitEllipseAlgebraic_F64 {
 		int index = 0;
 		for( int i = 0; i < N; i++ ) {
 			Point2D_F64 p = points.get(i);
+			double w = weights[i];
 
 			// fill in each row one at a time
-			D1.data[index]   = p.x*p.x;
-			D2.data[index++] = p.x;
-			D1.data[index]   = p.x*p.y;
-			D2.data[index++] = p.y;
-			D1.data[index]   = p.y*p.y;
-			D2.data[index++] = 1;
+			D1.data[index]   = w*p.x*p.x;
+			D2.data[index++] = w*p.x;
+			D1.data[index]   = w*p.x*p.y;
+			D2.data[index++] = w*p.y;
+			D1.data[index]   = w*p.y*p.y;
+			D2.data[index++] = w;
 		}
 
 		// Compute scatter matrix
@@ -134,12 +146,12 @@ public class FitEllipseAlgebraic_F64 {
 		// ellipse coefficients
 		CommonOps_DDRM.mult(T,a1,Ta1);
 
-		ellipse.a = a1.data[0];
-		ellipse.b = a1.data[1]/2;
-		ellipse.c = a1.data[2];
-		ellipse.d = Ta1.data[0]/2;
-		ellipse.e = Ta1.data[1]/2;
-		ellipse.f = Ta1.data[2];
+		ellipse.A = a1.data[0];
+		ellipse.B = a1.data[1]/2;
+		ellipse.C = a1.data[2];
+		ellipse.D = Ta1.data[0]/2;
+		ellipse.E = Ta1.data[1]/2;
+		ellipse.F = Ta1.data[2];
 
 		return true;
 	}

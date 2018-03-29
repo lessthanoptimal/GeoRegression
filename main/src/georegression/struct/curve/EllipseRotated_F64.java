@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,9 +16,9 @@
  * limitations under the License.
  */
 
-package georegression.struct.shapes;
+package georegression.struct.curve;
 
-import georegression.struct.point.Point2D_F32;
+import georegression.struct.point.Point2D_F64;
 
 import java.io.Serializable;
 
@@ -32,23 +32,23 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public class EllipseRotated_F32 implements Serializable {
+public class EllipseRotated_F64 implements Serializable {
 	/**
 	 * Center of the ellipse
 	 */
-	public Point2D_F32 center = new Point2D_F32();
+	public Point2D_F64 center = new Point2D_F64();
 	/**
 	 * semi major-axis
 	 */
-	public float a;
+	public double a;
 	/**
 	 * semi minor-axis
 	 */
-	public float b;
+	public double b;
 	/**
 	 * counter clockwise angle of rotation from x-axis to the major axis.  Standard range is from -PI/2 to PI/2
 	 */
-	public float phi;
+	public double phi;
 
 	/**
 	 * Constructor
@@ -58,7 +58,7 @@ public class EllipseRotated_F32 implements Serializable {
 	 * @param b minor axis
 	 * @param phi orientation in radians
 	 */
-	public EllipseRotated_F32(Point2D_F32 center, float a, float b, float phi) {
+	public EllipseRotated_F64(Point2D_F64 center, double a, double b, double phi) {
 		this.center.set(center);
 		this.a = a;
 		this.b = b;
@@ -74,7 +74,7 @@ public class EllipseRotated_F32 implements Serializable {
 	 * @param b minor axis
 	 * @param phi orientation in radians
 	 */
-	public EllipseRotated_F32( float x0 , float y0, float a, float b, float phi) {
+	public EllipseRotated_F64( double x0 , double y0, double a, double b, double phi) {
 		set(x0,y0,a,b,phi);
 	}
 
@@ -83,18 +83,18 @@ public class EllipseRotated_F32 implements Serializable {
 	 *
 	 * @param original Ellipse which is to be copied
 	 */
-	public EllipseRotated_F32( EllipseRotated_F32 original ) {
+	public EllipseRotated_F64( EllipseRotated_F64 original ) {
 		this(original.center,original.getA(),original.getB(),original.getPhi());
 	}
 
-	public EllipseRotated_F32() {
+	public EllipseRotated_F64() {
 	}
 
-	public Point2D_F32 getCenter() {
+	public Point2D_F64 getCenter() {
 		return center;
 	}
 
-	public void setCenter(Point2D_F32 center) {
+	public void setCenter(Point2D_F64 center) {
 		this.center.set(center);
 	}
 
@@ -102,11 +102,11 @@ public class EllipseRotated_F32 implements Serializable {
 	 * Returns the major axis
 	 * @return major axis
 	 */
-	public float getA() {
+	public double getA() {
 		return a;
 	}
 
-	public void setA(float a) {
+	public void setA(double a) {
 		this.a = a;
 	}
 
@@ -114,11 +114,11 @@ public class EllipseRotated_F32 implements Serializable {
 	 * Returns the minor axis
 	 * @return minor axis
 	 */
-	public float getB() {
+	public double getB() {
 		return b;
 	}
 
-	public void setB(float b) {
+	public void setB(double b) {
 		this.b = b;
 	}
 
@@ -126,22 +126,22 @@ public class EllipseRotated_F32 implements Serializable {
 	 * Returns the orientation
 	 * @return orientation is randians
 	 */
-	public float getPhi() {
+	public double getPhi() {
 		return phi;
 	}
 
-	public void setPhi(float phi) {
+	public void setPhi(double phi) {
 		this.phi = phi;
 	}
 
-	public void set( float x0 , float y0, float a, float b, float phi) {
+	public void set( double x0 , double y0, double a, double b, double phi) {
 		this.center.set(x0,y0);
 		this.a = a;
 		this.b = b;
 		this.phi = phi;
 	}
 
-	public void set(EllipseRotated_F32 ellipse ) {
+	public void set(EllipseRotated_F64 ellipse ) {
 		this.center.set( ellipse.center );
 		this.a = ellipse.a;
 		this.b = ellipse.b;
@@ -150,7 +150,7 @@ public class EllipseRotated_F32 implements Serializable {
 
 	@Override
 	public String toString() {
-		return "EllipseRotated_F32{" +
+		return "EllipseRotated_F64{" +
 				"center=" + center +
 				", a=" + a +
 				", b=" + b +

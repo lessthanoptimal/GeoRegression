@@ -20,6 +20,7 @@ package georegression.metric;
 
 import georegression.geometry.UtilEllipse_F32;
 import georegression.misc.GrlConstants;
+import georegression.struct.curve.EllipseRotated_F32;
 import georegression.struct.line.LineGeneral2D_F32;
 import georegression.struct.line.LineParametric2D_F32;
 import georegression.struct.line.LineSegment2D_F32;
@@ -27,7 +28,10 @@ import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point3D_F32;
 import georegression.struct.point.Vector2D_F32;
 import georegression.struct.se.Se2_F32;
-import georegression.struct.shapes.*;
+import georegression.struct.shapes.Polygon2D_F32;
+import georegression.struct.shapes.Quadrilateral_F32;
+import georegression.struct.shapes.Rectangle2D_F32;
+import georegression.struct.shapes.RectangleLength2D_F32;
 import georegression.transform.se.SePointOps_F32;
 import org.junit.Test;
 
