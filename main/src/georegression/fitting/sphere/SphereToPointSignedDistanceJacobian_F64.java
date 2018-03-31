@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,8 @@ import org.ejml.data.DMatrixRMaj;
 
 import java.util.List;
 
-//NOFILTER import org.ejml.data.DMatrixRMaj;
+//CUSTOM ignore org.ejml.data.DMatrixRMaj;
+//CUSTOM ignore DMatrixRMaj;
 
 /**
  * Jacobian of {@link SphereToPointSignedDistance_F64}.

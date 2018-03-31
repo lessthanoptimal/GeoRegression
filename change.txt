@@ -16,6 +16,8 @@ Version : 0.16
 - GeometryMath
   * improved addMult so that you can pass in the same point more than once
   * added addMultTrans
+- Autocode
+  * move into it's own module
 
 TODO replace EllipseQuadratic_F64 with CubicGeneral_F64?
 TODO Move ellipse into curve package?

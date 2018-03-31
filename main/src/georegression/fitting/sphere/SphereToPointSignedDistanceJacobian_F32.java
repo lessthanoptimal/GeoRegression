@@ -25,6 +25,9 @@ import org.ejml.data.DMatrixRMaj;
 
 import java.util.List;
 
+//CUSTOM ignore org.ejml.data.DMatrixRMaj;
+//CUSTOM ignore DMatrixRMaj;
+
 /**
  * Jacobian of {@link SphereToPointSignedDistance_F32}.
  *

@@ -187,7 +187,7 @@ public class TestGeometryMath_F32 {
 		Equation eq = new Equation();
 		eq.alias(M,"M");
 		eq.process("expected=[1,2,3]' + M*[2;3;4]");
-		FMatrixRMaj expected = eq.lookupDDRM("expected");
+		FMatrixRMaj expected = eq.lookupFDRM("expected");
 
 		assertEquals( expected.get(0) , c.getX() , GrlConstants.TEST_F32);
 		assertEquals( expected.get(1) , c.getY() , GrlConstants.TEST_F32);
@@ -212,7 +212,7 @@ public class TestGeometryMath_F32 {
 		Equation eq = new Equation();
 		eq.alias(M,"M");
 		eq.process("expected=[1,2,3]' + M'*[2;3;4]");
-		FMatrixRMaj expected = eq.lookupDDRM("expected");
+		FMatrixRMaj expected = eq.lookupFDRM("expected");
 
 		assertEquals( expected.get(0) , c.getX() , GrlConstants.TEST_F32);
 		assertEquals( expected.get(1) , c.getY() , GrlConstants.TEST_F32);
