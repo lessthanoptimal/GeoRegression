@@ -13,6 +13,9 @@ Version : 0.16
   * Quadratic
   * Parabola
   * Conic
+- GeometryMath
+  * improved addMult so that you can pass in the same point more than once
+  * added addMultTrans
 
 TODO replace EllipseQuadratic_F64 with CubicGeneral_F64?
 TODO Move ellipse into curve package?

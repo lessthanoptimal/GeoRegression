@@ -80,4 +80,17 @@ public class ConicGeneral_F32 implements Serializable
 	public boolean isHyperbola( float tol ) {
 		return B*B-tol > 4*A*C;
 	}
+
+	public void setTo( ConicGeneral_F32 original ) {
+		this.A = original.A;
+		this.B = original.B;
+		this.C = original.C;
+		this.D = original.D;
+		this.E = original.E;
+		this.F = original.F;
+	}
+
+	public ConicGeneral_F32 copy() {
+		return new ConicGeneral_F32(A,B,C,D,E,F);
+	}
 }

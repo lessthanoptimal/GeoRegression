@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,6 +27,7 @@ import org.ejml.data.FMatrixRMaj;
 import org.ejml.dense.row.CommonOps_FDRM;
 import org.ejml.dense.row.MatrixFeatures_FDRM;
 import org.ejml.dense.row.RandomMatrices_FDRM;
+import org.ejml.equation.Equation;
 import org.junit.Test;
 
 import java.util.Random;
@@ -179,13 +180,49 @@ public class TestGeometryMath_F32 {
 		Vector3D_F32 a = new Vector3D_F32( 1, 2, 3 );
 		Vector3D_F32 b = new Vector3D_F32( 2, 3, 4 );
 		Vector3D_F32 c = new Vector3D_F32();
-		FMatrixRMaj M = new FMatrixRMaj( 3,3,true,1,1,1,1,1,1,1,1,1);
+		FMatrixRMaj M = new FMatrixRMaj( 3,3,true,1,2,3,4,5,6,7,8,9);
 
 		GeometryMath_F32.addMult( a , M , b , c );
 
-		assertEquals( 10 , c.getX() , GrlConstants.TEST_F32);
-		assertEquals( 11 , c.getY() , GrlConstants.TEST_F32);
-		assertEquals( 12 , c.getZ() , GrlConstants.TEST_F32);
+		Equation eq = new Equation();
+		eq.alias(M,"M");
+		eq.process("expected=[1,2,3]' + M*[2;3;4]");
+		FMatrixRMaj expected = eq.lookupDDRM("expected");
+
+		assertEquals( expected.get(0) , c.getX() , GrlConstants.TEST_F32);
+		assertEquals( expected.get(1) , c.getY() , GrlConstants.TEST_F32);
+		assertEquals( expected.get(2) , c.getZ() , GrlConstants.TEST_F32);
+
+		// see if passing a twice messes up the results
+		GeometryMath_F32.addMult( a , M , b , a );
+		assertEquals( expected.get(0) , a.getX() , GrlConstants.TEST_F32);
+		assertEquals( expected.get(1) , a.getY() , GrlConstants.TEST_F32);
+		assertEquals( expected.get(2) , a.getZ() , GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void addMultTran() {
+		Vector3D_F32 a = new Vector3D_F32( 1, 2, 3 );
+		Vector3D_F32 b = new Vector3D_F32( 2, 3, 4 );
+		Vector3D_F32 c = new Vector3D_F32();
+		FMatrixRMaj M = new FMatrixRMaj( 3,3,true,1,2,3,4,5,6,7,8,9);
+
+		GeometryMath_F32.addMultTrans( a , M , b , c );
+
+		Equation eq = new Equation();
+		eq.alias(M,"M");
+		eq.process("expected=[1,2,3]' + M'*[2;3;4]");
+		FMatrixRMaj expected = eq.lookupDDRM("expected");
+
+		assertEquals( expected.get(0) , c.getX() , GrlConstants.TEST_F32);
+		assertEquals( expected.get(1) , c.getY() , GrlConstants.TEST_F32);
+		assertEquals( expected.get(2) , c.getZ() , GrlConstants.TEST_F32);
+
+		// see if passing a twice messes up the results
+		GeometryMath_F32.addMultTrans( a , M , b , a );
+		assertEquals( expected.get(0) , a.getX() , GrlConstants.TEST_F32);
+		assertEquals( expected.get(1) , a.getY() , GrlConstants.TEST_F32);
+		assertEquals( expected.get(2) , a.getZ() , GrlConstants.TEST_F32);
 	}
 
 	@Test

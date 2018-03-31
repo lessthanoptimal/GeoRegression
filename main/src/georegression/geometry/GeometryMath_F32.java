@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -210,20 +210,51 @@ public class GeometryMath_F32 {
 	}
 
 	/**
-	 * ret = p0 + M*p1
+	 * <p>ret = p0 + M*p1</p>
 	 *
-	 * @param p0
-	 * @param M
-	 * @param p1
-	 * @param ret
+	 * Safe to pass in the same instance of a point more than once.
 	 */
-	public static <T extends GeoTuple3D_F32> T addMult( T p0, FMatrixRMaj M, T p1, T ret ) {
-		ret = mult( M, p1, ret );
-		ret.x += p0.x;
-		ret.y += p0.y;
-		ret.z += p0.z;
+	public static <T extends GeoTuple3D_F32> T addMult( T p0, FMatrixRMaj M, T p1, T result ) {
+		if( M.numRows != 3 || M.numCols != 3 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
 
-		return ret;
+		if( result == null ) {
+			result = (T) p0.createNewInstance();
+		}
+
+		float x = p1.x;
+		float y = p1.y;
+		float z = p1.z;
+
+		result.x = p0.x + (float) ( M.data[0] * x + M.data[1] * y + M.data[2] * z );
+		result.y = p0.y + (float) ( M.data[3] * x + M.data[4] * y + M.data[5] * z );
+		result.z = p0.z + (float) ( M.data[6] * x + M.data[7] * y + M.data[8] * z );
+
+		return result;
+	}
+
+	/**
+	 * <p>ret = p0 + M<sup>T</sup>*p1</p>
+	 *
+	 * Safe to pass in the same instance of a point more than once.
+	 */
+	public static <T extends GeoTuple3D_F32> T addMultTrans( T p0, FMatrixRMaj M, T p1, T result ) {
+		if( M.numRows != 3 || M.numCols != 3 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
+
+		if( result == null ) {
+			result = (T) p0.createNewInstance();
+		}
+
+		float x = p1.x;
+		float y = p1.y;
+		float z = p1.z;
+
+		result.x = p0.x + (float) ( M.data[0] * x + M.data[3] * y + M.data[6] * z );
+		result.y = p0.y + (float) ( M.data[1] * x + M.data[4] * y + M.data[7] * z );
+		result.z = p0.z + (float) ( M.data[2] * x + M.data[5] * y + M.data[8] * z );
+
+		return result;
 	}
 
 	/**
@@ -304,9 +335,9 @@ public class GeometryMath_F32 {
 		float y = pt.y;
 		float z = pt.z;
 
-		result.x = (float) ( M.unsafe_get(0, 0) * x + M.unsafe_get(0, 1) * y + M.unsafe_get(0, 2) * z );
-		result.y = (float) ( M.unsafe_get(1, 0) * x + M.unsafe_get(1, 1) * y + M.unsafe_get(1, 2) * z );
-		result.z = (float) ( M.unsafe_get(2, 0) * x + M.unsafe_get(2, 1) * y + M.unsafe_get(2, 2) * z );
+		result.x = (float) ( M.data[0] * x + M.data[1] * y + M.data[2] * z );
+		result.y = (float) ( M.data[3] * x + M.data[4] * y + M.data[5] * z );
+		result.z = (float) ( M.data[6] * x + M.data[7] * y + M.data[8] * z );
 
 		return (T) result;
 	}
