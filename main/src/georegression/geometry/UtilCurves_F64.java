@@ -33,7 +33,7 @@ public class UtilCurves_F64 {
 	 * @param dst (Output) Optional storage for converted parabola
 	 * @return Parabola
 	 */
-	public ParabolaGeneral_F64 convert(ConicGeneral_F64 src , ParabolaGeneral_F64 dst ) {
+	public static ParabolaGeneral_F64 convert(ConicGeneral_F64 src , ParabolaGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ParabolaGeneral_F64();
 
@@ -53,7 +53,7 @@ public class UtilCurves_F64 {
 	 * @param dst (Output) Optional storage for converted conic
 	 * @return Conic
 	 */
-	public ConicGeneral_F64 convert(ParabolaGeneral_F64 src , ConicGeneral_F64 dst ) {
+	public static ConicGeneral_F64 convert(ParabolaGeneral_F64 src , ConicGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ConicGeneral_F64();
 

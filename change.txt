@@ -20,7 +20,6 @@ Version : 0.16
   * move into it's own module
 
 TODO replace EllipseQuadratic_F64 with CubicGeneral_F64?
-TODO Move ellipse into curve package?
 TODO convert parabola to a function of t
 TODO intersection of two parabolas
 TODO intersection of two parabolas in a specific direction of t
