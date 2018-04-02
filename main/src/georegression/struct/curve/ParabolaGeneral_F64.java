@@ -34,7 +34,37 @@ public class ParabolaGeneral_F64 {
 	 */
 	public double A,C,D,E,F;
 
-	public double evaluate( double x , double y ) {
+	public ParabolaGeneral_F64(double a, double c, double d, double e, double f) {
+		A = a;
+		C = c;
+		D = d;
+		E = e;
+		F = f;
+	}
+
+	public ParabolaGeneral_F64( ParabolaGeneral_F64 original ) {
+		this.set(original);
+	}
+
+	public ParabolaGeneral_F64(){}
+
+	public void set( ParabolaGeneral_F64 original ) {
+		this.A = original.A;
+		this.C = original.C;
+		this.D = original.D;
+		this.E = original.E;
+		this.F = original.F;
+	}
+
+	public void set(double a, double c, double d, double e, double f) {
+		A = a;
+		C = c;
+		D = d;
+		E = e;
+		F = f;
+	}
+
+	public double evaluate(double x , double y ) {
 		double inner = A*x + C*y;
 		return inner*inner + D*x + E*y +F;
 	}

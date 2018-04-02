@@ -26,8 +26,26 @@ import static org.junit.Assert.fail;
  * @author Peter Abeles
  */
 public class TestFitParabola_F64 {
+
+
 	@Test
-	public void stuff() {
+	public void fitPerfect() {
 		fail("Implement");
 	}
+
+	@Test
+	public void fitNoisy() {
+		fail("Implement");
+	}
+
+	@Test
+	public void checkGradient() {
+		fail("Implement");
+	}
+
+	@Test
+	public void checkGradientWeight() {
+		fail("Implement");
+	}
+
 }
