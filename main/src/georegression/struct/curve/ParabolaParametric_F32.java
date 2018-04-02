@@ -23,26 +23,34 @@ import georegression.struct.point.Point2D_F32;
 /**
  * Parametric form of parabola with 4 parameters.
  *
- * https://math.stackexchange.com/questions/2044922/parametric-form-for-a-general-parabola
+ * <p> x=A*t<sup>2</sup> + B*t + C<br>
+ *     y=D*t<sup>2</sup> + E*t + F</p>
+ *
  *
  * @author Peter Abeles
  */
 public class ParabolaParametric_F32 {
-	/**
-	 * Vertex of parabola
-	 */
-	public float x0,y0;
-	/**
-	 * Focal length
-	 */
-	public float p;
-	/**
-	 * Sine and cosine of theta. Theta = direction of axis of symmetric
-	 */
-	public float sin,cos;
+	public float A,B,C,D,E,F;
+
+	public ParabolaParametric_F32(){}
+
+	public ParabolaParametric_F32( ParabolaParametric_F32 original ) {
+		this.A = original.A;
+		this.B = original.B;
+		this.C = original.C;
+		this.D = original.D;
+		this.E = original.E;
+		this.F = original.F;
+	}
 
 	public void evaulate(float t , Point2D_F32 location ) {
-		location.x = x0 - 2*p*t*sin + p*t*t*cos;
-		location.y = y0 + 2*p*t*cos + p*t*t*sin;
+		location.x = A*t*t + B*t + C;
+		location.y = D*t*t + E*t + F;
+	}
+
+	public Point2D_F32 evaluate( float t ) {
+		Point2D_F32 p = new Point2D_F32();
+		evaulate(t,p);
+		return p;
 	}
 }

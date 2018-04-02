@@ -18,8 +18,11 @@
 
 package georegression.geometry;
 
+import georegression.misc.GrlConstants;
 import georegression.struct.curve.ConicGeneral_F64;
 import georegression.struct.curve.ParabolaGeneral_F64;
+import georegression.struct.curve.ParabolaParametric_F64;
+import georegression.struct.point.Point2D_F64;
 import org.ejml.UtilEjml;
 import org.junit.Test;
 
@@ -74,4 +77,29 @@ public class TestUtilCurves_F64 {
 		assertEquals(conic.E,parabola.E, UtilEjml.TEST_F64);
 		assertEquals(conic.F,parabola.F, UtilEjml.TEST_F64);
 	}
+
+	@Test
+	public void parabola_generic_to_parametric() {
+		ParabolaGeneral_F64 general = new ParabolaGeneral_F64(1.1,0.5,0.4,-0.1,2.1);
+		ParabolaParametric_F64 parametric = new ParabolaParametric_F64();
+		ParabolaGeneral_F64 found = new ParabolaGeneral_F64();
+
+		UtilCurves_F64.convert(general,parametric);
+
+		// See if the parametric equation generates points that lie on the general equation
+		Point2D_F64 p = new Point2D_F64();
+		for (int i = 0; i < 20; i++) {
+			double t = i/10.0;
+			parametric.evaulate(t,p);
+			assertEquals(0,general.evaluate(p.x,p.y), UtilEjml.TEST_F64);
+		}
+
+		// see if the reverse works
+		UtilCurves_F64.convert(parametric,found);
+
+		// only unique up to a scale factor
+		assertTrue(general.isEquivalent(found, GrlConstants.TEST_F64));
+	}
+
+
 }

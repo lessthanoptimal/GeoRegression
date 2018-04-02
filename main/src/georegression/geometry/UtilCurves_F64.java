@@ -38,8 +38,9 @@ public class UtilCurves_F64 {
 		if( dst == null )
 			dst = new ParabolaGeneral_F64();
 
-		dst.A = Math.sqrt(src.A);
-		dst.C = Math.sqrt(src.C);
+		// NOTE haven't put much through if this is the correct way to handle negative values of A or C
+		dst.A = Math.signum(src.A) * Math.sqrt(Math.abs(src.A));
+		dst.C = Math.signum(src.C) * Math.sqrt(Math.abs(src.C));
 		dst.D = src.D;
 		dst.E = src.E;
 		dst.F = src.F;
@@ -112,15 +113,15 @@ public class UtilCurves_F64 {
 
 		double Z = src.A*src.E - src.B*src.D;
 
-		dst.A = src.D*Z;
-		dst.C = -src.A*Z;
-		dst.D = -src.E*Z;
-		dst.E = src.B*Z;
+		dst.A = src.D/Z;
+		dst.C = -src.A/Z;
+		dst.D = -src.E/Z;
+		dst.E = src.B/Z;
 
 		if( Math.abs(dst.A) > Math.abs(dst.C) ) {
-			dst.F = src.F*Z/dst.A;
+			dst.F = src.F/Z/dst.A;
 		} else if( dst.C != 0 ) {
-			dst.F = -src.C*Z/dst.C;
+			dst.F = -src.C/Z/dst.C;
 		} else {
 			dst.F = 0;
 		}

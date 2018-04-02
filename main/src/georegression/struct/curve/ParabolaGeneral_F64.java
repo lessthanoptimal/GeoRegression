@@ -69,6 +69,22 @@ public class ParabolaGeneral_F64 {
 		return inner*inner + D*x + E*y +F;
 	}
 
+	public void toArray( double[] array ) {
+		array[0] = A;
+		array[1] = C;
+		array[2] = D;
+		array[3] = E;
+		array[4] = F;
+	}
+
+	public void fromArray( double[] array ) {
+		A = array[0];
+		C = array[1];
+		D = array[2];
+		E = array[3];
+		F = array[4];
+	}
+
 	/**
 	 * Returns true if any of its parameters have an uncountable number
 	 */
@@ -76,5 +92,50 @@ public class ParabolaGeneral_F64 {
 		return UtilEjml.isUncountable(A) || UtilEjml.isUncountable(C)
 				|| UtilEjml.isUncountable(D) || UtilEjml.isUncountable(E) ||
 				UtilEjml.isUncountable(F);
+	}
+
+	public double relativeScale( ParabolaGeneral_F64 parabola ) {
+		double scale = A/parabola.A;
+		double max = Math.abs(parabola.A);
+		if( max < Math.abs(parabola.C)) {
+			max = Math.abs(parabola.C);
+			scale = C/parabola.C;
+		}
+		if( max < Math.abs(parabola.D)) {
+			max = Math.abs(parabola.D);
+			scale = D/parabola.D;
+		}
+		if( max < Math.abs(parabola.E)) {
+			max = Math.abs(parabola.E);
+			scale = E/parabola.E;
+		}
+		if( max < Math.abs(parabola.F)) {
+			max = Math.abs(parabola.F);
+			scale = F/parabola.F;
+		}
+
+		if( max == 0 )
+			scale = 0;
+		return scale;
+	}
+
+	/**
+	 * Determines if they are equivalent up to a scale factor
+	 */
+	public boolean isEquivalent( ParabolaGeneral_F64 parabola , double tol ) {
+		double scale = relativeScale(parabola);
+
+		if( Math.abs(A*scale-parabola.A) > tol )
+			return false;
+		if( Math.abs(C*scale-parabola.C) > tol )
+			return false;
+		if( Math.abs(D*scale-parabola.D) > tol )
+			return false;
+		if( Math.abs(E*scale-parabola.E) > tol )
+			return false;
+		if( Math.abs(F*scale-parabola.F) > tol )
+			return false;
+
+		return true;
 	}
 }

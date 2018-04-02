@@ -47,4 +47,10 @@ public class ParabolaParametric_F64 {
 		location.x = A*t*t + B*t + C;
 		location.y = D*t*t + E*t + F;
 	}
+
+	public Point2D_F64 evaluate( double t ) {
+		Point2D_F64 p = new Point2D_F64();
+		evaulate(t,p);
+		return p;
+	}
 }
