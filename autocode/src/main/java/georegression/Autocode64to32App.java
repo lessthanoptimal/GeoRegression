@@ -36,6 +36,15 @@ public class Autocode64to32App extends RecursiveConvert {
 	}
 
 	public static void main(String args[]) {
+		String path = "./";
+		while( true ) {
+			File d = new File(path);
+			if( new File(d,"main").exists() )
+				break;
+			path = "../"+path;
+		}
+		System.out.println("Path to project root: "+path);
+
 		String directories[] = new String[]{
 				"main/src", "main/test",
 				"experimental/src", "experimental/test"};
@@ -53,7 +62,7 @@ public class Autocode64to32App extends RecursiveConvert {
 
 		Autocode64to32App app = new Autocode64to32App(converter);
 		for (String dir : directories) {
-			app.process(new File(dir));
+			app.process(new File(path,dir));
 		}
 	}
 }
