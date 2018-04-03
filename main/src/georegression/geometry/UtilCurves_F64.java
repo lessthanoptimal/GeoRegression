@@ -96,13 +96,17 @@ public class UtilCurves_F64 {
 
 		double bottom = C*D-A*E;
 
-		dst.A = -C/bottom;
-		dst.B = E/bottom;
-		dst.C = -C*F/bottom;
+		if( bottom == 0 ) {
+			throw new RuntimeException("Not a parabola");
+		} else {
+			dst.A = -C / bottom;
+			dst.B = E / bottom;
+			dst.C = -C * F / bottom;
 
-		dst.D = A/bottom;
-		dst.E = -D/bottom;
-		dst.F = A*F/bottom;
+			dst.D = A / bottom;
+			dst.E = -D / bottom;
+			dst.F = A * F / bottom;
+		}
 
 		return dst;
 	}
