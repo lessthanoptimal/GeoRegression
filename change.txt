@@ -6,6 +6,7 @@ Version : 0.16
 
 - Polygon2D
   * functions to convert to and from a list
+  * Flushed out I32 functions more
 - Quadrilateral2D
   * functions to convert to and from a list
 - Added curves and fitting routines

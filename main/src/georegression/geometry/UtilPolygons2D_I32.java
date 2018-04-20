@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -99,6 +99,58 @@ public class UtilPolygons2D_I32 {
 	}
 
 	/**
+	 * Flips the order of points inside the polygon.  The first index will remain the same will otherwise be reversed
+	 *
+	 * @param a Polygon of order 3 or more.
+	 */
+	public static void flip( Polygon2D_I32 a ) {
+		int N = a.size();
+		int H = N/2;
+
+		for (int i = 1; i <= H; i++) {
+			int j = N-i;
+			Point2D_I32 tmp = a.vertexes.data[i];
+			a.vertexes.data[i] = a.vertexes.data[j];
+			a.vertexes.data[j] = tmp;
+		}
+	}
+
+	/**
+	 * Determines if the polugon is convex or concave.
+	 *
+	 * @param poly Polygon
+	 * @return true if convex and false if concave
+	 */
+	public static boolean isConvex( Polygon2D_I32 poly ) {
+		// if the cross product of all consecutive triples is positive or negative then it is convex
+
+		final int N = poly.size();
+		int numPositive = 0;
+		for (int i = 0; i < N; i++) {
+			int j = (i+1)%N;
+			int k = (i+2)%N;
+
+			Point2D_I32 a = poly.vertexes.data[i];
+			Point2D_I32 b = poly.vertexes.data[j];
+			Point2D_I32 c = poly.vertexes.data[k];
+
+			int dx0 = a.x-b.x;
+			int dy0 = a.y-b.y;
+
+			int dx1 = c.x-b.x;
+			int dy1 = c.y-b.y;
+
+			int z = dx0 * dy1 - dy0 * dx1;
+			if( z > 0 )
+				numPositive++;
+			// z can be zero if there are duplicate points.
+			// not sure if it should throw an exception if its "bad" or not
+		}
+
+		return( numPositive == 0 || numPositive == N );
+	}
+
+	/**
 	 * Returns true if the cross product would result in a strictly positive z (e.g. z > 0 ). If true then
 	 * the order is clockwise.
 	 *
@@ -121,4 +173,60 @@ public class UtilPolygons2D_I32 {
 
 		return z > 0 ;
 	}
+
+	/**
+	 * Checks to see if the vertexes of the two polygon's are the same up to the specified tolerance
+	 *
+	 * @param a Polygon
+	 * @param b Polygon
+	 * @return true if identical up to tolerance or false if not
+	 */
+	public static boolean isIdentical(Polygon2D_I32 a , Polygon2D_I32 b  ) {
+		if( a.size() != b.size())
+			return false;
+
+		for (int i = 0; i < a.size(); i++) {
+			if( !a.get(i).equals(b.get(i))  )
+				return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Checks to see if the vertexes of the two polygon's are the same up to the specified tolerance and allows
+	 * for a shift in their order
+	 *
+	 * @param a Polygon
+	 * @param b Polygon
+	 * @return true if identical up to tolerance or false if not
+	 */
+	public static boolean isEquivalent( Polygon2D_I32 a , Polygon2D_I32 b  ) {
+		if( a.size() != b.size())
+			return false;
+
+		// first find two vertexes which are the same
+		Point2D_I32 a0 = a.get(0);
+		int match = -1;
+		for (int i = 0; i < b.size(); i++) {
+			if( a0.equals(b.get(i)) ) {
+				match = i;
+				break;
+			}
+		}
+
+		if( match < 0 )
+			return false;
+
+		// now go in a circle and see if they all line up
+		for (int i = 1; i < b.size(); i++) {
+			Point2D_I32 ai = a.get(i);
+			Point2D_I32 bi = b.get((match+i)%b.size());
+
+			if( !ai.equals(bi)  ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,6 +35,85 @@ import static org.junit.Assert.*;
 public class TestUtilPolygons2D_I32 {
 
 	Random rand = new Random(234);
+
+	@Test
+	public void isConvex() {
+		Polygon2D_I32 a = new Polygon2D_I32(0, 0, 5, 5, -5, 5);
+		assertTrue(UtilPolygons2D_I32.isConvex(a));
+		a.flip();
+		assertTrue(UtilPolygons2D_I32.isConvex(a));
+
+		Polygon2D_I32 b = new Polygon2D_I32(0, 0, 0, 5, -5, 5, -5, 0);
+		assertTrue(UtilPolygons2D_I32.isConvex(b));
+		b.flip();
+		assertTrue(UtilPolygons2D_I32.isConvex(b));
+
+		Polygon2D_I32 c = new Polygon2D_I32(0, 0, 0, 5, -5, 5, -1, 4);
+		assertFalse(UtilPolygons2D_I32.isConvex(c));
+		c.flip();
+		assertFalse(UtilPolygons2D_I32.isConvex(c));
+	}
+
+	@Test
+	public void flip() {
+
+		// less than 3 has undrfined behavior
+
+		Polygon2D_I32 poly = new Polygon2D_I32(3);
+		List<Point2D_I32> orig = new ArrayList<>();
+		orig.addAll(poly.vertexes.toList());
+
+		UtilPolygons2D_I32.flip(poly);
+		assertTrue(orig.get(0)==poly.get(0));
+		assertTrue(orig.get(1)==poly.get(2));
+		assertTrue(orig.get(2)==poly.get(1));
+
+		poly = new Polygon2D_I32(4);
+		orig.clear();
+		orig.addAll(poly.vertexes.toList());
+
+		UtilPolygons2D_I32.flip(poly);
+		assertTrue(orig.get(0)==poly.get(0));
+		assertTrue(orig.get(1)==poly.get(3));
+		assertTrue(orig.get(2)==poly.get(2));
+		assertTrue(orig.get(3)==poly.get(1));
+
+		poly = new Polygon2D_I32(5);
+		orig.clear();
+		orig.addAll(poly.vertexes.toList());
+
+		UtilPolygons2D_I32.flip(poly);
+		assertTrue(orig.get(0)==poly.get(0));
+		assertTrue(orig.get(1)==poly.get(4));
+		assertTrue(orig.get(2)==poly.get(3));
+		assertTrue(orig.get(3)==poly.get(2));
+		assertTrue(orig.get(4)==poly.get(1));
+	}
+
+	@Test
+	public void isIdentical_poly_poly() {
+		Polygon2D_I32 poly1 = new Polygon2D_I32(1, 2, 3, 4, 5, 6);
+		Polygon2D_I32 poly2 = new Polygon2D_I32(1, 2, 3, 4, 5, 6);
+
+		assertTrue(UtilPolygons2D_I32.isIdentical(poly1, poly2));
+		poly2.get(2).x += 1;
+		assertFalse(UtilPolygons2D_I32.isIdentical(poly1, poly2));
+	}
+
+	@Test
+	public void isEquivalent_poly_poly() {
+		Polygon2D_I32 poly1 = new Polygon2D_I32(1, 2, 3, 4, 5, 6);
+		Polygon2D_I32 poly2 = new Polygon2D_I32(1, 2, 3, 4, 5, 6);
+
+		// create a shifted version of poly2
+		for (int i = 0; i < poly1.size(); i++) {
+			Polygon2D_I32 poly3 = new Polygon2D_I32(poly1.size());
+			for (int j = 0; j < poly1.size(); j++) {
+				poly3.vertexes.data[j] = poly2.vertexes.data[(j+i)%poly1.size()];
+			}
+			assertTrue(UtilPolygons2D_I32.isEquivalent(poly1,poly3));
+		}
+	}
 
 	@Test
 	public void bounding_points_rect() {

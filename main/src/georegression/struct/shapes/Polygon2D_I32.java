@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.struct.shapes;
 
+import georegression.geometry.UtilPolygons2D_I32;
 import georegression.struct.point.Point2D_I32;
 import org.ddogleg.struct.FastQueue;
 
@@ -28,23 +29,79 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public class Polygon2D_I32 implements Serializable  {
+public class Polygon2D_I32 implements Serializable, Cloneable  {
 
 	// vertexes in the polygon
 	public FastQueue<Point2D_I32> vertexes;
 
 	public Polygon2D_I32( int numVertexes ) {
-		vertexes = new FastQueue<Point2D_I32>(Point2D_I32.class,true);
+		vertexes = new FastQueue<>(Point2D_I32.class, true);
 
 		vertexes.growArray(numVertexes);
 		vertexes.size = numVertexes;
 	}
 
 	public Polygon2D_I32() {
-		vertexes = new FastQueue<Point2D_I32>(Point2D_I32.class,true);
+		vertexes = new FastQueue<>(Point2D_I32.class, true);
+	}
+
+	public Polygon2D_I32( Polygon2D_I32 original ) {
+		set(original);
+	}
+
+	public Polygon2D_I32( int... points ) {
+		if( points.length % 2 == 1 )
+			throw new IllegalArgumentException("Expected an even number");
+		vertexes = new FastQueue<Point2D_I32>(points.length/2,Point2D_I32.class,true);
+		vertexes.growArray(points.length/2);
+		vertexes.size = points.length/2;
+
+		int count = 0;
+		for (int i = 0; i < points.length; i += 2) {
+			vertexes.data[count++].set( points[i],points[i+1]);
+		}
 	}
 
 	public int size() {
 		return vertexes.size();
+	}
+
+	public Point2D_I32 get(int index ) {
+		return vertexes.data[index];
+	}
+
+	public void flip() {
+		UtilPolygons2D_I32.flip(this);
+	}
+
+	public boolean isCCW() {
+		return UtilPolygons2D_I32.isCCW(vertexes.toList());
+	}
+
+	public boolean isConvex() {
+		return UtilPolygons2D_I32.isConvex(this);
+	}
+
+	public boolean isIdentical( Polygon2D_I32 a ) {
+		return UtilPolygons2D_I32.isIdentical(this,a);
+	}
+
+	public boolean isEquivalent( Polygon2D_I32 a , double tol ) {
+		return UtilPolygons2D_I32.isEquivalent(this, a);
+	}
+
+	public void set( Polygon2D_I32 orig ) {
+		vertexes.resize(orig.size());
+		for (int i = 0; i < orig.size(); i++) {
+			vertexes.data[i].set( orig.vertexes.data[i]);
+		}
+	}
+
+	public void set( int index , int x , int y ) {
+		vertexes.data[index].set(x,y);
+	}
+
+	public Polygon2D_I32 clone() {
+		return new Polygon2D_I32(this);
 	}
 }
