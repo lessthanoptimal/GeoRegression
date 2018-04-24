@@ -391,6 +391,24 @@ public class TestUtilPolygons2D_F64 {
 		UtilPolygons2D_F64.removeAdjacentDuplicates(output, TEST_F64);
 		assertEquals(1, output.size());
 	}
+	@Test
+	public void hasAdjacentDuplicates() {
+		Polygon2D_F64 output = new Polygon2D_F64(0,0,1,1,2,2,3,3,0,0);
+
+		assertTrue(UtilPolygons2D_F64.hasAdjacentDuplicates(output, TEST_F64));
+
+		output = new Polygon2D_F64(0,0,0,0,2,2,3,3);
+		assertTrue(UtilPolygons2D_F64.hasAdjacentDuplicates(output, TEST_F64));
+
+		output = new Polygon2D_F64(0,0,1,1,2,2,2,2);
+		assertTrue(UtilPolygons2D_F64.hasAdjacentDuplicates(output, TEST_F64));
+
+		output = new Polygon2D_F64(0,0,1,1,2,2,3,3);
+		assertFalse(UtilPolygons2D_F64.hasAdjacentDuplicates(output, TEST_F64));
+
+		output = new Polygon2D_F64(0,0);
+		assertFalse(UtilPolygons2D_F64.hasAdjacentDuplicates(output, TEST_F64));
+	}
 
 	@Test
 	public void getSideLength() {

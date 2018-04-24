@@ -451,12 +451,27 @@ public class UtilPolygons2D_F64 {
 	 */
 	public static void removeAdjacentDuplicates( Polygon2D_F64 polygon , double tol ) {
 
-		for (int i = polygon.vertexes.size()-1; i >= 0 && polygon.size()>1; i--) {
-			int j = i==0?polygon.size()-1:i-1;
+		for (int i = polygon.vertexes.size()-1,j=0; i >= 0 && polygon.size()>1; j=i,i--) {
 			if( polygon.get(i).isIdentical(polygon.get(j),tol)) {
 				polygon.vertexes.remove(i);
 			}
 		}
+	}
+
+	/**
+	 * Remove a point if it's identical to a neighbor
+	 *
+	 * @param polygon The polygon being modified
+	 * @param tol Tolerance in radians
+	 */
+	public static boolean hasAdjacentDuplicates( Polygon2D_F64 polygon , double tol ) {
+
+		for (int i = polygon.vertexes.size()-1,j=0; i >= 0 && polygon.size()>1; j=i,i--) {
+			if( polygon.get(i).isIdentical(polygon.get(j),tol)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
