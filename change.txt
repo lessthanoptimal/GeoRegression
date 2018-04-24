@@ -7,6 +7,7 @@ Version : 0.16
 - Polygon2D
   * functions to convert to and from a list
   * Flushed out I32 functions more
+  * function for removing adjacent points which are duplicates
 - Quadrilateral2D
   * functions to convert to and from a list
 - Added curves and fitting routines
@@ -19,6 +20,8 @@ Version : 0.16
   * added addMultTrans
 - Autocode
   * move into it's own module
+- Point2D
+  * <= is used now instead of < for equality
 
 TODO replace EllipseQuadratic_F64 with CubicGeneral_F64?
 TODO convert parabola to a function of t

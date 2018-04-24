@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -359,6 +359,37 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(4, output.size());
 		assertEquals(0, output.get(0).x, TEST_F64);
 		assertEquals(4, output.get(1).x, TEST_F64);
+	}
+
+	@Test
+	public void removeAdjacentDuplicates() {
+		Polygon2D_F64 output = new Polygon2D_F64(9);
+
+		output.get(0).set(0,0);
+		output.get(1).set(0,0);
+		output.get(2).set(2,0);
+		output.get(3).set(4,0);
+		output.get(4).set(4,0);
+		output.get(5).set(4,0);
+		output.get(6).set(4,5);
+		output.get(7).set(0,5);
+		output.get(8).set(0,5);
+
+		UtilPolygons2D_F64.removeAdjacentDuplicates(output, TEST_F64);
+
+		assertEquals(5, output.size());
+		assertTrue(output.get(0).isIdentical(0,0));
+		assertTrue(output.get(1).isIdentical(2,0));
+		assertTrue(output.get(2).isIdentical(4,0));
+		assertTrue(output.get(3).isIdentical(4,5));
+		assertTrue(output.get(4).isIdentical(0,5));
+
+
+		// test a pathological case
+		output = new Polygon2D_F64(1);
+		output.get(0).set(0,0);
+		UtilPolygons2D_F64.removeAdjacentDuplicates(output, TEST_F64);
+		assertEquals(1, output.size());
 	}
 
 	@Test

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -51,11 +51,11 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 	}
 
 	public boolean isIdentical( double x, double y, double tol ) {
-		return ( Math.abs( this.x - x ) < tol && Math.abs( this.y - y ) < tol );
+		return ( Math.abs( this.x - x ) <= tol && Math.abs( this.y - y ) <= tol );
 	}
 
 	public boolean isIdentical( T t, double tol ) {
-		return ( Math.abs( this.x - t.x ) < tol && Math.abs( this.y - t.y ) < tol );
+		return ( Math.abs( this.x - t.x ) <= tol && Math.abs( this.y - t.y ) <= tol );
 	}
 
 	public void setX( double x ) {
