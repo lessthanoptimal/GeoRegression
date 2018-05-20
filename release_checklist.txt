@@ -7,7 +7,7 @@
 - Update version in build.gradle
 - Update project website
   cd docs/website
-  Documentation.rst Download.rst index.rst conf.py
+  conf.py <--- text substitution is now used to spread the version name
 -  examples might need to be updated too
   * git diff --name-status TAG_NAME examples
 - Commit and tag release

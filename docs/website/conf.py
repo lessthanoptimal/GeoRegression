@@ -28,7 +28,8 @@ import sphinx_bootstrap_theme
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.pngmath'
+    'sphinx.ext.pngmath',
+    'sphinx.ext.extlinks'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -286,3 +287,13 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+
+# Specifies keywords to replace in .rst files
+rst_epilog = '.. |geo_version| replace:: %s' % version
+rst_epilog += '\n.. |geo_vversion| replace:: v%s' % version
+
+extlinks = {'sourceforge_files': ('https://sourceforge.net/projects/georegression/files/{}'.format(version), ''),
+            'sourceforge_src'  : ('https://sourceforge.net/projects/georegression/files/{}/georegression-v{}-src.zip/download'.format(version,version), ''),
+            'sourceforge_libs' : ('https://sourceforge.net/projects/georegression/files/{}/georegression-v{}-libs.zip/download'.format(version,version), ''),
+            'github_tag'       : ('https://github.com/lessthanoptimal/GeoRegression/tree/v{}'.format(version),'')}

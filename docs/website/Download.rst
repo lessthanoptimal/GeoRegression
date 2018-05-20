@@ -7,8 +7,8 @@ Stable Release
 
 The latest stable release is available on `Source Forge <https://sourceforge.net/projects/georegression/>`_ with direct links provided below for your convenience:
 
-* `Source Code <http://sourceforge.net/projects/georegression/files/0.16/georegression-v0.16-src.zip/download>`_
-* `Precompiled Jar and Dependencies <http://sourceforge.net/projects/georegression/files/0.16/georegression-v0.16-libs.zip/download>`_
+* :sourceforge_src:`Source Code <>`
+* :sourceforge_libs:`Precompiled Jar and Dependencies <>`
 
 Bleeding Edge
 -------------
@@ -28,11 +28,12 @@ Maven Central
 To include the latest stable release in your Maven projects add the following dependency.
 
 **Maven:**
-::
+
+.. parsed-literal::
      <dependency>
       <groupId>org.georegression</groupId>
       <artifactId>georegression</artifactId>
-      <version>0.16</version>
+      <version>\ |geo_version|\ </version>
     </dependency>
 
 
