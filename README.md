@@ -24,6 +24,14 @@
   * Types: float and double.
   * Limited support for integers types. 
 
+## Build Instructions
+
+```bash
+cd georegression
+./gradlew autogenerate
+./gradlew install
+```
+
 ## Directory Structure:
 
 ```
