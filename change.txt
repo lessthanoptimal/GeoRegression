@@ -1,7 +1,7 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2018/
+Date    : 2018/05/20
 Version : 0.16
 
 - Polygon2D
@@ -22,12 +22,7 @@ Version : 0.16
   * move into it's own module
 - Point2D
   * <= is used now instead of < for equality
-
-TODO replace EllipseQuadratic_F64 with CubicGeneral_F64?
-TODO convert parabola to a function of t
-TODO intersection of two parabolas
-TODO intersection of two parabolas in a specific direction of t
-TODO closest point on a parabola from a point
+- Added GeoRegressionVersion file
 
 ---------------------------------------------
 Date    : 2018/01/17

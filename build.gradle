@@ -1,10 +1,20 @@
+plugins {
+    id "com.peterabeles.gversion" version "1.2" apply false
+}
 
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
+    apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
     version = '0.16-SNAPSHOT'
+}
+
+gversion {
+    srcDir = "main/src"
+    classPackage = "georegression"
+    className = "GeoRegressionVersion"
 }
 
 subprojects {
@@ -16,6 +26,15 @@ subprojects {
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
+
+    // Fail on jar conflict
+    configurations.all {
+        resolutionStrategy {
+            failOnVersionConflict()
+        }
+    }
+
+    createVersionFile.enabled = false // only want this to run once in the root project
 
     repositories {
         mavenCentral()
@@ -49,7 +68,7 @@ subprojects {
     }
 
     dependencies {
-        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.14-SNAPSHOT'
+        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.14'
         compile 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
