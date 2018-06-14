@@ -5,6 +5,8 @@ Date    : 2018/
 Version : 0.17
 
 
+TODO add maven central link on front page. Same for DDOGLEG
+
 
 ---------------------------------------------
 Date    : 2018/05/20
