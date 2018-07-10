@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -97,6 +97,50 @@ public class UtilPoint3D_F64 {
 			p.x = rand.nextDouble() * d + min;
 			p.y = rand.nextDouble() * d + min;
 			p.z = rand.nextDouble() * d + min;
+
+			ret.add( p );
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Creates a list of random points from a uniform distribution along each axis
+	 */
+	public static List<Point3D_F64> random(Point3D_F64 mean ,
+										   double minX , double maxX ,
+										   double minY , double maxY ,
+										   double minZ , double maxZ ,
+										   int num, Random rand )
+	{
+		List<Point3D_F64> ret = new ArrayList<>();
+
+		for( int i = 0; i < num; i++ ) {
+			Point3D_F64 p = new Point3D_F64();
+			p.x = mean.x + rand.nextDouble() * (maxX-minX) + minX;
+			p.y = mean.y + rand.nextDouble() * (maxY-minY) + minY;
+			p.z = mean.z + rand.nextDouble() * (maxZ-minZ) + minZ;
+
+			ret.add( p );
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Creates a list of random points from a normal distribution along each axis
+	 */
+	public static List<Point3D_F64> randomN(Point3D_F64 mean ,
+											double stdX , double stdY , double stdZ ,
+											int num, Random rand )
+	{
+		List<Point3D_F64> ret = new ArrayList<>();
+
+		for( int i = 0; i < num; i++ ) {
+			Point3D_F64 p = new Point3D_F64();
+			p.x = mean.x + rand.nextGaussian() * stdX;
+			p.y = mean.y + rand.nextGaussian() * stdY;
+			p.z = mean.z + rand.nextGaussian() * stdZ;
 
 			ret.add( p );
 		}

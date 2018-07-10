@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -97,6 +97,17 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 
 		assertEquals( 1.0, a.norm(), GrlConstants.TEST_F64);
 		GeometryUnitTest.assertEquals( a, 1.0 / n, 2.0 / n, 3.0 / n, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void normalize_overflow() {
+		Vector3D_F64 a = new Vector3D_F64( Double.MAX_VALUE, Double.MAX_VALUE/2, Double.MAX_VALUE/3 );
+		a.normalize();
+
+		Vector3D_F64 b = new Vector3D_F64(1, 1.0/2, 1.0/3 );
+		b.normalize();
+
+		GeometryUnitTest.assertEquals( a, b.x,b.y,b.z, GrlConstants.TEST_F64);
 	}
 
 	@Test

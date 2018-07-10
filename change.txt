@@ -6,7 +6,8 @@ Version : 0.17
 
 
 TODO add maven central link on front page. Same for DDOGLEG
-
+- Vector3D
+  * Normalized rewritten to avoid numerical overflow
 
 ---------------------------------------------
 Date    : 2018/05/20
