@@ -378,7 +378,7 @@ public class Intersection2D_F64 {
 	/**
 	 * Finds the area of the intersection of two polygons.
 	 *
-	 * @se AreaIntersectionPolygon2D_F64
+	 * @see AreaIntersectionPolygon2D_F64
 	 *
 	 * @param a (Input) Polygon 2D
 	 * @param b (Input) Polygon 2D

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,10 +18,19 @@
 
 package georegression.struct.se;
 
+import georegression.geometry.ConvertRotation3D_F64;
 import georegression.geometry.GeometryMath_F64;
+import georegression.struct.EulerType;
+import georegression.struct.GeoTuple2D_F64;
+import georegression.struct.GeoTuple3D_F64;
+import georegression.struct.RotationType;
+import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
+import georegression.transform.se.SePointOps_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+
+import javax.annotation.Nullable;
 
 
 /**
@@ -195,6 +204,84 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	public void reset() {
 		CommonOps_DDRM.setIdentity( R );
 		T.set( 0, 0, 0 );
+	}
+
+	/**
+	 * Fully specify the transform using Euler angles
+	 */
+	public void set(double x , double y , double z , EulerType type , double rotA , double rotB , double rotC ) {
+		T.set(x,y,z);
+		ConvertRotation3D_F64.eulerToMatrix(type,rotA,rotB,rotC,R);
+	}
+
+	/**
+	 * Fully specifies the transform using Rodrigues (axis angle) or Quaternions.  If Rodrigues then A=axisX, B=axisY,
+	 * C=axisZ, D=theta. If Quaternion then A=w, B=x, C=y, D=z.
+	 */
+	public void set(double x , double y , double z , RotationType type , double A , double B , double C, double D ) {
+		T.set(x,y,z);
+		switch( type ) {
+			case RODRIGUES:
+				ConvertRotation3D_F64.rodriguesToMatrix(A,B,C,D,R);
+				break;
+
+			case QUATERNION:
+				ConvertRotation3D_F64.quaternionToMatrix(A,B,C,D,R);
+				break;
+
+			default:
+				throw new IllegalArgumentException("Type is not supported");
+		}
+	}
+
+	/**
+	 * Applies the transform to the src point and stores the result in dst. src and dst can be the same instance
+	 *
+	 * @see SePointOps_F64#transform(Se3_F64, Point3D_F64, Point3D_F64)
+	 *
+	 * @param src Input
+	 * @param dst Output
+	 * @return Output
+	 */
+	public Point3D_F64 transform(Point3D_F64 src, @Nullable Point3D_F64 dst ) {
+		return SePointOps_F64.transform(this,src,dst);
+	}
+
+	/**
+	 * Applies the reverse transform to the src point and stores the result in dst. src and dst can be the same instance
+	 *
+	 * @see SePointOps_F64#transformReverse(Se3_F64, Point3D_F64, Point3D_F64)
+	 *
+	 * @param src Input
+	 * @param dst Output
+	 * @return Output
+	 */
+	public Point3D_F64 transformReverse(Point3D_F64 src, @Nullable Point3D_F64 dst ) {
+		return SePointOps_F64.transformReverse(this,src,dst);
+	}
+
+	/**
+	 * Applies the rotation to the src vector and stores the result in dst. src and dst can be the same instance
+	 *
+	 * @see GeometryMath_F64#mult(DMatrixRMaj, GeoTuple2D_F64, GeoTuple2D_F64)
+	 *
+	 * @param src Input
+	 * @param dst Output
+	 */
+	public Vector3D_F64 transform(Vector3D_F64 src, @Nullable Vector3D_F64 dst ) {
+		return GeometryMath_F64.mult(R,src,dst);
+	}
+
+	/**
+	 * Applies the reverse rotation to the src vector and stores the result in dst. src and dst can be the same instance
+	 *
+	 * @see GeometryMath_F64#multTran(DMatrixRMaj, GeoTuple3D_F64, GeoTuple3D_F64)
+	 *
+	 * @param src Input
+	 * @param dst Output
+	 */
+	public Vector3D_F64 transformReverse(Vector3D_F64 src, @Nullable Vector3D_F64 dst ) {
+		return GeometryMath_F64.multTran(R,src,dst);
 	}
 
 	public Se3_F64 copy() {

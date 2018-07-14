@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -177,7 +177,7 @@ public class UtilAngle {
 	}
 
 	/**
-	 * Bounds the angle between -&pi;/2 and &pi/2
+	 * Bounds the angle between -&pi;/2 and &pi;/2
 	 * @param angle angle in radians
 	 * @return bounded angle
 	 */
@@ -193,7 +193,7 @@ public class UtilAngle {
 	}
 
 	/**
-	 * Bounds the angle between -&pi;/2 and &pi/2
+	 * Bounds the angle between -&pi;/2 and &pi;/2
 	 * @param angle angle in radians
 	 * @return bounded angle
 	 */

@@ -151,7 +151,7 @@ public class UtilPolygons2D_I32 {
 	}
 
 	/**
-	 * Returns true if the cross product would result in a strictly positive z (e.g. z > 0 ). If true then
+	 * Returns true if the cross product would result in a strictly positive z (e.g. z &gt; 0 ). If true then
 	 * the order is clockwise.
 	 *
 	 * v0 = a-b

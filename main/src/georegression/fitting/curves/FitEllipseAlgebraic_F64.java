@@ -35,7 +35,7 @@ import java.util.List;
  * described in [1] and is a repartitioning of the solution describe in [2], with the aim of improving numerical
  * stability.  The found ellipse is described using 6 coefficients, as is shown below.
  * {@code F(x,y) = a*x^2 + 2*b*x*y + c*y^2 + 2*d*x + 2*e*y + f = 0 and b^2 - 4*ac < 0}
- * <p>
+ * </p>
  *
  * <p>
  * One peculiarity of this algorithm is that it's less stable when perfect data is provided.  This instability became

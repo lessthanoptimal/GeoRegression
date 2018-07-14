@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,6 +22,7 @@ import georegression.geometry.ConvertRotation3D_F64;
 import georegression.struct.EulerType;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Vector3D_F64;
+import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 
@@ -191,5 +192,31 @@ public class SpecialEuclideanOps_F64 {
 		T.z = dz;
 
 		return se;
+	}
+
+	/**
+	 * Can be used to see if two transforms are identical to within tolerance
+	 *
+	 * @param a transform
+	 * @param b tranform
+	 * @param tolT Tolerance for translation
+	 * @param tolR Tolerance for rotation in radians
+	 * @return true if identical or false if not
+	 */
+	public static boolean isIdentical( Se3_F64 a , Se3_F64 b , double tolT , double tolR ) {
+		if( Math.abs(a.T.x-b.T.x) > tolT )
+			return false;
+		if( Math.abs(a.T.y-b.T.y) > tolT )
+			return false;
+		if( Math.abs(a.T.z-b.T.z) > tolT )
+			return false;
+
+		DMatrixRMaj D = new DMatrixRMaj(3,3);
+		CommonOps_DDRM.multTransA(a.R,b.R,D);
+
+		Rodrigues_F64 rod = new Rodrigues_F64();
+		ConvertRotation3D_F64.matrixToRodrigues(D,rod);
+
+		return rod.theta <= tolR;
 	}
 }
