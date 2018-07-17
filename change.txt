@@ -10,6 +10,8 @@ TODO add maven central link on front page. Same for DDOGLEG
   * Normalized rewritten to avoid numerical overflow
 - Se3
   * convience functions added for heavily used operations
+- UtilPoint3D and 2D
+  * New function for adding noise
 
 ---------------------------------------------
 Date    : 2018/05/20

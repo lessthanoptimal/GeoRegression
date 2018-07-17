@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,6 +24,7 @@ import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
 import org.ddogleg.sorting.QuickSort_F64;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,6 +50,20 @@ public class UtilPoint2D_F64 {
 			p.x += rand.nextGaussian() * sigma;
 			p.y += rand.nextGaussian() * sigma;
 		}
+	}
+
+	public static Point2D_F64 noiseNormal(Point2D_F64 mean ,
+										  double sigmaX , double sigmaY,
+										  Random rand ,
+										  @Nullable Point2D_F64 output )
+	{
+		if( output == null )
+			output = new Point2D_F64();
+
+		output.x = mean.x + rand.nextGaussian()*sigmaX;
+		output.y = mean.y + rand.nextGaussian()*sigmaY;
+
+		return output;
 	}
 
 	public static double distance( double x0, double y0, double x1, double y1 ) {

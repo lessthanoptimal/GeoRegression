@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,6 +33,43 @@ import static org.junit.Assert.assertEquals;
  * @author Peter Abeles
  */
 public class TestUtilPoint3D_F64 {
+
+	Random rand = new Random(234);
+
+	@Test
+	public void noiseNormal_single() {
+		Point3D_F64 mean = new Point3D_F64(3,4,5);
+		double sx=1,sy=0.5,sz=0.25;
+
+		List<Point3D_F64> points = new ArrayList<>();
+		for (int i = 0; i < 10000; i++) {
+			points.add( UtilPoint3D_F64.noiseNormal(mean,sx,sy,sz,rand,null));
+		}
+
+		Point3D_F64 found = UtilPoint3D_F64.mean(points,null);
+
+		assertEquals(mean.x,found.x,0.01);
+		assertEquals(mean.y,found.y,0.01);
+		assertEquals(mean.z,found.z,0.01);
+
+		double stdevX=0,stdevY=0,stdevZ=0;
+
+		for (int i = 0; i < points.size(); i++) {
+			Point3D_F64 p = points.get(i);
+			double dx = p.x-found.x;
+			double dy = p.y-found.y;
+			double dz = p.z-found.z;
+
+			stdevX += dx*dx;
+			stdevY += dy*dy;
+			stdevZ += dz*dz;
+		}
+
+		assertEquals(sx,Math.sqrt(stdevX/points.size()),sx/20);
+		assertEquals(sy,Math.sqrt(stdevY/points.size()),sy/20);
+		assertEquals(sz,Math.sqrt(stdevZ/points.size()),sz/20);
+	}
+
 	@Test
 	public void distance() {
 		double found = UtilPoint3D_F64.distance(1,2,3,4,-3,-4);

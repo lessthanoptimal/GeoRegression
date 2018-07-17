@@ -21,6 +21,7 @@ package georegression.geometry;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.shapes.Box3D_F64;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -77,6 +78,21 @@ public class UtilPoint3D_F64 {
 		}
 
 		return ret;
+	}
+
+	public static Point3D_F64 noiseNormal( Point3D_F64 mean ,
+										   double sigmaX , double sigmaY, double sigmaZ,
+										   Random rand ,
+										   @Nullable Point3D_F64 output )
+	{
+		if( output == null )
+			output = new Point3D_F64();
+
+		output.x = mean.x + rand.nextGaussian()*sigmaX;
+		output.y = mean.y + rand.nextGaussian()*sigmaY;
+		output.z = mean.z + rand.nextGaussian()*sigmaZ;
+
+		return output;
 	}
 
 	public static void noiseNormal( List<Point3D_F64> pts, double sigma, Random rand ) {
