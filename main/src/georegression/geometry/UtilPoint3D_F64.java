@@ -18,7 +18,9 @@
 
 package georegression.geometry;
 
+import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Vector3D_F64;
 import georegression.struct.shapes.Box3D_F64;
 
 import javax.annotation.Nullable;
@@ -101,6 +103,39 @@ public class UtilPoint3D_F64 {
 			p.y += rand.nextGaussian() * sigma;
 			p.z += rand.nextGaussian() * sigma;
 		}
+	}
+
+	/**
+	 * Randomly generates a set of points on the plane centered at the plane's origin
+	 * using a uniform distribution.
+	 *
+	 * @param plane Plane
+	 * @param max Maximum distance from center
+	 * @param rand random number generator
+	 * @return set of points on the plane
+	 */
+	public static List<Point3D_F64> random(PlaneNormal3D_F64 plane , double max , int num, Random rand ) {
+
+		List<Point3D_F64> ret = new ArrayList<>();
+
+		Vector3D_F64 axisX = new Vector3D_F64();
+		Vector3D_F64 axisY = new Vector3D_F64();
+
+		UtilPlane3D_F64.selectAxis2D(plane.n,axisX,axisY);
+
+		for (int i = 0; i < num; i++) {
+			double x = 2*max*(rand.nextDouble()-0.5);
+			double y = 2*max*(rand.nextDouble()-0.5);
+
+			Point3D_F64 p = new Point3D_F64();
+			p.x = plane.p.x + axisX.x*x + axisY.x*y;
+			p.y = plane.p.y + axisX.y*x + axisY.y*y;
+			p.z = plane.p.z + axisX.z*x + axisY.z*y;
+
+			ret.add( p );
+		}
+
+		return ret;
 	}
 
 	public static List<Point3D_F64> random( double min, double max, int num, Random rand ) {
