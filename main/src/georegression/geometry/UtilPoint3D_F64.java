@@ -143,6 +143,13 @@ public class UtilPoint3D_F64 {
 		return ret;
 	}
 
+	public static List<Point3D_F64> random(Point3D_F64 mean ,
+										   double min , double max ,
+										   int num, Random rand )
+	{
+		return random(mean,min,max,min,max,min,max,num,rand);
+	}
+
 	/**
 	 * Creates a list of random points from a normal distribution along each axis
 	 */
@@ -162,6 +169,11 @@ public class UtilPoint3D_F64 {
 		}
 
 		return ret;
+	}
+
+	public static List<Point3D_F64> randomN(Point3D_F64 mean , double stdev, int num, Random rand )
+	{
+		return randomN(mean,stdev,stdev,stdev,num,rand);
 	}
 
 	/**
