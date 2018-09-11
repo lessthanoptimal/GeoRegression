@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -134,10 +134,64 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		}
 	}
 
+	public void scale( double scalar ) {
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
+		w *= scalar;
+	}
+
+	/**
+	 * <p>In-place addition</p>
+	 *
+	 * this.x = this.x + a.x;
+	 *
+	 * @param a value which is to be added
+	 */
+	public void plusIP( GeoTuple4D_F64 a ) {
+		x += a.x;
+		y += a.y;
+		z += a.z;
+		w += a.w;
+	}
+
+	public T times( double scalar ) {
+		T ret = createNewInstance();
+		ret.x = x*scalar;
+		ret.y = y*scalar;
+		ret.z = z*scalar;
+		ret.w = w*scalar;
+		return ret;
+	}
+
+	/**
+	 * In-place scalar multiplication
+	 * @param scalar value that it is multiplied by
+	 */
+	public void timesIP( double scalar ) {
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
+		w *= scalar;
+	}
+
+	public void divideIP( double scalar ) {
+		x /= scalar;
+		y /= scalar;
+		z /= scalar;
+		w /= scalar;
+	}
+
+	public void normalize() {
+		divideIP( norm() );
+	}
+
+	@Override
 	public double norm() {
 		return Math.sqrt( x * x + y * y + z * z + w * w);
 	}
 
+	@Override
 	public double normSq() {
 		return x * x + y * y + z * z + w * w;
 	}
@@ -184,6 +238,24 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 
 	public void setW( double w ) {
 		this.w = w;
+	}
+
+	/**
+	 * Returns the absolute value of the component with the largest absolute value
+	 * @return max absolute value
+	 */
+	public double maxAbs() {
+		double absX = Math.abs(x);
+		double absY = Math.abs(y);
+		double absZ = Math.abs(z);
+		double absW = Math.abs(w);
+
+		double found = Math.max(absX,absY);
+		if( found < absZ )
+			found = absZ;
+		if( found < absW )
+			found = absW;
+		return found;
 	}
 
 	@Override

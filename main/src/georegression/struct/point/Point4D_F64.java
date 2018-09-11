@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,7 +21,7 @@ package georegression.struct.point;
 import georegression.struct.GeoTuple4D_F64;
 
 /**
- *
+ * Point in 4D or a 3D point in homogenous coordinates.
  *
  */
 @SuppressWarnings({"unchecked"})
