@@ -98,4 +98,9 @@ public class FitSphereToPoints_F64 implements ModelFitter<Sphere3D_F64,Point3D_F
 
 		return true;
 	}
+
+	@Override
+	public /**/double getFitScore() {
+		return optimizer.getFunctionValue();
+	}
 }

@@ -19,12 +19,15 @@
 package georegression.struct.se;
 
 import georegression.geometry.ConvertRotation3D_F64;
+import georegression.geometry.GeometryMath_F64;
 import georegression.struct.EulerType;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 
 
 /**
@@ -218,5 +221,42 @@ public class SpecialEuclideanOps_F64 {
 		ConvertRotation3D_F64.matrixToRodrigues(D,rod);
 
 		return rod.theta <= tolR;
+	}
+
+	/**
+	 * Finds the best fit projection of 'a' onto SE(3).  This is useful when a was estimated using a linear algorithm.
+	 *
+	 * <p>See page 280 of "An Invitation to 3-D Vision, From Images to Geometric Models" 1st Ed. 2004. Springer.</p>
+	 * @param a Approximate SE(3). Modified.
+	 * @return true if successful
+	 */
+	public static boolean bestFit( Se3_F64 a ) {
+		SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(true,true,true);
+
+		if( !svd.decompose(a.R))
+			throw new RuntimeException("SVD Failed");
+
+		CommonOps_DDRM.multTransB(svd.getU(null,false),svd.getV(null,false),a.R);
+
+		// determinant should be +1
+		double det = CommonOps_DDRM.det(a.R);
+
+		if( det < 0 ) {
+			CommonOps_DDRM.scale(-1, a.R);
+		}
+
+		// compute the determinant of the singular matrix
+		double b = 1.0;
+		double s[] = svd.getSingularValues();
+
+		for( int i = 0; i < svd.numberOfSingularValues(); i++ ) {
+			b *= s[i];
+		}
+
+		b = Math.signum(det) / Math.pow(b,1.0/3.0);
+
+		GeometryMath_F64.scale(a.T,b);
+
+		return true;
 	}
 }

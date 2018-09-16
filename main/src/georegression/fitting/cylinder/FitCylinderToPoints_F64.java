@@ -98,4 +98,9 @@ public class FitCylinderToPoints_F64 implements ModelFitter<Cylinder3D_F64,Point
 
 		return true;
 	}
+
+	@Override
+	public /**/double getFitScore() {
+		return optimizer.getFunctionValue();
+	}
 }

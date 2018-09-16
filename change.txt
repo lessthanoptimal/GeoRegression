@@ -13,6 +13,8 @@ TODO add maven central link on front page. Same for DDOGLEG
 - UtilPoint3D and 2D
   * New function for adding noise
   * Randomly generate points on a plane in 3D
+- SpecialEuclideanOps_F64
+  * Added bestFit()
 
 ---------------------------------------------
 Date    : 2018/05/20
