@@ -19,6 +19,11 @@
 package georegression.struct;
 
 
+import org.ejml.UtilEjml;
+import org.ejml.ops.MatrixIO;
+
+import java.text.DecimalFormat;
+
 /**
  * Generic Tuple for geometric objects that store (x,y)
  *
@@ -227,5 +232,13 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 			return false;
 		GeoTuple2D_F64 p = (GeoTuple2D_F64)obj;
 		return x==p.x&&y==p.y;
+	}
+
+	protected String toString( String name ) {
+		DecimalFormat format = new DecimalFormat("#");
+		String sx = UtilEjml.fancyString(x,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sy = UtilEjml.fancyString(y,format, MatrixIO.DEFAULT_LENGTH,4);
+
+		return name+"( " + sx + " " + sy + " )";
 	}
 }

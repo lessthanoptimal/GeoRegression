@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -72,8 +72,9 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 		y = a.y - b.y;
 	}
 
+	@Override
 	public String toString() {
-		return "V( " + x + " " + y + " )";
+		return toString("V");
 	}
 
 	/**

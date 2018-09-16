@@ -101,7 +101,7 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 
 	@Override
 	public String toString() {
-		return "V( " + x + " " + y + " " + z + " )";
+		return toString("V");
 	}
 
 	public void normalize() {

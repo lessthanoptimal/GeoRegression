@@ -59,7 +59,7 @@ public class Point4D_F64 extends GeoTuple4D_F64 {
 
 	@Override
 	public String toString() {
-		return "P( " + x + " " + y + " " + z + " " + w +" )";
+		return toString("P");
 	}
 
 	@Override
