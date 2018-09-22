@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,6 +35,7 @@ import georegression.struct.shapes.Sphere3D_F64;
 import georegression.struct.shapes.Triangle3D_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.ddogleg.struct.FastQueue;
+import org.ejml.UtilEjml;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -322,6 +323,78 @@ public class TestIntersection3D_F64 {
 				new LineParametric3D_F64(0,0,2,1,0,0),new Sphere3D_F64(0,0,2,2),a,b));
 		assertTrue( a.distance(new Point3D_F64( 2,0,2)) <= GrlConstants.TEST_F64);
 		assertTrue( b.distance(new Point3D_F64(-2,0,2)) <= GrlConstants.TEST_F64);
+	}
 
+	/**
+	 * Check easy cases which can be computed by hand
+	 */
+	@Test
+	public void intersectConvex() {
+		FastQueue<Point3D_F64> polygon = new FastQueue<>(Point3D_F64.class,true);
+		polygon.grow().set(-1,-1.2,2);
+		polygon.grow().set(-1,1.2,2);
+		polygon.grow().set(1,1.2,2);
+		polygon.grow().set(1,-1.2,2);
+
+		LineParametric3D_F64 line = new LineParametric3D_F64();
+		line.slope.set(0,0,1);
+
+		Point3D_F64 found = new Point3D_F64();
+
+		// test an easy intersection dead center
+		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertEquals(0,found.distance(0,0,2), UtilEjml.TEST_F64);
+
+		// negative intersection
+		line.slope.set(0,0,-1);
+		assertEquals(3,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertEquals(0,found.distance(0,0,2), UtilEjml.TEST_F64);
+
+		// should barely hit
+		line.slope.set(-1,0,2.01);
+		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertEquals(0,found.distance(-1*(2.0/2.01),0,2), UtilEjml.TEST_F64);
+		line.slope.set(1,0,2.01);
+		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertEquals(0,found.distance(1*(2.0/2.01),0,2), UtilEjml.TEST_F64);
+		line.slope.set(0,-1.2,2.01);
+		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertEquals(0,found.distance(0,-1.2*(2.0/2.01),2), UtilEjml.TEST_F64);
+		line.slope.set(0,1.2,2.01);
+		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertEquals(0,found.distance(0,1.2*(2.0/2.01),2), UtilEjml.TEST_F64);
+
+		// should barely miss
+		line.slope.set(-1,0,1.99);
+		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
+		line.slope.set(1,0,1.99);
+		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
+		line.slope.set(0,-1.2,1.99);
+		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
+		line.slope.set(0,1.2,1.99);
+		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
+
+		// scale sanity check
+		line.slope.set(-1,0,2.01);
+		line.slope.normalize();
+		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertEquals(0,found.distance(-1*(2.0/2.01),0,2), UtilEjml.TEST_F64);
+		line.slope.set(-1,0,1.99);
+		line.slope.normalize();
+		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
+
+		// see if polygon order matters
+		polygon.get(0).set(1,-1.2,2);
+		polygon.get(1).set(1,1.2,2);
+		polygon.get(2).set(-1,1.2,2);
+		polygon.get(3).set(-1,-1.2,2);
+
+		line.slope.set(-1,0,2.01);
+		line.slope.normalize();
+		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
+		assertEquals(0,found.distance(-1*(2.0/2.01),0,2), UtilEjml.TEST_F64);
+		line.slope.set(-1,0,1.99);
+		line.slope.normalize();
+		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
 	}
 }
