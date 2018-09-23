@@ -4,12 +4,20 @@ GeoRegression
 Geometric Regression Library (GeoRegression) is an open source Java geometry library for scientific computing with a focus on 2D/3D space. GeoRegression provides the ability to estimate the closest point/distance between geometric primitives, best-fit shapes, and best fit geometric transform between sets of objects. It is designed for high performance and ease of use. GeoRegression has been release under an Apache v2.0 license for both commercial and non-commercial use.
 
 ===================   =====================
-**Latest Version**    |geo_vversion|
+**Latest Version**    v\ |geo_version|
 **Released**          May 20, 2018
 **Source Code**       `GitHub <https://github.com/lessthanoptimal/GeoRegression>`_
-**Precompiled**       :sourceforge_files:`Download <>`
 **License**           `Apache 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_
 ===================   =====================
+
+**Maven Central:**
+
+.. parsed-literal::
+    <dependency>
+      <groupId>org.georegression</groupId>
+      <artifactId>georegression</artifactId>
+      <version>\ |geo_version|\ </version>
+    </dependency>
 
 Functionality
 ---------------

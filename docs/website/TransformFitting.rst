@@ -3,7 +3,7 @@ Transform Fitting
 
 Demonstrate how to estimate rigid body motion of a point cloud
 
-`ExampleTransformFitting.java <https://github.com/lessthanoptimal/ddogleg/blob/v0.13/examples/src/georegression/examples/ExampleTransformFitting.java>`_
+:gitexample:`ExampleTransformFitting.java`
 
 .. literalinclude:: ../../examples/src/georegression/examples/ExampleTransformFitting.java
    :language: java
