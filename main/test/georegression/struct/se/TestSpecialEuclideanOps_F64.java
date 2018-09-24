@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -59,7 +59,7 @@ public class TestSpecialEuclideanOps_F64 {
 
 	@Test
 	public void toHomogeneous_3D() {
-		Se3_F64 se = SpecialEuclideanOps_F64.setEulerXYZ( 0.1, 2, -0.3, 2, -3, 4.4, null );
+		Se3_F64 se = SpecialEuclideanOps_F64.eulerXYZ( 0.1, 2, -0.3, 2, -3, 4.4, null );
 
 		DMatrixRMaj H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
 
@@ -105,7 +105,7 @@ public class TestSpecialEuclideanOps_F64 {
 
 	@Test
 	public void toSe3_F64() {
-		Se3_F64 se = SpecialEuclideanOps_F64.setEulerXYZ( 0.1, 2, -0.3, 2, -3, 4.4, null );
+		Se3_F64 se = SpecialEuclideanOps_F64.eulerXYZ( 0.1, 2, -0.3, 2, -3, 4.4, null );
 
 		DMatrixRMaj H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
 
@@ -136,7 +136,7 @@ public class TestSpecialEuclideanOps_F64 {
 	public void setEulerXYZ() {
 		Point3D_F64 orig = new Point3D_F64( 1, 2, 3 );
 
-		Se3_F64 se = SpecialEuclideanOps_F64.setEulerXYZ( 0.1, 2, -0.3, 2, -3, 4.4, null );
+		Se3_F64 se = SpecialEuclideanOps_F64.eulerXYZ( 0.1, 2, -0.3, 2, -3, 4.4, null );
 
 		Point3D_F64 expected = SePointOps_F64.transform( se, orig, null );
 
