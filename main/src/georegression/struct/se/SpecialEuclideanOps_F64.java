@@ -173,22 +173,27 @@ public class SpecialEuclideanOps_F64 {
 	 * Sets the value of an {@link Se3_F64} using Euler XYZ coordinates for the rotation and
 	 * a translation vector.
 	 *
-	 * @param rotX Rotation around X axis.
-	 * @param rotY Rotation around Y axis.
-	 * @param rotZ Rotation around Z axis.
 	 * @param dx   Translation along x-axis.
 	 * @param dy   Translation along y-axis.
 	 * @param dz   Translation along z-axis.
+	 * @param rotX Rotation around X axis.
+	 * @param rotY Rotation around Y axis.
+	 * @param rotZ Rotation around Z axis.
 	 * @param se   If not null then the transform is written here.
 	 * @return The transform.
 	 */
-	public static Se3_F64 eulerXYZ(double rotX, double rotY, double rotZ,
-								   double dx, double dy, double dz,
-								   Se3_F64 se ) {
+	public static Se3_F64 eulerXyz(double dx, double dy, double dz, double rotX, double rotY, double rotZ,
+								   Se3_F64 se) {
+		return eulerXyz(dx, dy, dz, EulerType.XYZ,rotX, rotY, rotZ, se);
+	}
+
+	public static Se3_F64 eulerXyz(double dx, double dy, double dz,
+								   EulerType type, double rotX, double rotY, double rotZ,
+								   Se3_F64 se) {
 		if( se == null )
 			se = new Se3_F64();
 
-		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rotX, rotY, rotZ, se.getR() );
+		ConvertRotation3D_F64.eulerToMatrix(type, rotX, rotY, rotZ, se.getR() );
 		Vector3D_F64 T = se.getT();
 		T.x = dx;
 		T.y = dy;
@@ -200,18 +205,17 @@ public class SpecialEuclideanOps_F64 {
 	/**
 	 * Create SE3 using axis-angle for rotation and XYZ tanslation
 	 *
-	 * @param rotX x-axis component
-	 * @param rotY y-axis component
-	 * @param rotZ z-axis component
 	 * @param dx   Translation along x-axis.
 	 * @param dy   Translation along y-axis.
 	 * @param dz   Translation along z-axis.
+	 * @param rotX x-axis component
+	 * @param rotY y-axis component
+	 * @param rotZ z-axis component
 	 * @param se   If not null then the transform is written here.
 	 * @return The transform.
 	 */
-	public static Se3_F64 axisXYZ(double rotX, double rotY, double rotZ,
-								  double dx, double dy, double dz,
-								  Se3_F64 se ) {
+	public static Se3_F64 axisXyz(double dx, double dy, double dz, double rotX, double rotY, double rotZ,
+								  Se3_F64 se) {
 		if( se == null )
 			se = new Se3_F64();
 
@@ -221,6 +225,22 @@ public class SpecialEuclideanOps_F64 {
 		} else {
 			ConvertRotation3D_F64.rodriguesToMatrix( rotX/theta, rotY/theta, rotZ/theta,theta, se.getR() );
 		}
+
+		Vector3D_F64 T = se.getT();
+		T.x = dx;
+		T.y = dy;
+		T.z = dz;
+		return se;
+	}
+
+	public static Se3_F64 quatXyz(double dx, double dy, double dz,
+								  double qw, double qx, double qy, double qz,
+								  Se3_F64 se) {
+		if( se == null )
+			se = new Se3_F64();
+
+
+		ConvertRotation3D_F64.quaternionToMatrix(qw,qx,qy,qz, se.getR() );
 
 		Vector3D_F64 T = se.getT();
 		T.x = dx;

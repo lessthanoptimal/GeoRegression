@@ -15,10 +15,9 @@
 - Create .zip of source code
   - remove .git
 - Create jar file
-  ./gradlew autogenerate
-  ./gradlew createLibraryDirectory
-  mv libraries ../georegression-v0.16-libs
-  cd ..;zip -r georegression-v0.16-libs.zip georegression-v0.16-libs
+  VERSION=v0.16
+  cd georegression;git checkout SNAPSHOT;./gradlew autogenerate;./gradlew createVersionFile;rm -rf .git;cd ..;zip -r georegression-$VERSION-src.zip georegression
+  cd georegression;./gradlew createLibraryDirectory;mv libraries ../georegression-$VERSION-libs;cd ..;zip -r georegression-$VERSION-libs.zip georegression-$VERSION-libs
 - Update JavaDoc
   rm -rf build/doc/javadoc
   ./gradlew javadocWeb

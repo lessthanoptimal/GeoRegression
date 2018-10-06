@@ -230,7 +230,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 				break;
 
 			default:
-				throw new IllegalArgumentException("Type is not supported");
+				throw new IllegalArgumentException("Type is not supported. "+type);
 		}
 	}
 

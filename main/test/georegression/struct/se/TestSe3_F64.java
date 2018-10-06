@@ -72,7 +72,7 @@ public class TestSe3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64
 
 		Se3_F64 ret = new Se3_F64();
 
-		SpecialEuclideanOps_F64.eulerXYZ( rotX, rotY, rotZ, x, y, z, ret );
+		SpecialEuclideanOps_F64.eulerXyz(x, y, z, rotX, rotY, rotZ, ret );
 
 		return ret;
 	}
