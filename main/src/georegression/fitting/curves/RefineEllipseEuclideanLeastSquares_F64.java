@@ -79,7 +79,7 @@ public class RefineEllipseEuclideanLeastSquares_F64 {
 	 * Defaults to a robust solver since this problem often encounters singularities.
 	 */
 	public RefineEllipseEuclideanLeastSquares_F64() {
-		this(FactoryOptimization.leastSquaresLM(1e-3, true));
+		this(FactoryOptimization.levenbergMarquardt(null,true));
 	}
 
 	public void setFtol(double ftol) {

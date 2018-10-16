@@ -5,7 +5,7 @@ This example demonstrates how classes inside of the metric package metric can be
 values which describe the relationship between to lines and points. The relationship between other
 shapes can also be done using the same classes.
 
-`ExampleMetricLine.java <https://github.com/lessthanoptimal/ddogleg/blob/v0.13/examples/src/georegression/examples/ExampleMetricLine.java>`_
+:gitexample:`ExampleMetricLine.java`
 
 .. literalinclude:: ../../examples/src/georegression/examples/ExampleMetricLine.java
    :language: java

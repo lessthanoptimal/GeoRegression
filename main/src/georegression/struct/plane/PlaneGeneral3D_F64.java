@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,11 @@
 
 package georegression.struct.plane;
 
+import org.ejml.UtilEjml;
+import org.ejml.ops.MatrixIO;
+
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 /**
  * <p>
@@ -101,7 +105,14 @@ public class PlaneGeneral3D_F64 implements Serializable {
 		D = d;
 	}
 
+	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"( A = "+A+" B = "+B+" C = "+C+" D = "+D+" )";
+		DecimalFormat format = new DecimalFormat("#");
+		String sA = UtilEjml.fancyString(A,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sB = UtilEjml.fancyString(B,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sC = UtilEjml.fancyString(C,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sD = UtilEjml.fancyString(D,format, MatrixIO.DEFAULT_LENGTH,4);
+
+		return getClass().getSimpleName()+"( A = "+sA+" B = "+sB+" C = "+sC+" D = "+sD+" )";
 	}
 }

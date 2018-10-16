@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,11 @@
 
 package georegression.struct;
 
+
+import org.ejml.UtilEjml;
+import org.ejml.ops.MatrixIO;
+
+import java.text.DecimalFormat;
 
 /**
  * Generic Tuple for geometric objects that store (x,y,z,w)
@@ -134,10 +139,64 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		}
 	}
 
+	public void scale( double scalar ) {
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
+		w *= scalar;
+	}
+
+	/**
+	 * <p>In-place addition</p>
+	 *
+	 * this.x = this.x + a.x;
+	 *
+	 * @param a value which is to be added
+	 */
+	public void plusIP( GeoTuple4D_F64 a ) {
+		x += a.x;
+		y += a.y;
+		z += a.z;
+		w += a.w;
+	}
+
+	public T times( double scalar ) {
+		T ret = createNewInstance();
+		ret.x = x*scalar;
+		ret.y = y*scalar;
+		ret.z = z*scalar;
+		ret.w = w*scalar;
+		return ret;
+	}
+
+	/**
+	 * In-place scalar multiplication
+	 * @param scalar value that it is multiplied by
+	 */
+	public void timesIP( double scalar ) {
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
+		w *= scalar;
+	}
+
+	public void divideIP( double scalar ) {
+		x /= scalar;
+		y /= scalar;
+		z /= scalar;
+		w /= scalar;
+	}
+
+	public void normalize() {
+		divideIP( norm() );
+	}
+
+	@Override
 	public double norm() {
 		return Math.sqrt( x * x + y * y + z * z + w * w);
 	}
 
+	@Override
 	public double normSq() {
 		return x * x + y * y + z * z + w * w;
 	}
@@ -186,11 +245,39 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		this.w = w;
 	}
 
+	/**
+	 * Returns the absolute value of the component with the largest absolute value
+	 * @return max absolute value
+	 */
+	public double maxAbs() {
+		double absX = Math.abs(x);
+		double absY = Math.abs(y);
+		double absZ = Math.abs(z);
+		double absW = Math.abs(w);
+
+		double found = Math.max(absX,absY);
+		if( found < absZ )
+			found = absZ;
+		if( found < absW )
+			found = absW;
+		return found;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if( this.getClass() != obj.getClass() )
 			return false;
 		GeoTuple4D_F64 p = (GeoTuple4D_F64)obj;
 		return x==p.x&&y==p.y&&z==p.z&&w==p.w;
+	}
+
+	protected String toString( String name ) {
+		DecimalFormat format = new DecimalFormat("#");
+		String sx = UtilEjml.fancyString(x,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sy = UtilEjml.fancyString(y,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sz = UtilEjml.fancyString(z,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sw = UtilEjml.fancyString(w,format, MatrixIO.DEFAULT_LENGTH,4);
+
+		return name+"( " + sx + " " + sy + " " + sz + " " + sw + " )";
 	}
 }

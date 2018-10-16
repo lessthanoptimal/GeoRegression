@@ -1,5 +1,5 @@
 plugins {
-    id "com.peterabeles.gversion" version "1.2" apply false
+    id "com.peterabeles.gversion" version "1.2.6" apply false
 }
 
 allprojects {
@@ -8,7 +8,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.16'
+    version = '0.17'
 }
 
 gversion {
@@ -68,7 +68,7 @@ subprojects {
     }
 
     dependencies {
-        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.14'
+        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.15.1'
         compile 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
@@ -87,7 +87,7 @@ subprojects {
 
     javadoc {
         configure(options) {
-            links = ['http://docs.oracle.com/javase/7/docs/api/',
+            links = ['http://docs.oracle.com/javase/8/docs/api/',
                      'http://ejml.org/javadoc/',
                      'http://ddogleg.org/javadoc/']
             failOnError = false
@@ -206,7 +206,7 @@ task alljavadoc(type: Javadoc) {
     configure(options) {
         failOnError = false
         docTitle = "GeoRegression v$project.version"
-        links = [ 'http://docs.oracle.com/javase/7/docs/api/',
+        links = [ 'http://docs.oracle.com/javase/8/docs/api/',
                   'http://ejml.org/javadoc/',
                   'http://ddogleg.org/javadoc/' ]
     }

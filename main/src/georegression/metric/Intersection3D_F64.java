@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -237,7 +237,7 @@ public class Intersection3D_F64 {
 	 *          <li>0 =  disjoint (no intersect)</li>
 	 *          <li>1 =  intersect in unique point. Positive direction or zero</li>
 	 *          <li>2 =  are in the same plane</li>
-	 *          <li>3 =  intersect in unique point. Negative direction<</li>
+	 *          <li>3 =  intersect in unique point. Negative direction</li>
 	 *          </ul>
 	 **/
 	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output) {
@@ -265,7 +265,7 @@ public class Intersection3D_F64 {
 	 *          <li>0 =  disjoint (no intersect)</li>
 	 *          <li>1 =  intersect in unique point. Positive direction or zero</li>
 	 *          <li>2 =  are in the same plane</li>
-	 *          <li>3 =  intersect in unique point. Negative direction<</li>
+	 *          <li>3 =  intersect in unique point. Negative direction</li>
 	 *          </ul>
 	 **/
 	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output ,
@@ -330,7 +330,7 @@ public class Intersection3D_F64 {
 	 *          <li>0 =  disjoint (no intersect)</li>
 	 *          <li>1 =  intersect in unique point. Positive direction or zero</li>
 	 *          <li>2 =  are in the same plane</li>
-	 *          <li>3 =  intersect in unique point. Negative direction<</li>
+	 *          <li>3 =  intersect in unique point. Negative direction</li>
 	 *          </ul>
 	 */
 	public static int intersectConvex(FastQueue<Point3D_F64> polygon,

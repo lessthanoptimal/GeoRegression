@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -101,14 +101,21 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 
 	@Override
 	public String toString() {
-		return "V( " + x + " " + y + " " + z + " )";
+		return toString("V");
 	}
 
 	public void normalize() {
-		double r = norm();
-		x /= r;
-		y /= r;
-		z /= r;
+		// carefully normalize to avoid numerical overflow
+		double m = Math.max(Math.max(Math.abs(x),Math.abs(y)),Math.abs(z));
+
+		double x_n = x/m;
+		double y_n = y/m;
+		double z_n = z/m;
+		double v = Math.sqrt(x_n*x_n + y_n*y_n + z_n*z_n);
+
+		x = x_n/v;
+		y = y_n/v;
+		z = z_n/v;
 	}
 
 	/**

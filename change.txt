@@ -1,6 +1,20 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2018/10/15
+Version : 0.17
+
+- Vector3D
+  * Normalized rewritten to avoid numerical overflow
+- Se3
+  * convience functions added for heavily used operations
+- UtilPoint3D and 2D
+  * New function for adding noise
+  * Randomly generate points on a plane in 3D
+- SpecialEuclideanOps_F64
+  * Added bestFit()
+
+---------------------------------------------
 Date    : 2018/05/20
 Version : 0.16
 

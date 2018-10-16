@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,11 +19,15 @@
 package georegression.struct.se;
 
 import georegression.geometry.ConvertRotation3D_F64;
+import georegression.geometry.GeometryMath_F64;
 import georegression.struct.EulerType;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Vector3D_F64;
+import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
+import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 
 
 /**
@@ -169,27 +173,142 @@ public class SpecialEuclideanOps_F64 {
 	 * Sets the value of an {@link Se3_F64} using Euler XYZ coordinates for the rotation and
 	 * a translation vector.
 	 *
-	 * @param rotX Rotation around X axis.
-	 * @param rotY Rotation around Y axis.
-	 * @param rotZ Rotation around Z axis.
 	 * @param dx   Translation along x-axis.
 	 * @param dy   Translation along y-axis.
 	 * @param dz   Translation along z-axis.
+	 * @param rotX Rotation around X axis.
+	 * @param rotY Rotation around Y axis.
+	 * @param rotZ Rotation around Z axis.
 	 * @param se   If not null then the transform is written here.
 	 * @return The transform.
 	 */
-	public static Se3_F64 setEulerXYZ( double rotX, double rotY, double rotZ,
-									   double dx, double dy, double dz,
-									   Se3_F64 se ) {
+	public static Se3_F64 eulerXyz(double dx, double dy, double dz, double rotX, double rotY, double rotZ,
+								   Se3_F64 se) {
+		return eulerXyz(dx, dy, dz, EulerType.XYZ,rotX, rotY, rotZ, se);
+	}
+
+	public static Se3_F64 eulerXyz(double dx, double dy, double dz,
+								   EulerType type, double rotX, double rotY, double rotZ,
+								   Se3_F64 se) {
 		if( se == null )
 			se = new Se3_F64();
 
-		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rotX, rotY, rotZ, se.getR() );
+		ConvertRotation3D_F64.eulerToMatrix(type, rotX, rotY, rotZ, se.getR() );
 		Vector3D_F64 T = se.getT();
 		T.x = dx;
 		T.y = dy;
 		T.z = dz;
 
 		return se;
+	}
+
+	/**
+	 * Create SE3 using axis-angle for rotation and XYZ tanslation
+	 *
+	 * @param dx   Translation along x-axis.
+	 * @param dy   Translation along y-axis.
+	 * @param dz   Translation along z-axis.
+	 * @param rotX x-axis component
+	 * @param rotY y-axis component
+	 * @param rotZ z-axis component
+	 * @param se   If not null then the transform is written here.
+	 * @return The transform.
+	 */
+	public static Se3_F64 axisXyz(double dx, double dy, double dz, double rotX, double rotY, double rotZ,
+								  Se3_F64 se) {
+		if( se == null )
+			se = new Se3_F64();
+
+		double theta = Math.sqrt(rotX*rotX + rotY+rotY + rotZ*rotZ);
+		if( theta == 0 ) {
+			CommonOps_DDRM.setIdentity(se.R);
+		} else {
+			ConvertRotation3D_F64.rodriguesToMatrix( rotX/theta, rotY/theta, rotZ/theta,theta, se.getR() );
+		}
+
+		Vector3D_F64 T = se.getT();
+		T.x = dx;
+		T.y = dy;
+		T.z = dz;
+		return se;
+	}
+
+	public static Se3_F64 quatXyz(double dx, double dy, double dz,
+								  double qw, double qx, double qy, double qz,
+								  Se3_F64 se) {
+		if( se == null )
+			se = new Se3_F64();
+
+
+		ConvertRotation3D_F64.quaternionToMatrix(qw,qx,qy,qz, se.getR() );
+
+		Vector3D_F64 T = se.getT();
+		T.x = dx;
+		T.y = dy;
+		T.z = dz;
+		return se;
+	}
+
+	/**
+	 * Can be used to see if two transforms are identical to within tolerance
+	 *
+	 * @param a transform
+	 * @param b tranform
+	 * @param tolT Tolerance for translation
+	 * @param tolR Tolerance for rotation in radians
+	 * @return true if identical or false if not
+	 */
+	public static boolean isIdentical( Se3_F64 a , Se3_F64 b , double tolT , double tolR ) {
+		if( Math.abs(a.T.x-b.T.x) > tolT )
+			return false;
+		if( Math.abs(a.T.y-b.T.y) > tolT )
+			return false;
+		if( Math.abs(a.T.z-b.T.z) > tolT )
+			return false;
+
+		DMatrixRMaj D = new DMatrixRMaj(3,3);
+		CommonOps_DDRM.multTransA(a.R,b.R,D);
+
+		Rodrigues_F64 rod = new Rodrigues_F64();
+		ConvertRotation3D_F64.matrixToRodrigues(D,rod);
+
+		return rod.theta <= tolR;
+	}
+
+	/**
+	 * Finds the best fit projection of 'a' onto SE(3).  This is useful when a was estimated using a linear algorithm.
+	 *
+	 * <p>See page 280 of "An Invitation to 3-D Vision, From Images to Geometric Models" 1st Ed. 2004. Springer.</p>
+	 * @param a Approximate SE(3). Modified.
+	 * @return true if successful
+	 */
+	public static boolean bestFit( Se3_F64 a ) {
+		SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(true,true,true);
+
+		if( !svd.decompose(a.R))
+			throw new RuntimeException("SVD Failed");
+
+		CommonOps_DDRM.multTransB(svd.getU(null,false),svd.getV(null,false),a.R);
+
+		// determinant should be +1
+		double det = CommonOps_DDRM.det(a.R);
+
+		if( det < 0 ) {
+			CommonOps_DDRM.scale(-1, a.R);
+		}
+
+		// compute the determinant of the singular matrix
+		double b = 1.0;
+		double s[] = svd.getSingularValues();
+
+		for( int i = 0; i < svd.numberOfSingularValues(); i++ ) {
+			b *= s[i];
+		}
+
+		b = Math.signum(det) / Math.pow(b,1.0/3.0);
+
+		GeometryMath_F64.scale(a.T,b);
+
+		return true;
 	}
 }

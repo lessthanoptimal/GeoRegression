@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -75,7 +75,7 @@ public class FitCylinderToPoints_F64 implements ModelFitter<Cylinder3D_F64,Point
 	 * @param maxIterations Maximum number of iterations.  Try 100
 	 */
 	public FitCylinderToPoints_F64( int maxIterations ) {
-		this(FactoryOptimization.leastSquaresLM( 1e-3 , false),maxIterations, GrlConstants.DCONV_TOL_B,0);
+		this(FactoryOptimization.levenbergMarquardt(null, false),maxIterations, GrlConstants.DCONV_TOL_B,0);
 	}
 
 	@Override
@@ -97,5 +97,10 @@ public class FitCylinderToPoints_F64 implements ModelFitter<Cylinder3D_F64,Point
 		codec.decode(optimizer.getParameters(), found);
 
 		return true;
+	}
+
+	@Override
+	public /**/double getFitScore() {
+		return optimizer.getFunctionValue();
 	}
 }

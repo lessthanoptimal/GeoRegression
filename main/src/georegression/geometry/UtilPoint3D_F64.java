@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,9 +18,12 @@
 
 package georegression.geometry;
 
+import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Vector3D_F64;
 import georegression.struct.shapes.Box3D_F64;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -79,12 +82,60 @@ public class UtilPoint3D_F64 {
 		return ret;
 	}
 
+	public static Point3D_F64 noiseNormal( Point3D_F64 mean ,
+										   double sigmaX , double sigmaY, double sigmaZ,
+										   Random rand ,
+										   @Nullable Point3D_F64 output )
+	{
+		if( output == null )
+			output = new Point3D_F64();
+
+		output.x = mean.x + rand.nextGaussian()*sigmaX;
+		output.y = mean.y + rand.nextGaussian()*sigmaY;
+		output.z = mean.z + rand.nextGaussian()*sigmaZ;
+
+		return output;
+	}
+
 	public static void noiseNormal( List<Point3D_F64> pts, double sigma, Random rand ) {
 		for( Point3D_F64 p : pts ) {
 			p.x += rand.nextGaussian() * sigma;
 			p.y += rand.nextGaussian() * sigma;
 			p.z += rand.nextGaussian() * sigma;
 		}
+	}
+
+	/**
+	 * Randomly generates a set of points on the plane centered at the plane's origin
+	 * using a uniform distribution.
+	 *
+	 * @param plane Plane
+	 * @param max Maximum distance from center
+	 * @param rand random number generator
+	 * @return set of points on the plane
+	 */
+	public static List<Point3D_F64> random(PlaneNormal3D_F64 plane , double max , int num, Random rand ) {
+
+		List<Point3D_F64> ret = new ArrayList<>();
+
+		Vector3D_F64 axisX = new Vector3D_F64();
+		Vector3D_F64 axisY = new Vector3D_F64();
+
+		UtilPlane3D_F64.selectAxis2D(plane.n,axisX,axisY);
+
+		for (int i = 0; i < num; i++) {
+			double x = 2*max*(rand.nextDouble()-0.5);
+			double y = 2*max*(rand.nextDouble()-0.5);
+
+			Point3D_F64 p = new Point3D_F64();
+			p.x = plane.p.x + axisX.x*x + axisY.x*y;
+			p.y = plane.p.y + axisX.y*x + axisY.y*y;
+			p.z = plane.p.z + axisX.z*x + axisY.z*y;
+
+			ret.add( p );
+		}
+
+		return ret;
 	}
 
 	public static List<Point3D_F64> random( double min, double max, int num, Random rand ) {
@@ -102,6 +153,62 @@ public class UtilPoint3D_F64 {
 		}
 
 		return ret;
+	}
+
+	/**
+	 * Creates a list of random points from a uniform distribution along each axis
+	 */
+	public static List<Point3D_F64> random(Point3D_F64 mean ,
+										   double minX , double maxX ,
+										   double minY , double maxY ,
+										   double minZ , double maxZ ,
+										   int num, Random rand )
+	{
+		List<Point3D_F64> ret = new ArrayList<>();
+
+		for( int i = 0; i < num; i++ ) {
+			Point3D_F64 p = new Point3D_F64();
+			p.x = mean.x + rand.nextDouble() * (maxX-minX) + minX;
+			p.y = mean.y + rand.nextDouble() * (maxY-minY) + minY;
+			p.z = mean.z + rand.nextDouble() * (maxZ-minZ) + minZ;
+
+			ret.add( p );
+		}
+
+		return ret;
+	}
+
+	public static List<Point3D_F64> random(Point3D_F64 mean ,
+										   double min , double max ,
+										   int num, Random rand )
+	{
+		return random(mean,min,max,min,max,min,max,num,rand);
+	}
+
+	/**
+	 * Creates a list of random points from a normal distribution along each axis
+	 */
+	public static List<Point3D_F64> randomN(Point3D_F64 mean ,
+											double stdX , double stdY , double stdZ ,
+											int num, Random rand )
+	{
+		List<Point3D_F64> ret = new ArrayList<>();
+
+		for( int i = 0; i < num; i++ ) {
+			Point3D_F64 p = new Point3D_F64();
+			p.x = mean.x + rand.nextGaussian() * stdX;
+			p.y = mean.y + rand.nextGaussian() * stdY;
+			p.z = mean.z + rand.nextGaussian() * stdZ;
+
+			ret.add( p );
+		}
+
+		return ret;
+	}
+
+	public static List<Point3D_F64> randomN(Point3D_F64 mean , double stdev, int num, Random rand )
+	{
+		return randomN(mean,stdev,stdev,stdev,num,rand);
 	}
 
 	/**

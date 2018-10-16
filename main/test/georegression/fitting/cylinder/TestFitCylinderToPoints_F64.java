@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -93,7 +93,7 @@ public class TestFitCylinderToPoints_F64 {
 
 		// the points should be on the other line
 		assertEquals(0, Distance3D_F64.distance(a.line, b.line.p),GrlConstants.TEST_F64);
-		assertEquals(0, Distance3D_F64.distance(b.line,a.line.p),GrlConstants.TEST_F64);
+		assertEquals(0, Distance3D_F64.distance(b.line, a.line.p), 10*GrlConstants.TEST_F64);
 
 		// slopes should be the same
 		double dot = a.line.slope.dot(b.line.slope);

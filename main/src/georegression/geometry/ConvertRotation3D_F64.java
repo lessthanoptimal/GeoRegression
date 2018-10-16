@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -724,12 +724,17 @@ public class ConvertRotation3D_F64 {
 	 * @return Rotation matrix
 	 */
 	public static DMatrixRMaj quaternionToMatrix( Quaternion_F64 quat, DMatrixRMaj R ) {
+		return quaternionToMatrix(quat.w,quat.x,quat.y,quat.z,R);
+	}
+
+	public static DMatrixRMaj quaternionToMatrix(double w, double x , double y , double z , DMatrixRMaj R )
+	{
 		R = checkDeclare3x3( R );
 
-		final double q0 = quat.w;
-		final double q1 = quat.x;
-		final double q2 = quat.y;
-		final double q3 = quat.z;
+		final double q0 = w;
+		final double q1 = x;
+		final double q2 = y;
+		final double q3 = z;
 
 		R.set( 0, 0, q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3 );
 		R.set( 0, 1, 2.0 * ( q1 * q2 - q0 * q3 ) );

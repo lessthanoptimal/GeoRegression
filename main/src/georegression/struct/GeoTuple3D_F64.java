@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,11 @@
 
 package georegression.struct;
 
+
+import org.ejml.UtilEjml;
+import org.ejml.ops.MatrixIO;
+
+import java.text.DecimalFormat;
 
 /**
  * Generic Tuple for geometric objects that store (x,y,z)
@@ -241,5 +246,14 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 			return false;
 		GeoTuple3D_F64 p = (GeoTuple3D_F64)obj;
 		return x==p.x&&y==p.y&&z==p.z;
+	}
+
+	protected String toString( String name ) {
+		DecimalFormat format = new DecimalFormat("#");
+		String sx = UtilEjml.fancyString(x,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sy = UtilEjml.fancyString(y,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sz = UtilEjml.fancyString(z,format, MatrixIO.DEFAULT_LENGTH,4);
+
+		return name+"( " + sx + " " + sy + " " + sz + " )";
 	}
 }

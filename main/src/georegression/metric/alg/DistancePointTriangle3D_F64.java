@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -107,6 +107,8 @@ public class DistancePointTriangle3D_F64 {
 	/**
 	 * Returns the signed of the vector.  If its "in front" it will be positive and negative if "behind".  In front
 	 * is defined as being on the same side as the cross product of p2-p0 and p1-p0.
+	 *
+	 * @param P Point for which the sign is determined
 	 */
 	public double sign( Point3D_F64 P ) {
 
