@@ -254,6 +254,6 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		String sy = UtilEjml.fancyString(y,format, MatrixIO.DEFAULT_LENGTH,4);
 		String sz = UtilEjml.fancyString(z,format, MatrixIO.DEFAULT_LENGTH,4);
 
-		return name+"( " + sx + " " + sy + " " + sz + " )";
+		return name+"( " + sx + " , " + sy + " , " + sz + " )";
 	}
 }
