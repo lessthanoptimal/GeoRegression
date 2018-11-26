@@ -5,7 +5,7 @@ Date    : 201
 Version : 0.18
 
 - upgraded gradle wrapper
-
+- Fixed SpecialOrthogonalOps
 ---------------------------------------------
 Date    : 2018/10/15
 Version : 0.17
