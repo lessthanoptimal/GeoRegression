@@ -32,8 +32,7 @@ import org.junit.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 /**
@@ -363,6 +362,17 @@ public class TestGeometryMath_F64 {
 		assertEquals( 16 , c.getY() , GrlConstants.TEST_F64);
 		assertEquals( 18 , c.getZ() , GrlConstants.TEST_F64);
 	}
+
+	@Test
+	public void mult_4d_3d() {
+		fail("Implement");
+	}
+
+	@Test
+	public void mult_4d_2d() {
+		fail("Implement");
+	}
+
 
 	@Test
 	public void multCrossA_2D() {

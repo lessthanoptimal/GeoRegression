@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.GeoTuple3D_F64;
+import georegression.struct.GeoTuple4D_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.mult.VectorVectorMult_DDRM;
 
@@ -424,6 +425,41 @@ public class GeometryMath_F64 {
 		mod.y = (double) ( ( M.unsafe_get(1, 0) * x + M.unsafe_get(1, 1) * y + M.unsafe_get(1, 2) ) / modz );
 
 		return mod;
+	}
+
+	/**
+	 * x = P*X
+	 *
+	 * @param P Projective 3x4 matrix
+	 * @param X 3D point in homogenous coordinates
+	 * @param mod 2D point in homogenous coordinates
+	 */
+	public static void mult(DMatrixRMaj P, GeoTuple4D_F64 X, GeoTuple3D_F64 mod ) {
+		if( P.numRows != 3 || P.numCols != 4 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 4 not " + P.numRows + " " + P.numCols );
+
+		mod.x = P.data[0]*X.x + P.data[1]*X.y + P.data[2]*X.z + P.data[3]*X.w;
+		mod.y = P.data[4]*X.x + P.data[5]*X.y + P.data[6]*X.z + P.data[7]*X.w;
+		mod.z = P.data[8]*X.x + P.data[9]*X.y + P.data[10]*X.z + P.data[11]*X.w;
+	}
+
+	/**
+	 * x = (P*X)/z
+	 *
+	 * @param P Projective 3x4 matrix
+	 * @param X 3D point in homogenous coordinates
+	 * @param mod 2D point in coordinates
+	 */
+	public static void mult(DMatrixRMaj P, GeoTuple4D_F64 X, GeoTuple2D_F64 mod ) {
+		if( P.numRows != 3 || P.numCols != 4 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 4 not " + P.numRows + " " + P.numCols );
+
+		double x = P.data[0]*X.x + P.data[1]*X.y + P.data[2]*X.z + P.data[3]*X.w;
+		double y = P.data[4]*X.x + P.data[5]*X.y + P.data[6]*X.z + P.data[7]*X.w;
+		double z = P.data[8]*X.x + P.data[9]*X.y + P.data[10]*X.z + P.data[11]*X.w;
+
+		mod.x = x/z;
+		mod.y = y/z;
 	}
 
 	/**

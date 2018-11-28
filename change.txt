@@ -6,6 +6,8 @@ Version : 0.18
 
 - upgraded gradle wrapper
 - Fixed SpecialOrthogonalOps
+- Created UtilPoint4D_F64
+
 ---------------------------------------------
 Date    : 2018/10/15
 Version : 0.17

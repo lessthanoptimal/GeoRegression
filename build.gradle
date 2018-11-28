@@ -68,7 +68,7 @@ subprojects {
     }
 
     dependencies {
-        compile group: 'org.ddogleg', name: 'ddogleg', version: '0.15.1'
+        compile (group: 'org.ddogleg', name: 'ddogleg', version: '0.15.2-SNAPSHOT')
         compile 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
