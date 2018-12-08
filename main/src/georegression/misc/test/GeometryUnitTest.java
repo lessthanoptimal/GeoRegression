@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -154,7 +154,7 @@ public class GeometryUnitTest {
 
 		int N = a.getDimension();
 		for( int i = 0; i < N; i++ ) {
-			assertEquals( a.getIndex( i ), b.getIndex( i ), tol, "Index " + i + " is not the same." );
+			assertEquals( a.getIdx( i ), b.getIdx( i ), tol, "Index " + i + " is not the same." );
 		}
 	}
 

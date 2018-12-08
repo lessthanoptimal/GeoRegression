@@ -276,7 +276,7 @@ public class UtilPolygons2D_F64 {
 	 * @param average (output) average point
 	 */
 	public static void vertexAverage(Polygon2D_F64 input, Point2D_F64 average ) {
-		average.set(0,0);
+		average.setIdx(0,0);
 
 		for (int i = 0; i < input.size(); i++) {
 			Point2D_F64 v = input.vertexes.data[i];

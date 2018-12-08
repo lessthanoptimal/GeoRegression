@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -50,7 +50,7 @@ public class TestTwistOps_F64 {
 		}
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(original.T.getIndex(i), H.get(i,3), GrlConstants.TEST_F64);
+			assertEquals(original.T.getIdx(i), H.get(i,3), GrlConstants.TEST_F64);
 		}
 		for (int i = 0; i < 3; i++) {
 			assertEquals(0, H.get(3,i), GrlConstants.TEST_F64);
@@ -75,7 +75,7 @@ public class TestTwistOps_F64 {
 		}
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(twist.v.getIndex(i), H.get(i,3), GrlConstants.TEST_F64);
+			assertEquals(twist.v.getIdx(i), H.get(i,3), GrlConstants.TEST_F64);
 		}
 		for (int i = 0; i < 4; i++) {
 			assertEquals(0, H.get(3,i), GrlConstants.TEST_F64);

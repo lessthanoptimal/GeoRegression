@@ -98,44 +98,23 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		return w;
 	}
 
-	public double getIndex( int index ) {
+	public double getIdx(int index ) {
 		switch( index ) {
-			case 0:
-				return x;
-
-			case 1:
-				return y;
-
-			case 2:
-				return z;
-
-			case 3:
-				return w;
-
-			default:
-				throw new IllegalArgumentException( "Invalid index" );
+			case 0: return x;
+			case 1: return y;
+			case 2: return z;
+			case 3: return w;
+			default: throw new IllegalArgumentException( "Invalid index" );
 		}
 	}
 
-	public void setIndex( int index, double value ) {
+	public void setIdx(int index, double value ) {
 		switch( index ) {
-			case 0:
-				x = value;
-				break;
-
-			case 1:
-				y = value;
-				break;
-
-			case 2:
-				z = value;
-				break;
-			
-			case 3:
-				w = value;
-
-			default:
-				throw new IllegalArgumentException( "Invalid index" );
+			case 0: x = value; break;
+			case 1: y = value; break;
+			case 2: z = value; break;
+			case 3: w = value; break;
+			default: throw new IllegalArgumentException( "Invalid index "+index );
 		}
 	}
 

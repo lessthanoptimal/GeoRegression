@@ -19,10 +19,8 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
-import georegression.struct.point.Point2D_F64;
-import georegression.struct.point.Point3D_F64;
-import georegression.struct.point.Vector2D_F64;
-import georegression.struct.point.Vector3D_F64;
+import georegression.struct.point.*;
+import org.ejml.UtilEjml;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
@@ -32,7 +30,8 @@ import org.junit.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -365,12 +364,37 @@ public class TestGeometryMath_F64 {
 
 	@Test
 	public void mult_4d_3d() {
-		fail("Implement");
+		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(3,4,rand);
+		Point4D_F64 X = new Point4D_F64(1,2,3,4);
+
+		Point3D_F64 Y = new Point3D_F64();
+		GeometryMath_F64.mult(P,X,Y);
+
+		GEquation eq = new GEquation(P,"P",X,"X");
+		eq.process("Y=P*X");
+		DMatrixRMaj expected = eq.lookupDDRM("Y");
+
+		for (int i = 0; i < 3; i++) {
+			assertEquals(expected.get(i),Y.getIdx(i), UtilEjml.TEST_F64);
+		}
 	}
 
 	@Test
 	public void mult_4d_2d() {
-		fail("Implement");
+		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(3,4,rand);
+		Point4D_F64 X = new Point4D_F64(1,2,3,4);
+
+		Point2D_F64 Y = new Point2D_F64();
+		GeometryMath_F64.mult(P,X,Y);
+
+		GEquation eq = new GEquation(P,"P",X,"X");
+		eq.process("Y=P*X");
+		DMatrixRMaj expected = eq.lookupDDRM("Y");
+
+		for (int i = 0; i < 2; i++) {
+			double z = expected.get(2);
+			assertEquals(expected.get(i)/z,Y.getIdx(i), UtilEjml.TEST_F64);
+		}
 	}
 
 

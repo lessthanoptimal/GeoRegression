@@ -178,7 +178,7 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 	}
 
 	@Override
-	public double getIndex( int index ) {
+	public double getIdx(int index ) {
 		switch( index ) {
 			case 0:
 				return x;
@@ -192,7 +192,7 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 	}
 
 	@Override
-	public void setIndex( int index, double value ) {
+	public void setIdx(int index, double value ) {
 		switch( index ) {
 			case 0:
 				x = value;

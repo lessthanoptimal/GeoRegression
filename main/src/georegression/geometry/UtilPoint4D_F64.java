@@ -37,9 +37,55 @@ public class UtilPoint4D_F64 {
 	 * @param tol (Input) tolerance. Try EPS
 	 * @return true if on plane at infinity
 	 */
-	public boolean isInfiniteH(Point4D_F64 p , double tol ) {
+	public static boolean isInfiniteH(Point4D_F64 p , double tol ) {
 		double n = Math.sqrt(p.x*p.x + p.y*p.y + p.z*p.z);
 		return Math.abs(p.w) <= n*tol;
+	}
+
+	/**
+	 * Normally distributed random point with the mean (center) specified and each axis having the same
+	 * standard deviation.
+	 * @param center
+	 * @param stdev
+	 * @param num
+	 * @param rand
+	 * @return
+	 */
+	public static List<Point4D_F64> randomN( Point4D_F64 center , double stdev, int num, Random rand ) {
+		List<Point4D_F64> ret = new ArrayList<>();
+
+		for( int i = 0; i < num; i++ ) {
+			Point4D_F64 p = new Point4D_F64();
+			p.x = center.x + rand.nextGaussian() * stdev;
+			p.y = center.y + rand.nextGaussian() * stdev;
+			p.z = center.z + rand.nextGaussian() * stdev;
+			p.w = center.w + rand.nextGaussian() * stdev;
+
+			ret.add( p );
+		}
+
+		return ret;
+	}
+
+
+	/**
+	 * Normally distributed homogenous 3D point. w is fixed
+	 *
+	 */
+	public static List<Point4D_F64> randomN( Point3D_F64 center , double w, double stdev, int num, Random rand ) {
+		List<Point4D_F64> ret = new ArrayList<>();
+
+		for( int i = 0; i < num; i++ ) {
+			Point4D_F64 p = new Point4D_F64();
+			p.x = center.x + rand.nextGaussian() * stdev;
+			p.y = center.y + rand.nextGaussian() * stdev;
+			p.z = center.z + rand.nextGaussian() * stdev;
+			p.w = w;
+
+			ret.add( p );
+		}
+
+		return ret;
 	}
 
 	public static List<Point4D_F64> random(double min, double max, int num, Random rand ) {
@@ -65,12 +111,12 @@ public class UtilPoint4D_F64 {
 	 * @param p 3D point in homogenous coordinates
 	 * @return 3D point
 	 */
-	public Point3D_F64 h_to_e( Point4D_F64 p ) {
+	public static Point3D_F64 h_to_e( Point4D_F64 p ) {
 		Point3D_F64 out = new Point3D_F64();
 		h_to_e(p,out);
 		return out;
 	}
-	public void h_to_e(Point4D_F64 p , Point3D_F64 out ) {
+	public static void h_to_e(Point4D_F64 p , Point3D_F64 out ) {
 		out.x = p.x/p.w;
 		out.y = p.y/p.w;
 		out.z = p.z/p.w;
