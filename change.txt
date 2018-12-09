@@ -7,6 +7,8 @@ Version : 0.18
 - upgraded gradle wrapper
 - Fixed SpecialOrthogonalOps
 - Created UtilPoint4D_F64
+- GeometryMath
+  * Added mult cross transpose functions
 
 ---------------------------------------------
 Date    : 2018/10/15

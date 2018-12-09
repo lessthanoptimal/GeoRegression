@@ -413,6 +413,20 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
+	public void multCrossATransA_2D() {
+		Point2D_F64 a = new Point2D_F64(3,2);
+		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
+
+		DMatrixRMaj a_hat = GeometryMath_F64.crossMatrix(a.x,a.y,1,null);
+		DMatrixRMaj expected = new DMatrixRMaj(3,3);
+		CommonOps_DDRM.multTransA(a_hat,b,expected);
+
+		DMatrixRMaj found = GeometryMath_F64.multCrossATransA(a,b,null);
+
+		assertTrue(MatrixFeatures_DDRM.isIdentical(expected,found,GrlConstants.TEST_F64));
+	}
+
+	@Test
 	public void multCrossA_3D() {
 		Point3D_F64 a = new Point3D_F64(1,2,3);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
@@ -422,6 +436,20 @@ public class TestGeometryMath_F64 {
 		CommonOps_DDRM.mult(a_hat,b,expected);
 
 		DMatrixRMaj found = GeometryMath_F64.multCrossA(a,b,null);
+
+		assertTrue(MatrixFeatures_DDRM.isIdentical(expected,found,GrlConstants.TEST_F64));
+	}
+
+	@Test
+	public void multCrossATransA_3D() {
+		Point3D_F64 a = new Point3D_F64(1,2,3);
+		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
+
+		DMatrixRMaj a_hat = GeometryMath_F64.crossMatrix(a.x,a.y,a.z,null);
+		DMatrixRMaj expected = new DMatrixRMaj(3,3);
+		CommonOps_DDRM.multTransA(a_hat,b,expected);
+
+		DMatrixRMaj found = GeometryMath_F64.multCrossATransA(a,b,null);
 
 		assertTrue(MatrixFeatures_DDRM.isIdentical(expected,found,GrlConstants.TEST_F64));
 	}
