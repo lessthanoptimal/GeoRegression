@@ -27,8 +27,11 @@ import org.ddogleg.struct.FastQueue;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.ejml.UtilEjml.fancyStringF;
 
 /**
  * Describes a polygon in 2D.
@@ -217,14 +220,16 @@ public class Polygon2D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
+		int length = 10;
+		DecimalFormat format = new DecimalFormat("#");
 		String out = getClass().getSimpleName()+"{ order "+vertexes.size+" : vertexes [ ";
 
 		for (int i = 0; i < vertexes.size; i++) {
 			Point2D_F64 p = vertexes.get(i);
-			out += p.x+" , "+p.y+" ; ";
+			out += "( "+ fancyStringF(p.x,format,length,4)+" , "+fancyStringF(p.y,format,length,4)+" ) ";
 		}
 
-		out += " ] }";
+		out += "] }";
 
 		return out;
 	}
