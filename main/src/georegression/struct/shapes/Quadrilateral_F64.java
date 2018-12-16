@@ -229,7 +229,13 @@ public class Quadrilateral_F64 implements Serializable {
 		return d.distance2(quad.d) <= tol;
 	}
 
+	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"{ a("+a.x+" "+a.y+") b("+b.x+" "+b.y+") c("+c.x+" "+c.y+") d("+d.x+" "+d.y+") }";
+		return getClass().getSimpleName()+"{" +
+				"a=" + a +
+				", b=" + b +
+				", c=" + c +
+				", d=" + d +
+				'}';
 	}
 }

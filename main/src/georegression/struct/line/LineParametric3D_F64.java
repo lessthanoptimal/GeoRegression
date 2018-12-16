@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -30,6 +30,8 @@ import java.io.Serializable;
  * where t specifies the location along the line, (x_0,y_0,z_0) is an arbitrary point on the line,
  * and (slopeX,slopeY,slopeZ).
  * </p>
+ *
+ * @see georegression.geometry.UtilLine3D_F64
  */
 public class LineParametric3D_F64 implements Serializable {
 	/**

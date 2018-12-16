@@ -31,6 +31,8 @@ import java.io.Serializable;
  * where t specifies the location along the line, (x_0,y_0) is an arbitrary point on the line,
  * and (slopeX,slopeY).
  * </p>
+ *
+ * @see UtilLine2D_F64
  */
 public class LineParametric2D_F64 implements Serializable {
 	/**

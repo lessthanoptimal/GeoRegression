@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
+import org.ejml.FancyPrint;
 
 import java.io.Serializable;
 
@@ -85,9 +86,13 @@ public class Cylinder3D_F64 implements Serializable {
 
 
 	public String toString() {
+		FancyPrint fancy = new FancyPrint();
+
 		Point3D_F64 p = line.p;
 		Vector3D_F64 slope = line.slope;
 
-		return getClass().getSimpleName()+" P( "+p.x+" "+p.y+" "+p.z+" ) Slope( "+slope.x+" "+slope.y+" "+slope.z+" ) radius "+radius;
+		return getClass().getSimpleName()+
+				" P( "+fancy.s(p.x)+" "+fancy.s(p.y)+" "+fancy.sf(p.z)+
+				" ) Slope( "+fancy.s(slope.x)+" "+fancy.s(slope.y)+" "+fancy.s(slope.z)+" ) radius "+fancy.s(radius);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,6 +25,8 @@ import java.io.Serializable;
 
 /**
  * Defines a line segment by its two end points.
+ *
+ * @see georegression.geometry.UtilLine2D_F64
  *
  * @author Peter Abeles
  */

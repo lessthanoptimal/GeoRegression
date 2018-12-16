@@ -24,6 +24,7 @@ import georegression.metric.Intersection2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.struct.FastQueue;
+import org.ejml.ops.MatrixIO;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
@@ -220,7 +221,7 @@ public class Polygon2D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		int length = 10;
+		final int length = MatrixIO.DEFAULT_LENGTH;
 		DecimalFormat format = new DecimalFormat("#");
 		String out = getClass().getSimpleName()+"{ order "+vertexes.size+" : vertexes [ ";
 

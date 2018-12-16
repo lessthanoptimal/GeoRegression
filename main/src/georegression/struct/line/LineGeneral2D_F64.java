@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,8 @@
 
 package georegression.struct.line;
 
+import georegression.geometry.UtilLine2D_F64;
+
 import java.io.Serializable;
 
 /**
@@ -30,6 +32,8 @@ import java.io.Serializable;
  * If it is said the line is normalized that refers to it being scaled such that A*A + B*B = 1.  To
  * normalize a line call {@link #normalize()}.  After normalization several operations become less expensive.
  * </p>
+ *
+ * @see UtilLine2D_F64
  *
  * @author Peter Abeles
  */

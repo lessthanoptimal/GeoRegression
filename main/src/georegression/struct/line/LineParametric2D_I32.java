@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -30,6 +30,8 @@ import java.io.Serializable;
  * where t specifies the location along the line, (x_0,y_0) is an arbitrary point on the line,
  * and (slopeX,slopeY).
  * </p>
+ *
+ * @see georegression.geometry.UtilLine2D_I32
  */
 public class LineParametric2D_I32 implements Serializable {
 	/**
@@ -112,7 +114,6 @@ public class LineParametric2D_I32 implements Serializable {
 	public void setP(Point2D_I32 p) {
 		this.p = p;
 	}
-
 
 	public LineParametric2D_I32 copy() {
 		return new LineParametric2D_I32( p, slopeX, slopeY );
