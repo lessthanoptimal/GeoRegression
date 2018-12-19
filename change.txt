@@ -9,6 +9,8 @@ Version : 0.18
 - Created UtilPoint4D_F64
 - GeometryMath
   * Added mult cross transpose functions
+- Added equals()
+  * Line data structures
 
 ---------------------------------------------
 Date    : 2018/10/15

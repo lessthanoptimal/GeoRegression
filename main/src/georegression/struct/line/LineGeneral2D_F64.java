@@ -19,6 +19,7 @@
 package georegression.struct.line;
 
 import georegression.geometry.UtilLine2D_F64;
+import org.ejml.FancyPrint;
 
 import java.io.Serializable;
 
@@ -133,6 +134,17 @@ public class LineGeneral2D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"{ A="+A+" B="+B+" C="+C+" }";
+		FancyPrint f = new FancyPrint();
+		return getClass().getSimpleName()+"{ A="+f.s(A)+" B="+f.s(B)+" C="+f.s(C)+" }";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			LineGeneral2D_F64 o = (LineGeneral2D_F64) obj;
+			return A==o.A && B ==o.B && C==o.C;
+		} catch( RuntimeException e ) {
+			return super.equals(obj);
+		}
 	}
 }

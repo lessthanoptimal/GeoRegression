@@ -102,4 +102,22 @@ public class LineSegment2D_I32 implements Serializable {
 	public LineSegment2D_I32 copy() {
 		return new LineSegment2D_I32( a, b );
 	}
+
+	@Override
+	public String toString() {
+		return "LineSegment2D_I32{" +
+				"a=" + a +
+				", b=" + b +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			LineSegment2D_I32 o = (LineSegment2D_I32) obj;
+			return a.equals(o.a) && b.equals(o.b);
+		} catch( RuntimeException e ) {
+			return super.equals(obj);
+		}
+	}
 }

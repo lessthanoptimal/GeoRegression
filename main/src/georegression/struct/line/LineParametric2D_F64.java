@@ -21,6 +21,7 @@ package georegression.struct.line;
 import georegression.geometry.UtilLine2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
+import org.ejml.FancyPrint;
 
 import java.io.Serializable;
 
@@ -152,6 +153,17 @@ public class LineParametric2D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+" P( "+p.x+" "+p.y+" ) Slope( "+slope.x+" "+slope.y+" )";
+		FancyPrint f = new FancyPrint();
+		return getClass().getSimpleName()+" P( "+f.s(p.x)+" "+f.s(p.y)+" ) Slope( "+f.s(slope.x)+" "+f.s(slope.y)+" )";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			LineParametric2D_F64 o = (LineParametric2D_F64) obj;
+			return p.equals(o.p) && slope.equals(o.slope);
+		} catch( RuntimeException e ) {
+			return super.equals(obj);
+		}
 	}
 }

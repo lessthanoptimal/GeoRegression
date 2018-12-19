@@ -110,4 +110,14 @@ public class LineSegment3D_F64 implements Serializable {
 				", b=" + b +
 				'}';
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			LineSegment3D_F64 o = (LineSegment3D_F64) obj;
+			return a.equals(o.a) && b.equals(o.b);
+		} catch( RuntimeException e ) {
+			return super.equals(obj);
+		}
+	}
 }
