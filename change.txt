@@ -11,6 +11,9 @@ Version : 0.18
   * Added mult cross transpose functions
 - Added equals()
   * Line data structures
+- Distance2D
+  * Fixed numerical overflow in line distance. Thanks Charlie Hayes for pointing out this problem.
+- TODO Add distance between point and box. See github
 
 ---------------------------------------------
 Date    : 2018/10/15
