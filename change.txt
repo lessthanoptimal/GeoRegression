@@ -1,7 +1,7 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 201
+Date    : 2018/12/26
 Version : 0.18
 
 - upgraded gradle wrapper
@@ -13,7 +13,6 @@ Version : 0.18
   * Line data structures
 - Distance2D
   * Fixed numerical overflow in line distance. Thanks Charlie Hayes for pointing out this problem.
-- TODO Add distance between point and box. See github
 
 ---------------------------------------------
 Date    : 2018/10/15
