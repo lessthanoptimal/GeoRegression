@@ -1,6 +1,5 @@
 **Geometric Regression Library (GeoRegression)** is a free Java based geometry library for scientific computing in fields such as robotics and computer vision with a focus on 2D/3D space. The goal of GeoRegression is to provide all the core functions for estimating the closest point/distance between geometric primitives, estimating best-fit shapes, and estimating and applying geometric transforms. It is designed for high performance and ease of use. GeoRegression has been release under an Apache v2.0 license for both commercial and non-commercial use.
 
-* **Build Instructions:** See install.txt
 * **Webpage:** http://georegression.org
 * **Source Code:** https://github.com/lessthanoptimal/GeoRegression
 * **Precompiled Jars:** https://sourceforge.net/projects/georegression/
@@ -14,12 +13,19 @@
   * Full support for 2-D/3-D space.
   * Minimal support for N-D space. 
 * Metric measures
-  * Distance, closest point, and points of intersection. 
+  * Distance, closest point, and intersections. 
 * Transforms
   * Rigid body 2D/3D, homography, and affine.
+* 3D Rotation
+  * Euler Angles (all possible)
+  * Rodrigues (axis-angle)
+  * Quaternions
+  * Convert between each aother and into 3x3 rotation matices
+* Homogenous Coordinates
+  * Implicit 2D z=1 and 3D w=1
 * Best Fit
-  * Shapes (e.g. best fit line from points).
-  * Motion/Transform (e.g. motion for a set of point pairs). 
+  * Shapes (e.g. lines, curves, ellipses, planes, spheres, cylinders, ... etc ).
+  * Motion/Transform (e.g. affine, homography, special euclidean). 
 * Support for both 32-bit and 64-bit floating point numbers.
   * Types: float and double.
   * Limited support for integers types. 

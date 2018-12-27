@@ -84,7 +84,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		return z;
 	}
 
-	public double getIndex( int index ) {
+	public double getIdx(int index ) {
 		switch( index ) {
 			case 0:
 				return x;
@@ -100,7 +100,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		}
 	}
 
-	public void setIndex( int index, double value ) {
+	public void setIdx(int index, double value ) {
 		switch( index ) {
 			case 0:
 				x = value;
@@ -254,6 +254,6 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		String sy = UtilEjml.fancyString(y,format, MatrixIO.DEFAULT_LENGTH,4);
 		String sz = UtilEjml.fancyString(z,format, MatrixIO.DEFAULT_LENGTH,4);
 
-		return name+"( " + sx + " " + sy + " " + sz + " )";
+		return name+"( " + sx + " , " + sy + " , " + sz + " )";
 	}
 }

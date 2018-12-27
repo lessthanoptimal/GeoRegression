@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -66,9 +66,9 @@ public class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 		T a = (T) seed.createNewInstance();
 
 		for( int i = 0; i < a.getDimension(); i++ ) {
-			assertEquals( 0, a.getIndex( i ), GrlConstants.TEST_F64);
-			a.setIndex( i, 2 );
-			assertEquals( 2, a.getIndex( i ), GrlConstants.TEST_F64);
+			assertEquals( 0, a.getIdx( i ), GrlConstants.TEST_F64);
+			a.setIdx( i, 2 );
+			assertEquals( 2, a.getIdx( i ), GrlConstants.TEST_F64);
 		}
 	}
 
@@ -76,7 +76,7 @@ public class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 		T a = (T) seed.createNewInstance();
 		double total = 0;
 		for( int i = 0; i < a.getDimension(); i++ ) {
-			a.setIndex( i, i + 1 );
+			a.setIdx( i, i + 1 );
 			total += ( i + 1 ) * ( i + 1 );
 		}
 
@@ -88,7 +88,7 @@ public class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 		T a = (T) seed.createNewInstance();
 		double total = 0;
 		for( int i = 0; i < a.getDimension(); i++ ) {
-			a.setIndex( i, i + 1 );
+			a.setIdx( i, i + 1 );
 			total += ( i + 1 ) * ( i + 1 );
 		}
 
@@ -98,14 +98,14 @@ public class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 	public void checkCopy() {
 		T a = (T) seed.createNewInstance();
 		for( int i = 0; i < a.getDimension(); i++ ) {
-			a.setIndex( i, i + 1 );
+			a.setIdx( i, i + 1 );
 		}
 
 		T b = (T) a.copy();
 
 		assertTrue( a != b );
 		for( int i = 0; i < a.getDimension(); i++ ) {
-			assertTrue( a.getIndex( i ) == b.getIndex( i ) );
+			assertTrue( a.getIdx( i ) == b.getIdx( i ) );
 		}
 	}
 
@@ -117,9 +117,9 @@ public class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 		assertTrue( a.equals(b) );
 
 		for( int i = 0; i < a.getDimension(); i++ ) {
-			a.setIndex(i, 2);
+			a.setIdx(i, 2);
 			assertFalse(a.equals(b));
-			b.setIndex(i, 2);
+			b.setIdx(i, 2);
 			assertTrue(a.equals(b));
 		}
 	}

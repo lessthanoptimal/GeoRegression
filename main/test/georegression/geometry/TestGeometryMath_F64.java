@@ -19,10 +19,8 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
-import georegression.struct.point.Point2D_F64;
-import georegression.struct.point.Point3D_F64;
-import georegression.struct.point.Vector2D_F64;
-import georegression.struct.point.Vector3D_F64;
+import georegression.struct.point.*;
+import org.ejml.UtilEjml;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
@@ -365,6 +363,42 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
+	public void mult_4d_3d() {
+		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(3,4,rand);
+		Point4D_F64 X = new Point4D_F64(1,2,3,4);
+
+		Point3D_F64 Y = new Point3D_F64();
+		GeometryMath_F64.mult(P,X,Y);
+
+		GEquation eq = new GEquation(P,"P",X,"X");
+		eq.process("Y=P*X");
+		DMatrixRMaj expected = eq.lookupDDRM("Y");
+
+		for (int i = 0; i < 3; i++) {
+			assertEquals(expected.get(i),Y.getIdx(i), UtilEjml.TEST_F64);
+		}
+	}
+
+	@Test
+	public void mult_4d_2d() {
+		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(3,4,rand);
+		Point4D_F64 X = new Point4D_F64(1,2,3,4);
+
+		Point2D_F64 Y = new Point2D_F64();
+		GeometryMath_F64.mult(P,X,Y);
+
+		GEquation eq = new GEquation(P,"P",X,"X");
+		eq.process("Y=P*X");
+		DMatrixRMaj expected = eq.lookupDDRM("Y");
+
+		for (int i = 0; i < 2; i++) {
+			double z = expected.get(2);
+			assertEquals(expected.get(i)/z,Y.getIdx(i), UtilEjml.TEST_F64);
+		}
+	}
+
+
+	@Test
 	public void multCrossA_2D() {
 		Point2D_F64 a = new Point2D_F64(3,2);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
@@ -379,6 +413,20 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
+	public void multCrossATransA_2D() {
+		Point2D_F64 a = new Point2D_F64(3,2);
+		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
+
+		DMatrixRMaj a_hat = GeometryMath_F64.crossMatrix(a.x,a.y,1,null);
+		DMatrixRMaj expected = new DMatrixRMaj(3,3);
+		CommonOps_DDRM.multTransA(a_hat,b,expected);
+
+		DMatrixRMaj found = GeometryMath_F64.multCrossATransA(a,b,null);
+
+		assertTrue(MatrixFeatures_DDRM.isIdentical(expected,found,GrlConstants.TEST_F64));
+	}
+
+	@Test
 	public void multCrossA_3D() {
 		Point3D_F64 a = new Point3D_F64(1,2,3);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
@@ -388,6 +436,20 @@ public class TestGeometryMath_F64 {
 		CommonOps_DDRM.mult(a_hat,b,expected);
 
 		DMatrixRMaj found = GeometryMath_F64.multCrossA(a,b,null);
+
+		assertTrue(MatrixFeatures_DDRM.isIdentical(expected,found,GrlConstants.TEST_F64));
+	}
+
+	@Test
+	public void multCrossATransA_3D() {
+		Point3D_F64 a = new Point3D_F64(1,2,3);
+		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
+
+		DMatrixRMaj a_hat = GeometryMath_F64.crossMatrix(a.x,a.y,a.z,null);
+		DMatrixRMaj expected = new DMatrixRMaj(3,3);
+		CommonOps_DDRM.multTransA(a_hat,b,expected);
+
+		DMatrixRMaj found = GeometryMath_F64.multCrossATransA(a,b,null);
 
 		assertTrue(MatrixFeatures_DDRM.isIdentical(expected,found,GrlConstants.TEST_F64));
 	}

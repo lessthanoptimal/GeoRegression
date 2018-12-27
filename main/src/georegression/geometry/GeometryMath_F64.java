@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.GeoTuple3D_F64;
+import georegression.struct.GeoTuple4D_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.mult.VectorVectorMult_DDRM;
 
@@ -427,6 +428,41 @@ public class GeometryMath_F64 {
 	}
 
 	/**
+	 * x = P*X
+	 *
+	 * @param P Projective 3x4 matrix
+	 * @param X 3D point in homogenous coordinates
+	 * @param mod 2D point in homogenous coordinates
+	 */
+	public static void mult(DMatrixRMaj P, GeoTuple4D_F64 X, GeoTuple3D_F64 mod ) {
+		if( P.numRows != 3 || P.numCols != 4 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 4 not " + P.numRows + " " + P.numCols );
+
+		mod.x = P.data[0]*X.x + P.data[1]*X.y + P.data[2]*X.z + P.data[3]*X.w;
+		mod.y = P.data[4]*X.x + P.data[5]*X.y + P.data[6]*X.z + P.data[7]*X.w;
+		mod.z = P.data[8]*X.x + P.data[9]*X.y + P.data[10]*X.z + P.data[11]*X.w;
+	}
+
+	/**
+	 * x = (P*X)/z
+	 *
+	 * @param P Projective 3x4 matrix
+	 * @param X 3D point in homogenous coordinates
+	 * @param mod 2D point in coordinates
+	 */
+	public static void mult(DMatrixRMaj P, GeoTuple4D_F64 X, GeoTuple2D_F64 mod ) {
+		if( P.numRows != 3 || P.numCols != 4 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 4 not " + P.numRows + " " + P.numCols );
+
+		double x = P.data[0]*X.x + P.data[1]*X.y + P.data[2]*X.z + P.data[3]*X.w;
+		double y = P.data[4]*X.x + P.data[5]*X.y + P.data[6]*X.z + P.data[7]*X.w;
+		double z = P.data[8]*X.x + P.data[9]*X.y + P.data[10]*X.z + P.data[11]*X.w;
+
+		mod.x = x/z;
+		mod.y = y/z;
+	}
+
+	/**
 	 * <p>
 	 * Computes the following:<br>
 	 * result = cross(A)*M<br>
@@ -469,6 +505,46 @@ public class GeometryMath_F64 {
 	/**
 	 * <p>
 	 * Computes the following:<br>
+	 * result = cross(A)<sup>T</sup>*M<br>
+	 * where M and result are 3x3 matrices, cross(A) is the cross product matrix of A.
+	 * </p>
+	 *
+	 * @param A 2D homogenous coordinate (implicit z = 1) that is internally converted into cross product matrix.
+	 * @param M 3x3 matrix.
+	 * @param result Storage for results.  Can be null.
+	 * @return Results.
+	 */
+	public static DMatrixRMaj multCrossATransA( GeoTuple2D_F64 A , DMatrixRMaj M, DMatrixRMaj result ) {
+		if( M.numRows != 3 || M.numCols != 3 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
+
+		if( result == null ) {
+			result = new DMatrixRMaj(3,3);
+		}
+
+		double x = A.x;
+		double y = A.y;
+
+		double a11 = M.data[0]; double a12 = M.data[1]; double a13 = M.data[2];
+		double a21 = M.data[3]; double a22 = M.data[4]; double a23 = M.data[5];
+		double a31 = M.data[6]; double a32 = M.data[7]; double a33 = M.data[8];
+
+		result.data[0] =  a21   - a31*y;
+		result.data[1] =  a22   - a32*y;
+		result.data[2] =  a23   - a33*y;
+		result.data[3] = -a11   + a31*x;
+		result.data[4] = -a12   + a32*x;
+		result.data[5] = -a13   + a33*x;
+		result.data[6] =  a11*y - a21*x;
+		result.data[7] =  a12*y - a22*x;
+		result.data[8] =  a13*y - a23*x;
+
+		return result;
+	}
+
+	/**
+	 * <p>
+	 * Computes the following:<br>
 	 * result = cross(A)*M<br>
 	 * where M and result are 3x3 matrices, cross(A) is the cross product matrix of A.
 	 * </p>
@@ -503,6 +579,47 @@ public class GeometryMath_F64 {
 		result.data[6] = -a11*y + a21*x;
 		result.data[7] = -a12*y + a22*x;
 		result.data[8] = -a13*y + a23*x;
+
+		return result;
+	}
+
+	/**
+	 * <p>
+	 * Computes the following:<br>
+	 * result = cross(A)<sup>T</sup>*M<br>
+	 * where M and result are 3x3 matrices, cross(A) is the cross product matrix of A.
+	 * </p>
+	 *
+	 * @param A 3D coordinate that is internally converted into cross product matrix.
+	 * @param M 3x3 matrix.
+	 * @param result Storage for results.  Can be null.
+	 * @return Results.
+	 */
+	public static DMatrixRMaj multCrossATransA( GeoTuple3D_F64 A , DMatrixRMaj M, DMatrixRMaj result ) {
+		if( M.numRows != 3 || M.numCols != 3 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols );
+
+		if( result == null ) {
+			result = new DMatrixRMaj(3,3);
+		}
+
+		double x = A.x;
+		double y = A.y;
+		double z = A.z;
+
+		double a11 = M.data[0]; double a12 = M.data[1]; double a13 = M.data[2];
+		double a21 = M.data[3]; double a22 = M.data[4]; double a23 = M.data[5];
+		double a31 = M.data[6]; double a32 = M.data[7]; double a33 = M.data[8];
+
+		result.data[0] =  a21*z - a31*y;
+		result.data[1] =  a22*z - a32*y;
+		result.data[2] =  a23*z - a33*y;
+		result.data[3] = -a11*z + a31*x;
+		result.data[4] = -a12*z + a32*x;
+		result.data[5] = -a13*z + a33*x;
+		result.data[6] =  a11*y - a21*x;
+		result.data[7] =  a12*y - a22*x;
+		result.data[8] =  a13*y - a23*x;
 
 		return result;
 	}

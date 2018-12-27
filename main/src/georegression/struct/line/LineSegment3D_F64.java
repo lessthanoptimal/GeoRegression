@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,6 +25,8 @@ import java.io.Serializable;
 
 /**
  * Defines a line segment by its two end points.
+ *
+ * @see georegression.geometry.UtilLine3D_F64
  *
  * @author Peter Abeles
  */
@@ -99,5 +101,23 @@ public class LineSegment3D_F64 implements Serializable {
 
 	public LineSegment3D_F64 copy() {
 		return new LineSegment3D_F64( a, b );
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+"{" +
+				"a=" + a +
+				", b=" + b +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			LineSegment3D_F64 o = (LineSegment3D_F64) obj;
+			return a.equals(o.a) && b.equals(o.b);
+		} catch( RuntimeException e ) {
+			return super.equals(obj);
+		}
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -300,14 +300,14 @@ public class TestClosestPoint3D_F64 {
 		Point3D_F64 work = pt.copy();
 
 		for( int i = 0; i < 3; i++ ) {
-			double orig = work.getIndex(i);
-			work.setIndex(i, orig + Math.sqrt(GrlConstants.TEST_F64));
+			double orig = work.getIdx(i);
+			work.setIdx(i, orig + Math.sqrt(GrlConstants.TEST_F64));
 			double d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
 			assertTrue(found+" "+d,found < d+10*GrlConstants.TEST_F64);
-			work.setIndex(i, orig - Math.sqrt(GrlConstants.TEST_F64));
+			work.setIdx(i, orig - Math.sqrt(GrlConstants.TEST_F64));
 			d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
 			assertTrue(found + " " + d, found <=d+10*GrlConstants.TEST_F64);
-			work.setIndex(i,orig);
+			work.setIdx(i,orig);
 		}
 	}
 
@@ -317,14 +317,14 @@ public class TestClosestPoint3D_F64 {
 		Point3D_F64 work = pt.copy();
 
 		for( int i = 0; i < 3; i++ ) {
-			double orig = work.getIndex(i);
-			work.setIndex(i,orig + Math.sqrt(GrlConstants.TEST_F64));
+			double orig = work.getIdx(i);
+			work.setIdx(i,orig + Math.sqrt(GrlConstants.TEST_F64));
 			double d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
 			assertTrue(found+" "+d,found <= d+10*GrlConstants.TEST_F64);
-			work.setIndex(i,orig - Math.sqrt(GrlConstants.TEST_F64));
+			work.setIdx(i,orig - Math.sqrt(GrlConstants.TEST_F64));
 			d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
 			assertTrue(found+" "+d,found <= d+10*GrlConstants.TEST_F64);
-			work.setIndex(i,orig);
+			work.setIdx(i,orig);
 		}
 	}
 }

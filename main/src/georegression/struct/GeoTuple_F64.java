@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,7 +41,7 @@ public abstract class GeoTuple_F64 <T extends GeoTuple_F64> extends GeoTuple<T> 
 
 		int N = getDimension();
 		for( int i = 0; i < N; i++ ) {
-			double diff = Math.abs( getIndex( i ) - t.getIndex( i ) );
+			double diff = Math.abs( getIdx( i ) - t.getIdx( i ) );
 
 			if( diff > tol )
 				return false;
@@ -61,7 +61,7 @@ public abstract class GeoTuple_F64 <T extends GeoTuple_F64> extends GeoTuple<T> 
 
 		int N = getDimension();
 		for( int i = 0; i < N; i++ ) {
-			ret.setIndex( i, getIndex( i ) );
+			ret.setIdx( i, getIdx( i ) );
 		}
 
 		return ret;
@@ -85,7 +85,7 @@ public abstract class GeoTuple_F64 <T extends GeoTuple_F64> extends GeoTuple<T> 
 		double total = 0;
 		int N = getDimension();
 		for( int i = 0; i < N; i++ ) {
-			double a = getIndex( i );
+			double a = getIdx( i );
 			total += a * a;
 		}
 
@@ -103,7 +103,7 @@ public abstract class GeoTuple_F64 <T extends GeoTuple_F64> extends GeoTuple<T> 
 		double total = 0;
 		final int N = getDimension();
 		for( int i = 0; i < N; i++ ) {
-			double diff = Math.abs( getIndex( i ) - t.getIndex( i ) );
+			double diff = Math.abs( getIdx( i ) - t.getIdx( i ) );
 
 			total += diff * diff;
 		}
@@ -117,9 +117,9 @@ public abstract class GeoTuple_F64 <T extends GeoTuple_F64> extends GeoTuple<T> 
 	 * @param index Which axis in the coordinate system.
 	 * @return Its value.
 	 */
-	public abstract double getIndex( int index );
+	public abstract double getIdx(int index );
 
-	public abstract void setIndex( int index, double value );
+	public abstract void setIdx(int index, double value );
 
 	@Override
 	public boolean equals(Object obj) {
@@ -131,7 +131,7 @@ public abstract class GeoTuple_F64 <T extends GeoTuple_F64> extends GeoTuple<T> 
 		if( N != p.getDimension() )
 			return false;
 		for( int i = 0; i < N; i++ ) {
-			if( getIndex(i) != p.getIndex(i))
+			if( getIdx(i) != p.getIdx(i))
 				return false;
 		}
 		return true;

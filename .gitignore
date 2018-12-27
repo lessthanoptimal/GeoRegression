@@ -3,7 +3,7 @@
 .settings
 target
 build
-.idea/libraries
+.idea/
 *.class
 *.jar
 **/*.iml

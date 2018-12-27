@@ -26,13 +26,13 @@ import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
 /**
  * @author Peter Abeles
  */
-public class SpecialOrthogonalOps {
+public class SpecialOrthogonalOps_F64 {
 	/**
 	 * Finds the best fit matrix in SO(3) for the input matrix.
 	 *
 	 * @param A 3x3 matrix. Modified.
 	 */
-	private void bestFit(DMatrixRMaj A ) {
+	public static void bestFit( DMatrixRMaj A ) {
 
 		SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(true,true,true);
 

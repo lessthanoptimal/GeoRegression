@@ -1,6 +1,20 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2018/12/26
+Version : 0.18
+
+- upgraded gradle wrapper
+- Fixed SpecialOrthogonalOps
+- Created UtilPoint4D_F64
+- GeometryMath
+  * Added mult cross transpose functions
+- Added equals()
+  * Line data structures
+- Distance2D
+  * Fixed numerical overflow in line distance. Thanks Charlie Hayes for pointing out this problem.
+
+---------------------------------------------
 Date    : 2018/10/15
 Version : 0.17
 
