@@ -8,7 +8,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.18'
+    version = '0.19-SNAPSHOT'
 }
 
 gversion {
