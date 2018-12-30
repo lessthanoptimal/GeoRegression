@@ -115,6 +115,11 @@ public class LineParametric2D_F64 implements Serializable {
 		return new Point2D_F64( slope.x * t + p.x, slope.y * t + p.y );
 	}
 
+	public void getPointOnLine(double t , Point2D_F64 x ) {
+		x.x = slope.x*t + p.x;
+		x.y = slope.y*t + p.y;
+	}
+
 	public Point2D_F64 getPoint() {
 		return p;
 	}
