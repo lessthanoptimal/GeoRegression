@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,6 +23,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Point4D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
@@ -142,8 +143,26 @@ public class TestSePointOps_F64 {
 		SePointOps_F64.transform( se, P, Pt );
 
 		assertEquals( 10, Pt.getX(), GrlConstants.TEST_F64);
-		assertEquals( 9, Pt.getY(), GrlConstants.TEST_F64);
-		assertEquals( 2, Pt.getZ(), GrlConstants.TEST_F64);
+		assertEquals( 9 , Pt.getY(), GrlConstants.TEST_F64);
+		assertEquals( 2 , Pt.getZ(), GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void transform_4d_single() {
+		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
+		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
+
+		Point4D_F64 P = new Point4D_F64( 1, 7, 9 , 1);
+		Point4D_F64 Pt = new Point4D_F64();
+
+		Se3_F64 se = new Se3_F64( R, T );
+
+		SePointOps_F64.transform( se, P, Pt );
+
+		assertEquals( 10, Pt.getX(), GrlConstants.TEST_F64);
+		assertEquals( 9 , Pt.getY(), GrlConstants.TEST_F64);
+		assertEquals( 2 , Pt.getZ(), GrlConstants.TEST_F64);
+		assertEquals( 1 , Pt.getW(), GrlConstants.TEST_F64);
 	}
 
 	@Test
