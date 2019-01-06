@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -153,7 +153,7 @@ public class TestSePointOps_F64 {
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
 		Point4D_F64 P = new Point4D_F64( 1, 7, 9 , 1);
-		Point4D_F64 Pt = new Point4D_F64();
+		Point3D_F64 Pt = new Point3D_F64();
 
 		Se3_F64 se = new Se3_F64( R, T );
 
@@ -162,7 +162,12 @@ public class TestSePointOps_F64 {
 		assertEquals( 10, Pt.getX(), GrlConstants.TEST_F64);
 		assertEquals( 9 , Pt.getY(), GrlConstants.TEST_F64);
 		assertEquals( 2 , Pt.getZ(), GrlConstants.TEST_F64);
-		assertEquals( 1 , Pt.getW(), GrlConstants.TEST_F64);
+
+		P.w = 0;
+		SePointOps_F64.transform( se, P, Pt );
+		assertEquals( 9 , Pt.getX(), GrlConstants.TEST_F64);
+		assertEquals( 7 , Pt.getY(), GrlConstants.TEST_F64);
+		assertEquals(-1 , Pt.getZ(), GrlConstants.TEST_F64);
 	}
 
 	@Test

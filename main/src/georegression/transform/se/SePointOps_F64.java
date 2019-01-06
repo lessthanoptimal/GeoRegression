@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -204,7 +204,7 @@ public class SePointOps_F64 {
 	 * <p>.
 	 * Applies the transform specified by SpecialEuclidean to a homogenous point.<br>
 	 * <br>
-	 * p' = [R t;0 0 0 1]*p
+	 * p' = [R t]*p
 	 * </p>
 	 * <p>
 	 * Both origPt and tranPt can be the same instance.
@@ -215,9 +215,9 @@ public class SePointOps_F64 {
 	 * @param tranPt Storage for transformed coordinate of the point. Point declared if null.  Modified.
 	 * @return Transformed point.
 	 */
-	public static Point4D_F64 transform(Se3_F64 se, Point4D_F64 origPt, Point4D_F64 tranPt ) {
+	public static Point3D_F64 transform(Se3_F64 se, Point4D_F64 origPt, Point3D_F64 tranPt ) {
 		if( tranPt == null )
-			tranPt = new Point4D_F64();
+			tranPt = new Point3D_F64();
 
 		DMatrixRMaj R = se.getR();
 		Vector3D_F64 T = se.getT();
@@ -226,11 +226,9 @@ public class SePointOps_F64 {
 		double P21 = R.data[3], P22 = R.data[4], P23 = R.data[5], P24 = T.y;
 		double P31 = R.data[6], P32 = R.data[7], P33 = R.data[8], P34 = T.z;
 
-		double X = P11*origPt.x + P12*origPt.y + P13*origPt.z + P14*origPt.w;
-		double Y = P21*origPt.x + P22*origPt.y + P23*origPt.z + P24*origPt.w;
-		double Z = P31*origPt.x + P32*origPt.y + P33*origPt.z + P34*origPt.w;
-
-		tranPt.set(X,Y,Z,origPt.w);
+		tranPt.x = P11*origPt.x + P12*origPt.y + P13*origPt.z + P14*origPt.w;
+		tranPt.y = P21*origPt.x + P22*origPt.y + P23*origPt.z + P24*origPt.w;
+		tranPt.z = P31*origPt.x + P32*origPt.y + P33*origPt.z + P34*origPt.w;
 
 		return tranPt;
 	}
