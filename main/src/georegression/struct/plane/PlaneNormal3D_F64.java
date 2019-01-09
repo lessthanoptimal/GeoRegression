@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -82,8 +82,12 @@ public class PlaneNormal3D_F64 implements Serializable {
 		this.n.set(n);
 	}
 
+	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"[ p( "+p.x+" "+p.y+" "+p.z+" ) , n( "+n.x+" "+n.y+" "+n.z+" ) ]";
+		return getClass().getSimpleName()+"{" +
+				"p=" + p +
+				", n=" + n +
+				'}';
 	}
 
 	@Override

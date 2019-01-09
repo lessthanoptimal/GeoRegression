@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -39,10 +39,21 @@ import static org.junit.Assert.assertEquals;
 public class TestDistance2D_F64 {
 
 	@Test
-	public void distance_parametric_line() {
+	public void distance_parametric_line_case0() {
 		double found = Distance2D_F64.distance( new LineParametric2D_F64( -2, 0, 1, 1 ), new Point2D_F64( 4, -2 ) );
 		double expected = (double) UtilTrig_F64.distance( 0, 2, 4, -2 );
 		assertEquals( expected, found, GrlConstants.TEST_F64);
+	}
+
+	/**
+	 * Give it a very large slope
+	 */
+	@Test
+	public void distance_parametric_line_case1() {
+		double found = Distance2D_F64.distance(
+				new LineParametric2D_F64( 100,0,0,Double.MAX_VALUE),
+				new Point2D_F64( 20, 20 ) );
+		assertEquals( 80.0, found, GrlConstants.TEST_F64);
 	}
 
 	@Test

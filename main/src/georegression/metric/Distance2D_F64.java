@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -76,10 +76,12 @@ public class Distance2D_F64 {
 	 * @return Euclidean distance squared to the closest point on the line is away from the point.
 	 */
 	public static double distanceSq( LineParametric2D_F64 line, Point2D_F64 p ) {
-		double t = ClosestPoint2D_F64.closestPointT( line, p );
+		double scale = Math.max(Math.abs(line.slope.x),Math.abs(line.slope.y));
 
-		double a = line.slope.x * t + line.p.x;
-		double b = line.slope.y * t + line.p.y;
+		double t = ClosestPoint2D_F64.closestPointT( line, p , scale);
+
+		double a = (line.slope.x/scale) * t + line.p.x;
+		double b = (line.slope.y/scale) * t + line.p.y;
 
 		double dx = p.x - a;
 		double dy = p.y - b;
@@ -98,10 +100,12 @@ public class Distance2D_F64 {
 	 * @return Euclidean distance squared to the closest point on the line is away from the point.
 	 */
 	public static double distanceSq( LineParametric2D_F64 line, double x , double y ) {
-		double t = ClosestPoint2D_F64.closestPointT( line, x,y );
+		double scale = Math.max(Math.abs(line.slope.x),Math.abs(line.slope.y));
 
-		double a = line.slope.x * t + line.p.x;
-		double b = line.slope.y * t + line.p.y;
+		double t = ClosestPoint2D_F64.closestPointT( line, x, y , scale);
+
+		double a = (line.slope.x/scale) * t + line.p.x;
+		double b = (line.slope.y/scale) * t + line.p.y;
 
 		double dx = x - a;
 		double dy = y - b;

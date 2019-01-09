@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,11 +24,15 @@ import georegression.metric.Intersection2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.struct.FastQueue;
+import org.ejml.ops.MatrixIO;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.ejml.UtilEjml.fancyStringF;
 
 /**
  * Describes a polygon in 2D.
@@ -217,14 +221,16 @@ public class Polygon2D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
+		final int length = MatrixIO.DEFAULT_LENGTH;
+		DecimalFormat format = new DecimalFormat("#");
 		String out = getClass().getSimpleName()+"{ order "+vertexes.size+" : vertexes [ ";
 
 		for (int i = 0; i < vertexes.size; i++) {
 			Point2D_F64 p = vertexes.get(i);
-			out += p.x+" , "+p.y+" ; ";
+			out += "( "+ fancyStringF(p.x,format,length,4)+" , "+fancyStringF(p.y,format,length,4)+" ) ";
 		}
 
-		out += " ] }";
+		out += "] }";
 
 		return out;
 	}

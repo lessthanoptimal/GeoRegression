@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,7 @@ package georegression.struct.line;
 
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
+import org.ejml.FancyPrint;
 
 import java.io.Serializable;
 
@@ -30,6 +31,8 @@ import java.io.Serializable;
  * where t specifies the location along the line, (x_0,y_0,z_0) is an arbitrary point on the line,
  * and (slopeX,slopeY,slopeZ).
  * </p>
+ *
+ * @see georegression.geometry.UtilLine3D_F64
  */
 public class LineParametric3D_F64 implements Serializable {
 	/**
@@ -172,6 +175,19 @@ public class LineParametric3D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+" P( "+p.x+" "+p.y+" "+p.z+" ) Slope( "+slope.x+" "+slope.y+" "+slope.z+" )";
+		FancyPrint f = new FancyPrint();
+
+		return getClass().getSimpleName()+" P( "+f.s(p.x)+" "+f.s(p.y)+" "+f.s(p.z)+
+				" ) Slope( "+f.s(slope.x)+" "+f.s(slope.y)+" "+f.s(slope.z)+" )";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			LineParametric3D_F64 o = (LineParametric3D_F64) obj;
+			return p.equals(o.p) && slope.equals(o.slope);
+		} catch( RuntimeException e ) {
+			return super.equals(obj);
+		}
 	}
 }

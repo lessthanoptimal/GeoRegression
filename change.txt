@@ -1,7 +1,16 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 201
+Date    : 2019
+Version : 0.19
+
+- SE3 applied to homogneous points
+- Added Hash Codes
+  * Requested by Nico Stuurman
+  * Points, Vectors, and Planes
+
+---------------------------------------------
+Date    : 2018/12/26
 Version : 0.18
 
 - upgraded gradle wrapper
@@ -9,9 +18,10 @@ Version : 0.18
 - Created UtilPoint4D_F64
 - GeometryMath
   * Added mult cross transpose functions
-- Added Hash Codes
-  * Requested by Nico Stuurman
-  * Points, Vectors, and Planes
+- Added equals()
+  * Line data structures
+- Distance2D
+  * Fixed numerical overflow in line distance. Thanks Charlie Hayes for pointing out this problem.
 
 ---------------------------------------------
 Date    : 2018/10/15

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,6 +34,9 @@ import java.io.Serializable;
  * where r is the distance from the closest point on the line to the origin, and &theta; is
  * an angle tangent to the line.
  * </p>
+ *
+ * @see georegression.geometry.UtilLine2D_F64
+ *
  * @author Peter Abeles
  */
 public class LinePolar2D_F64 implements Serializable{
