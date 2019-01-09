@@ -23,6 +23,7 @@ import org.ejml.UtilEjml;
 import org.ejml.ops.MatrixIO;
 
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 /**
  * Generic Tuple for geometric objects that store (x,y,z)
@@ -245,7 +246,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		if( this.getClass() != obj.getClass() )
 			return false;
 		GeoTuple3D_F64 p = (GeoTuple3D_F64)obj;
-		return x==p.x&&y==p.y&&z==p.z;
+		return Double.compare(x,p.x)==0 && Double.compare(y,p.y)==0 && Double.compare(z,p.z)==0;
 	}
 
 	protected String toString( String name ) {
@@ -255,5 +256,10 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		String sz = UtilEjml.fancyString(z,format, MatrixIO.DEFAULT_LENGTH,4);
 
 		return name+"( " + sx + " , " + sy + " , " + sz + " )";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y, z);
 	}
 }

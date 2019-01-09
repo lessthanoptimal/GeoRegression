@@ -9,6 +9,9 @@ Version : 0.18
 - Created UtilPoint4D_F64
 - GeometryMath
   * Added mult cross transpose functions
+- Added Hash Codes
+  * Requested by Nico Stuurman
+  * Points, Vectors, and Planes
 
 ---------------------------------------------
 Date    : 2018/10/15

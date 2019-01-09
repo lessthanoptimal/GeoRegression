@@ -23,6 +23,7 @@ import org.ejml.ops.MatrixIO;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 /**
  * <p>
@@ -114,5 +115,21 @@ public class PlaneGeneral3D_F64 implements Serializable {
 		String sD = UtilEjml.fancyString(D,format, MatrixIO.DEFAULT_LENGTH,4);
 
 		return getClass().getSimpleName()+"( A = "+sA+" B = "+sB+" C = "+sC+" D = "+sD+" )";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		PlaneGeneral3D_F64 that = (PlaneGeneral3D_F64) o;
+		return Double.compare(that.A, A) == 0 &&
+				Double.compare(that.B, B) == 0 &&
+				Double.compare(that.C, C) == 0 &&
+				Double.compare(that.D, D) == 0;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(A, B, C, D);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,8 @@
 package georegression.struct.point;
 
 import georegression.struct.GeoTuple;
+
+import java.util.Objects;
 
 /**
  * An integer 2D point
@@ -135,5 +137,10 @@ public class Point2D_I32 extends GeoTuple<Point2D_I32> {
 			return false;
 		Point2D_I32 p = (Point2D_I32)obj;
 		return x==p.x&&y==p.y;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y);
 	}
 }

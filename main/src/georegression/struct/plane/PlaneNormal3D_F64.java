@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,6 +22,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Defines a plane using a point on the plane and the plane's normal.  N*(x-p0) = 0, where N is the plane's
@@ -83,5 +84,18 @@ public class PlaneNormal3D_F64 implements Serializable {
 
 	public String toString() {
 		return getClass().getSimpleName()+"[ p( "+p.x+" "+p.y+" "+p.z+" ) , n( "+n.x+" "+n.y+" "+n.z+" ) ]";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		PlaneNormal3D_F64 that = (PlaneNormal3D_F64) o;
+		return p.equals(that.p) && n.equals(that.n);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(p, n);
 	}
 }
