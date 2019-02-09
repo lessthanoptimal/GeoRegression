@@ -3,7 +3,7 @@
 .settings
 target
 build
-.idea/
+.idea/*
 *.class
 *.jar
 **/*.iml
