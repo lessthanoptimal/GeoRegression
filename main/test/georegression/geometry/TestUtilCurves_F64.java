@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,7 +23,9 @@ import georegression.struct.curve.ConicGeneral_F64;
 import georegression.struct.curve.ParabolaGeneral_F64;
 import georegression.struct.curve.ParabolaParametric_F64;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.point.Point3D_F64;
 import org.ejml.UtilEjml;
+import org.ejml.data.DMatrixRMaj;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -33,6 +35,33 @@ import static org.junit.Assert.assertTrue;
  * @author Peter Abeles
  */
 public class TestUtilCurves_F64 {
+
+	@Test
+	public void matrix_to_conic() {
+		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);
+		DMatrixRMaj C = UtilCurves_F64.convert(conic,(DMatrixRMaj)null);
+		ConicGeneral_F64 found = UtilCurves_F64.convert(C,(ConicGeneral_F64)null);
+
+		assertEquals(conic.A,found.A, UtilEjml.TEST_F64);
+		assertEquals(conic.B,found.B, UtilEjml.TEST_F64);
+		assertEquals(conic.C,found.C, UtilEjml.TEST_F64);
+		assertEquals(conic.D,found.D, UtilEjml.TEST_F64);
+		assertEquals(conic.E,found.E, UtilEjml.TEST_F64);
+		assertEquals(conic.F,found.F, UtilEjml.TEST_F64);
+	}
+
+	@Test
+	public void conic_to_matrix() {
+		// hand constructed conic with a known point on the conic
+		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);
+
+		DMatrixRMaj C = UtilCurves_F64.convert(conic,(DMatrixRMaj)null);
+
+		// since the point is on the conic it should equal zero
+		Point3D_F64 P = new Point3D_F64(10,5,1);
+		assertEquals(0,GeometryMath_F64.innerProd(P,C,P) , UtilEjml.TEST_F64);
+	}
+
 	/**
 	 * The conic is a parabola This is an easy case
 	 */

@@ -98,4 +98,16 @@ public class ConicGeneral_F64 implements Serializable
 	public ConicGeneral_F64 copy() {
 		return new ConicGeneral_F64(A,B,C,D,E,F);
 	}
+
+	@Override
+	public String toString() {
+		return "ConicGeneral_F64{" +
+				"A=" + A +
+				", B=" + B +
+				", C=" + C +
+				", D=" + D +
+				", E=" + E +
+				", F=" + F +
+				'}';
+	}
 }

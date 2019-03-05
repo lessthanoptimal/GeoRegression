@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,11 +21,49 @@ package georegression.geometry;
 import georegression.struct.curve.ConicGeneral_F64;
 import georegression.struct.curve.ParabolaGeneral_F64;
 import georegression.struct.curve.ParabolaParametric_F64;
+import org.ejml.data.DMatrixRMaj;
 
 /**
  * @author Peter Abeles
  */
 public class UtilCurves_F64 {
+
+
+	/**
+	 * Converts the conic into a symmetric 3x3 matrix
+	 */
+	public static DMatrixRMaj convert(ConicGeneral_F64 src , DMatrixRMaj dst )
+	{
+		if( dst == null )
+			dst = new DMatrixRMaj(3,3);
+		else
+			dst.reshape(3,3);
+
+		double B = src.B/2.0;
+		double D = src.D/2.0;
+		double E = src.E/2.0;
+
+		dst.data[0] = src.A; dst.data[1] = B;     dst.data[2] = D;
+		dst.data[3] = B;     dst.data[4] = src.C; dst.data[5] = E;
+		dst.data[6] = D;     dst.data[7] = E;     dst.data[8] = src.F;
+
+		return dst;
+	}
+
+	/**
+	 * Converts symmetric 3x3 matrix back into a conic
+	 */
+	public static ConicGeneral_F64 convert( DMatrixRMaj src , ConicGeneral_F64 dst ) {
+		if( dst == null )
+			dst = new ConicGeneral_F64();
+
+		dst.A = src.data[0]; dst.B = 2*src.data[1]; dst.D = 2*src.data[2];
+		dst.C = src.data[4]; dst.E = 2*src.data[5];
+		dst.F = src.data[8];
+
+		return dst;
+	}
+
 	/**
 	 * Converts the conic into a parabola. If the conic isn't a parabola then it is converted into one
 	 * by adjusting the value of B.
