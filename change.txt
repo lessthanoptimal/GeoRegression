@@ -8,6 +8,7 @@ Version : 0.19
 - Added Hash Codes
   * Requested by Nico Stuurman
   * Points, Vectors, and Planes
+- Added cubic curve and fitting algorithm
 
 ---------------------------------------------
 Date    : 2018/12/26
