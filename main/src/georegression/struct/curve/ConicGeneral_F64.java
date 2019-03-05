@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,12 +46,12 @@ public class ConicGeneral_F64 implements Serializable
 	public double A,B,C,D,E,F;
 
 	public ConicGeneral_F64(double a, double b, double c, double d, double e, double f) {
-		A = a;
-		B = b;
-		C = c;
-		D = d;
-		E = e;
-		F = f;
+		A = a; B = b; C = c;
+		D = d; E = e; F = f;
+	}
+
+	public ConicGeneral_F64( ConicGeneral_F64 original ) {
+		set(original);
 	}
 
 	public ConicGeneral_F64() {
@@ -81,13 +81,18 @@ public class ConicGeneral_F64 implements Serializable
 		return B*B-tol > 4*A*C;
 	}
 
-	public void setTo( ConicGeneral_F64 original ) {
+	public void set(ConicGeneral_F64 original ) {
 		this.A = original.A;
 		this.B = original.B;
 		this.C = original.C;
 		this.D = original.D;
 		this.E = original.E;
 		this.F = original.F;
+	}
+
+	public void set(double a, double b, double c, double d, double e, double f) {
+		A = a; B = b; C = c;
+		D = d; E = e; F = f;
 	}
 
 	public ConicGeneral_F64 copy() {
