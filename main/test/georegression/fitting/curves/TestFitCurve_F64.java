@@ -19,8 +19,8 @@
 package georegression.fitting.curves;
 
 import georegression.misc.GrlConstants;
-import georegression.struct.curve.Cubic1D_F64;
-import georegression.struct.curve.Quadratic1D_F64;
+import georegression.struct.curve.PolynomialCubic1D_F64;
+import georegression.struct.curve.PolynomialQuadratic1D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
 import org.ejml.UtilEjml;
@@ -44,7 +44,7 @@ public class TestFitCurve_F64 {
 		points.add( new Point2D_F64(4,2));
 		points.add( new Point2D_F64(-1,8));
 
-		Quadratic1D_F64 found = FitCurve_F64.fit(points,(Quadratic1D_F64)null);
+		PolynomialQuadratic1D_F64 found = FitCurve_F64.fit(points,(PolynomialQuadratic1D_F64)null);
 
 		// it should fit all the points perfectly
 		for( Point2D_F64 p : points ) {
@@ -77,7 +77,7 @@ public class TestFitCurve_F64 {
 		points.add( new Point2D_I32(4,2));
 		points.add( new Point2D_I32(-1,8));
 
-		Quadratic1D_F64 found = FitCurve_F64.fit_S32(points,(Quadratic1D_F64)null);
+		PolynomialQuadratic1D_F64 found = FitCurve_F64.fit_S32(points,(PolynomialQuadratic1D_F64)null);
 
 		// it should fit all the points perfectly
 		for( Point2D_I32 p : points ) {
@@ -106,7 +106,7 @@ public class TestFitCurve_F64 {
 	public void fit_float_cubic() {
 		List<Point2D_F64> points = new ArrayList<>();
 
-		Cubic1D_F64 expected = new Cubic1D_F64(0.1,-0.5,2,0.1);
+		PolynomialCubic1D_F64 expected = new PolynomialCubic1D_F64(0.1,-0.5,2,0.1);
 
 		for (int i = 0; i < 4; i++) {
 			double x = i+0.5;
@@ -114,7 +114,7 @@ public class TestFitCurve_F64 {
 			points.add( new Point2D_F64(x,y) );
 		}
 
-		Cubic1D_F64 found = FitCurve_F64.fit(points,(Cubic1D_F64)null);
+		PolynomialCubic1D_F64 found = FitCurve_F64.fit(points,(PolynomialCubic1D_F64)null);
 
 		// it should fit all the points perfectly
 		for( Point2D_F64 p : points ) {
@@ -152,7 +152,7 @@ public class TestFitCurve_F64 {
 		points.add( new Point2D_I32(-1,8));
 		points.add( new Point2D_I32(-2,4));
 
-		Cubic1D_F64 found = FitCurve_F64.fit_S32(points,(Cubic1D_F64)null);
+		PolynomialCubic1D_F64 found = FitCurve_F64.fit_S32(points,(PolynomialCubic1D_F64)null);
 
 		// it should fit all the points perfectly
 		for( Point2D_I32 p : points ) {

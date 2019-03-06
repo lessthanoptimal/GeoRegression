@@ -19,36 +19,36 @@
 package georegression.struct.curve;
 
 /**
- * Quadratic curve in 1D: f(x) = a + bx + c x<sup>2</sup> + d x<sup>3</sup>
+ * Quadratic curve in 1D: f(x) = a + bx + c x<sup>2</sup>.
  *
  * <p>NOTE: The coefficient order is the reverse of what you will find for sake of consistency as the order
  * of the polynomial is increased.</p>
  *
  * @author Peter Abeles
  */
-public class Cubic1D_F64 {
+public class PolynomialQuadratic1D_F64 {
 	/**
 	 * Coefficients
 	 */
-	public double a,b,c,d;
+	public double a,b,c;
 
-	public Cubic1D_F64(){}
+	public PolynomialQuadratic1D_F64(){}
 
-	public Cubic1D_F64(double a, double b , double c, double d){
-		this.a = a; this.b = b; this.c = c; this.d = d;
+	public PolynomialQuadratic1D_F64(double a, double b , double c){
+		this.a = a; this.b = b; this.c = c;
 	}
 
 	public double evaluate( double t ) {
-		return a + b*t + c*t*t + d*t*t*t;
+		return a + b*t + c*t*t;
 	}
 
-	public void set( double a, double b , double c , double d )
+	public void set( double a, double b , double c )
 	{
-		this.a = a; this.b = b; this.c = c; this.d = d;
+		this.a = a; this.b = b; this.c = c;
 	}
 
-	public void set( Cubic1D_F64 src )
+	public void set( PolynomialQuadratic1D_F64 src )
 	{
-		this.a = src.a; this.b = src.b; this.c = src.c; this.d = src.d;
+		this.a = src.a; this.b = src.b; this.c = src.c;
 	}
 }

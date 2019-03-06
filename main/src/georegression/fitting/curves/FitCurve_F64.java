@@ -18,8 +18,8 @@
 
 package georegression.fitting.curves;
 
-import georegression.struct.curve.Cubic1D_F64;
-import georegression.struct.curve.Quadratic1D_F64;
+import georegression.struct.curve.PolynomialCubic1D_F64;
+import georegression.struct.curve.PolynomialQuadratic1D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
 import org.ejml.data.DMatrix3x3;
@@ -47,9 +47,9 @@ public class FitCurve_F64 {
 	 * @param output (Optional) storage for the curve
 	 * @return The fitted curve
 	 */
-	public static Quadratic1D_F64 fit(List<Point2D_F64> points , @Nullable Quadratic1D_F64 output ) {
+	public static PolynomialQuadratic1D_F64 fit(List<Point2D_F64> points , @Nullable PolynomialQuadratic1D_F64 output ) {
 		if( output == null )
-			output = new Quadratic1D_F64();
+			output = new PolynomialQuadratic1D_F64();
 
 		if( !fit(points,output,new DMatrix3x3()) )
 			throw new RuntimeException("fit failed");
@@ -57,9 +57,9 @@ public class FitCurve_F64 {
 		return output;
 	}
 
-	public static Quadratic1D_F64 fit_S32(List<Point2D_I32> points , @Nullable Quadratic1D_F64 output ) {
+	public static PolynomialQuadratic1D_F64 fit_S32(List<Point2D_I32> points , @Nullable PolynomialQuadratic1D_F64 output ) {
 		if( output == null )
-			output = new Quadratic1D_F64();
+			output = new PolynomialQuadratic1D_F64();
 
 		if( !fit_S32(points,output,new DMatrix3x3()) )
 			throw new RuntimeException("fit failed");
@@ -67,9 +67,9 @@ public class FitCurve_F64 {
 		return output;
 	}
 
-	public static Cubic1D_F64 fit(List<Point2D_F64> points , @Nullable Cubic1D_F64 output ) {
+	public static PolynomialCubic1D_F64 fit(List<Point2D_F64> points , @Nullable PolynomialCubic1D_F64 output ) {
 		if( output == null )
-			output = new Cubic1D_F64();
+			output = new PolynomialCubic1D_F64();
 
 		if( !fit(points,output,new DMatrix4x4()) )
 			throw new RuntimeException("fit failed");
@@ -77,9 +77,9 @@ public class FitCurve_F64 {
 		return output;
 	}
 
-	public static Cubic1D_F64 fit_S32(List<Point2D_I32> points , @Nullable Cubic1D_F64 output ) {
+	public static PolynomialCubic1D_F64 fit_S32(List<Point2D_I32> points , @Nullable PolynomialCubic1D_F64 output ) {
 		if( output == null )
-			output = new Cubic1D_F64();
+			output = new PolynomialCubic1D_F64();
 
 		if( !fit_S32(points,output,new DMatrix4x4()) )
 			throw new RuntimeException("fit failed");
@@ -88,10 +88,10 @@ public class FitCurve_F64 {
 	}
 
 	/**
-	 * Low level version of {@link #fit(List, Quadratic1D_F64)} which allows internal work variables
+	 * Low level version of {@link #fit(List, PolynomialQuadratic1D_F64)} which allows internal work variables
 	 * to be passed in
 	 */
-	public static boolean fit(List<Point2D_F64> points , Quadratic1D_F64 output , DMatrix3x3 work ) {
+	public static boolean fit(List<Point2D_F64> points , PolynomialQuadratic1D_F64 output , DMatrix3x3 work ) {
 		if( points.size() < 3 )
 			throw new IllegalArgumentException("At least 3 points are required");
 
@@ -137,10 +137,10 @@ public class FitCurve_F64 {
 	}
 
 	/**
-	 * Low level version of {@link #fit(List, Quadratic1D_F64)} which allows internal work variables
+	 * Low level version of {@link #fit(List, PolynomialQuadratic1D_F64)} which allows internal work variables
 	 * to be passed in
 	 */
-	public static boolean fit_S32(List<Point2D_I32> points , Quadratic1D_F64 output , DMatrix3x3 work ) {
+	public static boolean fit_S32(List<Point2D_I32> points , PolynomialQuadratic1D_F64 output , DMatrix3x3 work ) {
 		if( points.size() < 3 )
 			throw new IllegalArgumentException("At least 3 points are required");
 
@@ -186,10 +186,10 @@ public class FitCurve_F64 {
 	}
 
 	/**
-	 * Low level version of {@link #fit(List, Quadratic1D_F64)} which allows internal work variables
+	 * Low level version of {@link #fit(List, PolynomialQuadratic1D_F64)} which allows internal work variables
 	 * to be passed in
 	 */
-	public static boolean fit(List<Point2D_F64> points , Cubic1D_F64 output , DMatrix4x4 A ) {
+	public static boolean fit(List<Point2D_F64> points , PolynomialCubic1D_F64 output , DMatrix4x4 A ) {
 		if( points.size() < 4 )
 			throw new IllegalArgumentException("At least 4 points are required");
 
@@ -236,10 +236,10 @@ public class FitCurve_F64 {
 	}
 
 	/**
-	 * Low level version of {@link #fit(List, Quadratic1D_F64)} which allows internal work variables
+	 * Low level version of {@link #fit(List, PolynomialQuadratic1D_F64)} which allows internal work variables
 	 * to be passed in
 	 */
-	public static boolean fit_S32(List<Point2D_I32> points , Cubic1D_F64 output , DMatrix4x4 A ) {
+	public static boolean fit_S32(List<Point2D_I32> points , PolynomialCubic1D_F64 output , DMatrix4x4 A ) {
 		if( points.size() < 4 )
 			throw new IllegalArgumentException("At least 4 points are required");
 

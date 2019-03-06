@@ -62,6 +62,32 @@ public class TestUtilCurves_F64 {
 		assertEquals(0,GeometryMath_F64.innerProd(P,C,P) , UtilEjml.TEST_F64);
 	}
 
+	@Test
+	public void fmatrix_to_conic() {
+		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);
+		DMatrixRMaj C = UtilCurves_F64.convert(conic,(DMatrixRMaj)null);
+		ConicGeneral_F64 found = UtilCurves_F64.convert(C,(ConicGeneral_F64)null);
+
+		assertEquals(conic.A,found.A, UtilEjml.TEST_F64);
+		assertEquals(conic.B,found.B, UtilEjml.TEST_F64);
+		assertEquals(conic.C,found.C, UtilEjml.TEST_F64);
+		assertEquals(conic.D,found.D, UtilEjml.TEST_F64);
+		assertEquals(conic.E,found.E, UtilEjml.TEST_F64);
+		assertEquals(conic.F,found.F, UtilEjml.TEST_F64);
+	}
+
+	@Test
+	public void conic_tof_matrix() {
+		// hand constructed conic with a known point on the conic
+		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);
+
+		DMatrixRMaj C = UtilCurves_F64.convert(conic,(DMatrixRMaj)null);
+
+		// since the point is on the conic it should equal zero
+		Point3D_F64 P = new Point3D_F64(10,5,1);
+		assertEquals(0,GeometryMath_F64.innerProd(P,C,P) , UtilEjml.TEST_F64);
+	}
+
 	/**
 	 * The conic is a parabola This is an easy case
 	 */
