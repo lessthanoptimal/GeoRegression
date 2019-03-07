@@ -20,8 +20,10 @@ package georegression.fitting.curves;
 
 import georegression.struct.curve.PolynomialCubic1D_F64;
 import georegression.struct.curve.PolynomialQuadratic1D_F64;
+import georegression.struct.curve.PolynomialQuadratic2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
+import georegression.struct.point.Point3D_F64;
 import org.ejml.data.DMatrix3x3;
 import org.ejml.data.DMatrix4x4;
 import org.ejml.dense.fixed.CommonOps_DDF3;
@@ -276,6 +278,61 @@ public class FitCurve_F64 {
 				a01,a11,a12,a13,
 				a02,a12,a22,a23,
 				a03,a13,a23,a33);
+
+		if( !CommonOps_DDF4.invert(A,A) )// TODO use a symmetric inverse. Should be slightly faster
+			return false;
+
+		// output = inv(A)*B      Unrolled here for speed
+		output.a = A.a11*b0 + A.a12*b1 + A.a13*b2 + A.a14*b3;
+		output.b = A.a21*b0 + A.a22*b1 + A.a23*b2 + A.a24*b3;
+		output.c = A.a31*b0 + A.a32*b1 + A.a33*b2 + A.a34*b3;
+		output.d = A.a41*b0 + A.a42*b1 + A.a43*b2 + A.a44*b3;
+
+		return true;
+	}
+
+	/**
+	 * Low level version of {@link #fit(List, PolynomialQuadratic1D_F64)} which allows internal work variables
+	 * to be passed in
+	 */
+	public static boolean fit(List<Point3D_F64> points , PolynomialQuadratic2D_F64 output , DMatrix4x4 A ) {
+		if( points.size() < 4 )
+			throw new IllegalArgumentException("At least 4 points are required");
+
+		final int N = points.size();
+
+		// Unrolled pseudo inverse
+		// coef = inv(A^T*A)*A^T*y
+		double sx1=0, sy1=0, sx1y1=0, sx2=0, sy2=0, sx2y1=0, sx1y2=0, sx3=0, sy3=0, sx3y1=0, sx1y3=0, sx4=0, sy4=0;
+
+		double b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,b7=0,b8=0,b9=0,b10=0;
+
+		for (int i = 0; i < N; i++) {
+			Point3D_F64 p = points.get(i);
+
+			double x2 = p.x*p.x;
+			double x3 = x2*p.x;
+			double x4 = x2*x2;
+			double y2 = p.y*p.y;
+			double y3 = y2*p.y;
+			double y4 = y2*y2;
+
+
+			sx1 += p.x; sx2 += x2; sx3 += x3;sx4 += x4;
+			sy1 += p.y; sy2 += y2; sy3 += y3;sy4 += y4;
+			sx1y1 += p.x*p.y; sx2y1 += x2*p.y; sx1y2 += p.x*y2;
+			sx3y1 += x3*p.y; sx1y3 += p.x*y3;
+
+			b0 += p.z;
+			b1 += p.x*p.z;
+			b2 += x2*p.z;
+			b3 += x3*p.z;
+		}
+
+//		A.set(  N,  sx1,sx2,sx3,
+//				sx1,sx2,sx3,sx4,
+//				sx2,sx3,sx4,sx5,
+//				sx3,sx4,sx5,sx6);
 
 		if( !CommonOps_DDF4.invert(A,A) )// TODO use a symmetric inverse. Should be slightly faster
 			return false;

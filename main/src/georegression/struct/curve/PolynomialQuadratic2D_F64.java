@@ -21,46 +21,49 @@ package georegression.struct.curve;
 import org.ejml.FancyPrint;
 
 /**
- * Quadratic curve in 1D: f(x) = a + bx + c x<sup>2</sup>.
+ * Quadratic curve in 2D: f(x,y) = a + b&middot;x + c&middot;y + d&middot;xy + e&middot;x<sup>2</sup> + f&middot;y<sup>2</sup>.
  *
  * <p>NOTE: The coefficient order is the reverse of what you will find for sake of consistency as the order
  * of the polynomial is increased.</p>
  *
  * @author Peter Abeles
  */
-public class PolynomialQuadratic1D_F64 {
+public class PolynomialQuadratic2D_F64 {
 	/**
 	 * Coefficients
 	 */
-	public double a,b,c;
+	public double a,b,c,d,e,f;
 
-	public PolynomialQuadratic1D_F64(){}
+	public PolynomialQuadratic2D_F64(){}
 
-	public PolynomialQuadratic1D_F64(double a, double b , double c){
-		this.a = a; this.b = b; this.c = c;
+	public PolynomialQuadratic2D_F64(double a, double b , double c, double d, double e, double f){
+		this.a = a; this.b = b; this.c = c; this.d = d; this.e = e; this.f = f;
 	}
 
-	public double evaluate( double t ) {
-		return a + b*t + c*t*t;
+	public double evaluate( double x , double y  ) {
+		return a + b*x + c*y + d*x*y + e*x*x + f*y*y;
 	}
 
-	public void set( double a, double b , double c )
+	public void set(double a, double b , double c, double d, double e, double f)
 	{
-		this.a = a; this.b = b; this.c = c;
+		this.a = a; this.b = b; this.c = c; this.d = d; this.e = e; this.f = f;
 	}
 
-	public void set( PolynomialQuadratic1D_F64 src )
+	public void set( PolynomialQuadratic2D_F64 src )
 	{
-		this.a = src.a; this.b = src.b; this.c = src.c;
+		this.a = src.a; this.b = src.b; this.c = src.c; this.d = src.d; this.e = src.e; this.f = src.f;
 	}
 
 	@Override
 	public String toString() {
 		FancyPrint fp = new FancyPrint();
-		return "PolynomialQuadratic1D_F64{" +
+		return "PolynomialQuadratic2D_F64{" +
 				"a=" + fp.s(a) +
 				", b=" + fp.s(b) +
 				", c=" + fp.s(c) +
+				", d=" + fp.s(d) +
+				", e=" + fp.s(e) +
+				", f=" + fp.s(f) +
 				'}';
 	}
 }

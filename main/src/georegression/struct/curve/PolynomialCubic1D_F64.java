@@ -18,6 +18,8 @@
 
 package georegression.struct.curve;
 
+import org.ejml.FancyPrint;
+
 /**
  * Quadratic curve in 1D: f(x) = a + bx + c x<sup>2</sup> + d x<sup>3</sup>
  *
@@ -50,5 +52,16 @@ public class PolynomialCubic1D_F64 {
 	public void set( PolynomialCubic1D_F64 src )
 	{
 		this.a = src.a; this.b = src.b; this.c = src.c; this.d = src.d;
+	}
+
+	@Override
+	public String toString() {
+		FancyPrint fp = new FancyPrint();
+		return "PolynomialCubic1D_F64{" +
+				"a=" + fp.s(a) +
+				", b=" + fp.s(b) +
+				", c=" + fp.s(c) +
+				", d=" + fp.s(d) +
+				'}';
 	}
 }
