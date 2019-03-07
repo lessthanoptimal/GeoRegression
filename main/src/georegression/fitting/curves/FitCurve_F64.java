@@ -38,36 +38,6 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class FitCurve_F64 {
-	/**
-	 * <p>Fits points to the quadratic polynomial. It's recommended that you apply a linear transform to the points
-	 * to ensure that they have zero mean and a standard deviation of 1. Then reverse the transform on the result.
-	 * A solution is found using the pseudo inverse and inverse by minor matrices.</p>
-	 *
-	 * <p>WARNING: This type of quadratic polynomial can't handle lines along the y-axis.</p>
-	 *
-	 * @param points List of points the curve is to be fit too. Must have at least 3 elements.
-	 * @param output (Optional) storage for the curve
-	 * @return The fitted curve
-	 */
-	public static PolynomialQuadratic1D_F64 fit(List<Point2D_F64> points , @Nullable PolynomialQuadratic1D_F64 output ) {
-		if( output == null )
-			output = new PolynomialQuadratic1D_F64();
-
-		if( !fit(points,output,new DMatrix3x3()) )
-			throw new RuntimeException("fit failed");
-
-		return output;
-	}
-
-	public static PolynomialQuadratic1D_F64 fit_S32(List<Point2D_I32> points , @Nullable PolynomialQuadratic1D_F64 output ) {
-		if( output == null )
-			output = new PolynomialQuadratic1D_F64();
-
-		if( !fit_S32(points,output,new DMatrix3x3()) )
-			throw new RuntimeException("fit failed");
-
-		return output;
-	}
 
 	public static PolynomialCubic1D_F64 fit(List<Point2D_F64> points , @Nullable PolynomialCubic1D_F64 output ) {
 		if( output == null )
@@ -90,42 +60,54 @@ public class FitCurve_F64 {
 	}
 
 	/**
-	 * Low level version of {@link #fit(List, PolynomialQuadratic1D_F64)} which allows internal work variables
-	 * to be passed in
+	 * <p>Fits points to the quadratic polynomial. It's recommended that you apply a linear transform to the points
+	 * to ensure that they have zero mean and a standard deviation of 1. Then reverse the transform on the result.
+	 * A solution is found using the pseudo inverse and inverse by minor matrices.</p>
+	 *
+	 * <p>For a more numerically stable algorithm see {@link #fitQRP(double[], int, int, PolynomialQuadratic1D_F64)}</p>
+	 *
+	 * @param data Interleaved data [input[0], output[0], ....
+	 * @param offset first index in data
+	 * @param length number of elements in data that are to be read. must be divisible by 2
+	 * @param output (Optional) storage for the curve
+	 * @return The fitted curve
 	 */
-	public static boolean fit(List<Point2D_F64> points , PolynomialQuadratic1D_F64 output , DMatrix3x3 work ) {
-		if( points.size() < 3 )
-			throw new IllegalArgumentException("At least 3 points are required");
+	public static boolean fitMM(double[] data, int offset , int length ,
+								PolynomialQuadratic1D_F64 output , @Nullable DMatrix3x3 work ) {
+		if( work == null )
+			work = new DMatrix3x3();
 
-		final int N = points.size();
+		final int N = length/2;
 
 		// Unrolled pseudo inverse
 		// coef = inv(A^T*A)*A^T*y
-		double a00=N,a01=0,a02=0;
-		double a10=0,a11=0,a12=0;
-		double a20=0,a21=0,a22=0;
+		double sx0=N,sx1=0,sx2=0;
+		double             sx3=0;
+		double             sx4=0;
 
 		double b0=0,b1=0,b2=0;
 
-		for (int i = 0; i < N; i++) {
-			Point2D_F64 p = points.get(i);
+		int end = offset+length;
+		for (int i = offset; i < end; i += 2 ) {
+			double x = data[i];
+			double y = data[i+1];
 
-			double x2 = p.x*p.x;
+			double x2 = x*x;
 
-			a01 += p.x;
-			a02 += x2;
-			a12 += x2*p.x;
-			a22 += x2*x2;
+			sx1 += x;
+			sx2 += x2;
+			sx3 += x2*x;
+			sx4 += x2*x2;
 
-			b0 += p.y;
-			b1 += p.x*p.y;
-			b2 += x2*p.y;
+			b0 += y;
+			b1 += x*y;
+			b2 += x2*y;
 		}
-		a10 = a01; a11 = a02;
-		a20 = a02; a21 = a12;
 
 		DMatrix3x3 A = work;
-		A.set(a00,a01,a02,a10,a11,a12,a20,a21,a22);
+		A.set(  sx0,sx1,sx2,
+				sx1,sx2,sx3,
+				sx2,sx3,sx4);
 
 		if( !CommonOps_DDF3.invert(A,A) ) // TODO use a symmetric inverse. Should be slightly faster
 			return false;
@@ -139,56 +121,25 @@ public class FitCurve_F64 {
 	}
 
 	/**
-	 * Low level version of {@link #fit(List, PolynomialQuadratic1D_F64)} which allows internal work variables
-	 * to be passed in
+	 * <p>Fits points to the quadratic polynomial using a QRP linear solver.</p>
+	 *
+	 * @see FitPolynomialSolverTall_F64
+	 *
+	 * @param data Interleaved data [input[0], output[0], ....
+	 * @param offset first index in data
+	 * @param length number of elements in data that are to be read. must be divisible by 2
+	 * @param output (Optional) storage for the curve
+	 * @return The fitted curve
 	 */
-	public static boolean fit_S32(List<Point2D_I32> points , PolynomialQuadratic1D_F64 output , DMatrix3x3 work ) {
-		if( points.size() < 3 )
-			throw new IllegalArgumentException("At least 3 points are required");
+	public static boolean fitQRP( double[] data, int offset , int length ,
+								  PolynomialQuadratic1D_F64 output ) {
+		FitPolynomialSolverTall_F64 solver = new FitPolynomialSolverTall_F64();
 
-		final int N = points.size();
-
-		// Unrolled pseudo inverse
-		// coef = inv(A^T*A)*A^T*y
-		double a00=N,a01=0,a02=0;
-		double a10=0,a11=0,a12=0;
-		double a20=0,a21=0,a22=0;
-
-		double b0=0,b1=0,b2=0;
-
-		for (int i = 0; i < N; i++) {
-			Point2D_I32 p = points.get(i);
-
-			int x2 = p.x*p.x;
-
-			a01 += p.x;
-			a02 += x2;
-			a12 += x2*p.x;
-			a22 += x2*x2;
-
-			b0 += p.y;
-			b1 += p.x*p.y;
-			b2 += x2*p.y;
-		}
-		a10 = a01; a11 = a02;
-		a20 = a02; a21 = a12;
-
-		DMatrix3x3 A = work;
-		A.set(a00,a01,a02,a10,a11,a12,a20,a21,a22);
-
-		if( !CommonOps_DDF3.invert(A,A) )// TODO use a symmetric inverse. Should be slightly faster
-			return false;
-
-		// output = inv(A)*B      Unrolled here for speed
-		output.a = A.a11*b0 + A.a12*b1 + A.a13*b2;
-		output.b = A.a21*b0 + A.a22*b1 + A.a23*b2;
-		output.c = A.a31*b0 + A.a32*b1 + A.a33*b2;
-
-		return true;
+		return solver.process(data,offset,length,output);
 	}
 
 	/**
-	 * Low level version of {@link #fit(List, PolynomialQuadratic1D_F64)} which allows internal work variables
+	 * Low level version of {@link #fit(List, PolynomialCubic1D_F64)} which allows internal work variables
 	 * to be passed in
 	 */
 	public static boolean fit(List<Point2D_F64> points , PolynomialCubic1D_F64 output , DMatrix4x4 A ) {

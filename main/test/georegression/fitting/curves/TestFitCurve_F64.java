@@ -37,25 +37,29 @@ import static org.junit.Assert.assertFalse;
  */
 public class TestFitCurve_F64 {
 	@Test
-	public void fit_float_quadratic() {
-		List<Point2D_F64> points = new ArrayList<>();
+	public void fitMM_quadratic() {
 
-		points.add( new Point2D_F64(1,1));
-		points.add( new Point2D_F64(4,2));
-		points.add( new Point2D_F64(-1,8));
+		double[] data = new double[6];
 
-		PolynomialQuadratic1D_F64 found = FitCurve_F64.fit(points,(PolynomialQuadratic1D_F64)null);
+		data[0] = 1;data[1] = 1;
+		data[2] = 4;data[3] = 2;
+		data[4] =-1;data[5] = 8;
+
+		PolynomialQuadratic1D_F64 found = new PolynomialQuadratic1D_F64();
+		FitCurve_F64.fitMM(data,0,data.length,found,null);
 
 		// it should fit all the points perfectly
-		for( Point2D_F64 p : points ) {
-			assertEquals(p.y,found.evaluate(p.x),4*GrlConstants.TEST_F64);
+		for( int i = 0; i < data.length; i += 2 ) {
+			double x = data[i];
+			double y = data[i+1];
+			assertEquals(y,found.evaluate(x),4*GrlConstants.TEST_F64);
 		}
 
 		// Now see if it can a straight line
-		points.get(1).set(3,3);
-		points.get(2).set(4,4);
+		data[2] = 3;data[3] = 3;
+		data[4] = 4;data[5] = 4;
 
-		FitCurve_F64.fit(points,found);
+		FitCurve_F64.fitMM(data,0,data.length,found,null);
 
 		assertFalse(UtilEjml.isUncountable(found.a));
 		assertFalse(UtilEjml.isUncountable(found.b));
@@ -64,31 +68,37 @@ public class TestFitCurve_F64 {
 		// it's a line so a2 needs to be zero
 		assertEquals(0,found.c,GrlConstants.TEST_F64);
 		// it should fit all the points perfectly
-		for( Point2D_F64 p : points ) {
-			assertEquals(p.y,found.evaluate(p.x),4*GrlConstants.TEST_F64);
+		for( int i = 0; i < data.length; i += 2 ) {
+			double x = data[i];
+			double y = data[i+1];
+			assertEquals(y,found.evaluate(x),4*GrlConstants.TEST_F64);
 		}
 	}
 
 	@Test
-	public void fit_int_quadratic() {
-		List<Point2D_I32> points = new ArrayList<>();
+	public void fitQRP_quadratic() {
 
-		points.add( new Point2D_I32(1,1));
-		points.add( new Point2D_I32(4,2));
-		points.add( new Point2D_I32(-1,8));
+		double[] data = new double[6];
 
-		PolynomialQuadratic1D_F64 found = FitCurve_F64.fit_S32(points,(PolynomialQuadratic1D_F64)null);
+		data[0] = 1;data[1] = 1;
+		data[2] = 4;data[3] = 2;
+		data[4] =-1;data[5] = 8;
+
+		PolynomialQuadratic1D_F64 found = new PolynomialQuadratic1D_F64();
+		FitCurve_F64.fitQRP(data,0,data.length,found);
 
 		// it should fit all the points perfectly
-		for( Point2D_I32 p : points ) {
-			assertEquals(p.y,found.evaluate(p.x),4*GrlConstants.TEST_F64);
+		for( int i = 0; i < data.length; i += 2 ) {
+			double x = data[i];
+			double y = data[i+1];
+			assertEquals(y,found.evaluate(x),4*GrlConstants.TEST_F64);
 		}
 
 		// Now see if it can a straight line
-		points.get(1).set(3,3);
-		points.get(2).set(4,4);
+		data[2] = 3;data[3] = 3;
+		data[4] = 4;data[5] = 4;
 
-		FitCurve_F64.fit_S32(points,found);
+		FitCurve_F64.fitQRP(data,0,data.length,found);
 
 		assertFalse(UtilEjml.isUncountable(found.a));
 		assertFalse(UtilEjml.isUncountable(found.b));
@@ -97,10 +107,13 @@ public class TestFitCurve_F64 {
 		// it's a line so a2 needs to be zero
 		assertEquals(0,found.c,GrlConstants.TEST_F64);
 		// it should fit all the points perfectly
-		for( Point2D_I32 p : points ) {
-			assertEquals(p.y,found.evaluate(p.x),4*GrlConstants.TEST_F64);
+		for( int i = 0; i < data.length; i += 2 ) {
+			double x = data[i];
+			double y = data[i+1];
+			assertEquals(y,found.evaluate(x),4*GrlConstants.TEST_F64);
 		}
 	}
+
 
 	@Test
 	public void fit_float_cubic() {
