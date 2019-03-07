@@ -28,7 +28,7 @@ import org.ejml.FancyPrint;
  *
  * @author Peter Abeles
  */
-public class PolynomialQuadratic1D_F64 {
+public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
 	/**
 	 * Coefficients
 	 */
@@ -62,5 +62,35 @@ public class PolynomialQuadratic1D_F64 {
 				", b=" + fp.s(b) +
 				", c=" + fp.s(c) +
 				'}';
+	}
+
+	@Override
+	public double get(int coefficient) {
+		switch( coefficient ) {
+			case 0: return a;
+			case 1: return b;
+			case 2: return c;
+		}
+		throw new IllegalArgumentException("Coefficient out of range. "+coefficient);
+	}
+
+	@Override
+	public void set(int coefficient, double value) {
+		switch( coefficient ) {
+			case 0: a=value;return;
+			case 1: b=value;return;
+			case 2: c=value;return;
+		}
+		throw new IllegalArgumentException("Coefficient out of range. "+coefficient);
+	}
+
+	@Override
+	public int size() {
+		return 3;
+	}
+
+	@Override
+	public int degree() {
+		return 2;
 	}
 }
