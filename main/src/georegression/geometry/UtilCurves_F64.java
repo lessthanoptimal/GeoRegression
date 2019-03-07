@@ -30,8 +30,14 @@ import org.ejml.data.DMatrixRMaj;
 public class UtilCurves_F64 {
 
 	/**
-	 * Converts symmetric 3x3 matrix back into a conic. Only the upper right
-	 * portion of src is read.
+	 * Converts symmetric 3x3 matrix back into a conic.
+	 *
+	 * <pre>
+	 *        [A    B/2  D/2]
+	 *  dst = [B/2  C    E/2]
+	 *        [D/2  E/2  F  ]
+	 * </pre>
+	 *
 	 */
 	public static DMatrixRMaj convert(ConicGeneral_F64 src , DMatrixRMaj dst )
 	{
@@ -54,6 +60,15 @@ public class UtilCurves_F64 {
 	/**
 	 * Converts symmetric 3x3 matrix back into a conic. Only the upper right
 	 * portion of src is read.
+	 *
+	 * <pre>
+	 *     A = DST(0,0)
+	 *     B = DST(0,1)*2
+	 *     D = DST(0,2)*2
+	 *     C = DST(1,1)
+	 *     E = DST(1,2)*2
+	 *     F = DST(2,2)
+	 * </pre>
 	 */
 	public static ConicGeneral_F64 convert(DMatrix3x3 src , ConicGeneral_F64 dst ) {
 		if( dst == null )
@@ -68,6 +83,12 @@ public class UtilCurves_F64 {
 
 	/**
 	 * Converts the conic into a symmetric 3x3 matrix
+	 *
+	 * <pre>
+	 *        [A    B/2  D/2]
+	 *  dst = [B/2  C    E/2]
+	 *        [D/2  E/2  F  ]
+	 * </pre>
 	 */
 	public static DMatrix3x3 convert(ConicGeneral_F64 src , DMatrix3x3 dst )
 	{
@@ -86,7 +107,18 @@ public class UtilCurves_F64 {
 	}
 
 	/**
-	 * Converts symmetric 3x3 matrix back into a conic
+	 * Converts symmetric 3x3 matrix back into a conic. Only the upper right
+	 * portion of src is read.
+	 *
+	 * <pre>
+	 *     A = DST(0,0)
+	 *     B = DST(0,1)*2
+	 *     D = DST(0,2)*2
+	 *     C = DST(1,1)
+	 *     E = DST(1,2)*2
+	 *     F = DST(2,2)
+	 * </pre>
+	 *
 	 */
 	public static ConicGeneral_F64 convert( DMatrixRMaj src , ConicGeneral_F64 dst ) {
 		if( dst == null )
