@@ -21,16 +21,11 @@ package georegression.fitting.curves;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.PolynomialCubic1D_F64;
 import georegression.struct.curve.PolynomialQuadratic1D_F64;
-import georegression.struct.point.Point2D_F64;
-import georegression.struct.point.Point2D_I32;
+import georegression.struct.curve.PolynomialQuadratic2D_F64;
 import org.ejml.UtilEjml;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 /**
  * @author Peter Abeles
@@ -116,29 +111,34 @@ public class TestFitCurve_F64 {
 
 	@Test
 	public void fit_float_cubic1D() {
-		List<Point2D_F64> points = new ArrayList<>();
-
 		PolynomialCubic1D_F64 expected = new PolynomialCubic1D_F64(0.1,-0.5,2,0.1);
+
+		double[] data = new double[8];
 
 		for (int i = 0; i < 4; i++) {
 			double x = i+0.5;
 			double y = expected.evaluate(x);
-			points.add( new Point2D_F64(x,y) );
+			data[i*2  ] = x;
+			data[i*2+1] = y;
 		}
 
-		PolynomialCubic1D_F64 found = FitCurve_F64.fit(points,(PolynomialCubic1D_F64)null);
+		PolynomialCubic1D_F64 found = new PolynomialCubic1D_F64();
+		FitCurve_F64.fitMM(data,0,data.length,found,null);
 
 		// it should fit all the points perfectly
-		for( Point2D_F64 p : points ) {
-			assertEquals(p.y,found.evaluate(p.x),4*GrlConstants.TEST_F64);
+		for (int i = 0; i < 4; i++) {
+			double x = data[i*2  ];
+			double y = data[i*2+1];
+			assertEquals(y,found.evaluate(x),4*GrlConstants.TEST_F64);
 		}
 
 		// Now see if it can a straight line
 		for (int i = 0; i < 4; i++) {
-			points.get(i).set(i+1,i+1);
+			data[i*2  ] = i+1;
+			data[i*2+1] = i+1;
 		}
 
-		FitCurve_F64.fit(points,found);
+		FitCurve_F64.fitMM(data,0,data.length,found,null);
 
 		assertFalse(UtilEjml.isUncountable(found.a));
 		assertFalse(UtilEjml.isUncountable(found.b));
@@ -150,46 +150,60 @@ public class TestFitCurve_F64 {
 		assertEquals(0,found.d,GrlConstants.TEST_F64);
 
 		// it should fit all the points perfectly
-		for( Point2D_F64 p : points ) {
-			assertEquals(p.y,found.evaluate(p.x),4*GrlConstants.TEST_F64);
+		for (int i = 0; i < 4; i++) {
+			assertEquals(data[i*2+1],found.evaluate(data[i*2]),4*GrlConstants.TEST_F64);
 		}
 	}
 
 	@Test
-	public void fit_int_cubic1D() {
-		List<Point2D_I32> points = new ArrayList<>();
+	public void fit_float_quadratic2D() {
+		int N = 6;
+		double[] data = new double[N*3];
 
-		points.add( new Point2D_I32(1,1));
-		points.add( new Point2D_I32(4,2));
-		points.add( new Point2D_I32(-1,8));
-		points.add( new Point2D_I32(-2,4));
+		set3(data,0,1,1,0);
+		set3(data,1,4,2,2);
+		set3(data,2,-1,8,0.5);
+		set3(data,3,-3,5,1.5);
+		set3(data,4,2.1,6,2);
+		set3(data,5,2.5,4,3);
 
-		PolynomialCubic1D_F64 found = FitCurve_F64.fit_S32(points,(PolynomialCubic1D_F64)null);
+		PolynomialQuadratic2D_F64 found = new PolynomialQuadratic2D_F64();
+		assertTrue(FitCurve_F64.fit(data,0,data.length,found));
 
 		// it should fit all the points perfectly
-		for( Point2D_I32 p : points ) {
-			assertEquals(p.y,found.evaluate(p.x),4*GrlConstants.TEST_F64);
+		for (int i = 0; i < N; i++) {
+			assertEquals(data[i*3+2],found.evaluate(data[i*3],data[i*3+1]),4*GrlConstants.TEST_F64);
 		}
 
 		// Now see if it can a straight line
-		for (int i = 0; i < 4; i++) {
-			points.get(i).set(i+1,i+1);
+		for (int i = 0; i < N; i++) {
+			data[i*3  ] = i+1;
+			data[i*3+1] = i+1;
+			data[i*3+2] = i+1;
 		}
 
-		FitCurve_F64.fit_S32(points,found);
+		assertTrue(FitCurve_F64.fit(data,0,data.length,found));
 
 		assertFalse(UtilEjml.isUncountable(found.a));
 		assertFalse(UtilEjml.isUncountable(found.b));
 		assertFalse(UtilEjml.isUncountable(found.c));
 		assertFalse(UtilEjml.isUncountable(found.d));
+		assertFalse(UtilEjml.isUncountable(found.e));
+		assertFalse(UtilEjml.isUncountable(found.f));
 
-		// it's a line so a2 needs to be zero
-		assertEquals(0,found.c,GrlConstants.TEST_F64);
+		// it's a line so these needs to be zero
 		assertEquals(0,found.d,GrlConstants.TEST_F64);
-
+		assertEquals(0,found.e,GrlConstants.TEST_F64);
+		assertEquals(0,found.f,GrlConstants.TEST_F64);
 		// it should fit all the points perfectly
-		for( Point2D_I32 p : points ) {
-			assertEquals(p.y,found.evaluate(p.x),4*GrlConstants.TEST_F64);
+		for (int i = 0; i < N; i++) {
+			assertEquals(data[i*3+2],found.evaluate(data[i*3],data[i*3+1]),4*GrlConstants.TEST_F64);
 		}
+	}
+
+	private void set3( double[] data , int which , double x , double y , double z ) {
+		data[which*3  ] = x;
+		data[which*3+1] = y;
+		data[which*3+2] = z;
 	}
 }
