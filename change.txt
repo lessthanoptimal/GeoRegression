@@ -9,6 +9,9 @@ Version : 0.19
   * Requested by Nico Stuurman
   * Points, Vectors, and Planes
 - Added cubic curve and fitting algorithm
+- UtilPoint2D
+  * Compute 2D normal distribution
+  * Generate 2D normal distribution
 
 ---------------------------------------------
 Date    : 2018/12/26

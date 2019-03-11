@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,6 +23,9 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
+import org.ejml.data.DMatrix2x2;
+import org.ejml.dense.fixed.CommonOps_DDF2;
+import org.ejml.dense.fixed.NormOps_DDF2;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -176,6 +179,25 @@ public class TestUtilPoint2D_F64 {
 		assertTrue(found.get(1) == input.get(0));
 		assertTrue(found.get(2) == input.get(1));
 		assertTrue(found.get(3) == input.get(3));
+	}
+
+	@Test
+	public void create_and_compute_normal2D() {
+		Point2D_F64 mean = new Point2D_F64(-9,4);
+		DMatrix2x2 covar = new DMatrix2x2(2,0.1,0.1,1.5);
+
+		List<Point2D_F64> list = UtilPoint2D_F64.randomNorm(mean,covar,5000,rand,null);
+
+		Point2D_F64 foundMean = new Point2D_F64();
+		DMatrix2x2 foundCovar = new DMatrix2x2();
+
+		UtilPoint2D_F64.computeNormal(list,foundMean,foundCovar);
+
+		assertEquals(0.0,foundMean.distance(mean), 0.05);
+
+		DMatrix2x2 difference = new DMatrix2x2();
+		CommonOps_DDF2.subtract(covar,foundCovar,difference);
+		assertEquals(0,NormOps_DDF2.normF(difference),0.1);
 	}
 
 }

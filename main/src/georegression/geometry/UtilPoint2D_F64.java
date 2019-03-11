@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,6 +23,8 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
 import org.ddogleg.sorting.QuickSort_F64;
+import org.ejml.data.DMatrix;
+import org.ejml.data.ReshapeMatrix;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -272,5 +274,84 @@ public class UtilPoint2D_F64 {
 		}
 
 		return out;
+	}
+
+	/**
+	 * Computes the mean and covariance matrix from the set of points. This describes a normal distribution
+	 * @param points (Input) points
+	 * @param mean (Output) mean of the points
+	 * @param covariance (Output) 2x2 covariance matrix
+	 */
+	public static void computeNormal(List<Point2D_F64> points , Point2D_F64 mean , DMatrix covariance ) {
+		if( covariance.getNumCols() != 2 || covariance.getNumRows() != 2 ) {
+			if (covariance instanceof ReshapeMatrix) {
+				((ReshapeMatrix)covariance).reshape(2,2);
+			} else {
+				throw new IllegalArgumentException("Must be a 2x2 matrix");
+			}
+		}
+
+		mean(points,mean);
+
+		double xx=0,xy=0,yy=0;
+
+		for (int i = 0; i < points.size(); i++) {
+			Point2D_F64 p = points.get(i);
+			double dx = p.x-mean.x;
+			double dy = p.y-mean.y;
+
+			xx += dx*dx;
+			xy += dx*dy;
+			yy += dy*dy;
+		}
+		xx /= points.size();
+		xy /= points.size();
+		yy /= points.size();
+
+		covariance.unsafe_set(0,0,xx);
+		covariance.unsafe_set(0,1,xy);
+		covariance.unsafe_set(1,0,xy);
+		covariance.unsafe_set(1,1,yy);
+	}
+
+	/**
+	 * Randomly generates points from the specified normal distribution
+	 * @param mean (Input) mean
+	 * @param covariance (Output) 2x2 covariance matrix
+	 * @param count (Input) Number of points to create
+	 * @param rand (Input) Random number generator
+	 * @param output (Output) Optional storage for points. If null a new list is created
+	 * @return List containing points.
+	 */
+	public static List<Point2D_F64> randomNorm( Point2D_F64 mean , DMatrix covariance , int count ,
+												Random rand ,
+												@Nullable List<Point2D_F64> output )
+	{
+		if( output == null )
+			output = new ArrayList<>();
+
+		// extract values of covariance
+		double cxx = covariance.get(0,0);
+		double cxy = covariance.get(0,1);
+		double cyy = covariance.get(1,1);
+
+		// perform cholesky decomposition
+		double sxx = Math.sqrt(cxx);
+		double sxy = cxy/cxx;
+		double syy = Math.sqrt(cyy-sxy*sxy);
+
+		for (int i = 0; i < count; i++) {
+			Point2D_F64 p = new Point2D_F64();
+
+			double x = rand.nextGaussian();
+			double y = rand.nextGaussian();
+
+			p.x = mean.x + sxx*x + sxy*y;
+			p.y = mean.y + sxy*x + syy*y;
+
+			output.add(p);
+		}
+
+		return output;
 	}
 }
