@@ -58,12 +58,12 @@ public class PolynomialQuadratic2D_F64 {
 	public String toString() {
 		FancyPrint fp = new FancyPrint();
 		return "PolynomialQuadratic2D_F64{" +
-				"a=" + fp.s(a) +
-				", b=" + fp.s(b) +
-				", c=" + fp.s(c) +
-				", d=" + fp.s(d) +
-				", e=" + fp.s(e) +
-				", f=" + fp.s(f) +
+				"a=" + fp.p(a) +
+				", b=" + fp.p(b) +
+				", c=" + fp.p(c) +
+				", d=" + fp.p(d) +
+				", e=" + fp.p(e) +
+				", f=" + fp.p(f) +
 				'}';
 	}
 }

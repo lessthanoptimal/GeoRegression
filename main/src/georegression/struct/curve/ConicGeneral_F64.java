@@ -18,6 +18,7 @@
 
 package georegression.struct.curve;
 
+import org.ejml.FancyPrint;
 import org.ejml.UtilEjml;
 
 import java.io.Serializable;
@@ -101,13 +102,14 @@ public class ConicGeneral_F64 implements Serializable
 
 	@Override
 	public String toString() {
+		FancyPrint fp = new FancyPrint();
 		return "ConicGeneral_F64{" +
-				"A=" + A +
-				", B=" + B +
-				", C=" + C +
-				", D=" + D +
-				", E=" + E +
-				", F=" + F +
+				"A=" + fp.p(A) +
+				", B=" + fp.p(B) +
+				", C=" + fp.p(C) +
+				", D=" + fp.p(D) +
+				", E=" + fp.p(E) +
+				", F=" + fp.p(F) +
 				'}';
 	}
 }

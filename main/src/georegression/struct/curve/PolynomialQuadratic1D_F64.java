@@ -58,9 +58,9 @@ public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
 	public String toString() {
 		FancyPrint fp = new FancyPrint();
 		return "PolynomialQuadratic1D_F64{" +
-				"a=" + fp.s(a) +
-				", b=" + fp.s(b) +
-				", c=" + fp.s(c) +
+				"a=" + fp.p(a) +
+				", b=" + fp.p(b) +
+				", c=" + fp.p(c) +
 				'}';
 	}
 
