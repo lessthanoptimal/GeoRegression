@@ -3,6 +3,7 @@
 - Make sure all unit tests pass
   ./gradlew test
 - Update change.txt
+- Update version in maven central in README.MD
 - Update version in build.gradle
 - Update project website
   cd docs/website

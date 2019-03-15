@@ -5,7 +5,7 @@ Geometric Regression Library (GeoRegression) is an open source Java geometry lib
 
 ===================   =====================
 **Latest Version**    v\ |geo_version|
-**Released**          December 26, 2018
+**Released**          March 14, 2019
 **Source Code**       `GitHub <https://github.com/lessthanoptimal/GeoRegression>`_
 **License**           `Apache 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_
 ===================   =====================

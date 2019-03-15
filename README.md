@@ -30,6 +30,15 @@
   * Types: float and double.
   * Limited support for integers types. 
 
+## Maven Central
+
+GeoRegression is on [Maven Central](https://mvnrepository.com/artifact/org.georegression/georegression) and can
+be added to your Gradle project as follows:
+
+```Groovy
+compile group: 'org.georegression', name: 'georegression', version: '0.19'
+```
+
 ## Build Instructions
 
 ```bash
