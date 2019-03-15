@@ -9,16 +9,17 @@
   cd docs/website
   conf.py <--- text substitution is now used to spread the version name
   index.rst <-- just the date
+  make html;zip -r html.zip html/
 -  examples might need to be updated too
   * git diff --name-status TAG_NAME examples
 - Commit and tag release
 - Create .zip of source code
   - remove .git
 - Create jar file
-  VERSION=v0.16
-  git clone git@github.com:lessthanoptimal/GeoRegression.git georegression
-  cd georegression;git checkout SNAPSHOT;./gradlew autogenerate;./gradlew createVersionFile;rm -rf .git;cd ..;zip -r georegression-$VERSION-src.zip georegression
-  cd georegression;./gradlew createLibraryDirectory;mv libraries ../georegression-$VERSION-libs;cd ..;zip -r georegression-$VERSION-libs.zip georegression-$VERSION-libs
+  VERSION=v0.19;PRJNAME=georegression-$VERSION
+  git clone -b SNAPSHOT git@github.com:lessthanoptimal/GeoRegression.git $PRJNAME
+  cd $PRJNAME;./gradlew autogenerate;./gradlew createVersionFile;rm -rf .git;cd ..;zip -r $PRJNAME-src.zip $PRJNAME
+  cd $PRJNAME;./gradlew createLibraryDirectory;mv libraries ../$PRJNAME-libs;cd ..;zip -r $PRJNAME-libs.zip $PRJNAME-libs
 - Update JavaDoc
   rm -rf build/doc/javadoc
   ./gradlew javadocWeb;zip -r api.zip build/docs/javadoc
@@ -26,7 +27,7 @@
 -----
 Push to central:
 
-- gradle uploadArchives
+- ./gradlew uploadArchives
 - Then go to the website  https://oss.sonatype.org/
   * click close button
   * double check the files
