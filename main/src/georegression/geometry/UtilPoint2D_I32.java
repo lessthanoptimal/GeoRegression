@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,8 @@
 
 package georegression.geometry;
 
+import georegression.struct.point.Point2D_F32;
+import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
 
 import java.util.List;
@@ -80,6 +82,62 @@ public class UtilPoint2D_I32 {
 
 		mean.x = sumX/N;
 		mean.y = sumY/N;
+
+		return mean;
+	}
+
+	/**
+	 * Finds the point which has the mean location of all the points in the list. This is also known
+	 * as the centroid.
+	 *
+	 * @param list List of points
+	 * @param mean Storage for mean point.  If null then a new instance will be declared
+	 * @return The found mean
+	 */
+	public static Point2D_F32 mean(List<Point2D_I32> list, Point2D_F32 mean) {
+		if (mean == null)
+			mean = new Point2D_F32();
+
+		int sumX = 0, sumY = 0;
+		int N = list.size();
+
+		for (int i = 0; i < N; i++) {
+			Point2D_I32 p = list.get(i);
+
+			sumX += p.x;
+			sumY += p.y;
+		}
+
+		mean.x = sumX / (float) N;
+		mean.y = sumY / (float) N;
+
+		return mean;
+	}
+
+	/**
+	 * Finds the point which has the mean location of all the points in the list. This is also known
+	 * as the centroid.
+	 *
+	 * @param list List of points
+	 * @param mean Storage for mean point.  If null then a new instance will be declared
+	 * @return The found mean
+	 */
+	public static Point2D_F64 mean(List<Point2D_I32> list, Point2D_F64 mean) {
+		if (mean == null)
+			mean = new Point2D_F64();
+
+		int sumX = 0, sumY = 0;
+		int N = list.size();
+
+		for (int i = 0; i < N; i++) {
+			Point2D_I32 p = list.get(i);
+
+			sumX += p.x;
+			sumY += p.y;
+		}
+
+		mean.x = sumX / (double) N;
+		mean.y = sumY / (double) N;
 
 		return mean;
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,10 @@
 
 package georegression.geometry;
 
+import georegression.struct.point.Point2D_F32;
+import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
+import org.ejml.UtilEjml;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -69,7 +72,7 @@ public class TestUtilPoint2D_I32 {
 	}
 
 	@Test
-	public void mean() {
+	public void mean_I32() {
 		List<Point2D_I32> list = new ArrayList<Point2D_I32>();
 
 		int X=0,Y=0;
@@ -81,10 +84,48 @@ public class TestUtilPoint2D_I32 {
 			list.add(p);
 		}
 
-		Point2D_I32 found = UtilPoint2D_I32.mean(list, null);
+		Point2D_I32 found = UtilPoint2D_I32.mean(list, (Point2D_I32)null);
 
 		assertEquals(X/20,found.x);
 		assertEquals(Y/20,found.y);
+	}
+
+	@Test
+	public void mean_F32() {
+		List<Point2D_I32> list = new ArrayList<Point2D_I32>();
+
+		int X=0,Y=0;
+		for( int i = 0; i < 20; i++ ) {
+			Point2D_I32 p = new Point2D_I32();
+			X += p.x = rand.nextInt(100)-50;
+			Y += p.y = rand.nextInt(100)-50;
+
+			list.add(p);
+		}
+
+		Point2D_F32 found = UtilPoint2D_I32.mean(list, (Point2D_F32)null);
+
+		assertEquals(X/20.0,found.x, UtilEjml.TEST_F32);
+		assertEquals(Y/20.0,found.y, UtilEjml.TEST_F32);
+	}
+
+	@Test
+	public void mean_F64() {
+		List<Point2D_I32> list = new ArrayList<Point2D_I32>();
+
+		int X=0,Y=0;
+		for( int i = 0; i < 20; i++ ) {
+			Point2D_I32 p = new Point2D_I32();
+			X += p.x = rand.nextInt(100)-50;
+			Y += p.y = rand.nextInt(100)-50;
+
+			list.add(p);
+		}
+
+		Point2D_F64 found = UtilPoint2D_I32.mean(list, (Point2D_F64)null);
+
+		assertEquals(X/20.0,found.x, UtilEjml.TEST_F64);
+		assertEquals(Y/20.0,found.y, UtilEjml.TEST_F64);
 	}
 
 }
