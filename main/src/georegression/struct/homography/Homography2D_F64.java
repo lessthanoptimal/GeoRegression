@@ -20,6 +20,10 @@ package georegression.struct.homography;
 
 
 import georegression.struct.Matrix3x3_F64;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.ops.ConvertDMatrixStruct;
+
+import javax.annotation.Nullable;
 
 /**
  * Describes a homography transform in 2D.
@@ -122,30 +126,17 @@ public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homogr
 		a12 = a13 = a21 = a23 = a31 = a32 = 0;
 	}
 
-   public double get( int row , int col ) {
-      int index = row*3+col;
-      switch( index ) {
-         case 0:
-            return a11;
-         case 1:
-            return a12;
-         case 2:
-            return a13;
-         case 3:
-            return a21;
-         case 4:
-            return a22;
-         case 5:
-            return a23;
-         case 6:
-            return a31;
-         case 7:
-            return a32;
-         case 8:
-            return a33;
-      }
-      throw new IllegalArgumentException("Invalid coordinate: "+row+"  "+col);
-   }
+	public DMatrixRMaj ddrm(){
+		return ddrm(null);
+	}
+	public DMatrixRMaj ddrm( @Nullable DMatrixRMaj output ) {
+		if( output == null ) {
+			output = new DMatrixRMaj(3,3);
+		}
+
+		ConvertDMatrixStruct.convert(this,output);
+		return output;
+	}
 
 	public Homography2D_F64 copy() {
 		return new Homography2D_F64(this);
