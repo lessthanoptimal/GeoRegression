@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,10 @@ package georegression.struct;
 import georegression.misc.GrlConstants;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.affine.Affine2D_F64;
+import georegression.struct.line.LineParametric2D_F32;
+import georegression.struct.line.LineParametric2D_F64;
+import georegression.struct.line.LineParametric3D_F32;
+import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.point.*;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
@@ -123,6 +127,66 @@ public class TestConvertFloatType {
 
 		assertEquals(src.x, dst.x, GrlConstants.TEST_F32);
 		assertEquals(src.y, dst.y, GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void convert_LineParametric2D_64_32() {
+		LineParametric2D_F32 src = new LineParametric2D_F32(
+				rand.nextFloat(), rand.nextFloat(),
+				rand.nextFloat(), rand.nextFloat());
+
+		LineParametric2D_F64 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.p.x, dst.p.x, GrlConstants.TEST_F64);
+		assertEquals(src.p.y, dst.p.y, GrlConstants.TEST_F64);
+		assertEquals(src.slope.x, dst.slope.x, GrlConstants.TEST_F64);
+		assertEquals(src.slope.y, dst.slope.y, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void convert_LineParametric2D_32_64() {
+		LineParametric2D_F64 src = new LineParametric2D_F64(
+				rand.nextDouble(), rand.nextDouble(),
+				rand.nextDouble(), rand.nextDouble());
+
+		LineParametric2D_F32 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.p.x, dst.p.x, GrlConstants.TEST_F32);
+		assertEquals(src.p.y, dst.p.y, GrlConstants.TEST_F32);
+		assertEquals(src.slope.x, dst.slope.x, GrlConstants.TEST_F32);
+		assertEquals(src.slope.y, dst.slope.y, GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void convert_LineParametric3D_32_64() {
+		LineParametric3D_F32 src = new LineParametric3D_F32(
+				rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
+				rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+
+		LineParametric3D_F64 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.p.x, dst.p.x, GrlConstants.TEST_F64);
+		assertEquals(src.p.y, dst.p.y, GrlConstants.TEST_F64);
+		assertEquals(src.p.z, dst.p.z, GrlConstants.TEST_F64);
+		assertEquals(src.slope.x, dst.slope.x, GrlConstants.TEST_F64);
+		assertEquals(src.slope.y, dst.slope.y, GrlConstants.TEST_F64);
+		assertEquals(src.slope.z, dst.slope.z, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void convert_LineParametric3D_64_32() {
+		LineParametric3D_F64 src = new LineParametric3D_F64(
+				rand.nextDouble(), rand.nextDouble(), rand.nextDouble(),
+				rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
+
+		LineParametric3D_F32 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.p.x, dst.p.x, GrlConstants.TEST_F32);
+		assertEquals(src.p.y, dst.p.y, GrlConstants.TEST_F32);
+		assertEquals(src.p.z, dst.p.z, GrlConstants.TEST_F32);
+		assertEquals(src.slope.x, dst.slope.x, GrlConstants.TEST_F32);
+		assertEquals(src.slope.y, dst.slope.y, GrlConstants.TEST_F32);
+		assertEquals(src.slope.z, dst.slope.z, GrlConstants.TEST_F32);
 	}
 
 	public static boolean isIdentical(DMatrixRMaj a, FMatrixRMaj b, double tol) {

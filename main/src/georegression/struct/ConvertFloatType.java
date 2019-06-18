@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,6 +26,10 @@ import georegression.struct.curve.EllipseRotated_F32;
 import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.homography.Homography2D_F32;
 import georegression.struct.homography.Homography2D_F64;
+import georegression.struct.line.LineParametric2D_F32;
+import georegression.struct.line.LineParametric2D_F64;
+import georegression.struct.line.LineParametric3D_F32;
+import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.point.*;
 import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
@@ -279,4 +283,61 @@ public class ConvertFloatType {
 
 		return dst;
 	}
+
+	public static LineParametric2D_F32 convert(LineParametric2D_F64 src , LineParametric2D_F32 dst ) {
+		if( dst == null ) {
+			dst = new LineParametric2D_F32();
+		}
+
+		dst.slope.x = (float)src.slope.x;
+		dst.slope.y = (float)src.slope.y;
+		dst.p.x = (float)src.p.x;
+		dst.p.y = (float)src.p.y;
+
+		return dst;
+	}
+
+	public static LineParametric2D_F64 convert(LineParametric2D_F32 src , LineParametric2D_F64 dst ) {
+		if( dst == null ) {
+			dst = new LineParametric2D_F64();
+		}
+
+		dst.slope.x = src.slope.x;
+		dst.slope.y = src.slope.y;
+		dst.p.x = src.p.x;
+		dst.p.y = src.p.y;
+
+		return dst;
+	}
+
+	public static LineParametric3D_F32 convert(LineParametric3D_F64 src , LineParametric3D_F32 dst ) {
+		if( dst == null ) {
+			dst = new LineParametric3D_F32();
+		}
+
+		dst.slope.x = (float)src.slope.x;
+		dst.slope.y = (float)src.slope.y;
+		dst.slope.z = (float)src.slope.z;
+		dst.p.x = (float)src.p.x;
+		dst.p.y = (float)src.p.y;
+		dst.p.z = (float)src.p.z;
+
+		return dst;
+	}
+
+	public static LineParametric3D_F64 convert(LineParametric3D_F32 src , LineParametric3D_F64 dst ) {
+		if( dst == null ) {
+			dst = new LineParametric3D_F64();
+		}
+
+		dst.slope.x = src.slope.x;
+		dst.slope.y = src.slope.y;
+		dst.slope.z = src.slope.z;
+		dst.p.x = src.p.x;
+		dst.p.y = src.p.y;
+		dst.p.z = src.p.z;
+
+		return dst;
+	}
+
 }
