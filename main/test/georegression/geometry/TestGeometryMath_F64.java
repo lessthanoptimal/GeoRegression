@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -375,6 +375,23 @@ public class TestGeometryMath_F64 {
 		DMatrixRMaj expected = eq.lookupDDRM("Y");
 
 		for (int i = 0; i < 3; i++) {
+			assertEquals(expected.get(i),Y.getIdx(i), UtilEjml.TEST_F64);
+		}
+	}
+
+	@Test
+	public void mult_4d_4d() {
+		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(4,4,rand);
+		Point4D_F64 X = new Point4D_F64(1,2,3,4);
+
+		Point4D_F64 Y = new Point4D_F64();
+		GeometryMath_F64.mult(P,X,Y);
+
+		GEquation eq = new GEquation(P,"P",X,"X");
+		eq.process("Y=P*X");
+		DMatrixRMaj expected = eq.lookupDDRM("Y");
+
+		for (int i = 0; i < 4; i++) {
 			assertEquals(expected.get(i),Y.getIdx(i), UtilEjml.TEST_F64);
 		}
 	}

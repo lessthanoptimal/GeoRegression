@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -438,9 +438,26 @@ public class GeometryMath_F64 {
 		if( P.numRows != 3 || P.numCols != 4 )
 			throw new IllegalArgumentException( "Input matrix must be 3 by 4 not " + P.numRows + " " + P.numCols );
 
-		mod.x = P.data[0]*X.x + P.data[1]*X.y + P.data[2]*X.z + P.data[3]*X.w;
-		mod.y = P.data[4]*X.x + P.data[5]*X.y + P.data[6]*X.z + P.data[7]*X.w;
+		mod.x = P.data[0]*X.x + P.data[1]*X.y + P.data[2 ]*X.z + P.data[3 ]*X.w;
+		mod.y = P.data[4]*X.x + P.data[5]*X.y + P.data[6 ]*X.z + P.data[7 ]*X.w;
 		mod.z = P.data[8]*X.x + P.data[9]*X.y + P.data[10]*X.z + P.data[11]*X.w;
+	}
+
+	/**
+	 * x = P*X
+	 *
+	 * @param P 4x4 matrix
+	 * @param X 3D point in homogenous coordinates
+	 * @param mod 3D point in homogenous coordinates
+	 */
+	public static void mult(DMatrixRMaj P, GeoTuple4D_F64 X, GeoTuple4D_F64 mod ) {
+		if( P.numRows != 4 || P.numCols != 4 )
+			throw new IllegalArgumentException( "Input matrix must be 3 by 4 not " + P.numRows + " " + P.numCols );
+
+		mod.x = P.data[0 ]*X.x + P.data[1 ]*X.y + P.data[2 ]*X.z + P.data[3 ]*X.w;
+		mod.y = P.data[4 ]*X.x + P.data[5 ]*X.y + P.data[6 ]*X.z + P.data[7 ]*X.w;
+		mod.z = P.data[8 ]*X.x + P.data[9 ]*X.y + P.data[10]*X.z + P.data[11]*X.w;
+		mod.w = P.data[12]*X.x + P.data[13]*X.y + P.data[14]*X.z + P.data[15]*X.w;
 	}
 
 	/**
