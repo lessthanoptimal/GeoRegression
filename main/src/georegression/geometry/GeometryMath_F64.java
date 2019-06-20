@@ -344,6 +344,41 @@ public class GeometryMath_F64 {
 	}
 
 	/**
+	 * mod = M*pt
+	 * <p>
+	 * pt and mod can be the same reference. M is a 4x4 matrix. Homogenous coordinates with implicit w = 1
+	 * </p>
+	 *
+	 * @param M
+	 * @param pt
+	 * @param result Storage for output.  Can be the same instance as param 'pt'.  Modified.
+	 */
+	public static <T extends GeoTuple3D_F64> T mult4( DMatrixRMaj M, T pt, T result ) {
+		if( M.numRows != 4 || M.numCols != 4 )
+			throw new IllegalArgumentException( "Input matrix must be 4 by 4, not " + M.numRows + " " + M.numCols );
+
+		if( result == null ) {
+			result = (T) pt.createNewInstance();
+		}
+
+		double x = pt.x;
+		double y = pt.y;
+		double z = pt.z;
+
+		result.x = (double) ( M.data[0] * x + M.data[1] * y + M.data[2 ] * z + M.data[3]);
+		result.y = (double) ( M.data[4] * x + M.data[5] * y + M.data[6 ] * z + M.data[7]);
+		result.z = (double) ( M.data[8] * x + M.data[9] * y + M.data[10] * z + M.data[11]);
+		double w = (double) ( M.data[12] * x + M.data[13] * y + M.data[14] * z + M.data[15]);
+
+		result.x /= w;
+		result.y /= w;
+		result.z /= w;
+
+		return (T) result;
+	}
+
+
+	/**
 	 * <p>
 	 * mod = M*pt<br>
 	 * where mod is a 2D point that has an implicit z=1.
@@ -435,12 +470,21 @@ public class GeometryMath_F64 {
 	 * @param mod 2D point in homogenous coordinates
 	 */
 	public static void mult(DMatrixRMaj P, GeoTuple4D_F64 X, GeoTuple3D_F64 mod ) {
-		if( P.numRows != 3 || P.numCols != 4 )
-			throw new IllegalArgumentException( "Input matrix must be 3 by 4 not " + P.numRows + " " + P.numCols );
+		if( P.numCols != 4 )
+			throw new IllegalArgumentException( "Input matrix must have 4 columns not "+P.numCols );
 
-		mod.x = P.data[0]*X.x + P.data[1]*X.y + P.data[2 ]*X.z + P.data[3 ]*X.w;
-		mod.y = P.data[4]*X.x + P.data[5]*X.y + P.data[6 ]*X.z + P.data[7 ]*X.w;
-		mod.z = P.data[8]*X.x + P.data[9]*X.y + P.data[10]*X.z + P.data[11]*X.w;
+		mod.x = P.data[0] * X.x + P.data[1] * X.y + P.data[2] * X.z + P.data[3] * X.w;
+		mod.y = P.data[4] * X.x + P.data[5] * X.y + P.data[6] * X.z + P.data[7] * X.w;
+		mod.z = P.data[8] * X.x + P.data[9] * X.y + P.data[10] * X.z + P.data[11] * X.w;
+
+		if( P.numRows == 4 ) {
+			double w = P.data[12] * X.x + P.data[13] * X.y + P.data[14] * X.z + P.data[15] * X.w;
+			mod.x /= w;
+			mod.y /= w;
+			mod.z /= w;
+		} else if( P.numRows != 3 ) {
+			throw new IllegalArgumentException("rows must be 3 or 4 and not "+P.numRows);
+		}
 	}
 
 	/**

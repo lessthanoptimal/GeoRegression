@@ -290,6 +290,22 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
+	public void mult4_3d_3d() {
+		Vector3D_F64 a = new Vector3D_F64( -1, 2, 3 );
+		Vector4D_F64 aa = new Vector4D_F64( -1, 2, 3 , 1);
+		DMatrixRMaj M = new DMatrixRMaj(4,4,true,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7);
+		Vector3D_F64 c = new Vector3D_F64();
+		Vector3D_F64 cc = new Vector3D_F64();
+
+		GeometryMath_F64.mult4( M , a , c );
+		GeometryMath_F64.mult( M , aa , cc );
+
+		assertEquals( cc.x , c.getX() , GrlConstants.TEST_F64);
+		assertEquals( cc.y , c.getY() , GrlConstants.TEST_F64);
+		assertEquals( cc.z , c.getZ() , GrlConstants.TEST_F64);
+	}
+
+	@Test
 	public void mult_3d_2d() {
 		Vector3D_F64 a = new Vector3D_F64( -1, 2, 3 );
 		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
