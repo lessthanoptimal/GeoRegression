@@ -1,11 +1,12 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2019/
+Date    : 2019/07/02
 Version : 0.20
 
 - GeometryMath
   * mult(4x4,4,4)
+- Fit parametric line using linear equation
 
 ---------------------------------------------
 Date    : 2019/03/14

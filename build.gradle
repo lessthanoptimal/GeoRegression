@@ -8,7 +8,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.20-SNAPSHOT'
+    version = '0.20'
 }
 
 gversion {
@@ -68,7 +68,7 @@ subprojects {
     }
 
     dependencies {
-        compile (group: 'org.ddogleg', name: 'ddogleg', version: '0.17-SNAPSHOT')
+        compile (group: 'org.ddogleg', name: 'ddogleg', version: '0.17')
         compile 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
