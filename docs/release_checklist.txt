@@ -9,7 +9,7 @@
   cd docs/website
   conf.py <--- text substitution is now used to spread the version name
   index.rst <-- just the date
-  make html;zip -r html.zip html/
+  make html;cd _build;rm html.zip;zip -r html.zip html/
 -  examples might need to be updated too
   * git diff --name-status TAG_NAME examples
 - Commit and tag release
