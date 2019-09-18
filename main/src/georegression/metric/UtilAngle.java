@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -98,6 +98,44 @@ public class UtilAngle {
 			else
 				return -GrlConstants.F_PId2;
 		return (float)Math.atan(y/x);
+	}
+
+	/**
+	 * Computes the average of the two angles. This only works well and is a well defined problem when the two
+	 * angles are close. It operates by determining of the angles are closer in CW or CCW directions. The distance
+	 * in that direction is found then 1/2 the distance is added to one of them and returned.
+	 *
+	 * @param a Angle in radians.
+	 * @param b Angle in radians.
+	 * @return Average angle of the two. a + delta.
+	 */
+	public static double average( double a , double b ) {
+		double dist = UtilAngle.distanceCCW(bound(a),bound(b));
+		if( dist > GrlConstants.PI ) {
+			dist = GrlConstants.PI2-dist;
+			return a - dist/2.0;
+		} else {
+			return a + dist/2.0;
+		}
+	}
+
+	/**
+	 * Computes the average of the two angles. This only works well and is a well defined problem when the two
+	 * angles are close. It operates by determining of the angles are closer in CW or CCW directions. The distance
+	 * in that direction is found then 1/2 the distance is added to one of them and returned.
+	 *
+	 * @param a Angle in radians.
+	 * @param b Angle in radians.
+	 * @return Average angle of the two. a + delta.
+	 */
+	public static float average( float a , float b ) {
+		float dist = UtilAngle.distanceCCW(bound(a),bound(b));
+		if( dist > GrlConstants.F_PI ) {
+			dist = GrlConstants.F_PI2-dist;
+			return a - dist/2.0f;
+		} else {
+			return a + dist/2.0f;
+		}
 	}
 
 	/**
@@ -212,8 +250,8 @@ public class UtilAngle {
 	 * Angular distance in radians to go from angA to angB in counter clock-wise direction.
 	 * The resulting angle will be from 0 to 2&pi;.
 	 *
-	 * @param angA First angle. -pi to pi
-	 * @param angB Second angle -pi to pi
+	 * @param angA First angle. -pi to pi Radians.
+	 * @param angB Second angle -pi to pi Radians.
 	 * @return An angle from 0 to 2 &pi;
 	 */
 	public static double distanceCCW( double angA, double angB ) {
@@ -225,10 +263,28 @@ public class UtilAngle {
 
 	/**
 	 * Angular distance in radians to go from angA to angB in counter clock-wise direction.
+	 * The resulting angle will be from 0 to 2&pi;. Input is unbounded
+	 *
+	 * @param angA First angle. Radians.
+	 * @param angB Second angle  Radians.
+	 * @return An angle from 0 to 2 &pi;
+	 */
+	public static double distanceCCW_u( double angA, double angB ) {
+		angA = bound(angA);
+		angB = bound(angB);
+
+		if( angB >= angA )
+			return angB-angA;
+		else
+			return GrlConstants.PI2 - (angA-angB);
+	}
+
+	/**
+	 * Angular distance in radians to go from angA to angB in counter clock-wise direction.
 	 * The resulting angle will be from 0 to 2&pi;.
 	 *
-	 * @param angA First angle. -pi to pi
-	 * @param angB Second angle -pi to pi
+	 * @param angA First angle. -pi to pi Radians.
+	 * @param angB Second angle -pi to pi Radians.
 	 * @return An angle from 0 to 2 &pi;
 	 */
 	public static float distanceCCW( float angA, float angB ) {
@@ -239,14 +295,50 @@ public class UtilAngle {
 	}
 
 	/**
+	 * Angular distance in radians to go from angA to angB in counter clock-wise direction.
+	 * The resulting angle will be from 0 to 2&pi;. Input is unbounded
+	 *
+	 * @param angA First angle. Radians.
+	 * @param angB Second angle  Radians.
+	 * @return An angle from 0 to 2 &pi;
+	 */
+	public static float distanceCCW_u( float angA, float angB ) {
+		angA = bound(angA);
+		angB = bound(angB);
+
+		if( angB >= angA )
+			return angB-angA;
+		else
+			return GrlConstants.F_PI2 - (angA-angB);
+	}
+
+	/**
 	 * Angular distance in radians to go from angA to angB in clock-wise direction.
 	 * The resulting angle will be from 0 to 2&pi;.
 	 *
-	 * @param angA First angle. -pi to pi
-	 * @param angB Second angle   -pi to pi
+	 * @param angA First angle. -pi to pi  Radians.
+	 * @param angB Second angle   -pi to pi  Radians.
 	 * @return An angle from 0 to 2 &pi;
 	 */
 	public static double distanceCW( double angA, double angB ) {
+		if( angA >= angB )
+			return angA-angB;
+		else
+			return GrlConstants.PI2-(angB-angA);
+	}
+
+	/**
+	 * Angular distance in radians to go from angA to angB in clock-wise direction.
+	 * The resulting angle will be from 0 to 2&pi;. Input is unbounded.
+	 *
+	 * @param angA First angle. Radians.
+	 * @param angB Second angle. Radians.
+	 * @return An angle from 0 to 2 &pi;
+	 */
+	public static double distanceCW_u( double angA, double angB ) {
+		angA = bound(angA);
+		angB = bound(angB);
+
 		if( angA >= angB )
 			return angA-angB;
 		else
@@ -262,6 +354,24 @@ public class UtilAngle {
 	 * @return An angle from 0 to 2 &pi;
 	 */
 	public static float distanceCW( float angA, float angB ) {
+		if( angA >= angB )
+			return angA-angB;
+		else
+			return GrlConstants.F_PI2-(angB-angA);
+	}
+
+	/**
+	 * Angular distance in radians to go from angA to angB in clock-wise direction.
+	 * The resulting angle will be from 0 to 2&pi;. Input is unbounded.
+	 *
+	 * @param angA First angle. Radians.
+	 * @param angB Second angle. Radians.
+	 * @return An angle from 0 to 2 &pi;
+	 */
+	public static float distanceCW_u( float angA, float angB ) {
+		angA = bound(angA);
+		angB = bound(angB);
+
 		if( angA >= angB )
 			return angA-angB;
 		else
@@ -329,6 +439,20 @@ public class UtilAngle {
 	/**
 	 * <p>
 	 * Returns the number of radians two angles are apart.  This is equivalent to
+	 * Math.abs(UtilAngle.minus(angA,angB)). Unbounded input.
+	 * </p>
+	 *
+	 * @param angA first angle. Radians.
+	 * @param angB second angle. Radians.
+	 * @return an angle between 0 and pi
+	 */
+	public static double dist_u( double angA, double angB ) {
+		return Math.abs(minus(bound(angA),bound(angB)));
+	}
+
+	/**
+	 * <p>
+	 * Returns the number of radians two angles are apart.  This is equivalent to
 	 * Math.abs(UtilAngle.minus(angA,angB)).
 	 * </p>
 	 *
@@ -338,6 +462,20 @@ public class UtilAngle {
 	 */
 	public static float dist( float angA, float angB ) {
 		return Math.abs(minus(angA,angB));
+	}
+
+	/**
+	 * <p>
+	 * Returns the number of radians two angles are apart.  This is equivalent to
+	 * Math.abs(UtilAngle.minus(angA,angB)). Unbounded input.
+	 * </p>
+	 *
+	 * @param angA first angle. Radians.
+	 * @param angB second angle. Radians.
+	 * @return an angle between 0 and pi
+	 */
+	public static float dist_u( float angA, float angB ) {
+		return Math.abs(minus(bound(angA),bound(angB)));
 	}
 
 	/**

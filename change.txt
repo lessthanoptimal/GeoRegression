@@ -1,5 +1,15 @@
 YEAR-MONTH-DAY
 
+
+---------------------------------------------
+Date    : 2019/
+Version : 0.21
+
+- UtilLine2D
+  * define a line from a point and angle
+- UtilAngle
+  * Added functions which can take in unbounded angles
+  * Added average of two angles
 ---------------------------------------------
 Date    : 2019/07/02
 Version : 0.20

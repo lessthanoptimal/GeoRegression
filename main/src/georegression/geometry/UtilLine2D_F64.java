@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -202,6 +202,26 @@ public class UtilLine2D_F64 {
 		ret.p.set(a);
 		ret.slope.x = b.x-a.x;
 		ret.slope.y = b.y-a.y;
+
+		return ret;
+	}
+
+	/**
+	 * Converts a point and angle into a parametric line.
+	 *
+	 * @param a (Input) Point on the line
+	 * @param angle (Input) Orientation describing the line's slope. Radians.
+	 * @param ret (output) Storage for new line.. If null a new instance will be created.
+	 * @return The resulting line
+	 */
+	public static LineParametric2D_F64 convert( Point2D_F64 a , double angle , LineParametric2D_F64 ret )
+	{
+		if( ret == null )
+			ret = new LineParametric2D_F64();
+
+		ret.p.set(a);
+		ret.slope.x = Math.cos(angle);
+		ret.slope.y = Math.sin(angle);
 
 		return ret;
 	}

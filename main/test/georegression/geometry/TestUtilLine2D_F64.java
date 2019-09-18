@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -123,6 +123,19 @@ public class TestUtilLine2D_F64 {
 		assertEquals(para.p.y,6, GrlConstants.TEST_F64);
 		assertEquals(para.slope.x,5, GrlConstants.TEST_F64);
 		assertEquals(para.slope.y,2, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void convert_pt_angle_parametric() {
+		Point2D_F64 a = new Point2D_F64(2,6);
+		double angle = Math.PI;
+
+		LineParametric2D_F64 para = UtilLine2D_F64.convert(a,angle,(LineParametric2D_F64) null);
+
+		assertEquals(para.p.x,2, GrlConstants.TEST_F64);
+		assertEquals(para.p.y,6, GrlConstants.TEST_F64);
+		assertEquals(para.slope.x,-1, GrlConstants.TEST_F64);
+		assertEquals(para.slope.y,0, GrlConstants.TEST_F64);
 	}
 
 	@Test

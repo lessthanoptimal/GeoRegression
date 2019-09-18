@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,6 +24,8 @@ import org.junit.Test;
 import static georegression.metric.UtilAngle.*;
 import static georegression.misc.GrlConstants.*;
 import static java.lang.Math.PI;
+import static org.ejml.UtilEjml.TEST_F32;
+import static org.ejml.UtilEjml.TEST_F64;
 import static org.junit.Assert.*;
 
 public class TestUtilAngle {
@@ -34,6 +36,40 @@ public class TestUtilAngle {
 		assertEquals(Math.PI/2.0,UtilAngle.atanSafe(1.0,0.0),1e-8);
 		assertEquals(-Math.PI/2.0,UtilAngle.atanSafe(-1.0,0.0),1e-8);
 		assertEquals(Math.atan(1),UtilAngle.atanSafe(1.0,1.0),1e-8);
+	}
+
+	@Test
+	public void average_two_F64() {
+		assertEquals(0,UtilAngle.average(0,0), TEST_F64);
+		assertEquals(1,UtilAngle.average(1,1), TEST_F64);
+		assertEquals(1.3,UtilAngle.average(1,1.6), TEST_F64);
+		assertEquals(1.3,UtilAngle.average(1.6,1.0), TEST_F64);
+		assertEquals(-1.3,UtilAngle.average(-1,-1.6), TEST_F64);
+		assertEquals(-1.3,UtilAngle.average(-1.6,-1.0), TEST_F64);
+		assertEquals(2*PI,UtilAngle.average(2*PI,-2*PI), TEST_F64);
+		assertEquals(2*PI,UtilAngle.average(2*PI,-4*PI), TEST_F64);
+		assertEquals(0,UtilAngle.average(0,-2*PI), TEST_F64);
+		assertEquals(0.05,UtilAngle.average(0.1,-2*PI), TEST_F64);
+		assertEquals(-0.05,UtilAngle.average(-0.1,-2*PI), TEST_F64);
+		assertEquals(2*PI,UtilAngle.average(2*PI+0.1,2*PI-0.1), TEST_F64);
+		assertEquals(2*PI,UtilAngle.average(2*PI-0.1,2*PI+0.1), TEST_F64);
+	}
+
+	@Test
+	public void average_two_F32() {
+		assertEquals(0.0f,UtilAngle.average(0.0f,0.0f), TEST_F32);
+		assertEquals(1.0f,UtilAngle.average(1.0f,1.0f), TEST_F32);
+		assertEquals(1.3f,UtilAngle.average(1.0f,1.6), TEST_F32);
+		assertEquals(1.3f,UtilAngle.average(1.6f,1.0f), TEST_F32);
+		assertEquals(-1.3f,UtilAngle.average(-1f,-1.6f), TEST_F32);
+		assertEquals(-1.3f,UtilAngle.average(-1.6f,-1.0f), TEST_F32);
+		assertEquals(2.0f*F_PI,UtilAngle.average(F_PI2,-F_PI2), TEST_F32);
+		assertEquals(2.0f*F_PI,UtilAngle.average(F_PI2,-4*F_PI), TEST_F32);
+		assertEquals(0.0f,UtilAngle.average(0.0f,-F_PI2), TEST_F32);
+		assertEquals(0.05f,UtilAngle.average(0.1f,-F_PI2), TEST_F32);
+		assertEquals(-0.05f,UtilAngle.average(-0.1f,-F_PI2), TEST_F32);
+		assertEquals(F_PI2,UtilAngle.average(F_PI2+0.1f,F_PI2-0.1f), TEST_F32);
+		assertEquals(F_PI2,UtilAngle.average(F_PI2-0.1f,F_PI2+0.1f), TEST_F32);
 	}
 
 	@Test
@@ -105,6 +141,24 @@ public class TestUtilAngle {
 	}
 
 	@Test
+	public void testDistanceCCW_u_F64() {
+		assertEquals( PI * 1.5, distanceCCW_u(-0.75 * PI+2*PI, 0.75 * PI), GrlConstants.TEST_F64);
+		assertEquals( PI * 0.5, distanceCCW_u( 0.75 * PI, -0.75 * PI+2*PI), GrlConstants.TEST_F64);
+		assertEquals( PI * 1.5, distanceCCW_u(-0.75 * PI-2*PI, 0.75 * PI), GrlConstants.TEST_F64);
+		assertEquals( PI * 0.5, distanceCCW_u( 0.75 * PI, -0.75 * PI-2*PI), GrlConstants.TEST_F64);
+		assertEquals( 0, distanceCCW_u(1+2*PI,1), GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void testDistanceCCW_u_F32() {
+		assertEquals( F_PI * 1.5f, distanceCCW_u(-0.75f * F_PI +2*F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
+		assertEquals( F_PI * 0.5f, distanceCCW_u( 0.75f * F_PI, -0.75f * F_PI+2*F_PI), GrlConstants.TEST_F32);
+		assertEquals( F_PI * 1.5f, distanceCCW_u(-0.75f * F_PI-2*F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
+		assertEquals( F_PI * 0.5f, distanceCCW_u( 0.75f * F_PI, -0.75f * F_PI-2*F_PI), GrlConstants.TEST_F32);
+		assertEquals( 0f, distanceCCW_u(1f+2*F_PI,1f), GrlConstants.TEST_F32);
+	}
+
+	@Test
 	public void testDistanceCW_F64() {
 		assertEquals( PI * 0.5, distanceCW(-0.75 * PI, 0.75 * PI), GrlConstants.TEST_F64);
 		assertEquals( PI * 1.5, distanceCW(0.75 * PI, -0.75 * PI), GrlConstants.TEST_F64);
@@ -112,7 +166,25 @@ public class TestUtilAngle {
 	}
 
 	@Test
+	public void testDistanceCW_u_F64() {
+		assertEquals( PI * 0.5, distanceCW_u(-0.75 * PI+2*PI, 0.75 * PI), GrlConstants.TEST_F64);
+		assertEquals( PI * 1.5, distanceCW_u(0.75 * PI, -0.75 * PI+2*PI), GrlConstants.TEST_F64);
+		assertEquals( PI * 0.5, distanceCW_u(-0.75 * PI-2*PI, 0.75 * PI), GrlConstants.TEST_F64);
+		assertEquals( PI * 1.5, distanceCW_u(0.75 * PI, -0.75 * PI-2*PI), GrlConstants.TEST_F64);
+		assertEquals( 0, distanceCW_u(1+2*PI, 1), GrlConstants.TEST_F64);
+	}
+
+	@Test
 	public void testDistanceCW_F32() {
+		assertEquals( F_PI * 0.5f, distanceCW_u(-0.75f * F_PI +2*F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
+		assertEquals( F_PI * 1.5f, distanceCW_u(0.75f * F_PI, -0.75f * F_PI +2*F_PI), GrlConstants.TEST_F32);
+		assertEquals( F_PI * 0.5f, distanceCW_u(-0.75f * F_PI -2*F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
+		assertEquals( F_PI * 1.5f, distanceCW_u(0.75f * F_PI, -0.75f * F_PI -2*F_PI), GrlConstants.TEST_F32);
+		assertEquals( 0, distanceCW_u(1f+2*F_PI, 1f-2*F_PI), GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void testDistanceCW_u_F32() {
 		assertEquals( F_PI * 0.5f, distanceCW(-0.75f * F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
 		assertEquals( F_PI * 1.5f, distanceCW(0.75f * F_PI, -0.75f * F_PI), GrlConstants.TEST_F32);
 		assertEquals( 0, distanceCW(1f, 1f), GrlConstants.TEST_F32);
@@ -144,12 +216,30 @@ public class TestUtilAngle {
 	}
 
 	@Test
+	public void testDist_u_F64() {
+		assertEquals(0,dist_u(2*PI,-2*PI),1e-8);
+		assertEquals(0,dist_u(1+2*PI,1-2*PI),1e-8);
+		assertEquals(2,dist_u(-1+2*PI,1-2*PI),1e-8);
+		assertEquals(0,dist_u(-3*Math.PI,3*Math.PI),1e-8);
+		assertEquals(0.2,dist_u(-Math.PI+0.1,Math.PI-0.1),1e-8);
+	}
+
+	@Test
 	public void testDist_F32() {
 		assertEquals(0f,dist(0f,0f),1e-4f);
 		assertEquals(0f,dist(1f,1f),1e-4f);
 		assertEquals(2f,dist(-1f,1f),1e-4f);
-		assertEquals(0f,dist((float)-Math.PI,Math.PI),1e-5);
-		assertEquals(0.2f,dist((float)(-Math.PI+0.1),(float)(Math.PI-0.1)),1e-4);
+		assertEquals(0f,dist(-F_PI,F_PI),1e-5);
+		assertEquals(0.2f,dist(-F_PI+0.1f,F_PI-0.1),1e-4);
+	}
+
+	@Test
+	public void testDist_u_F32() {
+		assertEquals(0f,dist_u(0f+2*F_PI,0f-2*F_PI),1e-4f);
+		assertEquals(0f,dist_u(1f+2*F_PI,1f-2*F_PI),1e-4f);
+		assertEquals(2f,dist_u(-1f+2*F_PI,1f-2*F_PI),1e-4f);
+		assertEquals(0f,dist_u(-3*F_PI,3*F_PI),1e-5);
+		assertEquals(0.2f,dist_u(-F_PI+0.1f,F_PI-0.1),1e-4);
 	}
 
 	@Test
