@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -183,6 +183,43 @@ public class Intersection2D_F64 {
 		if( ret == null )
 			ret = new Point2D_F64();
 		ret.set(x,y);
+		return ret;
+	}
+
+	/**
+	 * Finds the point of intersection between two lines or two rays and returns the point.
+	 *
+	 * @param a Line.
+	 * @param b Line.
+	 * @param ray if true the lines are treated as a ray and only intersections on the positive side of both lines are allowed
+	 * @param ret storage for the point of intersection. If null a new point will be declared.
+	 * @return If the two lines/rays intersect it returns the point of intersection.  null if they don't intersect or have infinite intersections.
+	 */
+	public static Point2D_F64 intersection( LineParametric2D_F64 a, LineParametric2D_F64 b , boolean ray, Point2D_F64 ret ) {
+		if( !ray )
+			return intersection(a,b,ret);
+		double t_b = a.getSlopeX() * ( b.getY() - a.getY() ) - a.getSlopeY() * ( b.getX() - a.getX() );
+		double bottom = a.getSlopeY() * b.getSlopeX() - b.getSlopeY() * a.getSlopeX();
+
+		if( bottom == 0 )
+			return null;
+
+		t_b /= bottom;
+		if( t_b < 0 )
+			return null;
+
+		double t_a = b.getSlopeX() * ( a.getY() - b.getY() ) - b.getSlopeY() * ( a.getX() - b.getX() );
+		t_a /= b.getSlopeY() * a.getSlopeX() - a.getSlopeY() * b.getSlopeX();
+
+		if( t_a < 0 )
+			return null;
+
+		if( ret == null )
+			ret = new Point2D_F64();
+
+		ret.x = b.getSlopeX() * t_b + b.getX();
+		ret.y = b.getSlopeY() * t_b + b.getY();
+
 		return ret;
 	}
 

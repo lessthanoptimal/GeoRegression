@@ -10,6 +10,9 @@ Version : 0.21
 - UtilAngle
   * Added functions which can take in unbounded angles
   * Added average of two angles
+- Intersection2D
+  * Intersection of two rays
+
 ---------------------------------------------
 Date    : 2019/07/02
 Version : 0.20

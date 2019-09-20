@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,6 +33,7 @@ import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
 import georegression.transform.se.SePointOps_F64;
+import org.ejml.UtilEjml;
 import org.junit.Test;
 
 import java.util.Random;
@@ -262,6 +263,25 @@ public class TestIntersection2D_F64 {
 		LineParametric2D_F64 c = new LineParametric2D_F64(-8,2,0,1);
 
 		assertTrue(null == Intersection2D_F64.intersection(b,c,null));
+	}
+
+	@Test
+	public void intersection_r_to_r_parametric_pt() {
+		LineParametric2D_F64 a = new LineParametric2D_F64(2,3,1,0);
+		LineParametric2D_F64 b = new LineParametric2D_F64(-2,-4,0,-1);
+
+		assertNull(Intersection2D_F64.intersection(a, b, true, null));
+		b.slope.set(0,1);
+		assertNull(Intersection2D_F64.intersection(a, b, true, null));
+		assertNull(Intersection2D_F64.intersection(b, a, true, null));
+		a.slope.set(-1,0);
+		b.slope.set(0,-1);
+		assertNull(Intersection2D_F64.intersection(a, b, true, null));
+		assertNull(Intersection2D_F64.intersection(b, a, true, null));
+
+		b.slope.set(0,1);
+		Point2D_F64 found = Intersection2D_F64.intersection(a,b,true,null);
+		assertEquals(0,found.distance(-2,3), UtilEjml.TEST_F64);
 	}
 
 	@Test
