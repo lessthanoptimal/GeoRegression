@@ -21,10 +21,7 @@ package georegression.struct;
 import georegression.misc.GrlConstants;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.affine.Affine2D_F64;
-import georegression.struct.line.LineParametric2D_F32;
-import georegression.struct.line.LineParametric2D_F64;
-import georegression.struct.line.LineParametric3D_F32;
-import georegression.struct.line.LineParametric3D_F64;
+import georegression.struct.line.*;
 import georegression.struct.point.*;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
@@ -127,6 +124,86 @@ public class TestConvertFloatType {
 
 		assertEquals(src.x, dst.x, GrlConstants.TEST_F32);
 		assertEquals(src.y, dst.y, GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void convert_LinePolar2D_64_32() {
+		LinePolar2D_F64 src = new LinePolar2D_F64(rand.nextDouble(), rand.nextDouble());
+
+		LinePolar2D_F32 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.angle, dst.angle, GrlConstants.TEST_F32);
+		assertEquals(src.distance, dst.distance, GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void convert_LinePolar2D_32_64() {
+		LinePolar2D_F32 src = new LinePolar2D_F32(rand.nextFloat(), rand.nextFloat());
+
+		LinePolar2D_F64 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.angle, dst.angle, GrlConstants.TEST_F64);
+		assertEquals(src.distance, dst.distance, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void convert_LineSegment2D_64_32() {
+		LineSegment2D_F64 src = new LineSegment2D_F64(
+				rand.nextDouble(), rand.nextDouble(),
+				rand.nextDouble(), rand.nextDouble());
+
+		LineSegment2D_F32 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.a.x, dst.a.x, GrlConstants.TEST_F32);
+		assertEquals(src.a.y, dst.a.y, GrlConstants.TEST_F32);
+		assertEquals(src.b.x, dst.b.x, GrlConstants.TEST_F32);
+		assertEquals(src.b.y, dst.b.y, GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void convert_LineSegment2D_32_64() {
+		LineSegment2D_F32 src = new LineSegment2D_F32(
+				rand.nextFloat(), rand.nextFloat(),
+				rand.nextFloat(), rand.nextFloat());
+
+		LineSegment2D_F64 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.a.x, dst.a.x, GrlConstants.TEST_F64);
+		assertEquals(src.a.y, dst.a.y, GrlConstants.TEST_F64);
+		assertEquals(src.b.x, dst.b.x, GrlConstants.TEST_F64);
+		assertEquals(src.b.y, dst.b.y, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	public void convert_LineSegment3D_64_32() {
+		LineSegment3D_F64 src = new LineSegment3D_F64(
+				rand.nextDouble(), rand.nextDouble(), rand.nextDouble(),
+				rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
+
+		LineSegment3D_F32 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.a.x, dst.a.x, GrlConstants.TEST_F32);
+		assertEquals(src.a.y, dst.a.y, GrlConstants.TEST_F32);
+		assertEquals(src.a.z, dst.a.z, GrlConstants.TEST_F32);
+		assertEquals(src.b.x, dst.b.x, GrlConstants.TEST_F32);
+		assertEquals(src.b.y, dst.b.y, GrlConstants.TEST_F32);
+		assertEquals(src.b.z, dst.b.z, GrlConstants.TEST_F32);
+	}
+
+	@Test
+	public void convert_LineSegment3D_32_64() {
+		LineSegment3D_F32 src = new LineSegment3D_F32(
+				rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
+				rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+
+		LineSegment3D_F64 dst = ConvertFloatType.convert(src, null);
+
+		assertEquals(src.a.x, dst.a.x, GrlConstants.TEST_F64);
+		assertEquals(src.a.y, dst.a.y, GrlConstants.TEST_F64);
+		assertEquals(src.a.z, dst.a.z, GrlConstants.TEST_F64);
+		assertEquals(src.b.x, dst.b.x, GrlConstants.TEST_F64);
+		assertEquals(src.b.y, dst.b.y, GrlConstants.TEST_F64);
+		assertEquals(src.b.z, dst.b.z, GrlConstants.TEST_F64);
 	}
 
 	@Test

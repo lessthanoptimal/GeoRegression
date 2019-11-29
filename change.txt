@@ -12,6 +12,9 @@ Version : 0.21
   * Added average of two angles
 - Intersection2D
   * Intersection of two rays
+- ConvertFloatType
+  * LineSegment2D and LineSegment3D
+  * LinePolar2D
 
 ---------------------------------------------
 Date    : 2019/07/02

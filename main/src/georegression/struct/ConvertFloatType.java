@@ -26,10 +26,7 @@ import georegression.struct.curve.EllipseRotated_F32;
 import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.homography.Homography2D_F32;
 import georegression.struct.homography.Homography2D_F64;
-import georegression.struct.line.LineParametric2D_F32;
-import georegression.struct.line.LineParametric2D_F64;
-import georegression.struct.line.LineParametric3D_F32;
-import georegression.struct.line.LineParametric3D_F64;
+import georegression.struct.line.*;
 import georegression.struct.point.*;
 import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
@@ -284,6 +281,28 @@ public class ConvertFloatType {
 		return dst;
 	}
 
+	public static LinePolar2D_F32 convert(LinePolar2D_F64 src , LinePolar2D_F32 dst ) {
+		if( dst == null ) {
+			dst = new LinePolar2D_F32();
+		}
+
+		dst.distance = (float)src.distance;
+		dst.angle = (float)src.angle;
+
+		return dst;
+	}
+
+	public static LinePolar2D_F64 convert(LinePolar2D_F32 src , LinePolar2D_F64 dst ) {
+		if( dst == null ) {
+			dst = new LinePolar2D_F64();
+		}
+
+		dst.distance = src.distance;
+		dst.angle = src.angle;
+
+		return dst;
+	}
+
 	public static LineParametric2D_F32 convert(LineParametric2D_F64 src , LineParametric2D_F32 dst ) {
 		if( dst == null ) {
 			dst = new LineParametric2D_F32();
@@ -293,6 +312,62 @@ public class ConvertFloatType {
 		dst.slope.y = (float)src.slope.y;
 		dst.p.x = (float)src.p.x;
 		dst.p.y = (float)src.p.y;
+
+		return dst;
+	}
+
+	public static LineSegment2D_F64 convert(LineSegment2D_F32 src , LineSegment2D_F64 dst ) {
+		if( dst == null ) {
+			dst = new LineSegment2D_F64();
+		}
+
+		dst.a.x = src.a.x;
+		dst.a.y = src.a.y;
+		dst.b.x = src.b.x;
+		dst.b.y = src.b.y;
+
+		return dst;
+	}
+
+	public static LineSegment2D_F32 convert(LineSegment2D_F64 src , LineSegment2D_F32 dst ) {
+		if( dst == null ) {
+			dst = new LineSegment2D_F32();
+		}
+
+		dst.a.x = (float)src.a.x;
+		dst.a.y = (float)src.a.y;
+		dst.b.x = (float)src.b.x;
+		dst.b.y = (float)src.b.y;
+
+		return dst;
+	}
+
+	public static LineSegment3D_F64 convert(LineSegment3D_F32 src , LineSegment3D_F64 dst ) {
+		if( dst == null ) {
+			dst = new LineSegment3D_F64();
+		}
+
+		dst.a.x = src.a.x;
+		dst.a.y = src.a.y;
+		dst.a.z = src.a.z;
+		dst.b.x = src.b.x;
+		dst.b.y = src.b.y;
+		dst.b.z = src.b.z;
+
+		return dst;
+	}
+
+	public static LineSegment3D_F32 convert(LineSegment3D_F64 src , LineSegment3D_F32 dst ) {
+		if( dst == null ) {
+			dst = new LineSegment3D_F32();
+		}
+
+		dst.a.x = (float)src.a.x;
+		dst.a.y = (float)src.a.y;
+		dst.a.z = (float)src.a.z;
+		dst.b.x = (float)src.b.x;
+		dst.b.y = (float)src.b.y;
+		dst.b.z = (float)src.b.z;
 
 		return dst;
 	}
