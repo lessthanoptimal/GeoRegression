@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,7 +26,7 @@ import static org.junit.Assert.fail;
 /**
  * @author Peter Abeles
  */
-class TestSpecialOrthogonalOps_F64 {
+public class TestSpecialOrthogonalOps_F64 {
 	@Test
 	public void bestFit() {
 		fail("implement");

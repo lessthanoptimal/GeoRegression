@@ -8,7 +8,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.21-SNAPSHOT'
+    version = '0.21'
 }
 
 gversion {
@@ -19,13 +19,15 @@ gversion {
 
 subprojects {
 
-    apply plugin: 'java'
-    apply plugin: 'osgi'
+    apply plugin: 'java-library'
+//    apply plugin: 'osgi'
     apply plugin: 'maven'
     apply plugin: 'signing'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 
     // Fail on jar conflict
     configurations.all {
@@ -78,12 +80,12 @@ subprojects {
         ignoreFailures true
     }
 
-    jar {
-        manifest { // the manifest of the default jar is of type OsgiManifest
-            instruction 'Bundle-Vendor', 'GeoRegression'
-            instruction 'Bundle-DocURL', 'http://georegression.org'
-        }
-    }
+//    jar {
+//        manifest { // the manifest of the default jar is of type OsgiManifest
+//            instruction 'Bundle-Vendor', 'GeoRegression'
+//            instruction 'Bundle-DocURL', 'http://georegression.org'
+//        }
+//    }
 
     javadoc {
         configure(options) {
@@ -247,7 +249,7 @@ task javadocWeb(type: Javadoc) {
     }
 }
 
-task wrapper(type: Wrapper) {
+wrapper {
     distributionType = Wrapper.DistributionType.BIN
-    gradleVersion = '4.10.2'
+    gradleVersion = '5.6.4'
 }

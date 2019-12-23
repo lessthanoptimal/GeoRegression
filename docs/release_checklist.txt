@@ -9,13 +9,11 @@
   cd docs/website
   conf.py <--- text substitution is now used to spread the version name
   index.rst <-- just the date
-  make html;cd _build;rm html.zip;zip -r html.zip html/
+  rm -rf _build;make html;cd _build;rm html.zip;zip -r html.zip html/
 -  examples might need to be updated too
   * git diff --name-status TAG_NAME examples
 - Commit and tag release
-- Create .zip of source code
-  - remove .git
-- Create jar file
+- Create zip and jar files
   VERSION=v0.19;PRJNAME=georegression-$VERSION
   git clone -b SNAPSHOT git@github.com:lessthanoptimal/GeoRegression.git $PRJNAME
   cd $PRJNAME;./gradlew autogenerate;./gradlew createVersionFile;rm -rf .git;cd ..;zip -r $PRJNAME-src.zip $PRJNAME
@@ -23,11 +21,14 @@
 - Update JavaDoc
   rm -rf build/doc/javadoc
   ./gradlew javadocWeb;zip -r api.zip build/docs/javadoc
+- NOTE: There's a bug in Java 11 where it adds undefined directory. Stack Overflow solutions don't seem to work.
+        Build JavaDoc with JDK 1.8 for now
 
 -----
 Push to central:
 
-- ./gradlew uploadArchives
+- BUILD USING JAVA 1.8 FOR ANDROID COMPATIBILITY!!!
+- ./gradlew clean;./gradlew -Dorg.gradle.java.home=/opt/jdk/jdk1.8.0_211/ uploadArchives
 - Then go to the website  https://oss.sonatype.org/
   * click close button
   * double check the files

@@ -20,10 +20,7 @@ List of Example Code:
 * :doc:`/TransformFitting`
 * :doc:`/TransformSequence`
 
-- Update project website
-  cd docs/website
-  Documentation.rst Download.rst index.rst conf.py
-  examples might need to be updated tooBuilding the Library
+Building the Library
 --------------------
 
 GeoRegression is easy to compile using the provided Gradle script.  In Linux type the following commands:
