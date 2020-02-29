@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,9 +20,9 @@ package georegression.transform;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.se.Se2_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -34,7 +34,7 @@ public class TestInvertibleTransformSequence {
 	 * Test a sequence where it goes forward and backwards
 	 */
 	@Test
-	public void computeTransform() {
+	void computeTransform() {
 		InvertibleTransformSequence<Se2_F64> path = new InvertibleTransformSequence<Se2_F64>();
 
 		path.addTransform( false, new Se2_F64( 1, 2, 0 ) );
@@ -52,7 +52,7 @@ public class TestInvertibleTransformSequence {
 	 * where a unique instances were not being passed in to concat().
 	 */
 	@Test
-	public void computeTransform2() {
+	void computeTransform2() {
 		InvertibleTransformSequence<Se2_F64> path = new InvertibleTransformSequence<Se2_F64>();
 
 		path.addTransform( true, new Se2_F64( 1, 2, Math.PI/2.0 ) );

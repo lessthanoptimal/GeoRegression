@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,12 +22,12 @@ import georegression.metric.Distance3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -35,7 +35,7 @@ import static org.junit.Assert.assertEquals;
 public class TestSphereToPointSignedDistance_F64 {
 
 	@Test
-	public void compareToDistance() {
+	void compareToDistance() {
 
 		Sphere3D_F64 sphere = new Sphere3D_F64(1,2,3,4);
 
@@ -66,7 +66,7 @@ public class TestSphereToPointSignedDistance_F64 {
 	}
 
 	@Test
-	public void getN_and_getM() {
+	void getN_and_getM() {
 		SphereToPointSignedDistance_F64 alg = new SphereToPointSignedDistance_F64();
 
 		List<Point3D_F64> points = new ArrayList<Point3D_F64>();

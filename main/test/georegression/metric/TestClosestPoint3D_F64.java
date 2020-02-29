@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,10 +27,10 @@ import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -41,7 +41,7 @@ public class TestClosestPoint3D_F64 {
 	 * Compute truth from 3 random points then see if the 3rd point is found again.
 	 */
 	@Test
-	public void closestPoint_line() {
+	void closestPoint_line() {
 		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
 		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
 		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
@@ -65,7 +65,7 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
-	public void closestPoints_lines() {
+	void closestPoints_lines() {
 		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
 		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
 		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
@@ -88,7 +88,7 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
-	public void closestPoint_point() {
+	void closestPoint_point() {
 		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
 		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
 		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
@@ -108,7 +108,7 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
-	public void closestPoint_point_d() {
+	void closestPoint_point_d() {
 		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
 		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
 		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
@@ -131,7 +131,7 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
-	public void closestPoint_planeNorm_point() {
+	void closestPoint_planeNorm_point() {
 		Point3D_F64 found;
 
 		PlaneNormal3D_F64 n = new PlaneNormal3D_F64(3,4,-5,3,4,-5);
@@ -157,7 +157,7 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
-	public void closestPoint_planeGen_point() {
+	void closestPoint_planeGen_point() {
 		Point3D_F64 found;
 
 		PlaneNormal3D_F64 n = new PlaneNormal3D_F64(3,4,-5,3,4,-5);
@@ -184,7 +184,7 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
-	public void closestPointOrigin() {
+	void closestPointOrigin() {
 		PlaneGeneral3D_F64 g = new PlaneGeneral3D_F64(1,2,3,4);
 
 		Point3D_F64 expected = ClosestPoint3D_F64.closestPoint(g,new Point3D_F64(0,0,0),null);
@@ -196,7 +196,7 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
-	public void closestPoint_lineSeg_pt() {
+	void closestPoint_lineSeg_pt() {
 		// closest point is on the line
 		LineSegment3D_F64 lineA = new LineSegment3D_F64(2,3,4,7,8,9);
 		checkIsClosest(lineA,new Point3D_F64(2,3.5,3.5));
@@ -213,7 +213,7 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
-	public void closestPoint_lineSeg_lineSeg() {
+	void closestPoint_lineSeg_lineSeg() {
 		Point3D_F64 found;
 
 		LineSegment3D_F64 lineA = new LineSegment3D_F64(2,3,4,7,8,9);
@@ -240,7 +240,7 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
-	public void closestPoint_triangle_point() {
+	void closestPoint_triangle_point() {
 		Point3D_F64 P0 = new Point3D_F64(0,0,0);
 		Point3D_F64 P1 = new Point3D_F64(0,2,0);
 		Point3D_F64 P2 = new Point3D_F64(1,1,0);
@@ -257,7 +257,7 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
-	public void closestPointT_line_plane() {
+	void closestPointT_line_plane() {
 		LineParametric3D_F64 l = new LineParametric3D_F64(2,3,4,0,2,0);
 		PlaneNormal3D_F64 above = new PlaneNormal3D_F64(5,6,7,0,1,0);
 		PlaneNormal3D_F64 below = new PlaneNormal3D_F64(5,-1,7,0,1,0);
@@ -303,10 +303,10 @@ public class TestClosestPoint3D_F64 {
 			double orig = work.getIdx(i);
 			work.setIdx(i, orig + Math.sqrt(GrlConstants.TEST_F64));
 			double d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found+" "+d,found < d+10*GrlConstants.TEST_F64);
+			assertTrue(found < d+10*GrlConstants.TEST_F64,found+" "+d);
 			work.setIdx(i, orig - Math.sqrt(GrlConstants.TEST_F64));
 			d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found + " " + d, found <=d+10*GrlConstants.TEST_F64);
+			assertTrue(found <=d+10*GrlConstants.TEST_F64, found + " " + d);
 			work.setIdx(i,orig);
 		}
 	}
@@ -320,10 +320,10 @@ public class TestClosestPoint3D_F64 {
 			double orig = work.getIdx(i);
 			work.setIdx(i,orig + Math.sqrt(GrlConstants.TEST_F64));
 			double d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found+" "+d,found <= d+10*GrlConstants.TEST_F64);
+			assertTrue(found <= d+10*GrlConstants.TEST_F64,found+" "+d);
 			work.setIdx(i,orig - Math.sqrt(GrlConstants.TEST_F64));
 			d = Distance3D_F64.distance(lineA,work)+Distance3D_F64.distance(lineB,work);
-			assertTrue(found+" "+d,found <= d+10*GrlConstants.TEST_F64);
+			assertTrue(found <= d+10*GrlConstants.TEST_F64,found+" "+d);
 			work.setIdx(i,orig);
 		}
 	}

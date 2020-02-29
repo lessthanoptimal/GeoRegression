@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,13 +25,13 @@ import georegression.struct.so.Quaternion_F64;
 import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -44,7 +44,7 @@ public class TestAverageQuaternion_F64 {
 	 * Find the average of one quaternion.  Which should be the same as the input quaternion.
 	 */
 	@Test
-	public void one() {
+	void one() {
 		Quaternion_F64 q = ConvertRotation3D_F64.eulerToQuaternion(EulerType.XYZ,0.1,-0.5,1.5,null);
 
 		List<Quaternion_F64> list = new ArrayList<>();
@@ -59,7 +59,7 @@ public class TestAverageQuaternion_F64 {
 	}
 
 	@Test
-	public void two_same() {
+	void two_same() {
 		Quaternion_F64 q = ConvertRotation3D_F64.eulerToQuaternion(EulerType.XYZ,0.1,-0.5,1.5,null);
 
 		List<Quaternion_F64> list = new ArrayList<>();
@@ -78,7 +78,7 @@ public class TestAverageQuaternion_F64 {
 	 * Generate a bunch of quaternions, but noise them up on one axis and see if the result is close to the expected.
 	 */
 	@Test
-	public void noiseOnOneAxis() {
+	void noiseOnOneAxis() {
 
 		double rotX = 0.1;
 		double rotY = -0.5;

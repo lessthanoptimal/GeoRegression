@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,11 +24,11 @@ import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.homography.UtilHomography_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ejml.data.DMatrixRMaj;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -56,7 +56,7 @@ public class TestHomographyPointOps_F64 {
 	}
 
 	@Test
-	public void transform_Point_F64() {
+	void transform_Point_F64() {
 		Point2D_F64 src = new Point2D_F64(1,2);
 		Point2D_F64 dst = new Point2D_F64();
 		Point2D_F64 expected = new Point2D_F64();
@@ -70,7 +70,7 @@ public class TestHomographyPointOps_F64 {
 	}
 
 	@Test
-	public void transform_DD_F64() {
+	void transform_DD_F64() {
 		Point2D_F64 src = new Point2D_F64(1,2);
 		Point2D_F64 dst = new Point2D_F64();
 		Point2D_F64 expected = new Point2D_F64();

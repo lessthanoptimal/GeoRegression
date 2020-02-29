@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,9 +20,9 @@ package georegression.geometry;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineSegment2D_I32;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 public class TestUtilLine2D_I32 {
 
 	@Test
-	public void acuteAngle() {
+	void acuteAngle() {
 		LineSegment2D_I32 line0 = new LineSegment2D_I32(0,0,1,0);
 		LineSegment2D_I32 line1 = new LineSegment2D_I32(0,0,0,1);
 

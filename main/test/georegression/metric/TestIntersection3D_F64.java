@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,9 +36,9 @@ import georegression.struct.shapes.Triangle3D_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.ddogleg.struct.FastQueue;
 import org.ejml.UtilEjml;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -47,7 +47,7 @@ import static org.junit.Assert.*;
 public class TestIntersection3D_F64 {
 
 	@Test
-	public void intersect_planenorm_linepara() {
+	void intersect_planenorm_linepara() {
 		// simple case with a known solution
 		PlaneNormal3D_F64 plane = new PlaneNormal3D_F64(2,1,0,2,0,0);
 		LineParametric3D_F64 line = new LineParametric3D_F64(0,0,0,3,0,0);
@@ -61,7 +61,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void intersect_planegen_linepara() {
+	void intersect_planegen_linepara() {
 		// simple case with a known solution
 		PlaneNormal3D_F64 plane = new PlaneNormal3D_F64(2,1,0,2,0,0);
 		LineParametric3D_F64 line = new LineParametric3D_F64(0,0,0,3,0,0);
@@ -76,7 +76,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void intersect_plane_plane() {
+	void intersect_plane_plane() {
 		PlaneGeneral3D_F64 a = new PlaneGeneral3D_F64(3,-4,0.5,6);
 		PlaneGeneral3D_F64 b = new PlaneGeneral3D_F64(1.5,0.95,-4,-2);
 
@@ -100,7 +100,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void intersection_triangle_ls() {
+	void intersection_triangle_ls() {
 		LineSegment3D_F64 ls = new LineSegment3D_F64();
 		Point3D_F64 p = new Point3D_F64();
 
@@ -130,7 +130,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void intersection_triangle_line() {
+	void intersection_triangle_line() {
 		LineParametric3D_F64 line = new LineParametric3D_F64();
 		Point3D_F64 p = new Point3D_F64();
 
@@ -161,7 +161,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void intersect_poly_line() {
+	void intersect_poly_line() {
 		// Simple test cases
 		FastQueue<Point3D_F64> polygon = new FastQueue<>(Point3D_F64.class,true);
 
@@ -207,7 +207,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void contained_boxLength_point() {
+	void contained_boxLength_point() {
 		BoxLength3D_F64 box = new BoxLength3D_F64(2,3,4,1,1.5,2.5);
 
 		// point clearly inside the code
@@ -223,7 +223,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void contained_box_point() {
+	void contained_box_point() {
 		Box3D_F64 box = new Box3D_F64(2,3,4,3,4.5,6.5);
 
 		// point clearly inside the code
@@ -239,7 +239,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void contained2_box_point() {
+	void contained2_box_point() {
 		Box3D_F64 box = new Box3D_F64(2,3,4,3,4.5,6.5);
 
 		// point clearly inside the code
@@ -255,7 +255,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void contained_box_box() {
+	void contained_box_box() {
 		Box3D_F64 box = new Box3D_F64(2,3,4,3,4.5,6.5);
 
 		// identical
@@ -275,7 +275,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void intersect_box_box() {
+	void intersect_box_box() {
 		Box3D_F64 box = new Box3D_F64(2,3,4,3,4.5,6.5);
 
 		// identical
@@ -291,7 +291,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void intersect_1d() {
+	void intersect_1d() {
 		// identical
 		assertTrue(Intersection3D_F64.intersect(0,0,1,1));
 		// bigger
@@ -310,7 +310,7 @@ public class TestIntersection3D_F64 {
 	}
 
 	@Test
-	public void intersect_line_sphere() {
+	void intersect_line_sphere() {
 		Point3D_F64 a = new Point3D_F64();
 		Point3D_F64 b = new Point3D_F64();
 
@@ -329,7 +329,7 @@ public class TestIntersection3D_F64 {
 	 * Check easy cases which can be computed by hand
 	 */
 	@Test
-	public void intersectConvex() {
+	void intersectConvex() {
 		FastQueue<Point3D_F64> polygon = new FastQueue<>(Point3D_F64.class,true);
 		polygon.grow().set(-1,-1.2,2);
 		polygon.grow().set(-1,1.2,2);

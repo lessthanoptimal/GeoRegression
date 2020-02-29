@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,16 +18,16 @@
 
 package georegression.struct.shapes;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
  */
 public class TestRectangle2D_I32 {
 	@Test
-	public void enforceExtents() {
+	void enforceExtents() {
 		Rectangle2D_I32 a = new Rectangle2D_I32(-1,-2,50,10);
 		a.enforceExtents();
 		assertEquals(-1,a.x0);

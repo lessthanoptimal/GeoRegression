@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,12 +20,12 @@ package georegression.fitting.curves;
 
 import georegression.struct.curve.PolynomialGeneral1D_F64;
 import org.ejml.UtilEjml;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestFitPolynomialSolverTall_F64
 {
@@ -35,7 +35,7 @@ public class TestFitPolynomialSolverTall_F64
 	 * Fit randomly generated data with no noise for various degree polynomials
 	 */
 	@Test
-	public void perfect() {
+	void perfect() {
 		FitPolynomialSolverTall_F64 alg = new FitPolynomialSolverTall_F64();
 
 		for (int degree = 0; degree < 5; degree++) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,23 +20,23 @@ package georegression.struct.curve;
 
 import georegression.misc.GrlConstants;
 import org.ejml.UtilEjml;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
  */
 public class TestConicGeneral_F64 {
 	@Test
-	public void evaluate() {
+	void evaluate() {
 		// arbitrary but hand constructed conic
 		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);
 		assertEquals(0,conic.evaluate(10,5), UtilEjml.TEST_F64);
 	}
 
 	@Test
-	public void isEllipse() {
+	void isEllipse() {
 		double A = 1.5, C = 0.9;
 		double B = Math.sqrt(4*A*C)+0.01;
 		ConicGeneral_F64 conic = new ConicGeneral_F64(A,B,C,3,2,-217.5);
@@ -46,7 +46,7 @@ public class TestConicGeneral_F64 {
 	}
 
 	@Test
-	public void isHyperbola() {
+	void isHyperbola() {
 		double A = 1.5, C = 0.9;
 		double B = Math.sqrt(4*A*C)-0.01;
 		ConicGeneral_F64 conic = new ConicGeneral_F64(A,B,C,3,2,-217.5);
@@ -56,7 +56,7 @@ public class TestConicGeneral_F64 {
 	}
 
 	@Test
-	public void isParabola() {
+	void isParabola() {
 		double A = 1.5, C = 0.9;
 		double B = Math.sqrt(4*A*C)+0.01;
 		ConicGeneral_F64 conic = new ConicGeneral_F64(A,B,C,3,2,-217.5);

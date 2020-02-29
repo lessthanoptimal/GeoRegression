@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,11 +22,11 @@ import georegression.metric.Distance3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.point.Point3D_F64;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -44,13 +44,13 @@ public class TestDistancePointTriangle3D_F64 {
 	LineSegment3D_F64 L20 = new LineSegment3D_F64(P2,P0);
 
 
-	@Before
+	@BeforeEach
 	public void init() {
 		alg.setTriangle(P0,P1,P2);
 	}
 
 	@Test
-	public void sign() {
+	void sign() {
 		assertTrue(alg.sign(new Point3D_F64(0,0,2))> 0);
 		assertTrue(alg.sign(new Point3D_F64(3,-3,2))> 0);
 
@@ -59,13 +59,13 @@ public class TestDistancePointTriangle3D_F64 {
 	}
 
 	@Test
-	public void region0() {
+	void region0() {
 		assertEquals(2, distance(0.1, 0.2, 2), GrlConstants.TEST_F64);
 		assertEquals(2, distance(0.1, 0.2, -2), GrlConstants.TEST_F64);
 	}
 
 	@Test
-	public void region1() {
+	void region1() {
 		Point3D_F64 P = new Point3D_F64(2,1,2);
 		double d = Distance3D_F64.distance(L12,P);
 
@@ -74,7 +74,7 @@ public class TestDistancePointTriangle3D_F64 {
 	}
 
 	@Test
-	public void region2() {
+	void region2() {
 		Point3D_F64 P = new Point3D_F64(-0.2,7.2,2);
 		double d = P1.distance(P);
 
@@ -83,7 +83,7 @@ public class TestDistancePointTriangle3D_F64 {
 	}
 
 	@Test
-	public void region3() {
+	void region3() {
 		Point3D_F64 P = new Point3D_F64(-0.1,1.5,0);
 		double d = Distance3D_F64.distance(L01,P);
 
@@ -92,7 +92,7 @@ public class TestDistancePointTriangle3D_F64 {
 	}
 
 	@Test
-	public void region4() {
+	void region4() {
 		Point3D_F64 P = new Point3D_F64(-0.2,-0.5,2);
 		double d = P0.distance(P);
 
@@ -101,7 +101,7 @@ public class TestDistancePointTriangle3D_F64 {
 	}
 
 	@Test
-	public void region5() {
+	void region5() {
 		Point3D_F64 P = new Point3D_F64(0.6,0.5,2);
 		double d = Distance3D_F64.distance(L20,P);
 
@@ -110,7 +110,7 @@ public class TestDistancePointTriangle3D_F64 {
 	}
 
 	@Test
-	public void region6() {
+	void region6() {
 		Point3D_F64 P = new Point3D_F64(1.5,1,2);
 		double d = P2.distance(P);
 

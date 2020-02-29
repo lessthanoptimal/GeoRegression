@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,9 +21,9 @@ package georegression.geometry.algs;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.shapes.Polygon2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -33,7 +33,7 @@ public class TestAreaIntersectionPolygon_F64 {
 	 * Unit tests provided by the original author
 	 */
 	@Test
-	public void fromOriginalAuthor() {
+	void fromOriginalAuthor() {
 		double a1[][] = {{2,3}, {2,3}, {2,3}, {2,4}, {3,3}, {2,3}, {2,3}};
 		double b1[][] = {{1,1}, {1,4}, {4,4}, {4,1}, {1,1}}; // 1/2, 1/2
 		// The redundant vertices above are to provoke errors
@@ -96,7 +96,7 @@ public class TestAreaIntersectionPolygon_F64 {
 	 * of vertexes
 	 */
 	@Test
-	public void whyNegative() {
+	void whyNegative() {
 		AreaIntersectionPolygon2D_F64 alg = new AreaIntersectionPolygon2D_F64();
 
 		Polygon2D_F64 A = new Polygon2D_F64(new double[][]{{0,0},{2,0},{2,4},{0,4}});

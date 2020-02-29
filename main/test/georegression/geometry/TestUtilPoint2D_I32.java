@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,13 +22,13 @@ import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
 import org.ejml.UtilEjml;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -38,7 +38,7 @@ public class TestUtilPoint2D_I32 {
 	Random rand = new Random(234);
 
 	@Test
-	public void distance_int() {
+	void distance_int() {
 		int x0 = 5;
 		int y0 = 6;
 		int x1 = -2;
@@ -49,13 +49,13 @@ public class TestUtilPoint2D_I32 {
 	}
 
 	@Test
-	public void distance_pts() {
+	void distance_pts() {
 		double found = UtilPoint2D_I32.distance(new Point2D_I32(5,6),new Point2D_I32(-2,4));
 		assertEquals(7.2801, found, 1e-3);
 	}
 
 	@Test
-	public void distanceSq_int() {
+	void distanceSq_int() {
 		int x0 = 5;
 		int y0 = 6;
 		int x1 = -2;
@@ -66,13 +66,13 @@ public class TestUtilPoint2D_I32 {
 	}
 
 	@Test
-	public void distanceSq_pts() {
+	void distanceSq_pts() {
 		int found = UtilPoint2D_I32.distanceSq(new Point2D_I32(5,6),new Point2D_I32(-2,4));
 		assertEquals(53, found, 1e-3);
 	}
 
 	@Test
-	public void mean_I32() {
+	void mean_I32() {
 		List<Point2D_I32> list = new ArrayList<Point2D_I32>();
 
 		int X=0,Y=0;
@@ -91,7 +91,7 @@ public class TestUtilPoint2D_I32 {
 	}
 
 	@Test
-	public void mean_F32() {
+	void mean_F32() {
 		List<Point2D_I32> list = new ArrayList<Point2D_I32>();
 
 		int X=0,Y=0;
@@ -110,7 +110,7 @@ public class TestUtilPoint2D_I32 {
 	}
 
 	@Test
-	public void mean_F64() {
+	void mean_F64() {
 		List<Point2D_I32> list = new ArrayList<Point2D_I32>();
 
 		int X=0,Y=0;

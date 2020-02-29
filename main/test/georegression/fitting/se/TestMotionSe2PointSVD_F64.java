@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,13 +24,13 @@ import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.transform.se.SePointOps_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -40,7 +40,7 @@ public class TestMotionSe2PointSVD_F64 {
 	Random rand = new Random( 434324 );
 
 	@Test
-	public void noiseless() {
+	void noiseless() {
 		Se2_F64 tran = new Se2_F64( 2, -4, 0.93 );
 
 		List<Point2D_F64> src = UtilPoint2D_F64.random( -10, 10, 30, rand );

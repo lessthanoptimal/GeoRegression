@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,9 +26,9 @@ import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -37,7 +37,7 @@ import static org.junit.Assert.assertEquals;
 public class TestClosestPoint2D_F64 {
 
 	@Test
-	public void closestPoint_general() {
+	void closestPoint_general() {
 		LineParametric2D_F64 line = new LineParametric2D_F64( 1, 2, -1, 1 );
 		LineGeneral2D_F64 general = UtilLine2D_F64.convert(line,(LineGeneral2D_F64)null);
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
@@ -48,7 +48,7 @@ public class TestClosestPoint2D_F64 {
 	}
 
 	@Test
-	public void closestPoint_parametric() {
+	void closestPoint_parametric() {
 		LineParametric2D_F64 line = new LineParametric2D_F64( 1, 2, -1, 1 );
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
@@ -58,7 +58,7 @@ public class TestClosestPoint2D_F64 {
 	}
 
 	@Test
-	public void closestPointT_parametric() {
+	void closestPointT_parametric() {
 		LineParametric2D_F64 line = new LineParametric2D_F64( 1, 2, -1, 1 );
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
@@ -67,7 +67,7 @@ public class TestClosestPoint2D_F64 {
 	}
 
 	@Test
-	public void closestPointT_parametric_xy() {
+	void closestPointT_parametric_xy() {
 		LineParametric2D_F64 line = new LineParametric2D_F64( 1, 2, -1, 1 );
 
 		double found = ClosestPoint2D_F64.closestPointT( line, 1,0 );
@@ -75,7 +75,7 @@ public class TestClosestPoint2D_F64 {
 	}
 
 	@Test
-	public void closestPoint_LS() {
+	void closestPoint_LS() {
 		LineSegment2D_F64 ls; Point2D_F64 found;
 		// test middle
 		ls = new LineSegment2D_F64(1,2,4,5);
@@ -96,7 +96,7 @@ public class TestClosestPoint2D_F64 {
 	}
 
 	@Test
-	public void closestPoint_ellipse() {
+	void closestPoint_ellipse() {
 		EllipseRotated_F64 ellipse = new EllipseRotated_F64(1,2,3,2,0.1);
 
 		Point2D_F64 p = new Point2D_F64(6,7);

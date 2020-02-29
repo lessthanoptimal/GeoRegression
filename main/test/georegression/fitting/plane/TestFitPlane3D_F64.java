@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,13 +21,13 @@ package georegression.fitting.plane;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -41,7 +41,7 @@ public class TestFitPlane3D_F64 {
 	List<Point3D_F64> cloud;
 
 	@Test
-	public void svd() {
+	void svd() {
 		createCloud();
 
 		// compute the plane's equation
@@ -66,7 +66,7 @@ public class TestFitPlane3D_F64 {
 	}
 
 	@Test
-	public void svdPoint() {
+	void svdPoint() {
 		createCloud();
 
 		// compute the plane's equation

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,9 +22,9 @@ import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_I32;
 import georegression.struct.shapes.Rectangle2D_I32;
 import georegression.struct.shapes.RectangleLength2D_I32;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
@@ -32,7 +32,7 @@ import static org.junit.Assert.*;
 public class TestIntersection2D_I32 {
 
 	@Test
-	public void containConvex() {
+	void containConvex() {
 		Polygon2D_I32 poly = new Polygon2D_I32(4);
 		poly.vertexes.data[0].set(-10,-10);
 		poly.vertexes.data[1].set(10, -10);
@@ -59,7 +59,7 @@ public class TestIntersection2D_I32 {
 	}
 
 	@Test
-	public void containConcave_rectangle() {
+	void containConcave_rectangle() {
 		Polygon2D_I32 poly = new Polygon2D_I32(4);
 		poly.vertexes.data[0].set(-1,-1);
 		poly.vertexes.data[1].set(1, -1);
@@ -77,7 +77,7 @@ public class TestIntersection2D_I32 {
 	}
 
 	@Test
-	public void containConcave_concave() {
+	void containConcave_concave() {
 		Polygon2D_I32 poly = new Polygon2D_I32(5);
 		poly.vertexes.data[0].set(-10,-10);
 		poly.vertexes.data[1].set( 0, 0);
@@ -98,7 +98,7 @@ public class TestIntersection2D_I32 {
 	}
 	
 	@Test
-	public void intersects_rect_corners() {
+	void intersects_rect_corners() {
 		// check several positive cases
 		check( new Rectangle2D_I32(0,0,100,120),new Rectangle2D_I32(0,0,100,120),true);
 		check( new Rectangle2D_I32(0,0,100,120),new Rectangle2D_I32(10,12,99,119),true);
@@ -127,7 +127,7 @@ public class TestIntersection2D_I32 {
 	}
 
 	@Test
-	public void intersection_rect_corners() {
+	void intersection_rect_corners() {
 		// check several positive cases
 		check( new Rectangle2D_I32(0,0,100,120),new Rectangle2D_I32(0,0,100,120),
 				new Rectangle2D_I32(0,0,100,120));
@@ -173,7 +173,7 @@ public class TestIntersection2D_I32 {
 	}
 
 	@Test
-	public void contains_rectLength_pt() {
+	void contains_rectLength_pt() {
 		RectangleLength2D_I32 rect = new RectangleLength2D_I32(-10,-5,5,10);
 
 		assertTrue(Intersection2D_I32.contains(rect,-10,-5));
@@ -186,7 +186,7 @@ public class TestIntersection2D_I32 {
 	}
 
 	@Test
-	public void contains_rect_pt() {
+	void contains_rect_pt() {
 		Rectangle2D_I32 rect = new Rectangle2D_I32(-10,-5,5,10);
 
 		assertTrue(Intersection2D_I32.contains(rect,-10,-5));

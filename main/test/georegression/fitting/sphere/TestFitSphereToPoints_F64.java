@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,13 +26,13 @@ import georegression.struct.point.Vector3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
 import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.DMatrixRMaj;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -42,7 +42,7 @@ public class TestFitSphereToPoints_F64 {
 	Random rand = new Random(234);
 
 	@Test
-	public void perfectModel() {
+	void perfectModel() {
 
 		Sphere3D_F64 sphere = new Sphere3D_F64(1,2,3,4);
 
@@ -65,7 +65,7 @@ public class TestFitSphereToPoints_F64 {
 	}
 
 	@Test
-	public void perfectWithBadInitialModel() {
+	void perfectWithBadInitialModel() {
 		Sphere3D_F64 sphere = new Sphere3D_F64(1,2,3,4);
 
 		List<Point3D_F64> points = new ArrayList<Point3D_F64>();

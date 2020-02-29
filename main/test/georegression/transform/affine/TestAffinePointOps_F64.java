@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,9 +22,9 @@ import georegression.misc.GrlConstants;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestAffinePointOps_F64 {
 	@Test
-	public void transform_vector() {
+	void transform_vector() {
 		Affine2D_F64 transform = new Affine2D_F64(1,2,3,4,5,6);
 		Vector2D_F64 input = new Vector2D_F64(2,3);
 
@@ -46,7 +46,7 @@ public class TestAffinePointOps_F64 {
 	}
 
 	@Test
-	public void transform_point() {
+	void transform_point() {
 		Affine2D_F64 transform = new Affine2D_F64(1,2,3,4,5,6);
 		Point2D_F64 input = new Point2D_F64(2,3);
 
@@ -60,7 +60,7 @@ public class TestAffinePointOps_F64 {
 	}
 
 	@Test
-	public void transform_point_xy() {
+	void transform_point_xy() {
 		Affine2D_F64 transform = new Affine2D_F64(1,2,3,4,5,6);
 		double x = 2;
 		double y = 3;

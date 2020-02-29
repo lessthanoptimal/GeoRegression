@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -202,6 +202,39 @@ public class SePointOps_F64 {
 
 	/**
 	 * <p>.
+	 * Applies rigid body motion to a point. The homogeneous coordinate is converted into a cartesian coordinate<br>
+	 * <br>
+	 * p' = [R t]*p
+	 * </p>
+	 * <p>
+	 * Both origPt and tranPt can be the same instance.
+	 * </p>
+	 *
+	 * @param se SpecialEuclidean transform. Not modified.
+	 * @param src Original coordinate of the point. Not modified.
+	 * @param dst Storage for transformed coordinate of the point. Point declared if null.  Modified.
+	 * @return Transformed point.
+	 */
+	public static Point3D_F64 transform(Se3_F64 se, Point4D_F64 src, Point3D_F64 dst ) {
+		if( dst == null )
+			dst = new Point3D_F64();
+
+		final double x = src.x/src.w;
+		final double y = src.y/src.w;
+		final double z = src.z/src.w;
+
+		DMatrixRMaj R = se.getR();
+		Vector3D_F64 T = se.getT();
+
+		dst.x = R.data[0]*x + R.data[1]*y + R.data[2]*z + T.x;
+		dst.y = R.data[3]*x + R.data[4]*y + R.data[5]*z + T.y;
+		dst.z = R.data[6]*x + R.data[7]*y + R.data[8]*z + T.z;
+
+		return dst;
+	}
+
+	/**
+	 * <p>.
 	 * Applies the transform specified by SpecialEuclidean to a homogenous point.<br>
 	 * <br>
 	 * p' = [R t]*p
@@ -210,14 +243,19 @@ public class SePointOps_F64 {
 	 * Both origPt and tranPt can be the same instance.
 	 * </p>
 	 *
-	 * @param se	 SpecialEuclidean transform. Not modified.
-	 * @param origPt Original coordinate of the point. Not modified.
-	 * @param tranPt Storage for transformed coordinate of the point. Point declared if null.  Modified.
+	 * @param se SpecialEuclidean transform. Not modified.
+	 * @param src Original coordinate of the point. Not modified.
+	 * @param dst Storage for transformed coordinate of the point. Point declared if null.  Modified.
 	 * @return Transformed point.
 	 */
-	public static Point3D_F64 transform(Se3_F64 se, Point4D_F64 origPt, Point3D_F64 tranPt ) {
-		if( tranPt == null )
-			tranPt = new Point3D_F64();
+	public static Point4D_F64 transform(Se3_F64 se, Point4D_F64 src, Point4D_F64 dst ) {
+		if( dst == null )
+			dst = new Point4D_F64();
+
+		final double x = src.x;
+		final double y = src.y;
+		final double z = src.z;
+		final double w = src.w;
 
 		DMatrixRMaj R = se.getR();
 		Vector3D_F64 T = se.getT();
@@ -225,12 +263,14 @@ public class SePointOps_F64 {
 		double P11 = R.data[0], P12 = R.data[1], P13 = R.data[2], P14 = T.x;
 		double P21 = R.data[3], P22 = R.data[4], P23 = R.data[5], P24 = T.y;
 		double P31 = R.data[6], P32 = R.data[7], P33 = R.data[8], P34 = T.z;
+		// the bottom row is implicitly [0 0 0 1]
 
-		tranPt.x = P11*origPt.x + P12*origPt.y + P13*origPt.z + P14*origPt.w;
-		tranPt.y = P21*origPt.x + P22*origPt.y + P23*origPt.z + P24*origPt.w;
-		tranPt.z = P31*origPt.x + P32*origPt.y + P33*origPt.z + P34*origPt.w;
+		dst.x = P11*x + P12*y + P13*z + P14*w;
+		dst.y = P21*x + P22*y + P23*z + P24*w;
+		dst.z = P31*x + P32*y + P33*z + P34*w;
+		dst.w = w;
 
-		return tranPt;
+		return dst;
 	}
 
 	/**

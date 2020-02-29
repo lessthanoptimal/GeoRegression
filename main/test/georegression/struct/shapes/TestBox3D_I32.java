@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,9 +18,9 @@
 
 package georegression.struct.shapes;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 public class TestBox3D_I32 {
 
 	@Test
-	public void constructor_box() {
+	void constructor_box() {
 		Box3D_I32 boxA = new Box3D_I32(1,2,3,4,5,6);
 		Box3D_I32 box = new Box3D_I32(boxA);
 
@@ -41,7 +41,7 @@ public class TestBox3D_I32 {
 	}
 
 	@Test
-	public void constructor_ints() {
+	void constructor_ints() {
 		Box3D_I32 box = new Box3D_I32(1,2,3,4,5,6);
 
 		assertEquals(1,box.p0.x);
@@ -53,7 +53,7 @@ public class TestBox3D_I32 {
 	}
 
 	@Test
-	public void set_ints() {
+	void set_ints() {
 		Box3D_I32 box = new Box3D_I32();
 		box.set(1,2,3,4,5,6);
 
@@ -66,7 +66,7 @@ public class TestBox3D_I32 {
 	}
 
 	@Test
-	public void set_box() {
+	void set_box() {
 		Box3D_I32 boxA = new Box3D_I32(1,2,3,4,5,6);
 		Box3D_I32 box = new Box3D_I32();
 		box.set(boxA);
@@ -80,7 +80,7 @@ public class TestBox3D_I32 {
 	}
 
 	@Test
-	public void area() {
+	void area() {
 		Box3D_I32 box = new Box3D_I32(1,2,3,4,5,6);
 
 		int expected = 3*3*3;
@@ -88,21 +88,21 @@ public class TestBox3D_I32 {
 	}
 
 	@Test
-	public void getLengthX() {
+	void getLengthX() {
 		Box3D_I32 box = new Box3D_I32(1,2,3,4,6,8);
 
 		assertEquals(3,box.getLengthX());
 	}
 
 	@Test
-	public void getLengthY() {
+	void getLengthY() {
 		Box3D_I32 box = new Box3D_I32(1,2,3,4,6,8);
 
 		assertEquals(4,box.getLengthY());
 	}
 
 	@Test
-	public void getLengthZ() {
+	void getLengthZ() {
 		Box3D_I32 box = new Box3D_I32(1,2,3,4,6,8);
 
 		assertEquals(5,box.getLengthZ());

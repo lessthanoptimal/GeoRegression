@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,16 +21,16 @@ package georegression.transform.se;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.struct.se.Se2_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
  */
 public class TestInterpolateLinearSe2_F64 {
 	@Test
-	public void interpolate_translation() {
+	void interpolate_translation() {
 		Se2_F64 a = new Se2_F64(1,2,0);
 		Se2_F64 b = new Se2_F64(4,6,0);
 
@@ -52,7 +52,7 @@ public class TestInterpolateLinearSe2_F64 {
 	}
 
 	@Test
-	public void interpolate_angleEasy() {
+	void interpolate_angleEasy() {
 		Se2_F64 a = new Se2_F64(0,0,1);
 		Se2_F64 b = new Se2_F64(0,0,1.5);
 
@@ -68,7 +68,7 @@ public class TestInterpolateLinearSe2_F64 {
 	}
 
 	@Test
-	public void interpolate_angleHard0() {
+	void interpolate_angleHard0() {
 		Se2_F64 a = new Se2_F64(0,0,0.2);
 		Se2_F64 b = new Se2_F64(0,0,-0.1);
 
@@ -84,7 +84,7 @@ public class TestInterpolateLinearSe2_F64 {
 	}
 
 	@Test
-	public void interpolate_angleHard1() {
+	void interpolate_angleHard1() {
 		Se2_F64 a = new Se2_F64(0,0, Math.PI-0.1);
 		Se2_F64 b = new Se2_F64(0,0,- Math.PI+0.2);
 

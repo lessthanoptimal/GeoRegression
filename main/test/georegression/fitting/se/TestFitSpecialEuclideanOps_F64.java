@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -32,13 +32,13 @@ import georegression.struct.se.Se3_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -53,7 +53,7 @@ public class TestFitSpecialEuclideanOps_F64 {
 	 * by providing two lists
 	 */
 	@Test
-	public void fitPoints2D() {
+	void fitPoints2D() {
 		Se2_F64 tran = new Se2_F64( 2, -4, 0.93 );
 
 		List<Point2D_F64> from = UtilPoint2D_F64.random( -10, 10, 30, rand );
@@ -79,7 +79,7 @@ public class TestFitSpecialEuclideanOps_F64 {
 	 * by providing two lists
 	 */
 	@Test
-	public void fitPoints3D_list() {
+	void fitPoints3D_list() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0.1, 1.0, -1.5 , null );
 		Se3_F64 tran = new Se3_F64( R , new Vector3D_F64( 1 , 2 , 3));
 

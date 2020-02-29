@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,12 +22,12 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Point4D_F64;
 import org.ejml.UtilEjml;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -38,13 +38,13 @@ public class TestUtilPoint4D_F64 {
 	Random rand = new Random(234);
 
 	@Test
-	public void isInfinite() {
+	void isInfinite() {
 		assertFalse(UtilPoint4D_F64.isInfiniteH(new Point4D_F64(1,2,3,4), GrlConstants.EPS ));
 		assertTrue(UtilPoint4D_F64.isInfiniteH(new Point4D_F64(1,2,3,0), GrlConstants.EPS ));
 	}
 
 	@Test
-	public void randomN_4D() {
+	void randomN_4D() {
 		Point4D_F64 center = new Point4D_F64(-0.2,1,-2.3,4);
 		List<Point4D_F64> list = UtilPoint4D_F64.randomN(center,0.5,2000,rand);
 
@@ -83,7 +83,7 @@ public class TestUtilPoint4D_F64 {
 	}
 
 	@Test
-	public void randomN_3D() {
+	void randomN_3D() {
 		Point3D_F64 center = new Point3D_F64(-0.5, 1.1, -3);
 		List<Point4D_F64> list = UtilPoint4D_F64.randomN(center, 0.1, 0.5, 2000, rand);
 
@@ -123,7 +123,7 @@ public class TestUtilPoint4D_F64 {
 	}
 
 	@Test
-	public void random_min_max() {
+	void random_min_max() {
 		double lower = -2;
 		double upper = 1.5;
 		List<Point4D_F64> list = UtilPoint4D_F64.random(lower,upper,1000,rand);
@@ -149,7 +149,7 @@ public class TestUtilPoint4D_F64 {
 	}
 
 	@Test
-	public void h_to_e() {
+	void h_to_e() {
 		Point4D_F64 a = new Point4D_F64(1,2,3,0.5);
 		Point3D_F64 b = new Point3D_F64();
 		UtilPoint4D_F64.h_to_e(a,b);
@@ -160,7 +160,7 @@ public class TestUtilPoint4D_F64 {
 	}
 
 	@Test
-	public void h_to_e_out() {
+	void h_to_e_out() {
 		Point4D_F64 a = new Point4D_F64(1,2,3,0.5);
 		Point3D_F64 b = UtilPoint4D_F64.h_to_e(a);
 

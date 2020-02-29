@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,13 +26,13 @@ import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LinePolar2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
 import static georegression.geometry.UtilLine2D_F64.acuteAngle;
 import static georegression.geometry.UtilLine2D_F64.acuteAngleN;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -42,7 +42,7 @@ public class TestUtilLine2D_F64 {
 	Random rand = new Random(234234);
 
 	@Test
-	public void acuteAngle_general() {
+	void acuteAngle_general() {
 		assertEquals(0, acuteAngle(new LineGeneral2D_F64(1, 0, 0.5), new LineGeneral2D_F64(1, 0, 6)),
 				GrlConstants.TEST_F64);
 		assertEquals(0, acuteAngle(new LineGeneral2D_F64(0, 2, 0.5), new LineGeneral2D_F64(0, 2, 6)),
@@ -59,7 +59,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void acuteAngleN_general() {
+	void acuteAngleN_general() {
 
 		double a = Math.cos(Math.PI/4.0);
 		double tol = GrlConstants.TEST_F64 *10.0;// float case needs more tolerance
@@ -71,7 +71,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_segment_parametric() {
+	void convert_segment_parametric() {
 		LineSegment2D_F64 segment = new LineSegment2D_F64();
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 
@@ -87,7 +87,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_segment_general() {
+	void convert_segment_general() {
 		LineSegment2D_F64 segment = new LineSegment2D_F64();
 
 		segment.a.set(0,2);
@@ -101,7 +101,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_segment2pt_general() {
+	void convert_segment2pt_general() {
 		Point2D_F64 a = new Point2D_F64(2,6);
 		Point2D_F64 b = new Point2D_F64(7,8);
 
@@ -113,7 +113,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_segment2pt_parametric() {
+	void convert_segment2pt_parametric() {
 		Point2D_F64 a = new Point2D_F64(2,6);
 		Point2D_F64 b = new Point2D_F64(7,8);
 
@@ -126,7 +126,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_pt_angle_parametric() {
+	void convert_pt_angle_parametric() {
 		Point2D_F64 a = new Point2D_F64(2,6);
 		double angle = Math.PI;
 
@@ -139,7 +139,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_polar_parametric() {
+	void convert_polar_parametric() {
 		LinePolar2D_F64 polar = new LinePolar2D_F64();
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 
@@ -155,7 +155,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_polar_general() {
+	void convert_polar_general() {
 		LinePolar2D_F64 polar = new LinePolar2D_F64();
 
 		polar.distance = 5;
@@ -178,7 +178,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_general_polar() {
+	void convert_general_polar() {
 		LineGeneral2D_F64 general = new LineGeneral2D_F64(2,-3,-5);
 		LinePolar2D_F64 found = UtilLine2D_F64.convert(general,(LinePolar2D_F64)null);
 
@@ -198,7 +198,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_parametric_polar() {
+	void convert_parametric_polar() {
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 		LinePolar2D_F64 polar = new LinePolar2D_F64();
 
@@ -216,7 +216,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_BackAndForth_parametric_polar() {
+	void convert_BackAndForth_parametric_polar() {
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 		LinePolar2D_F64 polar = new LinePolar2D_F64();
 		LinePolar2D_F64 found = new LinePolar2D_F64();
@@ -244,7 +244,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_parametric_general() {
+	void convert_parametric_general() {
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 		LineGeneral2D_F64 general = new LineGeneral2D_F64();
 
@@ -264,7 +264,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test
-	public void convert_general_parametric() {
+	void convert_general_parametric() {
 		LineGeneral2D_F64 general = new LineGeneral2D_F64();
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 

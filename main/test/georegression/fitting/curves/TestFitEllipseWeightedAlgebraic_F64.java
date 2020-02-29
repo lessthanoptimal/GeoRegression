@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,14 +23,14 @@ import georegression.misc.GrlConstants;
 import georegression.struct.curve.EllipseQuadratic_F64;
 import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -40,7 +40,7 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 	Random rand = new Random(234);
 
 	@Test
-	public void checkCircle() {
+	void checkCircle() {
 		checkEllipse(0, 0, 3, 3, 0);
 	}
 
@@ -49,7 +49,7 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 	 * Perfect points is actually a hard case.  See comments in random section.
 	 */
 	@Test
-	public void checkEllipse() {
+	void checkEllipse() {
 		checkEllipse(0,0,3,1.5,0);
 		checkEllipse(1,2,3,1.5,0);
 		checkEllipse(1,2,3,1.5,0.25);
@@ -99,7 +99,7 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 	 * A bad point is given and see if the estimated error gets worse as it's weight is increased
 	 */
 	@Test
-	public void checkErrorIncreasedWithWeight() {
+	void checkErrorIncreasedWithWeight() {
 		checkEllipse(0,0,3,1.5,0);
 		checkEllipse(1,2,3,1.5,0);
 		checkEllipse(1,2,3,1.5,0.25);
@@ -154,7 +154,7 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 	 * below has been commented out since even the original algorithm run in octave can't pass that test.
 	 */
 	@Test
-	public void checkRandom() {
+	void checkRandom() {
 //		for( int i = 0; i < 100; i++ ) {
 //			System.out.println("i = "+i);
 //			double x0 = (rand.nextDouble()-0.5)*2;

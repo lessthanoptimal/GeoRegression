@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,9 +21,9 @@ package georegression.geometry;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.trig.Circle2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 public class TestUtilCircle2D_F64 {
 
 	@Test
-	public void evaluate() {
+	void evaluate() {
 		Circle2D_F64 circle = new Circle2D_F64(5,2,3);
 
 		assertEquals(0,UtilCircle2D_F64.evaluate(2-5,3,circle),GrlConstants.TEST_F64);
@@ -41,7 +41,7 @@ public class TestUtilCircle2D_F64 {
 	}
 
 	@Test
-	public void circle_3pts() {
+	void circle_3pts() {
 		Point2D_F64 x0 = new Point2D_F64(5,4);
 		Point2D_F64 x1 = new Point2D_F64(3,8);
 		Point2D_F64 x2 = new Point2D_F64(-3,-1);
@@ -56,7 +56,7 @@ public class TestUtilCircle2D_F64 {
 	}
 
 	@Test
-	public void circleRadiusSq_3pts() {
+	void circleRadiusSq_3pts() {
 		Point2D_F64 x0 = new Point2D_F64(5,4);
 		Point2D_F64 x1 = new Point2D_F64(3,8);
 		Point2D_F64 x2 = new Point2D_F64(-3,-1);

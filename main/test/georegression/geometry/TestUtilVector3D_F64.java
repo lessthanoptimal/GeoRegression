@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,11 +21,11 @@ package georegression.geometry;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.UtilEjml;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -36,7 +36,7 @@ public class TestUtilVector3D_F64 {
 	Random rand = new Random( 23423 );
 
 	@Test
-	public void isIdentical() {
+	void isIdentical() {
 		Vector3D_F64 a = UtilVector3D_F64.createRandom( -1, 1, rand );
 		Vector3D_F64 b = UtilVector3D_F64.createRandom( -1, 1, rand );
 
@@ -49,7 +49,7 @@ public class TestUtilVector3D_F64 {
 	}
 
 	@Test
-	public void normalize() {
+	void normalize() {
 		Vector3D_F64 a = new Vector3D_F64( 3, 3, 4 );
 
 		UtilVector3D_F64.normalize( a );
@@ -58,7 +58,7 @@ public class TestUtilVector3D_F64 {
 	}
 
 	@Test
-	public void acute() {
+	void acute() {
 		assertEquals(Math.PI/2.0,
 				UtilVector3D_F64.acute(new Vector3D_F64(1,0,0),new Vector3D_F64(0,1,0)),GrlConstants.TEST_F64);
 		assertEquals(Math.PI/2.0,
@@ -68,7 +68,7 @@ public class TestUtilVector3D_F64 {
 	}
 
 	@Test
-	public void perpendicularCanonical() {
+	void perpendicularCanonical() {
 //		perpendicularCanonical(new Vector3D_F64(1,0,0));
 //		perpendicularCanonical(new Vector3D_F64(0,-2,0));
 		perpendicularCanonical(new Vector3D_F64(0,0,3));

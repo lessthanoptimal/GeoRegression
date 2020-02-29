@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,10 +26,10 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import org.ejml.UtilEjml;
 import org.ejml.data.DMatrixRMaj;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -37,7 +37,7 @@ import static org.junit.Assert.assertTrue;
 public class TestUtilCurves_F64 {
 
 	@Test
-	public void matrix_to_conic() {
+	void matrix_to_conic() {
 		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);
 		DMatrixRMaj C = UtilCurves_F64.convert(conic,(DMatrixRMaj)null);
 		ConicGeneral_F64 found = UtilCurves_F64.convert(C,(ConicGeneral_F64)null);
@@ -51,7 +51,7 @@ public class TestUtilCurves_F64 {
 	}
 
 	@Test
-	public void conic_to_matrix() {
+	void conic_to_matrix() {
 		// hand constructed conic with a known point on the conic
 		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);
 
@@ -63,7 +63,7 @@ public class TestUtilCurves_F64 {
 	}
 
 	@Test
-	public void fmatrix_to_conic() {
+	void fmatrix_to_conic() {
 		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);
 		DMatrixRMaj C = UtilCurves_F64.convert(conic,(DMatrixRMaj)null);
 		ConicGeneral_F64 found = UtilCurves_F64.convert(C,(ConicGeneral_F64)null);
@@ -77,7 +77,7 @@ public class TestUtilCurves_F64 {
 	}
 
 	@Test
-	public void conic_tof_matrix() {
+	void conic_tof_matrix() {
 		// hand constructed conic with a known point on the conic
 		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);
 
@@ -92,7 +92,7 @@ public class TestUtilCurves_F64 {
 	 * The conic is a parabola This is an easy case
 	 */
 	@Test
-	public void conic_to_parabola_4AC_is_B() {
+	void conic_to_parabola_4AC_is_B() {
 		double A = 1.5,C=0.9;
 		double B = Math.sqrt(4*A*C);
 		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,B,0.9,3,2,-328.6895003862225);
@@ -121,7 +121,7 @@ public class TestUtilCurves_F64 {
 	 * B is not zero in this case. When converted it will be forced ot be zero
 	 */
 	@Test
-	public void conic_to_parabola_4AC_Not_B() {
+	void conic_to_parabola_4AC_Not_B() {
 		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,2,0.9,3,2,-212.5);
 		ParabolaGeneral_F64 parabola = new ParabolaGeneral_F64();
 		UtilCurves_F64.convert(conic,parabola);
@@ -134,7 +134,7 @@ public class TestUtilCurves_F64 {
 	}
 
 	@Test
-	public void parabola_generic_to_parametric() {
+	void parabola_generic_to_parametric() {
 		ParabolaGeneral_F64 general = new ParabolaGeneral_F64(1.1,0.5,0.4,-0.1,2.1);
 		ParabolaParametric_F64 parametric = new ParabolaParametric_F64();
 		ParabolaGeneral_F64 found = new ParabolaGeneral_F64();

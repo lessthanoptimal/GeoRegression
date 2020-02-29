@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,10 +20,10 @@ package georegression.fitting.sphere;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.shapes.Sphere3D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -31,14 +31,14 @@ import static org.junit.Assert.assertTrue;
 public class TestModelManagerSphere3D_F64 {
 
 	@Test
-	public void createModelInstance() {
+	void createModelInstance() {
 		ModelManagerSphere3D_F64 alg = new ModelManagerSphere3D_F64();
 
 		assertTrue( alg.createModelInstance() != null);
 	}
 
 	@Test
-	public void copyModel() {
+	void copyModel() {
 		ModelManagerSphere3D_F64 alg = new ModelManagerSphere3D_F64();
 
 		Sphere3D_F64 model = new Sphere3D_F64(1,2,3,4);

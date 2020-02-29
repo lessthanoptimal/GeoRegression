@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,10 +19,10 @@
 package georegression.struct;
 
 import georegression.misc.GrlConstants;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 public class TestMatrix3x3_F64 {
 
 	@Test
-	public void set_matrix() {
+	void set_matrix() {
 		Matrix3x3_F64 a = new Matrix3x3_F64();
 		a.set(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
@@ -49,7 +49,7 @@ public class TestMatrix3x3_F64 {
 	}
 
 	@Test
-	public void set_values() {
+	void set_values() {
 		Matrix3x3_F64 m = new Matrix3x3_F64();
 		m.set(1,2,3,4,5,6,7,8,9);
 
@@ -65,7 +65,7 @@ public class TestMatrix3x3_F64 {
 	}
 
 	@Test
-	public void scale() {
+	void scale() {
 		Matrix3x3_F64 m = new Matrix3x3_F64();
 		m.set(1,2,3,4,5,6,7,8,9);
 		m.scale(2);

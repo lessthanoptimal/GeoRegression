@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,14 +26,14 @@ import org.ejml.data.DMatrix3x3;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.ops.ConvertDMatrixStruct;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static georegression.geometry.ConvertRotation3D_F64.eulerToMatrix;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -46,7 +46,7 @@ public class TestAverageRotationMatrix_F64 {
 	 * Find the average of one quaternion.  Which should be the same as the input quaternion.
 	 */
 	@Test
-	public void one_M() {
+	void one_M() {
 		DMatrixRMaj q = eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null);
 
 		List<DMatrixRMaj> list = new ArrayList<>();
@@ -61,7 +61,7 @@ public class TestAverageRotationMatrix_F64 {
 	}
 
 	@Test
-	public void one_F() {
+	void one_F() {
 		DMatrix3x3 q = new DMatrix3x3();
 		ConvertDMatrixStruct.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
 
@@ -77,7 +77,7 @@ public class TestAverageRotationMatrix_F64 {
 	}
 
 	@Test
-	public void two_same_M() {
+	void two_same_M() {
 		DMatrixRMaj q = eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null);
 
 		List<DMatrixRMaj> list = new ArrayList<>();
@@ -93,7 +93,7 @@ public class TestAverageRotationMatrix_F64 {
 	}
 
 	@Test
-	public void two_same_F() {
+	void two_same_F() {
 		DMatrix3x3 q = new DMatrix3x3();
 		ConvertDMatrixStruct.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
 
@@ -113,7 +113,7 @@ public class TestAverageRotationMatrix_F64 {
 	 * Generate a bunch of quaternions, but noise them up on one axis and see if the result is close to the expected.
 	 */
 	@Test
-	public void noiseOnOneAxis_M() {
+	void noiseOnOneAxis_M() {
 		double rotX = 0.1;
 		double rotY = -0.5;
 		double rotZ = 1.5;
@@ -134,7 +134,7 @@ public class TestAverageRotationMatrix_F64 {
 	}
 
 	@Test
-	public void noiseOnOneAxis_F() {
+	void noiseOnOneAxis_F() {
 		double rotX = 0.1;
 		double rotY = -0.5;
 		double rotZ = 1.5;

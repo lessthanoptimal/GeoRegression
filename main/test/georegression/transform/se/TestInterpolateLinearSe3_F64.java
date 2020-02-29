@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,10 +24,10 @@ import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.EulerType;
 import georegression.struct.se.Se3_F64;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -35,7 +35,7 @@ import static org.junit.Assert.assertTrue;
 public class TestInterpolateLinearSe3_F64 {
 
 	@Test
-	public void identicalInputs() {
+	void identicalInputs() {
 		Se3_F64 a = create(1,2,3,0.3,   -0.2,1.2);
 		InterpolateLinearSe3_F64 alg = new InterpolateLinearSe3_F64();
 
@@ -49,7 +49,7 @@ public class TestInterpolateLinearSe3_F64 {
 	}
 
 	@Test
-	public void justTranslation() {
+	void justTranslation() {
 		Se3_F64 a = create(1,2,3,    0.3,-0.2,1.2);
 		Se3_F64 b = create(4,4,4,    0.3,-0.2,1.2);
 		InterpolateLinearSe3_F64 alg = new InterpolateLinearSe3_F64();
@@ -73,7 +73,7 @@ public class TestInterpolateLinearSe3_F64 {
 	}
 
 	@Test
-	public void justRotation() {
+	void justRotation() {
 		Se3_F64 a = create(1,2,3,    0.1,0,0);
 		Se3_F64 b = create(1,2,3,    0.9,0,0);
 		InterpolateLinearSe3_F64 alg = new InterpolateLinearSe3_F64();
@@ -100,7 +100,7 @@ public class TestInterpolateLinearSe3_F64 {
 	}
 
 	@Test
-	public void both() {
+	void both() {
 		Se3_F64 a = create(1,2,3,    0.1,0,0);
 		Se3_F64 b = create(4,4,4,    0.9,0,0);
 		InterpolateLinearSe3_F64 alg = new InterpolateLinearSe3_F64();

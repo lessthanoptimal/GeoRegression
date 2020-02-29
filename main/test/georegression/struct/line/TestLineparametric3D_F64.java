@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,17 +19,17 @@
 package georegression.struct.line;
 
 import org.ejml.UtilEjml;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * @author Peter Abeles
  */
 public class TestLineparametric3D_F64 {
 	@Test
-	public void equals() {
+	void equals() {
 		LineParametric3D_F64 a = new LineParametric3D_F64(1,2,3,4,5,6);
 		LineParametric3D_F64 b = new LineParametric3D_F64(1,2,3,4,5,6);
 

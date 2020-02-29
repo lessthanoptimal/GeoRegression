@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,12 +22,12 @@ import georegression.geometry.UtilEllipse_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -37,14 +37,14 @@ public class TestClosestPointEllipseAngle_F64 {
 	Random rand = new Random(234);
 
 	@Test
-	public void easyTest() {
+	void easyTest() {
 		checkSolution(0,0,3,1.5,0,5,6);
 		checkSolution(1,2,3,1.5,0.2,5,6);
 		checkSolution(1,2,3,1.5,0.2,1,2);
 	}
 
 	@Test
-	public void random() {
+	void random() {
 		for( int i = 0; i < 100; i++ ) {
 			double x0 = (rand.nextDouble()-0.5)*5;
 			double y0 = (rand.nextDouble()-0.5)*5;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -28,12 +28,12 @@ import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DMatrixRMaj;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -41,7 +41,7 @@ import static org.junit.Assert.assertEquals;
 public class TestSePointOps_F64 {
 
 	@Test
-	public void transform_2d_single() {
+	void transform_2d_single() {
 		Se2_F64 tran = new Se2_F64( -2, 3, Math.PI );
 
 		Point2D_F64 pt = new Point2D_F64( 2, 4 );
@@ -67,7 +67,7 @@ public class TestSePointOps_F64 {
 	}
 
 	@Test
-	public void transformReverse_2d_single() {
+	void transformReverse_2d_single() {
 		Se2_F64 tran = new Se2_F64( -2, 3, Math.PI / 2.0 );
 
 		Point2D_F64 pt = new Point2D_F64( 2, 4 );
@@ -93,7 +93,7 @@ public class TestSePointOps_F64 {
 	}
 
 	@Test
-	public void transform_2d_array() {
+	void transform_2d_array() {
 		Se2_F64 tran = new Se2_F64( -2, 3, Math.PI );
 
 		Point2D_F64 pts[] = new Point2D_F64[20];
@@ -115,7 +115,7 @@ public class TestSePointOps_F64 {
 	}
 
 	@Test
-	public void transform_2d_list() {
+	void transform_2d_list() {
 		Se2_F64 tran = new Se2_F64( -2, 3, Math.PI );
 
 		List<Point2D_F64> pts = new ArrayList<Point2D_F64>();
@@ -131,7 +131,7 @@ public class TestSePointOps_F64 {
 	}
 
 	@Test
-	public void transform_3d_single() {
+	void transform_3d_single() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
@@ -148,12 +148,32 @@ public class TestSePointOps_F64 {
 	}
 
 	@Test
-	public void transform_4d_single() {
+	void transform_4d_3D() {
+		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
+		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
+
+		double w = 1.5;
+		Point4D_F64 P = new Point4D_F64( 1, 7, 9 , w);
+		Point3D_F64 P3 = new Point3D_F64(1/w,7/w,9/w);
+		Point3D_F64 Pt = new Point3D_F64();
+
+		Se3_F64 se = new Se3_F64( R, T );
+
+		SePointOps_F64.transform( se, P, Pt );
+		SePointOps_F64.transform( se, P3, P3 );
+
+		assertEquals( P3.x, Pt.getX(), GrlConstants.TEST_F64);
+		assertEquals( P3.y , Pt.getY(), GrlConstants.TEST_F64);
+		assertEquals( P3.z , Pt.getZ(), GrlConstants.TEST_F64);
+	}
+
+	@Test
+	void transform_4d_4D() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
 		Point4D_F64 P = new Point4D_F64( 1, 7, 9 , 1);
-		Point3D_F64 Pt = new Point3D_F64();
+		Point4D_F64 Pt = new Point4D_F64();
 
 		Se3_F64 se = new Se3_F64( R, T );
 
@@ -162,16 +182,18 @@ public class TestSePointOps_F64 {
 		assertEquals( 10, Pt.getX(), GrlConstants.TEST_F64);
 		assertEquals( 9 , Pt.getY(), GrlConstants.TEST_F64);
 		assertEquals( 2 , Pt.getZ(), GrlConstants.TEST_F64);
+		assertEquals( 1 , Pt.w, GrlConstants.TEST_F64);
 
 		P.w = 0;
 		SePointOps_F64.transform( se, P, Pt );
 		assertEquals( 9 , Pt.getX(), GrlConstants.TEST_F64);
 		assertEquals( 7 , Pt.getY(), GrlConstants.TEST_F64);
 		assertEquals(-1 , Pt.getZ(), GrlConstants.TEST_F64);
+		assertEquals(0 , Pt.w, GrlConstants.TEST_F64);
 	}
 
 	@Test
-	public void transformReverse_3d_single() {
+	void transformReverse_3d_single() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 

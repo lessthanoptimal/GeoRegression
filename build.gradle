@@ -1,5 +1,5 @@
 plugins {
-    id "com.peterabeles.gversion" version "1.6.2" apply false
+    id "com.peterabeles.gversion" version "1.7.0" apply false
 }
 
 allprojects {
@@ -8,7 +8,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.21'
+    version = '0.22-SNAPSHOT'
 }
 
 gversion {
@@ -25,9 +25,15 @@ subprojects {
     apply plugin: 'signing'
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
+
+    // Creates Java 8 byte code
+    compileJava {
+        options.compilerArgs = [ "--release", "8"  ]
+    }
+
 
     // Fail on jar conflict
     configurations.all {
@@ -42,9 +48,8 @@ subprojects {
         mavenCentral()
         mavenLocal()
 
-        maven {
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url = 'https://jitpack.io' } // Allows annotations past Java 8 to be used
     }
 
     sourceSets {
@@ -70,10 +75,19 @@ subprojects {
     }
 
     dependencies {
-        compile (group: 'org.ddogleg', name: 'ddogleg', version: '0.17')
-        compile 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable
+        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.17')
+        implementation 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable
+        implementation 'javax.annotation:jsr250-api:1.0'       // @Generated
 
-        testCompile group: 'junit', name: 'junit', version: '4.12'
+        testImplementation(
+                'org.junit.jupiter:junit-jupiter-api:5.4.0'
+        )
+        testRuntimeOnly(
+                'org.junit.jupiter:junit-jupiter-engine:5.4.0'
+        )
+
+        // needed to use Java 11 with 8 byte code
+        annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:0.2.0'
     }
 
     test {

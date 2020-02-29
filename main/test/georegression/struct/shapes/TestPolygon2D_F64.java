@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,20 +19,20 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
  */
 public class TestPolygon2D_F64 {
 	@Test
-	public void convert() {
+	void convert() {
 		Polygon2D_F64 polygon = new Polygon2D_F64(3);
 		polygon.get(0).set(1,2);
 		polygon.get(1).set(2,3);
@@ -57,7 +57,7 @@ public class TestPolygon2D_F64 {
 	}
 
 	@Test
-	public void set_list() {
+	void set_list() {
 		List<Point2D_F64> list = new ArrayList<>();
 
 		list.add( new Point2D_F64(2,3));

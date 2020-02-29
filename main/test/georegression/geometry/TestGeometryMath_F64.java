@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,12 +26,12 @@ import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
 import org.ejml.dense.row.RandomMatrices_DDRM;
 import org.ejml.equation.Equation;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -45,7 +45,7 @@ public class TestGeometryMath_F64 {
 	 * Sees if crossMatrix produces a valid output
 	 */
 	@Test
-	public void crossMatrix_validOut() {
+	void crossMatrix_validOut() {
 		double a = 1.1, b = -0.5, c = 2.2;
 
 		Vector3D_F64 v = new Vector3D_F64( a, b, c );
@@ -69,7 +69,7 @@ public class TestGeometryMath_F64 {
 	 * Sees if both crossMatrix functions produce the same output
 	 */
 	@Test
-	public void crossMatrix_sameOut() {
+	void crossMatrix_sameOut() {
 		double a = 1.1, b = -0.5, c = 2.2;
 
 		Vector3D_F64 v = new Vector3D_F64( a, b, c );
@@ -81,7 +81,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void cross_3d_3d() {
+	void cross_3d_3d() {
 		Vector3D_F64 a = new Vector3D_F64( 1, 0, 0 );
 		Vector3D_F64 b = new Vector3D_F64( 0, 1, 0 );
 		Vector3D_F64 c = new Vector3D_F64();
@@ -100,7 +100,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void cross_3d_3d_double() {
+	void cross_3d_3d_double() {
 		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 0.5, 1.5, -3 );
 		Vector3D_F64 expected = new Vector3D_F64();
@@ -115,7 +115,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void cross_2d_3d() {
+	void cross_2d_3d() {
 		Vector2D_F64 aa = new Vector2D_F64( 0.75, 2 );
 		Vector3D_F64 a = new Vector3D_F64( 0.75, 2, 1);
 		Vector3D_F64 b = new Vector3D_F64( 3, 0.1, 4 );
@@ -131,7 +131,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void cross_2d_2d() {
+	void cross_2d_2d() {
 		Vector2D_F64 aa = new Vector2D_F64( 0.75, 2 );
 		Vector3D_F64 a = new Vector3D_F64( 0.75, 2, 1);
 		Vector2D_F64 bb = new Vector2D_F64( 3, 0.1);
@@ -148,7 +148,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void add() {
+	void add() {
 		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 3, 1, 4 );
 		Vector3D_F64 c = new Vector3D_F64();
@@ -161,7 +161,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void add_scale() {
+	void add_scale() {
 		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 3, 1, 4 );
 		Vector3D_F64 c = new Vector3D_F64();
@@ -174,7 +174,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void addMult() {
+	void addMult() {
 		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 2, 3, 4 );
 		Vector3D_F64 c = new Vector3D_F64();
@@ -199,7 +199,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void addMultTran() {
+	void addMultTran() {
 		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 2, 3, 4 );
 		Vector3D_F64 c = new Vector3D_F64();
@@ -224,7 +224,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void sub() {
+	void sub() {
 		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 3, 1, 4 );
 		Vector3D_F64 c = new Vector3D_F64();
@@ -237,7 +237,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void rotate_2d_theta() {
+	void rotate_2d_theta() {
 		Vector2D_F64 a = new Vector2D_F64( 1, 2 );
 		double theta = 0.6;
 
@@ -257,7 +257,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void rotate_2d_c_s() {
+	void rotate_2d_c_s() {
 		Vector2D_F64 a = new Vector2D_F64( 1, 2 );
 		double theta = 0.6;
 
@@ -277,7 +277,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void mult_3d_3d() {
+	void mult_3d_3d() {
 		Vector3D_F64 a = new Vector3D_F64( -1, 2, 3 );
 		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F64 c = new Vector3D_F64();
@@ -290,7 +290,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void mult4_3d_3d() {
+	void mult4_3d_3d() {
 		Vector3D_F64 a = new Vector3D_F64( -1, 2, 3 );
 		Vector4D_F64 aa = new Vector4D_F64( -1, 2, 3 , 1);
 		DMatrixRMaj M = new DMatrixRMaj(4,4,true,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7);
@@ -306,7 +306,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void mult_3d_2d() {
+	void mult_3d_2d() {
 		Vector3D_F64 a = new Vector3D_F64( -1, 2, 3 );
 		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector2D_F64 c = new Vector2D_F64();
@@ -318,7 +318,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void mult_2d_3d() {
+	void mult_2d_3d() {
 		Vector3D_F64 a3 = new Vector3D_F64( -1, 2, 1 );
 		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F64 expected = new Vector3D_F64();
@@ -335,7 +335,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void mult_2d_2d() {
+	void mult_2d_2d() {
 		Vector3D_F64 a3 = new Vector3D_F64( -1, 2, 1 );
 		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F64 expected = new Vector3D_F64();
@@ -353,7 +353,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void multTran_3d_3d() {
+	void multTran_3d_3d() {
 		Vector3D_F64 a = new Vector3D_F64( -1, 2, 3 );
 		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F64 c = new Vector3D_F64();
@@ -366,7 +366,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void multTran_2d_3d() {
+	void multTran_2d_3d() {
 		Vector2D_F64 a = new Vector2D_F64( -1, 2 );
 		DMatrixRMaj M = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 		Vector3D_F64 c = new Vector3D_F64();
@@ -379,7 +379,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void mult_4d_3d() {
+	void mult_4d_3d() {
 		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(3,4,rand);
 		Point4D_F64 X = new Point4D_F64(1,2,3,4);
 
@@ -396,7 +396,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void mult_4d_4d() {
+	void mult_4d_4d() {
 		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(4,4,rand);
 		Point4D_F64 X = new Point4D_F64(1,2,3,4);
 
@@ -413,7 +413,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void mult_4d_2d() {
+	void mult_4d_2d() {
 		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(3,4,rand);
 		Point4D_F64 X = new Point4D_F64(1,2,3,4);
 
@@ -432,7 +432,7 @@ public class TestGeometryMath_F64 {
 
 
 	@Test
-	public void multCrossA_2D() {
+	void multCrossA_2D() {
 		Point2D_F64 a = new Point2D_F64(3,2);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
 
@@ -446,7 +446,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void multCrossATransA_2D() {
+	void multCrossATransA_2D() {
 		Point2D_F64 a = new Point2D_F64(3,2);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
 
@@ -460,7 +460,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void multCrossA_3D() {
+	void multCrossA_3D() {
 		Point3D_F64 a = new Point3D_F64(1,2,3);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
 
@@ -474,7 +474,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void multCrossATransA_3D() {
+	void multCrossATransA_3D() {
 		Point3D_F64 a = new Point3D_F64(1,2,3);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3,3,rand);
 
@@ -488,7 +488,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void innerProd_3D() {
+	void innerProd_3D() {
 		Vector3D_F64 a = new Vector3D_F64( 2, -2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 4, 3, 2 );
 		DMatrixRMaj M = new DMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
@@ -499,7 +499,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void innerProdTranM() {
+	void innerProdTranM() {
 		Vector3D_F64 a = new Vector3D_F64( 2, -2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 4, 3, 2 );
 		DMatrixRMaj M = new DMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
@@ -510,7 +510,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void innerProd_2D() {
+	void innerProd_2D() {
 		Vector2D_F64 a = new Vector2D_F64( 2, -2 );
 		Vector2D_F64 b = new Vector2D_F64( 4, 3 );
 		DMatrixRMaj M = new DMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
@@ -521,7 +521,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void outerProd_3D() {
+	void outerProd_3D() {
 		Vector3D_F64 a = new Vector3D_F64( 2, -2 , 5);
 		Vector3D_F64 b = new Vector3D_F64( 4, 3 , 9);
 		DMatrixRMaj M = new DMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
@@ -534,7 +534,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void addOuterProd_3D() {
+	void addOuterProd_3D() {
 		Vector3D_F64 a = new Vector3D_F64( 2, -2 , 5);
 		Vector3D_F64 b = new Vector3D_F64( 4, 3 , 9);
 		DMatrixRMaj A = new DMatrixRMaj( 3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
@@ -549,7 +549,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void dot() {
+	void dot() {
 		Vector3D_F64 a = new Vector3D_F64( 2, -2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 4, 3, 2 );
 		double found = GeometryMath_F64.dot( a, b );
@@ -558,7 +558,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void scale() {
+	void scale() {
 		Vector3D_F64 a = new Vector3D_F64( 1, -2, 3 );
 		GeometryMath_F64.scale( a, 2 );
 
@@ -568,7 +568,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void divide() {
+	void divide() {
 		Vector3D_F64 a = new Vector3D_F64( 1, -2, 3 );
 		GeometryMath_F64.divide( a, 2 );
 
@@ -579,7 +579,7 @@ public class TestGeometryMath_F64 {
 
 
 	@Test
-	public void changeSign() {
+	void changeSign() {
 		Vector3D_F64 a = new Vector3D_F64( 1, -2, 3 );
 		GeometryMath_F64.changeSign( a );
 
@@ -589,7 +589,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void toMatrix() {
+	void toMatrix() {
 		Vector3D_F64 a = new Vector3D_F64( 1, -2, 3 );
 		DMatrixRMaj found = GeometryMath_F64.toMatrix(a,null);
 
@@ -599,7 +599,7 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test
-	public void toTuple3D() {
+	void toTuple3D() {
 		DMatrixRMaj a = new DMatrixRMaj(3,1,true,1,-2,3);
 		Vector3D_F64 b = new Vector3D_F64();
 		GeometryMath_F64.toTuple3D(a, b);

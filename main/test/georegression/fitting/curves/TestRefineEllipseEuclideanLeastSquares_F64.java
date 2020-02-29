@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,14 +23,14 @@ import georegression.misc.GrlConstants;
 import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.optimization.DerivativeChecker;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -40,21 +40,21 @@ public class TestRefineEllipseEuclideanLeastSquares_F64 {
 	Random rand = new Random(234);
 
 	@Test
-	public void perfectEllipse() {
+	void perfectEllipse() {
 		checkPerfect(0,0,2,1,0);
 		checkPerfect(1,-2,2,1,0);
 		checkPerfect(0.5,3,2,1,0.1);
 	}
 
 	@Test
-	public void perfectCircle() {
+	void perfectCircle() {
 		checkPerfect(0,0,2,2,0);
 		checkPerfect(1,-2,2,2,0);
 		checkPerfect(0.5,3,2,2,0.1);
 	}
 
 	@Test
-	public void perfectDataBadGuess() {
+	void perfectDataBadGuess() {
 		EllipseRotated_F64 trueModel = new EllipseRotated_F64(-1,1.5,3,2,-0.3);
 
 		checkIncorrect(-1, 1.5, 3, 2, -0.2, trueModel,false);
@@ -70,7 +70,7 @@ public class TestRefineEllipseEuclideanLeastSquares_F64 {
 	}
 
 	@Test
-	public void noisyEllipse() {
+	void noisyEllipse() {
 		double sigma = 0.05;
 
 		checkNoisy(0,0,2,1,0 , sigma);
@@ -160,7 +160,7 @@ public class TestRefineEllipseEuclideanLeastSquares_F64 {
 	}
 
 	@Test
-	public void checkJacobian() {
+	void checkJacobian() {
 		EllipseRotated_F64 model = new EllipseRotated_F64(1,2,3,2,0.1);
 
 		List<Point2D_F64> points = new ArrayList<Point2D_F64>();

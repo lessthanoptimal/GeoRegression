@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,9 +24,9 @@ import georegression.misc.GrlConstants;
 import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
@@ -39,7 +39,7 @@ public class TestTangentLinesTwoEllipses_F64 {
 	Point2D_F64 tangentB2 = new Point2D_F64(); Point2D_F64 tangentB3 = new Point2D_F64();
 
 	@Test
-	public void process() {
+	void process() {
 		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.TEST_F64, 20);
 
 		for( int i = 0; i < 20; i++ ) {
@@ -63,7 +63,7 @@ public class TestTangentLinesTwoEllipses_F64 {
 	}
 
 	@Test
-	public void initialize() {
+	void initialize() {
 		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.TEST_F64, 20);
 
 		EllipseRotated_F64 ellipseA = new EllipseRotated_F64(0,10,5,4,0);
@@ -125,7 +125,7 @@ public class TestTangentLinesTwoEllipses_F64 {
 	}
 
 	@Test
-	public void selectTangent() {
+	void selectTangent() {
 		TangentLinesTwoEllipses_F64 alg = new TangentLinesTwoEllipses_F64(GrlConstants.TEST_F64, 20);
 
 		EllipseRotated_F64 ellipse = new EllipseRotated_F64(0,10,2,2,0);

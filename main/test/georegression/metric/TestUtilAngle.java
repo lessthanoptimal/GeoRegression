@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,19 +19,19 @@
 package georegression.metric;
 
 import georegression.misc.GrlConstants;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static georegression.metric.UtilAngle.*;
 import static georegression.misc.GrlConstants.*;
 import static java.lang.Math.PI;
 import static org.ejml.UtilEjml.TEST_F32;
 import static org.ejml.UtilEjml.TEST_F64;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestUtilAngle {
 
 	@Test
-	public void atanSafe() {
+	void atanSafe() {
 		assertEquals(Math.PI/2.0,UtilAngle.atanSafe(0.0,0.0),1e-8);
 		assertEquals(Math.PI/2.0,UtilAngle.atanSafe(1.0,0.0),1e-8);
 		assertEquals(-Math.PI/2.0,UtilAngle.atanSafe(-1.0,0.0),1e-8);
@@ -39,7 +39,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void average_two_F64() {
+	void average_two_F64() {
 		assertEquals(0,UtilAngle.average(0,0), TEST_F64);
 		assertEquals(1,UtilAngle.average(1,1), TEST_F64);
 		assertEquals(1.3,UtilAngle.average(1,1.6), TEST_F64);
@@ -56,7 +56,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void average_two_F32() {
+	void average_two_F32() {
 		assertEquals(0.0f,UtilAngle.average(0.0f,0.0f), TEST_F32);
 		assertEquals(1.0f,UtilAngle.average(1.0f,1.0f), TEST_F32);
 		assertEquals(1.3f,UtilAngle.average(1.0f,1.6), TEST_F32);
@@ -73,7 +73,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void toHalfCircle() {
+	void toHalfCircle() {
 		assertEquals(0,UtilAngle.toHalfCircle(0),1e-8);
 		assertEquals(0.1,UtilAngle.toHalfCircle(0.1),1e-8);
 		assertEquals(1.9-Math.PI,UtilAngle.toHalfCircle(1.9),1e-8);
@@ -83,7 +83,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void isStandardDomain() {
+	void isStandardDomain() {
 		assertTrue( UtilAngle.isStandardDomain( 0.1 ) );
 		assertTrue( UtilAngle.isStandardDomain( -0.1 ) );
 		assertFalse( UtilAngle.isStandardDomain( 4 ) );
@@ -94,7 +94,7 @@ public class TestUtilAngle {
 	 * Test the bound function by providing several test cases.
 	 */
 	@Test
-	public void testBound() {
+	void testBound() {
 		assertEquals( PI * 0.5, bound( PI * 2.5 ), 1e-5 );
 		assertEquals( -PI * 0.5, bound( -PI * 2.5 ), 1e-5 );
 		assertEquals( PI * 0.5, bound( -PI * 1.5 ), 1e-5 );
@@ -105,7 +105,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testBoundHalf_F64() {
+	void testBoundHalf_F64() {
 		assertEquals( -0.1, boundHalf( PI - 0.1 ), 1e-5 );
 		assertEquals(  0.1, boundHalf( -PI + 0.1 ), 1e-5 );
 		assertEquals( PId2-0.1, boundHalf( PId2-0.1 ), 1e-5 );
@@ -116,7 +116,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testBoundHalf_F32() {
+	void testBoundHalf_F32() {
 		assertEquals( -0.1f, boundHalf( F_PI - 0.1f ), 1e-5f );
 		assertEquals(  0.1f, boundHalf( -F_PI + 0.1f ), 1e-5f );
 		assertEquals( F_PId2-0.1f, boundHalf( F_PId2-0.1f ), 1e-5f );
@@ -127,21 +127,21 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDistanceCCW_F64() {
+	void testDistanceCCW_F64() {
 		assertEquals( PI * 1.5, distanceCCW(-0.75 * PI, 0.75 * PI), GrlConstants.TEST_F64);
 		assertEquals( PI * 0.5, distanceCCW( 0.75 * PI, -0.75 * PI), GrlConstants.TEST_F64);
 		assertEquals( 0, distanceCCW(1,1), GrlConstants.TEST_F64);
 	}
 
 	@Test
-	public void testDistanceCCW_F32() {
+	void testDistanceCCW_F32() {
 		assertEquals( F_PI * 1.5f, distanceCCW(-0.75f * F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
 		assertEquals( F_PI * 0.5f, distanceCCW( 0.75f * F_PI, -0.75f * F_PI), GrlConstants.TEST_F32);
 		assertEquals( 0f, distanceCCW(1f,1f), GrlConstants.TEST_F32);
 	}
 
 	@Test
-	public void testDistanceCCW_u_F64() {
+	void testDistanceCCW_u_F64() {
 		assertEquals( PI * 1.5, distanceCCW_u(-0.75 * PI+2*PI, 0.75 * PI), GrlConstants.TEST_F64);
 		assertEquals( PI * 0.5, distanceCCW_u( 0.75 * PI, -0.75 * PI+2*PI), GrlConstants.TEST_F64);
 		assertEquals( PI * 1.5, distanceCCW_u(-0.75 * PI-2*PI, 0.75 * PI), GrlConstants.TEST_F64);
@@ -150,7 +150,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDistanceCCW_u_F32() {
+	void testDistanceCCW_u_F32() {
 		assertEquals( F_PI * 1.5f, distanceCCW_u(-0.75f * F_PI +2*F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
 		assertEquals( F_PI * 0.5f, distanceCCW_u( 0.75f * F_PI, -0.75f * F_PI+2*F_PI), GrlConstants.TEST_F32);
 		assertEquals( F_PI * 1.5f, distanceCCW_u(-0.75f * F_PI-2*F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
@@ -159,14 +159,14 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDistanceCW_F64() {
+	void testDistanceCW_F64() {
 		assertEquals( PI * 0.5, distanceCW(-0.75 * PI, 0.75 * PI), GrlConstants.TEST_F64);
 		assertEquals( PI * 1.5, distanceCW(0.75 * PI, -0.75 * PI), GrlConstants.TEST_F64);
 		assertEquals( 0, distanceCW(1, 1), GrlConstants.TEST_F64);
 	}
 
 	@Test
-	public void testDistanceCW_u_F64() {
+	void testDistanceCW_u_F64() {
 		assertEquals( PI * 0.5, distanceCW_u(-0.75 * PI+2*PI, 0.75 * PI), GrlConstants.TEST_F64);
 		assertEquals( PI * 1.5, distanceCW_u(0.75 * PI, -0.75 * PI+2*PI), GrlConstants.TEST_F64);
 		assertEquals( PI * 0.5, distanceCW_u(-0.75 * PI-2*PI, 0.75 * PI), GrlConstants.TEST_F64);
@@ -175,7 +175,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDistanceCW_F32() {
+	void testDistanceCW_F32() {
 		assertEquals( F_PI * 0.5f, distanceCW_u(-0.75f * F_PI +2*F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
 		assertEquals( F_PI * 1.5f, distanceCW_u(0.75f * F_PI, -0.75f * F_PI +2*F_PI), GrlConstants.TEST_F32);
 		assertEquals( F_PI * 0.5f, distanceCW_u(-0.75f * F_PI -2*F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
@@ -184,14 +184,14 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDistanceCW_u_F32() {
+	void testDistanceCW_u_F32() {
 		assertEquals( F_PI * 0.5f, distanceCW(-0.75f * F_PI, 0.75f * F_PI), GrlConstants.TEST_F32);
 		assertEquals( F_PI * 1.5f, distanceCW(0.75f * F_PI, -0.75f * F_PI), GrlConstants.TEST_F32);
 		assertEquals( 0, distanceCW(1f, 1f), GrlConstants.TEST_F32);
 	}
 
 	@Test
-	public void testMinus() {
+	void testMinus() {
 		assertEquals( -0.1, minus( 0.1, 0.2 ), 1e-5 );
 		assertEquals( 0.1, minus( 0.2, 0.1 ), 1e-5 );
 		assertEquals( 0.1, minus( -0.1, -0.2 ), 1e-5 );
@@ -207,7 +207,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDist_F64() {
+	void testDist_F64() {
 		assertEquals(0,dist(0,0),1e-8);
 		assertEquals(0,dist(1,1),1e-8);
 		assertEquals(2,dist(-1,1),1e-8);
@@ -216,7 +216,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDist_u_F64() {
+	void testDist_u_F64() {
 		assertEquals(0,dist_u(2*PI,-2*PI),1e-8);
 		assertEquals(0,dist_u(1+2*PI,1-2*PI),1e-8);
 		assertEquals(2,dist_u(-1+2*PI,1-2*PI),1e-8);
@@ -225,7 +225,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDist_F32() {
+	void testDist_F32() {
 		assertEquals(0f,dist(0f,0f),1e-4f);
 		assertEquals(0f,dist(1f,1f),1e-4f);
 		assertEquals(2f,dist(-1f,1f),1e-4f);
@@ -234,7 +234,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void testDist_u_F32() {
+	void testDist_u_F32() {
 		assertEquals(0f,dist_u(0f+2*F_PI,0f-2*F_PI),1e-4f);
 		assertEquals(0f,dist_u(1f+2*F_PI,1f-2*F_PI),1e-4f);
 		assertEquals(2f,dist_u(-1f+2*F_PI,1f-2*F_PI),1e-4f);
@@ -243,7 +243,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void distHalf_F64() {
+	void distHalf_F64() {
 		assertEquals(0,UtilAngle.distHalf(0,0),1e-8);
 		assertEquals(0,UtilAngle.distHalf(Math.PI/2,Math.PI/2),1e-8);
 		assertEquals(0,UtilAngle.distHalf(-Math.PI/2,-Math.PI/2),1e-8);
@@ -256,7 +256,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void domain2PI() {
+	void domain2PI() {
 		double angles[] = new double[]{-0.1,-Math.PI,-0.4,0.1,0.4,2.5,Math.PI};
 
 		for( double angle : angles ) {
@@ -266,7 +266,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void wrapZeroToOne_F64() {
+	void wrapZeroToOne_F64() {
 		assertEquals(0.00, UtilAngle.wrapZeroToOne(2.0), GrlConstants.TEST_F64);
 		assertEquals(0.00, UtilAngle.wrapZeroToOne(1.0), GrlConstants.TEST_F64);
 		assertEquals(0.00, UtilAngle.wrapZeroToOne(0.0), GrlConstants.TEST_F64);
@@ -281,7 +281,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void wrapZeroToOne_F32() {
+	void wrapZeroToOne_F32() {
 		assertEquals(0.00f, UtilAngle.wrapZeroToOne(2.0f), GrlConstants.TEST_F32);
 		assertEquals(0.00f, UtilAngle.wrapZeroToOne(1.0f), GrlConstants.TEST_F32);
 		assertEquals(0.00f, UtilAngle.wrapZeroToOne(0.0f), GrlConstants.TEST_F32);
@@ -296,7 +296,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void reflectZeroToOne_F64() {
+	void reflectZeroToOne_F64() {
 		assertEquals(0.00, UtilAngle.reflectZeroToOne(2.0), GrlConstants.TEST_F64);
 		assertEquals(1.00, UtilAngle.reflectZeroToOne(1.0), GrlConstants.TEST_F64);
 		assertEquals(0.00, UtilAngle.reflectZeroToOne(0.0), GrlConstants.TEST_F64);
@@ -312,7 +312,7 @@ public class TestUtilAngle {
 	}
 
 	@Test
-	public void reflectZeroToOne_F32() {
+	void reflectZeroToOne_F32() {
 		assertEquals(0.00f, UtilAngle.reflectZeroToOne(2.0f), GrlConstants.TEST_F32);
 		assertEquals(1.00f, UtilAngle.reflectZeroToOne(1.0f), GrlConstants.TEST_F32);
 		assertEquals(0.00f, UtilAngle.reflectZeroToOne(0.0f), GrlConstants.TEST_F32);

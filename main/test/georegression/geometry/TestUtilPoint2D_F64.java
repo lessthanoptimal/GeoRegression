@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,14 +26,14 @@ import georegression.struct.shapes.RectangleLength2D_F64;
 import org.ejml.data.DMatrix2x2;
 import org.ejml.dense.fixed.CommonOps_DDF2;
 import org.ejml.dense.fixed.NormOps_DDF2;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -43,7 +43,7 @@ public class TestUtilPoint2D_F64 {
 	Random rand = new Random(234);
 
 	@Test
-	public void noiseNormal_single() {
+	void noiseNormal_single() {
 		Point2D_F64 mean = new Point2D_F64(3,4);
 		double sx=1,sy=0.5;
 
@@ -73,7 +73,7 @@ public class TestUtilPoint2D_F64 {
 	}
 
 	@Test
-	public void mean_list() {
+	void mean_list() {
 		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
 
 		double X=0,Y=0;
@@ -92,7 +92,7 @@ public class TestUtilPoint2D_F64 {
 	}
 
 	@Test
-	public void mean_array() {
+	void mean_array() {
 		Point2D_F64[] list = new Point2D_F64[20];
 
 		double X=0,Y=0;
@@ -111,7 +111,7 @@ public class TestUtilPoint2D_F64 {
 	}
 
 	@Test
-	public void mean_2pt() {
+	void mean_2pt() {
 		Point2D_F64 a = new Point2D_F64(3,8);
 		Point2D_F64 b = new Point2D_F64(-4,7.8);
 
@@ -124,7 +124,7 @@ public class TestUtilPoint2D_F64 {
 	}
 
 	@Test
-	public void bounding_length() {
+	void bounding_length() {
 		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
 
 		for( int i = 0; i < 20; i++ ) {
@@ -145,7 +145,7 @@ public class TestUtilPoint2D_F64 {
 	}
 
 	@Test
-	public void bounding() {
+	void bounding() {
 		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
 
 		for( int i = 0; i < 20; i++ ) {
@@ -166,7 +166,7 @@ public class TestUtilPoint2D_F64 {
 	}
 
 	@Test
-	public void orderCCW() {
+	void orderCCW() {
 		List<Point2D_F64> input = new ArrayList<Point2D_F64>();
 		input.add(new Point2D_F64(2,-3));
 		input.add(new Point2D_F64(2,1));
@@ -182,7 +182,7 @@ public class TestUtilPoint2D_F64 {
 	}
 
 	@Test
-	public void create_and_compute_normal2D() {
+	void create_and_compute_normal2D() {
 		Point2D_F64 mean = new Point2D_F64(-9,4);
 		DMatrix2x2 covar = new DMatrix2x2(2,0.1,0.1,1.5);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,7 +27,7 @@ import georegression.struct.se.Se2_F64;
 import georegression.transform.affine.AffinePointOps_F64;
 import georegression.transform.homography.HomographyPointOps_F64;
 import georegression.transform.se.SePointOps_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 /**
@@ -35,7 +35,7 @@ import org.junit.Test;
  */
 public class TestConvertTransform_F64 {
 	@Test
-	public void Se_To_Affine_2D() {
+	void Se_To_Affine_2D() {
 		Se2_F64 a = new Se2_F64(2,3,0.5);
 		Affine2D_F64 b = ConvertTransform_F64.convert(a,new Affine2D_F64());
 
@@ -47,7 +47,7 @@ public class TestConvertTransform_F64 {
 	}
 
 	@Test
-	public void Se_To_Homography_2D() {
+	void Se_To_Homography_2D() {
 		Se2_F64 a = new Se2_F64(2,3,0.5);
 		Homography2D_F64 b = ConvertTransform_F64.convert(a,new Homography2D_F64());
 
@@ -59,7 +59,7 @@ public class TestConvertTransform_F64 {
 	}
 
 	@Test
-	public void Affine_To_Homography_2D() {
+	void Affine_To_Homography_2D() {
 		Affine2D_F64 a = new Affine2D_F64(1,2,3,4,5,6);
 		Homography2D_F64 b = ConvertTransform_F64.convert(a,new Homography2D_F64());
 

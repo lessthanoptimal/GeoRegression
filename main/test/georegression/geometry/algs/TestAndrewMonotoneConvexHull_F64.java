@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,12 +23,12 @@ import georegression.metric.Intersection2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -38,7 +38,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 	Random rand = new Random(2355);
 
 	@Test
-	public void triangle() {
+	void triangle() {
 		// all points are in hull
 		Point2D_F64 []input = new Point2D_F64[3];
 		input[0] = new Point2D_F64(2,3);
@@ -63,7 +63,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 	}
 
 	@Test
-	public void rectangle() {
+	void rectangle() {
 		// all points are in hull
 		Point2D_F64 []input = new Point2D_F64[4];
 		input[0] = new Point2D_F64(2,3);
@@ -89,7 +89,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 	}
 
 	@Test
-	public void pentagon() {
+	void pentagon() {
 		// all points are in hull
 		Point2D_F64 []input = new Point2D_F64[4];
 		input[0] = new Point2D_F64(2,3);
@@ -116,7 +116,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 	}
 
 	@Test
-	public void randomPoints() {
+	void randomPoints() {
 
 		AndrewMonotoneConvexHull_F64 alg = new AndrewMonotoneConvexHull_F64();
 		Polygon2D_F64 output = new Polygon2D_F64();
@@ -145,7 +145,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 	}
 
 	@Test
-	public void grid() {
+	void grid() {
 
 		AndrewMonotoneConvexHull_F64 alg = new AndrewMonotoneConvexHull_F64();
 		Polygon2D_F64 output = new Polygon2D_F64();

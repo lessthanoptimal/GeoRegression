@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,17 +19,17 @@
 package georegression.metric;
 
 import georegression.struct.shapes.Box3D_I32;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
  */
 public class TestIntersection3D_I32 {
 	@Test
-	public void contained_box_box() {
+	void contained_box_box() {
 		Box3D_I32 box = new Box3D_I32(2,3,4,4,6,8);
 
 		// identical
@@ -49,7 +49,7 @@ public class TestIntersection3D_I32 {
 	}
 
 	@Test
-	public void intersect_box_box() {
+	void intersect_box_box() {
 		Box3D_I32 box = new Box3D_I32(2,3,4,4,6,8);
 
 		// identical
@@ -65,7 +65,7 @@ public class TestIntersection3D_I32 {
 	}
 
 	@Test
-	public void intersect_1d() {
+	void intersect_1d() {
 		// identical
 		assertTrue(Intersection3D_I32.intersect(0,0,1,1));
 		// bigger

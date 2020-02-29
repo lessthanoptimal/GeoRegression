@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,14 +24,14 @@ import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_I32;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static georegression.misc.GrlConstants.TEST_F64;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
@@ -41,7 +41,7 @@ public class TestUtilPolygons2D_F64 {
 	Random rand = new Random(234);
 
 	@Test
-	public void isConvex() {
+	void isConvex() {
 		Polygon2D_F64 a = new Polygon2D_F64(0, 0, 5, 5, -5, 5);
 		assertTrue(UtilPolygons2D_F64.isConvex(a));
 		a.flip();
@@ -60,7 +60,7 @@ public class TestUtilPolygons2D_F64 {
 
 
 	@Test
-	public void convert_rectcorner_quad() {
+	void convert_rectcorner_quad() {
 		Rectangle2D_F64 r = new Rectangle2D_F64(1, 2, 5, 6);
 		Quadrilateral_F64 q = new Quadrilateral_F64();
 
@@ -77,7 +77,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void convert_rect_poly() {
+	void convert_rect_poly() {
 		Rectangle2D_F64 r = new Rectangle2D_F64(1,2,5,6);
 		Polygon2D_F64 p = new Polygon2D_F64(4);
 
@@ -94,7 +94,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void convert_quad_poly() {
+	void convert_quad_poly() {
 		Quadrilateral_F64 q = new Quadrilateral_F64(1,2,3,4,5,6,7,8);
 		Polygon2D_F64 p = new Polygon2D_F64(4);
 
@@ -107,7 +107,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void convert_poly_quad() {
+	void convert_poly_quad() {
 		Polygon2D_F64 r = new Polygon2D_F64(1,2, 5,2, 5,6, 1,6);
 		Quadrilateral_F64 q = new Quadrilateral_F64();
 
@@ -120,7 +120,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void convert_rectwh_quad() {
+	void convert_rectwh_quad() {
 		RectangleLength2D_I32 rect = new RectangleLength2D_I32(1, 2, 5, 6);
 
 		Quadrilateral_F64 q = new Quadrilateral_F64();
@@ -138,7 +138,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void bounding_quadrilateral() {
+	void bounding_quadrilateral() {
 		Quadrilateral_F64 q = new Quadrilateral_F64(3, 0, 2, -3, -2, 3, 1, 5);
 		Rectangle2D_F64 out = new Rectangle2D_F64();
 
@@ -151,7 +151,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void bounding_polygon() {
+	void bounding_polygon() {
 		Polygon2D_F64 q = new Polygon2D_F64(3, 0, 2, -3, -2, 3, 1, 5);
 		Rectangle2D_F64 out = new Rectangle2D_F64();
 
@@ -164,7 +164,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void center_quadrilateral() {
+	void center_quadrilateral() {
 		Quadrilateral_F64 q = new Quadrilateral_F64(3, 0, 2, -3, -2, 3, 1, 5);
 
 		Point2D_F64 pts[] = new Point2D_F64[]{q.a, q.b, q.c, q.d};
@@ -185,7 +185,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void isCCW() {
+	void isCCW() {
 		// check convex case
 		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
 		list.add(new Point2D_F64(1, 1));
@@ -202,7 +202,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void vertexAverage() {
+	void vertexAverage() {
 
 		Polygon2D_F64 poly = new Polygon2D_F64(1, 2, 3, 4, 5, 6);
 
@@ -225,7 +225,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void isIdentical_poly_poly() {
+	void isIdentical_poly_poly() {
 		Polygon2D_F64 poly1 = new Polygon2D_F64(1, 2, 3, 4, 5, 6);
 		Polygon2D_F64 poly2 = new Polygon2D_F64(1, 2, 3, 4, 5, 6.1);
 
@@ -234,7 +234,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void isEquivalent_poly_poly() {
+	void isEquivalent_poly_poly() {
 		Polygon2D_F64 poly1 = new Polygon2D_F64(1, 2, 3, 4, 5, 6);
 		Polygon2D_F64 poly2 = new Polygon2D_F64(1, 2, 3, 4, 5, 6);
 
@@ -249,7 +249,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void flip() {
+	void flip() {
 
 		// less than 3 has undrfined behavior
 
@@ -285,7 +285,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void shiftUp() {
+	void shiftUp() {
 		for (int i = 1; i <= 5; i++) {
 			Polygon2D_F64 poly = new Polygon2D_F64(i);
 			List<Point2D_F64> orig = new ArrayList<Point2D_F64>();
@@ -300,7 +300,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void shiftDown() {
+	void shiftDown() {
 		for (int i = 1; i <= 5; i++) {
 			Polygon2D_F64 poly = new Polygon2D_F64(i);
 			List<Point2D_F64> orig = new ArrayList<Point2D_F64>();
@@ -319,7 +319,7 @@ public class TestUtilPolygons2D_F64 {
 	 * detailed implementation.
 	 */
 	@Test
-	public void convexHull() {
+	void convexHull() {
 		Polygon2D_F64 output = new Polygon2D_F64();
 
 		for (int numPoints = 10; numPoints < 20; numPoints++) {
@@ -345,7 +345,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void removeAlmostParallel() {
+	void removeAlmostParallel() {
 		Polygon2D_F64 output = new Polygon2D_F64(5);
 
 		output.get(0).set(0,0);
@@ -362,7 +362,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void removeAdjacentDuplicates() {
+	void removeAdjacentDuplicates() {
 		Polygon2D_F64 output = new Polygon2D_F64(9);
 
 		output.get(0).set(0,0);
@@ -392,7 +392,7 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(1, output.size());
 	}
 	@Test
-	public void hasAdjacentDuplicates() {
+	void hasAdjacentDuplicates() {
 		Polygon2D_F64 output = new Polygon2D_F64(0,0,1,1,2,2,3,3,0,0);
 
 		assertTrue(UtilPolygons2D_F64.hasAdjacentDuplicates(output, TEST_F64));
@@ -411,7 +411,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void getSideLength() {
+	void getSideLength() {
 		Polygon2D_F64 output = new Polygon2D_F64(3);
 
 		output.get(0).set(0,0);
@@ -425,7 +425,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	@Test
-	public void averageOfClosestPointError() {
+	void averageOfClosestPointError() {
 		Polygon2D_F64 a = new Polygon2D_F64(4);
 
 		a.get(0).set(1,1);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,9 +20,9 @@ package georegression.struct.shapes;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 public class TestBox3D_F64 {
 
 	@Test
-	public void constructor_box() {
+	void constructor_box() {
 		Box3D_F64 boxA = new Box3D_F64(1,2,3,4,5,6);
 		Box3D_F64 box = new Box3D_F64(boxA);
 
@@ -43,7 +43,7 @@ public class TestBox3D_F64 {
 	}
 
 	@Test
-	public void constructor_floats() {
+	void constructor_floats() {
 		Box3D_F64 box = new Box3D_F64(1,2,3,4,5,6);
 
 		assertEquals(1,box.p0.x, GrlConstants.TEST_F64);
@@ -55,7 +55,7 @@ public class TestBox3D_F64 {
 	}
 
 	@Test
-	public void set_box() {
+	void set_box() {
 		Box3D_F64 box = new Box3D_F64();
 		box.set(1,2,3,4,5,6);
 
@@ -68,7 +68,7 @@ public class TestBox3D_F64 {
 	}
 
 	@Test
-	public void set_floats() {
+	void set_floats() {
 		Box3D_F64 boxA = new Box3D_F64(1,2,3,4,5,6);
 		Box3D_F64 box = new Box3D_F64();
 		box.set(boxA);
@@ -82,7 +82,7 @@ public class TestBox3D_F64 {
 	}
 
 	@Test
-	public void area() {
+	void area() {
 		Box3D_F64 box = new Box3D_F64(1,2,3,4,5,6);
 
 		double expected = 3*3*3;
@@ -90,28 +90,28 @@ public class TestBox3D_F64 {
 	}
 
 	@Test
-	public void getLengthX() {
+	void getLengthX() {
 		Box3D_F64 box = new Box3D_F64(1,2,3,4,6,8);
 
 		assertEquals(3,box.getLengthX(),GrlConstants.TEST_F64);
 	}
 
 	@Test
-	public void getLengthY() {
+	void getLengthY() {
 		Box3D_F64 box = new Box3D_F64(1,2,3,4,6,8);
 
 		assertEquals(4,box.getLengthY(),GrlConstants.TEST_F64);
 	}
 
 	@Test
-	public void getLengthZ() {
+	void getLengthZ() {
 		Box3D_F64 box = new Box3D_F64(1,2,3,4,6,8);
 
 		assertEquals(5,box.getLengthZ(),GrlConstants.TEST_F64);
 	}
 
 	@Test
-	public void center() {
+	void center() {
 		Point3D_F64 center = new Box3D_F64(1,2,3,4,5,6).center(null);
 
 		assertEquals(2.5,center.x,GrlConstants.TEST_F64);

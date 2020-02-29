@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,9 +18,9 @@
 
 package georegression.struct.point;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
@@ -28,12 +28,12 @@ import static org.junit.Assert.*;
 public class TestPoint3D_I32 {
 
 	@Test
-	public void getDimension() {
+	void getDimension() {
 		assertEquals(3,new Point3D_I32().getDimension());
 	}
 
 	@Test
-	public void set() {
+	void set() {
 		Point3D_I32 p = new Point3D_I32();
 		p.set(1,2,3);
 
@@ -43,7 +43,7 @@ public class TestPoint3D_I32 {
 	}
 
 	@Test
-	public void isIdentical() {
+	void isIdentical() {
 		Point3D_I32 a = new Point3D_I32(1,2,3);
 		Point3D_I32 b = new Point3D_I32(1,2,3);
 
@@ -54,12 +54,12 @@ public class TestPoint3D_I32 {
 	}
 
 	@Test
-	public void createNewInstance() {
+	void createNewInstance() {
 		assertTrue(new Point3D_I32().createNewInstance() instanceof Point3D_I32);
 	}
 
 	@Test
-	public void copy() {
+	void copy() {
 		Point3D_I32 p = new Point3D_I32(1,2,3).copy();
 
 		assertEquals(1,p.x);

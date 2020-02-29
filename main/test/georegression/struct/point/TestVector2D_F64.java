@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,9 +19,9 @@
 package georegression.struct.point;
 
 import georegression.misc.GrlConstants;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -29,7 +29,7 @@ import static org.junit.Assert.assertEquals;
 public class TestVector2D_F64 {
 
 	@Test
-	public void minus() {
+	void minus() {
 		Point2D_F64 a = new Point2D_F64(4,9);
 		Point2D_F64 b = new Point2D_F64(1.2,3.5);
 
@@ -41,7 +41,7 @@ public class TestVector2D_F64 {
 	}
 
 	@Test
-	public void dot() {
+	void dot() {
 		Vector2D_F64 a = new Vector2D_F64( 1, 2 );
 		Vector2D_F64 b = new Vector2D_F64( 3, 4 );
 
@@ -50,7 +50,7 @@ public class TestVector2D_F64 {
 	}
 
 	@Test
-	public void acute() {
+	void acute() {
 
 		Vector2D_F64 a = new Vector2D_F64(1,0);
 

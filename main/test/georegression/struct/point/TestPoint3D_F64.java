@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,9 +18,9 @@
 
 package georegression.struct.point;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * @author Peter Abeles
@@ -32,12 +32,12 @@ public class TestPoint3D_F64 extends GenericGeoTupleTests3D_F64<Point3D_F64> {
 	}
 
 	@Test
-	public void generic() {
+	void generic() {
 		checkAll();
 	}
 
 	@Test
-	public void equals_vector() {
+	void equals_vector() {
 		Point3D_F64 a = new Point3D_F64();
 		Vector3D_F64 b = new Vector3D_F64();
 

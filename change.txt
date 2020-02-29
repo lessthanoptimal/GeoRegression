@@ -1,5 +1,12 @@
 YEAR-MONTH-DAY
 
+---------------------------------------------
+Date    : 2020
+Version : 0.22
+
+- Java 11 syntax
+- Upgraded JUnit
+- SePointOps.transform( 4D ) fixed/added
 
 ---------------------------------------------
 Date    : 2019/Dec/23

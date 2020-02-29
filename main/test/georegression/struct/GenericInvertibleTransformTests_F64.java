@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,10 +19,10 @@
 package georegression.struct;
 
 import georegression.misc.GrlConstants;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -40,7 +40,7 @@ public abstract class GenericInvertibleTransformTests_F64 <T extends GeoTuple_F6
 	 * Makes sure that after reset is called the transform applies no transform
 	 */
 	@Test
-	public void testReset() {
+	void testReset() {
 		InvertibleTransform tran1 = createRandomTransform();
 
 		T orig = createRandomPoint();
@@ -61,7 +61,7 @@ public abstract class GenericInvertibleTransformTests_F64 <T extends GeoTuple_F6
 	 * two transforms once.
 	 */
 	@Test
-	public void testConcat() {
+	void testConcat() {
 		InvertibleTransform tran1 = createRandomTransform();
 		InvertibleTransform tran2 = createRandomTransform();
 
@@ -87,7 +87,7 @@ public abstract class GenericInvertibleTransformTests_F64 <T extends GeoTuple_F6
 	 * original location
 	 */
 	@Test
-	public void testInvert() {
+	void testInvert() {
 		InvertibleTransform a = createRandomTransform();
 		T orig = createRandomPoint();
 		T tran = apply( a, orig, null );
@@ -109,7 +109,7 @@ public abstract class GenericInvertibleTransformTests_F64 <T extends GeoTuple_F6
 	 * Makes sure it uses the storage correctlyt
 	 */
 	@Test
-	public void testInvert_input() {
+	void testInvert_input() {
 		InvertibleTransform aInv = createRandomTransform();
 
 		InvertibleTransform a = createRandomTransform();

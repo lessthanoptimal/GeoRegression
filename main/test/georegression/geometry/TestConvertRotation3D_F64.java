@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -30,14 +30,14 @@ import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
 import org.ejml.dense.row.RandomMatrices_DDRM;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 
@@ -50,7 +50,7 @@ public class TestConvertRotation3D_F64 {
 	Random rand = new Random( 234234 );
 
 	@Test
-	public void rodriguesToMatrix() {
+	void rodriguesToMatrix() {
 		DMatrixRMaj rotZ = ConvertRotation3D_F64.rotZ( 0.5, null );
 
 		Rodrigues_F64 r = new Rodrigues_F64( 0.5, 0, 0, 1 );
@@ -61,7 +61,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void rodriguesToEuler() throws InvocationTargetException, IllegalAccessException {
+	void rodriguesToEuler() throws InvocationTargetException, IllegalAccessException {
 		somethingToEulerTest("rodriguesToEuler",rand);
 	}
 
@@ -80,7 +80,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void rodriguesToQuaternion() {
+	void rodriguesToQuaternion() {
 		Rodrigues_F64 rod = new Rodrigues_F64(-1.5,1,3,-4);
 
 		Quaternion_F64 quat = ConvertRotation3D_F64.rodriguesToQuaternion(rod, null);
@@ -95,7 +95,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void quaternionToRodrigues() {
+	void quaternionToRodrigues() {
 		Quaternion_F64 quat = new Quaternion_F64(0.6,2,3,-1);
 		quat.normalize();
 
@@ -112,7 +112,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void quaternionToEuler() throws InvocationTargetException, IllegalAccessException {
+	void quaternionToEuler() throws InvocationTargetException, IllegalAccessException {
 		somethingToEulerTest("quaternionToEuler",rand);
 	}
 
@@ -131,7 +131,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void matrixToQuaternion() {
+	void matrixToQuaternion() {
 
 		double pid2 = Math.PI/2.0;
 
@@ -177,7 +177,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void matrixToRodrigues() {
+	void matrixToRodrigues() {
 		// create the rotation axis
 		for( int i = 1; i < 20; i++ ) {
 			double angle = i * Math.PI / 20;
@@ -254,7 +254,7 @@ public class TestConvertRotation3D_F64 {
 	 * A found test case where it failed
 	 */
 	@Test
-	public void matrixToRodrigues_case0() {
+	void matrixToRodrigues_case0() {
 		DMatrixRMaj R = UtilEjml.parse_DDRM(
 						"1.00000000000000000000e+00 -5.42066399999221260000e-14 -3.16267800000013500000e-13 \n" +
 						"5.42066400000000000000e-14 1.00000000000000040000e+00 2.46136444559397200000e-13 \n" +
@@ -266,7 +266,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void matrixToRodrigues_case1() {
+	void matrixToRodrigues_case1() {
 		DMatrixRMaj R = UtilEjml.parse_DDRM(
 						"0.99999999999999000000e+00 -5.42066399999221260000e-14 -3.16267800000013500000e-13 \n" +
 						"5.42066400000000000000e-14 0.99999999999999000000e+00 2.46136444559397200000e-13 \n" +
@@ -278,7 +278,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void rotX() {
+	void rotX() {
 		Point3D_F64 pt_y = new Point3D_F64( 0, 1.5, 0 );
 		Point3D_F64 pt_z = new Point3D_F64( 0, 0, 1.5 );
 
@@ -292,7 +292,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void rotY() {
+	void rotY() {
 		Point3D_F64 pt_x = new Point3D_F64( 1.5, 0, 0 );
 		Point3D_F64 pt_z = new Point3D_F64( 0, 0, 1.5 );
 
@@ -306,7 +306,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void rotZ() {
+	void rotZ() {
 		Point3D_F64 pt_x = new Point3D_F64( 1.5, 0, 0 );
 		Point3D_F64 pt_y = new Point3D_F64( 0, 1.5, 0 );
 
@@ -320,7 +320,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void matrixToEuler() throws InvocationTargetException, IllegalAccessException {
+	void matrixToEuler() throws InvocationTargetException, IllegalAccessException {
 		somethingToEulerTest("matrixToEuler",rand);
 	}
 
@@ -341,7 +341,7 @@ public class TestConvertRotation3D_F64 {
 	 * Creates a random matrix and sees if the approximation is a valid rotation matrix
 	 */
 	@Test
-	public void approximateRotationMatrix_random() {
+	void approximateRotationMatrix_random() {
 		DMatrixRMaj Q = RandomMatrices_DDRM.rectangle( 3, 3, rand );
 
 		DMatrixRMaj R = ConvertRotation3D_F64.approximateRotationMatrix( Q, null );
@@ -353,7 +353,7 @@ public class TestConvertRotation3D_F64 {
 	 * Create a rotation matrix and see if the exact same matrix is returned
 	 */
 	@Test
-	public void approximateRotationMatrix_nochange() {
+	void approximateRotationMatrix_nochange() {
 		DMatrixRMaj Q = RandomMatrices_DDRM.orthogonal( 3, 3, rand );
 
 		if( CommonOps_DDRM.det(Q) < 0 )
@@ -365,7 +365,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void eulerToMatrix() throws InvocationTargetException, IllegalAccessException {
+	void eulerToMatrix() throws InvocationTargetException, IllegalAccessException {
 		somethingToEulerTest("eulerToMatrix",rand);
 	}
 
@@ -402,7 +402,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
-	public void eulerToQuaternion() throws InvocationTargetException, IllegalAccessException {
+	void eulerToQuaternion() throws InvocationTargetException, IllegalAccessException {
 		somethingToEulerTest("eulerToQuaternion",rand);
 	}
 
@@ -427,7 +427,7 @@ public class TestConvertRotation3D_F64 {
 	 * where 'a' is the angle of rotation, u is the unit axis of rotation.
 	 */
 	@Test
-	public void quaternionToMatrix() {
+	void quaternionToMatrix() {
 		// rotate around z-axis 90 degrees
 		Quaternion_F64 q = ConvertRotation3D_F64.rodriguesToQuaternion( new Rodrigues_F64( Math.PI / 2.0, 0, 0, 1 ), null );
 

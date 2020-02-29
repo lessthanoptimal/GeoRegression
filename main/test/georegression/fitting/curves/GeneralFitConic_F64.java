@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,12 +22,12 @@ import georegression.fitting.FitShapeToPoints_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.ConicGeneral_F64;
 import georegression.struct.point.Point2D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
@@ -40,7 +40,7 @@ public abstract class GeneralFitConic_F64 {
 	 * Fit to the minimum possible while testing several specific geometric configurations
 	 */
 	@Test
-	public void fit_points_3() {
+	void fit_points_3() {
 		FitShapeToPoints_F64<Point2D_F64,ConicGeneral_F64> fitter = createAlg();
 		ConicGeneral_F64 found = new ConicGeneral_F64();
 
@@ -94,7 +94,7 @@ public abstract class GeneralFitConic_F64 {
 	 * to see if the weights are completely messed up.
 	 */
 	@Test
-	public void fit_points_3_weighted() {
+	void fit_points_3_weighted() {
 		double weights[] = {0.8,1.2,0.2};
 		FitShapeToPoints_F64<Point2D_F64,ConicGeneral_F64> fitter = createAlg();
 		ConicGeneral_F64 found = new ConicGeneral_F64();

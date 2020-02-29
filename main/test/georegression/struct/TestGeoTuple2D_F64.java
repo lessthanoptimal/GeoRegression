@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,16 +19,16 @@
 package georegression.struct;
 
 import georegression.misc.GrlConstants;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
  */
 public class TestGeoTuple2D_F64 {
 	@Test
-	public void plusIP() {
+	void plusIP() {
 		Dummy a = new Dummy(1,2);
 		Dummy b = new Dummy(4,5);
 
@@ -39,7 +39,7 @@ public class TestGeoTuple2D_F64 {
 	}
 
 	@Test
-	public void plus() {
+	void plus() {
 		Dummy a = new Dummy(1,2);
 		Dummy b = new Dummy(4,5);
 
@@ -53,7 +53,7 @@ public class TestGeoTuple2D_F64 {
 	}
 
 	@Test
-	public void timesIP() {
+	void timesIP() {
 		Dummy a = new Dummy(1,2);
 
 		a.timesIP(2.5);
@@ -63,7 +63,7 @@ public class TestGeoTuple2D_F64 {
 	}
 
 	@Test
-	public void scale() {
+	void scale() {
 		Dummy a = new Dummy(1,2);
 
 		a.scale(2.5);
@@ -73,7 +73,7 @@ public class TestGeoTuple2D_F64 {
 	}
 
 	@Test
-	public void times() {
+	void times() {
 		Dummy a = new Dummy(1,2);
 
 		Dummy b = a.times(2.5);
@@ -86,7 +86,7 @@ public class TestGeoTuple2D_F64 {
 	}
 
 	@Test
-	public void distance_two() {
+	void distance_two() {
 		Dummy a = new Dummy(1,2);
 
 		assertEquals(0,a.distance(1,2), GrlConstants.TEST_F64);
@@ -94,7 +94,7 @@ public class TestGeoTuple2D_F64 {
 	}
 
 	@Test
-	public void distance2_two() {
+	void distance2_two() {
 		Dummy a = new Dummy(1,2);
 
 		assertEquals(0,a.distance2(1,2), GrlConstants.TEST_F64);

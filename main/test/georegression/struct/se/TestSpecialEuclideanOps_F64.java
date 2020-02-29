@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -30,10 +30,10 @@ import georegression.transform.se.SePointOps_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -42,7 +42,7 @@ import static org.junit.Assert.assertTrue;
 public class TestSpecialEuclideanOps_F64 {
 
 	@Test
-	public void toAffine_2D() {
+	void toAffine_2D() {
 		Se2_F64 se = new Se2_F64(1.5,-3.4,0.5);
 		Affine2D_F64 affine = SpecialEuclideanOps_F64.toAffine(se,null);
 
@@ -58,7 +58,7 @@ public class TestSpecialEuclideanOps_F64 {
 	}
 
 	@Test
-	public void toHomogeneous_3D() {
+	void toHomogeneous_3D() {
 		Se3_F64 se = SpecialEuclideanOps_F64.eulerXyz(2, -3, 4.4, 0.1, 2, -0.3, null );
 
 		DMatrixRMaj H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
@@ -81,7 +81,7 @@ public class TestSpecialEuclideanOps_F64 {
 	}
 
 	@Test
-	public void toHomogeneous_2D() {
+	void toHomogeneous_2D() {
 		Point2D_F64 pt = new Point2D_F64( 3.4, -9.21 );
 		Se2_F64 se = new Se2_F64( -3, 6.9, -1.3 );
 
@@ -104,7 +104,7 @@ public class TestSpecialEuclideanOps_F64 {
 	}
 
 	@Test
-	public void toSe3_F64() {
+	void toSe3_F64() {
 		Se3_F64 se = SpecialEuclideanOps_F64.eulerXyz(2, -3, 4.4, 0.1, 2, -0.3, null );
 
 		DMatrixRMaj H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
@@ -119,7 +119,7 @@ public class TestSpecialEuclideanOps_F64 {
 	}
 
 	@Test
-	public void toSe2() {
+	void toSe2() {
 		Se2_F64 se = new Se2_F64( -3, 6.9, -1.3 );
 
 		DMatrixRMaj H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
@@ -133,7 +133,7 @@ public class TestSpecialEuclideanOps_F64 {
 	}
 
 	@Test
-	public void setEulerXYZ() {
+	void setEulerXYZ() {
 		Point3D_F64 orig = new Point3D_F64( 1, 2, 3 );
 
 		Se3_F64 se = SpecialEuclideanOps_F64.eulerXyz(2, -3, 4.4, 0.1, 2, -0.3, null );

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,12 +21,12 @@ package georegression.fitting.se;
 import georegression.fitting.MotionTransformPoint;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 
 /**
  * @author Peter Abeles
  */
-@Ignore
+@Disabled
 public class TestMotionSe3PointCrossCovariance_F64 extends GeneralMotionSe3Tests_F64 {
 
 	@Override

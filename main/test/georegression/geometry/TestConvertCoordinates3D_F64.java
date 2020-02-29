@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,7 +23,7 @@ import georegression.misc.test.GeometryUnitTest;
 import georegression.struct.EulerType;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.data.DMatrixRMaj;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
@@ -37,7 +37,7 @@ public class TestConvertCoordinates3D_F64 {
 	 * perform the equivalent operation in Euler coordinates and see if it gets the expected results
 	 */
 	@Test
-	public void latlonToUnitVector() {
+	void latlonToUnitVector() {
 
 		// check a few specific cases
 		latlonToUnitVector(0,0);

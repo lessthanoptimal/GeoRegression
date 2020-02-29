@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -29,13 +29,13 @@ import georegression.struct.line.LinePolar2D_F64;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -43,7 +43,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestFitLine_I32 {
 	@Test
-	public void polar_F64() {
+	void polar_F64() {
 		List<Point2D_I32> pts = new ArrayList<>();
 
 		pts.add(new Point2D_I32(100,200)); // add an outlier that should be ignored
@@ -65,7 +65,7 @@ public class TestFitLine_I32 {
 	}
 
 	@Test
-	public void polar_F32() {
+	void polar_F32() {
 		List<Point2D_I32> pts = new ArrayList<>();
 
 		pts.add(new Point2D_I32(100,200)); // add an outlier that should be ignored

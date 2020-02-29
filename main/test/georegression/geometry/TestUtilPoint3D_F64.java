@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,13 +21,13 @@ package georegression.geometry;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.shapes.Box3D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -37,7 +37,7 @@ public class TestUtilPoint3D_F64 {
 	Random rand = new Random(234);
 
 	@Test
-	public void noiseNormal_single() {
+	void noiseNormal_single() {
 		Point3D_F64 mean = new Point3D_F64(3,4,5);
 		double sx=1,sy=0.5,sz=0.25;
 
@@ -71,19 +71,19 @@ public class TestUtilPoint3D_F64 {
 	}
 
 	@Test
-	public void distance() {
+	void distance() {
 		double found = UtilPoint3D_F64.distance(1,2,3,4,-3,-4);
 		assertEquals(9.1104,found,1e-3);
 	}
 
 	@Test
-	public void distanceSq() {
+	void distanceSq() {
 		double found = UtilPoint3D_F64.distanceSq(1, 2, 3, 4, -3, -4);
 		assertEquals(83, found, GrlConstants.TEST_F64);
 	}
 
 	@Test
-	public void boundingBox() {
+	void boundingBox() {
 		List<Point3D_F64> list = new ArrayList<Point3D_F64>();
 
 		list.add( new Point3D_F64(1,1,1));

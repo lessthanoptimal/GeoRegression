@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,9 +20,9 @@ package georegression.fitting.cylinder;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.shapes.Cylinder3D_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 public class TestCodecCylinder3D_F64 {
 
 	@Test
-	public void basicCheck() {
+	void basicCheck() {
 		Cylinder3D_F64 cylinder = new Cylinder3D_F64(1,2,3,4,5,6,7);
 		Cylinder3D_F64 found = new Cylinder3D_F64();
 		/**/double param[] = new /**/double[ 7 ];

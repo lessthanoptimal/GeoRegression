@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,14 +27,14 @@ import georegression.struct.point.Vector3D_F64;
 import georegression.struct.shapes.Cylinder3D_F64;
 import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.DMatrixRMaj;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -44,7 +44,7 @@ public class TestFitCylinderToPoints_F64 {
 	Random rand = new Random(234);
 
 	@Test
-	public void perfectModel() {
+	void perfectModel() {
 
 		Cylinder3D_F64 cylinder = new Cylinder3D_F64(1,2,3,0,0,1,2.5);
 
@@ -66,7 +66,7 @@ public class TestFitCylinderToPoints_F64 {
 	}
 
 	@Test
-	public void perfectWithBadInitialModel() {
+	void perfectWithBadInitialModel() {
 		Cylinder3D_F64 cylinder = new Cylinder3D_F64(1,2,3,0,0,1,2.5);
 
 		List<Point3D_F64> points = new ArrayList<Point3D_F64>();

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,9 +22,9 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
 public class TestArea2D_F64 {
 
 	@Test
-	public void triangle() {
+	void triangle() {
 		Point2D_F64 a = new Point2D_F64(0,0);
 		Point2D_F64 b = new Point2D_F64(5,0);
 		Point2D_F64 c = new Point2D_F64(0,3);
@@ -45,7 +45,7 @@ public class TestArea2D_F64 {
 	}
 
 	@Test
-	public void quadrilateral() {
+	void quadrilateral() {
 		Quadrilateral_F64 q = new Quadrilateral_F64(0,0,2,0,2,3,0,3);
 
 		assertEquals(2*3,Area2D_F64.quadrilateral(q), GrlConstants.TEST_F64);
@@ -69,7 +69,7 @@ public class TestArea2D_F64 {
 	 * Test convex caused for the simple polygon area algorithm
 	 */
 	@Test
-	public void polygonSimple_convex() {
+	void polygonSimple_convex() {
 		Polygon2D_F64 t = new Polygon2D_F64(0,0,5,0,0,3);
 		assertEquals(0.5*5*3,Area2D_F64.polygonSimple(t), GrlConstants.TEST_F64);
 
@@ -94,7 +94,7 @@ public class TestArea2D_F64 {
 	 * Test concave caused for the simple polygon area algorithm
 	 */
 	@Test
-	public void polygonSimple_concave() {
+	void polygonSimple_concave() {
 		Polygon2D_F64 t_inside = new Polygon2D_F64(5,5, 3,3, 0,5);
 		double area_inside = Area2D_F64.polygonSimple(t_inside);
 
