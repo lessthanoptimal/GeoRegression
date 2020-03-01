@@ -75,7 +75,7 @@ subprojects {
     }
 
     dependencies {
-        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.17')
+        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.18-SNAPSHOT')
         implementation 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable
         implementation 'javax.annotation:jsr250-api:1.0'       // @Generated
 
