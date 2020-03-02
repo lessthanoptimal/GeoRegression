@@ -9,6 +9,8 @@ Version : 0.22
 - SePointOps.transform( 4D ) fixed/added
 - GeoTuple4D
   * Added distance(x,y,z,w)
+- GeoTuple2D
+  * Added isNaN()
 
 ---------------------------------------------
 Date    : 2019/Dec/23

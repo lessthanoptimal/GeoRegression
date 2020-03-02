@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -233,6 +233,10 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 			return false;
 		GeoTuple2D_F64 p = (GeoTuple2D_F64)obj;
 		return Double.compare(x,p.x)==0 && Double.compare(y,p.y)==0;
+	}
+
+	public boolean isNaN() {
+		return ( Double.isNaN( x ) || Double.isNaN( y ));
 	}
 
 	protected String toString( String name ) {
