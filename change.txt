@@ -7,6 +7,8 @@ Version : 0.22
 - Java 11 syntax
 - Upgraded JUnit
 - SePointOps.transform( 4D ) fixed/added
+- GeoTuple4D
+  * Added distance(x,y,z,w)
 
 ---------------------------------------------
 Date    : 2019/Dec/23

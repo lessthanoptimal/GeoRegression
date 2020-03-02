@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -191,12 +191,30 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		return Math.sqrt( dx * dx + dy * dy + dz * dz + dw * dw);
 	}
 
+	public double distance( double x , double y , double z , double w ) {
+		double dx = this.x - x;
+		double dy = this.y - y;
+		double dz = this.z - z;
+		double dw = this.w - w;
+
+		return Math.sqrt( dx * dx + dy * dy + dz * dz + dw * dw);
+	}
+
 	@Override
 	public double distance2( GeoTuple4D_F64 t ) {
 		double dx = t.x - x;
 		double dy = t.y - y;
 		double dz = t.z - z;
 		double dw = t.w - w;
+
+		return dx * dx + dy * dy + dz * dz + dw * dw;
+	}
+
+	public double distance2( double x , double y , double z , double w ) {
+		double dx = this.x - x;
+		double dy = this.y - y;
+		double dz = this.z - z;
+		double dw = this.w - w;
 
 		return dx * dx + dy * dy + dz * dz + dw * dw;
 	}
