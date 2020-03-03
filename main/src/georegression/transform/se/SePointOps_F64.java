@@ -182,27 +182,33 @@ public class SePointOps_F64 {
 	 * Both origPt and tranPt can be the same instance.
 	 * </p>
 	 *
-	 * @param se	 SpecialEuclidean transform. Not modified.
-	 * @param origPt Original coordinate of the point. Not modified.
-	 * @param tranPt Storage for transformed coordinate of the point. Point declared if null.  Modified.
+	 * @param se SpecialEuclidean transform. Not modified.
+	 * @param src Original coordinate of the point. Not modified.
+	 * @param dst Storage for transformed coordinate of the point. Point declared if null.  Modified.
 	 * @return Transformed point.
 	 */
-	public static Point3D_F64 transform( Se3_F64 se, Point3D_F64 origPt, Point3D_F64 tranPt ) {
-		if( tranPt == null )
-			tranPt = new Point3D_F64();
+	public static Point3D_F64 transform( Se3_F64 se, Point3D_F64 src, Point3D_F64 dst ) {
+		return transform(se,src.x, src.y, src.z, dst);
+	}
+
+	public static Point3D_F64 transform( Se3_F64 se, double x , double y, double z, Point3D_F64 dst ) {
+		if( dst == null )
+			dst = new Point3D_F64();
 
 		DMatrixRMaj R = se.getR();
 		Vector3D_F64 T = se.getT();
 
-		GeometryMath_F64.mult( R, origPt, tranPt );
-		GeometryMath_F64.add( tranPt, T, tranPt );
+		dst.x = R.data[0]*x + R.data[1]*y + R.data[2]*z + T.x;
+		dst.y = R.data[3]*x + R.data[4]*y + R.data[5]*z + T.y;
+		dst.z = R.data[6]*x + R.data[7]*y + R.data[8]*z + T.z;
 
-		return tranPt;
+		return dst;
 	}
 
 	/**
 	 * <p>.
-	 * Applies rigid body motion to a point. The homogeneous coordinate is converted into a cartesian coordinate<br>
+	 * Applies rigid body motion to a point. The homogeneous coordinate is converted into a cartesian coordinate.
+	 * This will not handle points at infinity. A NaN will be produced.<br>
 	 * <br>
 	 * p' = [R t]*p
 	 * </p>
@@ -229,6 +235,28 @@ public class SePointOps_F64 {
 		dst.x = R.data[0]*x + R.data[1]*y + R.data[2]*z + T.x;
 		dst.y = R.data[3]*x + R.data[4]*y + R.data[5]*z + T.y;
 		dst.z = R.data[6]*x + R.data[7]*y + R.data[8]*z + T.z;
+
+		return dst;
+	}
+
+	/**
+	 * Applies the transform to src, but omits the last implicit last row in dst where dst.w = src.w
+	 */
+	public static Point3D_F64 transformV(Se3_F64 se, Point4D_F64 src, Point3D_F64 dst ) {
+		if( dst == null )
+			dst = new Point3D_F64();
+
+		final double x = src.x;
+		final double y = src.y;
+		final double z = src.z;
+		final double w = src.w;
+
+		DMatrixRMaj R = se.getR();
+		Vector3D_F64 T = se.getT();
+
+		dst.x = R.data[0]*x + R.data[1]*y + R.data[2]*z + T.x*w;
+		dst.y = R.data[3]*x + R.data[4]*y + R.data[5]*z + T.y*w;
+		dst.z = R.data[6]*x + R.data[7]*y + R.data[8]*z + T.z*w;
 
 		return dst;
 	}

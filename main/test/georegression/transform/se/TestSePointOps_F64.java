@@ -193,6 +193,23 @@ public class TestSePointOps_F64 {
 	}
 
 	@Test
+	void transformV_4d_3d() {
+		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
+		var T = new Vector3D_F64( 1, 2, 3 );
+
+		var P = new Point4D_F64( 1, 7, 9 , 1);
+		var Pt = new Point3D_F64();
+
+		var se = new Se3_F64( R, T );
+
+		SePointOps_F64.transformV( se, P, Pt );
+
+		assertEquals( 10, Pt.getX(), GrlConstants.TEST_F64);
+		assertEquals( 9 , Pt.getY(), GrlConstants.TEST_F64);
+		assertEquals( 2 , Pt.getZ(), GrlConstants.TEST_F64);
+	}
+
+	@Test
 	void transformReverse_3d_single() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
