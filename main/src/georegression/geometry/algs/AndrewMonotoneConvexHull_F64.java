@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,9 +21,7 @@ package georegression.geometry.algs;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import org.ddogleg.sorting.QuickSortComparator;
-import org.ddogleg.struct.FastQueue;
-
-import java.util.Comparator;
+import org.ddogleg.struct.FastArray;
 
 /**
  * Computes the convex hull of a set of points using Andrew's monotone chain algorithm.  O(n log n) for sort and
@@ -35,24 +33,21 @@ public class AndrewMonotoneConvexHull_F64 {
 	// Use this sorting routine to avoid declaring memory each time its called
 	QuickSortComparator<Point2D_F64> sorter;
 
-	FastQueue<Point2D_F64> work = new FastQueue<Point2D_F64>(Point2D_F64.class,false);
+	FastArray<Point2D_F64> work = new FastArray<>(Point2D_F64.class);
 
 	public AndrewMonotoneConvexHull_F64() {
 
 		// Sort the points based on their x value.  If the same then use y value
-		sorter = new QuickSortComparator<>(new Comparator<Point2D_F64>() {
-			@Override
-			public int compare(Point2D_F64 a, Point2D_F64 b) {
-				if( a.x < b.x )
-					return -1;
-				else if( a.x > b.x )
-					return 1;
-				else if( a.y < b.y )
-					return -1;
-				else if( a.y > b.y )
-					return 1;
-				return 0;
-			}
+		sorter = new QuickSortComparator<>((a, b) -> {
+			if( a.x < b.x )
+				return -1;
+			else if( a.x > b.x )
+				return 1;
+			else if( a.y < b.y )
+				return -1;
+			else if( a.y > b.y )
+				return 1;
+			return 0;
 		});
 	}
 

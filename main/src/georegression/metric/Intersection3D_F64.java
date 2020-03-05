@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -31,7 +31,7 @@ import georegression.struct.shapes.Box3D_F64;
 import georegression.struct.shapes.BoxLength3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
 import georegression.struct.shapes.Triangle3D_F64;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.FastAccess;
 
 /**
  * @author Peter Abeles
@@ -333,7 +333,7 @@ public class Intersection3D_F64 {
 	 *          <li>3 =  intersect in unique point. Negative direction</li>
 	 *          </ul>
 	 */
-	public static int intersectConvex(FastQueue<Point3D_F64> polygon,
+	public static int intersectConvex(FastAccess<Point3D_F64> polygon,
 									  LineParametric3D_F64 line , Point3D_F64 output,
 									  Vector3D_F64 n, Vector3D_F64 u, Vector3D_F64 v, Vector3D_F64 w0) {
 		if( polygon.size < 3 )
@@ -390,9 +390,9 @@ public class Intersection3D_F64 {
 	}
 
 	/**
-	 * @see #intersectConvex(FastQueue, LineParametric3D_F64, Point3D_F64, Vector3D_F64, Vector3D_F64, Vector3D_F64, Vector3D_F64)
+	 * @see #intersectConvex(FastAccess, LineParametric3D_F64, Point3D_F64, Vector3D_F64, Vector3D_F64, Vector3D_F64, Vector3D_F64)
 	 */
-	public static int intersectConvex(FastQueue<Point3D_F64> polygon,
+	public static int intersectConvex(FastAccess<Point3D_F64> polygon,
 									  LineParametric3D_F64 line , Point3D_F64 output) {
 		return intersectConvex(polygon,line,output,new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64(),
 				new Vector3D_F64());

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,14 +35,14 @@ public class Polygon2D_I32 implements Serializable, Cloneable  {
 	public FastQueue<Point2D_I32> vertexes;
 
 	public Polygon2D_I32( int numVertexes ) {
-		vertexes = new FastQueue<>(Point2D_I32.class, true);
+		vertexes = new FastQueue<>(Point2D_I32::new);
 
 		vertexes.growArray(numVertexes);
 		vertexes.size = numVertexes;
 	}
 
 	public Polygon2D_I32() {
-		vertexes = new FastQueue<>(Point2D_I32.class, true);
+		vertexes = new FastQueue<>(Point2D_I32::new);
 	}
 
 	public Polygon2D_I32( Polygon2D_I32 original ) {
@@ -52,7 +52,7 @@ public class Polygon2D_I32 implements Serializable, Cloneable  {
 	public Polygon2D_I32( int... points ) {
 		if( points.length % 2 == 1 )
 			throw new IllegalArgumentException("Expected an even number");
-		vertexes = new FastQueue<Point2D_I32>(points.length/2,Point2D_I32.class,true);
+		vertexes = new FastQueue<>(points.length/2,Point2D_I32::new);
 		vertexes.growArray(points.length/2);
 		vertexes.size = points.length/2;
 

@@ -43,7 +43,7 @@ public class TestUtilShape3D_F64 {
 		Se3_F64 se = new Se3_F64();
 		se.T.set(1,2,3);
 
-		FastQueue<Point3D_F64> output = new FastQueue<>(Point3D_F64.class,true);
+		FastQueue<Point3D_F64> output = new FastQueue<>(Point3D_F64::new);
 		UtilShape3D_F64.polygon2Dto3D(p,se,output);
 
 		assertEquals(3,output.size);

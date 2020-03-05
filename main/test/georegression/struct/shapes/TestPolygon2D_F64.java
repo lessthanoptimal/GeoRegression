@@ -51,7 +51,7 @@ public class TestPolygon2D_F64 {
 			assertTrue(list.get(i).equals(polygon.get(i)));
 		}
 
-		polygon.vertexes.add(new Point2D_F64(4,5));
+		polygon.vertexes.grow().set(4,5);
 		polygon.convert(list,true);
 		assertEquals(4,list.size());
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -53,14 +53,14 @@ public class Polygon2D_F64 implements Serializable {
 	}
 
 	public Polygon2D_F64( Polygon2D_F64 a ) {
-		vertexes = new FastQueue<Point2D_F64>(a.size(),Point2D_F64.class,true);
+		vertexes = new FastQueue<>(a.size(),Point2D_F64::new);
 		for (int i = 0; i < a.size(); i++) {
 			vertexes.grow().set(a.get(i));
 		}
 	}
 
 	public Polygon2D_F64( int numVertexes ) {
-		vertexes = new FastQueue<Point2D_F64>(numVertexes, Point2D_F64.class,true);
+		vertexes = new FastQueue<>(numVertexes, Point2D_F64::new);
 
 		vertexes.growArray(numVertexes);
 		vertexes.size = numVertexes;
@@ -69,7 +69,7 @@ public class Polygon2D_F64 implements Serializable {
 	public Polygon2D_F64( double... points ) {
 		if( points.length % 2 == 1 )
 			throw new IllegalArgumentException("Expected an even number");
-		vertexes = new FastQueue<Point2D_F64>(points.length/2,Point2D_F64.class,true);
+		vertexes = new FastQueue<>(points.length/2,Point2D_F64::new);
 		vertexes.growArray(points.length/2);
 		vertexes.size = points.length/2;
 
@@ -80,7 +80,7 @@ public class Polygon2D_F64 implements Serializable {
 	}
 
 	public Polygon2D_F64() {
-		vertexes = new FastQueue<>(Point2D_F64.class,true);
+		vertexes = new FastQueue<>(Point2D_F64::new);
 	}
 
 	public void set( Polygon2D_F64 orig ) {

@@ -34,6 +34,7 @@ import georegression.struct.shapes.BoxLength3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
 import georegression.struct.shapes.Triangle3D_F64;
 import georegression.transform.se.SePointOps_F64;
+import org.ddogleg.struct.FastArray;
 import org.ddogleg.struct.FastQueue;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
@@ -163,7 +164,7 @@ public class TestIntersection3D_F64 {
 	@Test
 	void intersect_poly_line() {
 		// Simple test cases
-		FastQueue<Point3D_F64> polygon = new FastQueue<>(Point3D_F64.class,true);
+		FastArray<Point3D_F64> polygon = new FastArray<>(Point3D_F64.class);
 
 		polygon.add( new Point3D_F64(-1,-1,2));
 		polygon.add( new Point3D_F64(-1,1,2));
@@ -330,7 +331,7 @@ public class TestIntersection3D_F64 {
 	 */
 	@Test
 	void intersectConvex() {
-		FastQueue<Point3D_F64> polygon = new FastQueue<>(Point3D_F64.class,true);
+		FastQueue<Point3D_F64> polygon = new FastQueue<>(Point3D_F64::new);
 		polygon.grow().set(-1,-1.2,2);
 		polygon.grow().set(-1,1.2,2);
 		polygon.grow().set(1,1.2,2);
