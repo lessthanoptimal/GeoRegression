@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,14 +18,14 @@
 
 package georegression.struct.point;
 
-import georegression.struct.GeoTuple;
+import georegression.struct.GeoTuple_I32;
 
 /**
  * Point in 3D with integer values.
  *
  */
 @SuppressWarnings({"unchecked"})
-public class Point3D_I32 extends GeoTuple<Point3D_I32> {
+public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 
 	public int x;
 	public int y;
@@ -48,6 +48,29 @@ public class Point3D_I32 extends GeoTuple<Point3D_I32> {
 	@Override
 	public Point3D_I32 copy() {
 		return new Point3D_I32( x, y, z );
+	}
+
+	@Override
+	public int getIdx( int index ) {
+		if( index == 0 )
+			return x;
+		else if( index == 1 )
+			return y;
+		else if( index == 2 )
+			return z;
+		throw new RuntimeException("Invalid index "+index);
+	}
+
+	@Override
+	public void setIdx( int index , int value ) {
+		if( index == 0 )
+			this.x = value;
+		else if( index == 1 )
+			this.y = value;
+		else if( index == 2 )
+			this.z = value;
+		else
+			throw new RuntimeException("Invalid index "+index);
 	}
 
 	public void set(int x, int y, int z) {

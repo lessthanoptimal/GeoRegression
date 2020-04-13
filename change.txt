@@ -11,6 +11,7 @@ Version : 0.22
   * Added distance(x,y,z,w)
 - GeoTuple2D
   * Added isNaN()
+- Flushed out GeoTuple2D_I32 more and added more functionality to its children
 - Updated for DDogleg's FastAccess, FastArray, and FastQueue
 
 ---------------------------------------------

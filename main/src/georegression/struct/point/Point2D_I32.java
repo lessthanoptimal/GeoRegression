@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,14 +18,14 @@
 
 package georegression.struct.point;
 
-import georegression.struct.GeoTuple;
+import georegression.struct.GeoTuple_I32;
 
 import java.util.Objects;
 
 /**
  * An integer 2D point
  */
-public class Point2D_I32 extends GeoTuple<Point2D_I32> {
+public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 	public int x;
 	public int y;
 
@@ -107,6 +107,33 @@ public class Point2D_I32 extends GeoTuple<Point2D_I32> {
 		int dy = this.y-y;
 
 		return dx*dx + dy*dy;
+	}
+
+	public boolean isIdentical( int x , int y ) {
+		return this.x == x && this.y == y;
+	}
+
+	@Override
+	public int getIdx( int index ) {
+		if( index == 0 )
+			return x;
+		else if( index == 1 )
+			return y;
+		throw new RuntimeException("Invalid index "+index);
+	}
+
+	@Override
+	public void setIdx( int index , int value ) {
+		if( index == 0 )
+			this.x = value;
+		else if( index == 1 )
+			this.y = value;
+		else
+			throw new RuntimeException("Invalid index "+index);
+	}
+
+	public void print() {
+		System.out.println(toString());
 	}
 
 	public Point2D_I32 copy() {
