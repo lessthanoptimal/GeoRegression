@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -99,7 +99,7 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 		DMatrixRMaj Sigma = new DMatrixRMaj( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
 
 		if( !svd.decompose(Sigma) )
-			throw new RuntimeException("SVD failed!?");
+			return false;
 
 		DMatrixRMaj U = svd.getU(null,false);
 		DMatrixRMaj V = svd.getV(null,false);
