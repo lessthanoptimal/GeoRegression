@@ -8,7 +8,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.22-SNAPSHOT'
+    version = '0.22'
 }
 
 gversion {
@@ -20,7 +20,6 @@ gversion {
 subprojects {
 
     apply plugin: 'java-library'
-//    apply plugin: 'osgi'
     apply plugin: 'maven'
     apply plugin: 'signing'
 
@@ -75,16 +74,12 @@ subprojects {
     }
 
     dependencies {
-        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.18-SNAPSHOT')
+        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.18')
         implementation 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable
         implementation 'javax.annotation:jsr250-api:1.0'       // @Generated
 
-        testImplementation(
-                'org.junit.jupiter:junit-jupiter-api:5.4.0'
-        )
-        testRuntimeOnly(
-                'org.junit.jupiter:junit-jupiter-engine:5.4.0'
-        )
+        testImplementation( 'org.junit.jupiter:junit-jupiter-api:5.4.0' )
+        testRuntimeOnly( 'org.junit.jupiter:junit-jupiter-engine:5.4.0' )
 
         // needed to use Java 11 with 8 byte code
         annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:0.2.0'
@@ -93,13 +88,6 @@ subprojects {
     test {
         ignoreFailures true
     }
-
-//    jar {
-//        manifest { // the manifest of the default jar is of type OsgiManifest
-//            instruction 'Bundle-Vendor', 'GeoRegression'
-//            instruction 'Bundle-DocURL', 'http://georegression.org'
-//        }
-//    }
 
     javadoc {
         configure(options) {
@@ -124,7 +112,10 @@ subprojects {
         archives javadocJar, sourcesJar
     }
 
-// if Maven central isn't setup in gradle.properties skip all of this
+    // Force uploadArchives to fail if trying to upload a stable release and git is dirty
+    uploadArchives.dependsOn failDirtyNotSnapshot
+
+    // if Maven central isn't setup in gradle.properties skip all of this
     if (project.hasProperty('ossrhUsername')) {
         signing {
             sign configurations.archives
@@ -214,10 +205,16 @@ def javadocProjects = [
 task alljavadoc(type: Javadoc) {
     // only include source code in src directory to avoid including 3rd party code which some projects do as a hack
     source = javadocProjects.collect { project(it).fileTree('src').include('**/*.java') }
-//    source = javadocProjects.collect { project(it).sourceSets.main.allJava }
     classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
 
     destinationDir = file("${buildDir}/docs/javadoc")
+
+    // Hack for Java 8u121 and beyond. Comment out if running an earlier version of Java
+    options.addBooleanOption("-allow-script-in-comments", true)
+    options.addBooleanOption("-no-module-directories", true)
+
+    // Add a list of uses of a class to javadoc
+    options.use = true
 
     configure(options) {
         failOnError = false
@@ -231,13 +228,16 @@ task alljavadoc(type: Javadoc) {
 task javadocWeb(type: Javadoc) {
     // only include source code in src directory to avoid including 3rd party code which some projects do as a hack
     source = javadocProjects.collect { project(it).fileTree('src').include('**/*.java') }
-//    source = javadocProjects.collect { project(it).sourceSets.main.allJava }
     classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
 
     destinationDir = file("${buildDir}/docs/javadoc")
 
     // Hack for Java 8u121 and beyond. Comment out if running an earlier version of Java
     options.addBooleanOption("-allow-script-in-comments", true)
+    options.addBooleanOption("-no-module-directories", true)
+
+    // Add a list of uses of a class to javadoc
+    options.use = true
 
     configure(options) {
         failOnError = false
