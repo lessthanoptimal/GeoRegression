@@ -265,5 +265,5 @@ task javadocWeb(type: Javadoc) {
 
 wrapper {
     distributionType = Wrapper.DistributionType.BIN
-    gradleVersion = '5.6.4'
+    gradleVersion = '6.4.1'
 }
