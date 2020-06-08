@@ -73,13 +73,14 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 			throw new RuntimeException("Invalid index "+index);
 	}
 
-	public void set(int x, int y, int z) {
+	public void setTo(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-	public void set( Point3D_I32 p ) {
+	@Override
+	public void setTo(Point3D_I32 p ) {
 		this.x = p.x;
 		this.y = p.y;
 		this.z = p.z;

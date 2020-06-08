@@ -48,23 +48,6 @@ public abstract class GeoTuple_I32 <T extends GeoTuple_I32<T>> extends GeoTuple<
 	}
 
 	/**
-	 * Generic copy routine.  It is recommended that this be overridden with a faster implementation.
-	 *
-	 * @return An exact copy of this GeoTuple.
-	 */
-	@Override
-	public T copy() {
-		T ret = createNewInstance();
-
-		int N = getDimension();
-		for( int i = 0; i < N; i++ ) {
-			ret.setIdx( i, getIdx( i ) );
-		}
-
-		return ret;
-	}
-
-	/**
 	 * Returns the value of the tuple along the specified coordinate system axis.
 	 *
 	 * @param index Which axis in the coordinate system.

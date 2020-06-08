@@ -52,4 +52,14 @@ public class TestPoint2D_I32 {
 		assertEquals(a.x,b.x);
 		assertEquals(a.y,b.y);
 	}
+
+	@Test
+	void setTo() {
+		Point2D_I32 a = new Point2D_I32(1,2);
+		Point2D_I32 b = new Point2D_I32();
+		b.setTo(a);
+
+		assertEquals(a.x,b.x);
+		assertEquals(a.y,b.y);
+	}
 }

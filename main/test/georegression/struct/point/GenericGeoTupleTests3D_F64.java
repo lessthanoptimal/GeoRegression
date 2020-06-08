@@ -20,6 +20,7 @@ package georegression.struct.point;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.GeoTuple3D_F64;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
@@ -30,18 +31,18 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Peter Abeles
  */
 @SuppressWarnings({"unchecked"})
-public class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> extends GenericGeoTupleTests_F64<T> {
+public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> extends GenericGeoTupleTests_F64<T> {
 
 	Random rand = new Random(234234);
 	private T seed;
 
 	public GenericGeoTupleTests3D_F64( T seed ) {
-		super( seed );
+		super( seed , 3);
 		this.seed = seed;
 	}
 
 	public void checkAll() {
-		super.checkAll( 3 );
+		super.checkAll();
 		checkGetAndSetAxis();
 		checkSetAxisAll();
 		isIdentical_3_double();
@@ -49,6 +50,7 @@ public class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> extends Gener
 		isNaN();
 	}
 
+	@Test
 	public void checkGetAndSetAxis() {
 		T a = (T) seed.createNewInstance();
 
@@ -63,6 +65,7 @@ public class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> extends Gener
 		assertEquals( 1.5, a.getZ(), GrlConstants.TEST_F64);
 	}
 
+	@Test
 	public void checkSetAxisAll() {
 		T a = (T) seed.createNewInstance();
 
@@ -73,6 +76,7 @@ public class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> extends Gener
 		assertEquals( 3.5, a.getZ(), GrlConstants.TEST_F64);
 	}
 
+	@Test
 	public void isIdentical_3_double() {
 		T a = (T) seed.createNewInstance();
 
@@ -81,6 +85,7 @@ public class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> extends Gener
 		assertTrue( a.isIdentical( 1, 2, 3, GrlConstants.TEST_F64) );
 	}
 
+	@Test
 	public void isIdentical_tuple() {
 		T a = (T) seed.createNewInstance();
 
@@ -91,6 +96,7 @@ public class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> extends Gener
 		assertTrue( a.isIdentical( b, GrlConstants.TEST_F64) );
 	}
 
+	@Test
 	public void isNaN() {
 		T a = (T) seed.createNewInstance();
 

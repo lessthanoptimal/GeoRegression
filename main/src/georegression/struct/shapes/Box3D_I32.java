@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -38,8 +38,8 @@ public class Box3D_I32 implements Serializable {
 	public Point3D_I32 p1 = new Point3D_I32();
 
 	public Box3D_I32(int x0, int y0, int z0, int x1, int y1, int z1) {
-		this.p0.set(x0, y0, z0);
-		this.p1.set(x1, y1, z1);
+		this.p0.setTo(x0, y0, z0);
+		this.p1.setTo(x1, y1, z1);
 	}
 
 	public Box3D_I32(Box3D_I32 orig) {
@@ -54,8 +54,8 @@ public class Box3D_I32 implements Serializable {
 	}
 
 	public void set(int x0, int y0, int z0, int x1, int y1, int z1 ) {
-		this.p0.set(x0, y0, z0);
-		this.p1.set(x1, y1, z1);
+		this.p0.setTo(x0, y0, z0);
+		this.p1.setTo(x1, y1, z1);
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class Box3D_I32 implements Serializable {
 	}
 
 	public void setP1(Point3D_I32 p1) {
-		this.p1.set(p1);
+		this.p1.setTo(p1);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class Box3D_I32 implements Serializable {
 	}
 
 	public void setP0(Point3D_I32 p0) {
-		this.p0.set(p0);
+		this.p0.setTo(p0);
 	}
 
 	public String toString() {

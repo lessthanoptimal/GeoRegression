@@ -114,6 +114,12 @@ public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 	}
 
 	@Override
+	public void setTo(Point2D_I32 src) {
+		this.x = src.x;
+		this.y = src.y;
+	}
+
+	@Override
 	public int getIdx( int index ) {
 		if( index == 0 )
 			return x;

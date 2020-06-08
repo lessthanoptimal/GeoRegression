@@ -262,6 +262,14 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 	}
 
 	@Override
+	public void setTo(T src) {
+		this.x = src.x;
+		this.y = src.y;
+		this.z = src.z;
+		this.w = src.w;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if( this.getClass() != obj.getClass() )
 			return false;

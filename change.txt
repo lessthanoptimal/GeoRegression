@@ -4,6 +4,9 @@ YEAR-MONTH-DAY
 Date    : 2020
 Version : 0.23
 
+- GeoTuple
+  * Added setTo() function
+
 ---------------------------------------------
 Date    : 2020/May/19
 Version : 0.22

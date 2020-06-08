@@ -20,6 +20,7 @@ package georegression.struct.point;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.GeoTuple_F64;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,37 +29,43 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Peter Abeles
  */
 @SuppressWarnings({"unchecked"})
-public class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
+public abstract class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 
 	private T seed;
+	int dimension;
 
-	public GenericGeoTupleTests_F64( T seed ) {
+	public GenericGeoTupleTests_F64( T seed , int dimension ) {
 		this.seed = seed;
+		this.dimension = dimension;
 	}
 
-	public void checkAll( int dimension ) {
+	public void checkAll() {
 		checkCreateNewInstance();
-		checkDimension( dimension );
+		checkDimension();
 		checkSetAndGetIndex();
 		checkNorm();
 		checkNormSq();
+		checkSetTo();
 		checkCopy();
 		checkEquals();
 	}
 
+	@Test
 	public void checkCreateNewInstance() {
 		T a = (T) seed.createNewInstance();
 
-		assertTrue( a != null );
-		assertTrue( a.getClass() == seed.getClass() );
+		assertNotNull(a);
+		assertSame(a.getClass(), seed.getClass());
 	}
 
-	public void checkDimension( int expected ) {
+	@Test
+	public void checkDimension() {
 		T a = (T) seed.createNewInstance();
 
-		assertEquals( a.getDimension(), expected );
+		assertEquals( this.dimension, a.getDimension() );
 	}
 
+	@Test
 	public void checkSetAndGetIndex() {
 
 		T a = (T) seed.createNewInstance();
@@ -70,6 +77,7 @@ public class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 		}
 	}
 
+	@Test
 	public void checkNorm() {
 		T a = (T) seed.createNewInstance();
 		double total = 0;
@@ -82,6 +90,7 @@ public class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 		assertEquals( expected, a.norm(), GrlConstants.TEST_F64);
 	}
 
+	@Test
 	public void checkNormSq() {
 		T a = (T) seed.createNewInstance();
 		double total = 0;
@@ -93,6 +102,22 @@ public class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 		assertEquals( total, a.normSq(), GrlConstants.TEST_F64);
 	}
 
+	@Test
+	public void checkSetTo() {
+		T a = (T) seed.createNewInstance();
+		for( int i = 0; i < a.getDimension(); i++ ) {
+			a.setIdx( i, i + 1 );
+		}
+
+		T b = (T) seed.createNewInstance();
+		b.setTo(a);
+
+		for( int i = 0; i < a.getDimension(); i++ ) {
+			assertEquals(a.getIdx(i), b.getIdx(i));
+		}
+	}
+
+	@Test
 	public void checkCopy() {
 		T a = (T) seed.createNewInstance();
 		for( int i = 0; i < a.getDimension(); i++ ) {
@@ -101,24 +126,25 @@ public class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 
 		T b = (T) a.copy();
 
-		assertTrue( a != b );
+		assertNotSame(a, b);
 		for( int i = 0; i < a.getDimension(); i++ ) {
-			assertTrue( a.getIdx( i ) == b.getIdx( i ) );
+			assertEquals(a.getIdx(i), b.getIdx(i));
 		}
 	}
 
+	@Test
 	public void checkEquals() {
 		T a = (T) seed.createNewInstance();
 		T b = (T) seed.createNewInstance();
 
-		assertTrue( a != b );
-		assertTrue( a.equals(b) );
+		assertNotSame(a, b);
+		assertEquals(a, b);
 
 		for( int i = 0; i < a.getDimension(); i++ ) {
 			a.setIdx(i, 2);
-			assertFalse(a.equals(b));
+			assertNotEquals(a, b);
 			b.setIdx(i, 2);
-			assertTrue(a.equals(b));
+			assertEquals(a, b);
 		}
 	}
 

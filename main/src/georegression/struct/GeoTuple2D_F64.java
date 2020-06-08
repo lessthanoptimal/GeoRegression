@@ -163,6 +163,12 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 	}
 
 	@Override
+	public void setTo(T src) {
+		this.x = src.x;
+		this.y = src.y;
+	}
+
+	@Override
 	public double distance( T t ) {
 		double dx = t.x - x;
 		double dy = t.y - y;

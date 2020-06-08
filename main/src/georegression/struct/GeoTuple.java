@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,9 +46,19 @@ public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
 	public abstract T createNewInstance();
 
 	/**
+	 * Sets this equal to 'src'
+	 * @param src The tuple being copied
+	 */
+	public abstract void setTo( T src );
+
+	/**
 	 * Generic copy routine.  It is recommended that this be overridden with a faster implementation.
 	 *
 	 * @return An exact copy of this GeoTuple.
 	 */
-	public abstract T copy();
+	public T copy() {
+		T dst = createNewInstance();
+		dst.setTo(this);
+		return dst;
+	}
 }

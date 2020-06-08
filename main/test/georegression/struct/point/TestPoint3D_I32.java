@@ -35,7 +35,7 @@ public class TestPoint3D_I32 {
 	@Test
 	void set() {
 		Point3D_I32 p = new Point3D_I32();
-		p.set(1,2,3);
+		p.setTo(1,2,3);
 
 		assertEquals(1,p.x);
 		assertEquals(2,p.y);
@@ -65,5 +65,16 @@ public class TestPoint3D_I32 {
 		assertEquals(1,p.x);
 		assertEquals(2,p.y);
 		assertEquals(3,p.z);
+	}
+
+	@Test
+	void setTo() {
+		Point3D_I32 a = new Point3D_I32(1,2,3);
+		Point3D_I32 b = new Point3D_I32();
+		b.setTo(a);
+
+		assertEquals(1,b.x);
+		assertEquals(2,b.y);
+		assertEquals(3,b.z);
 	}
 }
