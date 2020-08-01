@@ -19,6 +19,7 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
@@ -114,5 +115,13 @@ public class TestUtilVector3D_F64 {
 
 			assertTrue(Math.abs(A.dot(found)) <= GrlConstants.EPS);
 		}
+	}
+
+	@Test
+	void axisMaxMag() {
+		assertEquals(0,UtilVector3D_F64.axisMaxMag(new Point3D_F64()));
+		assertEquals(1,UtilVector3D_F64.axisMaxMag(new Point3D_F64(10,-11,0)));
+		assertEquals(1,UtilVector3D_F64.axisMaxMag(new Point3D_F64(-10,11,0)));
+		assertEquals(2,UtilVector3D_F64.axisMaxMag(new Point3D_F64(0,-0.5,1)));
 	}
 }

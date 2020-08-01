@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -170,5 +170,21 @@ public class UtilVector3D_F64 {
 			value = -1.0;
 
 		return Math.acos( value );
+	}
+
+	/**
+	 * Finds which axis in `v` has the largest magnitude
+	 */
+	public static int axisMaxMag( GeoTuple3D_F64<?> v ) {
+		int bestAxis = -1;
+		double best = -1;
+		for (int i = 0; i < 3; i++) {
+			double m = Math.abs(v.getIdx(i));
+			if( m > best ) {
+				best = m;
+				bestAxis = i;
+			}
+		}
+		return bestAxis;
 	}
 }
