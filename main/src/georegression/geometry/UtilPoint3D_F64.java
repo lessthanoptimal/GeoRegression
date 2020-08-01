@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
@@ -294,5 +295,26 @@ public class UtilPoint3D_F64 {
 
 		bounding.p0.set(minX,minY,minZ);
 		bounding.p1.set(maxX, maxY, maxZ);
+	}
+
+	/**
+	 * Returns the axis with the largest absolute value
+	 */
+	public static int axisLargestAbs( GeoTuple3D_F64<?> p ) {
+		double x = Math.abs(p.x);
+		double y = Math.abs(p.y);
+		double z = Math.abs(p.z);
+
+		if( x > y ) {
+			if( x > z ) {
+				return 0;
+			} else {
+				return 2;
+			}
+		} else if( y > z ) {
+			return 1;
+		} else {
+			return 2;
+		}
 	}
 }

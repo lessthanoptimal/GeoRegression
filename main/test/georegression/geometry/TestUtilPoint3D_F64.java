@@ -96,4 +96,19 @@ public class TestUtilPoint3D_F64 {
 		assertEquals(0,cube.getP0().distance(list.get(0)),GrlConstants.TEST_F64);
 		assertEquals(0,cube.getP1().distance(new Point3D_F64(2,3,5)),1e-8);
 	}
+
+	@Test
+	void axisLargestAbs() {
+		assertEquals(0, UtilPoint3D_F64.axisLargestAbs(new Point3D_F64(3,2,1)));
+		assertEquals(0, UtilPoint3D_F64.axisLargestAbs(new Point3D_F64(-3,2,1)));
+		assertEquals(0, UtilPoint3D_F64.axisLargestAbs(new Point3D_F64(-3,-2,-1)));
+
+		assertEquals(1, UtilPoint3D_F64.axisLargestAbs(new Point3D_F64(2,3,1)));
+		assertEquals(1, UtilPoint3D_F64.axisLargestAbs(new Point3D_F64(2,-3,1)));
+		assertEquals(1, UtilPoint3D_F64.axisLargestAbs(new Point3D_F64(-2,3,-1)));
+
+		assertEquals(2, UtilPoint3D_F64.axisLargestAbs(new Point3D_F64(2,1,3)));
+		assertEquals(2, UtilPoint3D_F64.axisLargestAbs(new Point3D_F64(2,1,-3)));
+		assertEquals(2, UtilPoint3D_F64.axisLargestAbs(new Point3D_F64(-2,-1,3)));
+	}
 }
