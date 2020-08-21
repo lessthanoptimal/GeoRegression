@@ -1,8 +1,8 @@
-//import net.ltgt.gradle.errorprone.CheckSeverity
+import net.ltgt.gradle.errorprone.CheckSeverity
 
 plugins {
     id "com.peterabeles.gversion" version "1.8.3"
-//    id "net.ltgt.errorprone" version "1.2.1" apply false
+    id "net.ltgt.errorprone" version "1.2.1" apply false
 }
 
 allprojects {
@@ -23,7 +23,7 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'maven'
     apply plugin: 'signing'
-//    apply plugin: 'net.ltgt.errorprone'
+    apply plugin: 'net.ltgt.errorprone'
 
     java {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -35,12 +35,20 @@ subprojects {
         options.compilerArgs = [ "--release", "8"  ]
     }
 
+    // Crap to make Error Prone plugin not cause version conflicts
+    // https://github.com/tbroyer/gradle-errorprone-plugin/issues/16
+    configurations {
+        [annotationProcessor, testAnnotationProcessor].each {
+            it.resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.2'
+            it.resolutionStrategy.force "com.google.errorprone:error_prone_annotations:2.4.0"
+            it.resolutionStrategy.force "com.google.guava:guava:27.0.1-jre"
+            it.resolutionStrategy.force "org.checkerframework:checker-qual:2.10.0"
+        }
+    }
 
     // Fail on jar conflict
     configurations.all {
-        resolutionStrategy {
-            failOnVersionConflict()
-        }
+        resolutionStrategy { failOnVersionConflict() }
     }
 
     repositories {
@@ -84,39 +92,35 @@ subprojects {
         annotationProcessor("net.bytebuddy:byte-buddy:1.10.10")
         annotationProcessor("net.bytebuddy:byte-buddy-agent:1.10.10")
 
-//        errorprone( "com.google.errorprone:error_prone_core:2.4.0" )
-//        errorproneJavac( "com.google.errorprone:javac:9+181-r4173-1" )
+        errorprone( "com.google.errorprone:error_prone_core:2.4.0" )
+        errorproneJavac( "com.google.errorprone:javac:9+181-r4173-1" )
 
         // even if it's not used you still need to include the dependency
-//        annotationProcessor "com.uber.nullaway:nullaway:0.8.0"
-//        testAnnotationProcessor "com.uber.nullaway:nullaway:0.8.0"
+        annotationProcessor "com.uber.nullaway:nullaway:0.8.0"
+        testAnnotationProcessor "com.uber.nullaway:nullaway:0.8.0"
     }
 
-//    tasks.withType(JavaCompile).configureEach {
-//        options.errorprone.enabled = false
-//        if( name.startsWith("compileTest") )
-//            return
-//        if( path.contains("experimental") )
-//            return
-//        if( path.contains("example") )
-//            return
-//
-//        options.errorprone.enabled = true
-//        options.errorprone.disableWarningsInGeneratedCode = true
-//        options.errorprone.disable("TypeParameterUnusedInFormals","StringSplitter","InconsistentCapitalization",
-//                "HidingField", // this is sometimes done when the specific type is known by child. Clean up later.
-//                "ClassNewInstance", // yes it's deprecated, but new version is more verbose with ignored errors
-//                "FloatingPointLiteralPrecision", // too many false positives in test code
-//                "MissingSummary","UnescapedEntity","EmptyBlockTag")
-//        options.errorprone.error("MissingOverride","MissingCasesInEnumSwitch","BadInstanceof",
-//                "PublicConstructorForAbstractClass","EmptyCatch","NarrowingCompoundAssignment","JdkObsolete")
-//
-////        options.errorprone {
-////            check("NullAway", CheckSeverity.ERROR)
-////            option("NullAway:TreatGeneratedAsUnannotated", true)
-////            option("NullAway:AnnotatedPackages", "org.ejml")
-////        }
-//    }
+    tasks.withType(JavaCompile).configureEach {
+        options.errorprone.enabled = false
+        if( name.startsWith("compileTest") )
+            return
+
+        options.errorprone.enabled = true
+        options.errorprone.disableWarningsInGeneratedCode = true
+        options.errorprone.disable("TypeParameterUnusedInFormals","StringSplitter","InconsistentCapitalization",
+                "HidingField", // this is sometimes done when the specific type is known by child. Clean up later.
+                "ClassNewInstance", // yes it's deprecated, but new version is more verbose with ignored errors
+                "FloatingPointLiteralPrecision", // too many false positives in test code
+                "MissingSummary","UnescapedEntity","EmptyBlockTag")
+        options.errorprone.error("MissingOverride","MissingCasesInEnumSwitch","BadInstanceof",
+                "PublicConstructorForAbstractClass","EmptyCatch","NarrowingCompoundAssignment","JdkObsolete")
+
+        options.errorprone {
+            check("NullAway", CheckSeverity.ERROR)
+            option("NullAway:TreatGeneratedAsUnannotated", true)
+            option("NullAway:AnnotatedPackages", "org.ejml")
+        }
+    }
 
     test {
         ignoreFailures true

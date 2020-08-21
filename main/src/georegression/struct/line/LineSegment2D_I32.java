@@ -116,7 +116,7 @@ public class LineSegment2D_I32 implements Serializable {
 		try {
 			LineSegment2D_I32 o = (LineSegment2D_I32) obj;
 			return a.equals(o.a) && b.equals(o.b);
-		} catch( RuntimeException e ) {
+		} catch( Exception e ) {
 			return super.equals(obj);
 		}
 	}

@@ -780,7 +780,7 @@ public class GeometryMath_F64 {
 		DMatrixRMaj m1 = new DMatrixRMaj( 3, 1, true, a.x, a.y, a.z );
 		DMatrixRMaj m2 = new DMatrixRMaj( 3, 1, true, b.x, b.y, b.z );
 
-		return (double) ( VectorVectorMult_DDRM.innerProdA( m1, M, m2 ) );
+		return (double) VectorVectorMult_DDRM.innerProdA( m1, M, m2 );
 	}
 
 	/**
@@ -801,7 +801,7 @@ public class GeometryMath_F64 {
 		DMatrixRMaj m1 = new DMatrixRMaj( 3, 1, true, a.x, a.y, a.z );
 		DMatrixRMaj m2 = new DMatrixRMaj( 3, 1, true, b.x, b.y, b.z );
 
-		return (double) ( VectorVectorMult_DDRM.innerProdTranA( m1, M, m2 ) );
+		return (double) VectorVectorMult_DDRM.innerProdTranA( m1, M, m2 );
 	}
 
 	/**
@@ -876,7 +876,7 @@ public class GeometryMath_F64 {
 		DMatrixRMaj m1 = new DMatrixRMaj( 3, 1, true, a.x, a.y, 1 );
 		DMatrixRMaj m2 = new DMatrixRMaj( 3, 1, true, b.x, b.y, 1 );
 
-		return (double) ( VectorVectorMult_DDRM.innerProdA( m1, M, m2 ) );
+		return (double) VectorVectorMult_DDRM.innerProdA( m1, M, m2 );
 	}
 
 	/**

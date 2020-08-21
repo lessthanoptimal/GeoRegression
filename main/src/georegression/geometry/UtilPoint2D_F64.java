@@ -174,7 +174,7 @@ public class UtilPoint2D_F64 {
 	}
 
 	public static boolean isEquals( GeoTuple2D_F64 a, GeoTuple2D_F64 b, double tol ) {
-		return ( Math.abs( a.x - b.x ) <= tol && Math.abs( a.x - b.x ) <= tol );
+		return ( Math.abs( a.x - b.x ) <= tol && Math.abs( a.y - b.y ) <= tol );
 	}
 
 	/**

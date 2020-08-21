@@ -109,7 +109,7 @@ public class Intersection2D_F64 {
 
 		if( (pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y) ) {
 			// location of line segment along x-axis at y = pt.y
-			double x = b.y==a.y ? pt.x : (pt.y-pt.y)*(b.x-a.x)/(b.y-a.y) + a.x;
+			double x = b.y==a.y ? pt.x : (pt.y-a.y)*(b.x-a.x)/(b.y-a.y) + a.x;
 
 			if( x <= pt.x )
 				left++;
@@ -452,7 +452,7 @@ public class Intersection2D_F64 {
 	 * if it is &ge; the lower extend and &le; the upper extent.
 	 * </p>
 	 * <p>
-	 * {@code inside = x &ge; x0 AND x &le; x0+width and y &ge; y0 AND y &le; y0+height}
+	 * inside = x &ge; x0 AND x &le; x0+width and y &ge; y0 AND y &le; y0+height
 	 * </p>
 	 * @param a Rectangle.
 	 * @param x x-coordinate of point being tested for containment

@@ -120,7 +120,7 @@ public class Intersection2D_I32 {
 
 		if( (pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y) ) {
 			// location of line segment along x-axis at y = pt.y
-			double x = b.y==a.y ? pt.x : (pt.y-pt.y)*(b.x-a.x)/(double)(b.y-a.y) + a.x;
+			double x = b.y==a.y ? pt.x : (pt.y-a.y)*(b.x-a.x)/(double)(b.y-a.y) + a.x;
 
 			if( x <= pt.x )
 				left++;

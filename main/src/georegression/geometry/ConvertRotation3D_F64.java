@@ -321,7 +321,7 @@ public class ConvertRotation3D_F64 {
 			quat.x = (m21 - m12) / S;
 			quat.y = (m02 - m20) / S;
 			quat.z = (m10 - m01) / S;
-		} else if ((m00 > m11)&(m00 > m22)) {
+		} else if ((m00 > m11)&&(m00 > m22)) {
 			double S = Math.sqrt(1.0 + m00 - m11 - m22) * 2; // S=4*qx
 			quat.w = (m21 - m12) / S;
 			quat.x = 0.25 * S;
