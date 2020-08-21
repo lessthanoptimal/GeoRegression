@@ -1,11 +1,13 @@
+//import net.ltgt.gradle.errorprone.CheckSeverity
+
 plugins {
-    id "com.peterabeles.gversion" version "1.7.0" apply false
+    id "com.peterabeles.gversion" version "1.8.3"
+//    id "net.ltgt.errorprone" version "1.2.1" apply false
 }
 
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
-    apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
     version = '0.23-SNAPSHOT'
@@ -18,10 +20,10 @@ gversion {
 }
 
 subprojects {
-
     apply plugin: 'java-library'
     apply plugin: 'maven'
     apply plugin: 'signing'
+//    apply plugin: 'net.ltgt.errorprone'
 
     java {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -41,8 +43,6 @@ subprojects {
         }
     }
 
-    createVersionFile.enabled = false // only want this to run once in the root project
-
     repositories {
         mavenCentral()
         mavenLocal()
@@ -53,12 +53,8 @@ subprojects {
 
     sourceSets {
         main {
-            java {
-                srcDir 'src'
-            }
-            resources {
-                srcDir 'resources/src'
-            }
+            java { srcDir 'src' }
+            resources { srcDir 'resources/src' }
         }
 
         test {
@@ -67,16 +63,15 @@ subprojects {
                 srcDir 'generate'
                 srcDir 'benchmark'
             }
-            resources {
-                srcDir 'resources/test'
-            }
+            resources { srcDir 'resources/test' }
         }
     }
 
     dependencies {
-        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.18')
-        implementation 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable
-        implementation 'javax.annotation:jsr250-api:1.0'       // @Generated
+        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.19-SNAPSHOT')
+
+        compileOnly 'org.jetbrains:annotations:20.0.0' // @Nullable
+        compileOnly 'javax.annotation:jsr250-api:1.0'  // @Generated
 
         testImplementation( 'org.junit.jupiter:junit-jupiter-api:5.4.0' )
         testRuntimeOnly( 'org.junit.jupiter:junit-jupiter-engine:5.4.0' )
@@ -88,7 +83,40 @@ subprojects {
         }
         annotationProcessor("net.bytebuddy:byte-buddy:1.10.10")
         annotationProcessor("net.bytebuddy:byte-buddy-agent:1.10.10")
+
+//        errorprone( "com.google.errorprone:error_prone_core:2.4.0" )
+//        errorproneJavac( "com.google.errorprone:javac:9+181-r4173-1" )
+
+        // even if it's not used you still need to include the dependency
+//        annotationProcessor "com.uber.nullaway:nullaway:0.8.0"
+//        testAnnotationProcessor "com.uber.nullaway:nullaway:0.8.0"
     }
+
+//    tasks.withType(JavaCompile).configureEach {
+//        options.errorprone.enabled = false
+//        if( name.startsWith("compileTest") )
+//            return
+//        if( path.contains("experimental") )
+//            return
+//        if( path.contains("example") )
+//            return
+//
+//        options.errorprone.enabled = true
+//        options.errorprone.disableWarningsInGeneratedCode = true
+//        options.errorprone.disable("TypeParameterUnusedInFormals","StringSplitter","InconsistentCapitalization",
+//                "HidingField", // this is sometimes done when the specific type is known by child. Clean up later.
+//                "ClassNewInstance", // yes it's deprecated, but new version is more verbose with ignored errors
+//                "FloatingPointLiteralPrecision", // too many false positives in test code
+//                "MissingSummary","UnescapedEntity","EmptyBlockTag")
+//        options.errorprone.error("MissingOverride","MissingCasesInEnumSwitch","BadInstanceof",
+//                "PublicConstructorForAbstractClass","EmptyCatch","NarrowingCompoundAssignment","JdkObsolete")
+//
+////        options.errorprone {
+////            check("NullAway", CheckSeverity.ERROR)
+////            option("NullAway:TreatGeneratedAsUnannotated", true)
+////            option("NullAway:AnnotatedPackages", "org.ejml")
+////        }
+//    }
 
     test {
         ignoreFailures true
@@ -100,6 +128,7 @@ subprojects {
                      'http://ejml.org/javadoc/',
                      'http://ddogleg.org/javadoc/']
             failOnError = false
+            enabled = false // disable to stop it from spamming stdout
         }
     }
 
@@ -253,6 +282,8 @@ task javadocWeb(type: Javadoc) {
         bottom = file('docs/bottom.txt').text
     }
 }
+
+project(':georegression').compileJava.dependsOn(createVersionFile)
 
 // Disable the creation of jars for distribution.  If you don't do this it will crash
 [':examples','autocode'].each {String a ->

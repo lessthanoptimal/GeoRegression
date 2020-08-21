@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,8 +25,8 @@ import georegression.struct.shapes.RectangleLength2D_F64;
 import org.ddogleg.sorting.QuickSort_F64;
 import org.ejml.data.DMatrix;
 import org.ejml.data.ReshapeMatrix;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

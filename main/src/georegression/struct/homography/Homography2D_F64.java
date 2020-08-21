@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,8 +22,7 @@ package georegression.struct.homography;
 import georegression.struct.Matrix3x3_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.ops.ConvertDMatrixStruct;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Describes a homography transform in 2D.
