@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -28,6 +28,7 @@ import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -53,7 +54,7 @@ public class SpecialEuclideanOps_F64 {
 	 * @param affine (Output) Equivalent affine.  If null a new object will be declared.
 	 * @return Equivalent affine.
 	 */
-	public static Affine2D_F64 toAffine( Se2_F64 se , Affine2D_F64 affine ) {
+	public static Affine2D_F64 toAffine( Se2_F64 se , @Nullable Affine2D_F64 affine ) {
 		if( affine == null )
 			affine = new Affine2D_F64();
 
@@ -75,7 +76,7 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
-	public static DMatrixRMaj toHomogeneous( Se3_F64 se, DMatrixRMaj ret ) {
+	public static DMatrixRMaj toHomogeneous( Se3_F64 se, @Nullable DMatrixRMaj ret ) {
 		if( ret == null )
 			ret = new DMatrixRMaj( 4, 4 );
 		else {
@@ -102,7 +103,7 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F64 transform.
 	 */
-	public static Se3_F64 toSe3(DMatrixRMaj H, Se3_F64 ret ) {
+	public static Se3_F64 toSe3(DMatrixRMaj H, @Nullable Se3_F64 ret ) {
 		if( H.numCols != 4 || H.numRows != 4 )
 			throw new IllegalArgumentException( "The homogeneous matrix must be 4 by 4 by definition." );
 
@@ -123,7 +124,7 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
-	public static DMatrixRMaj toHomogeneous( Se2_F64 se, DMatrixRMaj ret ) {
+	public static DMatrixRMaj toHomogeneous( Se2_F64 se, @Nullable DMatrixRMaj ret ) {
 		if( ret == null )
 			ret = new DMatrixRMaj( 3, 3 );
 		else {
@@ -152,7 +153,7 @@ public class SpecialEuclideanOps_F64 {
 	 * @param ret If not null where the results are written to.
 	 * @return Se3_F64 transform.
 	 */
-	public static Se2_F64 toSe2( DMatrixRMaj H, Se2_F64 ret ) {
+	public static Se2_F64 toSe2( DMatrixRMaj H, @Nullable Se2_F64 ret ) {
 		if( H.numCols != 3 || H.numRows != 3 )
 			throw new IllegalArgumentException( "The homogeneous matrix must be 3 by 3 by definition." );
 
@@ -183,13 +184,13 @@ public class SpecialEuclideanOps_F64 {
 	 * @return The transform.
 	 */
 	public static Se3_F64 eulerXyz(double dx, double dy, double dz, double rotX, double rotY, double rotZ,
-								   Se3_F64 se) {
+								   @Nullable Se3_F64 se) {
 		return eulerXyz(dx, dy, dz, EulerType.XYZ,rotX, rotY, rotZ, se);
 	}
 
 	public static Se3_F64 eulerXyz(double dx, double dy, double dz,
 								   EulerType type, double rotX, double rotY, double rotZ,
-								   Se3_F64 se) {
+								   @Nullable Se3_F64 se) {
 		if( se == null )
 			se = new Se3_F64();
 
@@ -215,7 +216,7 @@ public class SpecialEuclideanOps_F64 {
 	 * @return The transform.
 	 */
 	public static Se3_F64 axisXyz(double dx, double dy, double dz, double rotX, double rotY, double rotZ,
-								  Se3_F64 se) {
+								  @Nullable Se3_F64 se) {
 		if( se == null )
 			se = new Se3_F64();
 
@@ -235,7 +236,7 @@ public class SpecialEuclideanOps_F64 {
 
 	public static Se3_F64 quatXyz(double dx, double dy, double dz,
 								  double qw, double qx, double qy, double qz,
-								  Se3_F64 se) {
+								  @Nullable Se3_F64 se) {
 		if( se == null )
 			se = new Se3_F64();
 

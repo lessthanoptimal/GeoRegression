@@ -30,17 +30,18 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Peter Abeles
  */
-@SuppressWarnings({"unchecked"})
+@SuppressWarnings({"unchecked","NullAway.Init"})
 public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> extends GenericGeoTupleTests_F64<T> {
 
 	Random rand = new Random(234234);
 	private T seed;
 
-	public GenericGeoTupleTests3D_F64( T seed ) {
+	protected GenericGeoTupleTests3D_F64( T seed ) {
 		super( seed , 3);
 		this.seed = seed;
 	}
 
+	@Override
 	public void checkAll() {
 		super.checkAll();
 		checkGetAndSetAxis();

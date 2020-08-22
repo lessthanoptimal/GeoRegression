@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,6 +26,7 @@ import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
 import org.ejml.interfaces.linsol.LinearSolverDense;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -53,28 +54,28 @@ import java.util.List;
 public class FitEllipseAlgebraic_F64 {
 
 	// qudratic part of design matrix
-	private DMatrixRMaj D1 = new DMatrixRMaj(3,1);
+	private final DMatrixRMaj D1 = new DMatrixRMaj(3,1);
 	// linear part of design matrix
-	private DMatrixRMaj D2 = new DMatrixRMaj(3,1);
+	private final DMatrixRMaj D2 = new DMatrixRMaj(3,1);
 
 	// quadratic part of scatter matrix
-	private DMatrixRMaj S1 = new DMatrixRMaj(3,3);
+	private final DMatrixRMaj S1 = new DMatrixRMaj(3,3);
 	// combined part of scatter matrix
-	private DMatrixRMaj S2 = new DMatrixRMaj(3,3);
+	private final DMatrixRMaj S2 = new DMatrixRMaj(3,3);
 	//linear part of scatter matrix
-	private DMatrixRMaj S3 = new DMatrixRMaj(3,3);
+	private final DMatrixRMaj S3 = new DMatrixRMaj(3,3);
 	// Reduced scatter matrix
-	private DMatrixRMaj M = new DMatrixRMaj(3,3);
+	private final DMatrixRMaj M = new DMatrixRMaj(3,3);
 
 	// storage for intermediate steps
-	private DMatrixRMaj T = new DMatrixRMaj(3,3);
-	private DMatrixRMaj Ta1 = new DMatrixRMaj(3,1);
-	private DMatrixRMaj S2_tran = new DMatrixRMaj(3,3);
+	private final DMatrixRMaj T = new DMatrixRMaj(3,3);
+	private final DMatrixRMaj Ta1 = new DMatrixRMaj(3,1);
+	private final DMatrixRMaj S2_tran = new DMatrixRMaj(3,3);
 
-	private LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(3);
-	private EigenDecomposition<DMatrixRMaj> eigen = DecompositionFactory_DDRM.eig(3,true,false);
+	private final LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(3);
+	private final EigenDecomposition<DMatrixRMaj> eigen = DecompositionFactory_DDRM.eig(3,true,false);
 
-	private EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
+	private final EllipseQuadratic_F64 ellipse = new EllipseQuadratic_F64();
 
 	public boolean process( List<Point2D_F64> points ) {
 		int N = points.size();
@@ -144,7 +145,7 @@ public class FitEllipseAlgebraic_F64 {
 		return true;
 	}
 
-	private DMatrixRMaj selectBestEigenVector() {
+	private @Nullable DMatrixRMaj selectBestEigenVector() {
 
 		int bestIndex = -1;
 		double bestCond = Double.MAX_VALUE;

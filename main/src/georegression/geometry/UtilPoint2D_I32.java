@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.geometry;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class UtilPoint2D_I32 {
 	 * @param mean Storage for mean point.  If null then a new instance will be declared
 	 * @return The found mean
 	 */
-	public static Point2D_I32 mean(List<Point2D_I32> list, Point2D_I32 mean) {
+	public static Point2D_I32 mean(List<Point2D_I32> list, @Nullable Point2D_I32 mean) {
 		if( mean == null )
 			mean = new Point2D_I32();
 
@@ -94,7 +95,7 @@ public class UtilPoint2D_I32 {
 	 * @param mean Storage for mean point.  If null then a new instance will be declared
 	 * @return The found mean
 	 */
-	public static Point2D_F32 mean(List<Point2D_I32> list, Point2D_F32 mean) {
+	public static Point2D_F32 mean(List<Point2D_I32> list, @Nullable Point2D_F32 mean) {
 		if (mean == null)
 			mean = new Point2D_F32();
 
@@ -122,7 +123,7 @@ public class UtilPoint2D_I32 {
 	 * @param mean Storage for mean point.  If null then a new instance will be declared
 	 * @return The found mean
 	 */
-	public static Point2D_F64 mean(List<Point2D_I32> list, Point2D_F64 mean) {
+	public static Point2D_F64 mean(List<Point2D_I32> list, @Nullable Point2D_F64 mean) {
 		if (mean == null)
 			mean = new Point2D_F64();
 

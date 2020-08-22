@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,6 +33,7 @@ import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
 import org.ejml.ops.ConvertMatrixData;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Functions for converting between 32bit and 64bit structures
@@ -41,7 +42,7 @@ import org.ejml.ops.ConvertMatrixData;
  */
 public class ConvertFloatType {
 
-	public static Se3_F32 convert( Se3_F64 src , Se3_F32 dst ) {
+	public static Se3_F32 convert( Se3_F64 src , @Nullable Se3_F32 dst ) {
 		if( dst == null ) {
 			dst = new Se3_F32();
 		}
@@ -52,7 +53,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Se3_F64 convert( Se3_F32 src , Se3_F64 dst ) {
+	public static Se3_F64 convert( Se3_F32 src , @Nullable Se3_F64 dst ) {
 		if( dst == null ) {
 			dst = new Se3_F64();
 		}
@@ -63,7 +64,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Se2_F32 convert(Se2_F64 src , Se2_F32 dst ) {
+	public static Se2_F32 convert(Se2_F64 src , @Nullable Se2_F32 dst ) {
 		if( dst == null ) {
 			dst = new Se2_F32();
 		}
@@ -75,7 +76,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Se2_F64 convert( Se2_F32 src , Se2_F64 dst ) {
+	public static Se2_F64 convert( Se2_F32 src , @Nullable Se2_F64 dst ) {
 		if( dst == null ) {
 			dst = new Se2_F64();
 		}
@@ -87,7 +88,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Homography2D_F32 convert(Homography2D_F64 src , Homography2D_F32 dst ) {
+	public static Homography2D_F32 convert(Homography2D_F64 src , @Nullable Homography2D_F32 dst ) {
 		if( dst == null ) {
 			dst = new Homography2D_F32();
 		}
@@ -97,7 +98,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Homography2D_F64 convert(Homography2D_F32 src , Homography2D_F64 dst ) {
+	public static Homography2D_F64 convert(Homography2D_F32 src , @Nullable Homography2D_F64 dst ) {
 		if( dst == null ) {
 			dst = new Homography2D_F64();
 		}
@@ -107,7 +108,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Affine2D_F32 convert(Affine2D_F64 src , Affine2D_F32 dst ) {
+	public static Affine2D_F32 convert(Affine2D_F64 src , @Nullable Affine2D_F32 dst ) {
 		if( dst == null ) {
 			dst = new Affine2D_F32();
 		}
@@ -120,7 +121,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Affine2D_F64 convert(Affine2D_F32 src , Affine2D_F64 dst ) {
+	public static Affine2D_F64 convert(Affine2D_F32 src , @Nullable Affine2D_F64 dst ) {
 		if( dst == null ) {
 			dst = new Affine2D_F64();
 		}
@@ -133,7 +134,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Point3D_F32 convert( Point3D_F64 src , Point3D_F32 dst ) {
+	public static Point3D_F32 convert( Point3D_F64 src , @Nullable Point3D_F32 dst ) {
 		if( dst == null ) {
 			dst = new Point3D_F32();
 		}
@@ -145,7 +146,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Point3D_F64 convert( Point3D_F32 src , Point3D_F64 dst ) {
+	public static Point3D_F64 convert( Point3D_F32 src , @Nullable Point3D_F64 dst ) {
 		if( dst == null ) {
 			dst = new Point3D_F64();
 		}
@@ -157,7 +158,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Point2D_F32 convert( Point2D_F64 src , Point2D_F32 dst ) {
+	public static Point2D_F32 convert( Point2D_F64 src , @Nullable Point2D_F32 dst ) {
 		if( dst == null ) {
 			dst = new Point2D_F32();
 		}
@@ -168,7 +169,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Point2D_F64 convert( Point2D_F32 src , Point2D_F64 dst ) {
+	public static Point2D_F64 convert( Point2D_F32 src , @Nullable Point2D_F64 dst ) {
 		if( dst == null ) {
 			dst = new Point2D_F64();
 		}
@@ -179,7 +180,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Vector3D_F32 convert( Vector3D_F64 src , Vector3D_F32 dst ) {
+	public static Vector3D_F32 convert( Vector3D_F64 src , @Nullable Vector3D_F32 dst ) {
 		if( dst == null ) {
 			dst = new Vector3D_F32();
 		}
@@ -191,7 +192,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Vector3D_F64 convert( Vector3D_F32 src , Vector3D_F64 dst ) {
+	public static Vector3D_F64 convert( Vector3D_F32 src , @Nullable Vector3D_F64 dst ) {
 		if( dst == null ) {
 			dst = new Vector3D_F64();
 		}
@@ -203,7 +204,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Vector2D_F32 convert( Vector2D_F64 src , Vector2D_F32 dst ) {
+	public static Vector2D_F32 convert( Vector2D_F64 src , @Nullable Vector2D_F32 dst ) {
 		if( dst == null ) {
 			dst = new Vector2D_F32();
 		}
@@ -214,7 +215,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static Vector2D_F64 convert( Vector2D_F32 src , Vector2D_F64 dst ) {
+	public static Vector2D_F64 convert( Vector2D_F32 src , @Nullable Vector2D_F64 dst ) {
 		if( dst == null ) {
 			dst = new Vector2D_F64();
 		}
@@ -225,7 +226,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static EllipseRotated_F32 convert(EllipseRotated_F64 src , EllipseRotated_F32 dst ) {
+	public static EllipseRotated_F32 convert(EllipseRotated_F64 src , @Nullable EllipseRotated_F32 dst ) {
 		if( dst == null ) {
 			dst = new EllipseRotated_F32();
 		}
@@ -238,7 +239,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static EllipseRotated_F64 convert( EllipseRotated_F32 src , EllipseRotated_F64 dst ) {
+	public static EllipseRotated_F64 convert( EllipseRotated_F32 src , @Nullable EllipseRotated_F64 dst ) {
 		if( dst == null ) {
 			dst = new EllipseRotated_F64();
 		}
@@ -251,7 +252,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static EllipseQuadratic_F32 convert(EllipseQuadratic_F64 src , EllipseQuadratic_F32 dst ) {
+	public static EllipseQuadratic_F32 convert(EllipseQuadratic_F64 src , @Nullable EllipseQuadratic_F32 dst ) {
 		if( dst == null ) {
 			dst = new EllipseQuadratic_F32();
 		}
@@ -266,7 +267,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static EllipseQuadratic_F64 convert( EllipseQuadratic_F32 src , EllipseQuadratic_F64 dst ) {
+	public static EllipseQuadratic_F64 convert( EllipseQuadratic_F32 src , @Nullable EllipseQuadratic_F64 dst ) {
 		if( dst == null ) {
 			dst = new EllipseQuadratic_F64();
 		}
@@ -281,7 +282,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static LinePolar2D_F32 convert(LinePolar2D_F64 src , LinePolar2D_F32 dst ) {
+	public static LinePolar2D_F32 convert(LinePolar2D_F64 src , @Nullable LinePolar2D_F32 dst ) {
 		if( dst == null ) {
 			dst = new LinePolar2D_F32();
 		}
@@ -292,7 +293,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static LinePolar2D_F64 convert(LinePolar2D_F32 src , LinePolar2D_F64 dst ) {
+	public static LinePolar2D_F64 convert(LinePolar2D_F32 src , @Nullable LinePolar2D_F64 dst ) {
 		if( dst == null ) {
 			dst = new LinePolar2D_F64();
 		}
@@ -303,7 +304,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static LineParametric2D_F32 convert(LineParametric2D_F64 src , LineParametric2D_F32 dst ) {
+	public static LineParametric2D_F32 convert(LineParametric2D_F64 src , @Nullable LineParametric2D_F32 dst ) {
 		if( dst == null ) {
 			dst = new LineParametric2D_F32();
 		}
@@ -316,7 +317,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static LineSegment2D_F64 convert(LineSegment2D_F32 src , LineSegment2D_F64 dst ) {
+	public static LineSegment2D_F64 convert(LineSegment2D_F32 src , @Nullable LineSegment2D_F64 dst ) {
 		if( dst == null ) {
 			dst = new LineSegment2D_F64();
 		}
@@ -329,7 +330,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static LineSegment2D_F32 convert(LineSegment2D_F64 src , LineSegment2D_F32 dst ) {
+	public static LineSegment2D_F32 convert(LineSegment2D_F64 src , @Nullable LineSegment2D_F32 dst ) {
 		if( dst == null ) {
 			dst = new LineSegment2D_F32();
 		}
@@ -342,7 +343,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static LineSegment3D_F64 convert(LineSegment3D_F32 src , LineSegment3D_F64 dst ) {
+	public static LineSegment3D_F64 convert(LineSegment3D_F32 src , @Nullable LineSegment3D_F64 dst ) {
 		if( dst == null ) {
 			dst = new LineSegment3D_F64();
 		}
@@ -357,7 +358,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static LineSegment3D_F32 convert(LineSegment3D_F64 src , LineSegment3D_F32 dst ) {
+	public static LineSegment3D_F32 convert(LineSegment3D_F64 src , @Nullable LineSegment3D_F32 dst ) {
 		if( dst == null ) {
 			dst = new LineSegment3D_F32();
 		}
@@ -372,7 +373,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static LineParametric2D_F64 convert(LineParametric2D_F32 src , LineParametric2D_F64 dst ) {
+	public static LineParametric2D_F64 convert(LineParametric2D_F32 src , @Nullable LineParametric2D_F64 dst ) {
 		if( dst == null ) {
 			dst = new LineParametric2D_F64();
 		}
@@ -385,7 +386,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static LineParametric3D_F32 convert(LineParametric3D_F64 src , LineParametric3D_F32 dst ) {
+	public static LineParametric3D_F32 convert(LineParametric3D_F64 src , @Nullable LineParametric3D_F32 dst ) {
 		if( dst == null ) {
 			dst = new LineParametric3D_F32();
 		}
@@ -400,7 +401,7 @@ public class ConvertFloatType {
 		return dst;
 	}
 
-	public static LineParametric3D_F64 convert(LineParametric3D_F32 src , LineParametric3D_F64 dst ) {
+	public static LineParametric3D_F64 convert(LineParametric3D_F32 src , @Nullable LineParametric3D_F64 dst ) {
 		if( dst == null ) {
 			dst = new LineParametric3D_F64();
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,7 @@ package georegression.struct.se;
 
 import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.point.Vector2D_F64;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * <p>
@@ -72,6 +73,7 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 		this.s = sinYaw;
 	}
 
+	@Override
 	public void set( Se2_F64 target ) {
 		this.T.set(target.T);
 		this.c = target.c;
@@ -134,7 +136,7 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	}
 
 	@Override
-	public Se2_F64 concat( Se2_F64 second, Se2_F64 result ) {
+	public Se2_F64 concat( Se2_F64 second, @Nullable Se2_F64 result ) {
 		if( result == null )
 			result = new Se2_F64();
 
@@ -147,7 +149,7 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	}
 
 	@Override
-	public Se2_F64 invert( Se2_F64 inverse ) {
+	public Se2_F64 invert( @Nullable Se2_F64 inverse ) {
 		if( inverse == null )
 			inverse = new Se2_F64();
 
@@ -173,6 +175,7 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 		return new Se2_F64( T.x, T.y, c, s );
 	}
 
+	@Override
 	public String toString() {
 		return "Se2( x = " + T.x + " y = " + T.y + " yaw = " + getYaw() + " )";
 	}

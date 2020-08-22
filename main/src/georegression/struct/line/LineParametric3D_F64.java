@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,6 +34,7 @@ import java.io.Serializable;
  *
  * @see georegression.geometry.UtilLine3D_F64
  */
+@SuppressWarnings("NullAway.Init")
 public class LineParametric3D_F64 implements Serializable {
 	/**
 	 * A point on the line
@@ -183,11 +184,18 @@ public class LineParametric3D_F64 implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		try {
-			LineParametric3D_F64 o = (LineParametric3D_F64) obj;
-			return p.equals(o.p) && slope.equals(o.slope);
-		} catch( RuntimeException e ) {
-			return super.equals(obj);
-		}
+		if(this == obj)
+			return true;
+
+		if(!(obj instanceof LineParametric3D_F64))
+			return false;
+
+		var o = (LineParametric3D_F64) obj;
+		return p.equals(o.p) && slope.equals(o.slope);
+	}
+
+	@Override
+	public int hashCode() {
+		return p.hashCode() + slope.hashCode();
 	}
 }

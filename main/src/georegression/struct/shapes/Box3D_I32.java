@@ -113,6 +113,7 @@ public class Box3D_I32 implements Serializable {
 		this.p0.setTo(p0);
 	}
 
+	@Override
 	public String toString() {
 		return getClass().getSimpleName()+"{ P0( "+ p0.x+" "+ p0.y+" "+ p0.z+" ) P1( "+ p1.x+" "+ p1.y+" "+ p1.z+" ) }";
 	}

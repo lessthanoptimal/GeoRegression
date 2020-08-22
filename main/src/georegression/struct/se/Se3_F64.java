@@ -89,6 +89,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 *
 	 * @param se The transform that is being copied.
 	 */
+	@Override
 	public void set( Se3_F64 se ) {
 		R.set( se.getR() );
 		T.set( se.getT() );
@@ -168,7 +169,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	@Override
-	public Se3_F64 concat( Se3_F64 second, Se3_F64 result ) {
+	public Se3_F64 concat( Se3_F64 second, @Nullable Se3_F64 result ) {
 		if( result == null )
 			result = new Se3_F64();
 
@@ -180,7 +181,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	@Override
-	public Se3_F64 invert( Se3_F64 inverse ) {
+	public Se3_F64 invert( @Nullable Se3_F64 inverse ) {
 
 		if( inverse == null )
 			inverse = new Se3_F64();
@@ -290,6 +291,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		return ret;
 	}
 
+	@Override
 	public String toString() {
 		String ret = "Se3_F64: T = "+T.toString()+"\n";
 		ret += R;

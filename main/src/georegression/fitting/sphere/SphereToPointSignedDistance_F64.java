@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,16 +34,17 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
+@SuppressWarnings("NullAway.Init")
 public class SphereToPointSignedDistance_F64 implements FunctionNtoM {
 
 	// model of the sphere
-	private Sphere3D_F64 sphere = new Sphere3D_F64();
+	private final Sphere3D_F64 sphere = new Sphere3D_F64();
 
 	// points whose distance from the sphere is being computed
 	private List<Point3D_F64> points;
 
 	// used to convert double[] into shape parameters
-	private CodecSphere3D_F64 codec = new CodecSphere3D_F64();
+	private final CodecSphere3D_F64 codec = new CodecSphere3D_F64();
 
 	public void setPoints(List<Point3D_F64> points) {
 		this.points = points;

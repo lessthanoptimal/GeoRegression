@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -124,11 +124,18 @@ public class Rectangle2D_I32 {
 
 	@Override
 	public boolean equals(Object obj) {
-		try {
-			Rectangle2D_I32 r = (Rectangle2D_I32)obj;
-			return x0==r.x0&&y0==r.y0&&x1==r.x1&&y1==r.y1;
-		} catch( RuntimeException e){
+		if(this == obj)
+			return true;
+
+		if(!(obj instanceof Rectangle2D_I32))
 			return false;
-		}
+
+		var o = (Rectangle2D_I32) obj;
+		return x0==o.x0&&y0==o.y0&&x1==o.x1&&y1==o.y1;
+	}
+
+	@Override
+	public int hashCode() {
+		return Integer.hashCode(x0+y0+x1+y1);
 	}
 }

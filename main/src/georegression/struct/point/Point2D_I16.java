@@ -111,6 +111,7 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 		return new Point2D_I16();
 	}
 
+	@Override
 	public Point2D_I16 copy() {
 		return new Point2D_I16( x, y );
 	}
@@ -121,11 +122,15 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Point2D_I16 that = (Point2D_I16) o;
-		return x == that.x && y == that.y;
+	public boolean equals(Object obj) {
+		if(this == obj)
+			return true;
+
+		if(!(obj instanceof Point2D_I16))
+			return false;
+
+		var o = (Point2D_I16) obj;
+		return x == o.x && y == o.y;
 	}
 
 	@Override

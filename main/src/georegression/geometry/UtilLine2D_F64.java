@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,6 +25,7 @@ import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LinePolar2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Various functions related to lines
@@ -76,7 +77,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) line in parametric notation.  If null a new instance will be created.
 	 * @return Converted line in parametric notation
 	 */
-	public static LineParametric2D_F64 convert( LinePolar2D_F64 src , LineParametric2D_F64 ret )
+	public static LineParametric2D_F64 convert( LinePolar2D_F64 src , @Nullable LineParametric2D_F64 ret )
 	{
 		if( ret == null )
 			ret = new LineParametric2D_F64();
@@ -97,7 +98,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) line in general notation.  If null a new instance will be created.
 	 * @return Converted line in general notation
 	 */
-	public static LineGeneral2D_F64 convert( LinePolar2D_F64 src , LineGeneral2D_F64 ret )
+	public static LineGeneral2D_F64 convert( LinePolar2D_F64 src , @Nullable LineGeneral2D_F64 ret )
 	{
 		if( ret == null )
 			ret = new LineGeneral2D_F64();
@@ -119,7 +120,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) line in polar notation.  If null a new instance will be created.
 	 * @return Converted line in polar notation
 	 */
-	public static LinePolar2D_F64 convert( LineGeneral2D_F64 src , LinePolar2D_F64 ret )
+	public static LinePolar2D_F64 convert( LineGeneral2D_F64 src , @Nullable LinePolar2D_F64 ret )
 	{
 		if( ret == null )
 			ret = new LinePolar2D_F64();
@@ -142,7 +143,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) line in parametric notation.  If null a new instance will be created.
 	 * @return Converted line in parametric notation
 	 */
-	public static LineParametric2D_F64 convert( LineSegment2D_F64 src , LineParametric2D_F64 ret )
+	public static LineParametric2D_F64 convert( LineSegment2D_F64 src , @Nullable LineParametric2D_F64 ret )
 	{
 		if( ret == null )
 			ret = new LineParametric2D_F64();
@@ -160,7 +161,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) line in general notation. If null a new instance will be created.
 	 * @return Line in general notation
 	 */
-	public static LineGeneral2D_F64 convert( LineSegment2D_F64 src , LineGeneral2D_F64 ret )
+	public static LineGeneral2D_F64 convert( LineSegment2D_F64 src , @Nullable LineGeneral2D_F64 ret )
 	{
 		return convert(src.a,src.b,ret);
 	}
@@ -173,7 +174,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) line in general notation. If null a new instance will be created.
 	 * @return Line in general notation
 	 */
-	public static LineGeneral2D_F64 convert( Point2D_F64 a , Point2D_F64 b , LineGeneral2D_F64 ret )
+	public static LineGeneral2D_F64 convert( Point2D_F64 a , Point2D_F64 b , @Nullable LineGeneral2D_F64 ret )
 	{
 		if( ret == null )
 			ret = new LineGeneral2D_F64();
@@ -194,7 +195,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) Storage for new line.. If null a new instance will be created.
 	 * @return The resulting line
 	 */
-	public static LineParametric2D_F64 convert( Point2D_F64 a , Point2D_F64 b , LineParametric2D_F64 ret )
+	public static LineParametric2D_F64 convert( Point2D_F64 a , Point2D_F64 b , @Nullable LineParametric2D_F64 ret )
 	{
 		if( ret == null )
 			ret = new LineParametric2D_F64();
@@ -214,7 +215,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) Storage for new line.. If null a new instance will be created.
 	 * @return The resulting line
 	 */
-	public static LineParametric2D_F64 convert( Point2D_F64 a , double angle , LineParametric2D_F64 ret )
+	public static LineParametric2D_F64 convert( Point2D_F64 a , double angle , @Nullable LineParametric2D_F64 ret )
 	{
 		if( ret == null )
 			ret = new LineParametric2D_F64();
@@ -233,7 +234,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) line in polar notation. If null a new instance will be created.
 	 * @return Line in polar notation
 	 */
-	public static LinePolar2D_F64 convert( LineParametric2D_F64 src , LinePolar2D_F64 ret )
+	public static LinePolar2D_F64 convert( LineParametric2D_F64 src , @Nullable LinePolar2D_F64 ret )
 	{
 		if( ret == null )
 			ret = new LinePolar2D_F64();
@@ -257,7 +258,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) line in general notation.  If null a new instance will be created.
 	 * @return Converted line in general notation
 	 */
-	public static LineGeneral2D_F64 convert( LineParametric2D_F64 src , LineGeneral2D_F64 ret ) {
+	public static LineGeneral2D_F64 convert( LineParametric2D_F64 src , @Nullable LineGeneral2D_F64 ret ) {
 		if( ret == null ) {
 			ret = new LineGeneral2D_F64();
 		}
@@ -276,7 +277,7 @@ public class UtilLine2D_F64 {
 	 * @param ret (output) line in parametric notation.  If null a new instance will be created.
 	 * @return Converted line in parametric notation
 	 */
-	public static LineParametric2D_F64 convert( LineGeneral2D_F64 src ,  LineParametric2D_F64 ret ) {
+	public static LineParametric2D_F64 convert( LineGeneral2D_F64 src ,  @Nullable LineParametric2D_F64 ret ) {
 		if( ret == null ) {
 			ret = new LineParametric2D_F64();
 		}

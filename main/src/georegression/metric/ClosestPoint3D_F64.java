@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,6 +24,7 @@ import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -41,9 +42,9 @@ public class ClosestPoint3D_F64 {
 	 * @param ret (Optional) Storage for the closest point. If null a new point is declared. Modified.
 	 * @return Closest point between two lines.
 	 */
-	public static Point3D_F64 closestPoint(LineParametric3D_F64 l0,
-										   LineParametric3D_F64 l1,
-										   Point3D_F64 ret) {
+	public static @Nullable Point3D_F64 closestPoint(LineParametric3D_F64 l0,
+													 LineParametric3D_F64 l1,
+													 @Nullable Point3D_F64 ret) {
 		if( ret == null ) {
 			ret = new Point3D_F64();
 		}
@@ -91,7 +92,7 @@ public class ClosestPoint3D_F64 {
 	 */
 	public static boolean closestPoints(LineParametric3D_F64 l0,
 										LineParametric3D_F64 l1,
-										double param[])
+										double[] param)
 	{
 		double dX = l0.p.x - l1.p.x;
 		double dY = l0.p.y - l1.p.y;
@@ -125,7 +126,8 @@ public class ClosestPoint3D_F64 {
 	 * @param pt   The point whose closest point is being looked for.  Not modified.
 	 * @param ret  Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
 	 */
-	public static Point3D_F64 closestPoint(LineParametric3D_F64 line, Point3D_F64 pt, Point3D_F64 ret)
+	public static Point3D_F64 closestPoint(LineParametric3D_F64 line, Point3D_F64 pt,
+										   @Nullable Point3D_F64 ret)
 	{
 		if( ret == null ) {
 			ret = new Point3D_F64();
@@ -171,7 +173,8 @@ public class ClosestPoint3D_F64 {
 	 * @param found (Optional) Storage for the closest point.  If null a new point is declared internally.
 	 * @return The closest point
 	 */
-	public static Point3D_F64 closestPoint( PlaneNormal3D_F64 plane , Point3D_F64 point , Point3D_F64 found ) {
+	public static Point3D_F64 closestPoint( PlaneNormal3D_F64 plane , Point3D_F64 point ,
+											@Nullable Point3D_F64 found ) {
 		if( found == null )
 			found = new Point3D_F64();
 
@@ -199,7 +202,9 @@ public class ClosestPoint3D_F64 {
 	 * @param found (Optional) Storage for the closest point.  Can be same as instance as 'pt'. If null a new point is declared internally.
 	 * @return The closest point
 	 */
-	public static Point3D_F64 closestPoint( PlaneGeneral3D_F64 plane , Point3D_F64 point , Point3D_F64 found ) {
+	public static Point3D_F64 closestPoint( PlaneGeneral3D_F64 plane , Point3D_F64 point ,
+											@Nullable Point3D_F64 found )
+	{
 		if( found == null )
 			found = new Point3D_F64();
 
@@ -221,7 +226,8 @@ public class ClosestPoint3D_F64 {
 	 * @param found (Optional) Storage for the closest point.  Can be same as instance as 'pt'. If null a new point is declared internally.
 	 * @return The closest point
 	 */
-	public static Point3D_F64 closestPointOrigin( PlaneGeneral3D_F64 plane , Point3D_F64 found ) {
+	public static Point3D_F64 closestPointOrigin( PlaneGeneral3D_F64 plane ,
+															@Nullable Point3D_F64 found ) {
 		if( found == null )
 			found = new Point3D_F64();
 
@@ -242,7 +248,8 @@ public class ClosestPoint3D_F64 {
 	 * @param ret  (Optional) Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
 	 * @return The closest point
 	 */
-	public static Point3D_F64 closestPoint(LineSegment3D_F64 line, Point3D_F64 pt, Point3D_F64 ret) {
+	public static Point3D_F64 closestPoint(LineSegment3D_F64 line, Point3D_F64 pt,
+										   @Nullable Point3D_F64 ret) {
 		if( ret == null ) {
 			ret = new Point3D_F64();
 		}
@@ -281,7 +288,8 @@ public class ClosestPoint3D_F64 {
 	 * @param ret (Optional) Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
 	 * @return The closest point
 	 */
-	public static Point3D_F64 closestPoint( LineSegment3D_F64 l0 , LineSegment3D_F64 l1 , Point3D_F64 ret ) {
+	public static @Nullable Point3D_F64 closestPoint(LineSegment3D_F64 l0 , LineSegment3D_F64 l1 ,
+													 @Nullable Point3D_F64 ret ) {
 		if( ret == null ) {
 			ret = new Point3D_F64();
 		}
@@ -351,7 +359,7 @@ public class ClosestPoint3D_F64 {
 	 * @return The closest point
 	 */
 	public static Point3D_F64 closestPoint( Point3D_F64 vertexA, Point3D_F64 vertexB, Point3D_F64 vertexC,
-											Point3D_F64 point , Point3D_F64 ret) {
+											Point3D_F64 point , @Nullable Point3D_F64 ret) {
 
 		if( ret == null ) {
 			ret = new Point3D_F64();

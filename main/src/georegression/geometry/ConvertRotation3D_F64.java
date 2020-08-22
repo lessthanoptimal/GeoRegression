@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,6 +26,7 @@ import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -42,7 +43,7 @@ public class ConvertRotation3D_F64 {
 	 * @param R where the results will be stored.  If null a new matrix is declared internally.
 	 * @return rotation matrix.
 	 */
-	public static DMatrixRMaj rodriguesToMatrix( Rodrigues_F64 rodrigues, DMatrixRMaj R ) {
+	public static DMatrixRMaj rodriguesToMatrix( Rodrigues_F64 rodrigues, @Nullable DMatrixRMaj R ) {
 		return rodriguesToMatrix(
 				rodrigues.unitAxisRotation.x,
 				rodrigues.unitAxisRotation.y,
@@ -62,7 +63,7 @@ public class ConvertRotation3D_F64 {
 	 * @return Rotation matrix.
 	 */
 	public static DMatrixRMaj rodriguesToMatrix( double axisX , double axisY , double axisZ , double theta,
-													DMatrixRMaj R ) {
+												 @Nullable DMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
 		//noinspection UnnecessaryLocalVariable
@@ -93,7 +94,7 @@ public class ConvertRotation3D_F64 {
 	 * @param euler (Output) Optional storage for Euler rotation
 	 * @return The Euler rotation.
 	 */
-	public static double[] rodriguesToEuler(Rodrigues_F64 rodrigues , EulerType type , double []euler )
+	public static double[] rodriguesToEuler(Rodrigues_F64 rodrigues , EulerType type , @Nullable double []euler )
 	{
 		DMatrixRMaj R = rodriguesToMatrix(rodrigues,null);
 		return matrixToEuler(R,type,euler);
@@ -109,7 +110,7 @@ public class ConvertRotation3D_F64 {
 	 * @return unit quaternion coordinate.
 	 */
 	public static Quaternion_F64 rodriguesToQuaternion( Rodrigues_F64 rodrigues,
-														Quaternion_F64 quat ) {
+														@Nullable Quaternion_F64 quat ) {
 		if( quat == null )
 			quat = new Quaternion_F64();
 
@@ -130,7 +131,7 @@ public class ConvertRotation3D_F64 {
 	 * @return rodrigues
 	 */
 	public static Rodrigues_F64 quaternionToRodrigues( Quaternion_F64 quat,
-													   Rodrigues_F64 rodrigues ) {
+													   @Nullable Rodrigues_F64 rodrigues ) {
 		if( rodrigues == null )
 			rodrigues = new Rodrigues_F64();
 
@@ -150,7 +151,7 @@ public class ConvertRotation3D_F64 {
 	 * @param euler (Output) Optional storage for Euler rotation
 	 * @return The Euler rotation.
 	 */
-	public static double[] quaternionToEuler(Quaternion_F64 q , EulerType type , double []euler )
+	public static double[] quaternionToEuler(Quaternion_F64 q , EulerType type , @Nullable double []euler )
 	{
 		DMatrixRMaj R = quaternionToMatrix(q,null);
 		return matrixToEuler(R,type,euler);
@@ -164,7 +165,7 @@ public class ConvertRotation3D_F64 {
 	 * @param euler (Output) Optional storage for Euler rotation
 	 * @return The Euler rotation.
 	 */
-	public static double[] matrixToEuler(DMatrixRMaj R , EulerType type , double[] euler ) {
+	public static double[] matrixToEuler(DMatrixRMaj R , EulerType type , @Nullable double[] euler ) {
 		if( euler == null )
 			euler = new double[3];
 
@@ -293,7 +294,7 @@ public class ConvertRotation3D_F64 {
 	 * @param quat (Output) Optional storage for quaternion.  If null a new class will be used.
 	 * @return unit quaternion representation of the rotation matrix.
 	 */
-	public static Quaternion_F64 matrixToQuaternion( DMatrixRMaj R, Quaternion_F64 quat ) {
+	public static Quaternion_F64 matrixToQuaternion( DMatrixRMaj R, @Nullable Quaternion_F64 quat ) {
 
 		if( quat == null )
 			quat = new Quaternion_F64();
@@ -351,7 +352,7 @@ public class ConvertRotation3D_F64 {
 	 * @param rodrigues Storage used for solution.  If null a new instance is declared.
 	 * @return The found axis and rotation angle.
 	 */
-	public static Rodrigues_F64 matrixToRodrigues( DMatrixRMaj R, Rodrigues_F64 rodrigues ) {
+	public static Rodrigues_F64 matrixToRodrigues( DMatrixRMaj R, @Nullable Rodrigues_F64 rodrigues ) {
 		if( rodrigues == null ) {
 			rodrigues = new Rodrigues_F64();
 		}
@@ -423,7 +424,7 @@ public class ConvertRotation3D_F64 {
 	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	public static DMatrixRMaj rotX( double ang, DMatrixRMaj R ) {
+	public static DMatrixRMaj rotX( double ang, @Nullable DMatrixRMaj R ) {
 		if( R == null )
 			R = new DMatrixRMaj( 3, 3 );
 
@@ -456,7 +457,7 @@ public class ConvertRotation3D_F64 {
 	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	public static DMatrixRMaj rotY( double ang, DMatrixRMaj R ) {
+	public static DMatrixRMaj rotY( double ang, @Nullable DMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
 		setRotY( ang, R );
@@ -488,7 +489,7 @@ public class ConvertRotation3D_F64 {
 	 * @param R (Output) Optional storage for rotation matrix.  Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	public static DMatrixRMaj rotZ( double ang, DMatrixRMaj R ) {
+	public static DMatrixRMaj rotZ( double ang, @Nullable DMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
 		setRotZ( ang, R );
@@ -523,8 +524,8 @@ public class ConvertRotation3D_F64 {
 	 * @return Rotation matrix
 	 */
 	public static DMatrixRMaj eulerToMatrix( EulerType type ,
-												double rotA, double rotB, double rotC,
-												DMatrixRMaj R ) {
+											 double rotA, double rotB, double rotC,
+											 @Nullable DMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
 		DMatrixRMaj R_a = rotationAboutAxis( type.getAxisA(), rotA, null );
@@ -542,7 +543,7 @@ public class ConvertRotation3D_F64 {
 	@SuppressWarnings("DuplicateExpressions")
 	public static Quaternion_F64 eulerToQuaternion(EulerType type ,
 												   double rotA, double rotB, double rotC,
-												   Quaternion_F64 q ) {
+												   @Nullable Quaternion_F64 q ) {
 		if( q == null )
 			q = new Quaternion_F64();
 
@@ -653,7 +654,7 @@ public class ConvertRotation3D_F64 {
 	 * @param angle The angle it is rotated by in radians.
 	 * @return The 3 by 3 rotation matrix.
 	 */
-	private static DMatrixRMaj rotationAboutAxis(int axis, double angle, DMatrixRMaj R ) {
+	private static DMatrixRMaj rotationAboutAxis(int axis, double angle, @Nullable DMatrixRMaj R ) {
 		switch( axis ) {
 			case 0:
 				return ConvertRotation3D_F64.rotX( angle, R );
@@ -692,7 +693,7 @@ public class ConvertRotation3D_F64 {
 	 * @param R (Optional) Storage for the approximated rotation matrix.  Modified.
 	 * @return Rotation matrix
 	 */
-	public static DMatrixRMaj approximateRotationMatrix( DMatrixRMaj orig, DMatrixRMaj R ) {
+	public static DMatrixRMaj approximateRotationMatrix( DMatrixRMaj orig, @Nullable DMatrixRMaj R ) {
 		R = checkDeclare3x3( R );
 
 		SingularValueDecomposition<DMatrixRMaj> svd =
@@ -724,12 +725,13 @@ public class ConvertRotation3D_F64 {
 	 * @param R Storage for rotation matrix.  If null a new matrix is created. Modified.
 	 * @return Rotation matrix
 	 */
-	public static DMatrixRMaj quaternionToMatrix( Quaternion_F64 quat, DMatrixRMaj R ) {
+	public static DMatrixRMaj quaternionToMatrix( Quaternion_F64 quat, @Nullable DMatrixRMaj R ) {
 		return quaternionToMatrix(quat.w,quat.x,quat.y,quat.z,R);
 	}
 
 	@SuppressWarnings("UnnecessaryLocalVariable")
-	public static DMatrixRMaj quaternionToMatrix(double w, double x , double y , double z , DMatrixRMaj R )
+	public static DMatrixRMaj quaternionToMatrix(double w, double x , double y , double z ,
+												 @Nullable DMatrixRMaj R )
 	{
 		R = checkDeclare3x3( R );
 
@@ -753,13 +755,11 @@ public class ConvertRotation3D_F64 {
 		return R;
 	}
 
-	private static DMatrixRMaj checkDeclare3x3( DMatrixRMaj R ) {
+	private static DMatrixRMaj checkDeclare3x3( @Nullable DMatrixRMaj R ) {
 		if( R == null ) {
-			R = new DMatrixRMaj( 3, 3 );
-		} else {
-			if( R.numRows != 3 || R.numCols != 3 )
-				throw new IllegalArgumentException( "Expected 3 by 3 matrix." );
+			return new DMatrixRMaj( 3, 3 );
 		}
+		R.reshape(3,3);
 		return R;
 	}
 }

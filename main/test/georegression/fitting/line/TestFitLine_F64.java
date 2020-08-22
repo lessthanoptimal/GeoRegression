@@ -27,8 +27,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -83,6 +82,7 @@ public class TestFitLine_F64 {
 
 		LinePolar2D_F64 found = FitLine_F64.polar(pts,weights,null);
 
+		assertNotNull(found);
 		assertEquals(r,found.distance, GrlConstants.TEST_F64);
 		assertTrue(UtilAngle.dist(theta, found.angle) <= GrlConstants.TEST_F64);
 	}

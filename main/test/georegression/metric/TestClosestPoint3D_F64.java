@@ -27,10 +27,10 @@ import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -53,7 +53,7 @@ public class TestClosestPoint3D_F64 {
 		LineParametric3D_F64 lineB = new LineParametric3D_F64( c, vc );
 
 		Point3D_F64 foundB = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
-
+		assertNotNull(foundB);
 		assertTrue( b.isIdentical( foundB, GrlConstants.TEST_F64) );
 		checkIsClosest(foundB,lineA,lineB);
 
@@ -294,7 +294,8 @@ public class TestClosestPoint3D_F64 {
 		assertTrue( dist <= dist1 );
 	}
 
-	private void checkIsClosest( Point3D_F64 pt , LineSegment3D_F64 lineA , LineSegment3D_F64 lineB ) {
+	private void checkIsClosest(@Nullable Point3D_F64 pt , LineSegment3D_F64 lineA , LineSegment3D_F64 lineB ) {
+		assertNotNull(pt);
 		double found = Distance3D_F64.distance(lineA,pt)+Distance3D_F64.distance(lineB,pt);
 
 		Point3D_F64 work = pt.copy();
@@ -311,7 +312,8 @@ public class TestClosestPoint3D_F64 {
 		}
 	}
 
-	private void checkIsClosest( Point3D_F64 pt , LineParametric3D_F64 lineA , LineParametric3D_F64 lineB ) {
+	private void checkIsClosest( @Nullable Point3D_F64 pt , LineParametric3D_F64 lineA , LineParametric3D_F64 lineB ) {
+		assertNotNull(pt);
 		double found = Distance3D_F64.distance(lineA,pt)+Distance3D_F64.distance(lineB,pt);
 
 		Point3D_F64 work = pt.copy();

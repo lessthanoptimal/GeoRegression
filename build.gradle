@@ -80,6 +80,7 @@ subprojects {
 
         compileOnly 'org.jetbrains:annotations:20.0.0' // @Nullable
         compileOnly 'javax.annotation:jsr250-api:1.0'  // @Generated
+        testCompileOnly project.sourceSets.main.compileClasspath
 
         testImplementation( 'org.junit.jupiter:junit-jupiter-api:5.4.0' )
         testRuntimeOnly( 'org.junit.jupiter:junit-jupiter-engine:5.4.0' )
@@ -101,10 +102,6 @@ subprojects {
     }
 
     tasks.withType(JavaCompile).configureEach {
-        options.errorprone.enabled = false
-        if( name.startsWith("compileTest") )
-            return
-
         options.errorprone.enabled = true
         options.errorprone.disableWarningsInGeneratedCode = true
         options.errorprone.disable("TypeParameterUnusedInFormals","StringSplitter","InconsistentCapitalization",
@@ -115,10 +112,14 @@ subprojects {
         options.errorprone.error("MissingOverride","MissingCasesInEnumSwitch","BadInstanceof",
                 "PublicConstructorForAbstractClass","EmptyCatch","NarrowingCompoundAssignment","JdkObsolete")
 
+        if( name.startsWith("compileTest") ) {
+            options.errorprone.disable("ReferenceEquality","IntLongMath","ClassCanBeStatic")
+        }
+
         options.errorprone {
             check("NullAway", CheckSeverity.ERROR)
             option("NullAway:TreatGeneratedAsUnannotated", true)
-            option("NullAway:AnnotatedPackages", "org.ejml")
+            option("NullAway:AnnotatedPackages", "georegression")
         }
     }
 
@@ -132,7 +133,7 @@ subprojects {
                      'http://ejml.org/javadoc/',
                      'http://ddogleg.org/javadoc/']
             failOnError = false
-            enabled = false // disable to stop it from spamming stdout
+            enabled = !project.version.contains("SNAPSHOT") // disable to stop it from spamming stdout
         }
     }
 

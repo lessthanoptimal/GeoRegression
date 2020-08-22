@@ -121,7 +121,7 @@ public class TestConvertRotation3D_F64 {
 		DMatrixRMaj expected = ConvertRotation3D_F64.eulerToMatrix(type,rotA,rotB,rotC,null);
 
 		Quaternion_F64 q = ConvertRotation3D_F64.matrixToQuaternion(expected,null);
-		double euler[] = ConvertRotation3D_F64.quaternionToEuler(q,type,null);
+		double[] euler = ConvertRotation3D_F64.quaternionToEuler(q,type,null);
 
 		DMatrixRMaj found = ConvertRotation3D_F64.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 
@@ -328,7 +328,7 @@ public class TestConvertRotation3D_F64 {
 	{
 		DMatrixRMaj expected = ConvertRotation3D_F64.eulerToMatrix(type,rotA,rotB,rotC,null);
 
-		double euler[] = ConvertRotation3D_F64.matrixToEuler(expected,type,(double[])null);
+		double[] euler = ConvertRotation3D_F64.matrixToEuler(expected,type,(double[])null);
 
 		DMatrixRMaj found = ConvertRotation3D_F64.eulerToMatrix(type,euler[0],euler[1],euler[2],null);
 

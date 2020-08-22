@@ -34,6 +34,7 @@ import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.ejml.UtilEjml;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -175,11 +176,12 @@ public class TestIntersection2D_F64 {
 		checkIntersection(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, 1, 0, 3), null);
 	}
 
-	public void checkIntersection( LineSegment2D_F64 a, LineSegment2D_F64 b, Point2D_F64 expected ) {
+	public void checkIntersection( LineSegment2D_F64 a, LineSegment2D_F64 b, @Nullable Point2D_F64 expected ) {
 		Point2D_F64 found = Intersection2D_F64.intersection( a, b, null );
 		if( found == null )
-			assertTrue( expected == null );
+			assertNull(expected);
 		else {
+			assertNotNull(expected);
 			assertEquals( found.getX(), expected.getX(), GrlConstants.TEST_F64);
 			assertEquals( found.getY(), expected.getY(), GrlConstants.TEST_F64);
 		}
@@ -257,12 +259,13 @@ public class TestIntersection2D_F64 {
 		LineParametric2D_F64 b = new LineParametric2D_F64(-2,-4,0,1);
 
 		Point2D_F64 found = Intersection2D_F64.intersection(a,b,null);
+		assertNotNull(found);
 		assertEquals( -2, found.x, GrlConstants.TEST_F64);
 		assertEquals(3, found.y, GrlConstants.TEST_F64);
 
 		LineParametric2D_F64 c = new LineParametric2D_F64(-8,2,0,1);
 
-		assertTrue(null == Intersection2D_F64.intersection(b,c,null));
+		assertNull(Intersection2D_F64.intersection(b, c, null));
 	}
 
 	@Test
@@ -281,6 +284,7 @@ public class TestIntersection2D_F64 {
 
 		b.slope.set(0,1);
 		Point2D_F64 found = Intersection2D_F64.intersection(a,b,true,null);
+		assertNotNull(found);
 		assertEquals(0,found.distance(-2,3), UtilEjml.TEST_F64);
 	}
 
@@ -314,8 +318,8 @@ public class TestIntersection2D_F64 {
 		Point2D_F64 expected = Intersection2D_F64.intersection(a,b,null);
 		Point2D_F64 found = Intersection2D_F64.intersection(a0,a1,b0,b1,null);
 
-		assertTrue(expected!=null);
-		assertTrue(found!=null);
+		assertNotNull(expected);
+		assertNotNull(found);
 		assertEquals(expected.x, found.x, GrlConstants.TEST_F64);
 		assertEquals(expected.y, found.y, GrlConstants.TEST_F64);
 
@@ -347,13 +351,14 @@ public class TestIntersection2D_F64 {
 		LineGeneral2D_F64 b = new LineGeneral2D_F64(2,-1,0.5);
 
 		Point2D_F64 found = Intersection2D_F64.intersection(a,b,(Point2D_F64)null);
+		assertNotNull(found);
 		assertEquals(0,a.A*found.x+a.B*found.y+a.C, GrlConstants.TEST_F64);
 
 		// give it two parallel lines
 		a = new LineGeneral2D_F64(1,2,3);
 		b = new LineGeneral2D_F64(1,2,0.5);
 
-		assertTrue(null == Intersection2D_F64.intersection(a, b, found));
+		assertNull(Intersection2D_F64.intersection(a, b, found));
 	}
 
 	@Test
@@ -375,14 +380,14 @@ public class TestIntersection2D_F64 {
 		// edge cases
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(0,0,0,0),false);
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(100,120,100,120),false);
-		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(-10, 0, 0, 120), false);
+		check( new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(-10, 0, 0, 120), false);
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(100,0,105,120),false);
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(0,-10,100,0),false);
-		check(new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(0, 120, 100, 125), false);
+		check( new Rectangle2D_F64(0, 0, 100, 120), new Rectangle2D_F64(0, 120, 100, 125), false);
 	}
 
 	private void check( Rectangle2D_F64 a , Rectangle2D_F64 b , boolean expected ) {
-		assertTrue(expected==Intersection2D_F64.intersects(a,b));
+		assertEquals(Intersection2D_F64.intersects(a, b), expected);
 	}
 
 	@Test
@@ -416,9 +421,9 @@ public class TestIntersection2D_F64 {
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(0,120,100,125),null);
 	}
 
-	private void check( Rectangle2D_F64 a , Rectangle2D_F64 b , Rectangle2D_F64 expected ) {
+	private void check( Rectangle2D_F64 a , Rectangle2D_F64 b , @Nullable Rectangle2D_F64 expected ) {
 		if( expected == null ) {
-			assertFalse(Intersection2D_F64.intersection(a, b, null));
+			assertFalse(Intersection2D_F64.intersection(a, b, new Rectangle2D_F64()));
 			return;
 		}
 

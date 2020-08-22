@@ -34,7 +34,7 @@ public abstract class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 	private T seed;
 	int dimension;
 
-	public GenericGeoTupleTests_F64( T seed , int dimension ) {
+	protected GenericGeoTupleTests_F64( T seed , int dimension ) {
 		this.seed = seed;
 		this.dimension = dimension;
 	}

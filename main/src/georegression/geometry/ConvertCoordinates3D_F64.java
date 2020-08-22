@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.point.Vector3D_F64;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Contains code for converting between different 3D coordinate systems
@@ -36,7 +37,7 @@ public class ConvertCoordinates3D_F64 {
 	 * @param vector (output) Storage for unit vector.  If null is passed in a new instance will be created.
 	 * @return Unit vector
 	 */
-	public static <T extends GeoTuple3D_F64<T>> T latlonToUnitVector(double lat , double lon , T vector ) {
+	public static <T extends GeoTuple3D_F64<T>> T latlonToUnitVector(double lat , double lon , @Nullable T vector ) {
 		if( vector == null )
 			vector = (T)new Vector3D_F64();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -48,10 +48,11 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
+@SuppressWarnings("NullAway.Init")
 public class RefineEllipseEuclideanLeastSquares_F64 {
 
 	// optimization routine
-	protected UnconstrainedLeastSquares optimizer;
+	protected UnconstrainedLeastSquares< DMatrixRMaj > optimizer;
 	// convergence parameters
 	double ftol= GrlConstants.DCONV_TOL_B,gtol=GrlConstants.DCONV_TOL_B;
 	int maxIterations=500;
@@ -71,7 +72,7 @@ public class RefineEllipseEuclideanLeastSquares_F64 {
 	// error using the initial parameters
 	/**/double initialError;
 
-	public RefineEllipseEuclideanLeastSquares_F64(UnconstrainedLeastSquares optimizer ) {
+	public RefineEllipseEuclideanLeastSquares_F64(UnconstrainedLeastSquares< DMatrixRMaj > optimizer ) {
 		this.optimizer = optimizer;
 	}
 
@@ -119,7 +120,7 @@ public class RefineEllipseEuclideanLeastSquares_F64 {
 		}
 
 		// start optimization
-		optimizer.setFunction(new Error(),null);
+		optimizer.setFunction(new EllipseError(),null);
 		optimizer.initialize(initialParam,ftol,gtol);
 		initialError = optimizer.getFunctionValue();
 
@@ -147,18 +148,15 @@ public class RefineEllipseEuclideanLeastSquares_F64 {
 		return (double)optimizer.getFunctionValue();
 	}
 
-	protected Error createError() {
-		return new Error();
+	protected EllipseError createError() {
+		return new EllipseError();
 	}
 
 	protected Jacobian createJacobian() {
 		return new Jacobian();
 	}
 
-	/**
-	 *
-	 */
-	public class Error implements FunctionNtoM {
+	public class EllipseError implements FunctionNtoM {
 
 		@Override
 		public int getNumOfInputsN() {

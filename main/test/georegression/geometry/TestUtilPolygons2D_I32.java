@@ -64,30 +64,30 @@ public class TestUtilPolygons2D_I32 {
 		orig.addAll(poly.vertexes.toList());
 
 		UtilPolygons2D_I32.flip(poly);
-		assertTrue(orig.get(0)==poly.get(0));
-		assertTrue(orig.get(1)==poly.get(2));
-		assertTrue(orig.get(2)==poly.get(1));
+		assertSame(orig.get(0), poly.get(0));
+		assertSame(orig.get(1), poly.get(2));
+		assertSame(orig.get(2), poly.get(1));
 
 		poly = new Polygon2D_I32(4);
 		orig.clear();
 		orig.addAll(poly.vertexes.toList());
 
 		UtilPolygons2D_I32.flip(poly);
-		assertTrue(orig.get(0)==poly.get(0));
-		assertTrue(orig.get(1)==poly.get(3));
-		assertTrue(orig.get(2)==poly.get(2));
-		assertTrue(orig.get(3)==poly.get(1));
+		assertSame(orig.get(0), poly.get(0));
+		assertSame(orig.get(1), poly.get(3));
+		assertSame(orig.get(2), poly.get(2));
+		assertSame(orig.get(3), poly.get(1));
 
 		poly = new Polygon2D_I32(5);
 		orig.clear();
 		orig.addAll(poly.vertexes.toList());
 
 		UtilPolygons2D_I32.flip(poly);
-		assertTrue(orig.get(0)==poly.get(0));
-		assertTrue(orig.get(1)==poly.get(4));
-		assertTrue(orig.get(2)==poly.get(3));
-		assertTrue(orig.get(3)==poly.get(2));
-		assertTrue(orig.get(4)==poly.get(1));
+		assertSame(orig.get(0), poly.get(0));
+		assertSame(orig.get(1), poly.get(4));
+		assertSame(orig.get(2), poly.get(3));
+		assertSame(orig.get(3), poly.get(2));
+		assertSame(orig.get(4), poly.get(1));
 	}
 
 	@Test

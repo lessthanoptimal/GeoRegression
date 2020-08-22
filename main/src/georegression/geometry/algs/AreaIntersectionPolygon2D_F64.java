@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,6 +34,7 @@ import georegression.struct.shapes.Rectangle2D_F64;
  *
  * @author Peter Abeles
  */
+@SuppressWarnings("NullAway.Init")
 public class AreaIntersectionPolygon2D_F64 {
 	static final double gamut = (double)500000000.0;
 	static final double mid = gamut / (double)2.0;

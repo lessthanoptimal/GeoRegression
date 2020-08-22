@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,6 +22,7 @@ import georegression.struct.InvertibleTransform;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.se.Se2_F64;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -33,7 +34,7 @@ import georegression.struct.se.Se2_F64;
 public class ConvertTransform_F64 {
 
 	public static <A extends InvertibleTransform, B extends InvertibleTransform>
-	B convert( A src , B dst ) 
+	B convert( @Nullable A src , @Nullable B dst )
 	{
 		if( src == null || dst == null )
 			throw new IllegalArgumentException("Both inputs must not be null");
@@ -64,7 +65,7 @@ public class ConvertTransform_F64 {
 		throw new IllegalArgumentException("The specified transform is not supported");
 	}
 	
-	public static Affine2D_F64 convert( Se2_F64 src , Affine2D_F64 dst ) {
+	public static Affine2D_F64 convert( Se2_F64 src , @Nullable Affine2D_F64 dst ) {
 		if( dst == null )
 			dst = new Affine2D_F64();
 
@@ -78,7 +79,7 @@ public class ConvertTransform_F64 {
 		return dst;
 	}
 
-	public static Homography2D_F64 convert( Se2_F64 src , Homography2D_F64 dst ) {
+	public static Homography2D_F64 convert( Se2_F64 src , @Nullable Homography2D_F64 dst ) {
 		if( dst == null )
 			dst = new Homography2D_F64();
 
@@ -95,7 +96,7 @@ public class ConvertTransform_F64 {
 		return dst;
 	}
 
-	public static Homography2D_F64 convert( Affine2D_F64 src , Homography2D_F64 dst ) {
+	public static Homography2D_F64 convert( Affine2D_F64 src , @Nullable Homography2D_F64 dst ) {
 		if( dst == null )
 			dst = new Homography2D_F64();
 

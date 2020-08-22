@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -28,6 +28,7 @@ import georegression.struct.point.Point2D_F64;
  *
  * @author Peter Abeles
  */
+@SuppressWarnings("NullAway.Init")
 public class ClosestPointEllipseAngle_F64 {
 
 	// tolerance to test for solution.  Must be this close to zero

@@ -32,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * @author Peter Abeles
  */
+@SuppressWarnings("NullAway.Init")
 public class TestFitPlane3D_F64 {
 
 	Random rand = new Random(234);

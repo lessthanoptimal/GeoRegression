@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -73,6 +73,7 @@ public class LinePolar2D_F64 implements Serializable{
 		this.angle = angle;
 	}
 
+	@Override
 	public String toString() {
 		return getClass().getSimpleName()+"{ d = "+distance+" angle = "+angle+" }";
 	}

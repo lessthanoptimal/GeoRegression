@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -140,11 +140,18 @@ public class LineGeneral2D_F64 implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		try {
-			LineGeneral2D_F64 o = (LineGeneral2D_F64) obj;
-			return A==o.A && B ==o.B && C==o.C;
-		} catch( RuntimeException e ) {
-			return super.equals(obj);
-		}
+		if(this == obj)
+			return true;
+
+		if(!(obj instanceof LineGeneral2D_F64))
+			return false;
+
+		var o = (LineGeneral2D_F64) obj;
+		return A==o.A && B==o.B && C==o.C;
+	}
+
+	@Override
+	public int hashCode() {
+		return Double.hashCode(A+B+C);
 	}
 }

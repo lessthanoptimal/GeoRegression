@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.geometry;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.point.Point3D_F64;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Various utilty functions related to lines in 3D
@@ -35,7 +36,7 @@ public class UtilLine3D_F64 {
 	 * @param output Storage for converted line.  If null new line will be declared.
 	 * @return Line in parametric format
 	 */
-	public static LineParametric3D_F64 convert( LineSegment3D_F64 line , LineParametric3D_F64 output ) {
+	public static LineParametric3D_F64 convert( LineSegment3D_F64 line , @Nullable LineParametric3D_F64 output ) {
 		if( output == null )
 			output = new LineParametric3D_F64();
 

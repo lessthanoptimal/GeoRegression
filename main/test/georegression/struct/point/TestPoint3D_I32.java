@@ -55,7 +55,7 @@ public class TestPoint3D_I32 {
 
 	@Test
 	void createNewInstance() {
-		assertTrue(new Point3D_I32().createNewInstance() instanceof Point3D_I32);
+		assertNotNull(new Point3D_I32().createNewInstance());
 	}
 
 	@Test

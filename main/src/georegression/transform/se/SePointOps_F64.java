@@ -26,6 +26,7 @@ import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DMatrixRMaj;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class SePointOps_F64 {
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Se2_F64 se, Point2D_F64 orig, Point2D_F64 result ) {
+	public static Point2D_F64 transform( Se2_F64 se, Point2D_F64 orig, @Nullable Point2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F64();
@@ -63,7 +64,7 @@ public class SePointOps_F64 {
 		return result;
 	}
 
-	public static Point2D_F64 transform( Se2_F64 se, double x, double y, Point2D_F64 result ) {
+	public static Point2D_F64 transform( Se2_F64 se, double x, double y, @Nullable Point2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F64();
@@ -78,7 +79,7 @@ public class SePointOps_F64 {
 		return result;
 	}
 
-	public static Point2D_F64 transformReverse( Se2_F64 se, Point2D_F64 orig, Point2D_F64 result ) {
+	public static Point2D_F64 transformReverse( Se2_F64 se, Point2D_F64 orig, @Nullable Point2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F64();
@@ -105,7 +106,7 @@ public class SePointOps_F64 {
 	 * @param points Array of points which are to be transformed.  Modified.
 	 * @param length The number of elements in the array that are to be processed.
 	 */
-	public static void transform( Se2_F64 se, Point2D_F64 points[], int length ) {
+	public static void transform(Se2_F64 se, Point2D_F64[] points, int length ) {
 
 		double tranX = se.getX();
 		double tranY = se.getY();
@@ -187,11 +188,11 @@ public class SePointOps_F64 {
 	 * @param dst Storage for transformed coordinate of the point. Point declared if null.  Modified.
 	 * @return Transformed point.
 	 */
-	public static Point3D_F64 transform( Se3_F64 se, Point3D_F64 src, Point3D_F64 dst ) {
+	public static Point3D_F64 transform( Se3_F64 se, Point3D_F64 src, @Nullable Point3D_F64 dst ) {
 		return transform(se,src.x, src.y, src.z, dst);
 	}
 
-	public static Point3D_F64 transform( Se3_F64 se, double x , double y, double z, Point3D_F64 dst ) {
+	public static Point3D_F64 transform( Se3_F64 se, double x , double y, double z, @Nullable Point3D_F64 dst ) {
 		if( dst == null )
 			dst = new Point3D_F64();
 
@@ -221,7 +222,7 @@ public class SePointOps_F64 {
 	 * @param dst Storage for transformed coordinate of the point. Point declared if null.  Modified.
 	 * @return Transformed point.
 	 */
-	public static Point3D_F64 transform(Se3_F64 se, Point4D_F64 src, Point3D_F64 dst ) {
+	public static Point3D_F64 transform(Se3_F64 se, Point4D_F64 src, @Nullable Point3D_F64 dst ) {
 		if( dst == null )
 			dst = new Point3D_F64();
 
@@ -242,7 +243,7 @@ public class SePointOps_F64 {
 	/**
 	 * Applies the transform to src, but omits the last implicit last row in dst where dst.w = src.w
 	 */
-	public static Point3D_F64 transformV(Se3_F64 se, Point4D_F64 src, Point3D_F64 dst ) {
+	public static Point3D_F64 transformV(Se3_F64 se, Point4D_F64 src, @Nullable Point3D_F64 dst ) {
 		if( dst == null )
 			dst = new Point3D_F64();
 
@@ -276,7 +277,7 @@ public class SePointOps_F64 {
 	 * @param dst Storage for transformed coordinate of the point. Point declared if null.  Modified.
 	 * @return Transformed point.
 	 */
-	public static Point4D_F64 transform(Se3_F64 se, Point4D_F64 src, Point4D_F64 dst ) {
+	public static Point4D_F64 transform(Se3_F64 se, Point4D_F64 src, @Nullable Point4D_F64 dst ) {
 		if( dst == null )
 			dst = new Point4D_F64();
 
@@ -315,7 +316,7 @@ public class SePointOps_F64 {
 	 * @param origPt Original coordinate of the point.
 	 * @param tranPt Transformed coordinate of the point.
 	 */
-	public static Point3D_F64 transformReverse( Se3_F64 se, Point3D_F64 origPt, Point3D_F64 tranPt ) {
+	public static Point3D_F64 transformReverse( Se3_F64 se, Point3D_F64 origPt, @Nullable Point3D_F64 tranPt ) {
 		if( tranPt == null )
 			tranPt = new Point3D_F64();
 

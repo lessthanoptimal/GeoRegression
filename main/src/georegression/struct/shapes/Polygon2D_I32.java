@@ -29,6 +29,7 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
+@SuppressWarnings("NullAway.Init")
 public class Polygon2D_I32 implements Serializable, Cloneable  {
 
 	// vertexes in the polygon
@@ -101,7 +102,7 @@ public class Polygon2D_I32 implements Serializable, Cloneable  {
 		vertexes.data[index].set(x,y);
 	}
 
-	public Polygon2D_I32 clone() {
+	public Polygon2D_I32 copy() {
 		return new Polygon2D_I32(this);
 	}
 }

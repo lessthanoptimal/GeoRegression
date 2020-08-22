@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,6 +26,7 @@ import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -293,16 +294,16 @@ public class Distance2D_F64 {
 	 * @param storage Optional storage for linesegment which is used internally to compute the distance
 	 * @return Distance squared apart
 	 */
-	public static double distanceSq( Polygon2D_F64 poly , Point2D_F64 p , LineSegment2D_F64 storage ) {
+	public static double distanceSq( Polygon2D_F64 poly , Point2D_F64 p , @Nullable LineSegment2D_F64 storage ) {
 		if( storage == null )
-			storage = LineSegment2D_F64.wrap(null,null);
+			storage = new LineSegment2D_F64();
 
 		double minimum = Double.MAX_VALUE;
 		for (int i = 0; i < poly.size(); i++) {
 			int j = (i+1)%poly.size();
 
-			storage.a = poly.vertexes.data[i];
-			storage.b = poly.vertexes.data[j];
+			storage.a.set(poly.vertexes.data[i]);
+			storage.b.set(poly.vertexes.data[j]);
 
 			double d = distanceSq(storage, p);
 			if( d < minimum )

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -30,6 +30,7 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
+@SuppressWarnings("NullAway.Init")
 public class Cylinder3D_F64 implements Serializable {
 	/**
 	 * Line which defines the cylinder's axis
@@ -84,7 +85,7 @@ public class Cylinder3D_F64 implements Serializable {
 		this.radius = o.radius;
 	}
 
-
+	@Override
 	public String toString() {
 		FancyPrint fancy = new FancyPrint();
 

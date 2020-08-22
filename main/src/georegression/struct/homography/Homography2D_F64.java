@@ -71,7 +71,7 @@ public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homogr
 	}
 
 	@Override
-	public Homography2D_F64 concat(Homography2D_F64 second, Homography2D_F64 ret) {
+	public Homography2D_F64 concat(Homography2D_F64 second, @Nullable Homography2D_F64 ret) {
 		if( ret == null )
 			ret = new Homography2D_F64();
 
@@ -89,7 +89,7 @@ public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homogr
 	}
 
 	@Override
-	public Homography2D_F64 invert(Homography2D_F64 ret) {
+	public Homography2D_F64 invert( @Nullable Homography2D_F64 ret) {
 	    if( ret == null )
 			ret = new Homography2D_F64();
 
@@ -137,6 +137,7 @@ public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homogr
 		return output;
 	}
 
+	@Override
 	public Homography2D_F64 copy() {
 		return new Homography2D_F64(this);
 	}

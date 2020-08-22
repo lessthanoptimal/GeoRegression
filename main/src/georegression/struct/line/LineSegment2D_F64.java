@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -113,11 +113,18 @@ public class LineSegment2D_F64 implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		try {
-			LineSegment2D_F64 o = (LineSegment2D_F64) obj;
-			return a.equals(o.a) && b.equals(o.b);
-		} catch( RuntimeException e ) {
-			return super.equals(obj);
-		}
+		if(this == obj)
+			return true;
+
+		if(!(obj instanceof LineSegment2D_F64))
+			return false;
+
+		var o = (LineSegment2D_F64) obj;
+		return a.equals(o.a) && b.equals(o.b);
+	}
+
+	@Override
+	public int hashCode() {
+		return a.hashCode() + b.hashCode();
 	}
 }

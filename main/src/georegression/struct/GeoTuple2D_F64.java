@@ -34,12 +34,12 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 	public double x;
 	public double y;
 
-	public GeoTuple2D_F64( double x, double y ) {
+	protected GeoTuple2D_F64( double x, double y ) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public GeoTuple2D_F64() {
+	protected GeoTuple2D_F64() {
 	}
 
 	protected void _set( GeoTuple2D_F64 a ) {
@@ -60,6 +60,7 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 		return ( Math.abs( this.x - x ) <= tol && Math.abs( this.y - y ) <= tol );
 	}
 
+	@Override
 	public boolean isIdentical( T t, double tol ) {
 		return ( Math.abs( this.x - t.x ) <= tol && Math.abs( this.y - t.y ) <= tol );
 	}
@@ -235,10 +236,14 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 
 	@Override
 	public boolean equals(Object obj) {
-		if( this.getClass() != obj.getClass() )
+		if(this == obj)
+			return true;
+
+		if(!(obj instanceof GeoTuple2D_F64))
 			return false;
-		GeoTuple2D_F64 p = (GeoTuple2D_F64)obj;
-		return Double.compare(x,p.x)==0 && Double.compare(y,p.y)==0;
+
+		var o = (GeoTuple2D_F64)obj;
+		return Double.compare(x,o.x)==0 && Double.compare(y,o.y)==0;
 	}
 
 	public boolean isNaN() {

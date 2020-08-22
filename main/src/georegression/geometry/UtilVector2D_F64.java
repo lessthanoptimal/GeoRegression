@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,7 @@ package georegression.geometry;
 
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Peter Abeles
@@ -65,7 +66,7 @@ public class UtilVector2D_F64 {
 	 * @param output (output) optional storage for vector.
 	 * @return Solution
 	 */
-	public static Vector2D_F64 minus( Point2D_F64 a , Point2D_F64 b , Vector2D_F64 output ) {
+	public static Vector2D_F64 minus( Point2D_F64 a , Point2D_F64 b , @Nullable Vector2D_F64 output ) {
 		if( output == null )
 			output = new Vector2D_F64();
 
@@ -89,7 +90,6 @@ public class UtilVector2D_F64 {
 		double dy0 = yb-ya;
 		double dx1 = xb+xa;
 		double dy1 = yb+ya;
-
 
 		double error0 = dx0*dx0 + dy0*dy0;
 		double error1 = dx1*dx1 + dy1*dy1;

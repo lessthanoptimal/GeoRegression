@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,8 @@
 
 package georegression.struct.affine;
 
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 2D affine transform for 64-bit floats.
@@ -70,7 +72,7 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 	}
 
 	@Override
-	public Affine2D_F64 concat( Affine2D_F64 second, Affine2D_F64 ret ) {
+	public Affine2D_F64 concat( Affine2D_F64 second, @Nullable Affine2D_F64 ret ) {
 
 		if( ret == null )
 			ret = new Affine2D_F64();
@@ -87,7 +89,7 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 	}
 
 	@Override
-	public Affine2D_F64 invert( Affine2D_F64 inverse ) {
+	public Affine2D_F64 invert( @Nullable Affine2D_F64 inverse ) {
 		if( inverse == null )
 			inverse = new Affine2D_F64();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,6 +25,7 @@ import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -46,7 +47,7 @@ public class ClosestPoint2D_F64 {
 	 */
 	public static Point2D_F64 closestPoint( LineGeneral2D_F64 line,
 											Point2D_F64 p,
-											Point2D_F64 output ) {
+											@Nullable Point2D_F64 output ) {
 		if( output == null )
 			output = new Point2D_F64();
 
@@ -75,7 +76,7 @@ public class ClosestPoint2D_F64 {
 	 */
 	public static Point2D_F64 closestPoint( LineParametric2D_F64 line,
 											Point2D_F64 p,
-											Point2D_F64 output ) {
+											@Nullable Point2D_F64 output ) {
 		if( output == null )
 			output = new Point2D_F64();
 
@@ -177,7 +178,7 @@ public class ClosestPoint2D_F64 {
 	 */
 	public static Point2D_F64 closestPoint( LineSegment2D_F64 line,
 											Point2D_F64 p,
-											Point2D_F64 output ) {
+											@Nullable Point2D_F64 output ) {
 
 		if( output == null )
 			output = new Point2D_F64();

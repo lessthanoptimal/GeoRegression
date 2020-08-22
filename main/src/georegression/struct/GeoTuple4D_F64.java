@@ -36,15 +36,14 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 	public double z;
 	public double w;
 
-	public GeoTuple4D_F64(double x, double y, double z, double w) {
+	protected GeoTuple4D_F64(double x, double y, double z, double w) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.w = w;
 	}
 
-	public GeoTuple4D_F64() {
-	}
+	protected GeoTuple4D_F64() {}
 
 	@Override
 	public int getDimension() {
@@ -76,6 +75,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 				Math.abs( this.w - w ) <= tol );
 	}
 
+	@Override
 	public boolean isIdentical( GeoTuple4D_F64 t, double tol ) {
 		return ( Math.abs( this.x - t.x ) <= tol && 
 				Math.abs( this.y - t.y ) <= tol && 
@@ -99,6 +99,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		return w;
 	}
 
+	@Override
 	public double getIdx(int index ) {
 		switch( index ) {
 			case 0: return x;
@@ -109,6 +110,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		}
 	}
 
+	@Override
 	public void setIdx(int index, double value ) {
 		switch( index ) {
 			case 0: x = value; break;
@@ -271,11 +273,15 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 
 	@Override
 	public boolean equals(Object obj) {
-		if( this.getClass() != obj.getClass() )
+		if(this == obj)
+			return true;
+
+		if(!(obj instanceof GeoTuple4D_F64))
 			return false;
-		GeoTuple4D_F64 p = (GeoTuple4D_F64)obj;
-		return Double.compare(x,p.x)==0 && Double.compare(y,p.y)==0 &&
-				Double.compare(z,p.z)==0 && Double.compare(w,p.w)==0;
+
+		var o = (GeoTuple4D_F64)obj;
+		return Double.compare(x,o.x)==0 && Double.compare(y,o.y)==0 &&
+				Double.compare(z,o.z)==0 && Double.compare(w,o.w)==0;
 	}
 
 	protected String toString( String name ) {

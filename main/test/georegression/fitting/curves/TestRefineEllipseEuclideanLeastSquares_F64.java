@@ -175,7 +175,7 @@ public class TestRefineEllipseEuclideanLeastSquares_F64 {
 
 		alg.refine(model,points);
 
-		RefineEllipseEuclideanLeastSquares_F64.Error error = alg.createError();
+		RefineEllipseEuclideanLeastSquares_F64.EllipseError error = alg.createError();
 		RefineEllipseEuclideanLeastSquares_F64.Jacobian jacobian = alg.createJacobian();
 
 		DerivativeChecker.jacobian(error,jacobian,alg.initialParam,GrlConstants.TEST_SQ_F64);

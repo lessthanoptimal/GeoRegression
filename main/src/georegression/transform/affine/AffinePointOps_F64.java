@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.transform.affine;
 import georegression.struct.affine.Affine2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -38,7 +39,7 @@ public class AffinePointOps_F64 {
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Vector2D_F64 transform( Affine2D_F64 se, Vector2D_F64 orig, Vector2D_F64 result ) {
+	public static Vector2D_F64 transform( Affine2D_F64 se, Vector2D_F64 orig, @Nullable Vector2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Vector2D_F64();
@@ -64,7 +65,7 @@ public class AffinePointOps_F64 {
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Affine2D_F64 se, Point2D_F64 orig, Point2D_F64 result ) {
+	public static Point2D_F64 transform( Affine2D_F64 se, Point2D_F64 orig, @Nullable Point2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F64();
@@ -91,7 +92,7 @@ public class AffinePointOps_F64 {
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Affine2D_F64 se, double x, double y, Point2D_F64 result ) {
+	public static Point2D_F64 transform( Affine2D_F64 se, double x, double y, @Nullable Point2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F64();

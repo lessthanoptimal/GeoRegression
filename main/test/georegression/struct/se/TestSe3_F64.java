@@ -24,6 +24,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.ejml.data.DMatrixRMaj;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -78,7 +79,7 @@ public class TestSe3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64
 	}
 
 	@Override
-	public Point3D_F64 apply( InvertibleTransform se, Point3D_F64 point, Point3D_F64 result ) {
+	public Point3D_F64 apply( InvertibleTransform se, Point3D_F64 point, @Nullable Point3D_F64 result ) {
 		return SePointOps_F64.transform( (Se3_F64) se, (Point3D_F64) point, (Point3D_F64) result );
 	}
 }

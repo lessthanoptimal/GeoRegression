@@ -102,9 +102,9 @@ public class TestUtilVector3D_F64 {
 		scale = Math.max(scale,Math.abs(A.z));
 
 		if( scale == 0 ) {
-			assertTrue(0 == found.x);
-			assertTrue(0 == found.y);
-			assertTrue(0 == found.z);
+			assertEquals(found.x, 0);
+			assertEquals(found.y, 0);
+			assertEquals(found.z, 0);
 		} else {
 			A.scale(1.0 / scale);
 

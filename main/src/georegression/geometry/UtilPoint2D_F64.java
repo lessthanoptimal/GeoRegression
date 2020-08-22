@@ -38,7 +38,7 @@ import java.util.Random;
 public class UtilPoint2D_F64 {
 
 	public static List<Point2D_F64> copy( List<Point2D_F64> pts ) {
-		List<Point2D_F64> ret = new ArrayList<Point2D_F64>();
+		List<Point2D_F64> ret = new ArrayList<>();
 
 		for( Point2D_F64 p : pts ) {
 			ret.add( p.copy() );
@@ -90,7 +90,7 @@ public class UtilPoint2D_F64 {
 	 * @param mean Storage for mean point.  If null then a new instance will be declared
 	 * @return The found mean
 	 */
-	public static Point2D_F64 mean( List<Point2D_F64> list , Point2D_F64 mean ) {
+	public static Point2D_F64 mean( List<Point2D_F64> list , @Nullable Point2D_F64 mean ) {
 		if( mean == null )
 			mean = new Point2D_F64();
 
@@ -119,7 +119,8 @@ public class UtilPoint2D_F64 {
 	 * @param mean Storage for mean point.  If null then a new instance will be declared
 	 * @return The found mean
 	 */
-	public static Point2D_F64 mean( Point2D_F64[] list , int offset , int length , Point2D_F64 mean ) {
+	public static Point2D_F64 mean( Point2D_F64[] list , int offset , int length ,
+									@Nullable Point2D_F64 mean ) {
 		if( mean == null )
 			mean = new Point2D_F64();
 
@@ -147,7 +148,8 @@ public class UtilPoint2D_F64 {
 	 * @param mean (output) average of 'a' and 'b'
 	 *
 	 */
-	public static Point2D_F64 mean( Point2D_F64 a , Point2D_F64 b, Point2D_F64 mean ) {
+	public static Point2D_F64 mean( Point2D_F64 a , Point2D_F64 b,
+									@Nullable Point2D_F64 mean ) {
 		if( mean == null )
 			mean = new Point2D_F64();
 
@@ -158,7 +160,7 @@ public class UtilPoint2D_F64 {
 	}
 
 	public static List<Point2D_F64> random( double min, double max, int num, Random rand ) {
-		List<Point2D_F64> ret = new ArrayList<Point2D_F64>();
+		List<Point2D_F64> ret = new ArrayList<>();
 
 		double d = max - min;
 
@@ -183,7 +185,8 @@ public class UtilPoint2D_F64 {
 	 * @param points Input: List of points.
 	 * @param bounding Output: Bounding rectangle
 	 */
-	public static RectangleLength2D_F64 bounding(List<Point2D_F64> points, RectangleLength2D_F64 bounding) {
+	public static RectangleLength2D_F64 bounding(List<Point2D_F64> points,
+												 @Nullable RectangleLength2D_F64 bounding) {
 		if( bounding == null )
 			bounding = new RectangleLength2D_F64();
 
@@ -220,7 +223,8 @@ public class UtilPoint2D_F64 {
 	 * @param points Input: List of points.
 	 * @param bounding Output: Bounding rectangle
 	 */
-	public static Rectangle2D_F64 bounding(List<Point2D_F64> points, Rectangle2D_F64 bounding) {
+	public static Rectangle2D_F64 bounding(List<Point2D_F64> points,
+										   @Nullable Rectangle2D_F64 bounding) {
 		if( bounding == null )
 			bounding = new Rectangle2D_F64();
 
@@ -253,7 +257,7 @@ public class UtilPoint2D_F64 {
 	public static List<Point2D_F64> orderCCW( List<Point2D_F64> points ) {
 		Point2D_F64 center = mean(points,null);
 
-		double angles[] = new double[ points.size() ];
+		double[] angles = new double[ points.size() ];
 		for (int i = 0; i < angles.length; i++) {
 			Point2D_F64 p = points.get(i);
 
@@ -263,12 +267,12 @@ public class UtilPoint2D_F64 {
 			angles[i] = Math.atan2(dy,dx);
 		}
 
-		int order[] = new int[ points.size() ];
+		int[] order = new int[ points.size() ];
 
 		QuickSort_F64 sorter = new QuickSort_F64();
 		sorter.sort(angles,0,points.size(),order);
 
-		List<Point2D_F64> out = new ArrayList<Point2D_F64>(points.size());
+		List<Point2D_F64> out = new ArrayList<>(points.size());
 		for (int i = 0; i < points.size(); i++) {
 			out.add(points.get(order[i]));
 		}

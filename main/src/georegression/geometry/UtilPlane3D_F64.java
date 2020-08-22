@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,6 +27,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DMatrixRMaj;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Peter Abeles
@@ -40,7 +41,7 @@ public class UtilPlane3D_F64 {
 	 * @param output (Optional) Storage for output plane in general form. If null a new instance will be declared.
 	 * @return The convert plane in general form.
 	 */
-	public static PlaneGeneral3D_F64 convert( PlaneNormal3D_F64 input , PlaneGeneral3D_F64 output ) {
+	public static PlaneGeneral3D_F64 convert( PlaneNormal3D_F64 input , @Nullable PlaneGeneral3D_F64 output ) {
 		if( output == null )
 			output = new PlaneGeneral3D_F64();
 
@@ -67,7 +68,7 @@ public class UtilPlane3D_F64 {
 	 * @param output (Optional) Storage for output plane in normal form. If null a new instance will be declared.
 	 * @return The plane in normal form.
 	 */
-	public static PlaneNormal3D_F64 convert( PlaneGeneral3D_F64 input , PlaneNormal3D_F64 output ) {
+	public static PlaneNormal3D_F64 convert( PlaneGeneral3D_F64 input , @Nullable PlaneNormal3D_F64 output ) {
 
 		if( output == null )
 			output = new PlaneNormal3D_F64();
@@ -91,7 +92,7 @@ public class UtilPlane3D_F64 {
 	 * @param output (Optional) Storage for output plane in normal form. If null a new instance will be declared.
 	 * @return The convert plane in general form.
 	 */
-	public static PlaneNormal3D_F64 convert( PlaneTangent3D_F64 input , PlaneNormal3D_F64 output ) {
+	public static PlaneNormal3D_F64 convert( PlaneTangent3D_F64 input , @Nullable PlaneNormal3D_F64 output ) {
 		if( output == null )
 			output = new PlaneNormal3D_F64();
 
@@ -112,7 +113,7 @@ public class UtilPlane3D_F64 {
 	 * @param output (Output) Plane
 	 * @return Plane
 	 */
-	public static PlaneNormal3D_F64 convert( Se3_F64 planeToWorld , PlaneNormal3D_F64 output ) {
+	public static PlaneNormal3D_F64 convert( Se3_F64 planeToWorld , @Nullable PlaneNormal3D_F64 output ) {
 		if( output == null )
 			output = new PlaneNormal3D_F64();
 
@@ -278,7 +279,7 @@ public class UtilPlane3D_F64 {
 	 * @param planeToWorld (Optional) storage for the planeToWorld transform.  Can be null.
 	 * @return Transform from planeToWorld
 	 */
-	public static Se3_F64 planeToWorld( PlaneGeneral3D_F64 plane , Se3_F64 planeToWorld ) {
+	public static Se3_F64 planeToWorld( PlaneGeneral3D_F64 plane , @Nullable Se3_F64 planeToWorld ) {
 		if( planeToWorld == null )
 			planeToWorld = new Se3_F64();
 
@@ -294,7 +295,7 @@ public class UtilPlane3D_F64 {
 
 	public static Se3_F64 planeToWorld( PlaneGeneral3D_F64 plane ,
 										Vector3D_F64 axisX , Vector3D_F64 axisY,Vector3D_F64 axisZ,
-										Se3_F64 planeToWorld ) {
+										@Nullable Se3_F64 planeToWorld ) {
 		if( planeToWorld == null )
 			planeToWorld = new Se3_F64();
 

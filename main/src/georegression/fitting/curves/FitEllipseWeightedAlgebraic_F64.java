@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,6 +26,7 @@ import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.decomposition.EigenDecomposition;
 import org.ejml.interfaces.linsol.LinearSolverDense;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -156,7 +157,7 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		return true;
 	}
 
-	private DMatrixRMaj selectBestEigenVector() {
+	private @Nullable DMatrixRMaj selectBestEigenVector() {
 
 		int bestIndex = -1;
 		double bestCond = Double.MAX_VALUE;

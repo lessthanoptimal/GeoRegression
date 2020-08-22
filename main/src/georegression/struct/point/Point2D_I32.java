@@ -142,6 +142,7 @@ public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 		System.out.println(toString());
 	}
 
+	@Override
 	public Point2D_I32 copy() {
 		return new Point2D_I32( this );
 	}
@@ -166,8 +167,8 @@ public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if( this.getClass() != obj.getClass() )
-			return false;
+		if (this == obj) return true;
+		if( !(obj instanceof Point2D_I32)) return false;
 		Point2D_I32 p = (Point2D_I32)obj;
 		return x==p.x&&y==p.y;
 	}

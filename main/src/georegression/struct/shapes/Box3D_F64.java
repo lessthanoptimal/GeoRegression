@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F64;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -118,7 +119,7 @@ public class Box3D_F64 implements Serializable {
 	 * @param storage Optional storage for the center.  If null a new instance will be created and returned.
 	 * @return The cube's center point
 	 */
-	public Point3D_F64 center( Point3D_F64 storage ) {
+	public Point3D_F64 center( @Nullable Point3D_F64 storage ) {
 		if( storage == null )
 			storage = new Point3D_F64();
 		storage.x = (p0.x + p1.x)/2.0;
@@ -127,6 +128,7 @@ public class Box3D_F64 implements Serializable {
 		return storage;
 	}
 
+	@Override
 	public String toString() {
 		return getClass().getSimpleName()+"{ P0( "+ p0.x+" "+ p0.y+" "+ p0.z+" ) P1( "+ p1.x+" "+ p1.y+" "+ p1.z+" ) }";
 	}

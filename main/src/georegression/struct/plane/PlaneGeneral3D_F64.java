@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -113,14 +113,14 @@ public class PlaneGeneral3D_F64 implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		PlaneGeneral3D_F64 that = (PlaneGeneral3D_F64) o;
-		return Double.compare(that.A, A) == 0 &&
-				Double.compare(that.B, B) == 0 &&
-				Double.compare(that.C, C) == 0 &&
-				Double.compare(that.D, D) == 0;
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if( !(obj instanceof PlaneGeneral3D_F64)) return false;
+		var o = (PlaneGeneral3D_F64) obj;
+		return Double.compare(o.A, A) == 0 &&
+				Double.compare(o.B, B) == 0 &&
+				Double.compare(o.C, C) == 0 &&
+				Double.compare(o.D, D) == 0;
 	}
 
 	@Override

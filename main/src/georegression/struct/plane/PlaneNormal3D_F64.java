@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -93,7 +93,7 @@ public class PlaneNormal3D_F64 implements Serializable {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if( !(o instanceof PlaneNormal3D_F64)) return false;
 		PlaneNormal3D_F64 that = (PlaneNormal3D_F64) o;
 		return p.equals(that.p) && n.equals(that.n);
 	}

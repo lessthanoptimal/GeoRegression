@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.struct.homography;
 
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Various useful functions related to homographies.
@@ -36,7 +37,7 @@ public class UtilHomography_F64 {
 	 * @param ret Storage for output.  If null then a new instance is created.
 	 * @return Equivalent homography.
 	 */
-	public static Homography2D_F64 convert( DMatrixRMaj m , Homography2D_F64 ret ) {
+	public static Homography2D_F64 convert( DMatrixRMaj m , @Nullable Homography2D_F64 ret ) {
 		if( m.numCols != 3 || m.numRows != 3)
 			throw new IllegalArgumentException("Expected a 3 by 3 matrix.");
 
@@ -63,7 +64,7 @@ public class UtilHomography_F64 {
 	 * @param ret Storage for output.  If null then a new instance is created.
 	 * @return Equivalent matrix.
 	 */
-	public static DMatrixRMaj convert( Homography2D_F64 m , DMatrixRMaj ret ) {
+	public static DMatrixRMaj convert( Homography2D_F64 m , @Nullable DMatrixRMaj ret ) {
 		if( ret == null ) {
 			ret = new DMatrixRMaj(3,3);
 		} else if( ret.numCols != 3 || ret.numRows != 3)
@@ -83,7 +84,7 @@ public class UtilHomography_F64 {
 		return ret;
 	}
 
-	public static Homography2D_F64 invert( Homography2D_F64 orig , Homography2D_F64 inverted ) {
+	public static Homography2D_F64 invert( Homography2D_F64 orig , @Nullable Homography2D_F64 inverted ) {
 		if( inverted == null )
 			inverted = new Homography2D_F64();
 

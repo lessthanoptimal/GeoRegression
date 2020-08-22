@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,8 +24,10 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.shapes.Cylinder3D_F64;
 import org.ddogleg.optimization.functions.FunctionNtoM;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Computes the signed Euclidean distance between a cylinder and a set of points, see
@@ -37,13 +39,13 @@ import java.util.List;
  */
 public class CylinderToPointSignedDistance_F64 implements FunctionNtoM {
 	// model of the cylinder
-	private Cylinder3D_F64 cylinder = new Cylinder3D_F64();
+	private final Cylinder3D_F64 cylinder = new Cylinder3D_F64();
 
 	// points whose distance from the sphere is being computed
-	private List<Point3D_F64> points;
+	private @Nullable List<Point3D_F64> points;
 
 	// used to convert double[] into shape parameters
-	private CodecCylinder3D_F64 codec = new CodecCylinder3D_F64();
+	private final CodecCylinder3D_F64 codec = new CodecCylinder3D_F64();
 
 	public void setPoints(List<Point3D_F64> points) {
 		this.points = points;
@@ -56,11 +58,13 @@ public class CylinderToPointSignedDistance_F64 implements FunctionNtoM {
 
 	@Override
 	public int getNumOfOutputsM() {
+		Objects.requireNonNull(points,"Call setPoints() first");
 		return points.size();
 	}
 
 	@Override
 	public void process( /**/double[] input, /**/double[] output) {
+		Objects.requireNonNull(points,"Call setPoints() first");
 		codec.decode(input,cylinder);
 
 		Point3D_F64 cp = cylinder.line.p;

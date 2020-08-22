@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,6 +27,7 @@ import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Operations related to twists.
@@ -44,7 +45,7 @@ public class TwistOps_F64 {
 	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
-	public static DMatrixRMaj homogenous( Se3_F64 transform , DMatrixRMaj H ) {
+	public static DMatrixRMaj homogenous( Se3_F64 transform , @Nullable DMatrixRMaj H ) {
 		if( H == null ) {
 			H = new DMatrixRMaj(4,4);
 		} else {
@@ -68,7 +69,7 @@ public class TwistOps_F64 {
 	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
-	public static DMatrixRMaj homogenous( TwistCoordinate_F64 twist , DMatrixRMaj H ) {
+	public static DMatrixRMaj homogenous( TwistCoordinate_F64 twist , @Nullable DMatrixRMaj H ) {
 		if( H == null ) {
 			H = new DMatrixRMaj(4,4);
 		} else {
@@ -97,7 +98,7 @@ public class TwistOps_F64 {
 	 * @param motion Storage for SE(3).  If null a new instance will be returned.
 	 * @return The transformation.
 	 */
-	public static Se3_F64 exponential(TwistCoordinate_F64 twist , double theta , Se3_F64 motion ) {
+	public static Se3_F64 exponential(TwistCoordinate_F64 twist , double theta , @Nullable Se3_F64 motion ) {
 		if( motion == null ) {
 			motion = new Se3_F64();
 		}
@@ -153,7 +154,7 @@ public class TwistOps_F64 {
 	 * @param twist (Output) Storage for twist.
 	 * @return magnitude of the motion
 	 */
-	public static TwistCoordinate_F64 twist( Se3_F64 motion , TwistCoordinate_F64 twist ) {
+	public static TwistCoordinate_F64 twist( Se3_F64 motion , @Nullable TwistCoordinate_F64 twist ) {
 		if( twist == null )
 			twist = new TwistCoordinate_F64();
 

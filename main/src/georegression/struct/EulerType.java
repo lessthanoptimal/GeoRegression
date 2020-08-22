@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -68,5 +68,5 @@ public enum EulerType {
 		return axisC;
 	}
 
-	int axisA,axisB,axisC;
+	final int axisA,axisB,axisC;
 }

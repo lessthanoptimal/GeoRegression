@@ -22,7 +22,7 @@ package georegression.struct.homography;
 import org.ejml.data.DMatrixRMaj;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -35,15 +35,15 @@ public class TestUtilHomography_F64 {
 
 		Homography2D_F64 h = UtilHomography_F64.convert(a,null);
 
-		assertTrue(h.a11 == a.get(0,0));
-		assertTrue(h.a12 == a.get(0,1));
-		assertTrue(h.a13 == a.get(0,2));
-		assertTrue(h.a21 == a.get(1,0));
-		assertTrue(h.a22 == a.get(1,1));
-		assertTrue(h.a23 == a.get(1,2));
-		assertTrue(h.a31 == a.get(2,0));
-		assertTrue(h.a32 == a.get(2,1));
-		assertTrue(h.a33 == a.get(2,2));
+		assertEquals(a.get(0, 0), h.a11);
+		assertEquals(a.get(0, 1), h.a12);
+		assertEquals(a.get(0, 2), h.a13);
+		assertEquals(a.get(1, 0), h.a21);
+		assertEquals(a.get(1, 1), h.a22);
+		assertEquals(a.get(1, 2), h.a23);
+		assertEquals(a.get(2, 0), h.a31);
+		assertEquals(a.get(2, 1), h.a32);
+		assertEquals(a.get(2, 2), h.a33);
 	}
 
 	@Test
@@ -52,15 +52,15 @@ public class TestUtilHomography_F64 {
 
 		DMatrixRMaj a = UtilHomography_F64.convert(h,null);
 
-		assertTrue(h.a11 == a.get(0,0));
-		assertTrue(h.a12 == a.get(0,1));
-		assertTrue(h.a13 == a.get(0,2));
-		assertTrue(h.a21 == a.get(1,0));
-		assertTrue(h.a22 == a.get(1,1));
-		assertTrue(h.a23 == a.get(1,2));
-		assertTrue(h.a31 == a.get(2,0));
-		assertTrue(h.a32 == a.get(2,1));
-		assertTrue(h.a33 == a.get(2,2));
+		assertEquals(a.get(0, 0), h.a11);
+		assertEquals(a.get(0, 1), h.a12);
+		assertEquals(a.get(0, 2), h.a13);
+		assertEquals(a.get(1, 0), h.a21);
+		assertEquals(a.get(1, 1), h.a22);
+		assertEquals(a.get(1, 2), h.a23);
+		assertEquals(a.get(2, 0), h.a31);
+		assertEquals(a.get(2, 1), h.a32);
+		assertEquals(a.get(2, 2), h.a33);
 	}
 
 }

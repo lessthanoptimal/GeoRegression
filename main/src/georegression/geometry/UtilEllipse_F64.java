@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,6 +24,7 @@ import georegression.struct.curve.EllipseQuadratic_F64;
 import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Functions for extracting information from ellipses and converting between different ellipse formats.
@@ -45,7 +46,7 @@ public class UtilEllipse_F64 {
 	 * @param output (Optional) Storage for converted format.  Can be null.
 	 * @return Ellipse in rotated format.
 	 */
-	public static EllipseRotated_F64 convert( EllipseQuadratic_F64 input , EllipseRotated_F64 output ) {
+	public static EllipseRotated_F64 convert( EllipseQuadratic_F64 input , @Nullable EllipseRotated_F64 output ) {
 		if( output == null )
 			output = new EllipseRotated_F64();
 
@@ -102,7 +103,7 @@ public class UtilEllipse_F64 {
 	 * @param output (Optional) Storage for quadratic format.  Can be null.
 	 * @return Ellipse in quadratic format.
 	 */
-	public static EllipseQuadratic_F64 convert( EllipseRotated_F64 input , EllipseQuadratic_F64 output ) {
+	public static EllipseQuadratic_F64 convert( EllipseRotated_F64 input , @Nullable EllipseQuadratic_F64 output ) {
 		if( output == null )
 			output = new EllipseQuadratic_F64();
 
@@ -180,7 +181,8 @@ public class UtilEllipse_F64 {
 	 * @param output (Optional) point on the ellipse .  Can be null.
 	 * @return Point on the ellipse
 	 */
-	public static Point2D_F64 computePoint( double t , EllipseRotated_F64 ellipse , Point2D_F64 output ) {
+	public static Point2D_F64 computePoint( double t , EllipseRotated_F64 ellipse ,
+											@Nullable Point2D_F64 output ) {
 		if( output == null )
 			output = new Point2D_F64();
 
@@ -232,7 +234,7 @@ public class UtilEllipse_F64 {
 	 */
 	public static Vector2D_F64 computeTangent( double t ,
 											   EllipseRotated_F64 ellipse ,
-											   Vector2D_F64 output  ) {
+											   @Nullable Vector2D_F64 output  ) {
 		if( output == null )
 			output = new Vector2D_F64();
 

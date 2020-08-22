@@ -19,10 +19,10 @@
 package georegression.struct;
 
 import georegression.misc.GrlConstants;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
@@ -34,7 +34,7 @@ public abstract class GenericInvertibleTransformTests_F64 <T extends GeoTuple_F6
 
 	public abstract InvertibleTransform createRandomTransform();
 
-	public abstract T apply( InvertibleTransform se, T point, T result );
+	public abstract T apply( InvertibleTransform se, T point, @Nullable T result );
 
 	/**
 	 * Makes sure that after reset is called the transform applies no transform
@@ -116,7 +116,7 @@ public abstract class GenericInvertibleTransformTests_F64 <T extends GeoTuple_F6
 		T orig = createRandomPoint();
 		T tran = apply( a, orig, null );
 
-		assertTrue( aInv == a.invert( aInv ) );
+		assertSame(aInv, a.invert(aInv));
 		T found = apply( aInv, tran, null );
 
 		assertTrue( found.isIdentical( orig, GrlConstants.TEST_F64) );

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -28,6 +28,7 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
+@SuppressWarnings("NullAway.Init")
 public class CylinderBounded3D_F64 implements Serializable {
 	/**
 	 * End points of the cylinder
@@ -107,6 +108,7 @@ public class CylinderBounded3D_F64 implements Serializable {
 		return radius;
 	}
 
+	@Override
 	public String toString() {
 		return getClass().getSimpleName()+" A( "+ endA.x+" "+ endA.y+" "+ endA.z+" ) B( "+ endB.x+" "+ endB.y+" "+ endB.z+" ) radius "+radius;
 	}

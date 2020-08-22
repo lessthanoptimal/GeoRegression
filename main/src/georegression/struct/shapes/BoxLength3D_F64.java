@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F64;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -105,7 +106,7 @@ public class BoxLength3D_F64 implements Serializable {
 	 * @param corner (Optional) storage for the corner. If null a new point will be declared
 	 * @return The corner.
 	 */
-	public Point3D_F64 getCorner(int index , Point3D_F64 corner ) {
+	public Point3D_F64 getCorner(int index , @Nullable Point3D_F64 corner ) {
 		if( corner == null )
 			corner = new Point3D_F64();
 
@@ -123,6 +124,7 @@ public class BoxLength3D_F64 implements Serializable {
 		return corner;
 	}
 
+	@Override
 	public String toString() {
 		return getClass().getSimpleName()+"P( "+p.x+" "+p.y+" "+p.z+" ) sides ( "+lengthX+" , "+lengthY+" , "+lengthZ+" )";
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -31,6 +31,7 @@ import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -168,7 +169,9 @@ public class Intersection2D_F64 {
 	 * @param ret storage for the point of intersection. If null a new point will be declared.
 	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect or have infinite intersections.
 	 */
-	public static Point2D_F64 intersection( LineParametric2D_F64 a, LineParametric2D_F64 b , Point2D_F64 ret ) {
+	public static @Nullable Point2D_F64 intersection( LineParametric2D_F64 a, LineParametric2D_F64 b ,
+													  @Nullable Point2D_F64 ret )
+	{
 		double t_b = a.getSlopeX() * ( b.getY() - a.getY() ) - a.getSlopeY() * ( b.getX() - a.getX() );
 		double bottom = a.getSlopeY() * b.getSlopeX() - b.getSlopeY() * a.getSlopeX();
 
@@ -195,7 +198,8 @@ public class Intersection2D_F64 {
 	 * @param ret storage for the point of intersection. If null a new point will be declared.
 	 * @return If the two lines/rays intersect it returns the point of intersection.  null if they don't intersect or have infinite intersections.
 	 */
-	public static Point2D_F64 intersection( LineParametric2D_F64 a, LineParametric2D_F64 b , boolean ray, Point2D_F64 ret ) {
+	public static @Nullable Point2D_F64 intersection( LineParametric2D_F64 a, LineParametric2D_F64 b , boolean ray,
+													  @Nullable Point2D_F64 ret ) {
 		if( !ray )
 			return intersection(a,b,ret);
 		double t_b = a.getSlopeX() * ( b.getY() - a.getY() ) - a.getSlopeY() * ( b.getX() - a.getX() );
@@ -249,8 +253,8 @@ public class Intersection2D_F64 {
 	 * @param ret storage for the point of intersection. If null a new point will be declared.
 	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect or have infinite intersections.
 	 */
-	public static Point2D_F64 intersection( LineSegment2D_F64 l_0, LineSegment2D_F64 l_1,
-											Point2D_F64 ret ) {
+	public static @Nullable Point2D_F64 intersection( LineSegment2D_F64 l_0, LineSegment2D_F64 l_1,
+													  @Nullable Point2D_F64 ret ) {
 
 		double a0 = l_0.b.x - l_0.a.x;
 		double b0 = l_0.b.y - l_0.a.y;
@@ -304,7 +308,7 @@ public class Intersection2D_F64 {
 	 * @param ret Storage for point of intersection.
 	 * @return Point of intersection represented in homogeneous coordinates.
 	 */
-	public static Point3D_F64 intersection( LineGeneral2D_F64 a , LineGeneral2D_F64 b , Point3D_F64 ret )
+	public static Point3D_F64 intersection( LineGeneral2D_F64 a , LineGeneral2D_F64 b , @Nullable Point3D_F64 ret )
 	{
 		if( ret == null )
 			ret = new Point3D_F64();
@@ -328,7 +332,8 @@ public class Intersection2D_F64 {
 	 * @param ret Storage for point of intersection.
 	 * @return Point of intersection in 2D coordinates.  null if intersection at infinity
 	 */
-	public static Point2D_F64 intersection( LineGeneral2D_F64 a , LineGeneral2D_F64 b , Point2D_F64 ret )
+	public static @Nullable Point2D_F64 intersection( LineGeneral2D_F64 a , LineGeneral2D_F64 b ,
+													  @Nullable Point2D_F64 ret )
 	{
 		if( ret == null )
 			ret = new Point2D_F64();
@@ -356,9 +361,9 @@ public class Intersection2D_F64 {
 	 * @param output (Optional) storage for point of intersection
 	 * @return Point of intersection or null if the lines are parallel
 	 */
-	public static Point2D_F64 intersection( Point2D_F64 lineA0 , Point2D_F64 lineA1 ,
-											Point2D_F64 lineB0 , Point2D_F64 lineB1 ,
-											Point2D_F64 output )
+	public static @Nullable Point2D_F64 intersection( Point2D_F64 lineA0 , Point2D_F64 lineA1 ,
+													  Point2D_F64 lineB0 , Point2D_F64 lineB1 ,
+													  @Nullable Point2D_F64 output )
 	{
 		if( output == null )
 			output = new Point2D_F64();
@@ -512,7 +517,7 @@ public class Intersection2D_F64 {
 		return (UtilEllipse_F64.evaluate(x,y, ellipse) <= 1.0 );
 	}
 
-	public static RectangleLength2D_F64 intersection( RectangleLength2D_F64 a, RectangleLength2D_F64 b ) {
+	public static @Nullable RectangleLength2D_F64 intersection(RectangleLength2D_F64 a, RectangleLength2D_F64 b ) {
 		double tl_x, tl_y, w, h;
 
 		if( a.getX() >= b.getX() ) {

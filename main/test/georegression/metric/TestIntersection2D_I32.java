@@ -22,6 +22,7 @@ import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_I32;
 import georegression.struct.shapes.Rectangle2D_I32;
 import georegression.struct.shapes.RectangleLength2D_I32;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -157,9 +158,9 @@ public class TestIntersection2D_I32 {
 		check( new Rectangle2D_I32(0,0,100,120),new Rectangle2D_I32(0,120,100,125),null);
 	}
 
-	private void check( Rectangle2D_I32 a , Rectangle2D_I32 b , Rectangle2D_I32 expected ) {
+	private void check( Rectangle2D_I32 a , Rectangle2D_I32 b , @Nullable Rectangle2D_I32 expected ) {
 		if( expected == null ) {
-			assertFalse(Intersection2D_I32.intersection(a, b, null));
+			assertFalse(Intersection2D_I32.intersection(a, b, new Rectangle2D_I32()));
 			return;
 		}
 

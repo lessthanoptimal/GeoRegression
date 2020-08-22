@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -17,6 +17,8 @@
  */
 
 package georegression.struct;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -43,21 +45,21 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 *
 	 * @return space's dimension
 	 */
-	public int getDimension();
+	int getDimension();
 
 	/**
 	 * Creates a new instance of the same SpecialEuclidean as this class.
 	 *
 	 * @return A new instance.
 	 */
-	public T createInstance();
+	T createInstance();
 
 	/**
 	 * Assigns 'this' to the value of target.
 	 *
 	 * @param target The new value of 'this'.
 	 */
-	public void set( T target );
+	void set( T target );
 
 	/**
 	 * <p>
@@ -82,7 +84,7 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 *               If null then a new instance is declared. Modified.
 	 * @return The equivalent transform.
 	 */
-	public T concat( T second, T result );
+	T concat( T second, @Nullable T result );
 
 	/**
 	 * <p>
@@ -100,10 +102,10 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 * @param inverse Where the inverse will be stored.  If null a new instance is created.  Modified.
 	 * @return The inverse transform.
 	 */
-	public T invert( T inverse );
+	T invert( @Nullable T inverse );
 
 	/**
 	 * Sets the transform to its initial state of no transform.
 	 */
-	public void reset();
+	void reset();
 }

@@ -131,9 +131,14 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if( this.getClass() != obj.getClass() )
-			return false;
+		if (this == obj) return true;
+		if( !(obj instanceof Point3D_I32)) return false;
 		Point3D_I32 p = (Point3D_I32)obj;
 		return x==p.x&&y==p.y&&z==p.z;
+	}
+
+	@Override
+	public int hashCode() {
+		return Integer.hashCode(x+y+z);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,6 +23,7 @@ import georegression.struct.curve.ParabolaGeneral_F64;
 import georegression.struct.curve.ParabolaParametric_F64;
 import org.ejml.data.DMatrix3x3;
 import org.ejml.data.DMatrixRMaj;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Peter Abeles
@@ -39,7 +40,7 @@ public class UtilCurves_F64 {
 	 * </pre>
 	 *
 	 */
-	public static DMatrixRMaj convert(ConicGeneral_F64 src , DMatrixRMaj dst )
+	public static DMatrixRMaj convert(ConicGeneral_F64 src , @Nullable DMatrixRMaj dst )
 	{
 		if( dst == null )
 			dst = new DMatrixRMaj(3,3);
@@ -70,7 +71,7 @@ public class UtilCurves_F64 {
 	 *     F = DST(2,2)
 	 * </pre>
 	 */
-	public static ConicGeneral_F64 convert(DMatrix3x3 src , ConicGeneral_F64 dst ) {
+	public static ConicGeneral_F64 convert(DMatrix3x3 src , @Nullable ConicGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ConicGeneral_F64();
 
@@ -90,7 +91,7 @@ public class UtilCurves_F64 {
 	 *        [D/2  E/2  F  ]
 	 * </pre>
 	 */
-	public static DMatrix3x3 convert(ConicGeneral_F64 src , DMatrix3x3 dst )
+	public static DMatrix3x3 convert(ConicGeneral_F64 src , @Nullable DMatrix3x3 dst )
 	{
 		if( dst == null )
 			dst = new DMatrix3x3();
@@ -120,7 +121,7 @@ public class UtilCurves_F64 {
 	 * </pre>
 	 *
 	 */
-	public static ConicGeneral_F64 convert( DMatrixRMaj src , ConicGeneral_F64 dst ) {
+	public static ConicGeneral_F64 convert( DMatrixRMaj src , @Nullable ConicGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ConicGeneral_F64();
 
@@ -139,7 +140,7 @@ public class UtilCurves_F64 {
 	 * @param dst (Output) Optional storage for converted parabola
 	 * @return Parabola
 	 */
-	public static ParabolaGeneral_F64 convert(ConicGeneral_F64 src , ParabolaGeneral_F64 dst ) {
+	public static ParabolaGeneral_F64 convert(ConicGeneral_F64 src , @Nullable ParabolaGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ParabolaGeneral_F64();
 
@@ -160,7 +161,7 @@ public class UtilCurves_F64 {
 	 * @param dst (Output) Optional storage for converted conic
 	 * @return Conic
 	 */
-	public static ConicGeneral_F64 convert(ParabolaGeneral_F64 src , ConicGeneral_F64 dst ) {
+	public static ConicGeneral_F64 convert(ParabolaGeneral_F64 src , @Nullable ConicGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ConicGeneral_F64();
 
@@ -189,7 +190,8 @@ public class UtilCurves_F64 {
 //
 //	}
 
-	public static ParabolaParametric_F64 convert( ParabolaGeneral_F64 src , ParabolaParametric_F64 dst ) {
+	public static ParabolaParametric_F64 convert( ParabolaGeneral_F64 src ,
+												  @Nullable ParabolaParametric_F64 dst ) {
 		if( dst == null )
 			dst = new ParabolaParametric_F64();
 
@@ -216,7 +218,8 @@ public class UtilCurves_F64 {
 		return dst;
 	}
 
-	public static ParabolaGeneral_F64 convert( ParabolaParametric_F64 src , ParabolaGeneral_F64 dst ) {
+	public static ParabolaGeneral_F64 convert( ParabolaParametric_F64 src ,
+											   @Nullable ParabolaGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ParabolaGeneral_F64();
 

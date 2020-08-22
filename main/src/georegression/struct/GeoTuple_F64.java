@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -123,17 +123,31 @@ public abstract class GeoTuple_F64 <T extends GeoTuple_F64> extends GeoTuple<T> 
 
 	@Override
 	public boolean equals(Object obj) {
-		if( this.getClass() != obj.getClass() )
+		if(this == obj)
+			return true;
+
+		if(!(obj instanceof GeoTuple_F64))
 			return false;
-		GeoTuple_F64 p = (GeoTuple_F64)obj;
+
+		var o = (GeoTuple_F64)obj;
 		final int N = getDimension();
 
-		if( N != p.getDimension() )
+		if( N != o.getDimension() )
 			return false;
 		for( int i = 0; i < N; i++ ) {
-			if( getIdx(i) != p.getIdx(i))
+			if( getIdx(i) != o.getIdx(i))
 				return false;
 		}
 		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int N = getDimension();
+		int hash = 0;
+		for (int i = 0; i < N; i++) {
+			hash += Double.hashCode(getIdx(i));
+		}
+		return hash;
 	}
 }

@@ -124,7 +124,7 @@ public class TestFitCylinderToPoints_F64 {
 		}
 
 		double angle = axisZ.dot(cylinder.line.slope);
-		angle = Math.acos( angle / (cylinder.line.slope.norm()));
+		angle = Math.acos( angle / cylinder.line.slope.norm());
 
 		Rodrigues_F64 rod = new Rodrigues_F64(angle,cross);
 		DMatrixRMaj R = ConvertRotation3D_F64.rodriguesToMatrix(rod, null);

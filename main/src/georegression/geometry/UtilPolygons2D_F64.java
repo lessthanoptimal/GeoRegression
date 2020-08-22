@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,6 +26,7 @@ import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_I32;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -219,7 +220,7 @@ public class UtilPolygons2D_F64 {
 	 * @param center (output) Center point of the quadrilateral.  Can be null.
 	 * @return The center point.
 	 */
-	public static Point2D_F64 center( Quadrilateral_F64 quad , Point2D_F64 center ) {
+	public static Point2D_F64 center( Quadrilateral_F64 quad , @Nullable Point2D_F64 center ) {
 		if( center == null )
 			center = new Point2D_F64();
 

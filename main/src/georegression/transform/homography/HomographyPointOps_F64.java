@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,7 @@ package georegression.transform.homography;
 
 import georegression.struct.homography.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -40,7 +41,7 @@ public class HomographyPointOps_F64 {
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Homography2D_F64 H, Point2D_F64 orig, Point2D_F64 result ) {
+	public static Point2D_F64 transform( Homography2D_F64 H, Point2D_F64 orig, @Nullable Point2D_F64 result ) {
 
 		if( result == null ) {
 			result = new Point2D_F64();
@@ -71,8 +72,9 @@ public class HomographyPointOps_F64 {
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
-	public static Point2D_F64 transform( Homography2D_F64 H, double x , double y , Point2D_F64 result ) {
-
+	public static Point2D_F64 transform( Homography2D_F64 H, double x , double y ,
+										 @Nullable Point2D_F64 result )
+	{
 		if( result == null ) {
 			result = new Point2D_F64();
 		}

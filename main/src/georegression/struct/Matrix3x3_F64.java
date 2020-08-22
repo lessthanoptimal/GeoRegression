@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,6 +27,7 @@ import org.ejml.data.DMatrix3x3;
  */
 public class Matrix3x3_F64 extends DMatrix3x3 {
 
+	@Override
 	public void zero() {
 		a11=a12=a13=a21=a22=a23=a31=a32=a33=0;
 	}
@@ -37,6 +38,7 @@ public class Matrix3x3_F64 extends DMatrix3x3 {
 		a31=b.a31; a32=b.a32; a33=b.a33;
 	}
 
+	@Override
 	public void set( double a11, double a12, double a13 ,
 					 double a21, double a22, double a23 ,
 					 double a31, double a32, double a33 ) {

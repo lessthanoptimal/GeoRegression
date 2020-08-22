@@ -21,6 +21,7 @@ package georegression.geometry;
 import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.data.DMatrixRMaj;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -59,7 +60,7 @@ public class UtilVector3D_F64 {
 	 * @param output (Optional) storage for output
 	 * @return Perpendicular vector
 	 */
-	public static Vector3D_F64 perpendicularCanonical( Vector3D_F64 A , Vector3D_F64 output ) {
+	public static Vector3D_F64 perpendicularCanonical( Vector3D_F64 A , @Nullable Vector3D_F64 output ) {
 		if( output == null )
 			output = new Vector3D_F64();
 
@@ -124,7 +125,7 @@ public class UtilVector3D_F64 {
 	 * @param R If not null the vectors are stored here.
 	 * @return Matrix.
 	 */
-	public static DMatrixRMaj createMatrix( DMatrixRMaj R, Vector3D_F64... v ) {
+	public static DMatrixRMaj createMatrix( @Nullable DMatrixRMaj R, Vector3D_F64... v ) {
 		if( R == null ) {
 			R = new DMatrixRMaj( 3, v.length );
 		}
