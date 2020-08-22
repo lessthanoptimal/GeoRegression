@@ -4,6 +4,8 @@ YEAR-MONTH-DAY
 Date    : 2020
 Version : 0.23
 
+- Build
+  * Static checks with Error Prone and NullAway
 - GeoTuple
   * Added setTo() function
 
