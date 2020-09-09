@@ -258,7 +258,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		if(this == obj)
 			return true;
 
-		if(!(obj instanceof GeoTuple3D_F64))
+		if( this.getClass() != obj.getClass() )
 			return false;
 
 		var o = (GeoTuple3D_F64)obj;
