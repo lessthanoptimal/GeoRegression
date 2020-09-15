@@ -226,16 +226,17 @@ public class SePointOps_F64 {
 		if( dst == null )
 			dst = new Point3D_F64();
 
-		final double x = src.x/src.w;
-		final double y = src.y/src.w;
-		final double z = src.z/src.w;
+		DMatrixRMaj R = se.R;
+		Vector3D_F64 T = se.T;
 
-		DMatrixRMaj R = se.getR();
-		Vector3D_F64 T = se.getT();
+		// [R T]*X
+		dst.x = R.data[0]*src.x + R.data[1]*src.y + R.data[2]*src.z + T.x*src.w;
+		dst.y = R.data[3]*src.x + R.data[4]*src.y + R.data[5]*src.z + T.y*src.w;
+		dst.z = R.data[6]*src.x + R.data[7]*src.y + R.data[8]*src.z + T.z*src.w;
 
-		dst.x = R.data[0]*x + R.data[1]*y + R.data[2]*z + T.x;
-		dst.y = R.data[3]*x + R.data[4]*y + R.data[5]*z + T.y;
-		dst.z = R.data[6]*x + R.data[7]*y + R.data[8]*z + T.z;
+		dst.x /= src.w;
+		dst.y /= src.w;
+		dst.z /= src.w;
 
 		return dst;
 	}
