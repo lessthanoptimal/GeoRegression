@@ -8,6 +8,8 @@ Version : 0.23
   * Static checks with Error Prone and NullAway
 - GeoTuple
   * Added setTo() function
+- Area2D
+  * Includes functions for intersection-over-union a common quality of fit measure
 
 ---------------------------------------------
 Date    : 2020/May/19

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -552,8 +552,25 @@ public class TestIntersection2D_F64 {
 	}
 
 	@Test
-	void line_ellipse() {
+	void intersection_poly_to_poly_Simple() {
+		// A should have an area of 2*4 + 2*2
+		// It's a concave polygon with no self intersections
+		Polygon2D_F64 A = new Polygon2D_F64(new double[][]{{0,0},{4,0},{4,4},{2,2},{0,4}});
+		Polygon2D_F64 B = A.copy();
 
+		assertEquals(12,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+
+		// make sure the order doesn't matter
+		B.flip();
+		assertEquals(12,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+
+		// Now B will be a convex polygon that the intersects left side
+		B = new Polygon2D_F64(new double[][]{{0,0},{2,0},{2,6},{0,4}});
+		assertEquals(0.5*2*2,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+	}
+
+	@Test
+	void line_ellipse() {
 		// easy cases where the ellipse is at the original aligned to the coordinate axis
 		EllipseRotated_F64 ellipse = new EllipseRotated_F64(0,0,2,1,0);
 
