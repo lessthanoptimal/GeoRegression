@@ -10,6 +10,9 @@ Version : 0.23
   * Added setTo() function
 - Area2D
   * Includes functions for intersection-over-union a common quality of fit measure
+- Iteratve Closest Point (ICP)
+  * Fits 2D and 3D point clouds
+  * Moved over from Project BUBO
 
 ---------------------------------------------
 Date    : 2020/May/19
