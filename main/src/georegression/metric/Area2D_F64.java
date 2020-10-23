@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,9 +18,12 @@
 
 package georegression.metric;
 
+import georegression.geometry.algs.AreaIntersectionPolygon2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The area contained inside 2D shapes
@@ -91,5 +94,52 @@ public class Area2D_F64 {
 		total += v1.x*( v2.y - v0.y);
 
 		return Math.abs(total/2.0);
+	}
+
+	/**
+	 * Returns the area of the Rectangle
+	 * @param r Rectangle
+	 * @return area
+	 */
+	public static double rectangle( Rectangle2D_F64 r ) {
+		return r.area();
+	}
+
+	/**
+	 * Returns the Intersection Over Union (IoU) score
+	 *
+	 * @param a (Input) rectangle
+	 * @param b (Input) rectangle
+	 * @return IoU score
+	 */
+	public static double scoreIoU( Rectangle2D_F64 a, Rectangle2D_F64 b ) {
+		double areaI = Intersection2D_F64.intersectionArea(a,b);
+
+		if (areaI == 0.0)
+			return 0.0;
+
+		return areaI/(a.area() + b.area() - areaI);
+	}
+
+	/**
+	 * Returns the Intersection Over Union (IoU) score for two simple polygon
+	 *
+	 * @param a (Input) Simple polygon
+	 * @param b (Input) Simple polygon
+	 * @return IoU score
+	 */
+	public static double scoreIoU(Polygon2D_F64 a, Polygon2D_F64 b,
+								  @Nullable AreaIntersectionPolygon2D_F64 computeArea) {
+		if (computeArea == null)
+			computeArea = new AreaIntersectionPolygon2D_F64();
+
+		double areaI = Math.abs(computeArea.computeArea(a, b));
+		if (areaI == 0.0)
+			return 0.0;
+
+		double areaA = Area2D_F64.polygonSimple(a);
+		double areaB = Area2D_F64.polygonSimple(b);
+
+		return areaI/(areaA + areaB - areaI);
 	}
 }
