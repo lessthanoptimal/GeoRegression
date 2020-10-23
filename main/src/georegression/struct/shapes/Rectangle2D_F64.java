@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -72,6 +72,36 @@ public class Rectangle2D_F64 implements Serializable {
 		}
 	}
 
+	/**
+	 * Returns true if all the extents are within tolerance.
+	 * @param r Rectangle
+	 * @param tol tolerance for equality. To be equal the difference must be less than or equal to this
+	 * @return true if equal or false if not
+	 */
+	public boolean isEquals( Rectangle2D_F64 r , double tol ) {
+		return isEquals(r.p0.x, r.p0.y, r.p1.x, r.p1.y, tol);
+	}
+
+	/**
+	 * Returns true if all the extents are within tolerance.
+	 * @param x0 lower extent. x-axis
+	 * @param y0 lower extent. y-axis
+	 * @param x1 upper extent. x-axis
+	 * @param y1 upper extent. y-axis
+	 * @param tol tolerance for equality. To be equal the difference must be less than or equal to this
+	 * @return true if equal or false if not
+	 */
+	public boolean isEquals( double x0, double y0, double x1, double y1, double tol ) {
+		if (Math.abs(x0-this.p0.x) > tol)
+			return false;
+		if (Math.abs(y0-this.p0.y) > tol)
+			return false;
+		if (Math.abs(x1-this.p1.x) > tol)
+			return false;
+		return !(Math.abs(y1 - this.p1.y) > tol);
+	}
+
+
 	public double getWidth() {
 		return p1.x-p0.x;
 	}
@@ -99,6 +129,7 @@ public class Rectangle2D_F64 implements Serializable {
 	public void setP1(Point2D_F64 p1) {
 		this.p1 = p1;
 	}
+
 
 	@Override
 	public String toString() {

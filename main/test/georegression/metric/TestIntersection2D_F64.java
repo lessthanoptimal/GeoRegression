@@ -566,7 +566,7 @@ public class TestIntersection2D_F64 {
 
 		// Now B will be a convex polygon that the intersects left side
 		B = new Polygon2D_F64(new double[][]{{0,0},{2,0},{2,6},{0,4}});
-		assertEquals(0.5*2*2,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+		assertEquals(1.5*2*2,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
 	}
 
 	@Test

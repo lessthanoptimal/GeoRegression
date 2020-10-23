@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -71,6 +71,10 @@ public class Rectangle2D_I32 {
 			y1 = y0;
 			y0 = tmp;
 		}
+	}
+
+	public boolean isEquals(int x0, int y0, int x1, int y1) {
+		return this.x0 == x0 && this.y0 == y0 && this.x1 == x1 && this.y1 == y1;
 	}
 
 	public int getWidth() {
