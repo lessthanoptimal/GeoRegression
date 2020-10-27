@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,8 +18,10 @@
 
 package georegression.fitting.polygon;
 
+import georegression.geometry.UtilPolygons2D_F64;
 import georegression.metric.Intersection2D_F64;
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import org.junit.jupiter.api.Test;
 
@@ -40,14 +42,32 @@ public class TestFitPolygon2D_F64 {
 	}
 
 	@Test void rectangleAabb() {
-		List<Point2D_F64> list = new ArrayList<>();
-		for (int i = 0; i < 20; i++) {
-			list.add(new Point2D_F64(rand.nextGaussian(), rand.nextGaussian()));
-		}
+		List<Point2D_F64> list = randomPoints();
 
 		Rectangle2D_F64 r = FitPolygon2D_F64.rectangleAabb(list, null);
 		for (Point2D_F64 p : list) {
 			assertTrue(Intersection2D_F64.contains2(r, p.x, p.y));
 		}
+	}
+
+	@Test void convexHull() {
+		List<Point2D_F64> list = randomPoints();
+
+		Polygon2D_F64 found = FitPolygon2D_F64.convexHull(list,null);
+
+		// Check results using the definition.
+		// this won't prove that it's the minimal area convex hull
+		assertTrue(found.size() <= list.size());
+		assertTrue(UtilPolygons2D_F64.isConvex(found));
+
+		list.forEach(p->assertTrue(Intersection2D_F64.containsConvex2(found,p.x, p.y)));
+	}
+
+	private List<Point2D_F64> randomPoints() {
+		List<Point2D_F64> list = new ArrayList<>();
+		for (int i = 0; i < 20; i++) {
+			list.add(new Point2D_F64(rand.nextGaussian(), rand.nextGaussian()));
+		}
+		return list;
 	}
 }

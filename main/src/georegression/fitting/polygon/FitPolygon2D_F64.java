@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,7 +19,9 @@
 package georegression.fitting.polygon;
 
 import georegression.struct.point.Point2D_F64;
+import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
+import org.ddogleg.struct.FastArray;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -63,5 +65,26 @@ public class FitPolygon2D_F64 {
 		rectangle.set( x0, y0, x1, y1);
 
 		return rectangle;
+	}
+
+	/**
+	 * Finds the convex hull of the set of points using an algorithm with a runtime of O( n log n ).
+	 *
+	 * @see FitConvexHullGrahamScan_F64
+	 *
+	 * @param points (Input) Points
+	 * @param output (Output) Storage for output convex hull. Nullable.
+	 * @return The convex hull
+	 */
+	public static Polygon2D_F64 convexHull( final List<Point2D_F64> points, @Nullable Polygon2D_F64 output) {
+		if (output==null)
+			output = new Polygon2D_F64();
+
+		var array = new FastArray<>(Point2D_F64.class);
+		array.addAll(points);
+		var fitter = new FitConvexHullGrahamScan_F64();
+		fitter.process(array, output);
+
+		return output;
 	}
 }

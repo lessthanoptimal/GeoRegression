@@ -10,11 +10,14 @@ Version : 0.23
   * Added setTo() function
 - Area2D
   * Includes functions for intersection-over-union a common quality of fit measure
+- Intersection2D
+  * Added containsConvex2() which includes points that lie along the border.
 - Iterative Closest Point (ICP)
   * Fits 2D and 3D point clouds
   * Moved over from Project BUBO
 - Added FitPolygon2D and FitPolygon3D
-  * Contains fit AABB
+  * Fit AABB for 2D and 3D
+  * Fit convex hull for 2D
 
 ---------------------------------------------
 Date    : 2020/May/19

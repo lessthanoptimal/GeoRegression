@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -50,9 +50,7 @@ public class Intersection2D_F64 {
 	 * point is an the polygon's perimeter it is considered to NOT be inside.
 	 * </p>
 	 *
-	 * <p>
-	 * Clockwise or counter-clockwise order of the polygon does not matter.
-	 * </p>
+	 * <p> Clockwise or counter-clockwise order of the polygon does not matter. </p>
 	 *
 	 * @param polygon Convex polygon. Not modified.
 	 * @param pt Point. Not modified.
@@ -60,7 +58,7 @@ public class Intersection2D_F64 {
 	 */
 	// Ported from internet code 12/2011
 	// http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-	public static boolean containConvex( Polygon2D_F64 polygon , Point2D_F64 pt )
+	public static boolean containsConvex(Polygon2D_F64 polygon , Point2D_F64 pt )
 	{
 		final int N = polygon.size();
 
@@ -76,6 +74,46 @@ public class Intersection2D_F64 {
 	}
 
 	/**
+	 * True if the convex polygon contains the point. The point is considered inside if it lies along the line.
+	 *
+	 * <p> Clockwise or counter-clockwise order of the polygon does not matter. </p>
+	 *
+	 * @param polygon Convex polygon. Not modified.
+	 * @param x x-coordinate
+	 * @param y y-coordinate
+	 * @return True if the point is contained inside the polygon.
+	 */
+	public static boolean containsConvex2(Polygon2D_F64 polygon, double x, double y ) {
+
+		int positive = 0;
+		int negative = 0;
+		int border = 0;
+
+		for (int i = 0, j = polygon.size()-1; i < polygon.size(); j=i,i++) {
+			Point2D_F64 a = polygon.get(j);
+			Point2D_F64 b = polygon.get(i);
+
+			double ax = x - a.x;
+			double ay = y - a.y;
+			double bx = x - b.x;
+			double by = y - b.y;
+			double cross = ax*by - ay*bx;
+
+			if (cross>0.0) {
+				positive++;
+			} else if(cross<0.0) {
+				negative++;
+			} else {
+				border++;
+			}
+		}
+
+		if (positive+border == polygon.size())
+			return true;
+		return negative+border == polygon.size();
+	}
+
+	/**
 	 * Checks to see if the point is contained inside the concave polygon.
 	 *
 	 * NOTE: Points which lie along the perimeter may or may not be considered as inside
@@ -84,7 +122,7 @@ public class Intersection2D_F64 {
 	 * @param pt Point. Not modified.
 	 * @return True if the point is contained inside the polygon.
 	 */
-	public static boolean containConcave( Polygon2D_F64 polygon , Point2D_F64 pt )
+	public static boolean containsConcave(Polygon2D_F64 polygon , Point2D_F64 pt )
 	{
 		final int N = polygon.size();
 
@@ -137,7 +175,7 @@ public class Intersection2D_F64 {
 	/**
 	 * Returns true of the the point is inside the triangle.
 	 *
-	 * This function is simply an unrolled version of {@link #containConcave(Polygon2D_F64, Point2D_F64)}.
+	 * This function is simply an unrolled version of {@link #containsConcave(Polygon2D_F64, Point2D_F64)}.
 	 *
 	 * @param a vertex in triangle
 	 * @param b vertex in triangle

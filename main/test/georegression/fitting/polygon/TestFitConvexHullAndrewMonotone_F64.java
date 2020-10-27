@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.geometry.algs;
+package georegression.fitting.polygon;
 
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.metric.Intersection2D_F64;
@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * @author Peter Abeles
  */
-public class TestAndrewMonotoneConvexHull_F64 {
+public class TestFitConvexHullAndrewMonotone_F64 {
 
 	Random rand = new Random(2355);
 
@@ -47,7 +47,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 
 		Polygon2D_F64 output = new Polygon2D_F64();
 
-		AndrewMonotoneConvexHull_F64 alg = new AndrewMonotoneConvexHull_F64();
+		FitConvexHullAndrewMonotone_F64 alg = new FitConvexHullAndrewMonotone_F64();
 
 		alg.process(input,input.length,output);
 
@@ -73,7 +73,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 
 		Polygon2D_F64 output = new Polygon2D_F64();
 
-		AndrewMonotoneConvexHull_F64 alg = new AndrewMonotoneConvexHull_F64();
+		FitConvexHullAndrewMonotone_F64 alg = new FitConvexHullAndrewMonotone_F64();
 
 		alg.process(input,input.length,output);
 
@@ -100,7 +100,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 
 		Polygon2D_F64 output = new Polygon2D_F64();
 
-		AndrewMonotoneConvexHull_F64 alg = new AndrewMonotoneConvexHull_F64();
+		FitConvexHullAndrewMonotone_F64 alg = new FitConvexHullAndrewMonotone_F64();
 
 		alg.process(input,input.length,output);
 
@@ -118,12 +118,12 @@ public class TestAndrewMonotoneConvexHull_F64 {
 	@Test
 	void randomPoints() {
 
-		AndrewMonotoneConvexHull_F64 alg = new AndrewMonotoneConvexHull_F64();
+		FitConvexHullAndrewMonotone_F64 alg = new FitConvexHullAndrewMonotone_F64();
 		Polygon2D_F64 output = new Polygon2D_F64();
 
 		for (int numPoints = 10; numPoints < 20; numPoints++) {
 
-			Point2D_F64 data[] = new Point2D_F64[numPoints];
+			Point2D_F64[] data = new Point2D_F64[numPoints];
 			for (int i = 0; i < numPoints; i++) {
 				double x = rand.nextGaussian()*5;
 				double y = rand.nextGaussian()*5;
@@ -139,7 +139,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 			assertTrue(output.isConvex());
 
 			for (int i = 0; i < numPoints; i++) {
-				Intersection2D_F64.containConvex(output,data[i]);
+				Intersection2D_F64.containsConvex(output,data[i]);
 			}
 		}
 	}
@@ -147,7 +147,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 	@Test
 	void grid() {
 
-		AndrewMonotoneConvexHull_F64 alg = new AndrewMonotoneConvexHull_F64();
+		FitConvexHullAndrewMonotone_F64 alg = new FitConvexHullAndrewMonotone_F64();
 		Polygon2D_F64 output = new Polygon2D_F64();
 
 		int numRows = 5;
@@ -155,7 +155,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 
 		double w = 1.2;
 
-		Point2D_F64 points[] = new Point2D_F64[numRows*numCols];
+		Point2D_F64[] points = new Point2D_F64[numRows*numCols];
 
 		for (int row = 0; row < numRows; row++) {
 			double y = row*w - 2.1;
@@ -173,7 +173,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 		assertTrue(output.isConvex());
 
 		for (int i = 0; i < points.length; i++) {
-			Intersection2D_F64.containConvex(output,points[i]);
+			Intersection2D_F64.containsConvex(output,points[i]);
 		}
 	}
 
@@ -181,7 +181,7 @@ public class TestAndrewMonotoneConvexHull_F64 {
 
 		assertTrue(UtilPolygons2D_F64.isConvex(output));
 
-		int count[] = new int[expected.length];
+		int[] count = new int[expected.length];
 
 		assertEquals(expected.length,output.size());
 

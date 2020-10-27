@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.geometry.algs;
+package georegression.fitting.polygon;
 
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
@@ -29,13 +29,13 @@ import org.ddogleg.struct.FastArray;
  *
  * @author Peter Abeles
  */
-public class AndrewMonotoneConvexHull_F64 {
+public class FitConvexHullAndrewMonotone_F64 {
 	// Use this sorting routine to avoid declaring memory each time its called
 	QuickSortComparator<Point2D_F64> sorter;
 
 	FastArray<Point2D_F64> work = new FastArray<>(Point2D_F64.class);
 
-	public AndrewMonotoneConvexHull_F64() {
+	public FitConvexHullAndrewMonotone_F64() {
 
 		// Sort the points based on their x value.  If the same then use y value
 		sorter = new QuickSortComparator<>((a, b) -> {
@@ -60,7 +60,7 @@ public class AndrewMonotoneConvexHull_F64 {
 	 */
 	public void process( Point2D_F64[] input , int length , Polygon2D_F64 hull )
 	{
-		// ahdnle special cases
+		// Handle special cases
 		if( length == 2 ) {
 			hull.vertexes.resize(length);
 			for (int i = 0; i < length; i++) {
@@ -88,9 +88,9 @@ public class AndrewMonotoneConvexHull_F64 {
 		int minSize = work.size+2;
 
 		// construct upper hull
-		for(int i = length-1 ; i >= 0 ; i --)                // Finding top layer from hull
+		for(int i = length-1 ; i >= 0 ; i --) // Finding top layer from hull
 		{
-			//Contains at least 2 points and the last two points and 'p' do not make a counter-clockwise turn
+			// Contains at least 2 points and the last two points and 'p' do not make a counter-clockwise turn
 			Point2D_F64 p = input[i];
 			while( work.size() >= minSize && subtractThenCross(p,work.getTail(0),work.getTail(1)) >= 0 ) {
 				work.removeTail();

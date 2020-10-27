@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -129,17 +129,17 @@ public class Polygon2D_F64 implements Serializable {
 	 * Returns true if the point is inside the polygon.  Points along the border are ambiguously considered inside
 	 * or outside.
 	 *
-	 * @see Intersection2D_F64#containConcave(Polygon2D_F64, Point2D_F64)
-	 * @see Intersection2D_F64#containConcave(Polygon2D_F64, Point2D_F64)
+	 * @see Intersection2D_F64#containsConcave(Polygon2D_F64, Point2D_F64)
+	 * @see Intersection2D_F64#containsConcave(Polygon2D_F64, Point2D_F64)
 	 *
 	 * @param p A point
 	 * @return true if inside and false if outside
 	 */
 	public boolean isInside( Point2D_F64 p ) {
 		if( isConvex() ) {
-			return Intersection2D_F64.containConvex(this,p);
+			return Intersection2D_F64.containsConvex(this,p);
 		} else {
-			return Intersection2D_F64.containConcave(this,p);
+			return Intersection2D_F64.containsConcave(this,p);
 		}
 	}
 

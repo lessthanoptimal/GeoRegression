@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,6 @@
 
 package georegression.geometry;
 
-import georegression.geometry.algs.AndrewMonotoneConvexHull_F64;
 import georegression.metric.Distance2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -393,28 +392,6 @@ public class UtilPolygons2D_F64 {
 			a.vertexes.data[i] = a.vertexes.data[i-1];
 		}
 		a.vertexes.data[0] = last;
-	}
-
-	/**
-	 * Computes the convex hull of the set of points.
-	 *
-	 * <p>
-	 * NOTE: This method declares a temporary array.  If you want to avoid that invoke {@link AndrewMonotoneConvexHull_F64}
-	 * directly.
-	 * </p>
-	 *
-	 * @param points (Input) Set of points.
-	 * @param hull (output) storage for convex hull.  Will be in counter-clockwise order
-	 */
-	public static void convexHull( List<Point2D_F64> points , Polygon2D_F64 hull ) {
-		Point2D_F64[] array = new Point2D_F64[points.size()];
-
-		for (int i = 0; i < points.size(); i++) {
-			array[i] = points.get(i);
-		}
-
-		AndrewMonotoneConvexHull_F64 andrew = new AndrewMonotoneConvexHull_F64();
-		andrew.process(array,array.length,hull);
 	}
 
 	/**
