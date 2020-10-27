@@ -20,35 +20,41 @@ package georegression.fitting.polygon;
 
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.metric.Intersection2D_F64;
+import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
+import org.ddogleg.struct.FastAccess;
 import org.ddogleg.struct.FastQueue;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
+ * Checks for convex hull algorithms
+ *
  * @author Peter Abeles
  */
-public class TestFitConvexHullGrahamScan_F64 {
+public abstract class CommonConvexHullChecks_F64 {
 	Random rand = new Random(324);
+
+	abstract FitConvexHull_F64 createAlgorithm();
 
 	/**
 	 * Trivial case where there are 4 points that form a square and are axis-aligned
 	 */
-	@Test void square_axis_aligned() {
+	@Test
+	void square_axis_aligned() {
 		var points = new FastQueue<>(Point2D_F64::new);
 		points.grow().set(0,0);
 		points.grow().set(2,0);
 		points.grow().set(2,2);
 		points.grow().set(0,2);
 
-		var alg = new FitConvexHullGrahamScan_F64();
+		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
 		alg.process(points, found);
 
@@ -78,7 +84,7 @@ public class TestFitConvexHullGrahamScan_F64 {
 		points.grow().set(2,2);
 		points.grow().set(0,2);
 
-		var alg = new FitConvexHullGrahamScan_F64();
+		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
 		alg.process(points, found);
 
@@ -100,7 +106,7 @@ public class TestFitConvexHullGrahamScan_F64 {
 		points.grow().set(1,4);
 		points.grow().set(-1,2);
 
-		var alg = new FitConvexHullGrahamScan_F64();
+		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
 		alg.process(points, found);
 
@@ -118,7 +124,7 @@ public class TestFitConvexHullGrahamScan_F64 {
 		points.grow().set(2,2);
 		points.grow().set(0,0);
 
-		var alg = new FitConvexHullGrahamScan_F64();
+		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
 		alg.process(points, found);
 
@@ -139,7 +145,7 @@ public class TestFitConvexHullGrahamScan_F64 {
 		points.grow().set(2,2);
 		points.grow().set(0,0);
 
-		var alg = new FitConvexHullGrahamScan_F64();
+		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
 		alg.process(points, found);
 
@@ -154,34 +160,6 @@ public class TestFitConvexHullGrahamScan_F64 {
 		assertEquals(4, found.size());
 		assertTrue(UtilPolygons2D_F64.isCCW(found));
 		assertTrue(UtilPolygons2D_F64.isConvex(found));
-
-	}
-
-	/**
-	 * Pathological case for this specific algorithm. Multiple points will have the same angle relative to the pivot
-	 * point
-	 */
-	@Test void multiple_points_same_angle() {
-		var points = new FastQueue<>(Point2D_F64::new);
-		points.grow().set(0,0);
-		points.grow().set(2,0);
-		points.grow().set(2,2);
-		points.grow().set(0,2);
-		points.grow().set(0.5,0);
-		points.grow().set(1.0,0);
-		points.grow().set(0,0.5);
-		points.grow().set(0,1.5);
-
-		var alg = new FitConvexHullGrahamScan_F64();
-		var found = new Polygon2D_F64();
-		alg.process(points, found);
-
-		assertEquals(4, found.size());
-		assertTrue(UtilPolygons2D_F64.isCCW(found));
-		assertEquals(0.0, found.get(0).distance(0,0), UtilEjml.TEST_F64);
-		assertEquals(0.0, found.get(1).distance(2,0), UtilEjml.TEST_F64);
-		assertEquals(0.0, found.get(2).distance(2,2), UtilEjml.TEST_F64);
-		assertEquals(0.0, found.get(3).distance(0,2), UtilEjml.TEST_F64);
 	}
 
 	/**
@@ -189,7 +167,7 @@ public class TestFitConvexHullGrahamScan_F64 {
 	 */
 	@Test void random() {
 		var points = new FastQueue<>(Point2D_F64::new);
-		var alg = new FitConvexHullGrahamScan_F64();
+		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
 
 		for (int trial = 0; trial < 40; trial++) {
@@ -217,7 +195,7 @@ public class TestFitConvexHullGrahamScan_F64 {
 		var points = new FastQueue<>(Point2D_F64::new);
 		points.grow().set(0,0);
 
-		var alg = new FitConvexHullGrahamScan_F64();
+		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
 		alg.process(points, found);
 		assertEquals(1, found.size());
@@ -237,7 +215,7 @@ public class TestFitConvexHullGrahamScan_F64 {
 		points.grow().set(2,0);
 		points.grow().set(3,0);
 
-		var alg = new FitConvexHullGrahamScan_F64();
+		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
 		alg.process(points, found);
 		assertEquals(2, found.size());
@@ -245,31 +223,79 @@ public class TestFitConvexHullGrahamScan_F64 {
 		assertEquals(0.0, found.get(1).distance(3,0), UtilEjml.TEST_F64);
 	}
 
-	@Test void isCCW() {
-		Point2D_F64 a = new Point2D_F64(2,2);
-		Point2D_F64 b = new Point2D_F64(3,2);
-		Point2D_F64 c = new Point2D_F64(2,3);
+	@Test void pentagon() {
+		// all points are in hull
+		var input = new FastQueue<>(Point2D_F64::new);
+		input.grow().set(2,3);
+		input.grow().set(2,8);
+		input.grow().set(7,8);
+		input.grow().set(7,3);
+		input.grow().set(4,10);
 
-		assertEquals(-1, FitConvexHullGrahamScan_F64.isCW(a,b,c));
-		assertEquals(1, FitConvexHullGrahamScan_F64.isCW(a,c,b));
-		assertEquals(0, FitConvexHullGrahamScan_F64.isCW(a,c,c));
+		Polygon2D_F64 output = new Polygon2D_F64();
+
+		ConvexHullAndrewMonotone_F64 alg = new ConvexHullAndrewMonotone_F64();
+
+		alg.process(input,output);
+
+		containsOnceEach(input,output);
+
+		// add a point inside
+		var input2 = new FastQueue<>(Point2D_F64::new);
+		input2.copyAll(input.toList(), (a,b)->b.set(a));
+		input2.grow().set(4,4);
+
+		alg.process(input2,output);
+		containsOnceEach(input,output);
 	}
 
-	@Test void compareAngle() {
-		var alg = new FitConvexHullGrahamScan_F64();
-		Comparator<Point2D_F64> compare = alg.sorter.getComparator();
-		Point2D_F64 a = new Point2D_F64(2,2);
-		Point2D_F64 b = new Point2D_F64(3,2);
-		Point2D_F64 c = new Point2D_F64(2,3);
+	@Test void grid() {
+		ConvexHullAndrewMonotone_F64 alg = new ConvexHullAndrewMonotone_F64();
+		Polygon2D_F64 output = new Polygon2D_F64();
 
-		alg.pivot = a;
+		int numRows = 5;
+		int numCols = 6;
 
-		assertEquals(-1,compare.compare(b,c));
-		assertEquals(1,compare.compare(c,b));
-		assertEquals(0,compare.compare(c,c));
+		double w = 1.2;
 
-		Point2D_F64 d = new Point2D_F64(2,4);
-		assertEquals(1,compare.compare(d,c));
-		assertEquals(-1,compare.compare(c,d));
+		var points = new FastQueue<>(Point2D_F64::new);
+
+		for (int row = 0; row < numRows; row++) {
+			double y = row*w - 2.1;
+			for (int col = 0; col < numCols; col++) {
+				double x = col*w - 2.6;
+				points.grow().set(x,y);
+			}
+		}
+		alg.process(points,output);
+
+		// check some of the properties of the convex hull
+		assertTrue(output.size() <= points.size);
+		assertTrue(output.isCCW());
+		assertTrue(output.isConvex());
+
+		for (int i = 0; i < points.size; i++) {
+			Intersection2D_F64.containsConvex(output,points.get(i));
+		}
+	}
+
+	void containsOnceEach(FastAccess<Point2D_F64> expected , Polygon2D_F64 output ) {
+		assertTrue(UtilPolygons2D_F64.isConvex(output));
+
+		int[] count = new int[expected.size];
+
+		assertEquals(expected.size,output.size());
+
+		for (int i = 0; i < expected.size; i++) {
+			for (int j = 0; j < output.size(); j++) {
+				if( expected.get(i).distance2(output.get(j)) <= GrlConstants.TEST_F64) {
+					count[i]++;
+				}
+			}
+		}
+
+		for (int i = 0; i < count.length; i++) {
+			assertEquals(1, count[i]);
+		}
 	}
 }

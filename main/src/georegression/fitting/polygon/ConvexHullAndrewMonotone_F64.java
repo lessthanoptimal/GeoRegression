@@ -21,6 +21,7 @@ package georegression.fitting.polygon;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import org.ddogleg.sorting.QuickSortComparator;
+import org.ddogleg.struct.FastAccess;
 import org.ddogleg.struct.FastArray;
 
 /**
@@ -29,14 +30,13 @@ import org.ddogleg.struct.FastArray;
  *
  * @author Peter Abeles
  */
-public class FitConvexHullAndrewMonotone_F64 {
+public class ConvexHullAndrewMonotone_F64 implements FitConvexHull_F64{
 	// Use this sorting routine to avoid declaring memory each time its called
 	QuickSortComparator<Point2D_F64> sorter;
 
-	FastArray<Point2D_F64> work = new FastArray<>(Point2D_F64.class);
+	FastArray<Point2D_F64> stack = new FastArray<>(Point2D_F64.class);
 
-	public FitConvexHullAndrewMonotone_F64() {
-
+	public ConvexHullAndrewMonotone_F64() {
 		// Sort the points based on their x value.  If the same then use y value
 		sorter = new QuickSortComparator<>((a, b) -> {
 			if( a.x < b.x )
@@ -54,58 +54,58 @@ public class FitConvexHullAndrewMonotone_F64 {
 	/**
 	 * Computes the convex hull.  The output will be in counter-clockwise order.
 	 *
-	 * @param input List of input points.  The list will be modified by sorting
-	 * @param length Number of valid elements in list
-	 * @param hull (Output) Where the complex hull is written to
+	 * @param points List of input points.  The list will be modified by sorting
+	 * @param output (Output) Where the complex hull is written to.
 	 */
-	public void process( Point2D_F64[] input , int length , Polygon2D_F64 hull )
+	@Override
+	public void process(FastAccess<Point2D_F64> points, Polygon2D_F64 output )
 	{
+		output.vertexes.reset();
+
 		// Handle special cases
-		if( length == 2 ) {
-			hull.vertexes.resize(length);
-			for (int i = 0; i < length; i++) {
-				hull.get(i).set(input[i]);
+		if( points.size <= 2 ) {
+			output.vertexes.resize(points.size);
+			for (int i = 0; i < points.size; i++) {
+				output.get(i).set(points.data[i]);
 			}
 			return;
 		}
 
-		sorter.sort(input,length);
-		work.reset();
+		final int length = points.size;
+		sorter.sort(points.data, length);
+		stack.reset();
 
 		// construct the lower hull
 		for (int i = 0; i < length; i++) {
-			Point2D_F64 p = input[i];
-			//Contains at least 2 points and the last two points and 'p' do not make a counter-clockwise turn
-			while( work.size() >= 2 && subtractThenCross(p,work.getTail(0),work.getTail(1)) >= 0) {
+			Point2D_F64 p = points.data[i];
+			// Contains at least 2 points and the last two points and 'p' do not make a counter-clockwise turn
+			while( stack.size() >= 2 && subtractThenCross(p, stack.getTail(), stack.getTail(1)) >= 0) {
 				// remove the last points from the hull
-				work.removeTail();
+				stack.removeTail();
 			}
 			// append p to the end
-			work.add(p);
+			stack.add(p);
 		}
 
-		work.removeTail();
-		int minSize = work.size+2;
+		stack.removeTail();
+		int minSize = stack.size+2;
 
 		// construct upper hull
-		for(int i = length-1 ; i >= 0 ; i --) // Finding top layer from hull
-		{
+		for(int i = length-1 ; i >= 0 ; i --) { // Finding top layer from hull
 			// Contains at least 2 points and the last two points and 'p' do not make a counter-clockwise turn
-			Point2D_F64 p = input[i];
-			while( work.size() >= minSize && subtractThenCross(p,work.getTail(0),work.getTail(1)) >= 0 ) {
-				work.removeTail();
+			Point2D_F64 p = points.data[i];
+			while( stack.size() >= minSize && subtractThenCross(p, stack.getTail(), stack.getTail(1)) >= 0 ) {
+				stack.removeTail();
 			}
 			// append p to the end
-			work.add(p);
+			stack.add(p);
 		}
-		work.removeTail();
+		stack.removeTail();
 
-		// create a copy for the output
-		// the work buffer contains references to the input points, but to be safe the output should have its
-		// own instances
-		hull.vertexes.resize(work.size);
-		for (int i = 0; i < work.size(); i++) {
-			hull.vertexes.data[i].set(work.get(i));
+		// Copy the stack into the output polygon
+		output.vertexes.resize(stack.size());
+		for (int i = 0; i < stack.size; i++) {
+			output.vertexes.get(i).set(stack.get(i));
 		}
 	}
 
@@ -121,5 +121,4 @@ public class FitConvexHullAndrewMonotone_F64 {
 
 		return x0 * y1 - y0 * x1;
 	}
-
 }

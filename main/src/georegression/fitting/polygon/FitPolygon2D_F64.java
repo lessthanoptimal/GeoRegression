@@ -70,7 +70,8 @@ public class FitPolygon2D_F64 {
 	/**
 	 * Finds the convex hull of the set of points using an algorithm with a runtime of O( n log n ).
 	 *
-	 * @see FitConvexHullGrahamScan_F64
+	 * @see ConvexHullAndrewMonotone_F64
+	 * @see ConvexHullGrahamScan_F64
 	 *
 	 * @param points (Input) Points
 	 * @param output (Output) Storage for output convex hull. Nullable.
@@ -82,7 +83,7 @@ public class FitPolygon2D_F64 {
 
 		var array = new FastArray<>(Point2D_F64.class);
 		array.addAll(points);
-		var fitter = new FitConvexHullGrahamScan_F64();
+		var fitter = new ConvexHullAndrewMonotone_F64();
 		fitter.process(array, output);
 
 		return output;

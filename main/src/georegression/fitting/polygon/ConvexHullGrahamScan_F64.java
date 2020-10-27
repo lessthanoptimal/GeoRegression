@@ -31,7 +31,7 @@ import java.util.Comparator;
  *
  * @author Peter Abeles
  */
-public class FitConvexHullGrahamScan_F64 {
+public class ConvexHullGrahamScan_F64 implements FitConvexHull_F64 {
 
 	// Point that all the other points are sorted based on their relative angle to it
 	Point2D_F64 pivot = new Point2D_F64();
@@ -52,6 +52,7 @@ public class FitConvexHullGrahamScan_F64 {
 	 * @param points (Input, Output) Point that the convex hull is fit to. This list will be re-ordered.
 	 * @param output (Output) The found convex hull.
 	 */
+	@Override
 	public void process(FastAccess<Point2D_F64> points, Polygon2D_F64 output) {
 		output.vertexes.reset();
 
@@ -62,28 +63,17 @@ public class FitConvexHullGrahamScan_F64 {
 		int indexLowestX = findLowestX(points);
 		pivot = points.get(indexLowestX);
 
-		// Sort with CCW having increasing index around the pixel
+		// Sort the points according to Graham Scan's approach below
 		sorter.sort(points.data,points.size);
 		if (points.get(0) != pivot)
 			throw new RuntimeException("BUG!");
 
-		// Add the first three points while being careful to handle < 3 points correctly
-		int index = 0;
-		while (index < points.size && stack.size() < 3) {
-			stack.add(points.get(index));
-			index = nextNotOnSameLine(points,index);
-		}
-
-		// Add the remaining points to the polygon
-		while (index < points.size) {
-			// Pop the last points from the stack until we turn clockwise
-			Point2D_F64 top = stack.removeTail();
-			while (isCW(stack.getTail(), top, points.get(index)) >= 0) {
-				top = stack.removeTail();
+		for (int i = 0; i < points.size; i++) {
+			// Pop the last points from the stack until we turn counter-clockwise
+			while (stack.size >= 2 && isCW(stack.getTail(1), stack.getTail(), points.get(i)) >= 0) {
+				stack.removeTail();
 			}
-			stack.add(top);
-			stack.add(points.get(index));
-			index = nextNotOnSameLine(points,index);
+			stack.add(points.get(i));
 		}
 
 		// Copy the stack into the output polygon
@@ -115,31 +105,6 @@ public class FitConvexHullGrahamScan_F64 {
 			}
 		}
 		return selectedIndex;
-	}
-
-	/**
-	 * Since the input has not had points which lie along the same line relative to the pivot filtered we need to
-	 * do it after the fact. That's what this function does. It will return the next index which is not on the line
-	 */
-	int nextNotOnSameLine(FastAccess<Point2D_F64> array, int index ) {
-		if (index+1==array.size)
-			return array.size;
-
-		// If the next element is not along the same line return that
-		Point2D_F64 a = array.get(index);
-		Point2D_F64 b = array.get(++index);
-		if (isCW(pivot,a,b)!=0)
-			return index;
-		a = b;
-
-		// Otherwise we traverse along until we hit the end of the line, which will be the farthest one
-		while (index+1 < array.size) {
-			b = array.get(++index);
-			if (isCW(pivot,a,b)!=0)
-				return index-1;
-			a = b;
-		}
-		return array.size-1;
 	}
 
 	/**
