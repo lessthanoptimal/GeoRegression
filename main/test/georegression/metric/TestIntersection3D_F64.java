@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -397,5 +397,35 @@ public class TestIntersection3D_F64 {
 		line.slope.set(-1,0,1.99);
 		line.slope.normalize();
 		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
+	}
+
+	@Test void intersectionArea_box_box() {
+		// check several positive cases
+		check( new Box3D_F64(0,0,0,100,120,90),new Box3D_F64(0,0,0,100,120,90), 100*120*90);
+		check( new Box3D_F64(0,0,0,100,120,90),new Box3D_F64(10,12,13,99,119,89), 89*107*76);
+		check( new Box3D_F64(0,0,0,100,120,90),new Box3D_F64(50,50,50,200,200,200), 50*70*40 );
+		check( new Box3D_F64(0,0,0,100,120,90),new Box3D_F64(-10,-10,-10,10,10,10), 10*10*10 );
+		check( new Box3D_F64(0,0,0,100,120,90),new Box3D_F64(90,-10,30,105,1,75), 10*1*45);
+		check( new Box3D_F64(0,0,0,100,120,90),new Box3D_F64(90,5,-5,105,105,105), 10*100*90 );
+
+		// negative cases
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(200, 200, 200,300, 305,295), 0);
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(-200, -200, -200,-10, -10,-10), 0);
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(0, -20, -30, 100, -5, 5), 0);
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(0, 125, 95, 100, 130, 100), 0);
+
+		// edge cases
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(0, 0, 0, 0, 0, 0), 0);
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(100, 120, 90, 100, 120, 90), 0);
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(-10, 0, 0, 0, 120, 90), 0);
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(100, 0, 0, 105, 120, 90), 0);
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(0, -10, 0, 100, 0, 90), 0);
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(0, 120, 0, 100, 125, 90), 0);
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(0, 0, 90, 100, 120, 95), 0);
+		check(new Box3D_F64(0,0,0,100,120,90), new Box3D_F64(0, 0, -10, 100, 120, 0), 0);
+	}
+
+	private void check( Box3D_F64 a , Box3D_F64 b , double expected ) {
+		assertEquals(expected,Intersection3D_F64.intersectionArea(a,b),GrlConstants.TEST_F64);
 	}
 }

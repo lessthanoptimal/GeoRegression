@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,12 +23,15 @@ import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.shapes.Box3D_F64;
 import georegression.struct.shapes.Cylinder3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
 import georegression.struct.shapes.Triangle3D_F64;
 
 
 /**
+ * Distance of various shapes in 3D space
+ *
  * @author Peter Abeles
  */
 public class Distance3D_F64 {
@@ -212,5 +215,21 @@ public class Distance3D_F64 {
 		double d = point.distance(cp);
 
 		return alg.sign(point)*d;
+	}
+
+	/**
+	 * Returns the Intersection Over Union (IoU) score
+	 *
+	 * @param a (Input) rectangle
+	 * @param b (Input) rectangle
+	 * @return IoU score
+	 */
+	public static double scoreIoU( Box3D_F64 a, Box3D_F64 b ) {
+		double areaI = Intersection3D_F64.intersectionArea(a,b);
+
+		if (areaI == 0.0)
+			return 0.0;
+
+		return areaI/(a.area() + b.area() - areaI);
 	}
 }

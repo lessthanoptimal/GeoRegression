@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -28,10 +28,11 @@ import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
+import georegression.struct.shapes.Rectangle2D_F64;
+import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 /**
  * @author Peter Abeles
@@ -48,37 +49,32 @@ public class TestDistance2D_F64 {
 	/**
 	 * Give it a very large slope
 	 */
-	@Test
-	void distance_parametric_line_case1() {
+	@Test void distance_parametric_line_case1() {
 		double found = Distance2D_F64.distance(
 				new LineParametric2D_F64( 100,0,0,Double.MAX_VALUE),
 				new Point2D_F64( 20, 20 ) );
 		assertEquals( 80.0, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_parametric_line_points() {
+	@Test void distance_parametric_line_points() {
 		double found = Distance2D_F64.distance( new LineParametric2D_F64( -2, 0, 1, 1 ),  4, -2  );
 		double expected = (double) UtilTrig_F64.distance( 0, 2, 4, -2 );
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distanceSq_parametric_line() {
+	@Test void distanceSq_parametric_line() {
 		double found = Distance2D_F64.distanceSq(new LineParametric2D_F64(-2, 0, 1, 1), new Point2D_F64(4, -2));
 		double expected = (double) UtilTrig_F64.distanceSq(0, 2, 4, -2);
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distanceSq_parametric_line_points() {
+	@Test void distanceSq_parametric_line_points() {
 		double found = Distance2D_F64.distanceSq(new LineParametric2D_F64(-2, 0, 1, 1), 4, -2);
 		double expected = (double) UtilTrig_F64.distanceSq(0, 2, 4, -2);
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_line_segment() {
+	@Test void distance_line_segment() {
 		// test inside the line
 		double found = Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( 2, 0 ) );
 		double expected = (double) UtilTrig_F64.distance( 0, 2, 2, 0 );
@@ -95,8 +91,7 @@ public class TestDistance2D_F64 {
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distanceSq_line_segment() {
+	@Test void distanceSq_line_segment() {
 		// test inside the line
 		double found = Distance2D_F64.distanceSq( new LineSegment2D_F64( -2, 0, 3, 5 ), new Point2D_F64( 2, 0 ) );
 		double expected = (double) UtilTrig_F64.distanceSq( 0, 2, 2, 0 );
@@ -113,8 +108,7 @@ public class TestDistance2D_F64 {
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_line_segment_param() {
+	@Test void distance_line_segment_param() {
 		// test inside the line
 		double found = Distance2D_F64.distance( new LineSegment2D_F64( -2, 0, 3, 5 ), 2, 0 );
 		double expected = (double) UtilTrig_F64.distance( 0, 2, 2, 0 );
@@ -131,8 +125,7 @@ public class TestDistance2D_F64 {
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distanceSq_line_segment_param() {
+	@Test void distanceSq_line_segment_param() {
 		// test inside the line
 		double found = Distance2D_F64.distanceSq( new LineSegment2D_F64( -2, 0, 3, 5 ),  2, 0  );
 		double expected = (double) UtilTrig_F64.distanceSq( 0, 2, 2, 0 );
@@ -149,8 +142,7 @@ public class TestDistance2D_F64 {
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_general_line() {
+	@Test void distance_general_line() {
 		// easier to cherry pick points in parametric notation
 		LineParametric2D_F64 parametric = new LineParametric2D_F64( -2, 0, 1, 1 );
 		// convert into general format
@@ -161,8 +153,7 @@ public class TestDistance2D_F64 {
 		assertEquals(expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_generalNorm_line() {
+	@Test void distance_generalNorm_line() {
 		// easier to cherry pick points in parametric notation
 		LineParametric2D_F64 parametric = new LineParametric2D_F64( -2, 0, 1, 1 );
 		// convert into general format
@@ -179,8 +170,7 @@ public class TestDistance2D_F64 {
 		assertEquals(expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_lineSegment_lineSegment() {
+	@Test void distance_lineSegment_lineSegment() {
 		// case of no intersection but one of the lines intersects inside
 		LineSegment2D_F64 a = new LineSegment2D_F64(0,0,10,0);
 		LineSegment2D_F64 b = new LineSegment2D_F64(5,2,5,10);
@@ -206,8 +196,7 @@ public class TestDistance2D_F64 {
 		assertEquals(2,Distance2D_F64.distance(b,a),GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_quadrilateral_point() {
+	@Test void distance_quadrilateral_point() {
 		Quadrilateral_F64 quad = new Quadrilateral_F64(2,0, 2,10, 10,10, 10,0);
 
 		// test a point to the left and right of a side.  should be the same
@@ -220,8 +209,7 @@ public class TestDistance2D_F64 {
 		assertEquals(6,Distance2D_F64.distance(quad,new Point2D_F64(6,-6)),GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_polygon_point() {
+	@Test void distance_polygon_point() {
 		Polygon2D_F64 poly = new Polygon2D_F64(2,0, 2,10, 10,10, 10,0);
 
 		// test a point to the left and right of a side.  should be the same
@@ -234,8 +222,7 @@ public class TestDistance2D_F64 {
 		assertEquals(6,Distance2D_F64.distance(poly,new Point2D_F64(6,-6)),GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distanceOrigin_LineParametric() {
+	@Test void distanceOrigin_LineParametric() {
 		LineParametric2D_F64 line = new LineParametric2D_F64(2.3,-9.5,2,-3.1);
 
 		double expected = Distance2D_F64.distance(line,new Point2D_F64());
@@ -244,8 +231,7 @@ public class TestDistance2D_F64 {
 		assertEquals(expected,found,GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_ellipserotated_point() {
+	@Test void distance_ellipserotated_point() {
 		EllipseRotated_F64 ellipse = new EllipseRotated_F64(4,5,4,3, GrlConstants.PId2);
 
 		assertEquals(0, Distance2D_F64.distance(ellipse,new Point2D_F64(4+3,5)), GrlConstants.TEST_F64);
@@ -259,5 +245,33 @@ public class TestDistance2D_F64 {
 
 		assertEquals(1.1, Distance2D_F64.distance(ellipse,new Point2D_F64(4+4.1,5)), GrlConstants.TEST_F64);
 		assertEquals(1.1, Distance2D_F64.distance(ellipse,new Point2D_F64(4-4.1,5)), GrlConstants.TEST_F64);
+	}
+
+	@Test void scoreIoU_Rectangle2D() {
+		// area = 6
+		Rectangle2D_F64 A = new Rectangle2D_F64(-1,-1,2,1);
+		// area = 4
+		Rectangle2D_F64 B = new Rectangle2D_F64(-2,-2,0,0);
+
+		double expected = 1.0/(6+4-1);
+		assertEquals(expected, Distance2D_F64.scoreIoU(A,B), UtilEjml.TEST_F64);
+
+		// Test no intersection
+		Rectangle2D_F64 C = new Rectangle2D_F64(10,-2,12,-1);
+		assertEquals(0.0, Distance2D_F64.scoreIoU(A,C), UtilEjml.TEST_F64);
+	}
+
+	@Test void scoreIoU_SimplePolygon() {
+		// Convex non-self intersecting polygon with an area of 12
+		Polygon2D_F64 A = new Polygon2D_F64(new double[][]{{0,0},{4,0},{4,4},{2,2},{0,4}});
+		// Square inside of A with an area of 4
+		Polygon2D_F64 B = new Polygon2D_F64(new double[][]{{1,0},{3,0},{3,2},{1,2}});
+
+		double expected = 4.0/(12.0 + 4.0 - 4.0);
+		assertEquals(expected, Distance2D_F64.scoreIoU(A,B,null), UtilEjml.TEST_F64);
+
+		// Test case with no intersection
+		Polygon2D_F64 C = new Polygon2D_F64(new double[][]{{10,0},{13,0},{13,2},{10,2}});
+		assertEquals(0.0, Distance2D_F64.scoreIoU(A,C,null), UtilEjml.TEST_F64);
 	}
 }

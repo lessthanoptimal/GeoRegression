@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,8 +22,6 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
-import georegression.struct.shapes.Rectangle2D_F64;
-import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,8 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class TestArea2D_F64 {
 
-	@Test
-	void triangle() {
+	@Test void triangle() {
 		Point2D_F64 a = new Point2D_F64(0,0);
 		Point2D_F64 b = new Point2D_F64(5,0);
 		Point2D_F64 c = new Point2D_F64(0,3);
@@ -46,8 +43,7 @@ public class TestArea2D_F64 {
 		assertEquals(expected,found,GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void quadrilateral() {
+	@Test void quadrilateral() {
 		Quadrilateral_F64 q = new Quadrilateral_F64(0,0,2,0,2,3,0,3);
 
 		assertEquals(2*3,Area2D_F64.quadrilateral(q), GrlConstants.TEST_F64);
@@ -70,8 +66,7 @@ public class TestArea2D_F64 {
 	/**
 	 * Test convex caused for the simple polygon area algorithm
 	 */
-	@Test
-	void polygonSimple_convex() {
+	@Test void polygonSimple_convex() {
 		Polygon2D_F64 t = new Polygon2D_F64(0,0,5,0,0,3);
 		assertEquals(0.5*5*3,Area2D_F64.polygonSimple(t), GrlConstants.TEST_F64);
 
@@ -95,8 +90,7 @@ public class TestArea2D_F64 {
 	/**
 	 * Test concave caused for the simple polygon area algorithm
 	 */
-	@Test
-	void polygonSimple_concave() {
+	@Test void polygonSimple_concave() {
 		Polygon2D_F64 t_inside = new Polygon2D_F64(5,5, 3,3, 0,5);
 		double area_inside = Area2D_F64.polygonSimple(t_inside);
 
@@ -112,35 +106,5 @@ public class TestArea2D_F64 {
 
 		q.flip();
 		assertEquals(area_q_full - area_inside, Area2D_F64.polygonSimple(q), GrlConstants.TEST_F64);
-	}
-
-	@Test
-	void scoreIoU_Rectangle2D() {
-		// area = 6
-		Rectangle2D_F64 A = new Rectangle2D_F64(-1,-1,2,1);
-		// area = 4
-		Rectangle2D_F64 B = new Rectangle2D_F64(-2,-2,0,0);
-
-		double expected = 1.0/(6+4-1);
-		assertEquals(expected, Area2D_F64.scoreIoU(A,B), UtilEjml.TEST_F64);
-
-		// Test no intersection
-		Rectangle2D_F64 C = new Rectangle2D_F64(10,-2,12,-1);
-		assertEquals(0.0, Area2D_F64.scoreIoU(A,C), UtilEjml.TEST_F64);
-	}
-
-	@Test
-	void scoreIoU_SimplePolygon() {
-		// Convex non-self intersecting polygon with an area of 12
-		Polygon2D_F64 A = new Polygon2D_F64(new double[][]{{0,0},{4,0},{4,4},{2,2},{0,4}});
-		// Square inside of A with an area of 4
-		Polygon2D_F64 B = new Polygon2D_F64(new double[][]{{1,0},{3,0},{3,2},{1,2}});
-
-		double expected = 4.0/(12.0 + 4.0 - 4.0);
-		assertEquals(expected, Area2D_F64.scoreIoU(A,B,null), UtilEjml.TEST_F64);
-
-		// Test case with no intersection
-		Polygon2D_F64 C = new Polygon2D_F64(new double[][]{{10,0},{13,0},{13,2},{10,2}});
-		assertEquals(0.0, Area2D_F64.scoreIoU(A,C,null), UtilEjml.TEST_F64);
 	}
 }

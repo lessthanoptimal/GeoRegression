@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -488,6 +488,27 @@ public class Intersection3D_F64 {
 		return( boxA.p0.x <= boxB.p0.x && boxA.p1.x >= boxB.p1.x &&
 				boxA.p0.y <= boxB.p0.y && boxA.p1.y >= boxB.p1.y &&
 				boxA.p0.z <= boxB.p0.z && boxA.p1.z >= boxB.p1.z );
+	}
+
+	/**
+	 * Returns the area of the intersection of two 3D boces.
+	 *
+	 * @param a Box3D
+	 * @param b Box3D
+	 * @return area of intersection
+	 */
+	public static double intersectionArea(Box3D_F64 a , Box3D_F64 b ) {
+		if( !intersect(a,b) )
+			return 0;
+
+		double x0 = Math.max(a.p0.x,b.p0.x);
+		double x1 = Math.min(a.p1.x,b.p1.x);
+		double y0 = Math.max(a.p0.y,b.p0.y);
+		double y1 = Math.min(a.p1.y,b.p1.y);
+		double z0 = Math.max(a.p0.z,b.p0.z);
+		double z1 = Math.min(a.p1.z,b.p1.z);
+
+		return (x1-x0)*(y1-y0)*(z1-z0);
 	}
 
 	/**
