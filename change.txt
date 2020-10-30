@@ -19,6 +19,11 @@ Version : 0.23
   * Fit AABB for 2D and 3D
   * Fit convex hull for 2D
 
+// TODO convex intersection in 2D
+// TODO concave "hull" in 3D
+// TODO convex hull in 3D
+// TODO area of intersection of convex hull in 3D
+
 ---------------------------------------------
 Date    : 2020/May/19
 Version : 0.22

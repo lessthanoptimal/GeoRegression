@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,9 +44,9 @@ public class TestIntersection2D_I32 {
 		Point2D_I32 inside = new Point2D_I32(5,5);
 		Point2D_I32 outside = new Point2D_I32(15,5);
 
-		assertFalse(Intersection2D_I32.containConvex(poly,online));
-		assertTrue(Intersection2D_I32.containConvex(poly,inside));
-		assertFalse(Intersection2D_I32.containConvex(poly,outside));
+		assertFalse(Intersection2D_I32.containsConvex(poly,online));
+		assertTrue(Intersection2D_I32.containsConvex(poly,inside));
+		assertFalse(Intersection2D_I32.containsConvex(poly,outside));
 
 		// change the order of the vertexes
 		poly.vertexes.data[0].set(-10, 10);
@@ -54,9 +54,9 @@ public class TestIntersection2D_I32 {
 		poly.vertexes.data[2].set(10, -10);
 		poly.vertexes.data[3].set(-10,-10);
 
-		assertFalse(Intersection2D_I32.containConvex(poly,online));
-		assertTrue(Intersection2D_I32.containConvex(poly,inside));
-		assertFalse(Intersection2D_I32.containConvex(poly,outside));
+		assertFalse(Intersection2D_I32.containsConvex(poly,online));
+		assertTrue(Intersection2D_I32.containsConvex(poly,inside));
+		assertFalse(Intersection2D_I32.containsConvex(poly,outside));
 	}
 
 	@Test
@@ -67,14 +67,14 @@ public class TestIntersection2D_I32 {
 		poly.vertexes.data[2].set(1, 1);
 		poly.vertexes.data[3].set(-1, 1);
 
-		assertTrue(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,0)));
+		assertTrue(Intersection2D_I32.containsConcave(poly, new Point2D_I32(0,0)));
 
 		// perimeter cases intentionally not handled here
 
-		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(2,0)));
-		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(-2,0)));
-		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,2)));
-		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,-2)));
+		assertFalse(Intersection2D_I32.containsConcave(poly, new Point2D_I32(2,0)));
+		assertFalse(Intersection2D_I32.containsConcave(poly, new Point2D_I32(-2,0)));
+		assertFalse(Intersection2D_I32.containsConcave(poly, new Point2D_I32(0,2)));
+		assertFalse(Intersection2D_I32.containsConcave(poly, new Point2D_I32(0,-2)));
 	}
 
 	@Test
@@ -86,16 +86,16 @@ public class TestIntersection2D_I32 {
 		poly.vertexes.data[3].set(10, 10);
 		poly.vertexes.data[4].set(-10, 10);
 
-		assertTrue(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,5)));
-		assertTrue(Intersection2D_I32.containConcave(poly, new Point2D_I32(-7,-2)));
-		assertTrue(Intersection2D_I32.containConcave(poly, new Point2D_I32(7,-2)));
+		assertTrue(Intersection2D_I32.containsConcave(poly, new Point2D_I32(0,5)));
+		assertTrue(Intersection2D_I32.containsConcave(poly, new Point2D_I32(-7,-2)));
+		assertTrue(Intersection2D_I32.containsConcave(poly, new Point2D_I32(7,-2)));
 
-		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,-5)));
+		assertFalse(Intersection2D_I32.containsConcave(poly, new Point2D_I32(0,-5)));
 
-		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(20,0)));
-		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(-20,0)));
-		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,20)));
-		assertFalse(Intersection2D_I32.containConcave(poly, new Point2D_I32(0,-20)));
+		assertFalse(Intersection2D_I32.containsConcave(poly, new Point2D_I32(20,0)));
+		assertFalse(Intersection2D_I32.containsConcave(poly, new Point2D_I32(-20,0)));
+		assertFalse(Intersection2D_I32.containsConcave(poly, new Point2D_I32(0,20)));
+		assertFalse(Intersection2D_I32.containsConcave(poly, new Point2D_I32(0,-20)));
 	}
 	
 	@Test

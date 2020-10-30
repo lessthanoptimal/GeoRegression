@@ -564,15 +564,15 @@ public class TestIntersection2D_F64 {
 	}
 
 	@Test
-	void intersection_poly_to_poly() {
+	void intersectionArea_poly_to_poly() {
 		Polygon2D_F64 A = new Polygon2D_F64(new double[][]{{0,0},{2,0},{2,4},{0,4}});
 		Polygon2D_F64 B = A.copy();
 
-		assertEquals(8,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+		assertEquals(8,Intersection2D_F64.intersectionArea(A,B), GrlConstants.TEST_SQ_F64);
 
 		// make sure the order doesn't matter
 		B.flip();
-		assertEquals(8,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+		assertEquals(8,Intersection2D_F64.intersectionArea(A,B), GrlConstants.TEST_SQ_F64);
 	}
 
 	@Test
@@ -582,15 +582,15 @@ public class TestIntersection2D_F64 {
 		Polygon2D_F64 A = new Polygon2D_F64(new double[][]{{0,0},{4,0},{4,4},{2,2},{0,4}});
 		Polygon2D_F64 B = A.copy();
 
-		assertEquals(12,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+		assertEquals(12,Intersection2D_F64.intersectionArea(A,B), GrlConstants.TEST_SQ_F64);
 
 		// make sure the order doesn't matter
 		B.flip();
-		assertEquals(12,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+		assertEquals(12,Intersection2D_F64.intersectionArea(A,B), GrlConstants.TEST_SQ_F64);
 
 		// Now B will be a convex polygon that the intersects left side
 		B = new Polygon2D_F64(new double[][]{{0,0},{2,0},{2,6},{0,4}});
-		assertEquals(1.5*2*2,Intersection2D_F64.intersection(A,B), GrlConstants.TEST_SQ_F64);
+		assertEquals(1.5*2*2,Intersection2D_F64.intersectionArea(A,B), GrlConstants.TEST_SQ_F64);
 	}
 
 	@Test

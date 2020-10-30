@@ -464,7 +464,7 @@ public class Intersection2D_F64 {
 	 * @param b (Input) Polygon 2D
 	 * @return Area of intersection.
 	 */
-	public static double intersection( Polygon2D_F64 a , Polygon2D_F64 b ) {
+	public static double intersectionArea(Polygon2D_F64 a , Polygon2D_F64 b ) {
 		AreaIntersectionPolygon2D_F64 alg = new AreaIntersectionPolygon2D_F64();
 		return Math.abs(alg.computeArea(a,b));
 	}

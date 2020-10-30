@@ -47,7 +47,7 @@ public class Intersection3D_F64 {
 	 * @param intersection (Output) Where the intersection is written to
 	 * @return True if the intersection is at a unique point.  If false then no intersection or infinite.
 	 */
-	public static boolean intersect( PlaneNormal3D_F64 plane , LineParametric3D_F64 line , Point3D_F64 intersection ) {
+	public static boolean intersection(PlaneNormal3D_F64 plane , LineParametric3D_F64 line , Point3D_F64 intersection ) {
 		double dx = plane.p.x - line.p.x;
 		double dy = plane.p.y - line.p.y;
 		double dz = plane.p.z - line.p.z;
@@ -76,7 +76,7 @@ public class Intersection3D_F64 {
 	 * @param intersection (Output) Where the intersection is written to
 	 * @return True if the intersection is at a unique point.  If false then no intersection or infinite.
 	 */
-	public static boolean intersect( PlaneGeneral3D_F64 plane , LineParametric3D_F64 line , Point3D_F64 intersection ) {
+	public static boolean intersection(PlaneGeneral3D_F64 plane , LineParametric3D_F64 line , Point3D_F64 intersection ) {
 
 		double top = plane.D - plane.A*line.p.x - plane.B*line.p.y - plane.C*line.p.z;
 		double bottom = plane.A*line.slope.x + plane.B*line.slope.y + plane.C*line.slope.z;
@@ -103,7 +103,7 @@ public class Intersection3D_F64 {
 	 * @param line (Output) Intersection.
 	 * @return true if they intersect ata line or false if not
 	 */
-	public static boolean intersect( PlaneGeneral3D_F64 a , PlaneGeneral3D_F64 b , LineParametric3D_F64 line ) {
+	public static boolean intersection(PlaneGeneral3D_F64 a , PlaneGeneral3D_F64 b , LineParametric3D_F64 line ) {
 
 		// Line's slope is the cross product of the two normal vectors
 		GeometryMath_F64.cross(a.A,a.B,a.C,b.A,b.B,b.C,line.slope);
@@ -152,8 +152,8 @@ public class Intersection3D_F64 {
 	 *          1 =  intersect in unique point I1<br>
 	 *          2 =  are in the same plane
 	 **/
-	public static int intersect(Triangle3D_F64 T , LineSegment3D_F64 R , Point3D_F64 output ) {
-		return intersect(T,R,output,
+	public static int intersection(Triangle3D_F64 T , LineSegment3D_F64 R , Point3D_F64 output ) {
+		return intersection(T,R,output,
 				new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64());
 	}
 
@@ -178,9 +178,9 @@ public class Intersection3D_F64 {
 	 *          1 =  intersect in unique point I1
 	 *          2 =  are in the same plane
 	 **/
-	public static int intersect(Triangle3D_F64 T , LineSegment3D_F64 R , Point3D_F64 output ,
-								Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
-								Vector3D_F64 dir , Vector3D_F64 w0 ) {
+	public static int intersection(Triangle3D_F64 T , LineSegment3D_F64 R , Point3D_F64 output ,
+								   Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
+								   Vector3D_F64 dir , Vector3D_F64 w0 ) {
 		double r, a, b;              // params to calc ray-plane intersect
 
 		// get triangle edge vectors and plane normal
@@ -240,8 +240,8 @@ public class Intersection3D_F64 {
 	 *          <li>3 =  intersect in unique point. Negative direction</li>
 	 *          </ul>
 	 **/
-	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output) {
-		return intersect(T,R,output,
+	public static int intersection(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output) {
+		return intersection(T,R,output,
 				new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64(),new Vector3D_F64());
 	}
 
@@ -268,9 +268,9 @@ public class Intersection3D_F64 {
 	 *          <li>3 =  intersect in unique point. Negative direction</li>
 	 *          </ul>
 	 **/
-	public static int intersect(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output ,
-								Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
-								Vector3D_F64 w0 ) {
+	public static int intersection(Triangle3D_F64 T , LineParametric3D_F64 R , Point3D_F64 output ,
+								   Vector3D_F64 u , Vector3D_F64 v , Vector3D_F64 n,
+								   Vector3D_F64 w0 ) {
 		double r, a, b;              // params to calc ray-plane intersect
 
 		// get triangle edge vectors and plane normal
@@ -498,7 +498,7 @@ public class Intersection3D_F64 {
 	 * @return area of intersection
 	 */
 	public static double intersectionArea(Box3D_F64 a , Box3D_F64 b ) {
-		if( !intersect(a,b) )
+		if( !intersection(a,b) )
 			return 0;
 
 		double x0 = Math.max(a.p0.x,b.p0.x);
@@ -519,13 +519,13 @@ public class Intersection3D_F64 {
 	 * @param boxB Box
 	 * @return true for intersection and false if no intersection
 	 */
-	public static boolean intersect( Box3D_F64 boxA , Box3D_F64 boxB ) {
-		return( intersect(boxA.p0.x , boxB.p0.x , boxA.p1.x , boxB.p1.x ) &&
-				intersect(boxA.p0.y , boxB.p0.y , boxA.p1.y , boxB.p1.y ) &&
-				intersect(boxA.p0.z , boxB.p0.z , boxA.p1.z , boxB.p1.z ) );
+	public static boolean intersection(Box3D_F64 boxA , Box3D_F64 boxB ) {
+		return( intersection(boxA.p0.x , boxB.p0.x , boxA.p1.x , boxB.p1.x ) &&
+				intersection(boxA.p0.y , boxB.p0.y , boxA.p1.y , boxB.p1.y ) &&
+				intersection(boxA.p0.z , boxB.p0.z , boxA.p1.z , boxB.p1.z ) );
 	}
 
-	protected static boolean intersect( double a0 , double b0 , double a1, double b1 ) {
+	protected static boolean intersection(double a0 , double b0 , double a1, double b1 ) {
 		if( a0 <= b0 ) {
 			return b0 < a1;
 		} else {
@@ -543,8 +543,8 @@ public class Intersection3D_F64 {
 	 * @param b (Output) Storage for point of intersection.  t = max(t0,t1), where t is location on line
 	 * @return true if the line intersects the sphere
 	 */
-	public static boolean intersect(LineParametric3D_F64 line , Sphere3D_F64 sphere ,
-									Point3D_F64 a, Point3D_F64 b ) {
+	public static boolean intersection(LineParametric3D_F64 line , Sphere3D_F64 sphere ,
+									   Point3D_F64 a, Point3D_F64 b ) {
 
 		// this equation was found by solving for l:
 		// ||(P + V*l) - X0|| == r

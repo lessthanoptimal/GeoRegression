@@ -54,7 +54,7 @@ public class TestIntersection3D_F64 {
 		LineParametric3D_F64 line = new LineParametric3D_F64(0,0,0,3,0,0);
 
 		Point3D_F64 found = new Point3D_F64();
-		assertTrue(Intersection3D_F64.intersect(plane, line, found));
+		assertTrue(Intersection3D_F64.intersection(plane, line, found));
 
 		assertEquals(2,found.x, GrlConstants.TEST_F64);
 		assertEquals(0,found.y, GrlConstants.TEST_F64);
@@ -69,7 +69,7 @@ public class TestIntersection3D_F64 {
 		PlaneGeneral3D_F64 general = UtilPlane3D_F64.convert(plane,(PlaneGeneral3D_F64)null);
 
 		Point3D_F64 found = new Point3D_F64();
-		assertTrue(Intersection3D_F64.intersect(general, line, found));
+		assertTrue(Intersection3D_F64.intersection(general, line, found));
 
 		assertEquals(2,found.x, GrlConstants.TEST_F64);
 		assertEquals(0,found.y, GrlConstants.TEST_F64);
@@ -83,7 +83,7 @@ public class TestIntersection3D_F64 {
 
 		LineParametric3D_F64 line = new LineParametric3D_F64();
 
-		Intersection3D_F64.intersect(a,b,line);
+		Intersection3D_F64.intersection(a,b,line);
 
 		// see if the origin of the line lies on both planes
 		assertEquals(0, UtilPlane3D_F64.evaluate(a,line.p), GrlConstants.TEST_F64);
@@ -107,27 +107,27 @@ public class TestIntersection3D_F64 {
 
 		// degenerate triangle
 		Triangle3D_F64 triangle = new Triangle3D_F64(1,1,1,2,2,2,3,3,3);
-		assertEquals(-1,Intersection3D_F64.intersect(triangle,ls,p));
+		assertEquals(-1,Intersection3D_F64.intersection(triangle,ls,p));
 
 		// no intersection
 		triangle.set(1,0,0,  3,0,0,  3,2,0);
 		ls.set(0,0,0,  0,0,10); // completely miss
-		assertEquals(0, Intersection3D_F64.intersect(triangle, ls, p));
+		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
 		ls.set(0,0,0,  0,0,10); // hits the plain but not the triangle
-		assertEquals(0, Intersection3D_F64.intersect(triangle, ls, p));
+		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
 		ls.set(2,0.5,-1,  2,0.5,-0.5); // would hit, but is too short
-		assertEquals(0, Intersection3D_F64.intersect(triangle, ls, p));
+		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
 		ls.set(2,0.5,-0.5,  2,0.5,-1); // would hit, but is too short
-		assertEquals(0,Intersection3D_F64.intersect(triangle,ls,p));
+		assertEquals(0,Intersection3D_F64.intersection(triangle,ls,p));
 
 		// unique intersection
 		ls.set(2,0.5,1,  2,0.5,-1);
-		assertEquals(1,Intersection3D_F64.intersect(triangle,ls,p));
+		assertEquals(1,Intersection3D_F64.intersection(triangle,ls,p));
 		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.TEST_F64);
 
 		// infinite intersections
 		ls.set(0, 0, 0, 4, 0, 0);
-		assertEquals(2,Intersection3D_F64.intersect(triangle, ls, p));
+		assertEquals(2,Intersection3D_F64.intersection(triangle, ls, p));
 	}
 
 	@Test
@@ -138,27 +138,27 @@ public class TestIntersection3D_F64 {
 
 		// degenerate triangle
 		Triangle3D_F64 triangle = new Triangle3D_F64(1,1,1,2,2,2,3,3,3);
-		assertEquals(-1,Intersection3D_F64.intersect(triangle,line,p));
+		assertEquals(-1,Intersection3D_F64.intersection(triangle,line,p));
 
 		// no intersection
 		triangle.set(1,0,0,  3,0,0,  3,2,0);
 		line.set(0,0,0,  0,0,10); // completely miss
-		assertEquals(0, Intersection3D_F64.intersect(triangle, line, p));
+		assertEquals(0, Intersection3D_F64.intersection(triangle, line, p));
 		line.set(0,0,0,  0,0,10); // hits the plain but not the triangle
-		assertEquals(0, Intersection3D_F64.intersect(triangle, line, p));
+		assertEquals(0, Intersection3D_F64.intersection(triangle, line, p));
 
 		// unique intersection - positive
 		line.set(2,0.5,1,  0,0,-2);
-		assertEquals(1,Intersection3D_F64.intersect(triangle,line,p));
+		assertEquals(1,Intersection3D_F64.intersection(triangle,line,p));
 		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.TEST_F64);
 		// unique intersection - negative
 		line.set(2,0.5,-1,  0,0,2);
-		assertEquals(1,Intersection3D_F64.intersect(triangle,line,p));
+		assertEquals(1,Intersection3D_F64.intersection(triangle,line,p));
 		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.TEST_F64);
 
 		// infinite intersections
 		line.set(0, 0, 0, 4, 0, 0);
-		assertEquals(2,Intersection3D_F64.intersect(triangle, line, p));
+		assertEquals(2,Intersection3D_F64.intersection(triangle, line, p));
 	}
 
 	@Test
@@ -294,20 +294,20 @@ public class TestIntersection3D_F64 {
 	@Test
 	void intersect_1d() {
 		// identical
-		assertTrue(Intersection3D_F64.intersect(0,0,1,1));
+		assertTrue(Intersection3D_F64.intersection(0,0,1,1));
 		// bigger
-		assertTrue(Intersection3D_F64.intersect(0,-1,1,2));
-		assertTrue(Intersection3D_F64.intersect(-1,0,2,1));
+		assertTrue(Intersection3D_F64.intersection(0,-1,1,2));
+		assertTrue(Intersection3D_F64.intersection(-1,0,2,1));
 		// shifted
-		assertTrue(Intersection3D_F64.intersect(0,0.1,1,1.1));
-		assertTrue(Intersection3D_F64.intersect(0,-0.1,1,0.9));
-		assertTrue(Intersection3D_F64.intersect(0.1,0,1.1,1));
-		assertTrue(Intersection3D_F64.intersect(-0.1,0,0.9,1));
+		assertTrue(Intersection3D_F64.intersection(0,0.1,1,1.1));
+		assertTrue(Intersection3D_F64.intersection(0,-0.1,1,0.9));
+		assertTrue(Intersection3D_F64.intersection(0.1,0,1.1,1));
+		assertTrue(Intersection3D_F64.intersection(-0.1,0,0.9,1));
 		// graze
-		assertFalse(Intersection3D_F64.intersect(0,1,1,2));
-		assertFalse(Intersection3D_F64.intersect(1,0,2,1));
+		assertFalse(Intersection3D_F64.intersection(0,1,1,2));
+		assertFalse(Intersection3D_F64.intersection(1,0,2,1));
 		// outside
-		assertFalse(Intersection3D_F64.intersect(0,2,1,3));
+		assertFalse(Intersection3D_F64.intersection(0,2,1,3));
 	}
 
 	@Test
@@ -316,11 +316,11 @@ public class TestIntersection3D_F64 {
 		Point3D_F64 b = new Point3D_F64();
 
 		// test a negative case first
-		assertFalse(Intersection3D_F64.intersect(
+		assertFalse(Intersection3D_F64.intersection(
 				new LineParametric3D_F64(0,0,-10,1,0,0),new Sphere3D_F64(0,0,0,2),a,b));
 
 		// Now a positive case
-		assertTrue(Intersection3D_F64.intersect(
+		assertTrue(Intersection3D_F64.intersection(
 				new LineParametric3D_F64(0,0,2,1,0,0),new Sphere3D_F64(0,0,2,2),a,b));
 		assertTrue( a.distance(new Point3D_F64( 2,0,2)) <= GrlConstants.TEST_F64);
 		assertTrue( b.distance(new Point3D_F64(-2,0,2)) <= GrlConstants.TEST_F64);

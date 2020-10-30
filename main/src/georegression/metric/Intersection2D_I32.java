@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -70,8 +70,7 @@ public class Intersection2D_I32 {
 	 */
 	// Ported from internet code 12/2011
 	// http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-	public static boolean containConvex( Polygon2D_I32 polygon , Point2D_I32 pt )
-	{
+	public static boolean containsConvex(Polygon2D_I32 polygon , Point2D_I32 pt ) {
 		final int N = polygon.size();
 
 		boolean c = false;
@@ -94,8 +93,7 @@ public class Intersection2D_I32 {
 	 * @param pt Point. Not modified.
 	 * @return True if the point is contained inside the polygon.
 	 */
-	public static boolean containConcave( Polygon2D_I32 polygon , Point2D_I32 pt )
-	{
+	public static boolean containsConcave(Polygon2D_I32 polygon , Point2D_I32 pt ) {
 		final int N = polygon.size();
 
 		int left=0;
@@ -157,5 +155,4 @@ public class Intersection2D_I32 {
 	public static boolean contains( Rectangle2D_I32 a, int x, int y ) {
 		return( x >= a.x0 && y >= a.y0 && x < a.x1 && y < a.y1 );
 	}
-
 }
