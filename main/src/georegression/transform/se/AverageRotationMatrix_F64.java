@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ import org.ejml.dense.fixed.CommonOps_DDF3;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
 import org.ejml.interfaces.decomposition.SingularValueDecomposition_F64;
-import org.ejml.ops.ConvertDMatrixStruct;
+import org.ejml.ops.DConvertMatrixStruct;
 
 import java.util.List;
 
@@ -106,7 +106,7 @@ public class AverageRotationMatrix_F64 {
 
 		CommonOps_DDF3.divide(F,list.size());
 
-		ConvertDMatrixStruct.convert(F,M);
+		DConvertMatrixStruct.convert(F,M);
 		if( !svd.decompose(M) )
 			return false;
 
@@ -118,7 +118,7 @@ public class AverageRotationMatrix_F64 {
 		if( det < 0 )
 			CommonOps_DDRM.scale(-1,M);
 
-		ConvertDMatrixStruct.convert(M,average);
+		DConvertMatrixStruct.convert(M,average);
 
 		return true;
 	}

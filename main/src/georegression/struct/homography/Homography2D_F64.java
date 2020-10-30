@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,7 +21,7 @@ package georegression.struct.homography;
 
 import georegression.struct.Matrix3x3_F64;
 import org.ejml.data.DMatrixRMaj;
-import org.ejml.ops.ConvertDMatrixStruct;
+import org.ejml.ops.DConvertMatrixStruct;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -133,7 +133,7 @@ public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homogr
 			output = new DMatrixRMaj(3,3);
 		}
 
-		ConvertDMatrixStruct.convert(this,output);
+		DConvertMatrixStruct.convert(this,output);
 		return output;
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -30,7 +30,7 @@ import org.ejml.dense.fixed.CommonOps_DDF4;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import org.ejml.interfaces.linsol.LinearSolverDense;
-import org.ejml.ops.ConvertDMatrixStruct;
+import org.ejml.ops.DConvertMatrixStruct;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -240,7 +240,7 @@ public class FitCurve_F64 {
 				sy2  ,sx1y2,sy3  ,sx1y3,sx2y2,sy4   );
 
 		DMatrixRMaj _A = new DMatrixRMaj(6,6);
-		ConvertDMatrixStruct.convert(A,_A);
+		DConvertMatrixStruct.convert(A,_A);
 
 		// pseudo inverse is required to handle degenerate matrices, e.g. lines
 		LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.pseudoInverse(true);

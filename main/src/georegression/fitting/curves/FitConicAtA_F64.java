@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,7 +26,7 @@ import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.fixed.CommonOps_DDF6;
 import org.ejml.dense.row.linsol.svd.SolveNullSpaceSvd_DDRM;
 import org.ejml.interfaces.SolveNullSpace;
-import org.ejml.ops.ConvertDMatrixStruct;
+import org.ejml.ops.DConvertMatrixStruct;
 
 import java.util.List;
 
@@ -120,7 +120,7 @@ public class FitConicAtA_F64 implements FitShapeToPoints_F64<Point2D_F64,ConicGe
 		ATA.a65 = ATA.a56;
 		ATA.a66 = N;
 
-		ConvertDMatrixStruct.convert(ATA,tmp);
+		DConvertMatrixStruct.convert(ATA,tmp);
 
 		if( !solver.process(tmp,1,nullspace) )
 			return false;
@@ -214,7 +214,7 @@ public class FitConicAtA_F64 implements FitShapeToPoints_F64<Point2D_F64,ConicGe
 		ATA.a64 = ATA.a56;
 		ATA.a65 = ATA.a56;
 
-		ConvertDMatrixStruct.convert(ATA,tmp);
+		DConvertMatrixStruct.convert(ATA,tmp);
 
 		if( !solver.process(tmp,1,nullspace) )
 			return false;

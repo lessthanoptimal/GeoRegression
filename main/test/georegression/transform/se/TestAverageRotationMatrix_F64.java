@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ import georegression.struct.so.Rodrigues_F64;
 import org.ejml.data.DMatrix3x3;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
-import org.ejml.ops.ConvertDMatrixStruct;
+import org.ejml.ops.DConvertMatrixStruct;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class TestAverageRotationMatrix_F64 {
 	@Test
 	void one_F() {
 		DMatrix3x3 q = new DMatrix3x3();
-		ConvertDMatrixStruct.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
+		DConvertMatrixStruct.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
 
 		List<DMatrix3x3> list = new ArrayList<>();
 		list.add(q);
@@ -95,7 +95,7 @@ public class TestAverageRotationMatrix_F64 {
 	@Test
 	void two_same_F() {
 		DMatrix3x3 q = new DMatrix3x3();
-		ConvertDMatrixStruct.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
+		DConvertMatrixStruct.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),q);
 
 		List<DMatrix3x3> list = new ArrayList<>();
 		list.add(q);
@@ -143,11 +143,11 @@ public class TestAverageRotationMatrix_F64 {
 		for (int i = 0; i < 40; i++) {
 			double noise = rand.nextGaussian() * 0.03;
 			DMatrix3x3 q = new DMatrix3x3();
-			ConvertDMatrixStruct.convert(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ,null),q);
+			DConvertMatrixStruct.convert(eulerToMatrix(EulerType.XYZ, rotX, rotY + noise, rotZ,null),q);
 			list.add(q);
 		}
 		DMatrix3x3 expected = new DMatrix3x3();
-		ConvertDMatrixStruct.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),expected);
+		DConvertMatrixStruct.convert(eulerToMatrix(EulerType.XYZ,0.1,-0.5,1.5,null),expected);
 
 		AverageRotationMatrix_F64 alg = new AverageRotationMatrix_F64();
 		DMatrix3x3 found = new DMatrix3x3();
@@ -170,8 +170,8 @@ public class TestAverageRotationMatrix_F64 {
 		DMatrixRMaj E = new DMatrixRMaj(3,3);
 		DMatrixRMaj F = new DMatrixRMaj(3,3);
 
-		ConvertDMatrixStruct.convert(expected,E);
-		ConvertDMatrixStruct.convert(found,F);
+		DConvertMatrixStruct.convert(expected,E);
+		DConvertMatrixStruct.convert(found,F);
 
 		DMatrixRMaj diff = new DMatrixRMaj(3,3);
 		CommonOps_DDRM.multTransA(E,F,diff);

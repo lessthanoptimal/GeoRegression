@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -55,6 +55,7 @@ public class Autocode64to32App extends RecursiveConvert {
 		converter.replacePattern("_DD", "_FD");
 		converter.replacePattern("lookupDDRM","lookupFDRM");
 		converter.replacePattern("DMatrix", "FMatrix");
+		converter.replacePattern("DConvert", "FConvert");
 		converter.replacePattern("DCONV_TOL_", "FCONV_TOL_");
 		converter.replacePattern("GrlConstants.PI", "GrlConstants.F_PI");
 		converter.replacePattern("GrlConstants.EPS", "GrlConstants.F_EPS");
