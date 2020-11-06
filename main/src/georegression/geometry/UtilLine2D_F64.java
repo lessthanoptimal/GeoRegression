@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -295,5 +295,44 @@ public class UtilLine2D_F64 {
 		}
 
 		return ret;
+	}
+
+	/**
+	 * Computes a signed area for the 3 point triangle. Useful when testing the relationship between line segments.
+	 *
+	 * See: Computational Geometry in C. 2nd Ed. Section 1.5
+	 *
+	 * @return a signed area of the triangle
+	 */
+	public static double area2(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c) {
+		return (b.x - a.x)*(c.y - a.y) - (c.x - a.x)*(b.y - a.y);
+	}
+
+	public static boolean isColinear(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, double tol ) {
+		return Math.abs(area2(a,b,c)) <= tol;
+	}
+
+	/**
+	 * The three points are co-linear. Check to see if 'c' lies on the segment defined by 'a' and 'b',
+	 * but if 'c' is identical to 'a' or 'b' it is between.
+	 */
+	public static boolean isBetweenColinear(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c) {
+		// use the axis with the greatest difference since it will be less prone to round off error
+		if (Math.abs(a.x-b.x) >= Math.abs(a.y-b.y)) {
+			return (a.x <= c.x && c.x <= b.x) || (a.x >= c.x && c.x >= b.x);
+		}
+		return (a.y <= c.y && c.y <= b.y) || (a.y >= c.y && c.y >= b.y);
+	}
+
+	/**
+	 * The three points are co-linear. Check to see if 'c' lies on the segment defined by 'a' and 'b',
+	 * but if 'c' is identical to 'a' or 'b' it is not between.
+	 */
+	public static boolean isBetweenColinearExclusive(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c) {
+		// use the axis with the greatest difference since it will be less prone to round off error
+		if (Math.abs(a.x-b.x) >= Math.abs(a.y-b.y)) {
+			return (a.x < c.x && c.x < b.x) || (a.x > c.x && c.x > b.x);
+		}
+		return (a.y < c.y && c.y < b.y) || (a.y > c.y && c.y > b.y);
 	}
 }

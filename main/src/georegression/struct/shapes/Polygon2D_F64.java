@@ -32,7 +32,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.ejml.UtilEjml.fancyStringF;
+import static org.ejml.UtilEjml.fancyString;
 
 /**
  * Describes a polygon in 2D.
@@ -66,16 +66,16 @@ public class Polygon2D_F64 implements Serializable {
 		vertexes.size = numVertexes;
 	}
 
-	public Polygon2D_F64( double... points ) {
-		if( points.length % 2 == 1 )
+	public Polygon2D_F64( double... xy ) {
+		if( xy.length % 2 == 1 )
 			throw new IllegalArgumentException("Expected an even number");
-		vertexes = new FastQueue<>(points.length/2,Point2D_F64::new);
-		vertexes.growArray(points.length/2);
-		vertexes.size = points.length/2;
+		vertexes = new FastQueue<>(xy.length/2,Point2D_F64::new);
+		vertexes.growArray(xy.length/2);
+		vertexes.size = xy.length/2;
 
 		int count = 0;
-		for (int i = 0; i < points.length; i += 2) {
-			vertexes.data[count++].set( points[i],points[i+1]);
+		for (int i = 0; i < xy.length; i += 2) {
+			vertexes.data[count++].set( xy[i],xy[i+1]);
 		}
 	}
 
@@ -167,6 +167,15 @@ public class Polygon2D_F64 implements Serializable {
 		UtilPolygons2D_F64.flip(this);
 	}
 
+	/** Creates a copy of 'this' and flips it */
+	public Polygon2D_F64 flip( @Nullable Polygon2D_F64 storage ) {
+		if (storage==null)
+			storage = new Polygon2D_F64(this.size());
+		storage.set(this);
+		storage.flip();
+		return storage;
+	}
+
 	/**
 	 * Returns the line/edge defined by vertex index and index+1.
 	 * @param index Index of the line
@@ -221,13 +230,14 @@ public class Polygon2D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
+
 		final int length = MatrixIO.DEFAULT_LENGTH;
 		DecimalFormat format = new DecimalFormat("#");
-		String out = getClass().getSimpleName()+"{ order "+vertexes.size+" : vertexes [ ";
+		String out = getClass().getSimpleName()+"{ order="+vertexes.size+", [ ";
 
 		for (int i = 0; i < vertexes.size; i++) {
 			Point2D_F64 p = vertexes.get(i);
-			out += "( "+ fancyStringF(p.x,format,length,4)+" , "+fancyStringF(p.y,format,length,4)+" ) ";
+			out += "("+ fancyString(p.x,format,false,length,4)+", "+fancyString(p.y,format,false,length,4)+") ";
 		}
 
 		out += "] }";

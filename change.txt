@@ -18,9 +18,17 @@ Version : 0.23
 - Added FitPolygon2D and FitPolygon3D
   * Fit AABB for 2D and 3D
   * Fit convex hull for 2D
+- UtilPolygon2D
+  * isSimple()
+  * TODO triangulate()
 
-// TODO convex intersection in 2D
-// TODO concave "hull" in 3D
+
+// TODO triangulatization
+// TODO Delaunay triangulation
+// TODO convex intersection in 2D  - p252
+// TODO convex union in 2D
+// TODO Add Polyhedra3D
+// TODO concave "hull" in 2D
 // TODO convex hull in 3D
 // TODO area of intersection of convex hull in 3D
 

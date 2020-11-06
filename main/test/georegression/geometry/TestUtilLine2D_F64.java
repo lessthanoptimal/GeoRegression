@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,23 +26,23 @@ import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LinePolar2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
+import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
 import static georegression.geometry.UtilLine2D_F64.acuteAngle;
 import static georegression.geometry.UtilLine2D_F64.acuteAngleN;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
  */
 public class TestUtilLine2D_F64 {
 
-	Random rand = new Random(234234);
+	private final Random rand = new Random(234234);
 
-	@Test
-	void acuteAngle_general() {
+	@Test void acuteAngle_general() {
 		assertEquals(0, acuteAngle(new LineGeneral2D_F64(1, 0, 0.5), new LineGeneral2D_F64(1, 0, 6)),
 				GrlConstants.TEST_F64);
 		assertEquals(0, acuteAngle(new LineGeneral2D_F64(0, 2, 0.5), new LineGeneral2D_F64(0, 2, 6)),
@@ -58,9 +58,7 @@ public class TestUtilLine2D_F64 {
 				GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void acuteAngleN_general() {
-
+	@Test void acuteAngleN_general() {
 		double a = Math.cos(Math.PI/4.0);
 		double tol = GrlConstants.TEST_F64 *10.0;// float case needs more tolerance
 
@@ -70,8 +68,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(Math.PI/2, acuteAngleN(new LineGeneral2D_F64(a, a, 0.5), new LineGeneral2D_F64(-a, a, 6)),tol);
 	}
 
-	@Test
-	void convert_segment_parametric() {
+	@Test void convert_segment_parametric() {
 		LineSegment2D_F64 segment = new LineSegment2D_F64();
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 
@@ -86,8 +83,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(para.slope.y,-2, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_segment_general() {
+	@Test void convert_segment_general() {
 		LineSegment2D_F64 segment = new LineSegment2D_F64();
 
 		segment.a.set(0,2);
@@ -100,8 +96,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(0,general.evaluate(segment.b.x,segment.b.y), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_segment2pt_general() {
+	@Test void convert_segment2pt_general() {
 		Point2D_F64 a = new Point2D_F64(2,6);
 		Point2D_F64 b = new Point2D_F64(7,8);
 
@@ -112,8 +107,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(0,general.evaluate(b.x,b.y), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_segment2pt_parametric() {
+	@Test void convert_segment2pt_parametric() {
 		Point2D_F64 a = new Point2D_F64(2,6);
 		Point2D_F64 b = new Point2D_F64(7,8);
 
@@ -125,8 +119,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(para.slope.y,2, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_pt_angle_parametric() {
+	@Test void convert_pt_angle_parametric() {
 		Point2D_F64 a = new Point2D_F64(2,6);
 		double angle = Math.PI;
 
@@ -138,8 +131,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(para.slope.y,0, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_polar_parametric() {
+	@Test void convert_polar_parametric() {
 		LinePolar2D_F64 polar = new LinePolar2D_F64();
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 
@@ -154,8 +146,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(para.slope.y,0, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_polar_general() {
+	@Test void convert_polar_general() {
 		LinePolar2D_F64 polar = new LinePolar2D_F64();
 
 		polar.distance = 5;
@@ -177,8 +168,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(expected.C,found.C,GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_general_polar() {
+	@Test void convert_general_polar() {
 		LineGeneral2D_F64 general = new LineGeneral2D_F64(2,-3,-5);
 		LinePolar2D_F64 found = UtilLine2D_F64.convert(general,(LinePolar2D_F64)null);
 
@@ -197,8 +187,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(0,general.evaluate(x1,y1), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_parametric_polar() {
+	@Test void convert_parametric_polar() {
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 		LinePolar2D_F64 polar = new LinePolar2D_F64();
 
@@ -215,8 +204,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(polar.angle,-Math.PI+Math.PI/4, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_BackAndForth_parametric_polar() {
+	@Test void convert_BackAndForth_parametric_polar() {
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 		LinePolar2D_F64 polar = new LinePolar2D_F64();
 		LinePolar2D_F64 found = new LinePolar2D_F64();
@@ -243,8 +231,7 @@ public class TestUtilLine2D_F64 {
 		}
 	}
 
-	@Test
-	void convert_parametric_general() {
+	@Test void convert_parametric_general() {
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 		LineGeneral2D_F64 general = new LineGeneral2D_F64();
 
@@ -263,8 +250,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(0,val, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_general_parametric() {
+	@Test void convert_general_parametric() {
 		LineGeneral2D_F64 general = new LineGeneral2D_F64();
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 
@@ -281,5 +267,46 @@ public class TestUtilLine2D_F64 {
 		double val = general.A*p.x + general.B*p.y + general.C;
 
 		assertEquals(0,val, GrlConstants.TEST_F64);
+	}
+
+	@Test void area2() {
+		assertEquals( 2.0*4.0, UtilLine2D_F64.area2(cr(1,1), cr(3,1), cr(3,5)), UtilEjml.TEST_F64);
+		assertEquals(-2.0*4.0, UtilLine2D_F64.area2(cr(3,5), cr(3,1), cr(1,1)), UtilEjml.TEST_F64);
+	}
+
+	@Test void isColinear() {
+		assertFalse(UtilLine2D_F64.isColinear(cr(1,1), cr(3,1), cr(3,5), UtilEjml.TEST_F64));
+		assertFalse(UtilLine2D_F64.isColinear(cr(1,1), cr(3,1), cr(-3,-5), UtilEjml.TEST_F64));
+		assertTrue(UtilLine2D_F64.isColinear(cr(1,1), cr(2,1), cr(5,1), UtilEjml.TEST_F64));
+		assertTrue(UtilLine2D_F64.isColinear(cr(1,1), cr(1,2), cr(1,5), UtilEjml.TEST_F64));
+
+		// Test the tolerance
+		assertTrue(UtilLine2D_F64.isColinear(cr(1,1), cr(2,1), cr(5,1.0999), 0.1));
+		assertFalse(UtilLine2D_F64.isColinear(cr(1,1), cr(2,1), cr(5,1.10001), 0.1));
+	}
+
+	@Test void isBetweenColinear() {
+		assertFalse(UtilLine2D_F64.isBetweenColinear(cr(1,1), cr(2,1), cr(5,1)));
+		assertTrue(UtilLine2D_F64.isBetweenColinear(cr(1,1), cr(2,1), cr(1.5,1)));
+		assertFalse(UtilLine2D_F64.isBetweenColinear(cr(1,1), cr(1,2), cr(1,5)));
+		assertTrue(UtilLine2D_F64.isBetweenColinear(cr(1,1), cr(1,2), cr(1,1.5)));
+
+		assertTrue(UtilLine2D_F64.isBetweenColinear(cr(1,1), cr(1,2), cr(1,1)));
+		assertTrue(UtilLine2D_F64.isBetweenColinear(cr(1,1), cr(1,2), cr(1,2)));
+	}
+
+	@Test void isBetweenColinearExclusive() {
+		assertFalse(UtilLine2D_F64.isBetweenColinearExclusive(cr(1, 1), cr(2, 1), cr(5, 1)));
+		assertTrue(UtilLine2D_F64.isBetweenColinearExclusive(cr(1, 1), cr(2, 1), cr(1.5, 1)));
+		assertFalse(UtilLine2D_F64.isBetweenColinearExclusive(cr(1, 1), cr(1, 2), cr(1, 5)));
+		assertTrue(UtilLine2D_F64.isBetweenColinearExclusive(cr(1, 1), cr(1, 2), cr(1, 1.5)));
+
+		assertFalse(UtilLine2D_F64.isBetweenColinearExclusive(cr(1,1), cr(1,2), cr(1,1)));
+		assertFalse(UtilLine2D_F64.isBetweenColinearExclusive(cr(1,1), cr(1,2), cr(1,2)));
+	}
+
+		/** short hand */
+	private static Point2D_F64 cr(double x , double y) {
+		return new Point2D_F64(x,y);
 	}
 }

@@ -19,6 +19,7 @@
 package georegression.geometry;
 
 import georegression.metric.Distance2D_F64;
+import georegression.metric.Intersection2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
@@ -35,7 +36,6 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class UtilPolygons2D_F64 {
-
 	/**
 	 * Determines if the polugon is convex or concave.
 	 *
@@ -69,6 +69,106 @@ public class UtilPolygons2D_F64 {
 		}
 
 		return( numPositive == 0 || numPositive == N );
+	}
+
+	/**
+	 * Checks to see if a polygon is simple or not, see [1]. If complex then the
+	 *
+	 * <p>[1] Numerical Recipes. Third Edition. Section 21.4</p>
+	 *
+	 * @param p (Input) polygon.
+	 * @param tol (Input) tolerance for testing if lines are colinear
+	 * @return true if simple or false if complex.
+	 */
+	public static PolygonInfo isSimple(Polygon2D_F64 p, @Nullable PolygonInfo result, double tol) {
+		if (result==null)
+			result = new PolygonInfo();
+		result.reset();
+
+		// Check to see if it's too small to be a valid polygon
+		if (p.size() < 3) {
+			result.type = PolygonInfo.Type.COMPLEX;
+			return result;
+		}
+
+		final int N = p.size();
+
+		int wind = 0; // winding number
+ 		boolean concave = false; // true concave
+
+		double crsp = 0.0; // previous cross product
+
+		// vector of previous side
+		double p0 = p.get(N-1).x - p.get(N-2).x;
+		double p1 = p.get(N-1).y - p.get(N-2).y;
+
+		for (int i = 0, ii=N-1; i < N; ii=i,i++) {
+			Point2D_F64 pa = p.get(ii);
+			Point2D_F64 pb = p.get(i);
+
+			// vector of current side
+			double d0 = pb.x - pa.x;
+			double d1 = pb.y - pa.y;
+
+			double crs = p0*d1-p1*d0; // cross product of vectors
+			if (crs*crsp < 0.0)
+				concave = true; // there is a sign change and this means a concavity was found
+			if (p1 <= 0.0) {
+				if (d1 > 0.0 && crs > 0.0)
+					wind++;
+			} else {
+				if (d1 <= 0.0 && crs < 0.0)
+					wind--;
+			}
+			p0 = d0;
+			p1 = d1;
+
+			// update cross product if it has a sign, i.e. not two parallel line.
+			if (crs != 0.0)
+				crsp = crs;
+		}
+
+		if (Math.abs(wind) != 1) {
+			result.type = PolygonInfo.Type.COMPLEX;
+		} else if (!concave) {
+			result.type = PolygonInfo.Type.CONVEX;
+			result.ccw = wind > 0;
+		} else if (isSelfIntersectingBrute(p, tol)) {
+			// Need to examine all pairs of edges for intersections now. This implements the brute force O(N^2) algorithm
+			// found in numerical recipes. They suggest doing something smarter than this for N>10
+			// See Computational Geometry in C Section 7.7 for a better approach
+			result.type = PolygonInfo.Type.COMPLEX;
+		} else {
+			result.ccw = wind > 0;
+			result.type = PolygonInfo.Type.SIMPLE_CONCAVE;
+		}
+
+		return result;
+	}
+
+	/**
+	 * Brute force algorithm which checks for self intersection.
+	 *
+	 * @param p (Input) the polygon
+	 * @param tol (Input) tolerance for testing if lines are colinear
+	 * @return true if self intersection
+	 */
+	public static boolean isSelfIntersectingBrute(Polygon2D_F64 p, double tol) {
+		final int N = p.size();
+
+		for (int i = 0, j = N-1; i < N; j=i,i++) {
+			Point2D_F64 a = p.get(j);
+			Point2D_F64 b = p.get(i);
+
+			for (int ii = i+1, jj=i; ii < N; jj=ii, ii++) {
+				Point2D_F64 aa = p.get(jj);
+				Point2D_F64 bb = p.get(ii);
+				if (Intersection2D_F64.intersects2(a, b, aa, bb, tol))
+					return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -466,7 +566,7 @@ public class UtilPolygons2D_F64 {
 	public static double averageOfClosestPointError(Polygon2D_F64 model , Polygon2D_F64 target , int numberOfSamples ) {
 		LineSegment2D_F64 line = new LineSegment2D_F64();
 
-		double cornerLocationsB[] = new double[target.size()+1];
+		double[] cornerLocationsB = new double[target.size()+1];
 		double totalLength = 0;
 		for (int i = 0; i < target.size(); i++) {
 			Point2D_F64 b0 = target.get(i%target.size());
@@ -512,5 +612,4 @@ public class UtilPolygons2D_F64 {
 
 		return error/numberOfSamples;
 	}
-
 }

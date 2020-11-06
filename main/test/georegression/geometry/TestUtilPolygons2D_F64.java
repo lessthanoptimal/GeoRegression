@@ -23,11 +23,11 @@ import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_I32;
+import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static georegression.misc.GrlConstants.TEST_F64;
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,10 +37,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class TestUtilPolygons2D_F64 {
 
-	Random rand = new Random(234);
-
-	@Test
-	void isConvex() {
+	@Test void isConvex() {
 		Polygon2D_F64 a = new Polygon2D_F64(0, 0, 5, 5, -5, 5);
 		assertTrue(UtilPolygons2D_F64.isConvex(a));
 		a.flip();
@@ -57,9 +54,103 @@ public class TestUtilPolygons2D_F64 {
 		assertFalse(UtilPolygons2D_F64.isConvex(c));
 	}
 
+	@Test void isSimple() {
+		PolygonInfo info = new PolygonInfo();
+		double tol = UtilEjml.TEST_F64;
 
-	@Test
-	void convert_rectcorner_quad() {
+		// A line
+		Polygon2D_F64 polyLine = new Polygon2D_F64(0, 0, 5, 5);
+		assertSame(info,UtilPolygons2D_F64.isSimple(polyLine,info,tol));
+		assertEquals(PolygonInfo.Type.COMPLEX,info.type);
+
+		// Triangle
+		Polygon2D_F64 a = new Polygon2D_F64(0, 0, 5, 5, -5, 5);
+		assertSame(info,UtilPolygons2D_F64.isSimple(a,info,tol));
+		assertEquals(PolygonInfo.Type.CONVEX,info.type);
+		assertTrue(info.ccw);
+		assertSame(info,UtilPolygons2D_F64.isSimple(a.flip(null),info,tol));
+		assertEquals(PolygonInfo.Type.CONVEX,info.type);
+		assertFalse(info.ccw);
+
+		// bent quadrilateral
+		Polygon2D_F64 b = new Polygon2D_F64(0, 0, 0, 5, -5, 5, -0.1, 4.5);
+		assertSame(info,UtilPolygons2D_F64.isSimple(b,info,tol));
+		assertEquals(PolygonInfo.Type.SIMPLE_CONCAVE,info.type);
+		assertTrue(info.ccw);
+		assertSame(info,UtilPolygons2D_F64.isSimple(b.flip(null),info,tol));
+		assertEquals(PolygonInfo.Type.SIMPLE_CONCAVE,info.type);
+		assertFalse(info.ccw);
+
+		// |\/|
+		// |__|
+		Polygon2D_F64 c = new Polygon2D_F64(new double[][]{{0, 0}, {0, 5}, {-2.5,2.5}, {-5, 5}, {-5,0}});
+		assertSame(info,UtilPolygons2D_F64.isSimple(c,info,tol));
+		assertEquals(PolygonInfo.Type.SIMPLE_CONCAVE,info.type);
+		assertTrue(info.ccw);
+		assertSame(info,UtilPolygons2D_F64.isSimple(c.flip(null),info,tol));
+		assertEquals(PolygonInfo.Type.SIMPLE_CONCAVE,info.type);
+		assertFalse(info.ccw);
+
+		// crossed
+		Polygon2D_F64 d = new Polygon2D_F64(new double[][]{{0, 0}, {5, 5}, {0, 5}, {5,0}});
+		assertSame(info,UtilPolygons2D_F64.isSimple(d,info,tol));
+		assertEquals(PolygonInfo.Type.COMPLEX,info.type);
+		assertSame(info,UtilPolygons2D_F64.isSimple(d.flip(null),info,tol));
+		assertEquals(PolygonInfo.Type.COMPLEX,info.type);
+		// not checking ccw since it's not well defined for complex
+	}
+
+	@Test void isSelfIntersectingBrute() {
+		double tol = UtilEjml.TEST_F64;
+		// triangle
+		var a = new Polygon2D_F64(new double[][]{{0, 0}, {5, 5}, {-5, 5}});
+		assertFalse(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
+		assertFalse(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+
+		// square
+		a = new Polygon2D_F64(new double[][]{{0, 0}, {0, 5}, {-5, 5}, {-5,0}});
+		assertFalse(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
+		assertFalse(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+
+		// |\/|
+		// |__|
+		a = new Polygon2D_F64(new double[][]{{0, 0}, {0, 5}, {-2.5,2.5}, {-5, 5}, {-5,0}});
+		assertFalse(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
+		assertFalse(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+
+		// There is a string of colinear sides but it's a rectangle
+		a = new Polygon2D_F64(new double[][]{{0, 0}, {0, 2}, {0, 3}, {0, 5}, {1,5}, {1,0}});
+		assertFalse(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
+		assertFalse(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+
+		// Two sides are co-linear but none intersecting
+		a = new Polygon2D_F64(new double[][]{{0, 0}, {0, 2}, {1, 2}, {0,3}, {0, 5}, {2,5}, {2,0}});
+		assertFalse(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
+		assertFalse(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+
+		// overlapping line 3
+		a = new Polygon2D_F64(new double[][]{{0, 0}, {0, 5}, {0, 1}});
+		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
+		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+
+		// overlapping line 4
+		a = new Polygon2D_F64(new double[][]{{0, 0}, {0, 5}, {0, 1}, {0, 5}});
+		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
+		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+
+		// crossed
+		a = new Polygon2D_F64(new double[][]{{0, 0}, {5, 5}, {0, 5}, {5,0}});
+		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
+		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+		UtilPolygons2D_F64.shiftDown(a);
+		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
+		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+		UtilPolygons2D_F64.shiftDown(a);
+		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
+		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+	}
+
+	@Test void convert_rectcorner_quad() {
 		Rectangle2D_F64 r = new Rectangle2D_F64(1, 2, 5, 6);
 		Quadrilateral_F64 q = new Quadrilateral_F64();
 
@@ -75,8 +166,7 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(6, q.d.y, TEST_F64);
 	}
 
-	@Test
-	void convert_rect_poly() {
+	@Test void convert_rect_poly() {
 		Rectangle2D_F64 r = new Rectangle2D_F64(1,2,5,6);
 		Polygon2D_F64 p = new Polygon2D_F64(4);
 
@@ -92,8 +182,7 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(6, p.get(3).y, TEST_F64);
 	}
 
-	@Test
-	void convert_quad_poly() {
+	@Test void convert_quad_poly() {
 		Quadrilateral_F64 q = new Quadrilateral_F64(1,2,3,4,5,6,7,8);
 		Polygon2D_F64 p = new Polygon2D_F64(4);
 
@@ -105,8 +194,7 @@ public class TestUtilPolygons2D_F64 {
 		assertTrue(p.get(3).distance(q.d) < TEST_F64);
 	}
 
-	@Test
-	void convert_poly_quad() {
+	@Test void convert_poly_quad() {
 		Polygon2D_F64 r = new Polygon2D_F64(1,2, 5,2, 5,6, 1,6);
 		Quadrilateral_F64 q = new Quadrilateral_F64();
 
@@ -118,8 +206,7 @@ public class TestUtilPolygons2D_F64 {
 		assertTrue(r.get(3).distance(q.d)< TEST_F64);
 	}
 
-	@Test
-	void convert_rectwh_quad() {
+	@Test void convert_rectwh_quad() {
 		RectangleLength2D_I32 rect = new RectangleLength2D_I32(1, 2, 5, 6);
 
 		Quadrilateral_F64 q = new Quadrilateral_F64();
@@ -136,8 +223,7 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(7, q.d.y, TEST_F64);
 	}
 
-	@Test
-	void bounding_quadrilateral() {
+	@Test void bounding_quadrilateral() {
 		Quadrilateral_F64 q = new Quadrilateral_F64(3, 0, 2, -3, -2, 3, 1, 5);
 		Rectangle2D_F64 out = new Rectangle2D_F64();
 
@@ -149,8 +235,7 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(5, out.p1.y, TEST_F64);
 	}
 
-	@Test
-	void bounding_polygon() {
+	@Test void bounding_polygon() {
 		Polygon2D_F64 q = new Polygon2D_F64(3, 0, 2, -3, -2, 3, 1, 5);
 		Rectangle2D_F64 out = new Rectangle2D_F64();
 
@@ -162,17 +247,16 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(5, out.p1.y, TEST_F64);
 	}
 
-	@Test
-	void center_quadrilateral() {
+	@Test void center_quadrilateral() {
 		Quadrilateral_F64 q = new Quadrilateral_F64(3, 0, 2, -3, -2, 3, 1, 5);
 
-		Point2D_F64 pts[] = new Point2D_F64[]{q.a, q.b, q.c, q.d};
+		Point2D_F64[] pts = new Point2D_F64[]{q.a, q.b, q.c, q.d};
 
 		Point2D_F64 expected = new Point2D_F64();
 
-		for (int i = 0; i < pts.length; i++) {
-			expected.x += pts[i].x;
-			expected.y += pts[i].y;
+		for (Point2D_F64 pt : pts) {
+			expected.x += pt.x;
+			expected.y += pt.y;
 		}
 		expected.x /= 4.0;
 		expected.y /= 4.0;
@@ -183,10 +267,9 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(expected.y, found.y, TEST_F64);
 	}
 
-	@Test
-	void isCCW() {
+	@Test void isCCW() {
 		// check convex case
-		List<Point2D_F64> list = new ArrayList<Point2D_F64>();
+		List<Point2D_F64> list = new ArrayList<>();
 		list.add(new Point2D_F64(1, 1));
 		list.add(new Point2D_F64(2, 1));
 		list.add(new Point2D_F64(2, 2));
@@ -200,9 +283,7 @@ public class TestUtilPolygons2D_F64 {
 		assertFalse(UtilPolygons2D_F64.isCCW(reverse(list)));
 	}
 
-	@Test
-	void vertexAverage() {
-
+	@Test void vertexAverage() {
 		Polygon2D_F64 poly = new Polygon2D_F64(1, 2, 3, 4, 5, 6);
 
 		Point2D_F64 ave = new Point2D_F64();
@@ -214,7 +295,7 @@ public class TestUtilPolygons2D_F64 {
 	}
 
 	private static List<Point2D_F64> reverse(List<Point2D_F64> points) {
-		List<Point2D_F64> reverse = new ArrayList<Point2D_F64>();
+		List<Point2D_F64> reverse = new ArrayList<>();
 
 		for (int i = points.size() - 1; i >= 0; i--) {
 			reverse.add(points.get(i));
@@ -223,8 +304,7 @@ public class TestUtilPolygons2D_F64 {
 		return reverse;
 	}
 
-	@Test
-	void isIdentical_poly_poly() {
+	@Test void isIdentical_poly_poly() {
 		Polygon2D_F64 poly1 = new Polygon2D_F64(1, 2, 3, 4, 5, 6);
 		Polygon2D_F64 poly2 = new Polygon2D_F64(1, 2, 3, 4, 5, 6.1);
 
@@ -232,8 +312,7 @@ public class TestUtilPolygons2D_F64 {
 		assertFalse(UtilPolygons2D_F64.isIdentical(poly1, poly2, 0.09));
 	}
 
-	@Test
-	void isEquivalent_poly_poly() {
+	@Test void isEquivalent_poly_poly() {
 		Polygon2D_F64 poly1 = new Polygon2D_F64(1, 2, 3, 4, 5, 6);
 		Polygon2D_F64 poly2 = new Polygon2D_F64(1, 2, 3, 4, 5, 6);
 
@@ -247,74 +326,65 @@ public class TestUtilPolygons2D_F64 {
 		}
 	}
 
-	@Test
-	void flip() {
-
-		// less than 3 has undrfined behavior
-
+	@Test void flip() {
+		// less than 3 has undefined behavior
 		Polygon2D_F64 poly = new Polygon2D_F64(3);
-		List<Point2D_F64> orig = new ArrayList<Point2D_F64>();
-		orig.addAll(poly.vertexes.toList());
+		List<Point2D_F64> orig = new ArrayList<>(poly.vertexes.toList());
 
 		UtilPolygons2D_F64.flip(poly);
-		assertTrue(orig.get(0)==poly.get(0));
-		assertTrue(orig.get(1)==poly.get(2));
-		assertTrue(orig.get(2)==poly.get(1));
+		assertSame(orig.get(0), poly.get(0));
+		assertSame(orig.get(1), poly.get(2));
+		assertSame(orig.get(2), poly.get(1));
 
 		poly = new Polygon2D_F64(4);
 		orig.clear();
 		orig.addAll(poly.vertexes.toList());
 
 		UtilPolygons2D_F64.flip(poly);
-		assertTrue(orig.get(0)==poly.get(0));
-		assertTrue(orig.get(1)==poly.get(3));
-		assertTrue(orig.get(2)==poly.get(2));
-		assertTrue(orig.get(3)==poly.get(1));
+		assertSame(orig.get(0), poly.get(0));
+		assertSame(orig.get(1), poly.get(3));
+		assertSame(orig.get(2), poly.get(2));
+		assertSame(orig.get(3), poly.get(1));
 
 		poly = new Polygon2D_F64(5);
 		orig.clear();
 		orig.addAll(poly.vertexes.toList());
 
 		UtilPolygons2D_F64.flip(poly);
-		assertTrue(orig.get(0)==poly.get(0));
-		assertTrue(orig.get(1)==poly.get(4));
-		assertTrue(orig.get(2)==poly.get(3));
-		assertTrue(orig.get(3)==poly.get(2));
-		assertTrue(orig.get(4)==poly.get(1));
+		assertSame(orig.get(0), poly.get(0));
+		assertSame(orig.get(1), poly.get(4));
+		assertSame(orig.get(2), poly.get(3));
+		assertSame(orig.get(3), poly.get(2));
+		assertSame(orig.get(4), poly.get(1));
 	}
 
-	@Test
-	void shiftUp() {
+	@Test void shiftUp() {
 		for (int i = 1; i <= 5; i++) {
 			Polygon2D_F64 poly = new Polygon2D_F64(i);
-			List<Point2D_F64> orig = new ArrayList<Point2D_F64>();
-			orig.addAll(poly.vertexes.toList());
+			List<Point2D_F64> orig = new ArrayList<>(poly.vertexes.toList());
 
 			UtilPolygons2D_F64.shiftUp(poly);
 			for (int j = 0; j < i-1; j++) {
-				assertTrue(orig.get(j+1) == poly.get(j));
+				assertSame(orig.get(j + 1), poly.get(j));
 			}
-			assertTrue(orig.get(0) == poly.get(i-1));
+			assertSame(orig.get(0), poly.get(i - 1));
 		}
 	}
 
-	@Test
-	void shiftDown() {
+	@Test void shiftDown() {
 		for (int i = 1; i <= 5; i++) {
 			Polygon2D_F64 poly = new Polygon2D_F64(i);
-			List<Point2D_F64> orig = new ArrayList<Point2D_F64>();
-			orig.addAll(poly.vertexes.toList());
+			List<Point2D_F64> orig = new ArrayList<>(poly.vertexes.toList());
 
 			UtilPolygons2D_F64.shiftDown(poly);
 			for (int j = 1; j < i; j++) {
-				assertTrue(orig.get(j-1) == poly.get(j));
+				assertSame(orig.get(j - 1), poly.get(j));
 			}
-			assertTrue(orig.get(i-1) == poly.get(0));
+			assertSame(orig.get(i - 1), poly.get(0));
 		}
 	}
 
-	@Test
-	void removeAlmostParallel() {
+	@Test void removeAlmostParallel() {
 		Polygon2D_F64 output = new Polygon2D_F64(5);
 
 		output.get(0).set(0,0);
@@ -330,8 +400,7 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(4, output.get(1).x, TEST_F64);
 	}
 
-	@Test
-	void removeAdjacentDuplicates() {
+	@Test void removeAdjacentDuplicates() {
 		Polygon2D_F64 output = new Polygon2D_F64(9);
 
 		output.get(0).set(0,0);
@@ -360,8 +429,8 @@ public class TestUtilPolygons2D_F64 {
 		UtilPolygons2D_F64.removeAdjacentDuplicates(output, TEST_F64);
 		assertEquals(1, output.size());
 	}
-	@Test
-	void hasAdjacentDuplicates() {
+
+	@Test void hasAdjacentDuplicates() {
 		Polygon2D_F64 output = new Polygon2D_F64(0,0,1,1,2,2,3,3,0,0);
 
 		assertTrue(UtilPolygons2D_F64.hasAdjacentDuplicates(output, TEST_F64));
@@ -379,8 +448,7 @@ public class TestUtilPolygons2D_F64 {
 		assertFalse(UtilPolygons2D_F64.hasAdjacentDuplicates(output, TEST_F64));
 	}
 
-	@Test
-	void getSideLength() {
+	@Test void getSideLength() {
 		Polygon2D_F64 output = new Polygon2D_F64(3);
 
 		output.get(0).set(0,0);
@@ -393,8 +461,7 @@ public class TestUtilPolygons2D_F64 {
 
 	}
 
-	@Test
-	void averageOfClosestPointError() {
+	@Test void averageOfClosestPointError() {
 		Polygon2D_F64 a = new Polygon2D_F64(4);
 
 		a.get(0).set(1,1);
@@ -421,6 +488,5 @@ public class TestUtilPolygons2D_F64 {
 		double errorBA = UtilPolygons2D_F64.averageOfClosestPointError(b,a,100);
 
 		assertTrue(errorAB>errorBA);
-
 	}
 }

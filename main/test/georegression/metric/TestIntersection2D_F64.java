@@ -48,8 +48,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestIntersection2D_F64 {
 	Random rand = new Random( 234 );
 
-	@Test
-	void containsConvex() {
+	@Test void containsConvex() {
 		Polygon2D_F64 poly = new Polygon2D_F64(4);
 		poly.vertexes.data[0].set(-1,-1);
 		poly.vertexes.data[1].set(1, -1);
@@ -72,8 +71,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.containsConvex(poly,outside));
 	}
 
-	@Test
-	void containsConvex2() {
+	@Test void containsConvex2() {
 		Polygon2D_F64 poly = new Polygon2D_F64(4);
 		poly.vertexes.data[0].set(-1,-1);
 		poly.vertexes.data[1].set(1, -1);
@@ -96,8 +94,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.containsConvex2(poly,outside.x,outside.y));
 	}
 
-	@Test
-	void containsConcave_rectangle() {
+	@Test void containsConcave_rectangle() {
 		Polygon2D_F64 poly = new Polygon2D_F64(4);
 		poly.vertexes.data[0].set(-1,-1);
 		poly.vertexes.data[1].set(1, -1);
@@ -114,8 +111,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.containsConcave(poly, new Point2D_F64(0, -2)));
 	}
 
-	@Test
-	void contains_quadrilateral() {
+	@Test void contains_quadrilateral() {
 		Quadrilateral_F64 quad = new Quadrilateral_F64();
 		quad.a.set(-1, -1);
 		quad.b.set(1, -1);
@@ -132,8 +128,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.contains(quad, new Point2D_F64(0, -2)));
 	}
 
-	@Test
-	void containTriangle() {
+	@Test void containTriangle() {
 		Point2D_F64 a = new Point2D_F64(1,2);
 		Point2D_F64 b = new Point2D_F64(4,2);
 		Point2D_F64 c = new Point2D_F64(4,5);
@@ -145,8 +140,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.containTriangle(a, b, c, outside));
 	}
 
-	@Test
-	void containEllipseRotated() {
+	@Test void containEllipseRotated() {
 
 		EllipseRotated_F64 ellipse = new EllipseRotated_F64(5,6,4,3, GrlConstants.PId2);
 
@@ -159,8 +153,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.contains(ellipse,5+3 + GrlConstants.TEST_F64,6));
 	}
 
-	@Test
-	void containConcave_concave() {
+	@Test void containConcave_concave() {
 		Polygon2D_F64 poly = new Polygon2D_F64(5);
 		poly.vertexes.data[0].set(-1,-1);
 		poly.vertexes.data[1].set( 0, 0);
@@ -180,8 +173,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.containsConcave(poly, new Point2D_F64(0, -2)));
 	}
 	
-	@Test
-	void intersection_ls_to_ls() {
+	@Test void intersection_ls_to_ls() {
 		// check positive, none pathological cases
 		checkIntersection(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 3), new Point2D_F64(2, 2));
 		checkIntersection(new LineSegment2D_F64(0, 2, 2, 0), new LineSegment2D_F64(0, 0, 2, 2), new Point2D_F64(1, 1));
@@ -211,14 +203,56 @@ public class TestIntersection2D_F64 {
 		}
 	}
 
+	@Test void intersects_ls_to_ls() {
+		final double tol = UtilEjml.TEST_F64;
+		// check positive, none pathological cases
+		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 3), tol));
+		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 2, 0), new LineSegment2D_F64(0, 0, 2, 2), tol));
+
+		// The end points are inclusive and should be considered an intersection
+		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 2), tol));
+		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 2), tol));
+		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(1, 0, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), tol));
+
+		// check negative
+		assertFalse(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 1.9), tol));
+		assertFalse(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 1.9), tol));
+		assertFalse(Intersection2D_F64.intersects(new LineSegment2D_F64(1, 0.1, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), tol));
+
+		// check parallel
+		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, 1, 0, 3), tol));
+		assertFalse(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, -0.5, 0, 1.5), tol));
+	}
+
+	@Test void intersects2_ls_to_ls() {
+		final double tol = UtilEjml.TEST_F64;
+		// check positive, none pathological cases
+		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 3), tol));
+		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 0), new LineSegment2D_F64(0, 0, 2, 2), tol));
+
+		// Two end points touching will not be considered an intersection
+		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 2), tol));
+		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 2), tol));
+
+		// However a line passing through an end point is an intersection
+		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 0, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), tol));
+
+		// check clear negative
+		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 1.9), tol));
+		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 1.9), tol));
+		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 0.1, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), tol));
+
+		// check parallel
+		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, 1, 0, 3), tol));
+		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, -0.5, 0, 1.5), tol));
+	}
 
 	/**
 	 * Checks to see if the expected distance is returned and that the end points of the
 	 * line segment are respected.  The test cases are rotated around in a circle to test
 	 * more geometric configurations
 	 */
-	@Test
-	void intersection_p_to_ls() {
+	@Test void intersection_p_to_ls() {
 		LineParametric2D_F64 paraLine = new LineParametric2D_F64();
 		LineSegment2D_F64 target = new LineSegment2D_F64( -1, 1, 1, 1 );
 
@@ -277,8 +311,7 @@ public class TestIntersection2D_F64 {
 		assertTrue( Double.isNaN( dist ) );
 	}
 
-	@Test
-	void intersection_l_to_l_parametric_pt() {
+	@Test void intersection_l_to_l_parametric_pt() {
 		LineParametric2D_F64 a = new LineParametric2D_F64(2,3,1,0);
 		LineParametric2D_F64 b = new LineParametric2D_F64(-2,-4,0,1);
 
@@ -292,8 +325,7 @@ public class TestIntersection2D_F64 {
 		assertNull(Intersection2D_F64.intersection(b, c, null));
 	}
 
-	@Test
-	void intersection_r_to_r_parametric_pt() {
+	@Test void intersection_r_to_r_parametric_pt() {
 		LineParametric2D_F64 a = new LineParametric2D_F64(2,3,1,0);
 		LineParametric2D_F64 b = new LineParametric2D_F64(-2,-4,0,-1);
 
@@ -312,8 +344,7 @@ public class TestIntersection2D_F64 {
 		assertEquals(0,found.distance(-2,3), UtilEjml.TEST_F64);
 	}
 
-	@Test
-	void intersection_l_to_l_parametric_t() {
+	@Test void intersection_l_to_l_parametric_t() {
 		LineParametric2D_F64 a = new LineParametric2D_F64(2,3,1,0);
 		LineParametric2D_F64 b = new LineParametric2D_F64(-2,-4,0,1);
 
@@ -329,8 +360,7 @@ public class TestIntersection2D_F64 {
 		assertTrue(Double.isNaN(Intersection2D_F64.intersection(b, c)));
 	}
 
-	@Test
-	void intersection_l_to_l_points() {
+	@Test void intersection_l_to_l_points() {
 		Point2D_F64 a0 = new Point2D_F64(3,20);
 		Point2D_F64 a1 = new Point2D_F64(10,20);
 		Point2D_F64 b0 = new Point2D_F64(7,5);
@@ -349,8 +379,7 @@ public class TestIntersection2D_F64 {
 
 	}
 	
-	@Test
-	void intersection_l_to_l_general_3D() {
+	@Test void intersection_l_to_l_general_3D() {
 		// check two arbitrary lines
 		LineGeneral2D_F64 a = new LineGeneral2D_F64(1,2,3);
 		LineGeneral2D_F64 b = new LineGeneral2D_F64(2,-1,0.5);
@@ -368,8 +397,7 @@ public class TestIntersection2D_F64 {
 		assertEquals(0, a.A * found.x + a.B * found.y + a.C * found.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void intersection_l_to_l_general_2D() {
+	@Test void intersection_l_to_l_general_2D() {
 		// check two arbitrary lines
 		LineGeneral2D_F64 a = new LineGeneral2D_F64(1,2,3);
 		LineGeneral2D_F64 b = new LineGeneral2D_F64(2,-1,0.5);
@@ -385,8 +413,7 @@ public class TestIntersection2D_F64 {
 		assertNull(Intersection2D_F64.intersection(a, b, found));
 	}
 
-	@Test
-	void intersects_rect_corners() {
+	@Test void intersects_rect_corners() {
 		// check several positive cases
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(0,0,100,120),true);
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(10,12,99,119),true);
@@ -414,8 +441,7 @@ public class TestIntersection2D_F64 {
 		assertEquals(Intersection2D_F64.intersects(a, b), expected);
 	}
 
-	@Test
-	void intersection_rect_corners() {
+	@Test void intersection_rect_corners() {
 		// check several positive cases
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(0,0,100,120),
 				new Rectangle2D_F64(0,0,100,120));
@@ -460,8 +486,7 @@ public class TestIntersection2D_F64 {
 		assertEquals(expected.p1.y,found.p1.y,GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void contains_rectLength_pt() {
+	@Test void contains_rectLength_pt() {
 		RectangleLength2D_F64 rect = new RectangleLength2D_F64(-10,-5,5,10);
 
 		assertTrue(Intersection2D_F64.contains(rect,-10,-5));
@@ -478,8 +503,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.contains(rect, -6, 5));
 	}
 
-	@Test
-	void contains2_rectLength_pt() {
+	@Test void contains2_rectLength_pt() {
 		RectangleLength2D_F64 rect = new RectangleLength2D_F64(-10,-5,5,10);
 
 		assertTrue(Intersection2D_F64.contains2(rect, -10, -5));
@@ -497,8 +521,7 @@ public class TestIntersection2D_F64 {
 		assertTrue(Intersection2D_F64.contains2(rect, -6, 5));
 	}
 
-	@Test
-	void contains_rect_pt() {
+	@Test void contains_rect_pt() {
 		Rectangle2D_F64 rect = new Rectangle2D_F64(-10,-5,-5,5);
 
 		assertTrue(Intersection2D_F64.contains(rect, -10, -5));
@@ -515,8 +538,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.contains(rect, -6, 5));
 	}
 
-	@Test
-	void contains2_rect_pt() {
+	@Test void contains2_rect_pt() {
 		Rectangle2D_F64 rect = new Rectangle2D_F64(-10,-5,-5,5);
 
 		assertTrue(Intersection2D_F64.contains2(rect, -10, -5));
@@ -534,8 +556,7 @@ public class TestIntersection2D_F64 {
 		assertTrue(Intersection2D_F64.contains2(rect, -6, 5));
 	}
 
-	@Test
-	void intersectionArea_rect_rect() {
+	@Test void intersectionArea_rect_rect() {
 		// check several positive cases
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(0,0,100,120), 100*120);
 		check( new Rectangle2D_F64(0,0,100,120),new Rectangle2D_F64(10,12,99,119), 89*107);
@@ -563,8 +584,7 @@ public class TestIntersection2D_F64 {
 		assertEquals(expected,Intersection2D_F64.intersectionArea(a,b),GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void intersectionArea_poly_to_poly() {
+	@Test void intersectionArea_poly_to_poly() {
 		Polygon2D_F64 A = new Polygon2D_F64(new double[][]{{0,0},{2,0},{2,4},{0,4}});
 		Polygon2D_F64 B = A.copy();
 
@@ -575,8 +595,7 @@ public class TestIntersection2D_F64 {
 		assertEquals(8,Intersection2D_F64.intersectionArea(A,B), GrlConstants.TEST_SQ_F64);
 	}
 
-	@Test
-	void intersection_poly_to_poly_Simple() {
+	@Test void intersection_poly_to_poly_Simple() {
 		// A should have an area of 2*4 + 2*2
 		// It's a concave polygon with no self intersections
 		Polygon2D_F64 A = new Polygon2D_F64(new double[][]{{0,0},{4,0},{4,4},{2,2},{0,4}});
@@ -593,8 +612,7 @@ public class TestIntersection2D_F64 {
 		assertEquals(1.5*2*2,Intersection2D_F64.intersectionArea(A,B), GrlConstants.TEST_SQ_F64);
 	}
 
-	@Test
-	void line_ellipse() {
+	@Test void line_ellipse() {
 		// easy cases where the ellipse is at the original aligned to the coordinate axis
 		EllipseRotated_F64 ellipse = new EllipseRotated_F64(0,0,2,1,0);
 

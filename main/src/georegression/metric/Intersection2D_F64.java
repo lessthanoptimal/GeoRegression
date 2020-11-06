@@ -19,6 +19,7 @@
 package georegression.metric;
 
 import georegression.geometry.UtilEllipse_F64;
+import georegression.geometry.UtilLine2D_F64;
 import georegression.geometry.algs.AreaIntersectionPolygon2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.EllipseRotated_F64;
@@ -271,7 +272,8 @@ public class Intersection2D_F64 {
 	 *
 	 * @param a Line.
 	 * @param b Line.
-	 * @return The location along 'target'.  If the lines do not intersect or have infinite intersections Double.NaN is returned.
+	 * @return The location along 'target'.  If the lines do not intersect or have infinite intersections Double.
+	 * NaN is returned.
 	 */
 	public static double intersection( LineParametric2D_F64 a, LineParametric2D_F64 b ) {
 		double t_a = b.getSlopeX() * ( a.getY() - b.getY() ) - b.getSlopeY() * ( a.getX() - b.getX() );
@@ -289,11 +291,11 @@ public class Intersection2D_F64 {
 	 * @param l_0 Line segment.
 	 * @param l_1 line segment.
 	 * @param ret storage for the point of intersection. If null a new point will be declared.
-	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect or have infinite intersections.
+	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect or
+	 * have infinite intersections.
 	 */
 	public static @Nullable Point2D_F64 intersection( LineSegment2D_F64 l_0, LineSegment2D_F64 l_1,
 													  @Nullable Point2D_F64 ret ) {
-
 		double a0 = l_0.b.x - l_0.a.x;
 		double b0 = l_0.b.y - l_0.a.y;
 		double a1 = l_1.b.x - l_1.a.x;
@@ -326,6 +328,82 @@ public class Intersection2D_F64 {
 		ret.set( l_1.a.x + a1 * t_1, l_1.a.y + b1 * t_1 );
 
 		return ret;
+	}
+
+	/**
+	 * Returns true if the two line segments intersect. Two end points touching will be considered an
+	 * intersection.
+	 *
+	 * @param a (Input) Line segment
+	 * @param b (Input) Line segment
+	 * @param tol (Input) tolerance for lines being colinear
+	 * @return true if they intersect
+	 */
+	public static boolean intersects( LineSegment2D_F64 a, LineSegment2D_F64 b, double tol) {
+		return intersects(a.a, a.b, b.a, b.b, tol);
+	}
+
+	public static boolean intersects( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, double tol) {
+		// See if there's a special case where 3 of the points are colinear
+		if (UtilLine2D_F64.isColinear(a,b,c,tol) || UtilLine2D_F64.isColinear(a,b,d,tol) ||
+				UtilLine2D_F64.isColinear(c,d,a,tol) || UtilLine2D_F64.isColinear(c,d,b,tol)) {
+
+			if (UtilLine2D_F64.isColinear(a,b,c,tol) && UtilLine2D_F64.isBetweenColinear(a,b,c))
+				return true;
+			if (UtilLine2D_F64.isColinear(a,b,d,tol) && UtilLine2D_F64.isBetweenColinear(a,b,d))
+				return true;
+			if (UtilLine2D_F64.isColinear(c,d,a,tol) && UtilLine2D_F64.isBetweenColinear(c,d,a))
+				return true;
+			if (UtilLine2D_F64.isColinear(c,d,b,tol) && UtilLine2D_F64.isBetweenColinear(c,d,b))
+				return true;
+			return false;
+		}
+
+		// Use signum to avoid potential overflow in extreme situations
+		double abc = Math.signum(UtilLine2D_F64.area2(a,b,c));
+		double abd = Math.signum(UtilLine2D_F64.area2(a,b,d));
+		double cda = Math.signum(UtilLine2D_F64.area2(c,d,a));
+		double cdb = Math.signum(UtilLine2D_F64.area2(c,d,b));
+
+		return abc*abd < 0.0 && cda*cdb < 0.0;
+	}
+
+	/**
+	 * Returns true if the two line segments intersect. Two end points touching will not be considered an
+	 * intersection.
+	 *
+	 * @param a (Input) Line segment
+	 * @param b (Input) Line segment
+	 * @param tol (Input) tolerance for lines being colinear
+	 * @return true if they intersect
+	 */
+	public static boolean intersects2( LineSegment2D_F64 a, LineSegment2D_F64 b, double tol) {
+		return intersects2(a.a, a.b, b.a, b.b, tol);
+	}
+
+	public static boolean intersects2( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, double tol) {
+		// See if there's a special case where 3 of the points are colinear
+		if (UtilLine2D_F64.isColinear(a,b,c,tol) || UtilLine2D_F64.isColinear(a,b,d,tol) ||
+				UtilLine2D_F64.isColinear(c,d,a,tol) || UtilLine2D_F64.isColinear(c,d,b,tol)) {
+
+			if (UtilLine2D_F64.isColinear(a,b,c,tol) && UtilLine2D_F64.isBetweenColinearExclusive(a,b,c))
+				return true;
+			if (UtilLine2D_F64.isColinear(a,b,d,tol) && UtilLine2D_F64.isBetweenColinearExclusive(a,b,d))
+				return true;
+			if (UtilLine2D_F64.isColinear(c,d,a,tol) && UtilLine2D_F64.isBetweenColinearExclusive(c,d,a))
+				return true;
+			if (UtilLine2D_F64.isColinear(c,d,b,tol) && UtilLine2D_F64.isBetweenColinearExclusive(c,d,b))
+				return true;
+			return false;
+		}
+
+		// Use signum to avoid potential overflow in extreme situations
+		double abc = Math.signum(UtilLine2D_F64.area2(a,b,c));
+		double abd = Math.signum(UtilLine2D_F64.area2(a,b,d));
+		double cda = Math.signum(UtilLine2D_F64.area2(c,d,a));
+		double cdb = Math.signum(UtilLine2D_F64.area2(c,d,b));
+
+		return abc*abd < 0.0 && cda*cdb < 0.0;
 	}
 
 	/**
