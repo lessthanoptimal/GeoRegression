@@ -18,6 +18,8 @@
 
 package georegression.geometry;
 
+import georegression.geometry.polygon.ThreeIndexes;
+import georegression.geometry.polygon.TriangulateSimpleRemoveEars_F64;
 import georegression.metric.Distance2D_F64;
 import georegression.metric.Intersection2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
@@ -26,6 +28,7 @@ import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_I32;
+import org.ddogleg.struct.FastQueue;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -169,6 +172,20 @@ public class UtilPolygons2D_F64 {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Triangulates the simple polygon in O(N^2). Output is represented by sets of indexes where
+	 * each index is the index of the vertex in the input polygon.
+	 *
+	 * @see TriangulateSimpleRemoveEars_F64
+	 *
+	 * @param p (Input) Polygon
+	 * @param triangles (Output) Triangles.
+	 */
+	public static void triangulate(Polygon2D_F64 p, FastQueue<ThreeIndexes> triangles) {
+		var alg = new TriangulateSimpleRemoveEars_F64();
+		alg.process(p,triangles);
 	}
 
 	/**

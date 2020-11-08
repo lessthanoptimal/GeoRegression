@@ -20,10 +20,9 @@ Version : 0.23
   * Fit convex hull for 2D
 - UtilPolygon2D
   * isSimple()
-  * TODO triangulate()
+  * triangulate()
 
 
-// TODO triangulatization
 // TODO Delaunay triangulation
 // TODO convex intersection in 2D  - p252
 // TODO convex union in 2D

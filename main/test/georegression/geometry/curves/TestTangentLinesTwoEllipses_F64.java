@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.geometry.algs;
+package georegression.geometry.curves;
 
 import georegression.geometry.UtilEllipse_F64;
 import georegression.geometry.UtilVector2D_F64;

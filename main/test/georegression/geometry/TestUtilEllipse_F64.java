@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,8 @@
 
 package georegression.geometry;
 
-import georegression.geometry.algs.TangentLinesTwoEllipses_F64;
+import georegression.geometry.curves.TangentLinesTwoEllipses_F64;
+import georegression.geometry.curves.TestTangentLinesTwoEllipses_F64;
 import georegression.metric.Intersection2D_F64;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
@@ -305,7 +306,7 @@ public class TestUtilEllipse_F64 {
 
 	/**
 	 * Very basic unit test.  The more rigerous one is in
-	 * {@link georegression.geometry.algs.TestTangentLinesTwoEllipses_F64}
+	 * {@link TestTangentLinesTwoEllipses_F64}
 	 */
 	@Test
 	void tangentLines_ellipse_ellipse() {

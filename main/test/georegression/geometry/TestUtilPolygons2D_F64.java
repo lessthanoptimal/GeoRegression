@@ -18,11 +18,14 @@
 
 package georegression.geometry;
 
+import georegression.geometry.polygon.ThreeIndexes;
+import georegression.geometry.polygon.TriangulateSimpleRemoveEars_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_I32;
+import org.ddogleg.struct.FastQueue;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
@@ -148,6 +151,29 @@ public class TestUtilPolygons2D_F64 {
 		UtilPolygons2D_F64.shiftDown(a);
 		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a, tol));
 		assertTrue(UtilPolygons2D_F64.isSelfIntersectingBrute(a.flip(null), tol));
+	}
+
+	/**
+	 * Compares triangulate to the algorithm which it calls directly
+	 */
+	@Test void triangulate() {
+		var original = new Polygon2D_F64(new double[][]{{0,0},{2,0},{0.5,0.5},{0,2}});
+		var found = new FastQueue<>(ThreeIndexes::new);
+		var expected = new FastQueue<>(ThreeIndexes::new);
+		var alg = new TriangulateSimpleRemoveEars_F64();
+		alg.process(original,expected);
+
+		UtilPolygons2D_F64.triangulate(original, found);
+
+		assertEquals(expected.size, found.size);
+		for (int i = 0; i < expected.size; i++) {
+			ThreeIndexes e = expected.get(i);
+			ThreeIndexes f = found.get(i);
+
+			assertEquals(e.idx0, f.idx0);
+			assertEquals(e.idx1, f.idx1);
+			assertEquals(e.idx2, f.idx2);
+		}
 	}
 
 	@Test void convert_rectcorner_quad() {

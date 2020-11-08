@@ -19,7 +19,7 @@
 package georegression.metric;
 
 import georegression.geometry.UtilPoint2D_F64;
-import georegression.geometry.algs.AreaIntersectionPolygon2D_F64;
+import georegression.geometry.polygon.AreaIntersectionPolygon2D_F64;
 import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
