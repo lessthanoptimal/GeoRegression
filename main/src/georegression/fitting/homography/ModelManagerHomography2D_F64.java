@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,6 +34,6 @@ public class ModelManagerHomography2D_F64 implements ModelManager<Homography2D_F
 
 	@Override
 	public void copyModel(Homography2D_F64 src, Homography2D_F64 dst) {
-		dst.set(src);
+		dst.setTo(src);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,7 +44,7 @@ public class LineParametric2D_I32 implements Serializable {
 	public int slopeX,slopeY;
 
 	public LineParametric2D_I32(int x_0, int y_0, int slopeX, int slopeY ) {
-		p.set( x_0, y_0 );
+		p.setTo( x_0, y_0 );
 		this.slopeX = slopeX;
 		this.slopeY = slopeY;
 	}
@@ -54,17 +54,16 @@ public class LineParametric2D_I32 implements Serializable {
 		setSlope(slopeX,slopeY);
 	}
 
-	public LineParametric2D_I32() {
-	}
+	public LineParametric2D_I32() {}
 
-	public void set( LineParametric2D_I32 line ) {
-		this.p.set(line.p);
+	public void setTo(LineParametric2D_I32 line ) {
+		this.p.setTo(line.p);
 		this.slopeX = line.slopeX;
 		this.slopeY = line.slopeY;
 	}
 	
 	public void setPoint( Point2D_I32 pt ) {
-		this.p.set( pt );
+		this.p.setTo( pt );
 	}
 
 	public void setPoint( int x, int y ) {

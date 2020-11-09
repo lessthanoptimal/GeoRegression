@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -120,7 +120,7 @@ public class RectangleLength2D_F64 implements Serializable {
 	 * Sets this rectangle to be equal to the passed in rectangle.
 	 * @param r Rectangle which this is to be set equal to
 	 */
-	public void set(RectangleLength2D_I32 r) {
+	public void setTo(RectangleLength2D_I32 r) {
 		this.x0 = r.x0;
 		this.y0 = r.y0;
 		this.width = r.width;

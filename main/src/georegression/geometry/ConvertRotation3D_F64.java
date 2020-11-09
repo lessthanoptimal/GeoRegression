@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -642,7 +642,7 @@ public class ConvertRotation3D_F64 {
 
 		}
 
-		q.set(w,x,y,z);
+		q.setTo(w,x,y,z);
 		return q;
 	}
 

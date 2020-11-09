@@ -304,8 +304,8 @@ public class Distance2D_F64 {
 		for (int i = 0; i < poly.size(); i++) {
 			int j = (i+1)%poly.size();
 
-			storage.a.set(poly.vertexes.data[i]);
-			storage.b.set(poly.vertexes.data[j]);
+			storage.a.setTo(poly.vertexes.data[i]);
+			storage.b.setTo(poly.vertexes.data[j]);
 
 			double d = distanceSq(storage, p);
 			if( d < minimum )

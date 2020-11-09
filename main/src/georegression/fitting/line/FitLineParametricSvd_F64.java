@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -66,7 +66,7 @@ public class FitLineParametricSvd_F64 {
 		CommonOps_DDRM.multTransA(A,A,AA);
 
 		if( solver.process(AA,1,ns)) {
-			line.p.set(mean_x,mean_y);
+			line.p.setTo(mean_x,mean_y);
 			line.slope.x = -ns.data[1]*std_x;
 			line.slope.y =  ns.data[0]*std_y;
 			return true;

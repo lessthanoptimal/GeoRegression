@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,18 +36,18 @@ public class TestUtilLine2D_I32 {
 
 		assertEquals(Math.PI/2,UtilLine2D_I32.acuteAngle(line0,line1), GrlConstants.TEST_F64);
 
-		line0.set(2,2,3,2);
-		line1.set(3,2,2,2);
+		line0.setTo(2,2,3,2);
+		line1.setTo(3,2,2,2);
 
 		assertEquals(Math.PI, UtilLine2D_I32.acuteAngle(line0, line1), GrlConstants.TEST_F64);
 
-		line0.set(2,2,1,2);
-		line1.set(3,2,4,2);
+		line0.setTo(2,2,1,2);
+		line1.setTo(3,2,4,2);
 
 		assertEquals(Math.PI,UtilLine2D_I32.acuteAngle(line0,line1), GrlConstants.TEST_F64);
 
-		line0.set(2,2,3,2);
-		line1.set(3,2,4,2);
+		line0.setTo(2,2,3,2);
+		line1.setTo(3,2,4,2);
 
 		assertEquals(0,UtilLine2D_I32.acuteAngle(line0,line1), GrlConstants.TEST_F64);
 	}

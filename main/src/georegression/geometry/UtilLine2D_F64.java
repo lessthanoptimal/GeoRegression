@@ -85,8 +85,8 @@ public class UtilLine2D_F64 {
 		double c = (double) Math.cos(src.angle);
 		double s = (double) Math.sin(src.angle);
 
-		ret.p.set(c*src.distance,s*src.distance);
-		ret.slope.set(-s,c);
+		ret.p.setTo(c*src.distance,s*src.distance);
+		ret.slope.setTo(-s,c);
 
 		return ret;
 	}
@@ -148,8 +148,8 @@ public class UtilLine2D_F64 {
 		if( ret == null )
 			ret = new LineParametric2D_F64();
 
-		ret.p.set(src.a);
-		ret.slope.set(src.slopeX(),src.slopeY());
+		ret.p.setTo(src.a);
+		ret.slope.setTo(src.slopeX(),src.slopeY());
 
 		return ret;
 	}
@@ -200,7 +200,7 @@ public class UtilLine2D_F64 {
 		if( ret == null )
 			ret = new LineParametric2D_F64();
 
-		ret.p.set(a);
+		ret.p.setTo(a);
 		ret.slope.x = b.x-a.x;
 		ret.slope.y = b.y-a.y;
 
@@ -220,7 +220,7 @@ public class UtilLine2D_F64 {
 		if( ret == null )
 			ret = new LineParametric2D_F64();
 
-		ret.p.set(a);
+		ret.p.setTo(a);
 		ret.slope.x = Math.cos(angle);
 		ret.slope.y = Math.sin(angle);
 

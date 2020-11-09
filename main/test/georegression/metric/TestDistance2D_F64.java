@@ -179,19 +179,19 @@ public class TestDistance2D_F64 {
 		assertEquals(2,Distance2D_F64.distance(b,a),GrlConstants.TEST_F64);
 
 		// the two lines intersect
-		b.set(5, -1, 5, 1);
+		b.setTo(5, -1, 5, 1);
 		assertEquals(0, Distance2D_F64.distance(a, b), GrlConstants.TEST_F64);
 		assertEquals(0, Distance2D_F64.distance(b, a), GrlConstants.TEST_F64);
 
 		// two lines are parallel but don't intersect
-		b.set(12, 2, 2, 20);
+		b.setTo(12, 2, 2, 20);
 		double expected = Math.sqrt(2*2*2);
 		assertEquals(expected, Distance2D_F64.distance(a, b), GrlConstants.TEST_F64);
 		assertEquals(expected, Distance2D_F64.distance(b, a), GrlConstants.TEST_F64);
 
 		// general case where the end points are the closest
 		//        one of these cases was tested above already
-		b.set(5,-2,5,-10);
+		b.setTo(5,-2,5,-10);
 		assertEquals(2,Distance2D_F64.distance(a,b),GrlConstants.TEST_F64);
 		assertEquals(2,Distance2D_F64.distance(b,a),GrlConstants.TEST_F64);
 	}

@@ -44,14 +44,14 @@ public class TestConvexHullGrahamScan_F64 extends CommonConvexHullChecks_F64 {
 	 */
 	@Test void multiple_points_same_angle() {
 		var points = new FastQueue<>(Point2D_F64::new);
-		points.grow().set(0,0);
-		points.grow().set(2,0);
-		points.grow().set(2,2);
-		points.grow().set(0,2);
-		points.grow().set(0.5,0);
-		points.grow().set(1.0,0);
-		points.grow().set(0,0.5);
-		points.grow().set(0,1.5);
+		points.grow().setTo(0,0);
+		points.grow().setTo(2,0);
+		points.grow().setTo(2,2);
+		points.grow().setTo(0,2);
+		points.grow().setTo(0.5,0);
+		points.grow().setTo(1.0,0);
+		points.grow().setTo(0,0.5);
+		points.grow().setTo(0,1.5);
 
 		var alg = new ConvexHullGrahamScan_F64();
 		var found = new Polygon2D_F64();

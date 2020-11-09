@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -61,7 +61,7 @@ public class TestBoxLength3D_F64 {
 	@Test
 	void set_box() {
 		BoxLength3D_F64 box = new BoxLength3D_F64();
-		box.set(1,2,3,4,5,6);
+		box.setTo(1,2,3,4,5,6);
 
 		assertEquals(1, box.p.x, GrlConstants.TEST_F64);
 		assertEquals(2,box.p.y, GrlConstants.TEST_F64);
@@ -75,7 +75,7 @@ public class TestBoxLength3D_F64 {
 	void set_floats() {
 		BoxLength3D_F64 boxA = new BoxLength3D_F64(1,2,3,4,5,6);
 		BoxLength3D_F64 box = new BoxLength3D_F64();
-		box.set(boxA);
+		box.setTo(boxA);
 
 		assertEquals(1,box.p.x, GrlConstants.TEST_F64);
 		assertEquals(2,box.p.y, GrlConstants.TEST_F64);

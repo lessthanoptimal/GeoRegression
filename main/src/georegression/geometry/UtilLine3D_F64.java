@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -40,7 +40,7 @@ public class UtilLine3D_F64 {
 		if( output == null )
 			output = new LineParametric3D_F64();
 
-		output.p.set(line.a);
+		output.p.setTo(line.a);
 		output.slope.x = line.b.x - line.a.x;
 		output.slope.y = line.b.y - line.a.y;
 		output.slope.z = line.b.z - line.a.z;

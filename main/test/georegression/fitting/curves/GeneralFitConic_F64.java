@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -58,8 +58,8 @@ public abstract class GeneralFitConic_F64 {
 		}
 
 		// Now see if it can fit a straight diagonal
-		points.get(1).set(3,3);
-		points.get(2).set(4,4);
+		points.get(1).setTo(3,3);
+		points.get(2).setTo(4,4);
 
 		assertTrue(fitter.process(points,found));
 		assertFalse(found.hasUncountable());
@@ -71,8 +71,8 @@ public abstract class GeneralFitConic_F64 {
 		}
 
 		// Now see if it can fit a a straight line along x-axis
-		points.get(1).set(3,1);
-		points.get(2).set(4,1);
+		points.get(1).setTo(3,1);
+		points.get(2).setTo(4,1);
 		assertTrue(fitter.process(points,found));
 		assertFalse(found.hasUncountable());
 		for( Point2D_F64 p : points ) {
@@ -80,8 +80,8 @@ public abstract class GeneralFitConic_F64 {
 		}
 
 		// Now see if it can fit a a straight line along y-axis
-		points.get(1).set(1,3);
-		points.get(2).set(1,4);
+		points.get(1).setTo(1,3);
+		points.get(2).setTo(1,4);
 		assertTrue(fitter.process(points,found));
 		assertFalse(found.hasUncountable());
 		for( Point2D_F64 p : points ) {
@@ -113,8 +113,8 @@ public abstract class GeneralFitConic_F64 {
 		}
 
 		// Now see if it can fit a straight diagonal
-		points.get(1).set(3,3);
-		points.get(2).set(4,4);
+		points.get(1).setTo(3,3);
+		points.get(2).setTo(4,4);
 
 		assertTrue(fitter.process(points,weights,found));
 		assertFalse(found.hasUncountable());
@@ -126,8 +126,8 @@ public abstract class GeneralFitConic_F64 {
 		}
 
 		// Now see if it can fit a a straight line along x-axis
-		points.get(1).set(3,1);
-		points.get(2).set(4,1);
+		points.get(1).setTo(3,1);
+		points.get(2).setTo(4,1);
 		assertTrue(fitter.process(points,weights,found));
 		assertFalse(found.hasUncountable());
 		for( Point2D_F64 p : points ) {
@@ -135,8 +135,8 @@ public abstract class GeneralFitConic_F64 {
 		}
 
 		// Now see if it can fit a a straight line along y-axis
-		points.get(1).set(1,3);
-		points.get(2).set(1,4);
+		points.get(1).setTo(1,3);
+		points.get(2).setTo(1,4);
 		assertTrue(fitter.process(points,weights,found));
 		assertFalse(found.hasUncountable());
 		for( Point2D_F64 p : points ) {

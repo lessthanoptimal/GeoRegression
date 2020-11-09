@@ -413,11 +413,11 @@ public class TestUtilPolygons2D_F64 {
 	@Test void removeAlmostParallel() {
 		Polygon2D_F64 output = new Polygon2D_F64(5);
 
-		output.get(0).set(0,0);
-		output.get(1).set(2,0);
-		output.get(2).set(4,0);
-		output.get(3).set(4,5);
-		output.get(4).set(0,5);
+		output.get(0).setTo(0,0);
+		output.get(1).setTo(2,0);
+		output.get(2).setTo(4,0);
+		output.get(3).setTo(4,5);
+		output.get(4).setTo(0,5);
 
 		UtilPolygons2D_F64.removeAlmostParallel(output, TEST_F64);
 
@@ -429,15 +429,15 @@ public class TestUtilPolygons2D_F64 {
 	@Test void removeAdjacentDuplicates() {
 		Polygon2D_F64 output = new Polygon2D_F64(9);
 
-		output.get(0).set(0,0);
-		output.get(1).set(0,0);
-		output.get(2).set(2,0);
-		output.get(3).set(4,0);
-		output.get(4).set(4,0);
-		output.get(5).set(4,0);
-		output.get(6).set(4,5);
-		output.get(7).set(0,5);
-		output.get(8).set(0,5);
+		output.get(0).setTo(0,0);
+		output.get(1).setTo(0,0);
+		output.get(2).setTo(2,0);
+		output.get(3).setTo(4,0);
+		output.get(4).setTo(4,0);
+		output.get(5).setTo(4,0);
+		output.get(6).setTo(4,5);
+		output.get(7).setTo(0,5);
+		output.get(8).setTo(0,5);
 
 		UtilPolygons2D_F64.removeAdjacentDuplicates(output, TEST_F64);
 
@@ -451,7 +451,7 @@ public class TestUtilPolygons2D_F64 {
 
 		// test a pathological case
 		output = new Polygon2D_F64(1);
-		output.get(0).set(0,0);
+		output.get(0).setTo(0,0);
 		UtilPolygons2D_F64.removeAdjacentDuplicates(output, TEST_F64);
 		assertEquals(1, output.size());
 	}
@@ -477,9 +477,9 @@ public class TestUtilPolygons2D_F64 {
 	@Test void getSideLength() {
 		Polygon2D_F64 output = new Polygon2D_F64(3);
 
-		output.get(0).set(0,0);
-		output.get(1).set(2,0);
-		output.get(2).set(2,3);
+		output.get(0).setTo(0,0);
+		output.get(1).setTo(2,0);
+		output.get(2).setTo(2,3);
 
 		assertEquals(2,output.getSideLength(0), TEST_F64);
 		assertEquals(3,output.getSideLength(1), TEST_F64);
@@ -490,25 +490,25 @@ public class TestUtilPolygons2D_F64 {
 	@Test void averageOfClosestPointError() {
 		Polygon2D_F64 a = new Polygon2D_F64(4);
 
-		a.get(0).set(1,1);
-		a.get(1).set(4,1);
-		a.get(2).set(4,4);
-		a.get(3).set(1,4);
+		a.get(0).setTo(1,1);
+		a.get(1).setTo(4,1);
+		a.get(2).setTo(4,4);
+		a.get(3).setTo(1,4);
 
 		assertEquals(0,UtilPolygons2D_F64.averageOfClosestPointError(a,a,100),TEST_F64);
 
 		// same polygon just rotated order of points
 		Polygon2D_F64 b = new Polygon2D_F64(4);
-		b.get(0).set(1,4);
-		b.get(1).set(1,1);
-		b.get(2).set(4,1);
-		b.get(3).set(4,4);
+		b.get(0).setTo(1,4);
+		b.get(1).setTo(1,1);
+		b.get(2).setTo(4,1);
+		b.get(3).setTo(4,4);
 
 		assertEquals(0,UtilPolygons2D_F64.averageOfClosestPointError(a,b,100),TEST_F64);
 
 		// make b different from a
-		b.get(2).set(8,1);
-		b.get(3).set(8,4);
+		b.get(2).setTo(8,1);
+		b.get(3).setTo(8,4);
 
 		double errorAB = UtilPolygons2D_F64.averageOfClosestPointError(a,b,100);
 		double errorBA = UtilPolygons2D_F64.averageOfClosestPointError(b,a,100);

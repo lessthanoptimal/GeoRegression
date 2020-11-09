@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -67,7 +67,7 @@ public class InvertibleTransformSequence<T extends InvertibleTransform> {
 		T nodeTran = (T)n.tran;
 
 		if( n.forward ) {
-			tmp0.set( nodeTran );
+			tmp0.setTo( nodeTran );
 		} else {
 			nodeTran.invert( tmp0 );
 		}
@@ -86,7 +86,7 @@ public class InvertibleTransformSequence<T extends InvertibleTransform> {
 			tmp0 = tmp1;
 			tmp1 = swap;
 		}
-		result.set(tmp0);
+		result.setTo(tmp0);
 	}
 
 	public List<Node<T>> getPath() {

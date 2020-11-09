@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,8 +36,7 @@ public class PlaneTangent3D_F64 extends Point3D_F64 implements Serializable {
 		super(x, y, z);
 	}
 
-	public PlaneTangent3D_F64() {
-	}
+	public PlaneTangent3D_F64() {}
 
 	@Override
 	public String toString() {

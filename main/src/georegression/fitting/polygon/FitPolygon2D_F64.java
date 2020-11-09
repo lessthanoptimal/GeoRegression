@@ -46,7 +46,7 @@ public class FitPolygon2D_F64 {
 
 		// If empty the output is undefined. Just return a rectangle full of zeros
 		if (points.isEmpty()) {
-			rectangle.set(0.0, 0.0, 0.0, 0.0);
+			rectangle.setTo(0.0, 0.0, 0.0, 0.0);
 			return rectangle;
 		}
 
@@ -62,7 +62,7 @@ public class FitPolygon2D_F64 {
 			else if (p.y > y1) y1 = p.y;
 		}
 
-		rectangle.set( x0, y0, x1, y1);
+		rectangle.setTo( x0, y0, x1, y1);
 
 		return rectangle;
 	}

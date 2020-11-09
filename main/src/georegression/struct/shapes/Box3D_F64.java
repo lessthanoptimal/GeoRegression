@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,17 +44,16 @@ public class Box3D_F64 implements Serializable {
 	}
 
 	public Box3D_F64(Box3D_F64 orig) {
-		set(orig);
+		setTo(orig);
 	}
 
-	public void set( Box3D_F64 orig ) {
-		set(orig.p0.x,orig.p0.y,orig.p0.z,orig.p1.x,orig.p1.y,orig.p1.z);
+	public void setTo(Box3D_F64 orig ) {
+		setTo(orig.p0.x,orig.p0.y,orig.p0.z,orig.p1.x,orig.p1.y,orig.p1.z);
 	}
 
-	public Box3D_F64() {
-	}
+	public Box3D_F64() {}
 
-	public void set(double x0, double y0, double z0, double x1, double y1, double z1 ) {
+	public void setTo(double x0, double y0, double z0, double x1, double y1, double z1 ) {
 		this.p0.set(x0, y0, z0);
 		this.p1.set(x1, y1, z1);
 	}
@@ -134,7 +133,7 @@ public class Box3D_F64 implements Serializable {
 	}
 
 	public void setP1(Point3D_F64 p1) {
-		this.p1.set(p1);
+		this.p1.setTo(p1);
 	}
 
 	/**
@@ -145,7 +144,7 @@ public class Box3D_F64 implements Serializable {
 	}
 
 	public void setP0(Point3D_F64 p0) {
-		this.p0.set(p0);
+		this.p0.setTo(p0);
 	}
 
 	/**

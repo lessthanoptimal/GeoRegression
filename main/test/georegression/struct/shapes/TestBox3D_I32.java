@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -55,7 +55,7 @@ public class TestBox3D_I32 {
 	@Test
 	void set_ints() {
 		Box3D_I32 box = new Box3D_I32();
-		box.set(1,2,3,4,5,6);
+		box.setTo(1,2,3,4,5,6);
 
 		assertEquals(1,box.p0.x);
 		assertEquals(2,box.p0.y);
@@ -69,7 +69,7 @@ public class TestBox3D_I32 {
 	void set_box() {
 		Box3D_I32 boxA = new Box3D_I32(1,2,3,4,5,6);
 		Box3D_I32 box = new Box3D_I32();
-		box.set(boxA);
+		box.setTo(boxA);
 
 		assertEquals(1,box.p0.x);
 		assertEquals(2,box.p0.y);

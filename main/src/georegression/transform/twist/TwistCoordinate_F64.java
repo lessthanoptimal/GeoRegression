@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2016, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -57,8 +57,8 @@ public class TwistCoordinate_F64 {
 	}
 
 	public TwistCoordinate_F64(Vector3D_F64 w, Vector3D_F64 v) {
-		this.w.set(w);
-		this.v.set(v);
+		this.w.setTo(w);
+		this.v.setTo(v);
 	}
 
 	public void set( double wx, double wy , double wz, double vx , double vy, double vz ) {
@@ -67,8 +67,8 @@ public class TwistCoordinate_F64 {
 	}
 
 	public void set( TwistCoordinate_F64 original ) {
-		this.w.set( original.w );
-		this.v.set( original.v );
+		this.w.setTo( original.w );
+		this.v.setTo( original.v );
 	}
 
 	public void print() {

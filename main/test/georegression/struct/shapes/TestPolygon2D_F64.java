@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,9 +34,9 @@ public class TestPolygon2D_F64 {
 	@Test
 	void convert() {
 		Polygon2D_F64 polygon = new Polygon2D_F64(3);
-		polygon.get(0).set(1,2);
-		polygon.get(1).set(2,3);
-		polygon.get(2).set(3,4);
+		polygon.get(0).setTo(1,2);
+		polygon.get(1).setTo(2,3);
+		polygon.get(2).setTo(3,4);
 
 		List<Point2D_F64> list = polygon.convert(null,false);
 		assertEquals(3,list.size());
@@ -51,7 +51,7 @@ public class TestPolygon2D_F64 {
 			assertTrue(list.get(i).equals(polygon.get(i)));
 		}
 
-		polygon.vertexes.grow().set(4,5);
+		polygon.vertexes.grow().setTo(4,5);
 		polygon.convert(list,true);
 		assertEquals(4,list.size());
 	}
@@ -65,7 +65,7 @@ public class TestPolygon2D_F64 {
 		list.add( new Point2D_F64(4,5));
 
 		Polygon2D_F64 polygon = new Polygon2D_F64(2);
-		polygon.set(list);
+		polygon.setTo(list);
 		assertEquals(polygon.size(),list.size());
 		for ( int i = 0; i < list.size(); i++ ) {
 			assertTrue(list.get(i) != polygon.get(i));

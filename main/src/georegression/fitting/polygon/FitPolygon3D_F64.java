@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,7 +44,7 @@ public class FitPolygon3D_F64 {
 
 		// If empty the output is undefined. Just return a rectangle full of zeros
 		if (points.isEmpty()) {
-			rectangle.set(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+			rectangle.setTo(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 			return rectangle;
 		}
 
@@ -63,7 +63,7 @@ public class FitPolygon3D_F64 {
 			else if (p.z > z1) z1 = p.z;
 		}
 
-		rectangle.set(x0, y0, z0, x1, y1, x1);
+		rectangle.setTo(x0, y0, z0, x1, y1, x1);
 
 		return rectangle;
 	}

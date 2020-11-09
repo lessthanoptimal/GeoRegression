@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,29 +33,28 @@ public class Rectangle2D_I32 {
 	public int x1,y1;
 
 	public Rectangle2D_I32(int x0, int y0, int x1, int y1) {
-		set(x0,y0,x1,y1);
+		setTo(x0,y0,x1,y1);
 	}
 
 	public Rectangle2D_I32(Rectangle2D_I32 orig) {
-		set(orig);
+		setTo(orig);
 	}
 
-	public void set( Rectangle2D_I32 orig ) {
+	public void setTo(Rectangle2D_I32 orig ) {
 		this.x0 = orig.x0;
 		this.y0 = orig.y0;
 		this.x1 = orig.x1;
 		this.y1 = orig.y1;
 	}
 
-	public void set(int x0, int y0, int x1, int y1) {
+	public void setTo(int x0, int y0, int x1, int y1) {
 		this.x0 = x0;
 		this.y0 = y0;
 		this.x1 = x1;
 		this.y1 = y1;
 	}
 
-	public Rectangle2D_I32() {
-	}
+	public Rectangle2D_I32() {}
 
 	/**
 	 * Makes sure x0,y0 is the lower extent and x1,y1 is the upper extent

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,8 +36,7 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 		super( x, y, z );
 	}
 
-	public Vector3D_F64() {
-	}
+	public Vector3D_F64() {}
 
 	public Vector3D_F64( Point3D_F64 a, Point3D_F64 b ) {
 		x = b.getX() - a.getX();
@@ -45,7 +44,8 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 		z = b.getZ() - a.getZ();
 	}
 
-	public void set( Vector3D_F64 v ) {
+	@Override
+	public void setTo( Vector3D_F64 v ) {
 		this.x = v.x;
 		this.y = v.y;
 		this.z = v.z;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -38,11 +38,11 @@ public class LineSegment2D_F64 implements Serializable {
 	}
 
 	public LineSegment2D_F64( Point2D_F64 a, Point2D_F64 b ) {
-		set( a, b );
+		setTo( a, b );
 	}
 
 	public LineSegment2D_F64( double x0, double y0, double x1, double y1 ) {
-		set( x0, y0, x1, y1 );
+		setTo( x0, y0, x1, y1 );
 	}
 	
 	public static LineSegment2D_F64 wrap( Point2D_F64 a , Point2D_F64 b ) {
@@ -52,19 +52,19 @@ public class LineSegment2D_F64 implements Serializable {
 		return ret;
 	}
 
-	public void set( LineSegment2D_F64 l ) {
-		this.a.set( l.a );
-		this.b.set( l.b );
+	public void setTo(LineSegment2D_F64 l ) {
+		this.a.setTo( l.a );
+		this.b.setTo( l.b );
 	}
 
-	public void set( Point2D_F64 a, Point2D_F64 b ) {
-		this.a.set( a );
-		this.b.set( b );
+	public void setTo(Point2D_F64 a, Point2D_F64 b ) {
+		this.a.setTo( a );
+		this.b.setTo( b );
 	}
 
-	public void set( double x0, double y0, double x1, double y1 ) {
-		a.set( x0, y0 );
-		b.set( x1, y1 );
+	public void setTo(double x0, double y0, double x1, double y1 ) {
+		a.setTo( x0, y0 );
+		b.setTo( x1, y1 );
 	}
 
 	public Point2D_F64 getA() {

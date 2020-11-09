@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,10 +34,10 @@ public class TestQuadrilateral2D_F64 {
 	@Test
 	void convert() {
 		Quadrilateral_F64 polygon = new Quadrilateral_F64();
-		polygon.a.set(1,2);
-		polygon.b.set(2,3);
-		polygon.c.set(3,4);
-		polygon.c.set(4,5);
+		polygon.a.setTo(1,2);
+		polygon.b.setTo(2,3);
+		polygon.c.setTo(3,4);
+		polygon.c.setTo(4,5);
 
 		List<Point2D_F64> list = polygon.convert(null,false);
 		assertEquals(4,list.size());
@@ -63,7 +63,7 @@ public class TestQuadrilateral2D_F64 {
 		list.add( new Point2D_F64(5,6));
 
 		Quadrilateral_F64 polygon = new Quadrilateral_F64();
-		polygon.set(list);
+		polygon.setTo(list);
 		assertEquals(4,list.size());
 		for ( int i = 0; i < list.size(); i++ ) {
 			assertTrue(list.get(i) != polygon.get(i));

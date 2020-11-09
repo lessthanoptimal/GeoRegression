@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -43,6 +43,5 @@ public class EllipseQuadratic_F64 extends ConicGeneral_F64 {
 		this.F = f;
 	}
 
-	public EllipseQuadratic_F64() {
-	}
+	public EllipseQuadratic_F64() {}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -45,19 +45,19 @@ public class ConvertTransform_F64 {
 			} else if( dst instanceof Homography2D_F64 ) {
 				return (B)convert((Se2_F64)src,(Homography2D_F64)dst);
 			} else if( dst instanceof Se2_F64 ) {
-				dst.set(src);
+				dst.setTo(src);
 				return dst;
 			}
 		} else if( src instanceof Affine2D_F64 ) {
 			if( dst instanceof Homography2D_F64 ) {
 				return (B)convert((Affine2D_F64)src,(Homography2D_F64)dst);
 			} else if( dst instanceof Affine2D_F64 ) {
-				dst.set(src);
+				dst.setTo(src);
 				return dst;
 			}
 		} else if( src instanceof  Homography2D_F64 ) {
 			if( dst instanceof Homography2D_F64 ) {
-				dst.set(src);
+				dst.setTo(src);
 				return dst;
 			}
 		}

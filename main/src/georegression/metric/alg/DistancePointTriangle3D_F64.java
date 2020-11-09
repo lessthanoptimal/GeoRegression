@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -52,7 +52,7 @@ public class DistancePointTriangle3D_F64 {
 	public void setTriangle(Point3D_F64 p0, Point3D_F64 p1, Point3D_F64 p2) {
 
 		// convert triangle into new format
-		B.set(p0);
+		B.setTo(p0);
 		GeometryMath_F64.sub(p1, p0, E0);
 		GeometryMath_F64.sub(p2, p0, E1);
 	}

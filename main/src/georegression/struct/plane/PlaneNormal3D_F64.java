@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,15 +37,15 @@ public class PlaneNormal3D_F64 implements Serializable {
 	public Vector3D_F64 n = new Vector3D_F64();
 
 	public PlaneNormal3D_F64(PlaneNormal3D_F64 o) {
-		set(o);
+		setTo(o);
 	}
 
 	public PlaneNormal3D_F64(Point3D_F64 point, Vector3D_F64 normal) {
-		set(point,normal);
+		setTo(point,normal);
 	}
 
 	public PlaneNormal3D_F64( double px , double py , double pz , double nx , double ny, double nz ) {
-		set(px,py,pz,nx,ny,nz);
+		setTo(px,py,pz,nx,ny,nz);
 	}
 
 	public PlaneNormal3D_F64() {
@@ -55,23 +55,23 @@ public class PlaneNormal3D_F64 implements Serializable {
 		return p;
 	}
 
-	public void set( double px , double py , double pz , double nx , double ny, double nz ) {
+	public void setTo(double px , double py , double pz , double nx , double ny, double nz ) {
 		this.p.set(px,py,pz);
 		this.n.set(nx,ny,nz);
 	}
 
-	public void set( Point3D_F64 point, Vector3D_F64 normal ) {
-		this.p.set(point);
-		this.n.set(normal);
+	public void setTo(Point3D_F64 point, Vector3D_F64 normal ) {
+		this.p.setTo(point);
+		this.n.setTo(normal);
 	}
 
-	public void set( PlaneNormal3D_F64 o ) {
-		this.p.set(o.p);
-		this.n.set(o.n);
+	public void setTo(PlaneNormal3D_F64 o ) {
+		this.p.setTo(o.p);
+		this.n.setTo(o.n);
 	}
 
 	public void setP(Point3D_F64 p) {
-		this.p.set(p);
+		this.p.setTo(p);
 	}
 
 	public Vector3D_F64 getN() {
@@ -79,7 +79,7 @@ public class PlaneNormal3D_F64 implements Serializable {
 	}
 
 	public void setN(Vector3D_F64 n) {
-		this.n.set(n);
+		this.n.setTo(n);
 	}
 
 	@Override

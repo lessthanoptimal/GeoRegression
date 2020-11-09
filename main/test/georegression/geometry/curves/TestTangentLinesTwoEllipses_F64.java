@@ -134,7 +134,7 @@ public class TestTangentLinesTwoEllipses_F64 {
 		Point2D_F64 srcA = new Point2D_F64(2,11.5);
 		Point2D_F64 found = new Point2D_F64();
 
-		alg.centerLine.set(0,0,0,10);
+		alg.centerLine.setTo(0,0,0,10);
 		assertTrue(alg.selectTangent(a,srcA,ellipse,found, false));
 
 		assertEquals(2, found.x, GrlConstants.TEST_F64);

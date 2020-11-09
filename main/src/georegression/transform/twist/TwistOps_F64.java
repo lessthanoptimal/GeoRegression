@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -160,12 +160,12 @@ public class TwistOps_F64 {
 
 		if(MatrixFeatures_DDRM.isIdentity(motion.R, GrlConstants.TEST_F64)) {
 			twist.w.set(0,0,0);
-			twist.v.set(motion.T);
+			twist.v.setTo(motion.T);
 		} else {
 			Rodrigues_F64 rod = new Rodrigues_F64();
 			ConvertRotation3D_F64.matrixToRodrigues(motion.R,rod);
 
-			twist.w.set(rod.unitAxisRotation);
+			twist.w.setTo(rod.unitAxisRotation);
 			double theta = rod.theta;
 
 			// A = (I-SO)*hat(w) + w*w'*theta

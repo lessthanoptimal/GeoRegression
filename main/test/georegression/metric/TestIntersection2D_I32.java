@@ -35,10 +35,10 @@ public class TestIntersection2D_I32 {
 	@Test
 	void containConvex() {
 		Polygon2D_I32 poly = new Polygon2D_I32(4);
-		poly.vertexes.data[0].set(-10,-10);
-		poly.vertexes.data[1].set(10, -10);
-		poly.vertexes.data[2].set(10, 10);
-		poly.vertexes.data[3].set(-10, 10);
+		poly.vertexes.data[0].setTo(-10,-10);
+		poly.vertexes.data[1].setTo(10, -10);
+		poly.vertexes.data[2].setTo(10, 10);
+		poly.vertexes.data[3].setTo(-10, 10);
 
 		Point2D_I32 online = new Point2D_I32(10,-10);
 		Point2D_I32 inside = new Point2D_I32(5,5);
@@ -49,10 +49,10 @@ public class TestIntersection2D_I32 {
 		assertFalse(Intersection2D_I32.containsConvex(poly,outside));
 
 		// change the order of the vertexes
-		poly.vertexes.data[0].set(-10, 10);
-		poly.vertexes.data[1].set(10, 10);
-		poly.vertexes.data[2].set(10, -10);
-		poly.vertexes.data[3].set(-10,-10);
+		poly.vertexes.data[0].setTo(-10, 10);
+		poly.vertexes.data[1].setTo(10, 10);
+		poly.vertexes.data[2].setTo(10, -10);
+		poly.vertexes.data[3].setTo(-10,-10);
 
 		assertFalse(Intersection2D_I32.containsConvex(poly,online));
 		assertTrue(Intersection2D_I32.containsConvex(poly,inside));
@@ -62,10 +62,10 @@ public class TestIntersection2D_I32 {
 	@Test
 	void containConcave_rectangle() {
 		Polygon2D_I32 poly = new Polygon2D_I32(4);
-		poly.vertexes.data[0].set(-1,-1);
-		poly.vertexes.data[1].set(1, -1);
-		poly.vertexes.data[2].set(1, 1);
-		poly.vertexes.data[3].set(-1, 1);
+		poly.vertexes.data[0].setTo(-1,-1);
+		poly.vertexes.data[1].setTo(1, -1);
+		poly.vertexes.data[2].setTo(1, 1);
+		poly.vertexes.data[3].setTo(-1, 1);
 
 		assertTrue(Intersection2D_I32.containsConcave(poly, new Point2D_I32(0,0)));
 
@@ -80,11 +80,11 @@ public class TestIntersection2D_I32 {
 	@Test
 	void containConcave_concave() {
 		Polygon2D_I32 poly = new Polygon2D_I32(5);
-		poly.vertexes.data[0].set(-10,-10);
-		poly.vertexes.data[1].set( 0, 0);
-		poly.vertexes.data[2].set(10, -10);
-		poly.vertexes.data[3].set(10, 10);
-		poly.vertexes.data[4].set(-10, 10);
+		poly.vertexes.data[0].setTo(-10,-10);
+		poly.vertexes.data[1].setTo( 0, 0);
+		poly.vertexes.data[2].setTo(10, -10);
+		poly.vertexes.data[3].setTo(10, 10);
+		poly.vertexes.data[4].setTo(-10, 10);
 
 		assertTrue(Intersection2D_I32.containsConcave(poly, new Point2D_I32(0,5)));
 		assertTrue(Intersection2D_I32.containsConcave(poly, new Point2D_I32(-7,-2)));

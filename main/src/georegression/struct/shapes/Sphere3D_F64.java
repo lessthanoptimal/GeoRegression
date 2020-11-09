@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -43,23 +43,23 @@ public class Sphere3D_F64 implements Serializable {
 
 	public Sphere3D_F64( double x , double y , double z , double radius ) {
 		this();
-		set(x,y,z,radius);
+		setTo(x,y,z,radius);
 	}
 
 	public Sphere3D_F64( Sphere3D_F64 o ) {
 		this();
-		set(o);
+		setTo(o);
 	}
 
-	public void set( double x , double y , double z , double radius ) {
+	public void setTo(double x , double y , double z , double radius ) {
 		this.center.x = x;
 		this.center.y = y;
 		this.center.z = z;
 		this.radius = radius;
 	}
 
-	public void set( Sphere3D_F64 o ) {
-		this.center.set(o.center);
+	public void setTo(Sphere3D_F64 o ) {
+		this.center.setTo(o.center);
 		this.radius = o.radius;
 	}
 

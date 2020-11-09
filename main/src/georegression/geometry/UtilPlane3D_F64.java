@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -101,7 +101,7 @@ public class UtilPlane3D_F64 {
 		output.n.y = input.y;
 		output.n.z = input.z;
 
-		output.p.set(input);
+		output.p.setTo(input);
 
 		return output;
 	}

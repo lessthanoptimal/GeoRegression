@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -47,7 +47,7 @@ public class Polygon2D_I32 implements Serializable, Cloneable  {
 	}
 
 	public Polygon2D_I32( Polygon2D_I32 original ) {
-		set(original);
+		setTo(original);
 	}
 
 	public Polygon2D_I32( int... points ) {
@@ -59,7 +59,7 @@ public class Polygon2D_I32 implements Serializable, Cloneable  {
 
 		int count = 0;
 		for (int i = 0; i < points.length; i += 2) {
-			vertexes.data[count++].set( points[i],points[i+1]);
+			vertexes.data[count++].setTo( points[i],points[i+1]);
 		}
 	}
 
@@ -91,15 +91,15 @@ public class Polygon2D_I32 implements Serializable, Cloneable  {
 		return UtilPolygons2D_I32.isEquivalent(this, a);
 	}
 
-	public void set( Polygon2D_I32 orig ) {
+	public void setTo(Polygon2D_I32 orig ) {
 		vertexes.resize(orig.size());
 		for (int i = 0; i < orig.size(); i++) {
-			vertexes.data[i].set( orig.vertexes.data[i]);
+			vertexes.data[i].setTo( orig.vertexes.data[i]);
 		}
 	}
 
 	public void set( int index , int x , int y ) {
-		vertexes.data[index].set(x,y);
+		vertexes.data[index].setTo(x,y);
 	}
 
 	public Polygon2D_I32 copy() {

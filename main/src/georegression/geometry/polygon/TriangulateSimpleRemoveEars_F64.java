@@ -210,7 +210,7 @@ public class TriangulateSimpleRemoveEars_F64 {
 
 			Vertex v = vertexes.grow();
 			v.index = i;
-			v.set(p.x,p.y);
+			v.setTo(p.x,p.y);
 			polygon.pushTail(v);
 		}
 	}

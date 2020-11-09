@@ -47,7 +47,7 @@ public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homogr
 	}
 
 	public Homography2D_F64( Homography2D_F64 a ) {
-		set(a);
+		setTo(a);
 	}
 
 	public Homography2D_F64() {
@@ -66,7 +66,7 @@ public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homogr
 	}
 
 	@Override
-	public void set(Homography2D_F64 target) {
+	public void setTo(Homography2D_F64 target) {
 		super.set(target);
 	}
 

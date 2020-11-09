@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,8 +46,8 @@ public class LineParametric2D_F64 implements Serializable {
 	public Vector2D_F64 slope = new Vector2D_F64();
 
 	public LineParametric2D_F64( double x_0, double y_0, double slopeX, double slopeY ) {
-		p.set( x_0, y_0 );
-		slope.set( slopeX, slopeY );
+		p.setTo( x_0, y_0 );
+		slope.setTo( slopeX, slopeY );
 	}
 
 	public LineParametric2D_F64( Point2D_F64 p, Vector2D_F64 slope ) {
@@ -69,13 +69,13 @@ public class LineParametric2D_F64 implements Serializable {
 	public LineParametric2D_F64() {
 	}
 
-	public void set( LineParametric2D_F64 line ) {
-		this.p.set(line.p);
+	public void setTo( LineParametric2D_F64 line ) {
+		this.p.setTo(line.p);
 		this.slope.set(line.slope);
 	}
 	
 	public void setPoint( Point2D_F64 pt ) {
-		this.p.set( pt );
+		this.p.setTo( pt );
 	}
 
 	public void setPoint( double x, double y ) {
@@ -98,7 +98,7 @@ public class LineParametric2D_F64 implements Serializable {
 	 * @param angle Angle of the line specified in radians.
 	 */
 	public void setAngle( double angle ) {
-		slope.set( Math.cos( angle ), Math.sin( angle ) );
+		slope.setTo( Math.cos( angle ), Math.sin( angle ) );
 	}
 
 	public double getAngle() {

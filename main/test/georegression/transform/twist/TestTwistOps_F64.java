@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -91,7 +91,7 @@ public class TestTwistOps_F64 {
 		ConvertRotation3D_F64.rodriguesToMatrix(rod,expected.R);
 
 		TwistCoordinate_F64 twist = new TwistCoordinate_F64();
-		twist.w.set(rod.unitAxisRotation);
+		twist.w.setTo(rod.unitAxisRotation);
 
 		Se3_F64 found = TwistOps_F64.exponential(twist,rod.theta,null);
 
@@ -106,7 +106,7 @@ public class TestTwistOps_F64 {
 		expected.T.set(1,0.1,0);
 
 		TwistCoordinate_F64 twist = new TwistCoordinate_F64();
-		twist.v.set(expected.T);
+		twist.v.setTo(expected.T);
 		GeometryMath_F64.divide(twist.v,0.45);
 
 		Se3_F64 found = TwistOps_F64.exponential(twist,0.45,null);

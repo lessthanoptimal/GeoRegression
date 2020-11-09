@@ -218,10 +218,10 @@ public class UtilPolygons2D_F64 {
 		if (output.size() != 4)
 			throw new IllegalArgumentException("polygon of order 4 expected");
 
-		output.get(0).set(input.p0.x, input.p0.y);
-		output.get(1).set(input.p1.x, input.p0.y);
-		output.get(2).set(input.p1.x, input.p1.y);
-		output.get(3).set(input.p0.x, input.p1.y);
+		output.get(0).setTo(input.p0.x, input.p0.y);
+		output.get(1).setTo(input.p1.x, input.p0.y);
+		output.get(2).setTo(input.p1.x, input.p1.y);
+		output.get(3).setTo(input.p0.x, input.p1.y);
 	}
 
 	/**
@@ -234,10 +234,10 @@ public class UtilPolygons2D_F64 {
 		if (output.size() != 4)
 			throw new IllegalArgumentException("polygon of order 4 expected");
 
-		output.get(0).set(input.a);
-		output.get(1).set(input.b);
-		output.get(2).set(input.c);
-		output.get(3).set(input.d);
+		output.get(0).setTo(input.a);
+		output.get(1).setTo(input.b);
+		output.get(2).setTo(input.c);
+		output.get(3).setTo(input.d);
 	}
 
 	/**
@@ -250,10 +250,10 @@ public class UtilPolygons2D_F64 {
 		if( input.size() != 4 )
 			throw new IllegalArgumentException("Expected 4-sided polygon as input");
 
-		output.a.set(input.get(0));
-		output.b.set(input.get(1));
-		output.c.set(input.get(2));
-		output.d.set(input.get(3));
+		output.a.setTo(input.get(0));
+		output.b.setTo(input.get(1));
+		output.c.setTo(input.get(2));
+		output.d.setTo(input.get(3));
 	}
 
 	/**
@@ -310,8 +310,8 @@ public class UtilPolygons2D_F64 {
 	 */
 	public static void bounding( Polygon2D_F64 polygon , Rectangle2D_F64 rectangle ) {
 
-		rectangle.p0.set(polygon.get(0));
-		rectangle.p1.set(polygon.get(0));
+		rectangle.p0.setTo(polygon.get(0));
+		rectangle.p1.setTo(polygon.get(0));
 
 		for (int i = 0; i < polygon.size(); i++) {
 			Point2D_F64 p = polygon.get(i);

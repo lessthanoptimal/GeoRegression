@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,17 +46,16 @@ public class BoxLength3D_F64 implements Serializable {
 	}
 
 	public BoxLength3D_F64(BoxLength3D_F64 orig) {
-		set(orig);
+		setTo(orig);
 	}
 
-	public void set( BoxLength3D_F64 orig ) {
-		set(orig.p.x,orig.p.y,orig.p.z,orig.lengthX,orig.lengthY,orig.lengthZ);
+	public void setTo(BoxLength3D_F64 orig ) {
+		setTo(orig.p.x,orig.p.y,orig.p.z,orig.lengthX,orig.lengthY,orig.lengthZ);
 	}
 
-	public BoxLength3D_F64() {
-	}
+	public BoxLength3D_F64() {}
 
-	public void set(double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ) {
+	public void setTo(double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ) {
 		this.p.set(x0,y0,z0);
 		this.lengthX = lengthX;
 		this.lengthY = lengthY;
@@ -84,7 +83,7 @@ public class BoxLength3D_F64 implements Serializable {
 	}
 
 	public void setP(Point3D_F64 p) {
-		this.p.set(p);
+		this.p.setTo(p);
 	}
 
 	public void setLengthX(double lengthX) {
@@ -110,7 +109,7 @@ public class BoxLength3D_F64 implements Serializable {
 		if( corner == null )
 			corner = new Point3D_F64();
 
-		corner.set(p);
+		corner.setTo(p);
 
 		if( (index & 0x01) != 0 ) {
 			corner.x += lengthX;

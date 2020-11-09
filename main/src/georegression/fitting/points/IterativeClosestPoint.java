@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -145,7 +145,7 @@ public class IterativeClosestPoint<SE extends InvertibleTransform, P extends Geo
 			// sum up all the transforms up to this point
 			if (first) {
 				first = false;
-				foundModelToPoints.set(motion.getTransformSrcToDst());
+				foundModelToPoints.setTo(motion.getTransformSrcToDst());
 			} else {
 				// the returned transform is the result of the sequence of transforms.
 				foundModelToPoints = (SE) motion.getTransformSrcToDst().concat(foundModelToPoints, null);

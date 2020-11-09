@@ -6,8 +6,8 @@ Version : 0.23
 
 - Build
   * Static checks with Error Prone and NullAway
-- GeoTuple
-  * Added setTo() function
+- Refactoring
+  * Changed set() into setTo() for more structures
 - Area2D
   * Includes functions for intersection-over-union a common quality of fit measure
 - Intersection2D

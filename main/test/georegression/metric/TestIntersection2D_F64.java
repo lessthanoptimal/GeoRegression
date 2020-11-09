@@ -50,10 +50,10 @@ public class TestIntersection2D_F64 {
 
 	@Test void containsConvex() {
 		Polygon2D_F64 poly = new Polygon2D_F64(4);
-		poly.vertexes.data[0].set(-1,-1);
-		poly.vertexes.data[1].set(1, -1);
-		poly.vertexes.data[2].set(1, 1);
-		poly.vertexes.data[3].set(-1, 1);
+		poly.vertexes.data[0].setTo(-1,-1);
+		poly.vertexes.data[1].setTo(1, -1);
+		poly.vertexes.data[2].setTo(1, 1);
+		poly.vertexes.data[3].setTo(-1, 1);
 
 		Point2D_F64 online = new Point2D_F64(1,-1);
 		Point2D_F64 inside = new Point2D_F64(0.5,0.5);
@@ -73,10 +73,10 @@ public class TestIntersection2D_F64 {
 
 	@Test void containsConvex2() {
 		Polygon2D_F64 poly = new Polygon2D_F64(4);
-		poly.vertexes.data[0].set(-1,-1);
-		poly.vertexes.data[1].set(1, -1);
-		poly.vertexes.data[2].set(1, 1);
-		poly.vertexes.data[3].set(-1, 1);
+		poly.vertexes.data[0].setTo(-1,-1);
+		poly.vertexes.data[1].setTo(1, -1);
+		poly.vertexes.data[2].setTo(1, 1);
+		poly.vertexes.data[3].setTo(-1, 1);
 
 		Point2D_F64 online = new Point2D_F64(1,-1);
 		Point2D_F64 inside = new Point2D_F64(0.5,0.5);
@@ -96,10 +96,10 @@ public class TestIntersection2D_F64 {
 
 	@Test void containsConcave_rectangle() {
 		Polygon2D_F64 poly = new Polygon2D_F64(4);
-		poly.vertexes.data[0].set(-1,-1);
-		poly.vertexes.data[1].set(1, -1);
-		poly.vertexes.data[2].set(1, 1);
-		poly.vertexes.data[3].set(-1, 1);
+		poly.vertexes.data[0].setTo(-1,-1);
+		poly.vertexes.data[1].setTo(1, -1);
+		poly.vertexes.data[2].setTo(1, 1);
+		poly.vertexes.data[3].setTo(-1, 1);
 
 		assertTrue(Intersection2D_F64.containsConcave(poly, new Point2D_F64(0, 0)));
 
@@ -113,10 +113,10 @@ public class TestIntersection2D_F64 {
 
 	@Test void contains_quadrilateral() {
 		Quadrilateral_F64 quad = new Quadrilateral_F64();
-		quad.a.set(-1, -1);
-		quad.b.set(1, -1);
-		quad.c.set(1, 1);
-		quad.d.set(-1, 1);
+		quad.a.setTo(-1, -1);
+		quad.b.setTo(1, -1);
+		quad.c.setTo(1, 1);
+		quad.d.setTo(-1, 1);
 
 		assertTrue(Intersection2D_F64.contains(quad, new Point2D_F64(0, 0)));
 
@@ -155,11 +155,11 @@ public class TestIntersection2D_F64 {
 
 	@Test void containConcave_concave() {
 		Polygon2D_F64 poly = new Polygon2D_F64(5);
-		poly.vertexes.data[0].set(-1,-1);
-		poly.vertexes.data[1].set( 0, 0);
-		poly.vertexes.data[2].set(1, -1);
-		poly.vertexes.data[3].set(1, 1);
-		poly.vertexes.data[4].set(-1, 1);
+		poly.vertexes.data[0].setTo(-1,-1);
+		poly.vertexes.data[1].setTo( 0, 0);
+		poly.vertexes.data[2].setTo(1, -1);
+		poly.vertexes.data[3].setTo(1, 1);
+		poly.vertexes.data[4].setTo(-1, 1);
 
 		assertTrue(Intersection2D_F64.containsConcave(poly, new Point2D_F64(0,0.5)));
 		assertTrue(Intersection2D_F64.containsConcave(poly, new Point2D_F64(-0.75,-0.25)));
@@ -330,15 +330,15 @@ public class TestIntersection2D_F64 {
 		LineParametric2D_F64 b = new LineParametric2D_F64(-2,-4,0,-1);
 
 		assertNull(Intersection2D_F64.intersection(a, b, true, null));
-		b.slope.set(0,1);
+		b.slope.setTo(0,1);
 		assertNull(Intersection2D_F64.intersection(a, b, true, null));
 		assertNull(Intersection2D_F64.intersection(b, a, true, null));
-		a.slope.set(-1,0);
-		b.slope.set(0,-1);
+		a.slope.setTo(-1,0);
+		b.slope.setTo(0,-1);
 		assertNull(Intersection2D_F64.intersection(a, b, true, null));
 		assertNull(Intersection2D_F64.intersection(b, a, true, null));
 
-		b.slope.set(0,1);
+		b.slope.setTo(0,1);
 		Point2D_F64 found = Intersection2D_F64.intersection(a,b,true,null);
 		assertNotNull(found);
 		assertEquals(0,found.distance(-2,3), UtilEjml.TEST_F64);

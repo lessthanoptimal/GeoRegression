@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -92,8 +92,8 @@ public class CovarianceToEllipse_F64 {
 		lengthX = Math.sqrt(lengthX);
 		lengthY = Math.sqrt(lengthY);
 
-		x.set( (double) a0.get(0) , (double) a0.get(1));
-		y.set( (double) a1.get(0) , (double) a1.get(1));
+		x.setTo( (double) a0.get(0) , (double) a0.get(1));
+		y.setTo( (double) a1.get(0) , (double) a1.get(1));
 
 		return true;
 	}

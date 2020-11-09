@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -58,7 +58,7 @@ public class InterpolateLinearSe3_F64 {
 	 * @param end second transform
 	 */
 	public void setTransforms( Se3_F64 initial , Se3_F64 end) {
-		this.initial.set(initial);
+		this.initial.setTo(initial);
 
 		translation.x = end.T.x - initial.T.x;
 		translation.y = end.T.y - initial.T.y;

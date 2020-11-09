@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -47,11 +47,11 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	}
 
 	public Se2_F64( double x, double y, double yaw ) {
-		set( x, y, yaw );
+		setTo( x, y, yaw );
 	}
 
 	public Se2_F64( double x, double y, double cosYaw, double sinYaw ) {
-		set( x, y, cosYaw, sinYaw );
+		setTo( x, y, cosYaw, sinYaw );
 	}
 
 	/**
@@ -61,20 +61,20 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 		c=1.0;
 	}
 
-	public void set( double x, double y, double yaw ) {
-		this.T.set(x, y);
+	public void setTo(double x, double y, double yaw ) {
+		this.T.setTo(x, y);
 		this.c = Math.cos( yaw );
 		this.s = Math.sin( yaw );
 	}
 
-	public void set( double x, double y, double cosYaw, double sinYaw ) {
-		this.T.set(x, y);
+	public void setTo(double x, double y, double cosYaw, double sinYaw ) {
+		this.T.setTo(x, y);
 		this.c = cosYaw;
 		this.s = sinYaw;
 	}
 
 	@Override
-	public void set( Se2_F64 target ) {
+	public void setTo( Se2_F64 target ) {
 		this.T.set(target.T);
 		this.c = target.c;
 		this.s = target.s;
@@ -105,7 +105,7 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	}
 
 	public void setTranslation( double x, double y ) {
-		this.T.set(x, y);
+		this.T.setTo(x, y);
 	}
 
 	public double getYaw() {
@@ -168,7 +168,7 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	public void reset() {
 		c = 1;
 		s = 0;
-		T.set(0, 0);
+		T.setTo(0, 0);
 	}
 
 	public Se2_F64 copy() {

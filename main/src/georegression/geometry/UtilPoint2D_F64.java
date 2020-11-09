@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -105,7 +105,7 @@ public class UtilPoint2D_F64 {
 		x /= list.size();
 		y /= list.size();
 
-		mean.set(x, y);
+		mean.setTo(x, y);
 		return mean;
 	}
 
@@ -136,7 +136,7 @@ public class UtilPoint2D_F64 {
 		x /= length;
 		y /= length;
 
-		mean.set(x, y);
+		mean.setTo(x, y);
 		return mean;
 	}
 
@@ -243,7 +243,7 @@ public class UtilPoint2D_F64 {
 				maxY = p.y;
 		}
 
-		bounding.set(minX,minY,maxX,maxY);
+		bounding.setTo(minX,minY,maxX,maxY);
 
 		return bounding;
 	}

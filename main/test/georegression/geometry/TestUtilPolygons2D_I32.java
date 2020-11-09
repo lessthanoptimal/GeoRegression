@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -150,7 +150,7 @@ public class TestUtilPolygons2D_I32 {
 				int x = rand.nextInt(5)-2;
 				int y = rand.nextInt(5)-2;
 
-				poly.vertexes.grow().set(x,y);
+				poly.vertexes.grow().setTo(x,y);
 			}
 
 			Rectangle2D_I32 rectangle = new Rectangle2D_I32();

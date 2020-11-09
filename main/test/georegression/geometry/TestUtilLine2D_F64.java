@@ -72,8 +72,8 @@ public class TestUtilLine2D_F64 {
 		LineSegment2D_F64 segment = new LineSegment2D_F64();
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 
-		segment.a.set(1,2);
-		segment.b.set(5,0);
+		segment.a.setTo(1,2);
+		segment.b.setTo(5,0);
 
 		UtilLine2D_F64.convert(segment,para);
 
@@ -86,8 +86,8 @@ public class TestUtilLine2D_F64 {
 	@Test void convert_segment_general() {
 		LineSegment2D_F64 segment = new LineSegment2D_F64();
 
-		segment.a.set(0,2);
-		segment.b.set(5,6);
+		segment.a.setTo(0,2);
+		segment.b.setTo(5,6);
 
 		LineGeneral2D_F64 general = UtilLine2D_F64.convert(segment,(LineGeneral2D_F64)null);
 
@@ -191,13 +191,13 @@ public class TestUtilLine2D_F64 {
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 		LinePolar2D_F64 polar = new LinePolar2D_F64();
 
-		para.slope.set(1,0);
+		para.slope.setTo(1,0);
 		para.setPoint(0,5);
 		UtilLine2D_F64.convert(para,polar);
 		assertEquals(polar.distance,5, GrlConstants.TEST_F64);
 		assertEquals(polar.angle,Math.PI/2, GrlConstants.TEST_F64);
 
-		para.slope.set(1,-1);
+		para.slope.setTo(1,-1);
 		para.setPoint(-5,-5);
 		UtilLine2D_F64.convert(para,polar);
 		assertEquals(polar.distance,5*Math.sqrt(2), GrlConstants.TEST_F64);
@@ -235,8 +235,8 @@ public class TestUtilLine2D_F64 {
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 		LineGeneral2D_F64 general = new LineGeneral2D_F64();
 
-		para.slope.set(1,0.5);
-		para.p.set(0.75,0.34);
+		para.slope.setTo(1,0.5);
+		para.p.setTo(0.75,0.34);
 
 		// pick a point on the line
 		Point2D_F64 p = new Point2D_F64(para.p.x + para.slope.x*2,para.p.y + para.slope.y*2);
@@ -255,7 +255,7 @@ public class TestUtilLine2D_F64 {
 		LineParametric2D_F64 para = new LineParametric2D_F64();
 
 		// pick some arbitrary line
-		general.set(1,2,3);
+		general.setTo(1,2,3);
 
 		// convert to parametric notation
 		UtilLine2D_F64.convert(general,para);

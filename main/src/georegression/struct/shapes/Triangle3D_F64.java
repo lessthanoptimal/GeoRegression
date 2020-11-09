@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,9 +33,9 @@ public class Triangle3D_F64 implements Serializable {
 	public Point3D_F64 v2 = new Point3D_F64();
 
 	public Triangle3D_F64(Point3D_F64 v0, Point3D_F64 v1, Point3D_F64 v2) {
-		this.v0.set(v0);
-		this.v1.set(v1);
-		this.v2.set(v2);
+		this.v0.setTo(v0);
+		this.v1.setTo(v1);
+		this.v2.setTo(v2);
 	}
 
 	public Triangle3D_F64(double x0, double y0, double z0,
@@ -47,21 +47,21 @@ public class Triangle3D_F64 implements Serializable {
 	}
 
 	public Triangle3D_F64( Triangle3D_F64 orig ) {
-		set(orig);
+		setTo(orig);
 	}
 
 	public Triangle3D_F64() {
 	}
 
-	public void set( Triangle3D_F64 orig ) {
-		v0.set(orig.v0);
-		v1.set(orig.v1);
-		v2.set(orig.v2);
+	public void setTo(Triangle3D_F64 orig ) {
+		v0.setTo(orig.v0);
+		v1.setTo(orig.v1);
+		v2.setTo(orig.v2);
 	}
 
-	public void set(double x0, double y0, double z0,
-					double x1, double y1, double z1,
-					double x2, double y2, double z2) {
+	public void setTo(double x0, double y0, double z0,
+					  double x1, double y1, double z1,
+					  double x2, double y2, double z2) {
 		this.v0.set(x0,y0,z0);
 		this.v1.set(x1,y1,z1);
 		this.v2.set(x2,y2,z2);

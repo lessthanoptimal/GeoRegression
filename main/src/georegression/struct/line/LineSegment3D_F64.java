@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -38,11 +38,11 @@ public class LineSegment3D_F64 implements Serializable {
 	}
 
 	public LineSegment3D_F64(Point3D_F64 a, Point3D_F64 b) {
-		set( a, b );
+		setTo( a, b );
 	}
 
 	public LineSegment3D_F64(double x0, double y0, double z0, double x1, double y1 , double z1) {
-		set( x0, y0, z0, x1, y1, z1 );
+		setTo( x0, y0, z0, x1, y1, z1 );
 	}
 	
 	public static LineSegment3D_F64 wrap( Point3D_F64 a , Point3D_F64 b ) {
@@ -52,17 +52,17 @@ public class LineSegment3D_F64 implements Serializable {
 		return ret;
 	}
 
-	public void set( LineSegment3D_F64 l ) {
-		this.a.set( l.a );
-		this.b.set( l.b );
+	public void setTo(LineSegment3D_F64 l ) {
+		this.a.setTo( l.a );
+		this.b.setTo( l.b );
 	}
 
-	public void set( Point3D_F64 a, Point3D_F64 b ) {
-		this.a.set( a );
-		this.b.set( b );
+	public void setTo(Point3D_F64 a, Point3D_F64 b ) {
+		this.a.setTo( a );
+		this.b.setTo( b );
 	}
 
-	public void set( double x0, double y0, double z0, double x1, double y1 , double z1 ) {
+	public void setTo(double x0, double y0, double z0, double x1, double y1 , double z1 ) {
 		a.set( x0, y0, z0 );
 		b.set( x1, y1, z1 );
 	}

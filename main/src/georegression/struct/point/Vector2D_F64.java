@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -32,14 +32,14 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 	}
 
 	public Vector2D_F64( double x, double y ) {
-		set( x, y );
+		setTo( x, y );
 	}
 
 	public Vector2D_F64() {
 	}
 
 	public Vector2D_F64( Vector2D_F64 pt ) {
-		set( pt.x, pt.y );
+		setTo( pt.x, pt.y );
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 	}
 
 	public void set( Vector2D_F64 orig ) {
-		_set( orig );
+		_setTo( orig );
 	}
 
 	@Override

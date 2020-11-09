@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,25 +36,24 @@ public class Rectangle2D_F64 implements Serializable {
 	public Point2D_F64 p1 = new Point2D_F64();
 
 	public Rectangle2D_F64(double x0, double y0, double x1, double y1) {
-		set(x0,y0,x1,y1);
+		setTo(x0,y0,x1,y1);
 	}
 
 	public Rectangle2D_F64(Rectangle2D_F64 orig) {
-		set(orig);
+		setTo(orig);
 	}
 
-	public void set( Rectangle2D_F64 orig ) {
-		this.p0.set(orig.p0);
-		this.p1.set(orig.p1);
+	public void setTo(Rectangle2D_F64 orig ) {
+		this.p0.setTo(orig.p0);
+		this.p1.setTo(orig.p1);
 	}
 
-	public void set(double x0, double y0, double x1, double y1) {
-		this.p0.set(x0,y0);
-		this.p1.set(x1,y1);
+	public void setTo(double x0, double y0, double x1, double y1) {
+		this.p0.setTo(x0,y0);
+		this.p1.setTo(x1,y1);
 	}
 
-	public Rectangle2D_F64() {
-	}
+	public Rectangle2D_F64() { }
 
 	/**
 	 * Makes sure x0,y0 is the lower extent and x1,y1 is the upper extent
@@ -129,7 +128,6 @@ public class Rectangle2D_F64 implements Serializable {
 	public void setP1(Point2D_F64 p1) {
 		this.p1 = p1;
 	}
-
 
 	@Override
 	public String toString() {

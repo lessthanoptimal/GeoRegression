@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -55,7 +55,7 @@ public class TestSePointOps_F64 {
 		assertEquals( 4, pt.getY(), GrlConstants.TEST_F64);
 
 		// now provide it an input to work off of
-		found.set( 10, 10 );
+		found.setTo( 10, 10 );
 		SePointOps_F64.transform( tran, pt, found );
 		assertEquals( -4, found.getX(), GrlConstants.TEST_F64);
 		assertEquals( -1, found.getY(), GrlConstants.TEST_F64);
@@ -81,7 +81,7 @@ public class TestSePointOps_F64 {
 		assertEquals( 4, pt.getY(), GrlConstants.TEST_F64);
 
 		// now provide it an input to work off of
-		found.set( 10, 10 );
+		found.setTo( 10, 10 );
 		SePointOps_F64.transformReverse( tran, pt, found );
 		assertEquals( 1, found.getX(), GrlConstants.TEST_F64);
 		assertEquals( -4, found.getY(), GrlConstants.TEST_F64);

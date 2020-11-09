@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -59,7 +59,7 @@ public class EllipseRotated_F64 implements Serializable {
 	 * @param phi orientation in radians
 	 */
 	public EllipseRotated_F64(Point2D_F64 center, double a, double b, double phi) {
-		this.center.set(center);
+		this.center.setTo(center);
 		this.a = a;
 		this.b = b;
 		this.phi = phi;
@@ -75,7 +75,7 @@ public class EllipseRotated_F64 implements Serializable {
 	 * @param phi orientation in radians
 	 */
 	public EllipseRotated_F64( double x0 , double y0, double a, double b, double phi) {
-		set(x0,y0,a,b,phi);
+		setTo(x0,y0,a,b,phi);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class EllipseRotated_F64 implements Serializable {
 	}
 
 	public void setCenter(Point2D_F64 center) {
-		this.center.set(center);
+		this.center.setTo(center);
 	}
 
 	/**
@@ -134,15 +134,15 @@ public class EllipseRotated_F64 implements Serializable {
 		this.phi = phi;
 	}
 
-	public void set( double x0 , double y0, double a, double b, double phi) {
-		this.center.set(x0,y0);
+	public void setTo(double x0 , double y0, double a, double b, double phi) {
+		this.center.setTo(x0,y0);
 		this.a = a;
 		this.b = b;
 		this.phi = phi;
 	}
 
-	public void set(EllipseRotated_F64 ellipse ) {
-		this.center.set( ellipse.center );
+	public void setTo(EllipseRotated_F64 ellipse ) {
+		this.center.setTo( ellipse.center );
 		this.a = ellipse.a;
 		this.b = ellipse.b;
 		this.phi = ellipse.phi;

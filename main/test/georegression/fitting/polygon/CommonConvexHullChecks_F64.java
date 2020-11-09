@@ -49,10 +49,10 @@ public abstract class CommonConvexHullChecks_F64 {
 	@Test
 	void square_axis_aligned() {
 		var points = new FastQueue<>(Point2D_F64::new);
-		points.grow().set(0,0);
-		points.grow().set(2,0);
-		points.grow().set(2,2);
-		points.grow().set(0,2);
+		points.grow().setTo(0,0);
+		points.grow().setTo(2,0);
+		points.grow().setTo(2,2);
+		points.grow().setTo(0,2);
 
 		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
@@ -77,12 +77,12 @@ public abstract class CommonConvexHullChecks_F64 {
 	 */
 	@Test void square_axis_aligned_stuff_inside() {
 		var points = new FastQueue<>(Point2D_F64::new);
-		points.grow().set(1,1);
-		points.grow().set(0.5,1.5);
-		points.grow().set(0,0);
-		points.grow().set(2,0);
-		points.grow().set(2,2);
-		points.grow().set(0,2);
+		points.grow().setTo(1,1);
+		points.grow().setTo(0.5,1.5);
+		points.grow().setTo(0,0);
+		points.grow().setTo(2,0);
+		points.grow().setTo(2,2);
+		points.grow().setTo(0,2);
 
 		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
@@ -101,10 +101,10 @@ public abstract class CommonConvexHullChecks_F64 {
 	 */
 	@Test void square_off_axis() {
 		var points = new FastQueue<>(Point2D_F64::new);
-		points.grow().set(1,0);
-		points.grow().set(3,2);
-		points.grow().set(1,4);
-		points.grow().set(-1,2);
+		points.grow().setTo(1,0);
+		points.grow().setTo(3,2);
+		points.grow().setTo(1,4);
+		points.grow().setTo(-1,2);
 
 		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
@@ -120,9 +120,9 @@ public abstract class CommonConvexHullChecks_F64 {
 	 */
 	@Test void triangle() {
 		var points = new FastQueue<>(Point2D_F64::new);
-		points.grow().set(2,0);
-		points.grow().set(2,2);
-		points.grow().set(0,0);
+		points.grow().setTo(2,0);
+		points.grow().setTo(2,2);
+		points.grow().setTo(0,0);
 
 		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
@@ -138,12 +138,12 @@ public abstract class CommonConvexHullChecks_F64 {
 	 */
 	@Test void multiple_points_same_location() {
 		var points = new FastQueue<>(Point2D_F64::new);
-		points.grow().set(2,0);
-		points.grow().set(2,2);
-		points.grow().set(0,0);
-		points.grow().set(2,0);
-		points.grow().set(2,2);
-		points.grow().set(0,0);
+		points.grow().setTo(2,0);
+		points.grow().setTo(2,2);
+		points.grow().setTo(0,0);
+		points.grow().setTo(2,0);
+		points.grow().setTo(2,2);
+		points.grow().setTo(0,0);
 
 		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
@@ -154,8 +154,8 @@ public abstract class CommonConvexHullChecks_F64 {
 		assertTrue(UtilPolygons2D_F64.isConvex(found));
 
 		// turn it into a triangle and see if it still works
-		points.grow().set(0,2);
-		points.grow().set(0,2);
+		points.grow().setTo(0,2);
+		points.grow().setTo(0,2);
 		alg.process(points, found);
 		assertEquals(4, found.size());
 		assertTrue(UtilPolygons2D_F64.isCCW(found));
@@ -175,7 +175,7 @@ public abstract class CommonConvexHullChecks_F64 {
 			points.reset();
 			int N = rand.nextInt(20)+3;
 			for (int i = 0; i < N; i++) {
-				points.grow().set(rand.nextGaussian(), rand.nextGaussian());
+				points.grow().setTo(rand.nextGaussian(), rand.nextGaussian());
 			}
 
 			alg.process(points, found);
@@ -193,14 +193,14 @@ public abstract class CommonConvexHullChecks_F64 {
 	 */
 	@Test void one_and_two_points() {
 		var points = new FastQueue<>(Point2D_F64::new);
-		points.grow().set(0,0);
+		points.grow().setTo(0,0);
 
 		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
 		alg.process(points, found);
 		assertEquals(1, found.size());
 
-		points.grow().set(2,2);
+		points.grow().setTo(2,2);
 		alg.process(points, found);
 		assertEquals(2, found.size());
 	}
@@ -210,10 +210,10 @@ public abstract class CommonConvexHullChecks_F64 {
 	 */
 	@Test void line() {
 		var points = new FastQueue<>(Point2D_F64::new);
-		points.grow().set(0,0);
-		points.grow().set(1,0);
-		points.grow().set(2,0);
-		points.grow().set(3,0);
+		points.grow().setTo(0,0);
+		points.grow().setTo(1,0);
+		points.grow().setTo(2,0);
+		points.grow().setTo(3,0);
 
 		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
@@ -226,11 +226,11 @@ public abstract class CommonConvexHullChecks_F64 {
 	@Test void pentagon() {
 		// all points are in hull
 		var input = new FastQueue<>(Point2D_F64::new);
-		input.grow().set(2,3);
-		input.grow().set(2,8);
-		input.grow().set(7,8);
-		input.grow().set(7,3);
-		input.grow().set(4,10);
+		input.grow().setTo(2,3);
+		input.grow().setTo(2,8);
+		input.grow().setTo(7,8);
+		input.grow().setTo(7,3);
+		input.grow().setTo(4,10);
 
 		Polygon2D_F64 output = new Polygon2D_F64();
 
@@ -242,8 +242,8 @@ public abstract class CommonConvexHullChecks_F64 {
 
 		// add a point inside
 		var input2 = new FastQueue<>(Point2D_F64::new);
-		input2.copyAll(input.toList(), (a,b)->b.set(a));
-		input2.grow().set(4,4);
+		input2.copyAll(input.toList(), (a,b)->b.setTo(a));
+		input2.grow().setTo(4,4);
 
 		alg.process(input2,output);
 		containsOnceEach(input,output);
@@ -264,7 +264,7 @@ public abstract class CommonConvexHullChecks_F64 {
 			double y = row*w - 2.1;
 			for (int col = 0; col < numCols; col++) {
 				double x = col*w - 2.6;
-				points.grow().set(x,y);
+				points.grow().setTo(x,y);
 			}
 		}
 		alg.process(points,output);

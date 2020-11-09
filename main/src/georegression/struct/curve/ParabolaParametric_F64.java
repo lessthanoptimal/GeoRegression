@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,23 +34,25 @@ public class ParabolaParametric_F64 {
 
 	public ParabolaParametric_F64(){}
 
-	public ParabolaParametric_F64( ParabolaParametric_F64 original ) {
-		this.A = original.A;
-		this.B = original.B;
-		this.C = original.C;
-		this.D = original.D;
-		this.E = original.E;
-		this.F = original.F;
+	public ParabolaParametric_F64(ParabolaParametric_F64 src){setTo(src);}
+
+	public void setTo( ParabolaParametric_F64 src ) {
+		this.A = src.A;
+		this.B = src.B;
+		this.C = src.C;
+		this.D = src.D;
+		this.E = src.E;
+		this.F = src.F;
 	}
 
-	public void evaulate(double t , Point2D_F64 location ) {
+	public void evaluate(double t , Point2D_F64 location ) {
 		location.x = A*t*t + B*t + C;
 		location.y = D*t*t + E*t + F;
 	}
 
 	public Point2D_F64 evaluate( double t ) {
 		Point2D_F64 p = new Point2D_F64();
-		evaulate(t,p);
+		evaluate(t,p);
 		return p;
 	}
 }

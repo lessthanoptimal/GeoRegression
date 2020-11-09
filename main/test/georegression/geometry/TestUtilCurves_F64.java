@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -145,7 +145,7 @@ public class TestUtilCurves_F64 {
 		Point2D_F64 p = new Point2D_F64();
 		for (int i = 0; i < 20; i++) {
 			double t = i/10.0;
-			parametric.evaulate(t,p);
+			parametric.evaluate(t,p);
 			assertEquals(0,general.evaluate(p.x,p.y), UtilEjml.TEST_F64);
 		}
 

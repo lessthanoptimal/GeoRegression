@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,12 +37,12 @@ public class Circle2D_F64 {
 
 	public Circle2D_F64(double radius, Point2D_F64 center) {
 		this.radius = radius;
-		this.center.set(center);
+		this.center.setTo(center);
 	}
 
 	public Circle2D_F64(double radius, double x , double y) {
 		this.radius = radius;
-		this.center.set(x,y);
+		this.center.setTo(x,y);
 	}
 
 	public Circle2D_F64() {

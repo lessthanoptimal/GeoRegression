@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -49,7 +49,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		return 3;
 	}
 
-	protected void _set( GeoTuple3D_F64 a ) {
+	protected void _setTo(GeoTuple3D_F64 a ) {
 		x = a.x;
 		y = a.y;
 		z = a.z;

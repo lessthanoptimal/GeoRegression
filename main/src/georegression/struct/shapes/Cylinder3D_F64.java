@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -49,18 +49,18 @@ public class Cylinder3D_F64 implements Serializable {
 						   double slopeX, double slopeY, double slopeZ,
 						   double radius ) {
 		this();
-		this.line.set(x_0,y_0,z_0,slopeX,slopeY,slopeZ);
+		this.line.setTo(x_0,y_0,z_0,slopeX,slopeY,slopeZ);
 		this.radius = radius;
 	}
 
 	public Cylinder3D_F64(LineParametric3D_F64 line , double radius) {
 		this();
-		set(line,radius);
+		setTo(line,radius);
 	}
 
 	public Cylinder3D_F64(Cylinder3D_F64 o) {
 		this();
-		set(o);
+		setTo(o);
 	}
 
 	public Cylinder3D_F64( boolean declare ) {
@@ -68,20 +68,20 @@ public class Cylinder3D_F64 implements Serializable {
 			line = new LineParametric3D_F64();
 	}
 
-	public void set( double x_0, double y_0, double z_0,
-					 double slopeX, double slopeY, double slopeZ,
-					 double radius ) {
-		this.line.set(x_0,y_0,z_0,slopeX,slopeY,slopeZ);
+	public void setTo(double x_0, double y_0, double z_0,
+					  double slopeX, double slopeY, double slopeZ,
+					  double radius ) {
+		this.line.setTo(x_0,y_0,z_0,slopeX,slopeY,slopeZ);
 		this.radius = radius;
 	}
 
-	public void set( LineParametric3D_F64 line , double radius ) {
-		this.line.set(line);
+	public void setTo(LineParametric3D_F64 line , double radius ) {
+		this.line.setTo(line);
 		this.radius = radius;
 	}
 
-	public void set( Cylinder3D_F64 o ) {
-		this.line.set(o.line);
+	public void setTo(Cylinder3D_F64 o ) {
+		this.line.setTo(o.line);
 		this.radius = o.radius;
 	}
 

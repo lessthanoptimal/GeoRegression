@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -56,12 +56,12 @@ public class CylinderBounded3D_F64 implements Serializable {
 
 	public CylinderBounded3D_F64(Point3D_F64 endA, Point3D_F64 endB, double radius) {
 		this();
-		set(endA, endB,radius);
+		setTo(endA, endB,radius);
 	}
 
 	public CylinderBounded3D_F64(CylinderBounded3D_F64 o) {
 		this();
-		set(o);
+		setTo(o);
 	}
 
 	/**
@@ -76,23 +76,23 @@ public class CylinderBounded3D_F64 implements Serializable {
 		}
 	}
 
-	public void set( double x_0, double y_0, double z_0,
-					 double x_1, double y_1, double z_1,
-					 double radius ) {
+	public void setTo(double x_0, double y_0, double z_0,
+					  double x_1, double y_1, double z_1,
+					  double radius ) {
 		this.endA.set(x_0, y_0, z_0);
 		this.endB.set(x_1, y_1, z_1);
 		this.radius = radius;
 	}
 
-	public void set( Point3D_F64 endA , Point3D_F64 endB , double radius ) {
-		this.endA.set(endA);
-		this.endB.set(endB);
+	public void setTo(Point3D_F64 endA , Point3D_F64 endB , double radius ) {
+		this.endA.setTo(endA);
+		this.endB.setTo(endB);
 		this.radius = radius;
 	}
 
-	public void set( CylinderBounded3D_F64 o ) {
-		this.endA.set(o.endA);
-		this.endB.set(o.endB);
+	public void setTo(CylinderBounded3D_F64 o ) {
+		this.endA.setTo(o.endA);
+		this.endB.setTo(o.endB);
 		this.radius = o.radius;
 	}
 

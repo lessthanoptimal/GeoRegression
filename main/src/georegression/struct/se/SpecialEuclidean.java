@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,7 +36,4 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public interface SpecialEuclidean<T extends SpecialEuclidean> extends InvertibleTransform<T> , Serializable {
-
-
-}
+public interface SpecialEuclidean<T extends SpecialEuclidean> extends InvertibleTransform<T> , Serializable {}

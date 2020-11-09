@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -65,8 +65,8 @@ public class LineParametric3D_F64 implements Serializable {
 
 	public LineParametric3D_F64( LineParametric3D_F64 l ) {
 		this();
-		this.p.set(l.p);
-		this.slope.set(l.slope);
+		this.p.setTo(l.p);
+		this.slope.setTo(l.slope);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class LineParametric3D_F64 implements Serializable {
 	}
 
 	public void setPoint( Point3D_F64 pt ) {
-		this.p.set( pt );
+		this.p.setTo( pt );
 	}
 
 	public void setPoint( double x, double y , double z ) {
@@ -100,7 +100,7 @@ public class LineParametric3D_F64 implements Serializable {
 	}
 
 	public void setSlope( Vector3D_F64 slope ) {
-		this.slope.set( slope );
+		this.slope.setTo( slope );
 	}
 
 	public void setSlope( double slopeX, double slopeY , double slopeZ ) {
@@ -151,15 +151,15 @@ public class LineParametric3D_F64 implements Serializable {
 		return p.z;
 	}
 
-	public void set( double x_0, double y_0, double z_0,
-					 double slopeX, double slopeY, double slopeZ ) {
+	public void setTo(double x_0, double y_0, double z_0,
+					  double slopeX, double slopeY, double slopeZ ) {
 		p.set( x_0, y_0, z_0 );
 		slope.set( slopeX, slopeY, slopeZ );
 	}
 
-	public void set( LineParametric3D_F64 o ) {
-		this.p.set(o.p);
-		this.slope.set(o.slope);
+	public void setTo(LineParametric3D_F64 o ) {
+		this.p.setTo(o.p);
+		this.slope.setTo(o.slope);
 	}
 
 	public Point3D_F64 getP() {

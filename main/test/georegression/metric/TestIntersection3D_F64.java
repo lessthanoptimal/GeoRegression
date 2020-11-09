@@ -110,23 +110,23 @@ public class TestIntersection3D_F64 {
 		assertEquals(-1,Intersection3D_F64.intersection(triangle,ls,p));
 
 		// no intersection
-		triangle.set(1,0,0,  3,0,0,  3,2,0);
-		ls.set(0,0,0,  0,0,10); // completely miss
+		triangle.setTo(1,0,0,  3,0,0,  3,2,0);
+		ls.setTo(0,0,0,  0,0,10); // completely miss
 		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
-		ls.set(0,0,0,  0,0,10); // hits the plain but not the triangle
+		ls.setTo(0,0,0,  0,0,10); // hits the plain but not the triangle
 		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
-		ls.set(2,0.5,-1,  2,0.5,-0.5); // would hit, but is too short
+		ls.setTo(2,0.5,-1,  2,0.5,-0.5); // would hit, but is too short
 		assertEquals(0, Intersection3D_F64.intersection(triangle, ls, p));
-		ls.set(2,0.5,-0.5,  2,0.5,-1); // would hit, but is too short
+		ls.setTo(2,0.5,-0.5,  2,0.5,-1); // would hit, but is too short
 		assertEquals(0,Intersection3D_F64.intersection(triangle,ls,p));
 
 		// unique intersection
-		ls.set(2,0.5,1,  2,0.5,-1);
+		ls.setTo(2,0.5,1,  2,0.5,-1);
 		assertEquals(1,Intersection3D_F64.intersection(triangle,ls,p));
 		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.TEST_F64);
 
 		// infinite intersections
-		ls.set(0, 0, 0, 4, 0, 0);
+		ls.setTo(0, 0, 0, 4, 0, 0);
 		assertEquals(2,Intersection3D_F64.intersection(triangle, ls, p));
 	}
 
@@ -141,23 +141,23 @@ public class TestIntersection3D_F64 {
 		assertEquals(-1,Intersection3D_F64.intersection(triangle,line,p));
 
 		// no intersection
-		triangle.set(1,0,0,  3,0,0,  3,2,0);
-		line.set(0,0,0,  0,0,10); // completely miss
+		triangle.setTo(1,0,0,  3,0,0,  3,2,0);
+		line.setTo(0,0,0,  0,0,10); // completely miss
 		assertEquals(0, Intersection3D_F64.intersection(triangle, line, p));
-		line.set(0,0,0,  0,0,10); // hits the plain but not the triangle
+		line.setTo(0,0,0,  0,0,10); // hits the plain but not the triangle
 		assertEquals(0, Intersection3D_F64.intersection(triangle, line, p));
 
 		// unique intersection - positive
-		line.set(2,0.5,1,  0,0,-2);
+		line.setTo(2,0.5,1,  0,0,-2);
 		assertEquals(1,Intersection3D_F64.intersection(triangle,line,p));
 		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.TEST_F64);
 		// unique intersection - negative
-		line.set(2,0.5,-1,  0,0,2);
+		line.setTo(2,0.5,-1,  0,0,2);
 		assertEquals(1,Intersection3D_F64.intersection(triangle,line,p));
 		assertEquals(0,p.distance(new Point3D_F64(2,0.5,0)),GrlConstants.TEST_F64);
 
 		// infinite intersections
-		line.set(0, 0, 0, 4, 0, 0);
+		line.setTo(0, 0, 0, 4, 0, 0);
 		assertEquals(2,Intersection3D_F64.intersection(triangle, line, p));
 	}
 

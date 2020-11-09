@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -90,9 +90,9 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param se The transform that is being copied.
 	 */
 	@Override
-	public void set( Se3_F64 se ) {
+	public void setTo(Se3_F64 se ) {
 		R.set( se.getR() );
-		T.set( se.getT() );
+		T.setTo( se.getT() );
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param T New translation
 	 */
 	public void setTranslation( Vector3D_F64 T ) {
-		this.T.set( T );
+		this.T.setTo( T );
 	}
 
 	/**
@@ -286,7 +286,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 
 	public Se3_F64 copy() {
 		Se3_F64 ret = new Se3_F64();
-		ret.set( this );
+		ret.setTo( this );
 
 		return ret;
 	}

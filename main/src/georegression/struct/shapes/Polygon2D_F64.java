@@ -48,14 +48,14 @@ public class Polygon2D_F64 implements Serializable {
 		this(a.length);
 
 		for (int i = 0; i < a.length; i++) {
-			vertexes.get(i).set(a[i][0], a[i][1]);
+			vertexes.get(i).setTo(a[i][0], a[i][1]);
 		}
 	}
 
 	public Polygon2D_F64( Polygon2D_F64 a ) {
 		vertexes = new FastQueue<>(a.size(),Point2D_F64::new);
 		for (int i = 0; i < a.size(); i++) {
-			vertexes.grow().set(a.get(i));
+			vertexes.grow().setTo(a.get(i));
 		}
 	}
 
@@ -75,7 +75,7 @@ public class Polygon2D_F64 implements Serializable {
 
 		int count = 0;
 		for (int i = 0; i < xy.length; i += 2) {
-			vertexes.data[count++].set( xy[i],xy[i+1]);
+			vertexes.data[count++].setTo( xy[i],xy[i+1]);
 		}
 	}
 
@@ -83,15 +83,15 @@ public class Polygon2D_F64 implements Serializable {
 		vertexes = new FastQueue<>(Point2D_F64::new);
 	}
 
-	public void set( Polygon2D_F64 orig ) {
+	public void setTo(Polygon2D_F64 orig ) {
 		vertexes.resize(orig.size());
 		for (int i = 0; i < orig.size(); i++) {
-			vertexes.data[i].set( orig.vertexes.data[i]);
+			vertexes.data[i].setTo( orig.vertexes.data[i]);
 		}
 	}
 
 	public void set( int index , double x , double y ) {
-		vertexes.data[index].set(x,y);
+		vertexes.data[index].setTo(x,y);
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class Polygon2D_F64 implements Serializable {
 	public Polygon2D_F64 flip( @Nullable Polygon2D_F64 storage ) {
 		if (storage==null)
 			storage = new Polygon2D_F64(this.size());
-		storage.set(this);
+		storage.setTo(this);
 		storage.flip();
 		return storage;
 	}
@@ -187,8 +187,8 @@ public class Polygon2D_F64 implements Serializable {
 
 		int j = (index+1)%vertexes.size;
 
-		storage.a.set(get(index));
-		storage.b.set(get(j));
+		storage.a.setTo(get(index));
+		storage.b.setTo(get(j));
 
 		return storage;
 	}
@@ -221,15 +221,14 @@ public class Polygon2D_F64 implements Serializable {
 	 * to points in the list are saved.
 	 * @param list List which the polygon will be set to
 	 */
-	public void set( List<Point2D_F64> list ) {
+	public void setTo(List<Point2D_F64> list ) {
 		vertexes.resize(list.size());
 		for (int i = 0; i < list.size(); i++) {
-			vertexes.data[i].set( list.get(i));
+			vertexes.data[i].setTo( list.get(i));
 		}
 	}
 
-	@Override
-	public String toString() {
+	@Override public String toString() {
 
 		final int length = MatrixIO.DEFAULT_LENGTH;
 		DecimalFormat format = new DecimalFormat("#");

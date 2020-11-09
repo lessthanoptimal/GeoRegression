@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -268,9 +268,9 @@ public class ClosestPoint3D_F64 {
 
 		// if it is past the end points just return one of the end points
 		if( d <= 0 ) {
-			ret.set(line.a);
+			ret.setTo(line.a);
 		} else if( d >= n ) {
-			ret.set(line.b);
+			ret.setTo(line.b);
 		} else {
 			ret.x = line.a.x + d * slope_x / n;
 			ret.y = line.a.y + d * slope_y / n;

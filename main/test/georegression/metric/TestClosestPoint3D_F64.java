@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -223,18 +223,18 @@ public class TestClosestPoint3D_F64 {
 		found = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
 		checkIsClosest(found,lineA,lineB);
 
-		lineA.set(-10,0,0,10,0,0);
+		lineA.setTo(-10,0,0,10,0,0);
 		// misses start of lineA
-		lineB.set(-100,0,20,-100,0,-20);
+		lineB.setTo(-100,0,20,-100,0,-20);
 		found = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
 		checkIsClosest(found, lineA, lineB);
 		// misses end of lineA
-		lineB.set(100,0,20,100,0,-20);
+		lineB.setTo(100,0,20,100,0,-20);
 		found = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
 		checkIsClosest(found, lineA, lineB);
 		// same but for line B
 		checkIsClosest(found, lineB, lineA);
-		lineB.set(-100,0,20,-100,0,-20);
+		lineB.setTo(-100,0,20,-100,0,-20);
 		found = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
 		checkIsClosest(found, lineB, lineA);
 	}

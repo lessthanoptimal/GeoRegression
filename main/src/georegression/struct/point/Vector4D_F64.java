@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -39,7 +39,8 @@ public class Vector4D_F64 extends GeoTuple4D_F64<Vector4D_F64> {
 		w = b.getW() - a.getW();
 	}
 
-	public void set( Vector4D_F64 v ) {
+	@Override
+	public void setTo( Vector4D_F64 v ) {
 		this.x = v.x;
 		this.y = v.y;
 		this.z = v.z;

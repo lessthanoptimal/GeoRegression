@@ -224,7 +224,7 @@ public class Intersection2D_F64 {
 
 		if( ret == null )
 			ret = new Point2D_F64();
-		ret.set(x,y);
+		ret.setTo(x,y);
 		return ret;
 	}
 
@@ -325,7 +325,7 @@ public class Intersection2D_F64 {
 			ret = new Point2D_F64();
 		}
 
-		ret.set( l_1.a.x + a1 * t_1, l_1.a.y + b1 * t_1 );
+		ret.setTo( l_1.a.x + a1 * t_1, l_1.a.y + b1 * t_1 );
 
 		return ret;
 	}

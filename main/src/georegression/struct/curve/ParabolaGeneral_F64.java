@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -43,12 +43,12 @@ public class ParabolaGeneral_F64 {
 	}
 
 	public ParabolaGeneral_F64( ParabolaGeneral_F64 original ) {
-		this.set(original);
+		this.setTo(original);
 	}
 
 	public ParabolaGeneral_F64(){}
 
-	public void set( ParabolaGeneral_F64 original ) {
+	public void setTo(ParabolaGeneral_F64 original ) {
 		this.A = original.A;
 		this.C = original.C;
 		this.D = original.D;
@@ -56,7 +56,7 @@ public class ParabolaGeneral_F64 {
 		this.F = original.F;
 	}
 
-	public void set(double a, double c, double d, double e, double f) {
+	public void setTo(double a, double c, double d, double e, double f) {
 		A = a;
 		C = c;
 		D = d;

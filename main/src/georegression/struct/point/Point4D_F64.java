@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -53,8 +53,8 @@ public class Point4D_F64 extends GeoTuple4D_F64 {
 		return new Point4D_F64( x, y, z , w);
 	}
 
-	public void set( Point4D_F64 worldLoc ) {
-		_set( worldLoc );
+	public void setTo( Point4D_F64 worldLoc ) {
+		_setTo( worldLoc );
 	}
 
 	@Override

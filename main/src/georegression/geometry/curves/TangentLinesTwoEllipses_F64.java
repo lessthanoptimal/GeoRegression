@@ -173,15 +173,15 @@ public class TangentLinesTwoEllipses_F64 {
 					   Point2D_F64 tangentB0, Point2D_F64 tangentB1,
 					   Point2D_F64 tangentB2, Point2D_F64 tangentB3) {
 
-		centerLine.set(ellipseA.center,ellipseB.center);
+		centerLine.setTo(ellipseA.center,ellipseB.center);
 
 		UtilLine2D_F64.convert(centerLine, lineGeneral);
 
 		Intersection2D_F64.intersection(lineGeneral, ellipseA, temp0, temp1, -1);
 		if (temp0.distance2(ellipseB.center) < temp1.distance2(ellipseB.center)) {
-			tangentA0.set(temp0);
+			tangentA0.setTo(temp0);
 		} else {
-			tangentA0.set(temp1);
+			tangentA0.setTo(temp1);
 		}
 
 		// Two seed points for B.  This points will be on two different sides of center line
@@ -232,10 +232,10 @@ public class TangentLinesTwoEllipses_F64 {
 
 		if( cross == crossed0 ) {
 			sumDifference += previousTangent.distance2(temp0);
-			tangent.set(temp0);
+			tangent.setTo(temp0);
 		} else {
 			sumDifference += previousTangent.distance2(temp1);
-			tangent.set(temp1);
+			tangent.setTo(temp1);
 		}
 
 		return true;

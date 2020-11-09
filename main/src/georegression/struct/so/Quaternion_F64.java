@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -50,17 +50,17 @@ public class Quaternion_F64 implements Serializable {
 	}
 
 	public Quaternion_F64(double w, double x, double y, double z) {
-		set(w, x, y, z);
+		setTo(w, x, y, z);
 	}
 
-	public void set( Quaternion_F64 quaternion ) {
+	public void setTo(Quaternion_F64 quaternion ) {
 		this.w = quaternion.w;
 		this.x = quaternion.x;
 		this.y = quaternion.y;
 		this.z = quaternion.z;
 	}
 
-	public void set( double w, double x, double y, double z ) {
+	public void setTo(double w, double x, double y, double z ) {
 		this.w = w;
 		this.x = x;
 		this.y = y;

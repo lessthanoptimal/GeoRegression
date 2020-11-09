@@ -79,7 +79,7 @@ public class ConvexHullGrahamScan_F64 implements FitConvexHull_F64 {
 		// Copy the stack into the output polygon
 		output.vertexes.resize(stack.size());
 		for (int i = 0; i < stack.size; i++) {
-			output.vertexes.get(i).set(stack.get(i));
+			output.vertexes.get(i).setTo(stack.get(i));
 		}
 	}
 

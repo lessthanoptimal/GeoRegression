@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,10 +46,10 @@ public class Quadrilateral_F64 implements Serializable {
 
 	public Quadrilateral_F64( Quadrilateral_F64 quad ) {
 		this();
-		a.set(quad.a);
-		b.set(quad.b);
-		c.set(quad.c);
-		d.set(quad.d);
+		a.setTo(quad.a);
+		b.setTo(quad.b);
+		c.setTo(quad.c);
+		d.setTo(quad.d);
 	}
 
 	public Quadrilateral_F64( double x0, double y0 , double x1, double y1 ,
@@ -133,10 +133,10 @@ public class Quadrilateral_F64 implements Serializable {
 			storage = new LineSegment2D_F64();
 
 		switch( which ) {
-			case 0: storage.a.set(a);storage.b.set(b);break;
-			case 1: storage.a.set(b);storage.b.set(c);break;
-			case 2: storage.a.set(c);storage.b.set(d);break;
-			case 3: storage.a.set(d);storage.b.set(a);break;
+			case 0: storage.a.setTo(a);storage.b.setTo(b);break;
+			case 1: storage.a.setTo(b);storage.b.setTo(c);break;
+			case 2: storage.a.setTo(c);storage.b.setTo(d);break;
+			case 3: storage.a.setTo(d);storage.b.setTo(a);break;
 			default:
 				throw new IllegalArgumentException("Requested index out of range. "+which);
 		}
@@ -158,11 +158,11 @@ public class Quadrilateral_F64 implements Serializable {
 		}
 	}
 
-	public void set(Quadrilateral_F64 quad) {
-		this.a.set(quad.a);
-		this.b.set(quad.b);
-		this.c.set(quad.c);
-		this.d.set(quad.d);
+	public void setTo(Quadrilateral_F64 quad) {
+		this.a.setTo(quad.a);
+		this.b.setTo(quad.b);
+		this.c.setTo(quad.c);
+		this.d.setTo(quad.d);
 	}
 
 	/**
@@ -195,14 +195,14 @@ public class Quadrilateral_F64 implements Serializable {
 	 * to points in the list are saved.
 	 * @param list List which the polygon will be set to
 	 */
-	public void set( List<Point2D_F64> list ) {
+	public void setTo(List<Point2D_F64> list ) {
 		if( list.size() != 4 )
 			throw new IllegalArgumentException("List must have size of 4");
 
-		a.set(list.get(0));
-		b.set(list.get(1));
-		c.set(list.get(2));
-		d.set(list.get(3));
+		a.setTo(list.get(0));
+		b.setTo(list.get(1));
+		c.setTo(list.get(2));
+		d.setTo(list.get(3));
 	}
 
 	public Quadrilateral_F64 copy() {

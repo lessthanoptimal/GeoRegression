@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -53,7 +53,7 @@ public class Rodrigues_F64 implements Serializable {
 	 */
 	public Rodrigues_F64(double theta, Vector3D_F64 unitAxisRotation) {
 		this.theta = theta;
-		this.unitAxisRotation.set(unitAxisRotation);
+		this.unitAxisRotation.setTo(unitAxisRotation);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class Rodrigues_F64 implements Serializable {
 	}
 
 	public void setUnitAxisRotation(Vector3D_F64 unitAxisRotation) {
-		this.unitAxisRotation.set(unitAxisRotation);
+		this.unitAxisRotation.setTo(unitAxisRotation);
 	}
 
 	public double getTheta() {
