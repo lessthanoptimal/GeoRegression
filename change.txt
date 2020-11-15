@@ -41,6 +41,14 @@ Version : 0.24
 - Added support for Special Orthogonal 3 (SO3)
   * Fit SO3 to two point clouds
 
+// TODO Delaunay triangulation
+// TODO convex intersection in 2D  - p252
+// TODO convex union in 2D
+// TODO Add Polyhedra3D
+// TODO concave "hull" in 2D
+// TODO convex hull in 3D
+// TODO area of intersection of convex hull in 3D
+
 ---------------------------------------------
 Date    : 2020-Dec-19
 Version : 0.23

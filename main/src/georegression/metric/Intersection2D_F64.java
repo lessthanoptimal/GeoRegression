@@ -27,6 +27,7 @@ import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
+import georegression.struct.line.LineSegmentIntersection2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
@@ -70,7 +71,7 @@ public class Intersection2D_F64 {
 		for (int i = 0, j = N-1; i < N; j = i++) {
 			Point2D_F64 a = polygon.vertexes.data[i];
 			Point2D_F64 b = polygon.vertexes.data[j];
-			
+
 			if ( ((a.y>pt.y) != (b.y>pt.y)) && (pt.x < (b.x-a.x) * (pt.y-a.y) / (b.y-a.y) + a.x) )
 				c = !c;
 		}
@@ -338,6 +339,114 @@ public class Intersection2D_F64 {
 	}
 
 	/**
+	 * Finds the point of intersection between two lines segments and can handle edge cases.
+	 *
+	 * @param l_0 Line segment.
+	 * @param l_1 line segment.
+	 * @param ret storage for the point of intersection. If null a new point will be declared.
+	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect or
+	 * have infinite intersections.
+	 */
+	public static int intersection(LineSegment2D_F64 l_0, LineSegment2D_F64 l_1, LineSegmentIntersection2D_F64 ret) {
+		ret.reset();
+
+		double a0 = l_0.b.x - l_0.a.x;
+		double b0 = l_0.b.y - l_0.a.y;
+		double a1 = l_1.b.x - l_1.a.x;
+		double b1 = l_1.b.y - l_1.a.y;
+
+		double top = b0 * ( l_1.a.x - l_0.a.x ) + a0 * ( l_0.a.y - l_1.a.y );
+		double bottom = a0 * b1 - b0 * a1;
+
+		// See if the two line segments are parallel
+		if( bottom == 0 ) {
+			return intersectionParallel(l_0, l_1, 0.0, ret);
+		}
+		double t_1 = top / bottom;
+
+		// does not intersect along the second line segment
+		if( t_1 < 0 || t_1 > 1 )
+			return 0;
+
+		top = b1 * ( l_0.a.x - l_1.a.x ) + a1 * ( l_1.a.y - l_0.a.y );
+		bottom = a1 * b0 - b1 * a0;
+
+		double t_0 = top / bottom;
+
+		// does not intersect along the first line segment
+		if( t_0 < 0 || t_0 > 1 )
+			return 0;
+
+		ret.type = 1;
+		ret.t0 = t_0;
+		ret.t1 = t_1;
+		ret.pa.setTo( l_1.a.x + a1 * t_1, l_1.a.y + b1 * t_1 );
+
+		return 1;
+	}
+
+	/**
+	 * Handle the case where two line segments are parallel
+	 */
+	static int intersectionParallel( LineSegment2D_F64 l_0, LineSegment2D_F64 l_1, double tol,
+									 LineSegmentIntersection2D_F64 ret ) {
+		// make sure they all lie on the same line
+		if (!UtilLine2D_F64.isColinear(l_0.a, l_0.b, l_1.a, tol))
+			return 0;
+
+		ret.type = 2;
+
+		// See which axis has the greatest change and inspect along that axis
+		boolean useX = Math.abs(l_0.a.x - l_0.b.x) > Math.abs(l_0.a.y - l_0.b.y);
+
+		// see if l_1.a lies inside of l_0
+		if (isBetween(useX, l_0.a, l_0.b, l_1.a)) {
+			// see if l_1.b lies inside of l_0
+			if (isBetween(useX, l_0.a, l_0.b, l_1.b)) {
+				ret.pa.setTo(l_1.a);
+				ret.pb.setTo(l_1.b);
+			} else if (isBetween(useX, l_1.a, l_1.b, l_0.a)) {
+				// see if l_0.a lies inside of l_1
+				ret.pb.setTo(l_0.a);
+				ret.pa.setTo(l_1.a);
+			} else {
+				// l_0.b must lie inside
+				ret.pb.setTo(l_0.b);
+				ret.pa.setTo(l_1.a);
+			}
+		} else if (isBetween(useX, l_0.a, l_0.b, l_1.b)) {
+			// See if l_1.b lies inside of l_0
+			if (isBetween(useX, l_1.a, l_1.b, l_0.a)) {
+				// see if l_0.a lies inside of l_1
+				ret.pb.setTo(l_0.a);
+				ret.pa.setTo(l_1.b);
+			} else {
+				// l_0.b must lie inside
+				ret.pb.setTo(l_0.b);
+				ret.pa.setTo(l_1.b);
+			}
+		} else {
+			// They do not intersect
+			ret.type = 0;
+		}
+
+		return ret.type;
+	}
+
+	/** Checks to see if test lies between v0 and v1, order does not matter */
+	static boolean isBetween( boolean useX, Point2D_F64 pa, Point2D_F64 pb, Point2D_F64 ptest) {
+		double v0 = useX ? pa.x : pa.y;
+		double v1 = useX ? pb.x : pb.y;
+		double test = useX ? ptest.x : ptest.y;
+
+		if (v1 > v0) {
+			return test >= v0 && test <= v1;
+		} else {
+			return test >= v1 && test <= v0;
+		}
+	}
+
+	/**
 	 * Returns true if the two line segments intersect. Two end points touching will be considered an
 	 * intersection.
 	 *
@@ -419,13 +528,13 @@ public class Intersection2D_F64 {
 	 * solution is found in homogeneous coordinates it can even handle parallel lines which "intersect
 	 * at infinity".
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * A 2D point in homogeneous coordinates is expressed as the triple (x,y,z), which can be converted
 	 * into the standard notation as x' = x/z and y'= y/z. If the lines are parallel and intersect at
 	 * infinity then z=0 and the above conversion will fail.
 	 * </p>
-	 * 
+	 *
 	 * @param a Line
 	 * @param b Line
 	 * @param ret Storage for point of intersection.
@@ -435,7 +544,7 @@ public class Intersection2D_F64 {
 	{
 		if( ret == null )
 			ret = new Point3D_F64();
-		
+
 		// compute the intersection as the cross product of 'a' and 'b'
 		ret.x = a.B * b.C - a.C * b.B;
 		ret.y = a.C * b.A - a.A * b.C;

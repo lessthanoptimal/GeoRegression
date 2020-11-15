@@ -20,6 +20,7 @@ package georegression.geometry;
 
 
 import georegression.metric.UtilAngle;
+import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.line.LineGeneral2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LinePolar2D_F64;
@@ -304,8 +305,19 @@ public class UtilLine2D_F64 {
 	 *
 	 * @return a signed area of the triangle
 	 */
-	public static double area2(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c) {
+	public static double area2(GeoTuple2D_F64<?>  a, GeoTuple2D_F64<?>  b, GeoTuple2D_F64<?>  c) {
 		return (b.x - a.x)*(c.y - a.y) - (c.x - a.x)*(b.y - a.y);
+	}
+
+	public static  int areaSign(GeoTuple2D_F64<?> a, GeoTuple2D_F64<?>  b, GeoTuple2D_F64<?>  c, double tol) {
+		double area = area2(a,b,c);
+
+		if (area<-tol)
+			return -1;
+		else if(area>tol)
+			return 1;
+		else
+			return 0;
 	}
 
 	public static boolean isColinear(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, double tol ) {

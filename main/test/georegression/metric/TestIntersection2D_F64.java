@@ -219,7 +219,7 @@ public class TestIntersection2D_F64 {
 	}
 
 	public void checkIntersection( LineSegment2D_F64 a, LineSegment2D_F64 b, @Nullable Point2D_F64 expected ) {
-		Point2D_F64 found = Intersection2D_F64.intersection( a, b, null );
+		Point2D_F64 found = Intersection2D_F64.intersection( a, b, (Point2D_F64)null );
 		if( found == null )
 			assertNull(expected);
 		else {
@@ -227,6 +227,36 @@ public class TestIntersection2D_F64 {
 			assertEquals( found.getX(), expected.getX(), GrlConstants.TEST_F64);
 			assertEquals( found.getY(), expected.getY(), GrlConstants.TEST_F64);
 		}
+	}
+
+	@Test void intersection_ls_to_ls_MoreGeneral() {
+		fail("IMplement");
+	}
+
+	@Test void intersectionParallel_ls_to_ls() {
+		fail("IMplement");
+	}
+
+	@Test void isBetween() {
+		isBetween(new Point2D_F64(5,0), new Point2D_F64(10,0), new Point2D_F64(5,0),true);
+		isBetween(new Point2D_F64(5,0), new Point2D_F64(10,0), new Point2D_F64(10,0),true);
+		isBetween(new Point2D_F64(5,0), new Point2D_F64(10,0), new Point2D_F64(7,0),true);
+		isBetween(new Point2D_F64(5,0), new Point2D_F64(10,0), new Point2D_F64(4,0),false);
+		isBetween(new Point2D_F64(5,0), new Point2D_F64(10,0), new Point2D_F64(11,0),false);
+	}
+
+	static void isBetween(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, boolean expected) {
+		assertEquals(expected, Intersection2D_F64.isBetween(true,a,b,c));
+		swapAxis(a);
+		swapAxis(b);
+		swapAxis(c);
+		assertEquals(expected, Intersection2D_F64.isBetween(false,a,b,c));
+	}
+
+	static void swapAxis(Point2D_F64 p) {
+		double tmp = p.x;
+		p.x = p.y;
+		p.y = tmp;
 	}
 
 	@Test void intersects_ls_to_ls() {
