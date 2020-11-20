@@ -265,7 +265,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		return Double.compare(x,o.x)==0 && Double.compare(y,o.y)==0 && Double.compare(z,o.z)==0;
 	}
 
-	protected String toString( String name ) {
+	public String toString( String name ) {
 		DecimalFormat format = new DecimalFormat("#");
 		String sx = UtilEjml.fancyString(x,format, MatrixIO.DEFAULT_LENGTH,4);
 		String sy = UtilEjml.fancyString(y,format, MatrixIO.DEFAULT_LENGTH,4);

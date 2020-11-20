@@ -27,9 +27,13 @@ import georegression.struct.RotationType;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.transform.se.SePointOps_F64;
+import org.ejml.UtilEjml;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.ops.MatrixIO;
 import org.jetbrains.annotations.Nullable;
+
+import java.text.DecimalFormat;
 
 
 /**
@@ -52,7 +56,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * Creates a new transform that does nothing.
 	 */
 	public Se3_F64() {
-		R = CommonOps_DDRM.identity( 3 );
+		R = CommonOps_DDRM.identity(3);
 		T = new Vector3D_F64();
 	}
 
@@ -62,20 +66,20 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param R Rotation matrix.
 	 * @param T Translation.
 	 */
-	public Se3_F64( DMatrixRMaj R, Vector3D_F64 T ) {
-		this( R, T, false );
+	public Se3_F64(DMatrixRMaj R, Vector3D_F64 T) {
+		this(R, T, false);
 	}
 
 	/**
 	 * Initializes the Se3_F64 with the rotation matrix and translation vector.  If assign
 	 * is true the reference to the provided parameters is saved, otherwise a copy is made.
 	 *
-	 * @param R	  Rotation matrix.
-	 * @param T	  Translation.
+	 * @param R      Rotation matrix.
+	 * @param T      Translation.
 	 * @param assign If a reference is saved (true) or a copy made (false).
 	 */
-	public Se3_F64( DMatrixRMaj R, Vector3D_F64 T, boolean assign ) {
-		if( assign ) {
+	public Se3_F64(DMatrixRMaj R, Vector3D_F64 T, boolean assign) {
+		if (assign) {
 			this.R = R;
 			this.T = T;
 		} else {
@@ -90,9 +94,9 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param se The transform that is being copied.
 	 */
 	@Override
-	public void setTo(Se3_F64 se ) {
-		R.set( se.getR() );
-		T.setTo( se.getT() );
+	public void setTo(Se3_F64 se) {
+		R.set(se.getR());
+		T.setTo(se.getT());
 	}
 
 	/**
@@ -100,30 +104,33 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 *
 	 * @param R New rotation.
 	 */
-	public void setRotation( DMatrixRMaj R ) {
-		this.R.set( R );
+	public void setRotation(DMatrixRMaj R) {
+		this.R.set(R);
 	}
 
 	/**
 	 * Sets the translation to T
+	 *
 	 * @param T New translation
 	 */
-	public void setTranslation( Vector3D_F64 T ) {
-		this.T.setTo( T );
+	public void setTranslation(Vector3D_F64 T) {
+		this.T.setTo(T);
 	}
 
 	/**
 	 * Sets the translation to (x,y,z)
+	 *
 	 * @param x x component of translation
 	 * @param y y component of translation
 	 * @param z z component of translation
 	 */
-	public void setTranslation( double x, double y, double z ) {
-		this.T.set( x, y, z );
+	public void setTranslation(double x, double y, double z) {
+		this.T.set(x, y, z);
 	}
 
 	/**
 	 * Returns the rotation matrix
+	 *
 	 * @return rotation matrix
 	 */
 	public DMatrixRMaj getRotation() {
@@ -132,6 +139,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 
 	/**
 	 * Returns the translation vector
+	 *
 	 * @return translation vector
 	 */
 	public Vector3D_F64 getTranslation() {
@@ -169,21 +177,21 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	@Override
-	public Se3_F64 concat( Se3_F64 second, @Nullable Se3_F64 result ) {
-		if( result == null )
+	public Se3_F64 concat(Se3_F64 second, @Nullable Se3_F64 result) {
+		if (result == null)
 			result = new Se3_F64();
 
-		CommonOps_DDRM.mult( second.getR(), getR(), result.getR() );
-		GeometryMath_F64.mult( second.getR(), getT(), result.getT() );
-		GeometryMath_F64.add( second.getT(), result.getT(), result.getT() );
+		CommonOps_DDRM.mult(second.getR(), getR(), result.getR());
+		GeometryMath_F64.mult(second.getR(), getT(), result.getT());
+		GeometryMath_F64.add(second.getT(), result.getT(), result.getT());
 
 		return result;
 	}
 
 	@Override
-	public Se3_F64 invert( @Nullable Se3_F64 inverse ) {
+	public Se3_F64 invert(@Nullable Se3_F64 inverse) {
 
-		if( inverse == null )
+		if (inverse == null)
 			inverse = new Se3_F64();
 
 		// To derive the inverse transform solve for P
@@ -191,115 +199,161 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		// P = R^T*P' - R^T*T
 
 		// -R^T*T
-		GeometryMath_F64.multTran( R, T, inverse.T );
-		GeometryMath_F64.changeSign( inverse.T );
+		GeometryMath_F64.multTran(R, T, inverse.T);
+		GeometryMath_F64.changeSign(inverse.T);
 
 		// R^T
-		CommonOps_DDRM.transpose( R, inverse.R );
+		CommonOps_DDRM.transpose(R, inverse.R);
 
 		return inverse;
 	}
 
 	@Override
 	public void reset() {
-		CommonOps_DDRM.setIdentity( R );
-		T.set( 0, 0, 0 );
+		CommonOps_DDRM.setIdentity(R);
+		T.set(0, 0, 0);
 	}
 
 	/**
 	 * Fully specify the transform using Euler angles
 	 */
-	public void set(double x , double y , double z , EulerType type , double rotA , double rotB , double rotC ) {
-		T.set(x,y,z);
-		ConvertRotation3D_F64.eulerToMatrix(type,rotA,rotB,rotC,R);
+	public void set(double x, double y, double z, EulerType type, double rotA, double rotB, double rotC) {
+		T.set(x, y, z);
+		ConvertRotation3D_F64.eulerToMatrix(type, rotA, rotB, rotC, R);
 	}
 
 	/**
 	 * Fully specifies the transform using Rodrigues (axis angle) or Quaternions.  If Rodrigues then A=axisX, B=axisY,
 	 * C=axisZ, D=theta. If Quaternion then A=w, B=x, C=y, D=z.
 	 */
-	public void set(double x , double y , double z , RotationType type , double A , double B , double C, double D ) {
-		T.set(x,y,z);
-		switch( type ) {
+	public void set(double x, double y, double z, RotationType type, double A, double B, double C, double D) {
+		T.set(x, y, z);
+		switch (type) {
 			case RODRIGUES:
-				ConvertRotation3D_F64.rodriguesToMatrix(A,B,C,D,R);
+				ConvertRotation3D_F64.rodriguesToMatrix(A, B, C, D, R);
 				break;
 
 			case QUATERNION:
-				ConvertRotation3D_F64.quaternionToMatrix(A,B,C,D,R);
+				ConvertRotation3D_F64.quaternionToMatrix(A, B, C, D, R);
 				break;
 
 			default:
-				throw new IllegalArgumentException("Type is not supported. "+type);
+				throw new IllegalArgumentException("Type is not supported. " + type);
 		}
 	}
 
 	/**
 	 * Applies the transform to the src point and stores the result in dst. src and dst can be the same instance
 	 *
-	 * @see SePointOps_F64#transform(Se3_F64, Point3D_F64, Point3D_F64)
-	 *
 	 * @param src Input
 	 * @param dst Output
 	 * @return Output
+	 * @see SePointOps_F64#transform(Se3_F64, Point3D_F64, Point3D_F64)
 	 */
-	public Point3D_F64 transform(Point3D_F64 src, @Nullable Point3D_F64 dst ) {
-		return SePointOps_F64.transform(this,src,dst);
+	public Point3D_F64 transform(Point3D_F64 src, @Nullable Point3D_F64 dst) {
+		return SePointOps_F64.transform(this, src, dst);
 	}
 
 	/**
 	 * Applies the reverse transform to the src point and stores the result in dst. src and dst can be the same instance
 	 *
-	 * @see SePointOps_F64#transformReverse(Se3_F64, Point3D_F64, Point3D_F64)
-	 *
 	 * @param src Input
 	 * @param dst Output
 	 * @return Output
+	 * @see SePointOps_F64#transformReverse(Se3_F64, Point3D_F64, Point3D_F64)
 	 */
-	public Point3D_F64 transformReverse(Point3D_F64 src, @Nullable Point3D_F64 dst ) {
-		return SePointOps_F64.transformReverse(this,src,dst);
+	public Point3D_F64 transformReverse(Point3D_F64 src, @Nullable Point3D_F64 dst) {
+		return SePointOps_F64.transformReverse(this, src, dst);
 	}
 
 	/**
 	 * Applies the rotation to the src vector and stores the result in dst. src and dst can be the same instance
 	 *
-	 * @see GeometryMath_F64#mult(DMatrixRMaj, GeoTuple2D_F64, GeoTuple2D_F64)
-	 *
 	 * @param src Input
 	 * @param dst Output
+	 * @see GeometryMath_F64#mult(DMatrixRMaj, GeoTuple2D_F64, GeoTuple2D_F64)
 	 */
-	public Vector3D_F64 transform(Vector3D_F64 src, @Nullable Vector3D_F64 dst ) {
-		return GeometryMath_F64.mult(R,src,dst);
+	public Vector3D_F64 transform(Vector3D_F64 src, @Nullable Vector3D_F64 dst) {
+		return GeometryMath_F64.mult(R, src, dst);
 	}
 
 	/**
 	 * Applies the reverse rotation to the src vector and stores the result in dst. src and dst can be the same instance
 	 *
-	 * @see GeometryMath_F64#multTran(DMatrixRMaj, GeoTuple3D_F64, GeoTuple3D_F64)
-	 *
 	 * @param src Input
 	 * @param dst Output
+	 * @see GeometryMath_F64#multTran(DMatrixRMaj, GeoTuple3D_F64, GeoTuple3D_F64)
 	 */
-	public Vector3D_F64 transformReverse(Vector3D_F64 src, @Nullable Vector3D_F64 dst ) {
-		return GeometryMath_F64.multTran(R,src,dst);
+	public Vector3D_F64 transformReverse(Vector3D_F64 src, @Nullable Vector3D_F64 dst) {
+		return GeometryMath_F64.multTran(R, src, dst);
 	}
 
 	public Se3_F64 copy() {
 		Se3_F64 ret = new Se3_F64();
-		ret.setTo( this );
+		ret.setTo(this);
 
 		return ret;
 	}
 
 	@Override
 	public String toString() {
-		String ret = "Se3_F64: T = "+T.toString()+"\n";
+		String ret = "Se3_F64: T = " + T.toString() + "\n";
 		ret += R;
 
 		return ret;
 	}
 
+	/**
+	 * More compact toString() where the rotation matrix is encoded in one of the specified formats.
+	 */
+	public String toString(RotationType type) {
+		DecimalFormat format = new DecimalFormat("#");
+
+		final int sig = 4; // number of significant digits
+		String tx = UtilEjml.fancyString(T.x, format, false, MatrixIO.DEFAULT_LENGTH, sig);
+		String ty = UtilEjml.fancyString(T.y, format, false, MatrixIO.DEFAULT_LENGTH, sig);
+		String tz = UtilEjml.fancyString(T.z, format, false, MatrixIO.DEFAULT_LENGTH, sig);
+		String ret = "Se3_F64: T=(" + tx + ", " + ty + ", " + tz + "), ";
+
+		switch (type) {
+			case EULER: {
+				double[] euler = new double[3];
+				ConvertRotation3D_F64.matrixToEuler(R, EulerType.XYZ, euler);
+				ret += "EulerXYZ=(" +
+						UtilEjml.fancyString(euler[0], format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
+						UtilEjml.fancyString(euler[1], format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
+						UtilEjml.fancyString(euler[2], format, false, MatrixIO.DEFAULT_LENGTH, sig) + ")";
+			}
+			break;
+
+			case RODRIGUES: {
+				var rod = ConvertRotation3D_F64.matrixToRodrigues(R, null);
+				ret += "Rodrigues={n=(" +
+						UtilEjml.fancyString(rod.unitAxisRotation.x, format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
+						UtilEjml.fancyString(rod.unitAxisRotation.y, format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
+						UtilEjml.fancyString(rod.unitAxisRotation.z, format, false, MatrixIO.DEFAULT_LENGTH, sig) + "), theta=" +
+						UtilEjml.fancyString(rod.theta, format, false, MatrixIO.DEFAULT_LENGTH, sig) + "}";
+			}
+			break;
+
+			case QUATERNION: {
+				var quat = ConvertRotation3D_F64.matrixToQuaternion(R, null);
+				ret += "Quaternion=(" +
+						UtilEjml.fancyString(quat.x, format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
+						UtilEjml.fancyString(quat.y, format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
+						UtilEjml.fancyString(quat.z, format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
+						UtilEjml.fancyString(quat.w, format, false, MatrixIO.DEFAULT_LENGTH, sig) + ")";
+			}
+			break;
+		}
+		return ret;
+	}
+
 	public void print() {
 		System.out.println(this);
+	}
+
+	public void print(RotationType type) {
+		System.out.println(toString(type));
 	}
 }
