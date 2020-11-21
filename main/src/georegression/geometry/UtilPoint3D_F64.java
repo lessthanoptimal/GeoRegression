@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -293,8 +293,8 @@ public class UtilPoint3D_F64 {
 				maxZ = p.z;
 		}
 
-		bounding.p0.set(minX,minY,minZ);
-		bounding.p1.set(maxX, maxY, maxZ);
+		bounding.p0.setTo(minX,minY,minZ);
+		bounding.p1.setTo(maxX, maxY, maxZ);
 	}
 
 	/**

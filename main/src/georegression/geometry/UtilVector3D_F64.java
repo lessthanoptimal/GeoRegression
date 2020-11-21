@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -68,7 +68,7 @@ public class UtilVector3D_F64 {
 		double scale = Math.abs(A.x)+Math.abs(A.y)+Math.abs(A.z);
 
 		if( scale == 0 ) {
-			output.set(0,0,0);
+			output.setTo(0,0,0);
 		} else {
 			double x = A.x / scale;
 			double y = A.y / scale;
@@ -76,9 +76,9 @@ public class UtilVector3D_F64 {
 
 			// For numerical stability ensure that the largest variable is swapped
 			if (Math.abs(x) > Math.abs(y)) {
-				output.set(z, 0, -x);
+				output.setTo(z, 0, -x);
 			} else {
-				output.set(0, z,-y);
+				output.setTo(0, z,-y);
 			}
 		}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -90,7 +90,7 @@ public class TestFitSphereToPoints_F64 {
 
 	public static Point3D_F64 createPt( Sphere3D_F64 sphere , double phi , double theta ) {
 		Point3D_F64 p = new Point3D_F64();
-		p.set(0,0,sphere.radius);
+		p.setTo(0,0,sphere.radius);
 
 		Rodrigues_F64 rodX = new Rodrigues_F64(phi,new Vector3D_F64(1,0,0));
 		DMatrixRMaj rotX = ConvertRotation3D_F64.rodriguesToMatrix(rodX, null);

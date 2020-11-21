@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -52,7 +52,7 @@ public class FitPlane3D_F64 {
 		final int N = points.size();
 
 		// find the centroid
-		outputCenter.set(0,0,0);
+		outputCenter.setTo(0,0,0);
 		for( int i = 0; i < N; i++ ) {
 			Point3D_F64 p = points.get(i);
 			outputCenter.x += p.x;

@@ -63,8 +63,8 @@ public class LineSegment3D_F64 implements Serializable {
 	}
 
 	public void setTo(double x0, double y0, double z0, double x1, double y1 , double z1 ) {
-		a.set( x0, y0, z0 );
-		b.set( x1, y1, z1 );
+		a.setTo( x0, y0, z0 );
+		b.setTo( x1, y1, z1 );
 	}
 
 	public Point3D_F64 getA() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -118,7 +118,7 @@ public class TestFitCylinderToPoints_F64 {
 		Vector3D_F64 axisZ = new Vector3D_F64(0,0,1);
 		Vector3D_F64 cross = axisZ.cross(cylinder.line.slope);
 		if( Math.abs(cross.norm()) < GrlConstants.TEST_F64) {
-			cross.set(0,0,1);
+			cross.setTo(0,0,1);
 		} else {
 			cross.normalize();
 		}

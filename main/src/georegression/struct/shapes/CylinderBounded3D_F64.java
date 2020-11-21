@@ -49,8 +49,8 @@ public class CylinderBounded3D_F64 implements Serializable {
 								 double x_1, double y_1, double z_1,
 								 double radius) {
 		this();
-		this.endA.set(x_0, y_0, z_0);
-		this.endB.set(x_1, y_1, z_1);
+		this.endA.setTo(x_0, y_0, z_0);
+		this.endB.setTo(x_1, y_1, z_1);
 		this.radius = radius;
 	}
 
@@ -79,8 +79,8 @@ public class CylinderBounded3D_F64 implements Serializable {
 	public void setTo(double x_0, double y_0, double z_0,
 					  double x_1, double y_1, double z_1,
 					  double radius ) {
-		this.endA.set(x_0, y_0, z_0);
-		this.endB.set(x_1, y_1, z_1);
+		this.endA.setTo(x_0, y_0, z_0);
+		this.endB.setTo(x_1, y_1, z_1);
 		this.radius = radius;
 	}
 

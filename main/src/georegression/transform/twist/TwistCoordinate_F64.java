@@ -62,8 +62,8 @@ public class TwistCoordinate_F64 {
 	}
 
 	public void set( double wx, double wy , double wz, double vx , double vy, double vz ) {
-		this.w.set(wx,wy,wz);
-		this.v.set(vx,vy,vz);
+		this.w.setTo(wx,wy,wz);
+		this.v.setTo(vx,vy,vz);
 	}
 
 	public void set( TwistCoordinate_F64 original ) {

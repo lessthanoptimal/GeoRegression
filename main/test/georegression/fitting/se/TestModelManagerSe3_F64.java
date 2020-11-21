@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -45,7 +45,7 @@ public class TestModelManagerSe3_F64 {
 		Se3_F64 model = new Se3_F64();
 		Se3_F64 found = new Se3_F64();
 
-		model.T.set(1,2,3);
+		model.T.setTo(1,2,3);
 		model.getR().set(3,3,true,1,2,3,4,5,6,7,8,9);
 
 		alg.copyModel(model,found);

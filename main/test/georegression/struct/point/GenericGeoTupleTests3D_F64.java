@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -70,7 +70,7 @@ public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> exte
 	public void checkSetAxisAll() {
 		T a = (T) seed.createNewInstance();
 
-		a.set( 1.5, 2.5, 3.5 );
+		a.setTo( 1.5, 2.5, 3.5 );
 
 		assertEquals( 1.5, a.getX(), GrlConstants.TEST_F64);
 		assertEquals( 2.5, a.getY(), GrlConstants.TEST_F64);
@@ -81,7 +81,7 @@ public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> exte
 	public void isIdentical_3_double() {
 		T a = (T) seed.createNewInstance();
 
-		a.set( 1, 2, 3 );
+		a.setTo( 1, 2, 3 );
 
 		assertTrue( a.isIdentical( 1, 2, 3, GrlConstants.TEST_F64) );
 	}
@@ -90,7 +90,7 @@ public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> exte
 	public void isIdentical_tuple() {
 		T a = (T) seed.createNewInstance();
 
-		a.set( 1, 2, 3 );
+		a.setTo( 1, 2, 3 );
 
 		T b = (T) a.copy();
 
@@ -101,15 +101,15 @@ public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> exte
 	public void isNaN() {
 		T a = (T) seed.createNewInstance();
 
-		a.set( 1, 2, 3 );
+		a.setTo( 1, 2, 3 );
 
 		assertFalse( a.isNaN() );
 
-		a.set( 1, 2, Double.NaN );
+		a.setTo( 1, 2, Double.NaN );
 		assertTrue( a.isNaN() );
-		a.set( 1, Double.NaN, 3 );
+		a.setTo( 1, Double.NaN, 3 );
 		assertTrue( a.isNaN() );
-		a.set( Double.NaN, 1, 3 );
+		a.setTo( Double.NaN, 1, 3 );
 		assertTrue( a.isNaN() );
 	}
 

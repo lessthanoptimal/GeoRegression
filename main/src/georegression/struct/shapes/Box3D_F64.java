@@ -39,8 +39,8 @@ public class Box3D_F64 implements Serializable {
 	public Point3D_F64 p1 = new Point3D_F64();
 
 	public Box3D_F64(double x0, double y0, double z0, double x1, double y1, double z1) {
-		this.p0.set(x0, y0, z0);
-		this.p1.set(x1, y1, z1);
+		this.p0.setTo(x0, y0, z0);
+		this.p1.setTo(x1, y1, z1);
 	}
 
 	public Box3D_F64(Box3D_F64 orig) {
@@ -54,8 +54,8 @@ public class Box3D_F64 implements Serializable {
 	public Box3D_F64() {}
 
 	public void setTo(double x0, double y0, double z0, double x1, double y1, double z1 ) {
-		this.p0.set(x0, y0, z0);
-		this.p1.set(x1, y1, z1);
+		this.p0.setTo(x0, y0, z0);
+		this.p1.setTo(x1, y1, z1);
 	}
 
 	/**

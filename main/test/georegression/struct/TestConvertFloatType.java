@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,7 +46,7 @@ public class TestConvertFloatType {
 	void convert_Se_64_32() {
 		Se3_F64 src = new Se3_F64();
 		RandomMatrices_DDRM.fillUniform(src.getR(), rand);
-		src.getT().set(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
+		src.getT().setTo(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
 
 		Se3_F32 dst = ConvertFloatType.convert(src, null);
 

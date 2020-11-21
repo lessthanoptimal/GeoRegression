@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -444,7 +444,7 @@ public class TestConvertRotation3D_F64 {
 
 		R = ConvertRotation3D_F64.quaternionToMatrix( q, R );
 
-		p.set( 1, 0, 0 );
+		p.setTo( 1, 0, 0 );
 		GeometryMath_F64.mult( R, p, p );
 		GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.TEST_F64);
 

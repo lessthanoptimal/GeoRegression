@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -45,7 +45,7 @@ public class SpecialEuclideanOps_F64 {
 	 */
 	public static void setToNoMotion( Se3_F64 se ) {
 		CommonOps_DDRM.setIdentity( se.getR() );
-		se.getT().set( 0, 0, 0 );
+		se.getT().setTo( 0, 0, 0 );
 	}
 
 	/**

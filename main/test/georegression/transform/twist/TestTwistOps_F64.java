@@ -39,7 +39,7 @@ public class TestTwistOps_F64 {
 	@Test
 	void homogenous_se3() {
 		Se3_F64 original = new Se3_F64();
-		original.T.set(1,2,3);
+		original.T.setTo(1,2,3);
 
 		DMatrixRMaj H = TwistOps_F64.homogenous(original,null);
 
@@ -61,9 +61,9 @@ public class TestTwistOps_F64 {
 	@Test
 	void homogenous_twist() {
 		TwistCoordinate_F64 twist = new TwistCoordinate_F64();
-		twist.w.set(-1,1,2);
+		twist.w.setTo(-1,1,2);
 		twist.w.normalize();
-		twist.v.set(2,0.1,-0.7);
+		twist.v.setTo(2,0.1,-0.7);
 
 		DMatrixRMaj H = TwistOps_F64.homogenous(twist,null);
 
@@ -103,7 +103,7 @@ public class TestTwistOps_F64 {
 	void exponential_twist_pure_t() {
 
 		Se3_F64 expected = new Se3_F64();
-		expected.T.set(1,0.1,0);
+		expected.T.setTo(1,0.1,0);
 
 		TwistCoordinate_F64 twist = new TwistCoordinate_F64();
 		twist.v.setTo(expected.T);
@@ -122,9 +122,9 @@ public class TestTwistOps_F64 {
 	void exponential_to_twist_verse_norm1() {
 
 		TwistCoordinate_F64 twist = new TwistCoordinate_F64();
-		twist.w.set(-1,1,2);
+		twist.w.setTo(-1,1,2);
 		twist.w.normalize();
-		twist.v.set(2,0.1,-0.7);
+		twist.v.setTo(2,0.1,-0.7);
 
 		double theta = 0.7;
 		Se3_F64 se3 = TwistOps_F64.exponential(twist,theta,null);
@@ -146,9 +146,9 @@ public class TestTwistOps_F64 {
 	void exponential_to_twist_verse_NotNorm1() {
 
 		TwistCoordinate_F64 twist1 = new TwistCoordinate_F64();
-		twist1.w.set(-1,1,2);
+		twist1.w.setTo(-1,1,2);
 		twist1.w.scale(GrlConstants.TEST_SQ_F64);
-		twist1.v.set(2,0.1,-0.7);
+		twist1.v.setTo(2,0.1,-0.7);
 
 		double theta1 = 0.7;
 		Se3_F64 motion1 = TwistOps_F64.exponential(twist1,theta1,null);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,7 +44,7 @@ public class UtilShape3D_F64 {
 		for (int i = 0; i < polygon2D.size(); i++) {
 			Point2D_F64 p2 = polygon2D.get(i);
 			Point3D_F64 p3 = output.get(i);
-			p3.set(p2.x, p2.y,0);
+			p3.setTo(p2.x, p2.y,0);
 			SePointOps_F64.transform(polyToWorld,p3,p3);
 		}
 	}

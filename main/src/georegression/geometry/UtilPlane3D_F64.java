@@ -80,7 +80,7 @@ public class UtilPlane3D_F64 {
 		output.p.y = -input.B*top/n2;
 		output.p.z = -input.C*top/n2;
 
-		output.n.set(input.A,input.B,input.C);
+		output.n.setTo(input.A,input.B,input.C);
 
 		return output;
 	}
@@ -122,7 +122,7 @@ public class UtilPlane3D_F64 {
 		output.n.y = planeToWorld.R.unsafe_get(1,2);
 		output.n.z = planeToWorld.R.unsafe_get(2,2);
 
-		output.p.set(planeToWorld.T.x,planeToWorld.T.y,planeToWorld.T.z);
+		output.p.setTo(planeToWorld.T.x,planeToWorld.T.y,planeToWorld.T.z);
 
 		return output;
 	}
@@ -305,7 +305,7 @@ public class UtilPlane3D_F64 {
 		R.data[6] = axisX.z; R.data[7] = axisY.z; R.data[8] = axisZ.z;
 
 		Point3D_F64 cp = ClosestPoint3D_F64.closestPointOrigin(plane,null);
-		planeToWorld.getT().set(cp.x,cp.y,cp.z);
+		planeToWorld.getT().setTo(cp.x,cp.y,cp.z);
 
 		return planeToWorld;
 	}

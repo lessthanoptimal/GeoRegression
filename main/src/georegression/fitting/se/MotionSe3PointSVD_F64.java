@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -119,7 +119,7 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 		Point3D_F64 temp = new Point3D_F64();
 		GeometryMath_F64.mult(motion.getR(),meanSrc,temp);
 
-		motion.getT().set(meanDst.x - temp.x,meanDst.y - temp.y,meanDst.z - temp.z);
+		motion.getT().setTo(meanDst.x - temp.x,meanDst.y - temp.y,meanDst.z - temp.z);
 
 		return true;
 	}

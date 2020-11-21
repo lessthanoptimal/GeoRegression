@@ -66,7 +66,7 @@ public class Rodrigues_F64 implements Serializable {
 	 */
 	public Rodrigues_F64(double theta, double x, double y, double z) {
 		this.theta = theta;
-		this.unitAxisRotation.set( x, y, z );
+		this.unitAxisRotation.setTo( x, y, z );
 		unitAxisRotation.normalize();
 	}
 
@@ -104,7 +104,7 @@ public class Rodrigues_F64 implements Serializable {
 		
 		if( max == 0 ) {
 			theta = 0;
-			unitAxisRotation.set(1,0,0);
+			unitAxisRotation.setTo(1,0,0);
 		} else {
 			x /= max;
 			y /= max;

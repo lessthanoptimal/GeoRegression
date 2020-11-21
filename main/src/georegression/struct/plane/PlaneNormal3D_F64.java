@@ -56,8 +56,8 @@ public class PlaneNormal3D_F64 implements Serializable {
 	}
 
 	public void setTo(double px , double py , double pz , double nx , double ny, double nz ) {
-		this.p.set(px,py,pz);
-		this.n.set(nx,ny,nz);
+		this.p.setTo(px,py,pz);
+		this.n.setTo(nx,ny,nz);
 	}
 
 	public void setTo(Point3D_F64 point, Vector3D_F64 normal ) {

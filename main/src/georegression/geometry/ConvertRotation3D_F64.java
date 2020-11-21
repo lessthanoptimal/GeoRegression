@@ -135,7 +135,7 @@ public class ConvertRotation3D_F64 {
 		if( rodrigues == null )
 			rodrigues = new Rodrigues_F64();
 
-		rodrigues.unitAxisRotation.set( quat.x, quat.y, quat.z);
+		rodrigues.unitAxisRotation.setTo( quat.x, quat.y, quat.z);
 		rodrigues.unitAxisRotation.normalize();
 
 		rodrigues.theta = 2.0 * Math.acos( quat.w);

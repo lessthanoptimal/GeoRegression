@@ -48,8 +48,8 @@ public class LineParametric3D_F64 implements Serializable {
 	public LineParametric3D_F64( double x_0, double y_0, double z_0,
 								 double slopeX, double slopeY, double slopeZ ) {
 		this();
-		p.set( x_0, y_0, z_0 );
-		slope.set( slopeX, slopeY, slopeZ );
+		p.setTo( x_0, y_0, z_0 );
+		slope.setTo( slopeX, slopeY, slopeZ );
 	}
 
 	public LineParametric3D_F64( Point3D_F64 p, Vector3D_F64 slope ) {
@@ -153,8 +153,8 @@ public class LineParametric3D_F64 implements Serializable {
 
 	public void setTo(double x_0, double y_0, double z_0,
 					  double slopeX, double slopeY, double slopeZ ) {
-		p.set( x_0, y_0, z_0 );
-		slope.set( slopeX, slopeY, slopeZ );
+		p.setTo( x_0, y_0, z_0 );
+		slope.setTo( slopeX, slopeY, slopeZ );
 	}
 
 	public void setTo(LineParametric3D_F64 o ) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -47,9 +47,9 @@ public class TestUtilPlane3D_F64 {
 	@Test
 	void convert_norm_general() {
 		PlaneNormal3D_F64 original = new PlaneNormal3D_F64();
-		original.n.set(1,2,3);
+		original.n.setTo(1,2,3);
 		original.n.normalize();
-		original.p.set(-2,3,5);
+		original.p.setTo(-2,3,5);
 
 		PlaneGeneral3D_F64 test = UtilPlane3D_F64.convert(original,null);
 		List<Point3D_F64> points = randPointOnPlane(original,10);
@@ -76,9 +76,9 @@ public class TestUtilPlane3D_F64 {
 	@Test
 	void convert_tangent_norm() {
 		PlaneNormal3D_F64 original = new PlaneNormal3D_F64();
-		original.n.set(1,0,0);
+		original.n.setTo(1,0,0);
 		original.n.normalize();
-		original.p.set(-2,3,5);
+		original.p.setTo(-2,3,5);
 
 		// create a bunch of points which are on the original plane
 		List<Point3D_F64> points = randPointOnPlane(original,10);
@@ -101,7 +101,7 @@ public class TestUtilPlane3D_F64 {
 		Se3_F64 p2w = new Se3_F64();
 
 		convert_se3_plane(p2w);
-		p2w.T.set(2,6,-3);
+		p2w.T.setTo(2,6,-3);
 		convert_se3_plane(p2w);
 		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,0.2,3,-4.5,p2w.R);
 		convert_se3_plane(p2w);
@@ -141,9 +141,9 @@ public class TestUtilPlane3D_F64 {
 	@Test
 	void evaluate_general() {
 		PlaneNormal3D_F64 original = new PlaneNormal3D_F64();
-		original.n.set(1,2,3);
+		original.n.setTo(1,2,3);
 		original.n.normalize();
-		original.p.set(-2,3,5);
+		original.p.setTo(-2,3,5);
 
 		PlaneGeneral3D_F64 test = UtilPlane3D_F64.convert(original,null);
 
@@ -158,9 +158,9 @@ public class TestUtilPlane3D_F64 {
 	@Test
 	void evaluate_normal() {
 		PlaneNormal3D_F64 input = new PlaneNormal3D_F64();
-		input.n.set(1,2,3);
+		input.n.setTo(1,2,3);
 		input.n.normalize();
-		input.p.set(-2,3,5);
+		input.p.setTo(-2,3,5);
 
 		List<Point3D_F64> points = randPointOnPlane(input, 10);
 
@@ -256,7 +256,7 @@ public class TestUtilPlane3D_F64 {
 		Point3D_F64 l3 = new Point3D_F64();
 		Point3D_F64 k3 = new Point3D_F64();
 		for( Point2D_F64 p : points2D ) {
-			p3.set(p.x,p.y,0);
+			p3.setTo(p.x,p.y,0);
 			SePointOps_F64.transform(planeToWorld, p3, l3);
 
 			// see if it created a valid transform

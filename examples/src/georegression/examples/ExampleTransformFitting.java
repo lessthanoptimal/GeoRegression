@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -42,7 +42,7 @@ public class ExampleTransformFitting {
 		// Create a transform which will be applied to the point cloud
 		Se3_F64 actual = new Se3_F64();
 		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,0.5,-2,0.15,actual.R);
-		actual.T.set(2,3,-2);
+		actual.T.setTo(2,3,-2);
 
 		// Create a random point cloud and transform it
 		List<Point3D_F64> fromPts = new ArrayList<Point3D_F64>();

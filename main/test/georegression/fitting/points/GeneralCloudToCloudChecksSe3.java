@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -51,7 +51,7 @@ public abstract class GeneralCloudToCloudChecksSe3 {
 
 	@Test void identical_translate() {
 		Se3_F64 a = new Se3_F64();
-		a.getT().set(0.1, -0.05, 0.04);
+		a.getT().setTo(0.1, -0.05, 0.04);
 		identical(a, 0.01, 0.01);
 	}
 

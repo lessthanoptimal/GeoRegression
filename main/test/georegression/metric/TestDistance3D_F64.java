@@ -78,7 +78,7 @@ public class TestDistance3D_F64 {
 		assertEquals(2,Distance3D_F64.distance( l,p ), GrlConstants.TEST_F64);
 
 		// a point on the line
-		l.getSlope().set( 1 , 0 , 0 );
+		l.getSlope().setTo( 1 , 0 , 0 );
 		assertEquals(0,Distance3D_F64.distance( l,p ), GrlConstants.TEST_F64);
 	}
 
@@ -91,14 +91,14 @@ public class TestDistance3D_F64 {
 		assertEquals(2,Distance3D_F64.distance( l,p ), GrlConstants.TEST_F64);
 
 		// a point on the line
-		p.set(1,2.5,3);
+		p.setTo(1,2.5,3);
 		assertEquals(0,Distance3D_F64.distance( l,p ), GrlConstants.TEST_F64);
 
 		// point past l.a
-		p.set(3,-1,3);
+		p.setTo(3,-1,3);
 		assertEquals( p.distance(l.a) , Distance3D_F64.distance( l,p ), GrlConstants.TEST_F64);
 		// point past l.b
-		p.set(3,5,3);
+		p.setTo(3,5,3);
 		assertEquals( p.distance(l.b) , Distance3D_F64.distance( l,p ), GrlConstants.TEST_F64);
 
 		// this was a bug

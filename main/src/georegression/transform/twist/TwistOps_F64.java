@@ -159,7 +159,7 @@ public class TwistOps_F64 {
 			twist = new TwistCoordinate_F64();
 
 		if(MatrixFeatures_DDRM.isIdentity(motion.R, GrlConstants.TEST_F64)) {
-			twist.w.set(0,0,0);
+			twist.w.setTo(0,0,0);
 			twist.v.setTo(motion.T);
 		} else {
 			Rodrigues_F64 rod = new Rodrigues_F64();

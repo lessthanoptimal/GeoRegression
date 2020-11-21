@@ -39,7 +39,7 @@ public class BoxLength3D_F64 implements Serializable {
 	public double lengthX,lengthY,lengthZ;
 
 	public BoxLength3D_F64(double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ) {
-		this.p.set(x0,y0,z0);
+		this.p.setTo(x0,y0,z0);
 		this.lengthX = lengthX;
 		this.lengthY = lengthY;
 		this.lengthZ = lengthZ;
@@ -56,7 +56,7 @@ public class BoxLength3D_F64 implements Serializable {
 	public BoxLength3D_F64() {}
 
 	public void setTo(double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ) {
-		this.p.set(x0,y0,z0);
+		this.p.setTo(x0,y0,z0);
 		this.lengthX = lengthX;
 		this.lengthY = lengthY;
 		this.lengthZ = lengthZ;

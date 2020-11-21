@@ -41,9 +41,9 @@ public class Triangle3D_F64 implements Serializable {
 	public Triangle3D_F64(double x0, double y0, double z0,
 						  double x1, double y1, double z1,
 						  double x2, double y2, double z2) {
-		this.v0.set(x0,y0,z0);
-		this.v1.set(x1,y1,z1);
-		this.v2.set(x2,y2,z2);
+		this.v0.setTo(x0,y0,z0);
+		this.v1.setTo(x1,y1,z1);
+		this.v2.setTo(x2,y2,z2);
 	}
 
 	public Triangle3D_F64( Triangle3D_F64 orig ) {
@@ -62,9 +62,9 @@ public class Triangle3D_F64 implements Serializable {
 	public void setTo(double x0, double y0, double z0,
 					  double x1, double y1, double z1,
 					  double x2, double y2, double z2) {
-		this.v0.set(x0,y0,z0);
-		this.v1.set(x1,y1,z1);
-		this.v2.set(x2,y2,z2);
+		this.v0.setTo(x0,y0,z0);
+		this.v1.setTo(x1,y1,z1);
+		this.v2.setTo(x2,y2,z2);
 	}
 
 	public Point3D_F64 getV0() {

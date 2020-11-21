@@ -176,24 +176,24 @@ public class TestIntersection3D_F64 {
 		Point3D_F64 found = new Point3D_F64();
 //		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
 //		assertTrue(found.distance(-0.5,0.5,2) <= GrlConstants.TEST_F64);
-		line.p.set(0.5,-0.5,0);
+		line.p.setTo(0.5,-0.5,0);
 		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
 		assertTrue(found.distance(0.5,-0.5,2) <= GrlConstants.TEST_F64);
 		// point the line in the other direction
-		line.slope.set(0,0,-1);
+		line.slope.setTo(0,0,-1);
 		assertEquals(3,Intersection3D_F64.intersectConvex(polygon,line,found));
 		assertTrue(found.distance(0.5,-0.5,2) <= GrlConstants.TEST_F64);
 		// miss the target entirely
-		line.slope.set(0,50,0.001);
+		line.slope.setTo(0,50,0.001);
 		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
 
 		// rotate everything
 		Se3_F64 se = new Se3_F64();
-		se.T.set(-4,2,1.2);
+		se.T.setTo(-4,2,1.2);
 		ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,1.2,0.5,3.4,se.R);
 
-		line.p.set(0.5,-0.5,0);
-		line.slope.set(0,0,1);
+		line.p.setTo(0.5,-0.5,0);
+		line.slope.setTo(0,0,1);
 		SePointOps_F64.transform(se,line.p,line.p);
 		GeometryMath_F64.mult(se.R,line.slope,line.slope);
 
@@ -332,13 +332,13 @@ public class TestIntersection3D_F64 {
 	@Test
 	void intersectConvex() {
 		FastQueue<Point3D_F64> polygon = new FastQueue<>(Point3D_F64::new);
-		polygon.grow().set(-1,-1.2,2);
-		polygon.grow().set(-1,1.2,2);
-		polygon.grow().set(1,1.2,2);
-		polygon.grow().set(1,-1.2,2);
+		polygon.grow().setTo(-1,-1.2,2);
+		polygon.grow().setTo(-1,1.2,2);
+		polygon.grow().setTo(1,1.2,2);
+		polygon.grow().setTo(1,-1.2,2);
 
 		LineParametric3D_F64 line = new LineParametric3D_F64();
-		line.slope.set(0,0,1);
+		line.slope.setTo(0,0,1);
 
 		Point3D_F64 found = new Point3D_F64();
 
@@ -347,54 +347,54 @@ public class TestIntersection3D_F64 {
 		assertEquals(0,found.distance(0,0,2), UtilEjml.TEST_F64);
 
 		// negative intersection
-		line.slope.set(0,0,-1);
+		line.slope.setTo(0,0,-1);
 		assertEquals(3,Intersection3D_F64.intersectConvex(polygon,line,found));
 		assertEquals(0,found.distance(0,0,2), UtilEjml.TEST_F64);
 
 		// should barely hit
-		line.slope.set(-1,0,2.01);
+		line.slope.setTo(-1,0,2.01);
 		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
 		assertEquals(0,found.distance(-1*(2.0/2.01),0,2), UtilEjml.TEST_F64);
-		line.slope.set(1,0,2.01);
+		line.slope.setTo(1,0,2.01);
 		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
 		assertEquals(0,found.distance(1*(2.0/2.01),0,2), UtilEjml.TEST_F64);
-		line.slope.set(0,-1.2,2.01);
+		line.slope.setTo(0,-1.2,2.01);
 		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
 		assertEquals(0,found.distance(0,-1.2*(2.0/2.01),2), UtilEjml.TEST_F64);
-		line.slope.set(0,1.2,2.01);
+		line.slope.setTo(0,1.2,2.01);
 		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
 		assertEquals(0,found.distance(0,1.2*(2.0/2.01),2), UtilEjml.TEST_F64);
 
 		// should barely miss
-		line.slope.set(-1,0,1.99);
+		line.slope.setTo(-1,0,1.99);
 		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
-		line.slope.set(1,0,1.99);
+		line.slope.setTo(1,0,1.99);
 		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
-		line.slope.set(0,-1.2,1.99);
+		line.slope.setTo(0,-1.2,1.99);
 		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
-		line.slope.set(0,1.2,1.99);
+		line.slope.setTo(0,1.2,1.99);
 		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
 
 		// scale sanity check
-		line.slope.set(-1,0,2.01);
+		line.slope.setTo(-1,0,2.01);
 		line.slope.normalize();
 		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
 		assertEquals(0,found.distance(-1*(2.0/2.01),0,2), UtilEjml.TEST_F64);
-		line.slope.set(-1,0,1.99);
+		line.slope.setTo(-1,0,1.99);
 		line.slope.normalize();
 		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
 
 		// see if polygon order matters
-		polygon.get(0).set(1,-1.2,2);
-		polygon.get(1).set(1,1.2,2);
-		polygon.get(2).set(-1,1.2,2);
-		polygon.get(3).set(-1,-1.2,2);
+		polygon.get(0).setTo(1,-1.2,2);
+		polygon.get(1).setTo(1,1.2,2);
+		polygon.get(2).setTo(-1,1.2,2);
+		polygon.get(3).setTo(-1,-1.2,2);
 
-		line.slope.set(-1,0,2.01);
+		line.slope.setTo(-1,0,2.01);
 		line.slope.normalize();
 		assertEquals(1,Intersection3D_F64.intersectConvex(polygon,line,found));
 		assertEquals(0,found.distance(-1*(2.0/2.01),0,2), UtilEjml.TEST_F64);
-		line.slope.set(-1,0,1.99);
+		line.slope.setTo(-1,0,1.99);
 		line.slope.normalize();
 		assertEquals(0,Intersection3D_F64.intersectConvex(polygon,line,found));
 	}
