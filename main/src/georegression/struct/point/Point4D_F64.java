@@ -25,7 +25,7 @@ import georegression.struct.GeoTuple4D_F64;
  *
  */
 @SuppressWarnings({"unchecked"})
-public class Point4D_F64 extends GeoTuple4D_F64 {
+public class Point4D_F64 extends GeoTuple4D_F64<Point4D_F64> {
 
 	public Point4D_F64(Point4D_F64 pt) {
 		super( pt.x, pt.y, pt.z , pt.w );
@@ -53,6 +53,7 @@ public class Point4D_F64 extends GeoTuple4D_F64 {
 		return new Point4D_F64( x, y, z , w);
 	}
 
+	@Override
 	public void setTo( Point4D_F64 worldLoc ) {
 		_setTo( worldLoc );
 	}
