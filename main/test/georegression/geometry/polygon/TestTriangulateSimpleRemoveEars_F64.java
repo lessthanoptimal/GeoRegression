@@ -20,9 +20,9 @@ package georegression.geometry.polygon;
 
 import georegression.geometry.polygon.TriangulateSimpleRemoveEars_F64.Vertex;
 import georegression.struct.shapes.Polygon2D_F64;
+import org.ddogleg.struct.DogArray;
 import org.ddogleg.struct.DogLinkedList;
 import org.ddogleg.struct.FastAccess;
-import org.ddogleg.struct.FastQueue;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,7 +37,7 @@ public class TestTriangulateSimpleRemoveEars_F64 {
 	 */
 	@Test void lessThanThree() {
 		var original = new Polygon2D_F64(new double[][]{{2,0},{2,2}});
-		var found = new FastQueue<>(ThreeIndexes::new);
+		var found = new DogArray<>(ThreeIndexes::new);
 		var alg = new TriangulateSimpleRemoveEars_F64();
 
 		found.grow(); // make it not empty to see if it was cleared
@@ -51,7 +51,7 @@ public class TestTriangulateSimpleRemoveEars_F64 {
 	 */
 	@Test void triangle() {
 		var original = new Polygon2D_F64(new double[][]{{2,0},{2,2},{1,5}});
-		var found = new FastQueue<>(ThreeIndexes::new);
+		var found = new DogArray<>(ThreeIndexes::new);
 		var alg = new TriangulateSimpleRemoveEars_F64();
 		found.grow(); // make it not empty to see if it was cleared
 		alg.process(original,found);
@@ -64,7 +64,7 @@ public class TestTriangulateSimpleRemoveEars_F64 {
 	 */
 	@Test void rectangle() {
 		var original = new Polygon2D_F64(new double[][]{{0,0},{2,0},{2,1},{0,1}});
-		var found = new FastQueue<>(ThreeIndexes::new);
+		var found = new DogArray<>(ThreeIndexes::new);
 		var alg = new TriangulateSimpleRemoveEars_F64();
 		found.grow(); // make it not empty to see if it was cleared
 		alg.process(original,found);
@@ -79,7 +79,7 @@ public class TestTriangulateSimpleRemoveEars_F64 {
 	 */
 	@Test void concaveQuad() {
 		var original = new Polygon2D_F64(new double[][]{{0,0},{2,0},{0.5,0.5},{0,2}});
-		var found = new FastQueue<>(ThreeIndexes::new);
+		var found = new DogArray<>(ThreeIndexes::new);
 		var alg = new TriangulateSimpleRemoveEars_F64();
 		found.grow(); // make it not empty to see if it was cleared
 		alg.process(original,found);
@@ -91,7 +91,7 @@ public class TestTriangulateSimpleRemoveEars_F64 {
 
 	@Test void fiveSidesConcave() {
 		var original = new Polygon2D_F64(new double[][]{{0,0},{0,2},{1,1},{2,2},{2,0}});
-		var found = new FastQueue<>(ThreeIndexes::new);
+		var found = new DogArray<>(ThreeIndexes::new);
 		var alg = new TriangulateSimpleRemoveEars_F64();
 		found.grow(); // make it not empty to see if it was cleared
 		alg.process(original,found);

@@ -28,7 +28,7 @@ import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_I32;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.DogArray;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -183,7 +183,7 @@ public class UtilPolygons2D_F64 {
 	 * @param p (Input) Polygon
 	 * @param triangles (Output) Triangles.
 	 */
-	public static void triangulate(Polygon2D_F64 p, FastQueue<ThreeIndexes> triangles) {
+	public static void triangulate(Polygon2D_F64 p, DogArray<ThreeIndexes> triangles) {
 		var alg = new TriangulateSimpleRemoveEars_F64();
 		alg.process(p,triangles);
 	}

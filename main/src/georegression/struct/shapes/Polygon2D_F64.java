@@ -23,7 +23,7 @@ import georegression.metric.Area2D_F64;
 import georegression.metric.Intersection2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.DogArray;
 import org.ejml.ops.MatrixIO;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,7 +42,7 @@ import static org.ejml.UtilEjml.fancyString;
 public class Polygon2D_F64 implements Serializable {
 
 	// vertexes in the polygon
-	public FastQueue<Point2D_F64> vertexes;
+	public DogArray<Point2D_F64> vertexes;
 
 	public Polygon2D_F64( double[][] a ) {
 		this(a.length);
@@ -53,24 +53,24 @@ public class Polygon2D_F64 implements Serializable {
 	}
 
 	public Polygon2D_F64( Polygon2D_F64 a ) {
-		vertexes = new FastQueue<>(a.size(),Point2D_F64::new);
+		vertexes = new DogArray<>(a.size(),Point2D_F64::new);
 		for (int i = 0; i < a.size(); i++) {
 			vertexes.grow().setTo(a.get(i));
 		}
 	}
 
 	public Polygon2D_F64( int numVertexes ) {
-		vertexes = new FastQueue<>(numVertexes, Point2D_F64::new);
+		vertexes = new DogArray<>(numVertexes, Point2D_F64::new);
 
-		vertexes.growArray(numVertexes);
+		vertexes.reserve(numVertexes);
 		vertexes.size = numVertexes;
 	}
 
 	public Polygon2D_F64( double... xy ) {
 		if( xy.length % 2 == 1 )
 			throw new IllegalArgumentException("Expected an even number");
-		vertexes = new FastQueue<>(xy.length/2,Point2D_F64::new);
-		vertexes.growArray(xy.length/2);
+		vertexes = new DogArray<>(xy.length/2,Point2D_F64::new);
+		vertexes.reserve(xy.length/2);
 		vertexes.size = xy.length/2;
 
 		int count = 0;
@@ -80,7 +80,7 @@ public class Polygon2D_F64 implements Serializable {
 	}
 
 	public Polygon2D_F64() {
-		vertexes = new FastQueue<>(Point2D_F64::new);
+		vertexes = new DogArray<>(Point2D_F64::new);
 	}
 
 	public void setTo(Polygon2D_F64 orig ) {

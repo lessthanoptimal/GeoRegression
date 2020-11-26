@@ -20,7 +20,7 @@ package georegression.struct.shapes;
 
 import georegression.geometry.UtilPolygons2D_I32;
 import georegression.struct.point.Point2D_I32;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.DogArray;
 
 import java.io.Serializable;
 
@@ -33,17 +33,17 @@ import java.io.Serializable;
 public class Polygon2D_I32 implements Serializable, Cloneable  {
 
 	// vertexes in the polygon
-	public FastQueue<Point2D_I32> vertexes;
+	public DogArray<Point2D_I32> vertexes;
 
 	public Polygon2D_I32( int numVertexes ) {
-		vertexes = new FastQueue<>(Point2D_I32::new);
+		vertexes = new DogArray<>(Point2D_I32::new);
 
-		vertexes.growArray(numVertexes);
+		vertexes.reserve(numVertexes);
 		vertexes.size = numVertexes;
 	}
 
 	public Polygon2D_I32() {
-		vertexes = new FastQueue<>(Point2D_I32::new);
+		vertexes = new DogArray<>(Point2D_I32::new);
 	}
 
 	public Polygon2D_I32( Polygon2D_I32 original ) {
@@ -53,8 +53,8 @@ public class Polygon2D_I32 implements Serializable, Cloneable  {
 	public Polygon2D_I32( int... points ) {
 		if( points.length % 2 == 1 )
 			throw new IllegalArgumentException("Expected an even number");
-		vertexes = new FastQueue<>(points.length/2,Point2D_I32::new);
-		vertexes.growArray(points.length/2);
+		vertexes = new DogArray<>(points.length/2,Point2D_I32::new);
+		vertexes.reserve(points.length/2);
 		vertexes.size = points.length/2;
 
 		int count = 0;

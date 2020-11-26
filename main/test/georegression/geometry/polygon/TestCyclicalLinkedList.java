@@ -41,7 +41,7 @@ public class TestCyclicalLinkedList {
 		assertEquals(0, e.next.object);
 
 		assertSame(e, e.next.next);
-		assertSame(e, e.previous.previous);
+		assertSame(e, e.prev.prev);
 		assertSame(e.next, alg.getTail());
 	}
 
@@ -58,7 +58,7 @@ public class TestCyclicalLinkedList {
 		assertEquals(1, e.next.object);
 
 		assertSame(e, e.next.next);
-		assertSame(e, e.previous.previous);
+		assertSame(e, e.prev.prev);
 		assertSame(e.next, alg.getTail());
 	}
 
@@ -83,7 +83,7 @@ public class TestCyclicalLinkedList {
 		assertSame(e,alg.getHead());
 		assertSame(e.next,alg.getTail());
 		assertSame(e, e.next.next);
-		assertSame(e, e.previous.previous);
+		assertSame(e, e.prev.prev);
 
 		// Remove an object at the head. make it size=3 to be more interesting
 		alg.pushHead(3);
@@ -91,7 +91,7 @@ public class TestCyclicalLinkedList {
 		alg.remove(alg.getHead());
 		assertEquals(2, alg.size());
 		assertSame(e,alg.getHead());
-		assertSame(e.previous, alg.getTail());
+		assertSame(e.prev, alg.getTail());
 		assertSame(e.next, alg.getTail());
 	}
 }

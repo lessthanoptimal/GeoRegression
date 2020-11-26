@@ -22,7 +22,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.shapes.Polygon2D_F64;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.DogArray;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,7 +43,7 @@ public class TestUtilShape3D_F64 {
 		Se3_F64 se = new Se3_F64();
 		se.T.setTo(1,2,3);
 
-		FastQueue<Point3D_F64> output = new FastQueue<>(Point3D_F64::new);
+		DogArray<Point3D_F64> output = new DogArray<>(Point3D_F64::new);
 		UtilShape3D_F64.polygon2Dto3D(p,se,output);
 
 		assertEquals(3,output.size);

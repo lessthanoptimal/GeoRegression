@@ -25,7 +25,7 @@ import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_I32;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.DogArray;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
@@ -158,8 +158,8 @@ public class TestUtilPolygons2D_F64 {
 	 */
 	@Test void triangulate() {
 		var original = new Polygon2D_F64(new double[][]{{0,0},{2,0},{0.5,0.5},{0,2}});
-		var found = new FastQueue<>(ThreeIndexes::new);
-		var expected = new FastQueue<>(ThreeIndexes::new);
+		var found = new DogArray<>(ThreeIndexes::new);
+		var expected = new DogArray<>(ThreeIndexes::new);
 		var alg = new TriangulateSimpleRemoveEars_F64();
 		alg.process(original,expected);
 

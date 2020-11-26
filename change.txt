@@ -43,7 +43,7 @@ Version : 0.22
 - GeoTuple2D
   * Added isNaN()
 - Flushed out GeoTuple2D_I32 more and added more functionality to its children
-- Updated for DDogleg's FastAccess, FastArray, and FastQueue
+- Updated for DDogleg's FastAccess, FastArray, and DogArray
 - Fixed bug in MotionSe3PointSVD where it threw an exception instead of returning false
 
 ---------------------------------------------

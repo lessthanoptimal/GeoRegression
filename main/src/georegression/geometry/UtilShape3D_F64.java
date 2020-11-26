@@ -23,7 +23,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.transform.se.SePointOps_F64;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.DogArray;
 
 /**
  * @author Peter Abeles
@@ -37,7 +37,7 @@ public class UtilShape3D_F64 {
 	 * @param polyToWorld (Output) transform from 2D to 3D coordinate system.
 	 * @param output
 	 */
-	public static void polygon2Dto3D(Polygon2D_F64 polygon2D , Se3_F64  polyToWorld , FastQueue<Point3D_F64> output )
+	public static void polygon2Dto3D(Polygon2D_F64 polygon2D , Se3_F64  polyToWorld , DogArray<Point3D_F64> output )
 	{
 		output.resize(polygon2D.size());
 

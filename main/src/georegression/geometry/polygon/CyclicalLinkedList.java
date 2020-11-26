@@ -35,11 +35,11 @@ public class CyclicalLinkedList<T> extends DogLinkedList<T> {
 
 		if( first == null ) {
 			first = last = e;
-			e.next = e.previous = e;
+			e.next = e.prev = e;
 		} else {
 			e.next = first;
-			e.previous = last;
-			first.previous = e;
+			e.prev = last;
+			first.prev = e;
 			last.next = e;
 			first = e;
 		}
@@ -54,11 +54,11 @@ public class CyclicalLinkedList<T> extends DogLinkedList<T> {
 
 		if( last == null ) {
 			first = last = e;
-			e.next = e.previous = e;
+			e.next = e.prev = e;
 		} else {
 			e.next = first;
-			e.previous = last;
-			first.previous = e;
+			e.prev = last;
+			first.prev = e;
 			last.next = e;
 			last = e;
 		}
@@ -71,16 +71,16 @@ public class CyclicalLinkedList<T> extends DogLinkedList<T> {
 		if (size==1) {
 			first = last = null;
 		} else {
-			Element<T> p = e.previous;
+			Element<T> p = e.prev;
 			Element<T> n = e.next;
 
 			p.next = n;
-			n.previous = p;
+			n.prev = p;
 
 			if (first == e)
 				first = e.next;
 			if (last == e)
-				last = e.previous;
+				last = e.prev;
 		}
 		size--;
 		e.clear();

@@ -23,8 +23,8 @@ import georegression.metric.Intersection2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
+import org.ddogleg.struct.DogArray;
 import org.ddogleg.struct.FastAccess;
-import org.ddogleg.struct.FastQueue;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
@@ -48,7 +48,7 @@ public abstract class CommonConvexHullChecks_F64 {
 	 */
 	@Test
 	void square_axis_aligned() {
-		var points = new FastQueue<>(Point2D_F64::new);
+		var points = new DogArray<>(Point2D_F64::new);
 		points.grow().setTo(0,0);
 		points.grow().setTo(2,0);
 		points.grow().setTo(2,2);
@@ -76,7 +76,7 @@ public abstract class CommonConvexHullChecks_F64 {
 	 * Square again but with a few points inside for good measure. Should not change solution
 	 */
 	@Test void square_axis_aligned_stuff_inside() {
-		var points = new FastQueue<>(Point2D_F64::new);
+		var points = new DogArray<>(Point2D_F64::new);
 		points.grow().setTo(1,1);
 		points.grow().setTo(0.5,1.5);
 		points.grow().setTo(0,0);
@@ -100,7 +100,7 @@ public abstract class CommonConvexHullChecks_F64 {
 	 * Rotated square.
 	 */
 	@Test void square_off_axis() {
-		var points = new FastQueue<>(Point2D_F64::new);
+		var points = new DogArray<>(Point2D_F64::new);
 		points.grow().setTo(1,0);
 		points.grow().setTo(3,2);
 		points.grow().setTo(1,4);
@@ -119,7 +119,7 @@ public abstract class CommonConvexHullChecks_F64 {
 	 * Fit a triangle. Smallest well defined polygon.
 	 */
 	@Test void triangle() {
-		var points = new FastQueue<>(Point2D_F64::new);
+		var points = new DogArray<>(Point2D_F64::new);
 		points.grow().setTo(2,0);
 		points.grow().setTo(2,2);
 		points.grow().setTo(0,0);
@@ -137,7 +137,7 @@ public abstract class CommonConvexHullChecks_F64 {
 	 * Simple scenario but multiple points have the exact same coordinate
 	 */
 	@Test void multiple_points_same_location() {
-		var points = new FastQueue<>(Point2D_F64::new);
+		var points = new DogArray<>(Point2D_F64::new);
 		points.grow().setTo(2,0);
 		points.grow().setTo(2,2);
 		points.grow().setTo(0,0);
@@ -166,7 +166,7 @@ public abstract class CommonConvexHullChecks_F64 {
 	 * Randomly generate a point cloud and test it using the properties of convexity
 	 */
 	@Test void random() {
-		var points = new FastQueue<>(Point2D_F64::new);
+		var points = new DogArray<>(Point2D_F64::new);
 		FitConvexHull_F64 alg = createAlgorithm();
 		var found = new Polygon2D_F64();
 
@@ -192,7 +192,7 @@ public abstract class CommonConvexHullChecks_F64 {
 	 * one and two point sets are pathological
 	 */
 	@Test void one_and_two_points() {
-		var points = new FastQueue<>(Point2D_F64::new);
+		var points = new DogArray<>(Point2D_F64::new);
 		points.grow().setTo(0,0);
 
 		FitConvexHull_F64 alg = createAlgorithm();
@@ -209,7 +209,7 @@ public abstract class CommonConvexHullChecks_F64 {
 	 * All points lie along a line.
 	 */
 	@Test void line() {
-		var points = new FastQueue<>(Point2D_F64::new);
+		var points = new DogArray<>(Point2D_F64::new);
 		points.grow().setTo(0,0);
 		points.grow().setTo(1,0);
 		points.grow().setTo(2,0);
@@ -225,7 +225,7 @@ public abstract class CommonConvexHullChecks_F64 {
 
 	@Test void pentagon() {
 		// all points are in hull
-		var input = new FastQueue<>(Point2D_F64::new);
+		var input = new DogArray<>(Point2D_F64::new);
 		input.grow().setTo(2,3);
 		input.grow().setTo(2,8);
 		input.grow().setTo(7,8);
@@ -241,7 +241,7 @@ public abstract class CommonConvexHullChecks_F64 {
 		containsOnceEach(input,output);
 
 		// add a point inside
-		var input2 = new FastQueue<>(Point2D_F64::new);
+		var input2 = new DogArray<>(Point2D_F64::new);
 		input2.copyAll(input.toList(), (a,b)->b.setTo(a));
 		input2.grow().setTo(4,4);
 
@@ -258,7 +258,7 @@ public abstract class CommonConvexHullChecks_F64 {
 
 		double w = 1.2;
 
-		var points = new FastQueue<>(Point2D_F64::new);
+		var points = new DogArray<>(Point2D_F64::new);
 
 		for (int row = 0; row < numRows; row++) {
 			double y = row*w - 2.1;

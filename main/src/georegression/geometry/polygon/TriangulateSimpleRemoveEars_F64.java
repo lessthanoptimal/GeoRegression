@@ -23,9 +23,9 @@ import georegression.geometry.UtilPolygons2D_F64;
 import georegression.metric.Intersection2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
+import org.ddogleg.struct.DogArray;
 import org.ddogleg.struct.DogLinkedList;
 import org.ddogleg.struct.DogLinkedList.Element;
-import org.ddogleg.struct.FastQueue;
 import org.ejml.UtilEjml;
 
 /**
@@ -56,7 +56,7 @@ public class TriangulateSimpleRemoveEars_F64 {
 	final protected CyclicalLinkedList<Vertex> polygon = new CyclicalLinkedList<>();
 
 	// Storage for vertexes so that memory can be recycled
-	final protected FastQueue<Vertex> vertexes = new FastQueue<>(Vertex::new, Vertex::reset);
+	final protected DogArray<Vertex> vertexes = new DogArray<>(Vertex::new, Vertex::reset);
 
 	/**
 	 * Converts the polygon into a set of triangles.
@@ -64,7 +64,7 @@ public class TriangulateSimpleRemoveEars_F64 {
 	 * @param input (Input) Input polygon
 	 * @param output (Output) Storage for triangulation results. Reset is called.
 	 */
-	public void process(Polygon2D_F64 input, FastQueue<ThreeIndexes> output) {
+	public void process(Polygon2D_F64 input, DogArray<ThreeIndexes> output) {
 		output.reset();
 		if (input.size() < 3) {
 			// Too few points to create one triangle
@@ -96,7 +96,7 @@ public class TriangulateSimpleRemoveEars_F64 {
 				}
 
 				Element<Vertex> v3 = v2.next, v4 = v2.next.next;
-				Element<Vertex> v1 = v2.previous, v0 = v2.previous.previous;
+				Element<Vertex> v1 = v2.prev, v0 = v2.prev.prev;
 
 				// Copy this ear into the output triagonalization
 				ThreeIndexes tri = output.grow();
@@ -130,7 +130,7 @@ public class TriangulateSimpleRemoveEars_F64 {
 	void findEars() {
 		Element<Vertex> e = polygon.getHead();
 		do {
-			e.object.ear = isDiagonal(e.previous,e.next);
+			e.object.ear = isDiagonal(e.prev,e.next);
 			e = e.next;
 		} while (e != polygon.getHead());
 	}
@@ -171,7 +171,7 @@ public class TriangulateSimpleRemoveEars_F64 {
 	 */
 	boolean isInCone( Element<Vertex> a, Element<Vertex> b ) {
 		Element<Vertex> a1 = a.next;
-		Element<Vertex> a0 = a.previous;
+		Element<Vertex> a0 = a.prev;
 
 		// Check if 'a' is a convex vertex
 		if (isLeftOn(a.object, a1.object, a0.object) ) {

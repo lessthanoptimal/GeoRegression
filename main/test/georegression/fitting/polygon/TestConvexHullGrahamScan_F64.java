@@ -21,7 +21,7 @@ package georegression.fitting.polygon;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
-import org.ddogleg.struct.FastQueue;
+import org.ddogleg.struct.DogArray;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +43,7 @@ public class TestConvexHullGrahamScan_F64 extends CommonConvexHullChecks_F64 {
 	 * point
 	 */
 	@Test void multiple_points_same_angle() {
-		var points = new FastQueue<>(Point2D_F64::new);
+		var points = new DogArray<>(Point2D_F64::new);
 		points.grow().setTo(0,0);
 		points.grow().setTo(2,0);
 		points.grow().setTo(2,2);
