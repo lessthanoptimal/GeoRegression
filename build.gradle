@@ -150,7 +150,7 @@ subprojects {
     uploadArchives.dependsOn failDirtyNotSnapshot
 
     // Skip these codeless directories when publishing jars locally or to a remote destination
-    if ([':examples','autocode'].contains(name)) {
+    if (['examples','autocode'].contains(name)) {
         project.jar.enabled = false
         project.uploadArchives.enabled = false
         project.tasks.publish.enabled = false

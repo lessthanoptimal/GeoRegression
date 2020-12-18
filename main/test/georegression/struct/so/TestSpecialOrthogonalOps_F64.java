@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,16 +19,25 @@
 package georegression.struct.so;
 
 
+import org.ejml.UtilEjml;
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.RandomMatrices_DDRM;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
  */
 public class TestSpecialOrthogonalOps_F64 {
-	@Test
-	void bestFit() {
-		fail("implement");
+	Random rand = new Random(345);
+
+	@Test void bestFit() {
+		DMatrixRMaj A = RandomMatrices_DDRM.rectangle(3,3,-1,1,rand);
+		SpecialOrthogonalOps_F64.bestFit(A);
+		assertEquals(1.0, CommonOps_DDRM.det(A), UtilEjml.TEST_F64);
 	}
 }
