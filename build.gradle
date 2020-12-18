@@ -1,4 +1,5 @@
 import net.ltgt.gradle.errorprone.CheckSeverity
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
     id "com.peterabeles.gversion" version "1.9"
@@ -14,26 +15,27 @@ allprojects {
 }
 
 gversion {
-    srcDir = "main/src"
+    srcDir       = "main/src"
     classPackage = "georegression"
-    className = "GeoRegressionVersion"
+    className    = "GeoRegressionVersion"
+    annotate     = true
 }
 
 subprojects {
     apply plugin: 'java-library'
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     apply plugin: 'signing'
     apply plugin: 'net.ltgt.errorprone'
 
     java {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        withJavadocJar()
+        withSourcesJar()
     }
 
     // Creates Java 8 byte code
-    compileJava {
-        options.compilerArgs = [ "--release", "8"  ]
-    }
+    tasks.withType(JavaCompile).all { options.compilerArgs = ["--release", "8",] }
 
     // Crap to make Error Prone plugin not cause version conflicts
     // https://github.com/tbroyer/gradle-errorprone-plugin/issues/16
@@ -47,9 +49,7 @@ subprojects {
     }
 
     // Fail on jar conflict
-    configurations.all {
-        resolutionStrategy { failOnVersionConflict() }
-    }
+    configurations.all { resolutionStrategy { failOnVersionConflict() } }
 
     repositories {
         mavenCentral()
@@ -124,7 +124,14 @@ subprojects {
     }
 
     test {
-        ignoreFailures true
+        useJUnitPlatform()
+        reports.html.enabled = false
+        // Make the error logging verbose to make debugging on CI easier
+        testLogging.showStandardStreams = true
+        testLogging.exceptionFormat TestExceptionFormat.FULL
+        testLogging.showCauses true
+        testLogging.showExceptions true
+        testLogging.showStackTraces true
     }
 
     javadoc {
@@ -137,70 +144,67 @@ subprojects {
         }
     }
 
-    task javadocJar(type: Jar) {
-        classifier = 'javadoc'
-        from javadoc
-    }
-
-    task sourcesJar(type: Jar) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    artifacts {
-        archives javadocJar, sourcesJar
-    }
-
+    // Force the release build to fail if it depends on a SNAPSHOT
+    jar.dependsOn checkDependsOnSNAPSHOT
     // Force uploadArchives to fail if trying to upload a stable release and git is dirty
     uploadArchives.dependsOn failDirtyNotSnapshot
 
-    // if Maven central isn't setup in gradle.properties skip all of this
-    if (project.hasProperty('ossrhUsername')) {
-        signing {
-            sign configurations.archives
+    // Skip these codeless directories when publishing jars locally or to a remote destination
+    if ([':examples','autocode'].contains(name)) {
+        project.jar.enabled = false
+        project.uploadArchives.enabled = false
+        project.tasks.publish.enabled = false
+    }
+
+    if (!project.tasks.publish.enabled)
+        return
+
+    // if Maven central isn't setup in ~/.gradle/gradle.properties fill in these variables to make it happy
+    if( !project.hasProperty('ossrhUsername') ) {
+        ext.ossrhUsername = "dummy"
+        ext.ossrhPassword = "dummy"
+    } else {
+        signing { sign configurations.archives }
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                pom {
+                    name = 'GeoRegression'
+                    description = 'GeoRegression is a free Java based geometry library for scientific computing in fields such as robotics and computer vision with a focus on 2D/3D space.'
+                    url = 'http://georegression.org'
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'pabeles'
+                            name = 'Peter Abeles'
+                            email = 'peter.abeles@gmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:git://github.com/lessthanoptimal/georegression.git'
+                        developerConnection = 'scm:git:git://github.com/lessthanoptimal/georegression.git'
+                        url = 'https://github.com/lessthanoptimal/GeoRegression'
+                    }
+                }
+            }
         }
-
-        uploadArchives {
-            repositories {
-                mavenDeployer {
-                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                    repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                        authentication(userName: ossrhUsername, password: ossrhPassword)
-                    }
-
-                    snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                        authentication(userName: ossrhUsername, password: ossrhPassword)
-                    }
-
-                    pom.project {
-                        name 'GeoRegression'
-                        packaging 'pom'
-                        // optionally artifactId can be defined here
-                        description 'GeoRegression is a free Java based geometry library for scientific computing in fields such as robotics and computer vision with a focus on 2D/3D space.'
-                        url 'http://georegression.org'
-
-                        scm {
-                            connection 'scm:git:git@github.com:lessthanoptimal/georegression.git'
-                            developerConnection 'scm:git:git@github.com:lessthanoptimal/georegression.git'
-                            url 'https://github.com/lessthanoptimal/GeoRegression'
-                        }
-
-                        licenses {
-                            license {
-                                name 'The Apache Software License, Version 2.0'
-                                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                            }
-                        }
-
-                        developers {
-                            developer {
-                                id 'pabeles'
-                                name 'Peter Abeles'
-                                email 'peter.abeles@gmail.com'
-                            }
-                        }
-                    }
+        repositories {
+            maven {
+                def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                credentials {
+                    username ossrhUsername
+                    password ossrhPassword
                 }
             }
         }
@@ -289,20 +293,6 @@ task javadocWeb(type: Javadoc) {
 }
 
 project(':georegression').compileJava.dependsOn(createVersionFile)
-
-// Disable the creation of jars for distribution.  If you don't do this it will crash
-[':examples','autocode'].each {String a ->
-    project(a) {
-        if( project.hasProperty('ossrhUsername') ) {
-            signArchives.enabled = false
-        }
-        sourcesJar.enabled = false
-        javadocJar.enabled = false
-        jar.enabled = false
-        uploadArchives.enabled = false
-        install.enabled = false
-    }
-}
 
 wrapper {
     distributionType = Wrapper.DistributionType.BIN
