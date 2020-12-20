@@ -2,16 +2,17 @@ import net.ltgt.gradle.errorprone.CheckSeverity
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    id "com.peterabeles.gversion" version "1.9"
+    id "com.peterabeles.gversion" version "1.10" apply false
     id "net.ltgt.errorprone" version "1.2.1" apply false
 }
 
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
+    apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.23-SNAPSHOT'
+    version = '0.23'
 }
 
 gversion {
@@ -76,7 +77,7 @@ subprojects {
     }
 
     dependencies {
-        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.19-SNAPSHOT')
+        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.19')
 
         compileOnly 'org.jetbrains:annotations:20.0.0' // @Nullable
         compileOnly 'javax.annotation:jsr250-api:1.0'  // @Generated
@@ -142,12 +143,22 @@ subprojects {
             failOnError = false
             enabled = !project.version.contains("SNAPSHOT") // disable to stop it from spamming stdout
         }
+
+        // https://github.com/gradle/gradle/issues/11182 Error introduced in JDK 11
+        if (JavaVersion.current().compareTo(JavaVersion.VERSION_1_9) >= 0) {
+            options.addStringOption("-release", "8")
+        }
+
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
+        }
     }
 
     // Force the release build to fail if it depends on a SNAPSHOT
-    jar.dependsOn checkDependsOnSNAPSHOT
-    // Force uploadArchives to fail if trying to upload a stable release and git is dirty
-    uploadArchives.dependsOn failDirtyNotSnapshot
+    project.jar.dependsOn project.checkDependsOnSNAPSHOT
+
+    // Force publish to fail if trying to upload a stable release and git is dirty
+    project.publish.dependsOn failDirtyNotSnapshot
 
     // Skip these codeless directories when publishing jars locally or to a remote destination
     if (['examples','autocode'].contains(name)) {
@@ -254,7 +265,11 @@ task alljavadoc(type: Javadoc) {
 
     // Hack for Java 8u121 and beyond. Comment out if running an earlier version of Java
     options.addBooleanOption("-allow-script-in-comments", true)
-    options.addBooleanOption("-no-module-directories", true)
+
+    // Flag is no longer around in later versions of Java but required before
+    if (JavaVersion.current().ordinal() < JavaVersion.VERSION_13.ordinal()) {
+        options.addBooleanOption("-no-module-directories", true)
+    }
 
     // Add a list of uses of a class to javadoc
     options.use = true
@@ -277,7 +292,11 @@ task javadocWeb(type: Javadoc) {
 
     // Hack for Java 8u121 and beyond. Comment out if running an earlier version of Java
     options.addBooleanOption("-allow-script-in-comments", true)
-    options.addBooleanOption("-no-module-directories", true)
+
+    // Flag is no longer around in later versions of Java but required before
+    if (JavaVersion.current().ordinal() < JavaVersion.VERSION_13.ordinal()) {
+        options.addBooleanOption("-no-module-directories", true)
+    }
 
     // Add a list of uses of a class to javadoc
     options.use = true
