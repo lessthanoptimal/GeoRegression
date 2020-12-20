@@ -285,33 +285,13 @@ task alljavadoc(type: Javadoc) {
     }
 }
 
-task javadocWeb(type: Javadoc) {
-    // only include source code in src directory to avoid including 3rd party code which some projects do as a hack
-    source = javadocProjects.collect { project(it).fileTree('src').include('**/*.java') }
-    classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
-
-    destinationDir = file("${buildDir}/docs/javadoc")
-
-    // Hack for Java 8u121 and beyond. Comment out if running an earlier version of Java
-    options.addBooleanOption("-allow-script-in-comments", true)
-
-    // Flag is no longer around in later versions of Java but required before
-    if (JavaVersion.current().ordinal() < JavaVersion.VERSION_13.ordinal()) {
-        options.addBooleanOption("-no-module-directories", true)
-    }
-
-    // Add a list of uses of a class to javadoc
-    options.use = true
-
-    configure(options) {
-        failOnError = false
-        docTitle = "GeoRegression v$project.version"
-        links = [ 'http://docs.oracle.com/javase/8/docs/api/',
-                  'http://ejml.org/javadoc/',
-                  'http://ddogleg.org/javadoc/' ]
-        bottom = file('docs/bottom.txt').text
+task javadocWeb() {
+    doFirst {
+        alljavadoc.options.bottom = file('docs/bottom.txt').text
+        alljavadoc.destinationDir = file("${buildDir}/docs/api-web")
     }
 }
+javadocWeb.finalizedBy(alljavadoc)
 
 project(':georegression').compileJava.dependsOn(createVersionFile)
 
