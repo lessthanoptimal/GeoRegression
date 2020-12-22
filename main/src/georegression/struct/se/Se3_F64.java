@@ -95,7 +95,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 */
 	@Override
 	public void setTo(Se3_F64 se) {
-		R.set(se.getR());
+		R.setTo(se.getR());
 		T.setTo(se.getT());
 	}
 
@@ -105,7 +105,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param R New rotation.
 	 */
 	public void setRotation(DMatrixRMaj R) {
-		this.R.set(R);
+		this.R.setTo(R);
 	}
 
 	/**
