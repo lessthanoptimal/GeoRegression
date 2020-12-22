@@ -70,6 +70,11 @@ public class Rodrigues_F64 implements Serializable {
 		unitAxisRotation.normalize();
 	}
 
+	public void setTo( Rodrigues_F64 src ) {
+		this.theta = src.theta;
+		this.unitAxisRotation.setTo(src.unitAxisRotation);
+	}
+
 	public Vector3D_F64 getUnitAxisRotation() {
 		return unitAxisRotation;
 	}

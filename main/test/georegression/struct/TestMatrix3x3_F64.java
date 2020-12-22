@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,7 +22,6 @@ import georegression.misc.GrlConstants;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -32,42 +31,42 @@ public class TestMatrix3x3_F64 {
 	@Test
 	void set_matrix() {
 		Matrix3x3_F64 a = new Matrix3x3_F64();
-		a.set(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		a.setTo(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 		Matrix3x3_F64 m = new Matrix3x3_F64();
-		m.set(a);
+		m.setTo(a);
 
-		assertTrue(m.a11 == 1);
-		assertTrue(m.a12 == 2);
-		assertTrue(m.a13 == 3);
-		assertTrue(m.a21 == 4);
-		assertTrue(m.a22 == 5);
-		assertTrue(m.a23 == 6);
-		assertTrue(m.a31 == 7);
-		assertTrue(m.a32 == 8);
-		assertTrue(m.a33 == 9);
+		assertEquals(m.a11, 1);
+		assertEquals(m.a12, 2);
+		assertEquals(m.a13, 3);
+		assertEquals(m.a21, 4);
+		assertEquals(m.a22, 5);
+		assertEquals(m.a23, 6);
+		assertEquals(m.a31, 7);
+		assertEquals(m.a32, 8);
+		assertEquals(m.a33, 9);
 	}
 
 	@Test
 	void set_values() {
 		Matrix3x3_F64 m = new Matrix3x3_F64();
-		m.set(1,2,3,4,5,6,7,8,9);
+		m.setTo(1,2,3,4,5,6,7,8,9);
 
-		assertTrue(m.a11 == 1);
-		assertTrue(m.a12 == 2);
-		assertTrue(m.a13 == 3);
-		assertTrue(m.a21 == 4);
-		assertTrue(m.a22 == 5);
-		assertTrue(m.a23 == 6);
-		assertTrue(m.a31 == 7);
-		assertTrue(m.a32 == 8);
-		assertTrue(m.a33 == 9);
+		assertEquals(m.a11, 1);
+		assertEquals(m.a12, 2);
+		assertEquals(m.a13, 3);
+		assertEquals(m.a21, 4);
+		assertEquals(m.a22, 5);
+		assertEquals(m.a23, 6);
+		assertEquals(m.a31, 7);
+		assertEquals(m.a32, 8);
+		assertEquals(m.a33, 9);
 	}
 
 	@Test
 	void scale() {
 		Matrix3x3_F64 m = new Matrix3x3_F64();
-		m.set(1,2,3,4,5,6,7,8,9);
+		m.setTo(1,2,3,4,5,6,7,8,9);
 		m.scale(2);
 
 		assertEquals(2,m.a11, GrlConstants.TEST_F64);

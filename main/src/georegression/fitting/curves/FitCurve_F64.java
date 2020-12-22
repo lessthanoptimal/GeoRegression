@@ -86,9 +86,9 @@ public class FitCurve_F64 {
 		}
 
 		DMatrix3x3 A = work;
-		A.set(  sx0,sx1,sx2,
-				sx1,sx2,sx3,
-				sx2,sx3,sx4);
+		A.setTo( sx0,sx1,sx2,
+				 sx1,sx2,sx3,
+				 sx2,sx3,sx4);
 
 		if( !CommonOps_DDF3.invert(A,A) ) // TODO use a symmetric inverse. Should be slightly faster
 			return false;
@@ -165,10 +165,10 @@ public class FitCurve_F64 {
 			b3 += x3*y;
 		}
 
-		A.set(  N,  sx1,sx2,sx3,
-				sx1,sx2,sx3,sx4,
-				sx2,sx3,sx4,sx5,
-				sx3,sx4,sx5,sx6);
+		A.setTo( N,  sx1,sx2,sx3,
+				 sx1,sx2,sx3,sx4,
+				 sx2,sx3,sx4,sx5,
+				 sx3,sx4,sx5,sx6);
 
 		if( !CommonOps_DDF4.invert(A,A) )// TODO use a symmetric inverse. Should be slightly faster
 			return false;
@@ -232,7 +232,7 @@ public class FitCurve_F64 {
 
 		// using a fixed size matrix because the notation is much nicer
 		DMatrix6x6 A = new DMatrix6x6();
-		A.set(  N    ,sx1,  sy1  ,sx1y1,sx2  ,sy2  ,
+		A.setTo(N    ,sx1,  sy1  ,sx1y1,sx2  ,sy2  ,
 				sx1  ,sx2,  sx1y1,sx2y1,sx3  ,sx1y2,
 				sy1  ,sx1y1,sy2  ,sx1y2,sx2y1,sy3  ,
 				sx1y1,sx2y1,sx1y2,sx2y2,sx3y1,sx1y3,
