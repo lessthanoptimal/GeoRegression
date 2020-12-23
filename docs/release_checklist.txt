@@ -25,7 +25,7 @@
 Uploading Releases to Maven Central
 
 To post a SNAPSHOT:
-./gradlew uploadArchives
+./gradlew publish
 
 To post a full release:
 git clean -fd main/;./gradlew autogenerate;./gradlew assemble;./gradlew publish -Dorg.gradle.parallel=false

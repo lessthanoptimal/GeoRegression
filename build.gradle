@@ -218,7 +218,7 @@ subprojects {
         }
     }
 
-    if( project.hasProperty('ossrhUsername') ) {
+    if (ext.ossrhUsername != "dummy") {
         signing { sign publishing.publications.mavenJava }
     }
 }
