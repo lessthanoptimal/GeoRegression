@@ -37,6 +37,28 @@ import java.util.Random;
  */
 public class UtilPoint2D_F64 {
 
+	/**
+	 * Finds the closest point in the list to the specified point that is within tolerance. Returns
+	 * the index of the point or -1 if none was found.
+	 *
+	 * @param tol Tolerance in Euclidean distance.
+	 */
+	public static int findClosestIdx( double x , double y, List<Point2D_F64> pts , double tol ) {
+		double bestDist = Double.MAX_VALUE;
+		int best = -1;
+
+		for (int i = 0; i < pts.size(); i++) {
+			double dist = pts.get(i).distance2(x,y);
+			if (dist<bestDist) {
+				bestDist = dist;
+				best = i;
+			}
+		}
+		if (bestDist <= tol*tol)
+			return best;
+		return -1;
+	}
+
 	public static List<Point2D_F64> copy( List<Point2D_F64> pts ) {
 		List<Point2D_F64> ret = new ArrayList<>();
 

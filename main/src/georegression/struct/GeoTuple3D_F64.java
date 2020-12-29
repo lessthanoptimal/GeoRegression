@@ -233,6 +233,14 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		return dx * dx + dy * dy + dz * dz;
 	}
 
+	public double distance2( double x, double y, double z ) {
+		double dx = x - this.x;
+		double dy = y - this.y;
+		double dz = z - this.z;
+
+		return dx * dx + dy * dy + dz * dz;
+	}
+
 	public void print() {
 		System.out.println( this );
 	}

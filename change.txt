@@ -1,6 +1,15 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2021
+Version : 0.24
+
+- UtilPoint2D
+  * Added findClosestIdx()
+- UtilPoint3D
+  * Added findClosestIdx()
+
+---------------------------------------------
 Date    : 2020-Dec-19
 Version : 0.23
 

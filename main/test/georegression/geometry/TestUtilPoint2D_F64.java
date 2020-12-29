@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,6 +41,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TestUtilPoint2D_F64 {
 
 	Random rand = new Random(234);
+
+	@Test void findClosestIdx() {
+		List<Point2D_F64> list = new ArrayList<>();
+		assertEquals(-1, UtilPoint2D_F64.findClosestIdx(1,2,list,2));
+
+		list.add(new Point2D_F64(5,2));
+		assertEquals(-1, UtilPoint2D_F64.findClosestIdx(1,2,list,2));
+		assertEquals(0, UtilPoint2D_F64.findClosestIdx(1,2,list,4));
+
+		list.add(new Point2D_F64(5,2));
+		list.add(new Point2D_F64(6,2));
+		list.add(new Point2D_F64(8,2));
+
+		assertEquals(2, UtilPoint2D_F64.findClosestIdx(6,2.1,list,2));
+		assertEquals(-1, UtilPoint2D_F64.findClosestIdx(100,2,list,2));
+	}
 
 	@Test
 	void noiseNormal_single() {
