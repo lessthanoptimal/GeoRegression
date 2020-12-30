@@ -153,6 +153,32 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.contains(ellipse,5+3 + GrlConstants.TEST_F64,6));
 	}
 
+	/** Polygon has no elements. This caused an exception at one point */
+	@Test void containConcave_zero_one() {
+		// there is no polygon so it can't be inside
+		var poly = new Polygon2D_F64(0);
+		assertFalse(Intersection2D_F64.containsConcave(poly, new Point2D_F64(0,0.5)));
+
+		// a single point and the test point is identical. This is ambiguous. For now we define it ot be false
+		poly.vertexes.grow().setTo(0, 0.5);
+		assertFalse(Intersection2D_F64.containsConcave(poly, new Point2D_F64(0,0.5)));
+	}
+
+	/** See if it handles line points. A.k.a. line segment */
+	@Test void containConcave_two() {
+		var poly = new Polygon2D_F64(0);
+		poly.vertexes.grow().setTo(0,0);
+		poly.vertexes.grow().setTo(1,0);
+
+		// Point not on the line
+		assertFalse(Intersection2D_F64.containsConcave(poly, new Point2D_F64(0,0.5)));
+
+		// The current implementation doesn't define behavior for points on the line. We will just call
+		// this and make sure it doesn't throw an exception
+		Intersection2D_F64.containsConcave(poly, new Point2D_F64(0.5,0));
+		Intersection2D_F64.containsConcave(poly, new Point2D_F64(0.0,0));
+	}
+
 	@Test void containConcave_concave() {
 		Polygon2D_F64 poly = new Polygon2D_F64(5);
 		poly.vertexes.data[0].setTo(-1,-1);

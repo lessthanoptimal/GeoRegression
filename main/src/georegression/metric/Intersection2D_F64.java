@@ -127,6 +127,10 @@ public class Intersection2D_F64 {
 	{
 		final int N = polygon.size();
 
+		// always return false for empty or single point polygons
+		if (N <= 1)
+			return false;
+
 		int left=0;
 		int right=0;
 		for (int i = 0; i < N-1; i++) {
