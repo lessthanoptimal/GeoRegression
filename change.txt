@@ -8,6 +8,8 @@ Version : 0.24
   * Added findClosestIdx()
 - UtilPoint3D
   * Added findClosestIdx()
+- SePointOps
+  * Added expanded versions of transform for homogenous 3D coordinates
 
 ---------------------------------------------
 Date    : 2020-Dec-19

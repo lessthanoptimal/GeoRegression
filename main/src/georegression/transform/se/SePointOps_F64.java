@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -223,6 +223,12 @@ public class SePointOps_F64 {
 	 * @return Transformed point.
 	 */
 	public static Point3D_F64 transform(Se3_F64 se, Point4D_F64 src, @Nullable Point3D_F64 dst ) {
+		return transform(se, src.x, src.y, src.z, src.w, dst);
+	}
+
+	public static Point3D_F64 transform(Se3_F64 se,
+										final double x, final double y, final double z, final double w,
+										@Nullable Point3D_F64 dst ) {
 		if( dst == null )
 			dst = new Point3D_F64();
 
@@ -230,13 +236,13 @@ public class SePointOps_F64 {
 		Vector3D_F64 T = se.T;
 
 		// [R T]*X
-		dst.x = R.data[0]*src.x + R.data[1]*src.y + R.data[2]*src.z + T.x*src.w;
-		dst.y = R.data[3]*src.x + R.data[4]*src.y + R.data[5]*src.z + T.y*src.w;
-		dst.z = R.data[6]*src.x + R.data[7]*src.y + R.data[8]*src.z + T.z*src.w;
+		dst.x = R.data[0]*x + R.data[1]*y + R.data[2]*z + T.x*w;
+		dst.y = R.data[3]*x + R.data[4]*y + R.data[5]*z + T.y*w;
+		dst.z = R.data[6]*x + R.data[7]*y + R.data[8]*z + T.z*w;
 
-		dst.x /= src.w;
-		dst.y /= src.w;
-		dst.z /= src.w;
+		dst.x /= w;
+		dst.y /= w;
+		dst.z /= w;
 
 		return dst;
 	}
@@ -245,13 +251,14 @@ public class SePointOps_F64 {
 	 * Applies the transform to src, but omits the last implicit last row in dst where dst.w = src.w
 	 */
 	public static Point3D_F64 transformV(Se3_F64 se, Point4D_F64 src, @Nullable Point3D_F64 dst ) {
+		return transformV(se,src.x, src.y, src.z, src.w, dst);
+	}
+
+	public static Point3D_F64 transformV(Se3_F64 se,
+										 final double x, final double y, final double z, final double w,
+										 @Nullable Point3D_F64 dst ) {
 		if( dst == null )
 			dst = new Point3D_F64();
-
-		final double x = src.x;
-		final double y = src.y;
-		final double z = src.z;
-		final double w = src.w;
 
 		DMatrixRMaj R = se.getR();
 		Vector3D_F64 T = se.getT();
@@ -279,13 +286,14 @@ public class SePointOps_F64 {
 	 * @return Transformed point.
 	 */
 	public static Point4D_F64 transform(Se3_F64 se, Point4D_F64 src, @Nullable Point4D_F64 dst ) {
+		return transform(se, src.x, src.y, src.z ,src.w, dst);
+	}
+
+	public static Point4D_F64 transform(Se3_F64 se,
+										final double x, final double y, final double z, final double w,
+										@Nullable Point4D_F64 dst ) {
 		if( dst == null )
 			dst = new Point4D_F64();
-
-		final double x = src.x;
-		final double y = src.y;
-		final double z = src.z;
-		final double w = src.w;
 
 		DMatrixRMaj R = se.getR();
 		Vector3D_F64 T = se.getT();
