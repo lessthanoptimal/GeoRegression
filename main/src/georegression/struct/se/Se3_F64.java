@@ -217,7 +217,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	/**
 	 * Fully specify the transform using Euler angles
 	 */
-	public void set(double x, double y, double z, EulerType type, double rotA, double rotB, double rotC) {
+	public void setTo(double x, double y, double z, EulerType type, double rotA, double rotB, double rotC) {
 		T.setTo(x, y, z);
 		ConvertRotation3D_F64.eulerToMatrix(type, rotA, rotB, rotC, R);
 	}
@@ -226,7 +226,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * Fully specifies the transform using Rodrigues (axis angle) or Quaternions.  If Rodrigues then A=axisX, B=axisY,
 	 * C=axisZ, D=theta. If Quaternion then A=w, B=x, C=y, D=z.
 	 */
-	public void set(double x, double y, double z, RotationType type, double A, double B, double C, double D) {
+	public void setTo(double x, double y, double z, RotationType type, double A, double B, double C, double D) {
 		T.setTo(x, y, z);
 		switch (type) {
 			case RODRIGUES:
