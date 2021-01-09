@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -87,11 +87,11 @@ public class TestFitPlane3D_F64 {
 		// define a plane and its coordinate system
 		axisX = new Vector3D_F64(1,2,3);
 		axisY = new Vector3D_F64(3,-2,1);
-		axisZ = axisX.cross(axisY);
+		axisZ = axisX.crossWith(axisY);
 
 		axisX.normalize();
 		axisZ.normalize();
-		axisY = axisX.cross(axisZ);
+		axisY = axisX.crossWith(axisZ);
 
 		center = new Point3D_F64(2,-1,0.5);
 

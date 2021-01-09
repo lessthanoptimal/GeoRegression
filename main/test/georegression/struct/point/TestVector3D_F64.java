@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -72,7 +72,7 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 			Vector3D_F64 found = new Vector3D_F64();
 
 			GeometryMath_F64.cross(a, b, expected);
-			found.cross(a,b);
+			found.crossSetTo(a,b);
 			GeometryUnitTest.assertEquals(expected,found,GrlConstants.TEST_F64);
 		}
 	}
@@ -85,7 +85,7 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 			Vector3D_F64 expected = new Vector3D_F64();
 
 			GeometryMath_F64.cross(a, b, expected);
-			GeometryUnitTest.assertEquals(expected,a.cross(b),GrlConstants.TEST_F64);
+			GeometryUnitTest.assertEquals(expected,a.crossWith(b),GrlConstants.TEST_F64);
 		}
 	}
 

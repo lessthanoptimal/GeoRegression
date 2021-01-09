@@ -10,6 +10,9 @@ Version : 0.24
   * Added findClosestIdx()
 - SePointOps
   * Added expanded versions of transform for homogenous 3D coordinates
+- Vector3D
+  * Refactored cross functions to make their behavior more obvious
+  * Added new dot() variant
 
 ---------------------------------------------
 Date    : 2020-Dec-19

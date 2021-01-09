@@ -186,7 +186,7 @@ public class Intersection3D_F64 {
 		// get triangle edge vectors and plane normal
 		u.minus(T.v1,T.v0);   // NOTE: these could be precomputed
 		v.minus(T.v2,T.v0);
-		n.cross(u,v);
+		n.crossSetTo(u,v);
 
 		if ( n.normSq() == 0 )        // triangle is degenerate
 			return -1;                  // do not deal with this case
@@ -276,7 +276,7 @@ public class Intersection3D_F64 {
 		// get triangle edge vectors and plane normal
 		u.minus(T.v1,T.v0);   // NOTE: these could be precomputed
 		v.minus(T.v2,T.v0);
-		n.cross(u,v);
+		n.crossSetTo(u,v);
 
 		if ( n.normSq() == 0 )        // triangle is degenerate
 			return -1;                  // do not deal with this case
@@ -348,7 +348,7 @@ public class Intersection3D_F64 {
 		// get triangle edge vectors and plane normal
 		u.minus(v1,v0);   // NOTE: these could be precomputed
 		v.minus(v2,v0);
-		n.cross(u,v);
+		n.crossSetTo(u,v);
 
 		if ( n.normSq() == 0 )        // triangle is degenerate
 			return -1;                  // do not deal with this case

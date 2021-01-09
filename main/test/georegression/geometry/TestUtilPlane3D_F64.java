@@ -284,7 +284,7 @@ public class TestUtilPlane3D_F64 {
 		assertEquals( 1 , y.norm(), UtilEjml.TEST_F64);
 
 		Vector3D_F64 found = new Vector3D_F64();
-		found.cross(x,y);
+		found.crossSetTo(x,y);
 
 		assertTrue(found.dot(z) > 0 ); // make sure it's right handed
 	}

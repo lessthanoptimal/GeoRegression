@@ -179,7 +179,7 @@ public class UtilPlane3D_F64 {
 	public static void selectAxis2D( Vector3D_F64 normal , Vector3D_F64 axisX , Vector3D_F64 axisY ) {
 		UtilVector3D_F64.perpendicularCanonical(normal,axisX);
 		axisX.normalize();
-		axisY.cross(normal,axisX);
+		axisY.crossSetTo(normal,axisX);
 		axisY.normalize();
 	}
 

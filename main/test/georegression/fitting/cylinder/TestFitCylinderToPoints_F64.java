@@ -116,7 +116,7 @@ public class TestFitCylinderToPoints_F64 {
 		p.z = h;
 
 		Vector3D_F64 axisZ = new Vector3D_F64(0,0,1);
-		Vector3D_F64 cross = axisZ.cross(cylinder.line.slope);
+		Vector3D_F64 cross = axisZ.crossWith(cylinder.line.slope);
 		if( Math.abs(cross.norm()) < GrlConstants.TEST_F64) {
 			cross.setTo(0,0,1);
 		} else {
