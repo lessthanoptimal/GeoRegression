@@ -158,7 +158,7 @@ public class Distance3D_F64 {
 	 * @param point The point
 	 * @return Signed distance
 	 */
-	public static double distance( PlaneGeneral3D_F64 plane , Point3D_F64 point ) {
+	public static double distanceSigned( PlaneGeneral3D_F64 plane , Point3D_F64 point ) {
 		double top = plane.A*point.x + plane.B*point.y + plane.C*point.z - plane.D;
 
 		return top / Math.sqrt( plane.A*plane.A + plane.B*plane.B + plane.C*plane.C);

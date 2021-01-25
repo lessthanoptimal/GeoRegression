@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,7 +23,7 @@ import georegression.struct.plane.PlaneGeneral3D_F64;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author Peter Abeles
@@ -34,7 +34,7 @@ public class TestModelManagerPlaneGeneral3D_F64 {
 	void createModelInstance() {
 		ModelManagerPlaneGeneral3D_F64 alg = new ModelManagerPlaneGeneral3D_F64();
 
-		assertTrue( alg.createModelInstance() != null);
+		assertNotNull(alg.createModelInstance());
 	}
 
 	@Test
