@@ -128,21 +128,21 @@ public class TestDistance3D_F64 {
 
 		// distance from origin
 		double expected = Math.sqrt(3*3 + 4*4 + 5*5);
-		double found = Distance3D_F64.distance(g,new Point3D_F64(0,0,0));
+		double found = Distance3D_F64.distanceSigned(g,new Point3D_F64(0,0,0));
 		assertEquals(-expected,found, GrlConstants.TEST_F64);
 
 		// on the plane
-		found = Distance3D_F64.distance(g,new Point3D_F64(3,4,-5));
+		found = Distance3D_F64.distanceSigned(g,new Point3D_F64(3,4,-5));
 		assertEquals(0,found, GrlConstants.TEST_F64);
 
 		// move it away from the plane
 		Vector3D_F64 v = n.n;
 		v.normalize();
-		found = Distance3D_F64.distance(g,new Point3D_F64(v.x,v.y,v.z));
+		found = Distance3D_F64.distanceSigned(g,new Point3D_F64(v.x,v.y,v.z));
 		assertEquals(-(expected-1),found, GrlConstants.TEST_F64);
 
 		// make it to the other side and see if the sign changes
-		found = Distance3D_F64.distance(g,new Point3D_F64(v.x+3,v.y+4,v.z-5));
+		found = Distance3D_F64.distanceSigned(g,new Point3D_F64(v.x+3,v.y+4,v.z-5));
 		assertEquals(1,found, GrlConstants.TEST_F64);
 	}
 
