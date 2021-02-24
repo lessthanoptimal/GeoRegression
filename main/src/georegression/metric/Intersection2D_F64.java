@@ -20,6 +20,7 @@ package georegression.metric;
 
 import georegression.geometry.UtilEllipse_F64;
 import georegression.geometry.UtilLine2D_F64;
+import georegression.geometry.lines.IntersectionLinesGeneral_F64;
 import georegression.geometry.polygon.AreaIntersectionPolygon2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.EllipseRotated_F64;
@@ -33,6 +34,8 @@ import georegression.struct.shapes.Quadrilateral_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 
 /**
@@ -437,6 +440,28 @@ public class Intersection2D_F64 {
 		ret.x = a.B * b.C - a.C * b.B;
 		ret.y = a.C * b.A - a.A * b.C;
 		ret.z = a.A * b.B - a.B * b.A;
+
+		return ret;
+	}
+
+	/**
+	 * Finds the intersection between two or more lines and a 2D point in homogenous coordinates. An algebraic
+	 * method is used to find the point. Follow up by a non-linear refinement method that minimizes geometric
+	 * distance is suggested when high precision is required.
+	 *
+	 * @see #intersection(LineGeneral2D_F64, LineGeneral2D_F64, Point3D_F64)
+	 *
+	 * @param lines (Input) list of 2 or more lines
+	 * @param ret (Output) Optional storage for point of intersection
+	 * @return Found best fit point of intersection.
+	 */
+	public static Point3D_F64 intersection(List<LineGeneral2D_F64> lines, @Nullable Point3D_F64 ret )
+	{
+		if( ret == null )
+			ret = new Point3D_F64();
+
+		if (!new IntersectionLinesGeneral_F64().process(lines,ret))
+			throw new RuntimeException("Solver failed. Is there NaN or infinities in the input?");
 
 		return ret;
 	}

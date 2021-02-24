@@ -13,6 +13,8 @@ Version : 0.24
 - Vector3D
   * Refactored cross functions to make their behavior more obvious
   * Added new dot() variant
+- Intersection2D
+  * Added intersection of many points to a homogenous point
 
 ---------------------------------------------
 Date    : 2020-Dec-19
