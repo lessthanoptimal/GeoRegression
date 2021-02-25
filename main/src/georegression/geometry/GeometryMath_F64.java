@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,7 +22,6 @@ import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.GeoTuple4D_F64;
 import org.ejml.data.DMatrixRMaj;
-import org.ejml.dense.row.mult.VectorVectorMult_DDRM;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -764,10 +763,13 @@ public class GeometryMath_F64 {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "M must be 3 by 3." );
 
-		DMatrixRMaj m1 = new DMatrixRMaj( 3, 1, true, a.x, a.y, a.z );
-		DMatrixRMaj m2 = new DMatrixRMaj( 3, 1, true, b.x, b.y, b.z );
+		// a^T*M
+		double am0 = a.x*M.data[0] + a.y*M.data[3] + a.z*M.data[6];
+		double am1 = a.x*M.data[1] + a.y*M.data[4] + a.z*M.data[7];
+		double am2 = a.x*M.data[2] + a.y*M.data[5] + a.z*M.data[8];
 
-		return (double) VectorVectorMult_DDRM.innerProdA( m1, M, m2 );
+		// right side
+		return am0*b.x + am1*b.y + am2*b.z;
 	}
 
 	/**
@@ -785,10 +787,13 @@ public class GeometryMath_F64 {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "M must be 3 by 3." );
 
-		DMatrixRMaj m1 = new DMatrixRMaj( 3, 1, true, a.x, a.y, a.z );
-		DMatrixRMaj m2 = new DMatrixRMaj( 3, 1, true, b.x, b.y, b.z );
+		// a^T*M^T
+		double am0 = a.x*M.data[0] + a.y*M.data[1] + a.z*M.data[2];
+		double am1 = a.x*M.data[3] + a.y*M.data[4] + a.z*M.data[5];
+		double am2 = a.x*M.data[6] + a.y*M.data[7] + a.z*M.data[8];
 
-		return (double) VectorVectorMult_DDRM.innerProdTranA( m1, M, m2 );
+		// right side
+		return am0*b.x + am1*b.y + am2*b.z;
 	}
 
 	/**
@@ -862,10 +867,13 @@ public class GeometryMath_F64 {
 		if( M.numRows != 3 || M.numCols != 3 )
 			throw new IllegalArgumentException( "M must be 3 by 3." );
 
-		DMatrixRMaj m1 = new DMatrixRMaj( 3, 1, true, a.x, a.y, 1 );
-		DMatrixRMaj m2 = new DMatrixRMaj( 3, 1, true, b.x, b.y, 1 );
+		// a^T*M
+		double am0 = a.x*M.data[0] + a.y*M.data[3] + M.data[6];
+		double am1 = a.x*M.data[1] + a.y*M.data[4] + M.data[7];
+		double am2 = a.x*M.data[2] + a.y*M.data[5] + M.data[8];
 
-		return (double) VectorVectorMult_DDRM.innerProdA( m1, M, m2 );
+		// right side
+		return am0*b.x + am1*b.y + am2;
 	}
 
 	/**
@@ -878,7 +886,7 @@ public class GeometryMath_F64 {
 	 * @return scalar
 	 */
 	public static double dot( GeoTuple3D_F64 a, GeoTuple3D_F64 b ) {
-		return a.x * b.x + a.y * b.y + a.z * b.z;
+		return a.x*b.x + a.y*b.y + a.z*b.z;
 	}
 
 	/**
