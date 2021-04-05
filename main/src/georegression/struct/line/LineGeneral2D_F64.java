@@ -124,8 +124,12 @@ public class LineGeneral2D_F64 implements Serializable {
 	 * @param y y-coordinate of a point
 	 * @return result of line equation
 	 */
-	public double evaluate( double x , double y ) {
+	public double evaluate( double x, double y ) {
 		return A*x + B*y + C;
+	}
+
+	public double evaluate( double x, double y, double z ) {
+		return A*x + B*y + C*z;
 	}
 
 	public LineGeneral2D_F64 copy() {
