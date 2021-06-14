@@ -24,6 +24,7 @@ import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Point4D_F64;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -71,6 +72,41 @@ public class ClosestPoint3D_F64 {
 		ret.x = (double) 0.5 * ( ( l0.p.x + t0 * l0.slope.x ) + ( l1.p.x + t1 * l1.slope.x ) );
 		ret.y = (double) 0.5 * ( ( l0.p.y + t0 * l0.slope.y ) + ( l1.p.y + t1 * l1.slope.y ) );
 		ret.z = (double) 0.5 * ( ( l0.p.z + t0 * l0.slope.z ) + ( l1.p.z + t1 * l1.slope.z ) );
+
+		return ret;
+	}
+
+	/**
+	 * Returns the homogenous point which minimizes the distance between the two lines in 3D. Since the
+	 * results are computed in homogenous coordinates an intersection at infinity can be handled.
+	 *
+	 * @param l0  first line. Not modified.
+	 * @param l1  second line. Not modified.
+	 * @param ret (Optional) Storage for the closest point. If null a new point is declared. Modified.
+	 * @return Closest point between two lines in homogenous coordinates
+	 */
+	public static Point4D_F64 closestPoint(LineParametric3D_F64 l0, LineParametric3D_F64 l1, Point4D_F64 ret) {
+		if( ret == null ) {
+			ret = new Point4D_F64();
+		}
+
+		ret.x = l0.p.x - l1.p.x;
+		ret.y = l0.p.y - l1.p.y;
+		ret.z = l0.p.z - l1.p.z;
+
+		// this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
+		double dv01v0 = ret.x*l0.slope.x + ret.y*l0.slope.y + ret.z*l0.slope.z;
+		double dv01v1 = ret.x*l1.slope.x + ret.y*l1.slope.y + ret.z*l1.slope.z;
+		double dv1v0 = MiscOps.dot( l1.slope, l0.slope );
+		double dv1v1 = MiscOps.dot( l1.slope, l1.slope );
+
+		double t0 = dv01v1*dv1v0 - dv01v0*dv1v1;
+		double bottom = MiscOps.dot( l0.slope, l0.slope ) * dv1v1 - dv1v0*dv1v0;
+
+		ret.x = bottom*l0.p.x + t0*l0.slope.x;
+		ret.y = bottom*l0.p.y + t0*l0.slope.y;
+		ret.z = bottom*l0.p.z + t0*l0.slope.z;
+		ret.w = bottom;
 
 		return ret;
 	}

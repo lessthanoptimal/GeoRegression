@@ -26,6 +26,7 @@ import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Point4D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ public class TestClosestPoint3D_F64 {
 	 * Compute truth from 3 random points then see if the 3rd point is found again.
 	 */
 	@Test
-	void closestPoint_line() {
+	void closestPoint_line_3D() {
 		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
 		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
 		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
@@ -52,7 +53,7 @@ public class TestClosestPoint3D_F64 {
 		LineParametric3D_F64 lineA = new LineParametric3D_F64( a, va );
 		LineParametric3D_F64 lineB = new LineParametric3D_F64( c, vc );
 
-		Point3D_F64 foundB = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
+		Point3D_F64 foundB = ClosestPoint3D_F64.closestPoint(lineA, lineB, (Point3D_F64)null);
 		assertNotNull(foundB);
 		assertTrue( b.isIdentical( foundB, GrlConstants.TEST_F64) );
 		checkIsClosest(foundB,lineA,lineB);
@@ -60,7 +61,47 @@ public class TestClosestPoint3D_F64 {
 		// check two arbitrary lines
 		lineA = new LineParametric3D_F64( 2,3,-4,-9,3,6.7 );
 		lineB = new LineParametric3D_F64( -0.4,0,1.2,-3.4,4,-5 );
-		foundB = ClosestPoint3D_F64.closestPoint(lineA, lineB, null);
+		foundB = ClosestPoint3D_F64.closestPoint(lineA, lineB, (Point3D_F64)null);
+		checkIsClosest(foundB,lineA,lineB);
+	}
+
+	@Test
+	void closestPoint_line_Homogenous() {
+		Point3D_F64 a = new Point3D_F64( 1, 1, 1 );
+		Point3D_F64 b = new Point3D_F64( 1.5, -2.5, 9 );
+		Point3D_F64 c = new Point3D_F64( 10.1, 6, -3 );
+		Point3D_F64 foundB = new Point3D_F64();
+
+		Vector3D_F64 va = new Vector3D_F64( a, b );
+		Vector3D_F64 vc = new Vector3D_F64( c, b );
+
+		LineParametric3D_F64 lineA = new LineParametric3D_F64( a, va );
+		LineParametric3D_F64 lineB = new LineParametric3D_F64( c, vc );
+
+		Point4D_F64 foundB_H = ClosestPoint3D_F64.closestPoint(lineA, lineB, (Point4D_F64) null);
+		assertNotNull(foundB_H);
+		foundB.setTo(foundB_H.x/foundB_H.w, foundB_H.y/foundB_H.w, foundB_H.z/foundB_H.w);
+		assertTrue( b.isIdentical( foundB, GrlConstants.TEST_F64) );
+		checkIsClosest(foundB,lineA,lineB);
+
+		// check two arbitrary lines
+		lineA = new LineParametric3D_F64( 2,3,-4,-9,3,6.7 );
+		lineB = new LineParametric3D_F64( -0.4,0,1.2,-3.4,4,-5 );
+		foundB_H = ClosestPoint3D_F64.closestPoint(lineA, lineB, foundB_H);
+		foundB.setTo(foundB_H.x/foundB_H.w, foundB_H.y/foundB_H.w, foundB_H.z/foundB_H.w);
+		checkIsClosest(foundB,lineA,lineB);
+
+		// Check edge cases
+		lineA = new LineParametric3D_F64( 0,0,0,1,0,0 );
+		lineB = new LineParametric3D_F64( 0,0,0,0,1,0 );
+		foundB_H = ClosestPoint3D_F64.closestPoint(lineA, lineB, foundB_H);
+		foundB.setTo(foundB_H.x/foundB_H.w, foundB_H.y/foundB_H.w, foundB_H.z/foundB_H.w);
+		checkIsClosest(foundB,lineA,lineB);
+
+		lineA = new LineParametric3D_F64( 0,0,0,1,0,0 );
+		lineB = new LineParametric3D_F64( 1,0,0,0,1,0 );
+		foundB_H = ClosestPoint3D_F64.closestPoint(lineA, lineB, foundB_H);
+		foundB.setTo(foundB_H.x/foundB_H.w, foundB_H.y/foundB_H.w, foundB_H.z/foundB_H.w);
 		checkIsClosest(foundB,lineA,lineB);
 	}
 
@@ -79,7 +120,7 @@ public class TestClosestPoint3D_F64 {
 		LineParametric3D_F64 lineA = new LineParametric3D_F64( a, va );
 		LineParametric3D_F64 lineB = new LineParametric3D_F64( c, vc );
 
-		double param[] = new double[2];
+		double[] param = new double[2];
 
 		assertTrue(ClosestPoint3D_F64.closestPoints(lineA, lineB, param));
 
