@@ -85,7 +85,7 @@ public class ClosestPoint3D_F64 {
 	 * @param ret (Optional) Storage for the closest point. If null a new point is declared. Modified.
 	 * @return Closest point between two lines in homogenous coordinates
 	 */
-	public static Point4D_F64 closestPoint(LineParametric3D_F64 l0, LineParametric3D_F64 l1, Point4D_F64 ret) {
+	public static Point4D_F64 closestPoint(LineParametric3D_F64 l0, LineParametric3D_F64 l1, @Nullable Point4D_F64 ret) {
 		if( ret == null ) {
 			ret = new Point4D_F64();
 		}
