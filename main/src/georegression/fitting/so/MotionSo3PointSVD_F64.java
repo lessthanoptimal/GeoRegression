@@ -16,13 +16,11 @@
  * limitations under the License.
  */
 
-package georegression.fitting.se;
+package georegression.fitting.so;
 
 import georegression.fitting.MotionTransformPoint;
-import georegression.geometry.GeometryMath_F64;
-import georegression.geometry.UtilPoint3D_F64;
 import georegression.struct.point.Point3D_F64;
-import georegression.struct.se.Se3_F64;
+import georegression.struct.so.So3_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.SingularOps_DDRM;
@@ -33,7 +31,7 @@ import java.util.List;
 
 /**
  * <p>
- * Finds the rigid body motion which minimizes the different between the two sets of associated points in 3D.
+ * Finds the rotation which minimizes the different between the two sets of associated points in 3D.
  * Computes the SVD of the covariance and extracts the motion from the mean of the two
  * sets of points and the U and V components of SVD.
  * </p>
@@ -43,26 +41,22 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Point3D_F64> {
+public class MotionSo3PointSVD_F64 implements MotionTransformPoint<So3_F64, Point3D_F64> {
 
-	// rigid body motion
-	private Se3_F64 motion = new Se3_F64();
+	// Pure rotational motion
+	private So3_F64 rotation = new So3_F64();
 
 	SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(3, 3,true,true,false);
 
 	@Override
-	public Se3_F64 getTransformSrcToDst() {
-		return motion;
+	public So3_F64 getTransformSrcToDst() {
+		return rotation;
 	}
 
 	@Override
 	public boolean process( List<Point3D_F64> srcPts, List<Point3D_F64> dstPts) {
 		if( srcPts.size() != dstPts.size() )
 			throw new IllegalArgumentException( "There must be a 1 to 1 correspondence between the two sets of points" );
-
-		// find the mean of both sets of points
-		Point3D_F64 meanSrc = UtilPoint3D_F64.mean(srcPts, null );
-		Point3D_F64 meanDst = UtilPoint3D_F64.mean(dstPts, null );
 
 		final int N = srcPts.size();
 
@@ -77,23 +71,15 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 			Point3D_F64 f = srcPts.get( i );
 			Point3D_F64 t = dstPts.get( i );
 
-			double dfx = f.x - meanSrc.x;
-			double dfy = f.y - meanSrc.y;
-			double dfz = f.z - meanSrc.z;
-
-			double dtx = t.x - meanDst.x;
-			double dty = t.y - meanDst.y;
-			double dtz = t.z - meanDst.z;
-
-			s11 += dtx*dfx;
-			s12 += dtx*dfy;
-			s13 += dtx*dfz;
-			s21 += dty*dfx;
-			s22 += dty*dfy;
-			s23 += dty*dfz;
-			s31 += dtz*dfx;
-			s32 += dtz*dfy;
-			s33 += dtz*dfz;
+			s11 += t.x*f.x;
+			s12 += t.x*f.y;
+			s13 += t.x*f.z;
+			s21 += t.y*f.x;
+			s22 += t.y*f.y;
+			s23 += t.y*f.z;
+			s31 += t.z*f.x;
+			s32 += t.z*f.y;
+			s33 += t.z*f.z;
 		}
 
 		DMatrixRMaj Sigma = new DMatrixRMaj( 3, 3, true, s11, s12, s13, s21, s22, s23, s31, s32, s33 );
@@ -114,12 +100,7 @@ public class MotionSe3PointSVD_F64 implements MotionTransformPoint<Se3_F64, Poin
 			V.data[8] = -V.data[8];
 		}
 
-		CommonOps_DDRM.multTransB(U, V, motion.getR());
-
-		Point3D_F64 temp = new Point3D_F64();
-		GeometryMath_F64.mult(motion.getR(),meanSrc,temp);
-
-		motion.getT().setTo(meanDst.x - temp.x,meanDst.y - temp.y,meanDst.z - temp.z);
+		CommonOps_DDRM.multTransB(U, V, rotation.R);
 
 		return true;
 	}

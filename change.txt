@@ -19,6 +19,8 @@ Version : 0.24
   * Two line intersection in homogenous coordinates
 - GeometryMath
   * Unrolled innerProd() functions that were creating new matrices internally
+- Added support for Special Orthogonal 3 (SO3)
+  * Fit SO3 to two point clouds
 
 ---------------------------------------------
 Date    : 2020-Dec-19

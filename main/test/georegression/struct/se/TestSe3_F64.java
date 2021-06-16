@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -29,7 +29,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
  * @author Peter Abeles
@@ -47,12 +48,12 @@ public class TestSe3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
 		Se3_F64 a = new Se3_F64( R, T, false );
-		assertTrue( R != a.getR() );
-		assertTrue( T != a.getT() );
+		assertNotSame(R, a.getR());
+		assertNotSame(T, a.getT());
 
 		a = new Se3_F64( R, T, true );
-		assertTrue( R == a.getR() );
-		assertTrue( T == a.getT() );
+		assertSame(R, a.getR());
+		assertSame(T, a.getT());
 	}
 
 	@Override
