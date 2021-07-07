@@ -3,7 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
     id "com.peterabeles.gversion" version "1.10" apply false
-    id "net.ltgt.errorprone" version "1.2.1" apply false
+    id "net.ltgt.errorprone" version "2.0.1" apply false
 }
 
 allprojects {
@@ -14,6 +14,8 @@ allprojects {
     group = 'org.georegression'
     version = '0.24-SNAPSHOT'
 }
+
+project.ext.set("errorprone_version", '2.7.1')
 
 gversion {
     srcDir       = "main/src"
@@ -29,23 +31,28 @@ subprojects {
     apply plugin: 'net.ltgt.errorprone'
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
         withJavadocJar()
         withSourcesJar()
+        toolchain { languageVersion = JavaLanguageVersion.of(15) }
     }
 
-    // Creates Java 8 byte code
-    tasks.withType(JavaCompile).all { options.compilerArgs = ["--release", "8",] }
+    // Prevents tons of errors if someone is using ASCII
+    tasks.withType(JavaCompile).configureEach { options.encoding = "UTF-8" }
 
-    // Crap to make Error Prone plugin not cause version conflicts
-    // https://github.com/tbroyer/gradle-errorprone-plugin/issues/16
-    configurations {
-        [annotationProcessor, testAnnotationProcessor].each {
-            it.resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.2'
-            it.resolutionStrategy.force "com.google.errorprone:error_prone_annotations:2.4.0"
-            it.resolutionStrategy.force "com.google.guava:guava:27.0.1-jre"
-            it.resolutionStrategy.force "org.checkerframework:checker-qual:2.10.0"
+    // Creates Java 8 byte code
+    tasks.withType(JavaCompile).configureEach { options.release = 8 }
+
+    // Enable incremental compile. Should make single file changes faster
+    tasks.withType(JavaCompile) { options.incremental = true }
+
+    // To make ErrorProne and Kotlin plugins happy
+    configurations.configureEach {
+        resolutionStrategy {
+            force 'org.jetbrains:annotations:20.0.0'
+            force 'com.google.guava:guava:30.1-jre'
+            force "com.google.errorprone:error_prone_annotations:$project.errorprone_version"
+            force 'com.google.code.findbugs:jsr305:3.0.2'
+            force 'org.checkerframework:checker-qual:2.10.0'
         }
     }
 
@@ -87,15 +94,10 @@ subprojects {
         testRuntimeOnly( 'org.junit.jupiter:junit-jupiter-engine:5.4.0' )
 
         // needed to use Java 11+ syntax with Java 1.8 byte code
-        annotationProcessor('com.github.bsideup.jabel:jabel-javac-plugin:0.2.0'){
-            exclude group: 'net.bytebuddy', module: 'byte-buddy'
-            exclude group: 'net.bytebuddy', module: 'byte-buddy-agent'
-        }
-        annotationProcessor("net.bytebuddy:byte-buddy:1.10.10")
-        annotationProcessor("net.bytebuddy:byte-buddy-agent:1.10.10")
+        annotationProcessor('com.github.bsideup.jabel:jabel-javac-plugin:0.3.0')
+        testAnnotationProcessor('com.github.bsideup.jabel:jabel-javac-plugin:0.3.0')
 
-        errorprone( "com.google.errorprone:error_prone_core:2.4.0" )
-        errorproneJavac( "com.google.errorprone:javac:9+181-r4173-1" )
+        errorprone("com.google.errorprone:error_prone_core:$project.errorprone_version")
 
         // even if it's not used you still need to include the dependency
         annotationProcessor "com.uber.nullaway:nullaway:0.8.0"
@@ -296,5 +298,5 @@ project(':georegression').compileJava.dependsOn(createVersionFile)
 
 wrapper {
     distributionType = Wrapper.DistributionType.BIN
-    gradleVersion = '6.4.1'
+    gradleVersion = '6.8.3'
 }
