@@ -5,3 +5,8 @@ install:
   - ./gradlew autogenerate
   - ./gradlew build
 script:
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
