@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,8 +19,8 @@
 package georegression.struct;
 
 /**
- * Describes geometric objects that are composed of N double values.  Where N is the dimension
- * of space the object is contained in.  Points and vectors are two examples of a GeoTuple.  Each
+ * Describes geometric objects that are composed of N double values. Where N is the dimension
+ * of space the object is contained in. Points and vectors are two examples of a GeoTuple. Each
  * value is the value of the object along a dimension in the space it occupies.
  *
  * @author Peter Abeles
@@ -28,7 +28,7 @@ package georegression.struct;
 public abstract class GeoTuple_F64 <T extends GeoTuple_F64> extends GeoTuple<T> {
 
 	/**
-	 * Checks to see if the two GeoTuple have values which are nearly the same.  False is always
+	 * Checks to see if the two GeoTuple have values which are nearly the same. False is always
 	 * returned if the dimension is different.
 	 *
 	 * @param t   The GeoTuple it is being compared against.
@@ -51,7 +51,7 @@ public abstract class GeoTuple_F64 <T extends GeoTuple_F64> extends GeoTuple<T> 
 	}
 
 	/**
-	 * Generic copy routine.  It is recommended that this be overridden with a faster implementation.
+	 * Generic copy routine. It is recommended that this be overridden with a faster implementation.
 	 *
 	 * @return An exact copy of this GeoTuple.
 	 */

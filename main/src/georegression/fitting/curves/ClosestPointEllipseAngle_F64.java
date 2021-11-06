@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,16 +22,16 @@ import georegression.struct.curve.EllipseRotated_F64;
 import georegression.struct.point.Point2D_F64;
 
 /**
- * Finds the closest point on an ellipse to a point.  Point is first put into the ellipse's
- * coordinate system.  Then newton's method is used to find the solution.  The following parameterization is used:
- * (x,y) = a*cos(t) + b*sin(t).  For the center a point is arbitrarily selected.
+ * Finds the closest point on an ellipse to a point. Point is first put into the ellipse's
+ * coordinate system. Then newton's method is used to find the solution. The following parameterization is used:
+ * (x,y) = a*cos(t) + b*sin(t). For the center a point is arbitrarily selected.
  *
  * @author Peter Abeles
  */
 @SuppressWarnings("NullAway.Init")
 public class ClosestPointEllipseAngle_F64 {
 
-	// tolerance to test for solution.  Must be this close to zero
+	// tolerance to test for solution. Must be this close to zero
 	double tol;
 	// maximum number of newton steps
 	int maxIterations;
@@ -49,8 +49,8 @@ public class ClosestPointEllipseAngle_F64 {
 	/**
 	 * Specifies convergence criteria
 	 *
-	 * @param tol Convergence tolerance.  Try 1e-8
-	 * @param maxIterations Maximum number of iterations.  Try 100
+	 * @param tol Convergence tolerance. Try 1e-8
+	 * @param maxIterations Maximum number of iterations. Try 100
 	 */
 	public ClosestPointEllipseAngle_F64(double tol, int maxIterations) {
 		this.tol = tol;
@@ -68,7 +68,7 @@ public class ClosestPointEllipseAngle_F64 {
 	}
 
 	/**
-	 * Find the closest point on the ellipse to the specified point.  To get the solution call {@link #getClosest()}
+	 * Find the closest point on the ellipse to the specified point. To get the solution call {@link #getClosest()}
 	 *
 	 * @param point Point which it is being fit to
 	 */

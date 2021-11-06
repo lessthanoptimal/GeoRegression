@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * <p>
  * Special Euclidean transform that has been parameterized with three parameters:
- * translation (x,y) and rotation (yaw).  First the rotation is applied then the translation.
+ * translation (x,y) and rotation (yaw). First the rotation is applied then the translation.
  * </p>
  * <p>
  * Note that this data structure does not specify the units or coordinate frames.

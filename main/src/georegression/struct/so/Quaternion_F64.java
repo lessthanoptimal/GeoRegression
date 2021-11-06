@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,7 +37,7 @@ import java.io.Serializable;
  */
 public class Quaternion_F64 implements Serializable {
 	/**
-	 * Describes the angle of rotation.  See above for how it is encoded.
+	 * Describes the angle of rotation. See above for how it is encoded.
 	 */
 	public double w;
 	/**

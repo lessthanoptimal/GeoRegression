@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -39,7 +39,7 @@ public class DistancePointTriangle3D_F64 {
 	// storage for cross product of E0 and E1
 	private Vector3D_F64 N = new Vector3D_F64();
 
-	// coefficients for triangle.  0 <= s,t <= 1 and s+t <= 1
+	// coefficients for triangle. 0 <= s,t <= 1 and s+t <= 1
 	// any point can be uniquely described using s and t
 	// T(s,t) = B + s*E0 + t*S1
 	private double s, t;
@@ -59,8 +59,8 @@ public class DistancePointTriangle3D_F64 {
 
 	/**
 	 * Find the closest point on the triangle to P.
-	 * @param P Input.  The point for which the closest point is to be found.
-	 * @param closestPt Output.  The found closest point.
+	 * @param P Input. The point for which the closest point is to be found.
+	 * @param closestPt Output. The found closest point.
 	 */
 	public void closestPoint(Point3D_F64 P , Point3D_F64 closestPt ) {
 
@@ -105,7 +105,7 @@ public class DistancePointTriangle3D_F64 {
 	}
 
 	/**
-	 * Returns the signed of the vector.  If its "in front" it will be positive and negative if "behind".  In front
+	 * Returns the signed of the vector. If its "in front" it will be positive and negative if "behind". In front
 	 * is defined as being on the same side as the cross product of p2-p0 and p1-p0.
 	 *
 	 * @param P Point for which the sign is determined

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,7 +37,7 @@ import java.text.DecimalFormat;
 
 
 /**
- * A coordinate system transform composed of a rotation and translation.  This transform is
+ * A coordinate system transform composed of a rotation and translation. This transform is
  * a rigid body transform and is a member of the special euclidean group.
  *
  * @author Peter Abeles
@@ -71,7 +71,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	/**
-	 * Initializes the Se3_F64 with the rotation matrix and translation vector.  If assign
+	 * Initializes the Se3_F64 with the rotation matrix and translation vector. If assign
 	 * is true the reference to the provided parameters is saved, otherwise a copy is made.
 	 *
 	 * @param R      Rotation matrix.
@@ -223,7 +223,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	/**
-	 * Fully specifies the transform using Rodrigues (axis angle) or Quaternions.  If Rodrigues then A=axisX, B=axisY,
+	 * Fully specifies the transform using Rodrigues (axis angle) or Quaternions. If Rodrigues then A=axisX, B=axisY,
 	 * C=axisZ, D=theta. If Quaternion then A=w, B=x, C=y, D=z.
 	 */
 	public void setTo(double x, double y, double z, RotationType type, double A, double B, double C, double D) {

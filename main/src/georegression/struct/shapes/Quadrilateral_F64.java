@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -28,8 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A polygon with 4 vertices, a,b,c, and d.  The vertices are in order sequential order of a,b,c,d.
- *
+ * A polygon with 4 vertices, a,b,c, and d. The vertices are in order sequential order of a,b,c,d.
  */
 public class Quadrilateral_F64 implements Serializable {
 	public Point2D_F64 a;
@@ -52,20 +51,20 @@ public class Quadrilateral_F64 implements Serializable {
 		d.setTo(quad.d);
 	}
 
-	public Quadrilateral_F64( double x0, double y0 , double x1, double y1 ,
-							  double x2, double y2 , double x3, double y3 ) {
-		a = new Point2D_F64(x0,y0);
-		b = new Point2D_F64(x1,y1);
-		c = new Point2D_F64(x2,y2);
-		d = new Point2D_F64(x3,y3);
+	public Quadrilateral_F64( double x0, double y0, double x1, double y1,
+							  double x2, double y2, double x3, double y3 ) {
+		a = new Point2D_F64(x0, y0);
+		b = new Point2D_F64(x1, y1);
+		c = new Point2D_F64(x2, y2);
+		d = new Point2D_F64(x3, y3);
 	}
 
-	public Quadrilateral_F64(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d ) {
-		this(a,b,c,d,true);
+	public Quadrilateral_F64( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d ) {
+		this(a, b, c, d, true);
 	}
 
-	public Quadrilateral_F64(Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, boolean copy ) {
-		if( copy ) {
+	public Quadrilateral_F64( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, boolean copy ) {
+		if (copy) {
 			this.a = new Point2D_F64(a);
 			this.b = new Point2D_F64(b);
 			this.c = new Point2D_F64(c);
@@ -90,6 +89,7 @@ public class Quadrilateral_F64 implements Serializable {
 
 	/**
 	 * Returns the area of this quadrilateral
+	 *
 	 * @return area
 	 */
 	public double area() {
@@ -97,20 +97,20 @@ public class Quadrilateral_F64 implements Serializable {
 	}
 
 	public Point2D_F64 get( int index ) {
-		switch( index ) {
-			case 0: return a;
-			case 1: return b;
-			case 2: return c;
-			case 3: return d;
-		}
-		throw new IllegalArgumentException("Requested index out of range. "+index);
+		return switch (index) {
+			case 0 -> a;
+			case 1 -> b;
+			case 2 -> c;
+			case 3 -> d;
+			default -> throw new IllegalArgumentException("Requested index out of range. " + index);
+		};
 	}
 
 	public Point2D_F64 getA() {
 		return a;
 	}
 
-	public void setA(Point2D_F64 a) {
+	public void setA( Point2D_F64 a ) {
 		this.a = a;
 	}
 
@@ -118,7 +118,7 @@ public class Quadrilateral_F64 implements Serializable {
 		return b;
 	}
 
-	public void setB(Point2D_F64 b) {
+	public void setB( Point2D_F64 b ) {
 		this.b = b;
 	}
 
@@ -126,7 +126,7 @@ public class Quadrilateral_F64 implements Serializable {
 		return c;
 	}
 
-	public void setC(Point2D_F64 c) {
+	public void setC( Point2D_F64 c ) {
 		this.c = c;
 	}
 
@@ -134,21 +134,20 @@ public class Quadrilateral_F64 implements Serializable {
 		return d;
 	}
 
-	public void setD(Point2D_F64 d) {
+	public void setD( Point2D_F64 d ) {
 		this.d = d;
 	}
 
-	public LineSegment2D_F64 getLine( int which , LineSegment2D_F64 storage ) {
-		if( storage == null )
+	public LineSegment2D_F64 getLine( int which, LineSegment2D_F64 storage ) {
+		if (storage == null)
 			storage = new LineSegment2D_F64();
 
 		switch( which ) {
-			case 0: storage.a.setTo(a);storage.b.setTo(b);break;
-			case 1: storage.a.setTo(b);storage.b.setTo(c);break;
-			case 2: storage.a.setTo(c);storage.b.setTo(d);break;
-			case 3: storage.a.setTo(d);storage.b.setTo(a);break;
-			default:
-				throw new IllegalArgumentException("Requested index out of range. "+which);
+			case 0->{storage.a.setTo(a);storage.b.setTo(b);}
+			case 1->{storage.a.setTo(b);storage.b.setTo(c);}
+			case 2->{storage.a.setTo(c);storage.b.setTo(d);}
+			case 3->{storage.a.setTo(d);storage.b.setTo(a);}
+			default -> throw new IllegalArgumentException("Requested index out of range. " + which);
 		}
 		return storage;
 	}
@@ -158,17 +157,16 @@ public class Quadrilateral_F64 implements Serializable {
 	}
 
 	public double getSideLength2( int which ) {
-		switch( which ) {
-			case 0: return a.distance2(b);
-			case 1: return b.distance2(c);
-			case 2: return c.distance2(d);
-			case 3: return d.distance2(a);
-			default:
-				throw new IllegalArgumentException("Requested index out of range. "+which);
-		}
+		return switch (which) {
+			case 0 -> a.distance2(b);
+			case 1 -> b.distance2(c);
+			case 2 -> c.distance2(d);
+			case 3 -> d.distance2(a);
+			default -> throw new IllegalArgumentException("Requested index out of range. " + which);
+		};
 	}
 
-	public void setTo(Quadrilateral_F64 quad) {
+	public void setTo( Quadrilateral_F64 quad ) {
 		this.a.setTo(quad.a);
 		this.b.setTo(quad.b);
 		this.c.setTo(quad.c);
@@ -182,19 +180,19 @@ public class Quadrilateral_F64 implements Serializable {
 	 * @param copy If points will be copied otherwise a reference of points will be returned
 	 * @return List of vertexes
 	 */
-	public List<Point2D_F64> convert(@Nullable List<Point2D_F64> storage , boolean copy ) {
-		if( storage == null )
+	public List<Point2D_F64> convert( @Nullable List<Point2D_F64> storage, boolean copy ) {
+		if (storage == null)
 			storage = new ArrayList<>();
 		else
 			storage.clear();
 
-		if( copy ) {
+		if (copy) {
 			for (int i = 0; i < 4; i++) {
-				storage.add( get(i).copy() );
+				storage.add(get(i).copy());
 			}
 		} else {
 			for (int i = 0; i < 4; i++) {
-				storage.add( get(i) );
+				storage.add(get(i));
 			}
 		}
 		return storage;
@@ -203,10 +201,11 @@ public class Quadrilateral_F64 implements Serializable {
 	/**
 	 * Sets the polygon to be the same as the list. A true copy is created and no references
 	 * to points in the list are saved.
+	 *
 	 * @param list List which the polygon will be set to
 	 */
-	public void setTo(List<Point2D_F64> list ) {
-		if( list.size() != 4 )
+	public void setTo( List<Point2D_F64> list ) {
+		if (list.size() != 4)
 			throw new IllegalArgumentException("List must have size of 4");
 
 		a.setTo(list.get(0));
@@ -220,28 +219,28 @@ public class Quadrilateral_F64 implements Serializable {
 	}
 
 	/**
-	 * Returns true if the two quadrilaterals are equal to each other to within tolerance.  Equality is defined
+	 * Returns true if the two quadrilaterals are equal to each other to within tolerance. Equality is defined
 	 * by seeing if the distance between two equivalent vertexes is within tolerance.
 	 *
 	 * @param quad The second quadrilateral
 	 * @param tol Maximum allowed distance between vertexes.
 	 * @return true if equals or false if not
 	 */
-	public boolean isEquals( Quadrilateral_F64 quad , double tol ) {
+	public boolean isEquals( Quadrilateral_F64 quad, double tol ) {
 		tol *= tol;
 
-		if( a.distance2(quad.a) > tol )
+		if (a.distance2(quad.a) > tol)
 			return false;
-		if( b.distance2(quad.b) > tol )
+		if (b.distance2(quad.b) > tol)
 			return false;
-		if( c.distance2(quad.c) > tol )
+		if (c.distance2(quad.c) > tol)
 			return false;
 		return d.distance2(quad.d) <= tol;
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"{" +
+		return getClass().getSimpleName() + "{" +
 				"a=" + a +
 				", b=" + b +
 				", c=" + c +

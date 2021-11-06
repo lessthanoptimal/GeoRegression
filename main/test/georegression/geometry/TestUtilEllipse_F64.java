@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -233,7 +233,7 @@ public class TestUtilEllipse_F64 {
 		checkTangentLines( -10,1, new EllipseRotated_F64(0,0,2,2,0));
 		checkTangentLines( 1,-10, new EllipseRotated_F64(0,0,2,2,0));
 
-		// test failure case.  Inside
+		// test failure case. Inside
 		checkTangentLinesFail( 0,0, new EllipseRotated_F64(0,0,2,2,0));
 		checkTangentLinesFail( 0.05,0, new EllipseRotated_F64(0,0,2,2,0));
 		checkTangentLinesFail( 0,0.1, new EllipseRotated_F64(0,0,2,2,0));
@@ -305,7 +305,7 @@ public class TestUtilEllipse_F64 {
 	}
 
 	/**
-	 * Very basic unit test.  The more rigerous one is in
+	 * Very basic unit test. The more rigerous one is in
 	 * {@link TestTangentLinesTwoEllipses_F64}
 	 */
 	@Test

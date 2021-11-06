@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -160,7 +160,7 @@ public class TestDistance2D_F64 {
 		LineGeneral2D_F64 general = UtilLine2D_F64.convert(parametric,(LineGeneral2D_F64)null);
 		general.normalize();
 
-		// test a point and its reflection.  Should be same distance and positive
+		// test a point and its reflection. Should be same distance and positive
 		double found = Distance2D_F64.distanceNorm(general, new Point2D_F64(4, -2));
 		double expected = (double) UtilTrig_F64.distance( 0, 2, 4, -2 );
 		assertEquals(expected, found, GrlConstants.TEST_F64);
@@ -199,7 +199,7 @@ public class TestDistance2D_F64 {
 	@Test void distance_quadrilateral_point() {
 		Quadrilateral_F64 quad = new Quadrilateral_F64(2,0, 2,10, 10,10, 10,0);
 
-		// test a point to the left and right of a side.  should be the same
+		// test a point to the left and right of a side. should be the same
 		assertEquals(3,Distance2D_F64.distance(quad,new Point2D_F64(-1,3)),GrlConstants.TEST_F64);
 		assertEquals(3,Distance2D_F64.distance(quad,new Point2D_F64(5,3)),GrlConstants.TEST_F64);
 
@@ -212,7 +212,7 @@ public class TestDistance2D_F64 {
 	@Test void distance_polygon_point() {
 		Polygon2D_F64 poly = new Polygon2D_F64(2,0, 2,10, 10,10, 10,0);
 
-		// test a point to the left and right of a side.  should be the same
+		// test a point to the left and right of a side. should be the same
 		assertEquals(3,Distance2D_F64.distance(poly,new Point2D_F64(-1,3)),GrlConstants.TEST_F64);
 		assertEquals(3,Distance2D_F64.distance(poly,new Point2D_F64(5,3)),GrlConstants.TEST_F64);
 

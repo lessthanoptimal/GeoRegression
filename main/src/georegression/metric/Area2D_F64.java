@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -68,7 +68,7 @@ public class Area2D_F64 {
 	}
 
 	/**
-	 * Area of a simple polygon.  Meaning it can be concave or convex, but can't have self intersections
+	 * Area of a simple polygon. Meaning it can be concave or convex, but can't have self intersections
 	 * @param poly Simple polygon
 	 * @return area
 	 */

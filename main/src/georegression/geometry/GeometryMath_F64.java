@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -282,7 +282,7 @@ public class GeometryMath_F64 {
 	/**
 	 * Rotates a 2D point by the specified angle.
 	 *
-	 * @param solution where the solution is written to.  Can be the same point as 'pt'.
+	 * @param solution where the solution is written to. Can be the same point as 'pt'.
 	 */
 	public static void rotate( double theta, GeoTuple2D_F64 pt, GeoTuple2D_F64 solution ) {
 		double c = Math.cos( theta );
@@ -301,7 +301,7 @@ public class GeometryMath_F64 {
 	 * @param c Cosine of theta
 	 * @param s Sine of theta
 	 * @param pt
-	 * @param solution where the solution is written to.  Can be the same point as 'pt'.
+	 * @param solution where the solution is written to. Can be the same point as 'pt'.
 	 */
 	public static void rotate( double c , double s, GeoTuple2D_F64 pt, GeoTuple2D_F64 solution ) {
 
@@ -320,7 +320,7 @@ public class GeometryMath_F64 {
 	 *
 	 * @param M
 	 * @param pt
-	 * @param result Storage for output.  Can be the same instance as param 'pt'.  Modified.
+	 * @param result Storage for output. Can be the same instance as param 'pt'. Modified.
 	 */
 	public static <T extends GeoTuple3D_F64> T mult( DMatrixRMaj M, T pt, @Nullable T result ) {
 		if( M.numRows != 3 || M.numCols != 3 )
@@ -347,7 +347,7 @@ public class GeometryMath_F64 {
 	 * pt and mod can be the same reference. M is a 4x4 matrix. Homogenous coordinates with implicit w = 1
 	 * </p>
 	 *
-	 * @param result Storage for output.  Can be the same instance as param 'pt'.  Modified.
+	 * @param result Storage for output. Can be the same instance as param 'pt'. Modified.
 	 */
 	public static <T extends GeoTuple3D_F64> T mult4( DMatrixRMaj M, T pt, @Nullable T result ) {
 		if( M.numRows != 4 || M.numCols != 4 )
@@ -436,7 +436,7 @@ public class GeometryMath_F64 {
 	 * </p>
 	 * @param M  3x3 matrix
 	 * @param pt Homogeneous point with z=1
-	 * @param mod Storage for the computation.  If null a new point is declared.  Can be same instance as pt.
+	 * @param mod Storage for the computation. If null a new point is declared. Can be same instance as pt.
 	 * @return Result of computation.
 	 */
 	public static <T extends GeoTuple2D_F64> T mult( DMatrixRMaj M, T pt, @Nullable T mod ) {
@@ -528,7 +528,7 @@ public class GeometryMath_F64 {
 	 *
 	 * @param A 2D homogenous coordinate (implicit z = 1) that is internally converted into cross product matrix.
 	 * @param M 3x3 matrix.
-	 * @param result Storage for results.  Can be null.
+	 * @param result Storage for results. Can be null.
 	 * @return Results.
 	 */
 	public static DMatrixRMaj multCrossA( GeoTuple2D_F64 A , DMatrixRMaj M, @Nullable DMatrixRMaj result ) {
@@ -568,7 +568,7 @@ public class GeometryMath_F64 {
 	 *
 	 * @param A 2D homogenous coordinate (implicit z = 1) that is internally converted into cross product matrix.
 	 * @param M 3x3 matrix.
-	 * @param result Storage for results.  Can be null.
+	 * @param result Storage for results. Can be null.
 	 * @return Results.
 	 */
 	public static DMatrixRMaj multCrossATransA( GeoTuple2D_F64 A , DMatrixRMaj M, @Nullable DMatrixRMaj result ) {
@@ -608,7 +608,7 @@ public class GeometryMath_F64 {
 	 *
 	 * @param A 3D coordinate that is internally converted into cross product matrix.
 	 * @param M 3x3 matrix.
-	 * @param result Storage for results.  Can be null.
+	 * @param result Storage for results. Can be null.
 	 * @return Results.
 	 */
 	public static DMatrixRMaj multCrossA( GeoTuple3D_F64 A , DMatrixRMaj M, @Nullable DMatrixRMaj result ) {
@@ -649,7 +649,7 @@ public class GeometryMath_F64 {
 	 *
 	 * @param A 3D coordinate that is internally converted into cross product matrix.
 	 * @param M 3x3 matrix.
-	 * @param result Storage for results.  Can be null.
+	 * @param result Storage for results. Can be null.
 	 * @return Results.
 	 */
 	public static DMatrixRMaj multCrossATransA( GeoTuple3D_F64 A , DMatrixRMaj M, @Nullable DMatrixRMaj result ) {
@@ -682,7 +682,7 @@ public class GeometryMath_F64 {
 	}
 
 	/**
-	 * mod = M<sup>T</sup>*pt.  Both pt and mod can be the same instance.
+	 * mod = M<sup>T</sup>*pt. Both pt and mod can be the same instance.
 	 */
 	public static <T extends GeoTuple3D_F64> T multTran( DMatrixRMaj M, T pt, @Nullable T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
@@ -709,8 +709,8 @@ public class GeometryMath_F64 {
 	 *
 	 * @param M 3 by 3 matrix.
 	 * @param pt 2D point in homogeneous coordinates. Implicit z = 1
-	 * @param mod 2D point in homogeneous coordinates.  Implicit z = 1
-	 * @return 2D point in homogeneous coordinates.  Implicit z = 1
+	 * @param mod 2D point in homogeneous coordinates. Implicit z = 1
+	 * @return 2D point in homogeneous coordinates. Implicit z = 1
 	 */
 	public static <T extends GeoTuple3D_F64> T multTran( DMatrixRMaj M, GeoTuple2D_F64 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
@@ -732,8 +732,8 @@ public class GeometryMath_F64 {
 	 *
 	 * @param M 3 by 3 matrix.
 	 * @param pt 2D point in homogeneous coordinates. Implicit z = 1
-	 * @param mod 2D point in homogeneous coordinates.  Implicit z = 1
-	 * @return 2D point in homogeneous coordinates.  Implicit z = 1
+	 * @param mod 2D point in homogeneous coordinates. Implicit z = 1
+	 * @return 2D point in homogeneous coordinates. Implicit z = 1
 	 */
 	public static <T extends GeoTuple2D_F64> T multTran( DMatrixRMaj M, GeoTuple2D_F64 pt, T mod ) {
 		if( M.numRows != 3 || M.numCols != 3 )
@@ -923,7 +923,7 @@ public class GeometryMath_F64 {
 	 * T = -T
 	 * </p>
 	 *
-	 * @param t Vector whose sign is being changed.  Modified.
+	 * @param t Vector whose sign is being changed. Modified.
 	 */
 	public static void changeSign( GeoTuple3D_F64 t ) {
 		t.x = -t.x;
@@ -935,7 +935,7 @@ public class GeometryMath_F64 {
 	 * Converts a GeoTuple3D_F64 into DMatrixRMaj
 	 *
 	 * @param in Input vector
-	 * @param out Output matrix.  If null a new matrix will be declared
+	 * @param out Output matrix. If null a new matrix will be declared
 	 * @return Converted matrix
 	 */
 	public static DMatrixRMaj toMatrix(GeoTuple3D_F64 in, @Nullable DMatrixRMaj out) {

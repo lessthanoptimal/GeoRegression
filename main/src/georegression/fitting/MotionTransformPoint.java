@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -42,7 +42,7 @@ public interface MotionTransformPoint<T extends InvertibleTransform, P extends G
 	 * Processes the sets of corresponding points and finds a transformation which when applied
 	 * to 'srcPts' will minimize the difference with the 'dstPts'.
 	 *
-	 * @param srcPts The points which are to be transformed.  Not modified.
+	 * @param srcPts The points which are to be transformed. Not modified.
 	 * @param dstPts The points that are being compared against. Not modified.
 	 * @return true if the computation successfully produced a solution and false if not.
 	 */

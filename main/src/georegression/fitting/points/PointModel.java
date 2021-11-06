@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * The model is a set of points in 3D space.  The points are simply stored as a list of points and exhaustively
+ * The model is a set of points in 3D space. The points are simply stored as a list of points and exhaustively
  * searched each time the closest point needs to be found.
  *
  * @author Peter Abeles

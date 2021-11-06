@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -92,7 +92,7 @@ public class Rodrigues_F64 implements Serializable {
 	}
 
 	/**
-	 * Assign the Rodrigues coordinates using a 3 element vector.  Theta is the vector's
+	 * Assign the Rodrigues coordinates using a 3 element vector. Theta is the vector's
 	 * magnitude and the axis of rotation is the unit vector.
 	 *
 	 * @param x x-component of 3 vector

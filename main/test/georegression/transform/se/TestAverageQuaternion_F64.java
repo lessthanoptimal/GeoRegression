@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,7 +41,7 @@ public class TestAverageQuaternion_F64 {
 	Random rand = new Random(234);
 
 	/**
-	 * Find the average of one quaternion.  Which should be the same as the input quaternion.
+	 * Find the average of one quaternion. Which should be the same as the input quaternion.
 	 */
 	@Test
 	void one() {

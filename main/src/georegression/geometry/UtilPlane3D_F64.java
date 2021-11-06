@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -58,7 +58,7 @@ public class UtilPlane3D_F64 {
 
 	/**
 	 * <p>
-	 * Converts a plane in general form into normal form.  The point on the plane in normal form will be the
+	 * Converts a plane in general form into normal form. The point on the plane in normal form will be the
 	 * closest point to the origin.
 	 * </p>
 	 *
@@ -131,7 +131,7 @@ public class UtilPlane3D_F64 {
 	 * Converts the plane into Hessian normal form.   This is done by dividing each coefficient by the
 	 * Euclidean norm of (A,B,C).
 	 *
-	 * @param plane The input plane.  Modified.
+	 * @param plane The input plane. Modified.
 	 */
 	public static void hessianNormalForm( PlaneGeneral3D_F64 plane ) {
 		double n = Math.sqrt(plane.A*plane.A + plane.B*plane.B + plane.C*plane.C);
@@ -224,7 +224,7 @@ public class UtilPlane3D_F64 {
 	}
 
 	/**
-	 * Returns true if the two plane equations are equal to within tolerance.  Planes are converted into
+	 * Returns true if the two plane equations are equal to within tolerance. Planes are converted into
 	 * generalized format and normalized to take in account scale ambiguity.
 	 *
 	 * @param a plane
@@ -242,8 +242,8 @@ public class UtilPlane3D_F64 {
 		genA.A /= normA; genA.B /= normA; genA.C /= normA; genA.D /= normA;
 		genB.A /= normB; genB.B /= normB; genB.C /= normB; genB.D /= normB;
 
-		// handle the sign ambiguity by checking both directions.  This is actualy a bit trickier than it would
-		// see at first glance.  might be a better way
+		// handle the sign ambiguity by checking both directions. This is actualy a bit trickier than it would
+		// see at first glance. might be a better way
 		int numMatch0 = 0;
 
 		if( Math.abs(genA.A - genB.A) <= tol )
@@ -271,12 +271,12 @@ public class UtilPlane3D_F64 {
 	}
 
 	/**
-	 * Creates a transform from the plane's reference frame into world's reference frame.  The z-axis is set to the
-	 * plane's normal and the x-axis and y-axis are arbitrarily choosen.  Points which lie along the plane will
+	 * Creates a transform from the plane's reference frame into world's reference frame. The z-axis is set to the
+	 * plane's normal and the x-axis and y-axis are arbitrarily choosen. Points which lie along the plane will
 	 * lie along its x-y plane.
 	 *
 	 * @param plane Plane
-	 * @param planeToWorld (Optional) storage for the planeToWorld transform.  Can be null.
+	 * @param planeToWorld (Optional) storage for the planeToWorld transform. Can be null.
 	 * @return Transform from planeToWorld
 	 */
 	public static Se3_F64 planeToWorld( PlaneGeneral3D_F64 plane , @Nullable Se3_F64 planeToWorld ) {

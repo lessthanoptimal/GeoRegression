@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -60,7 +60,7 @@ public class TestIntersection3D_I32 {
 		assertFalse(Intersection3D_I32.contains(box,new Box3D_I32(2,10,4, 4,12,8)));
 		assertFalse(Intersection3D_I32.contains(box,new Box3D_I32(2,3,10, 4,6,12)));
 
-		// assume the 1D tests are sufficient.  the above tests do check to see if each axis is handled
+		// assume the 1D tests are sufficient. the above tests do check to see if each axis is handled
 		// individually
 	}
 

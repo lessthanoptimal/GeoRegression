@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -221,7 +221,7 @@ public class TestConvertRotation3D_F64 {
 		assertEquals( 1, Math.abs( dot ), GrlConstants.TEST_F64);
 
 		// if the rotation vector is in the opposite direction then the found angle will be
-		// the negative of the input.  both are equivalent
+		// the negative of the input. both are equivalent
 		assertTrue(UtilAngle.dist(rodInput.theta * dot, found.theta) <= GrlConstants.TEST_F64);
 	}
 
@@ -246,7 +246,7 @@ public class TestConvertRotation3D_F64 {
 		assertEquals( 1, Math.abs( found.unitAxisRotation.dot( expected.unitAxisRotation) ), GrlConstants.TEST_F64);
 
 		// if the rotation vector is in the opposite direction then the found angle will be
-		// the negative of the input.  both are equivalent
+		// the negative of the input. both are equivalent
 		assertEquals( expected.theta, found.theta, 10.0*GrlConstants.TEST_F64);
 	}
 
@@ -466,7 +466,7 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	/**
-	 * Standard checks for converting one parameterization into Euler.  Checks special cases with rotations of 90 and
+	 * Standard checks for converting one parameterization into Euler. Checks special cases with rotations of 90 and
 	 * 180 degrees plus random ones
 	 */
 	public static void somethingToEulerTest(String functionName , Random rand ) throws InvocationTargetException, IllegalAccessException {

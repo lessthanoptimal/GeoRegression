@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -40,7 +40,7 @@ public class ConvertRotation3D_F64 {
 	 * Converts {@link georegression.struct.so.Rodrigues_F64} into a rotation matrix.
 	 *
 	 * @param rodrigues rotation defined using rotation axis angle notation.
-	 * @param R where the results will be stored.  If null a new matrix is declared internally.
+	 * @param R where the results will be stored. If null a new matrix is declared internally.
 	 * @return rotation matrix.
 	 */
 	public static DMatrixRMaj rodriguesToMatrix( Rodrigues_F64 rodrigues, @Nullable DMatrixRMaj R ) {
@@ -59,7 +59,7 @@ public class ConvertRotation3D_F64 {
 	 * @param axisY y-component of normalized rotation vector
 	 * @param axisZ z-component of normalized rotation vector
 	 * @param theta magnitude of rotation in radians
-	 * @param R (Optional) storage for 3x3 rotation matrix.  If null one will be declared internally.
+	 * @param R (Optional) storage for 3x3 rotation matrix. If null one will be declared internally.
 	 * @return Rotation matrix.
 	 */
 	public static DMatrixRMaj rodriguesToMatrix( double axisX , double axisY , double axisZ , double theta,
@@ -106,7 +106,7 @@ public class ConvertRotation3D_F64 {
 	 * </p>
 	 *
 	 * @param rodrigues The angle of rotation around the rotation axis.
-	 * @param quat Storage for quaternion coordinate.  If null a new quaternion is created. Modified.
+	 * @param quat Storage for quaternion coordinate. If null a new quaternion is created. Modified.
 	 * @return unit quaternion coordinate.
 	 */
 	public static Quaternion_F64 rodriguesToQuaternion( Rodrigues_F64 rodrigues,
@@ -127,7 +127,7 @@ public class ConvertRotation3D_F64 {
 	/**
 	 * Converts a unit {@link Quaternion_F64} into {@link Rodrigues_F64}.
 	 * @param quat (Input) Unit quaternion
-	 * @param rodrigues (Optional) Storage for rodrigues coodinate.  If null a new instance is created.
+	 * @param rodrigues (Optional) Storage for rodrigues coodinate. If null a new instance is created.
 	 * @return rodrigues
 	 */
 	public static Rodrigues_F64 quaternionToRodrigues( Quaternion_F64 quat,
@@ -277,7 +277,7 @@ public class ConvertRotation3D_F64 {
 	}
 
 	/**
-	 * If the index is negative it returns the negative of the value at -index.  Starts at 0
+	 * If the index is negative it returns the negative of the value at -index. Starts at 0
 	 */
 	private static double get( DMatrixRMaj M , int index ) {
 		if( index < 0 ) {
@@ -291,7 +291,7 @@ public class ConvertRotation3D_F64 {
 	 * Extracts quaternions from the provided rotation matrix.
 	 *
 	 * @param R (Input) rotation matrix
-	 * @param quat (Output) Optional storage for quaternion.  If null a new class will be used.
+	 * @param quat (Output) Optional storage for quaternion. If null a new class will be used.
 	 * @return unit quaternion representation of the rotation matrix.
 	 */
 	public static Quaternion_F64 matrixToQuaternion( DMatrixRMaj R, @Nullable Quaternion_F64 quat ) {
@@ -349,7 +349,7 @@ public class ConvertRotation3D_F64 {
 	 * Converts a rotation matrix into {@link georegression.struct.so.Rodrigues_F64}.
 	 *
 	 * @param R Rotation matrix.
-	 * @param rodrigues Storage used for solution.  If null a new instance is declared.
+	 * @param rodrigues Storage used for solution. If null a new instance is declared.
 	 * @return The found axis and rotation angle.
 	 */
 	public static Rodrigues_F64 matrixToRodrigues( DMatrixRMaj R, @Nullable Rodrigues_F64 rodrigues ) {
@@ -421,7 +421,7 @@ public class ConvertRotation3D_F64 {
 	 * Creates a rotation matrix about the x-axis.
 	 *
 	 * @param ang the angle it rotates a point by in radians.
-	 * @param R (Output) Optional storage for rotation matrix.  Modified.
+	 * @param R (Output) Optional storage for rotation matrix. Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
 	public static DMatrixRMaj rotX( double ang, @Nullable DMatrixRMaj R ) {
@@ -437,7 +437,7 @@ public class ConvertRotation3D_F64 {
 	 * Sets the values in the specified matrix to a rotation matrix about the x-axis.
 	 *
 	 * @param ang the angle it rotates a point by in radians.
-	 * @param R (Output) Storage for rotation matrix.  Modified.
+	 * @param R (Output) Storage for rotation matrix. Modified.
 	 */
 	public static void setRotX( double ang, DMatrixRMaj R ) {
 		double c = Math.cos( ang );
@@ -454,7 +454,7 @@ public class ConvertRotation3D_F64 {
 	 * Creates a rotation matrix about the y-axis.
 	 *
 	 * @param ang the angle it rotates a point by in radians.
-	 * @param R (Output) Optional storage for rotation matrix.  Modified.
+	 * @param R (Output) Optional storage for rotation matrix. Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
 	public static DMatrixRMaj rotY( double ang, @Nullable DMatrixRMaj R ) {
@@ -486,7 +486,7 @@ public class ConvertRotation3D_F64 {
 	 * Creates a rotation matrix about the z-axis.
 	 *
 	 * @param ang the angle it rotates a point by in radians.
-	 * @param R (Output) Optional storage for rotation matrix.  Modified.
+	 * @param R (Output) Optional storage for rotation matrix. Modified.
 	 * @return The 3 by 3 rotation matrix.
 	 */
 	public static DMatrixRMaj rotZ( double ang, @Nullable DMatrixRMaj R ) {
@@ -515,9 +515,9 @@ public class ConvertRotation3D_F64 {
 	}
 
 	/**
-	 * Converts an Euler coordinate into a rotation matrix.  Different type of Euler coordinates are accepted.
+	 * Converts an Euler coordinate into a rotation matrix. Different type of Euler coordinates are accepted.
 	 * @param type Which Euler coordinate is the input in
-	 * @param rotA Angle of rotation around axis A.  First rotation
+	 * @param rotA Angle of rotation around axis A. First rotation
 	 * @param rotB Angle of rotation around axis B   Second rotation
 	 * @param rotC Angle of rotation around axis C   Third rotation
 	 * @param R (Output) Optional storage for output rotation matrix
@@ -689,8 +689,8 @@ public class ConvertRotation3D_F64 {
 	 * Both origin and R can be the same instance.
 	 * </p>
 	 *
-	 * @param orig Input approximate rotation matrix.  Not modified.
-	 * @param R (Optional) Storage for the approximated rotation matrix.  Modified.
+	 * @param orig Input approximate rotation matrix. Not modified.
+	 * @param R (Optional) Storage for the approximated rotation matrix. Modified.
 	 * @return Rotation matrix
 	 */
 	public static DMatrixRMaj approximateRotationMatrix( DMatrixRMaj orig, @Nullable DMatrixRMaj R ) {
@@ -722,7 +722,7 @@ public class ConvertRotation3D_F64 {
 	 * </p>
 	 *
 	 * @param quat Unit quaternion.
-	 * @param R Storage for rotation matrix.  If null a new matrix is created. Modified.
+	 * @param R Storage for rotation matrix. If null a new matrix is created. Modified.
 	 * @return Rotation matrix
 	 */
 	public static DMatrixRMaj quaternionToMatrix( Quaternion_F64 quat, @Nullable DMatrixRMaj R ) {

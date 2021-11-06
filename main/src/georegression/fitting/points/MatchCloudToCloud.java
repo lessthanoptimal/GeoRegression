@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,7 +37,7 @@ public interface MatchCloudToCloud<SE extends InvertibleTransform, T extends Geo
 	 *
 	 * <p>WARNING: Do not modify the passed in list until after processing has finished.</p>
 	 *
-	 * @param points Point cloud.  Call {@link #isModifiedSource()} to see if the list is modified.
+	 * @param points Point cloud. Call {@link #isModifiedSource()} to see if the list is modified.
 	 */
 	void setSource( List<T> points );
 
@@ -47,19 +47,19 @@ public interface MatchCloudToCloud<SE extends InvertibleTransform, T extends Geo
 	 *
 	 * <p>WARNING: Do not modify the passed in list until after processing has finished.</p>
 	 *
-	 * @param points Point cloud.  Not modified.
+	 * @param points Point cloud. Not modified.
 	 */
 	void setDestination( List<T> points );
 
 	/**
-	 * Computes the transform between the two point clouds.  Returns if it was successful or not.
+	 * Computes the transform between the two point clouds. Returns if it was successful or not.
 	 *
 	 * @return True if match between the two point clouds could be found. False otherwise
 	 */
 	boolean compute();
 
 	/**
-	 * Returns the found transform from source to destination.  Must call {@link #compute} first.
+	 * Returns the found transform from source to destination. Must call {@link #compute} first.
 	 * @return transform
 	 */
 	SE getSourceToDestination();

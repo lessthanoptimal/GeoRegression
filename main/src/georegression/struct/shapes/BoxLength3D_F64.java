@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -29,34 +29,31 @@ import java.io.Serializable;
  * is (x0+lengthX , y0+lengthY, z0+lengthZ), the upper extent.
  */
 public class BoxLength3D_F64 implements Serializable {
-	/**
-	 * Point on the box with the lowest values.  The lower extent.
-	 */
+	/** Point on the box with the lowest values. The lower extent. */
 	public Point3D_F64 p = new Point3D_F64();
-	/**
-	 * The length of each size along their respective axises
-	 */
-	public double lengthX,lengthY,lengthZ;
 
-	public BoxLength3D_F64(double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ) {
-		this.p.setTo(x0,y0,z0);
+	/** The length of each size along their respective axes */
+	public double lengthX, lengthY, lengthZ;
+
+	public BoxLength3D_F64( double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ ) {
+		this.p.setTo(x0, y0, z0);
 		this.lengthX = lengthX;
 		this.lengthY = lengthY;
 		this.lengthZ = lengthZ;
 	}
 
-	public BoxLength3D_F64(BoxLength3D_F64 orig) {
+	public BoxLength3D_F64( BoxLength3D_F64 orig ) {
 		setTo(orig);
 	}
 
-	public void setTo(BoxLength3D_F64 orig ) {
-		setTo(orig.p.x,orig.p.y,orig.p.z,orig.lengthX,orig.lengthY,orig.lengthZ);
+	public void setTo( BoxLength3D_F64 orig ) {
+		setTo(orig.p.x, orig.p.y, orig.p.z, orig.lengthX, orig.lengthY, orig.lengthZ);
 	}
 
 	public BoxLength3D_F64() {}
 
-	public void setTo(double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ) {
-		this.p.setTo(x0,y0,z0);
+	public void setTo( double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ ) {
+		this.p.setTo(x0, y0, z0);
 		this.lengthX = lengthX;
 		this.lengthY = lengthY;
 		this.lengthZ = lengthZ;
@@ -82,19 +79,19 @@ public class BoxLength3D_F64 implements Serializable {
 		return lengthZ;
 	}
 
-	public void setP(Point3D_F64 p) {
+	public void setP( Point3D_F64 p ) {
 		this.p.setTo(p);
 	}
 
-	public void setLengthX(double lengthX) {
+	public void setLengthX( double lengthX ) {
 		this.lengthX = lengthX;
 	}
 
-	public void setLengthY(double lengthY) {
+	public void setLengthY( double lengthY ) {
 		this.lengthY = lengthY;
 	}
 
-	public void setLengthZ(double lengthZ) {
+	public void setLengthZ( double lengthZ ) {
 		this.lengthZ = lengthZ;
 	}
 
@@ -105,19 +102,19 @@ public class BoxLength3D_F64 implements Serializable {
 	 * @param corner (Optional) storage for the corner. If null a new point will be declared
 	 * @return The corner.
 	 */
-	public Point3D_F64 getCorner(int index , @Nullable Point3D_F64 corner ) {
-		if( corner == null )
+	public Point3D_F64 getCorner( int index, @Nullable Point3D_F64 corner ) {
+		if (corner == null)
 			corner = new Point3D_F64();
 
 		corner.setTo(p);
 
-		if( (index & 0x01) != 0 ) {
+		if ((index & 0x01) != 0) {
 			corner.x += lengthX;
 		}
-		if( (index & 0x02) != 0 ) {
+		if ((index & 0x02) != 0) {
 			corner.y += lengthY;
 		}
-		if( (index & 0x04) != 0 ) {
+		if ((index & 0x04) != 0) {
 			corner.z += lengthZ;
 		}
 		return corner;
@@ -125,6 +122,6 @@ public class BoxLength3D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"P( "+p.x+" "+p.y+" "+p.z+" ) sides ( "+lengthX+" , "+lengthY+" , "+lengthZ+" )";
+		return getClass().getSimpleName() + "P( " + p.x + " " + p.y + " " + p.z + " ) sides ( " + lengthX + " , " + lengthY + " , " + lengthZ + " )";
 	}
 }

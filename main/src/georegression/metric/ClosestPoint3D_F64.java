@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ClosestPoint3D_F64 {
 	/**
-	 * Returns the point which minimizes the distance between the two lines in 3D.  If the
+	 * Returns the point which minimizes the distance between the two lines in 3D. If the
 	 * two lines are parallel the result is undefined.
 	 *
 	 * @param l0  first line. Not modified.
@@ -113,7 +113,7 @@ public class ClosestPoint3D_F64 {
 
 	/**
 	 * <p>
-	 * Finds the closest point on line lo to l1 and on l1 to l0.  The solution is returned in
+	 * Finds the closest point on line lo to l1 and on l1 to l0. The solution is returned in
 	 * 'param' as a value of 't' for each line.
 	 * </p>
 	 * <p>
@@ -158,9 +158,9 @@ public class ClosestPoint3D_F64 {
 	/**
 	 * Finds the closest point on a line to the specified point.
 	 *
-	 * @param line Line on which the closest point is being found.  Not modified.
-	 * @param pt   The point whose closest point is being looked for.  Not modified.
-	 * @param ret  Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
+	 * @param line Line on which the closest point is being found. Not modified.
+	 * @param pt   The point whose closest point is being looked for. Not modified.
+	 * @param ret  Storage for the solution. Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
 	 */
 	public static Point3D_F64 closestPoint(LineParametric3D_F64 line, Point3D_F64 pt,
 										   @Nullable Point3D_F64 ret)
@@ -185,11 +185,11 @@ public class ClosestPoint3D_F64 {
 	}
 
 	/**
-	 * Finds the closest point on a line to the specified point as a function of distance along the line.  The 3D
+	 * Finds the closest point on a line to the specified point as a function of distance along the line. The 3D
 	 * coordinate of the point at 'd', the returned value, is P = (x,y,z) + (slope.x,slope.y,slope.z)*d.
 	 *
-	 * @param line Line on which the closest point is being found.  Not modified.
-	 * @param pt   The point whose closest point is being looked for.  Not modified.
+	 * @param line Line on which the closest point is being found. Not modified.
+	 * @param pt   The point whose closest point is being looked for. Not modified.
 	 * @return The location 'd' along the line of the closeset point
 	 */
 	public static double closestPoint(LineParametric3D_F64 line, Point3D_F64 pt )
@@ -206,7 +206,7 @@ public class ClosestPoint3D_F64 {
 	 *
 	 * @param plane The plane
 	 * @param point The point
-	 * @param found (Optional) Storage for the closest point.  If null a new point is declared internally.
+	 * @param found (Optional) Storage for the closest point. If null a new point is declared internally.
 	 * @return The closest point
 	 */
 	public static Point3D_F64 closestPoint( PlaneNormal3D_F64 plane , Point3D_F64 point ,
@@ -235,7 +235,7 @@ public class ClosestPoint3D_F64 {
 	 *
 	 * @param plane The plane
 	 * @param point The point
-	 * @param found (Optional) Storage for the closest point.  Can be same as instance as 'pt'. If null a new point is declared internally.
+	 * @param found (Optional) Storage for the closest point. Can be same as instance as 'pt'. If null a new point is declared internally.
 	 * @return The closest point
 	 */
 	public static Point3D_F64 closestPoint( PlaneGeneral3D_F64 plane , Point3D_F64 point ,
@@ -259,7 +259,7 @@ public class ClosestPoint3D_F64 {
 	 * Finds the closest point on the plane to the origin.
 	 *
 	 * @param plane The plane
-	 * @param found (Optional) Storage for the closest point.  Can be same as instance as 'pt'. If null a new point is declared internally.
+	 * @param found (Optional) Storage for the closest point. Can be same as instance as 'pt'. If null a new point is declared internally.
 	 * @return The closest point
 	 */
 	public static Point3D_F64 closestPointOrigin( PlaneGeneral3D_F64 plane ,
@@ -279,9 +279,9 @@ public class ClosestPoint3D_F64 {
 	/**
 	 * Finds the closest point on a line segment to the specified point.
 	 *
-	 * @param line Line on which the closest point is being found.  Not modified.
-	 * @param pt   The point whose closest point is being looked for.  Not modified.
-	 * @param ret  (Optional) Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
+	 * @param line Line on which the closest point is being found. Not modified.
+	 * @param pt   The point whose closest point is being looked for. Not modified.
+	 * @param ret  (Optional) Storage for the solution. Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
 	 * @return The closest point
 	 */
 	public static Point3D_F64 closestPoint(LineSegment3D_F64 line, Point3D_F64 pt,
@@ -319,9 +319,9 @@ public class ClosestPoint3D_F64 {
 	/**
 	 * Find the point which minimizes its distance from the two line segments.
 	 *
-	 * @param l0 First line.  Not modified.
-	 * @param l1 Second line.  Not modified.
-	 * @param ret (Optional) Storage for the solution.  Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
+	 * @param l0 First line. Not modified.
+	 * @param l1 Second line. Not modified.
+	 * @param ret (Optional) Storage for the solution. Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
 	 * @return The closest point
 	 */
 	public static @Nullable Point3D_F64 closestPoint(LineSegment3D_F64 l0 , LineSegment3D_F64 l1 ,
@@ -391,7 +391,7 @@ public class ClosestPoint3D_F64 {
 	 * @param vertexB Vertex in a 3D triangle.
 	 * @param vertexC Vertex in a 3D triangle.
 	 * @param point Point for which the closest point on the triangle is found
-	 * @param ret (Optional) Storage for the solution.  If null is passed in a new point is created. Modified.
+	 * @param ret (Optional) Storage for the solution. If null is passed in a new point is created. Modified.
 	 * @return The closest point
 	 */
 	public static Point3D_F64 closestPoint( Point3D_F64 vertexA, Point3D_F64 vertexB, Point3D_F64 vertexC,
@@ -419,7 +419,7 @@ public class ClosestPoint3D_F64 {
 	 *
 	 * @param line The line along which the closest point is being found. Not modified.
 	 * @param plane Plane being checked for intersection
-	 * @return Distance as a function of 't'.  NaN if there is no intersection.
+	 * @return Distance as a function of 't'. NaN if there is no intersection.
 	 */
 	public static double closestPointT( LineParametric3D_F64 line , PlaneNormal3D_F64 plane ) {
 		double dx = plane.p.x - line.p.x;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -59,7 +59,7 @@ public class GeometryUnitTest {
 	}
 
 	/**
-	 * Sees if every parameter in expected is not each to each other.  Note that this test
+	 * Sees if every parameter in expected is not each to each other. Note that this test
 	 * passes if only one is not equals.
 	 *
 	 * @param expected The expected transform.

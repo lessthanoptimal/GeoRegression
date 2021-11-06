@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,8 +35,8 @@ import org.jetbrains.annotations.Nullable;
 public class UtilLine2D_F64 {
 
 	/**
-	 * Returns the acute angle between the slope of two lines.  Lines do not need to ever
-	 * intersect.  Found using the dot product.
+	 * Returns the acute angle between the slope of two lines. Lines do not need to ever
+	 * intersect. Found using the dot product.
 	 *
 	 * @param a (input) line
 	 * @param b (input) line
@@ -56,8 +56,8 @@ public class UtilLine2D_F64 {
 
 	/**
 	 * Returns the acute angle between the slope of two lines and assumes that the lines have
-	 * been normalized such that A*A + B*B = 1.  This avoids the need to compute the square root
-	 * twice.  Lines do not need to ever intersect.  Found using the dot product.
+	 * been normalized such that A*A + B*B = 1. This avoids the need to compute the square root
+	 * twice. Lines do not need to ever intersect. Found using the dot product.
 	 *
 	 * @param a (input) normalized line
 	 * @param b (input) normalized line
@@ -74,7 +74,7 @@ public class UtilLine2D_F64 {
 	 * Converts a line from polar form to parametric.
 	 *
 	 * @param src (input) line is polar notation
-	 * @param ret (output) line in parametric notation.  If null a new instance will be created.
+	 * @param ret (output) line in parametric notation. If null a new instance will be created.
 	 * @return Converted line in parametric notation
 	 */
 	public static LineParametric2D_F64 convert( LinePolar2D_F64 src , @Nullable LineParametric2D_F64 ret )
@@ -92,10 +92,10 @@ public class UtilLine2D_F64 {
 	}
 
 	/**
-	 * Converts a line from polar form to general.  After conversion the line will be normalized, e.g. A*A + B*B == 1.
+	 * Converts a line from polar form to general. After conversion the line will be normalized, e.g. A*A + B*B == 1.
 	 *
 	 * @param src (input) line is polar notation
-	 * @param ret (output) line in general notation.  If null a new instance will be created.
+	 * @param ret (output) line in general notation. If null a new instance will be created.
 	 * @return Converted line in general notation
 	 */
 	public static LineGeneral2D_F64 convert( LinePolar2D_F64 src , @Nullable LineGeneral2D_F64 ret )
@@ -117,7 +117,7 @@ public class UtilLine2D_F64 {
 	 * Converts a line from general to polar.
 	 *
 	 * @param src (input) line is general notation
-	 * @param ret (output) line in polar notation.  If null a new instance will be created.
+	 * @param ret (output) line in polar notation. If null a new instance will be created.
 	 * @return Converted line in polar notation
 	 */
 	public static LinePolar2D_F64 convert( LineGeneral2D_F64 src , @Nullable LinePolar2D_F64 ret )
@@ -136,11 +136,11 @@ public class UtilLine2D_F64 {
 	}
 
 	/**
-	 * Converts a line segment into a parametric line.  The start point will be 'src.a' and the
+	 * Converts a line segment into a parametric line. The start point will be 'src.a' and the
 	 * direction will be in the direction of 'src.b-src.a'
 	 *
 	 * @param src (input) line segment
-	 * @param ret (output) line in parametric notation.  If null a new instance will be created.
+	 * @param ret (output) line in parametric notation. If null a new instance will be created.
 	 * @return Converted line in parametric notation
 	 */
 	public static LineParametric2D_F64 convert( LineSegment2D_F64 src , @Nullable LineParametric2D_F64 ret )
@@ -255,7 +255,7 @@ public class UtilLine2D_F64 {
 	 * Converts a line from parametric to general
 	 *
 	 * @param src (input) line in parametric notation.
-	 * @param ret (output) line in general notation.  If null a new instance will be created.
+	 * @param ret (output) line in general notation. If null a new instance will be created.
 	 * @return Converted line in general notation
 	 */
 	public static LineGeneral2D_F64 convert( LineParametric2D_F64 src , @Nullable LineGeneral2D_F64 ret ) {
@@ -274,7 +274,7 @@ public class UtilLine2D_F64 {
 	 * Converts a line from general to parametric
 	 *
 	 * @param src (input) line in general notation.
-	 * @param ret (output) line in parametric notation.  If null a new instance will be created.
+	 * @param ret (output) line in parametric notation. If null a new instance will be created.
 	 * @return Converted line in parametric notation
 	 */
 	public static LineParametric2D_F64 convert( LineGeneral2D_F64 src ,  @Nullable LineParametric2D_F64 ret ) {

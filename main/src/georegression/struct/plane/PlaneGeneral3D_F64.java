@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,12 +26,12 @@ import java.util.Objects;
 /**
  * <p>
  * Represents the line using four parameters such that any point on the planes obeys the
- * following formula, A*x + B*y + C*z = D.  Any 3D plane can be represented using this notation.
+ * following formula, A*x + B*y + C*z = D. Any 3D plane can be represented using this notation.
  * This formulation is also known as scalar.
  * </p>
  *
  * <p>
- * If in Hessian normal form, then (A,B,C) is the unit normal, and D is distance of the plane from the origin.  The
+ * If in Hessian normal form, then (A,B,C) is the unit normal, and D is distance of the plane from the origin. The
  * sign of D determines the side on the plane on which the origin is located.
  * </p>
  *

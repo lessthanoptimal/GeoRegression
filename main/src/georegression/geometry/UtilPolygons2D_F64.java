@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -192,7 +192,7 @@ public class UtilPolygons2D_F64 {
 	 * Converts a rectangle into a quadrilateral
 	 *
 	 * @param input Rectangle.
-	 * @param output Quadrilateral.  Modified.
+	 * @param output Quadrilateral. Modified.
 	 */
 	public static void convert( Rectangle2D_F64 input , Quadrilateral_F64 output ) {
 		output.a.x = input.p0.x;
@@ -212,7 +212,7 @@ public class UtilPolygons2D_F64 {
 	 * Converts a rectangle into a polygon
 	 *
 	 * @param input Rectangle.
-	 * @param output Polygon2D_F64.  Modified.
+	 * @param output Polygon2D_F64. Modified.
 	 */
 	public static void convert( Rectangle2D_F64 input , Polygon2D_F64 output ) {
 		if (output.size() != 4)
@@ -228,7 +228,7 @@ public class UtilPolygons2D_F64 {
 	 * Converts a quadrilateral into a polygon
 	 *
 	 * @param input Quadrilateral.
-	 * @param output Polygon2D_F64.  Modified.
+	 * @param output Polygon2D_F64. Modified.
 	 */
 	public static void convert( Quadrilateral_F64 input , Polygon2D_F64 output ) {
 		if (output.size() != 4)
@@ -244,7 +244,7 @@ public class UtilPolygons2D_F64 {
 	 * Converts a polygon into a quadrilateral
 	 *
 	 * @param input polygon.
-	 * @param output Quadrilateral.  Modified.
+	 * @param output Quadrilateral. Modified.
 	 */
 	public static void convert( Polygon2D_F64 input , Quadrilateral_F64 output ) {
 		if( input.size() != 4 )
@@ -260,7 +260,7 @@ public class UtilPolygons2D_F64 {
 	 * Converts a rectangle into a quadrilateral
 	 *
 	 * @param input Rectangle.
-	 * @param output Quadrilateral.  Modified.
+	 * @param output Quadrilateral. Modified.
 	 */
 	public static void convert( RectangleLength2D_I32 input , Quadrilateral_F64 output ) {
 		output.a.x = input.x0;
@@ -333,7 +333,7 @@ public class UtilPolygons2D_F64 {
 	 * Computes the center or average point in the quadrilateral.
 	 *
 	 * @param quad (Input) Quadrilateral
-	 * @param center (output) Center point of the quadrilateral.  Can be null.
+	 * @param center (output) Center point of the quadrilateral. Can be null.
 	 * @return The center point.
 	 */
 	public static Point2D_F64 center( Quadrilateral_F64 quad , @Nullable Point2D_F64 center ) {
@@ -350,7 +350,7 @@ public class UtilPolygons2D_F64 {
 	}
 
 	/**
-	 * Returns true if the polygon is ordered in a counter-clockwise order.  This is done by summing up the interior
+	 * Returns true if the polygon is ordered in a counter-clockwise order. This is done by summing up the interior
 	 * angles.
 	 * 
 	 * @param polygon List of ordered points which define a polygon
@@ -465,7 +465,7 @@ public class UtilPolygons2D_F64 {
 	}
 
 	/**
-	 * Flips the order of points inside the polygon.  The first index will remain the same will otherwise be reversed
+	 * Flips the order of points inside the polygon. The first index will remain the same will otherwise be reversed
 	 *
 	 * @param a Polygon of order 3 or more.
 	 */
@@ -482,7 +482,7 @@ public class UtilPolygons2D_F64 {
 	}
 
 	/**
-	 * Shifts all the vertexes in the polygon up one element.  Wraps around at the end
+	 * Shifts all the vertexes in the polygon up one element. Wraps around at the end
 	 * @param a Polygon
 	 */
 	public static void shiftUp( Polygon2D_F64 a ) {
@@ -497,7 +497,7 @@ public class UtilPolygons2D_F64 {
 	}
 
 	/**
-	 * Shifts all the vertexes in the polygon up one element.  Wraps around at the end
+	 * Shifts all the vertexes in the polygon up one element. Wraps around at the end
 	 * @param a Polygon
 	 */
 	public static void shiftDown( Polygon2D_F64 a ) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,7 +23,7 @@ import georegression.struct.point.Point3D_F64;
 import java.io.Serializable;
 
 /**
- * Triangle in 3D space.  Described by 3 vertices/points.
+ * Triangle in 3D space. Described by 3 vertices/points.
  *
  * @author Peter Abeles
  */

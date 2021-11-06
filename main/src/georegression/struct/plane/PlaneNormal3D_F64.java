@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Defines a plane using a point on the plane and the plane's normal.  N*(x-p0) = 0, where N is the plane's
+ * Defines a plane using a point on the plane and the plane's normal. N*(x-p0) = 0, where N is the plane's
  * normal, p0 is a point on the plane, and 'x' is another point on the plane.
  *
  * @author Peter Abeles

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,7 +44,7 @@ public class FitConicAtA_F64 implements FitShapeToPoints_F64<Point2D_F64,ConicGe
 	private DMatrixRMaj nullspace = new DMatrixRMaj(6,1);
 
 	/**
-	 * Fits the conic to the points.  Strongly recommended that you transform the points such that they have
+	 * Fits the conic to the points. Strongly recommended that you transform the points such that they have
 	 * zero mean and a standard deviation along x and y axis, independently.
 	 *
 	 * @param points (Input) points
@@ -136,7 +136,7 @@ public class FitConicAtA_F64 implements FitShapeToPoints_F64<Point2D_F64,ConicGe
 	}
 
 	/**
-	 * Fits the conic to the weighted set of points.  Strongly recommended that you transform the points such
+	 * Fits the conic to the weighted set of points. Strongly recommended that you transform the points such
 	 * that they have  zero mean and a standard deviation along x and y axis, independently.
 	 *
 	 * @param points (Input) points

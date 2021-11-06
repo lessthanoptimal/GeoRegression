@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,7 +23,7 @@ import georegression.misc.GrlConstants;
 import static java.lang.Math.PI;
 
 /**
- * Utility functions relating to angles.  Unless otherwise state all angles
+ * Utility functions relating to angles. Unless otherwise state all angles
  * are in radians and have a domain of -pi to pi
  */
 public class UtilAngle {
@@ -385,7 +385,7 @@ public class UtilAngle {
 	 * and takes in account boundary conditions.
 	 * </p>
 	 *
-	 * @param angA first angle.  Must be between -pi and pi.
+	 * @param angA first angle. Must be between -pi and pi.
 	 * @param angB second angle. Must be between -pi and pi.
 	 * @return an angle between -pi and pi
 	 */
@@ -407,7 +407,7 @@ public class UtilAngle {
 	 * and takes in account boundary conditions.
 	 * </p>
 	 *
-	 * @param angA first angle.  Must be between -pi and pi.
+	 * @param angA first angle. Must be between -pi and pi.
 	 * @param angB second angle. Must be between -pi and pi.
 	 * @return an angle between -pi and pi
 	 */
@@ -424,11 +424,11 @@ public class UtilAngle {
 
 	/**
 	 * <p>
-	 * Returns the number of radians two angles are apart.  This is equivalent to
+	 * Returns the number of radians two angles are apart. This is equivalent to
 	 * Math.abs(UtilAngle.minus(angA,angB)).
 	 * </p>
 	 *
-	 * @param angA first angle.  Must be between -pi and pi.
+	 * @param angA first angle. Must be between -pi and pi.
 	 * @param angB second angle. Must be between -pi and pi.
 	 * @return an angle between 0 and pi
 	 */
@@ -438,7 +438,7 @@ public class UtilAngle {
 
 	/**
 	 * <p>
-	 * Returns the number of radians two angles are apart.  This is equivalent to
+	 * Returns the number of radians two angles are apart. This is equivalent to
 	 * Math.abs(UtilAngle.minus(angA,angB)). Unbounded input.
 	 * </p>
 	 *
@@ -452,11 +452,11 @@ public class UtilAngle {
 
 	/**
 	 * <p>
-	 * Returns the number of radians two angles are apart.  This is equivalent to
+	 * Returns the number of radians two angles are apart. This is equivalent to
 	 * Math.abs(UtilAngle.minus(angA,angB)).
 	 * </p>
 	 *
-	 * @param angA first angle.  Must be between -pi and pi.
+	 * @param angA first angle. Must be between -pi and pi.
 	 * @param angB second angle. Must be between -pi and pi.
 	 * @return an angle between 0 and pi
 	 */
@@ -466,7 +466,7 @@ public class UtilAngle {
 
 	/**
 	 * <p>
-	 * Returns the number of radians two angles are apart.  This is equivalent to
+	 * Returns the number of radians two angles are apart. This is equivalent to
 	 * Math.abs(UtilAngle.minus(angA,angB)). Unbounded input.
 	 * </p>
 	 *

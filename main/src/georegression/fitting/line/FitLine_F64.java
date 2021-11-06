@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,7 +44,7 @@ public class FitLine_F64 {
 	 * </p>
 	 *
 	 * @param points Set of points on the line.
-	 * @param ret Storage for the line.  If null a new line will be declared.
+	 * @param ret Storage for the line. If null a new line will be declared.
 	 * @return Best fit line
 	 */
 	public static LinePolar2D_F64 polar( List<Point2D_F64> points , @Nullable LinePolar2D_F64 ret ) {
@@ -93,8 +93,8 @@ public class FitLine_F64 {
 	 * </p>
 	 *
 	 * @param points Set of points on the line.
-	 * @param weights Weight for each point.  weights[i] &ge; 0
-	 * @param ret Storage for the line.  If null a new line will be declared.
+	 * @param weights Weight for each point. weights[i] &ge; 0
+	 * @param ret Storage for the line. If null a new line will be declared.
 	 * @return Best fit line. or null if sum of weights is zero
 	 */
 	public static @Nullable LinePolar2D_F64 polar(List<Point2D_F64> points , double[] weights,

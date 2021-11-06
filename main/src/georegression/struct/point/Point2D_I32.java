@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -78,7 +78,7 @@ public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 
 	/**
 	 * <p>
-	 * Returns the Euclidean distance squared from 'this' to 'a'.  No floating point
+	 * Returns the Euclidean distance squared from 'this' to 'a'. No floating point
 	 * operations are used.
 	 * </p>
 	 *

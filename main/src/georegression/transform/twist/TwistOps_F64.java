@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,8 +41,8 @@ public class TwistOps_F64 {
 	 *
 	 * [ R , T; 0 , 1]
 	 *
-	 * @param transform transform in regular SE3 format.  If null a new matrix will be declared
-	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
+	 * @param transform transform in regular SE3 format. If null a new matrix will be declared
+	 * @param H (Optional) Storage for homogenous 4x4 matrix. If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
 	public static DMatrixRMaj homogenous( Se3_F64 transform , @Nullable DMatrixRMaj H ) {
@@ -66,7 +66,7 @@ public class TwistOps_F64 {
 	 * H = [hat(w), v; 0 , 0]
 	 *
 	 * @param twist Twist coordinate
-	 * @param H (Optional) Storage for homogenous 4x4 matrix.  If null a new matrix is declared.
+	 * @param H (Optional) Storage for homogenous 4x4 matrix. If null a new matrix is declared.
 	 * @return Homogenous matrix
 	 */
 	public static DMatrixRMaj homogenous( TwistCoordinate_F64 twist , @Nullable DMatrixRMaj H ) {
@@ -95,7 +95,7 @@ public class TwistOps_F64 {
 	 *
 	 * @param twist Twist coordinate
 	 * @param theta Magnitude of rotation
-	 * @param motion Storage for SE(3).  If null a new instance will be returned.
+	 * @param motion Storage for SE(3). If null a new instance will be returned.
 	 * @return The transformation.
 	 */
 	public static Se3_F64 exponential(TwistCoordinate_F64 twist , double theta , @Nullable Se3_F64 motion ) {
@@ -115,7 +115,7 @@ public class TwistOps_F64 {
 
 		DMatrixRMaj R = motion.getR();
 
-		// First handle the SO region.  This Rodrigues equation
+		// First handle the SO region. This Rodrigues equation
 		double wx = twist.w.x/w_norm, wy = twist.w.y/w_norm, wz = twist.w.z/w_norm;
 
 		ConvertRotation3D_F64.rodriguesToMatrix(wx,wy,wz, theta*w_norm, R);
@@ -147,7 +147,7 @@ public class TwistOps_F64 {
 	}
 
 	/**
-	 * Converts a rigid body motion into a twist coordinate.  The value of theta used to generate the motion
+	 * Converts a rigid body motion into a twist coordinate. The value of theta used to generate the motion
 	 * is assumed to be one.
 	 *
 	 * @param motion (Input) The SE(3) transformation

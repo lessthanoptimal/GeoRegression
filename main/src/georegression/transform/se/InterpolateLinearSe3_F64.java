@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,13 +27,13 @@ import org.ejml.dense.row.CommonOps_DDRM;
 
 /**
  * <p>
- * Linear interpolation between two {@link georegression.struct.se.Se3_F64} transforms.  It is assumed that
- * the rotation able between the two transforms is {@code < 180} degrees.  If more than 180 degrees than it will chose
+ * Linear interpolation between two {@link georegression.struct.se.Se3_F64} transforms. It is assumed that
+ * the rotation able between the two transforms is {@code < 180} degrees. If more than 180 degrees than it will chose
  * the wrong direction to rotate.
  * </p>
  * <p>
- * The rotation and translation are interpolated separately.  Translation has straight forward linear interpolation
- * applied to it.  Rotations are interpolated by finding the axis of rotation and the rotation angle.  Then
+ * The rotation and translation are interpolated separately. Translation has straight forward linear interpolation
+ * applied to it. Rotations are interpolated by finding the axis of rotation and the rotation angle. Then
  * the angle is linearly interpolated and the rotation matrix found by the angle and axis.
  * </p>
  * @author Peter Abeles
@@ -44,7 +44,7 @@ public class InterpolateLinearSe3_F64 {
 	Se3_F64 initial = new Se3_F64();
 	// rodrigues representation of the rotation
 	Rodrigues_F64 rotation = new Rodrigues_F64();
-	// magnitude of the rotation.  between initial and end
+	// magnitude of the rotation. between initial and end
 	double rotMagnitude;
 	// translation between initial and end
 	Vector3D_F64 translation = new Vector3D_F64();
@@ -71,7 +71,7 @@ public class InterpolateLinearSe3_F64 {
 	}
 
 	/**
-	 * Interpolates a value between the first and second transform.  A value close to 0 will be
+	 * Interpolates a value between the first and second transform. A value close to 0 will be
 	 * more similar to the initial and 1 more similar to the end.
 	 * @param where A value between 0 and 1 which specifies the interpolation location
 	 * @param output Resulting transform

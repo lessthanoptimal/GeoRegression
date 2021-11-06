@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,7 +26,7 @@ import georegression.struct.line.LineSegment2D_I32;
 public class UtilLine2D_I32 {
 
 	/**
-	 * Computes the acute angle between the two lines.  Does not check for intersection
+	 * Computes the acute angle between the two lines. Does not check for intersection
 	 *
 	 * @param line0 First line
 	 * @param line1 Second line

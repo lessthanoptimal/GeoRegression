@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -110,7 +110,7 @@ public class LineParametric3D_F64 implements Serializable {
 	}
 
 	/**
-	 * Returns a point along the line.  See parametric equation in class description.
+	 * Returns a point along the line. See parametric equation in class description.
 	 *
 	 * @param t Location along the line.
 	 * @return Point on the line.

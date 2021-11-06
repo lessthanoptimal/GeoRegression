@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,7 +46,7 @@ public class EllipseRotated_F64 implements Serializable {
 	 */
 	public double b;
 	/**
-	 * counter clockwise angle of rotation from x-axis to the major axis.  Standard range is from -PI/2 to PI/2
+	 * counter clockwise angle of rotation from x-axis to the major axis. Standard range is from -PI/2 to PI/2
 	 */
 	public double phi;
 

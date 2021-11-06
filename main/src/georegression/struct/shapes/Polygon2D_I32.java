@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -30,7 +30,7 @@ import java.io.Serializable;
  * @author Peter Abeles
  */
 @SuppressWarnings("NullAway.Init")
-public class Polygon2D_I32 implements Serializable, Cloneable  {
+public class Polygon2D_I32 implements Serializable, Cloneable {
 
 	// vertexes in the polygon
 	public DogArray<Point2D_I32> vertexes;
@@ -51,15 +51,15 @@ public class Polygon2D_I32 implements Serializable, Cloneable  {
 	}
 
 	public Polygon2D_I32( int... points ) {
-		if( points.length % 2 == 1 )
+		if (points.length%2 == 1)
 			throw new IllegalArgumentException("Expected an even number");
-		vertexes = new DogArray<>(points.length/2,Point2D_I32::new);
+		vertexes = new DogArray<>(points.length/2, Point2D_I32::new);
 		vertexes.reserve(points.length/2);
 		vertexes.size = points.length/2;
 
 		int count = 0;
 		for (int i = 0; i < points.length; i += 2) {
-			vertexes.data[count++].setTo( points[i],points[i+1]);
+			vertexes.data[count++].setTo(points[i], points[i + 1]);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class Polygon2D_I32 implements Serializable, Cloneable  {
 		return vertexes.size();
 	}
 
-	public Point2D_I32 get(int index ) {
+	public Point2D_I32 get( int index ) {
 		return vertexes.data[index];
 	}
 
@@ -84,22 +84,22 @@ public class Polygon2D_I32 implements Serializable, Cloneable  {
 	}
 
 	public boolean isIdentical( Polygon2D_I32 a ) {
-		return UtilPolygons2D_I32.isIdentical(this,a);
+		return UtilPolygons2D_I32.isIdentical(this, a);
 	}
 
-	public boolean isEquivalent( Polygon2D_I32 a , double tol ) {
+	public boolean isEquivalent( Polygon2D_I32 a, double tol ) {
 		return UtilPolygons2D_I32.isEquivalent(this, a);
 	}
 
-	public void setTo(Polygon2D_I32 orig ) {
+	public void setTo( Polygon2D_I32 orig ) {
 		vertexes.resize(orig.size());
 		for (int i = 0; i < orig.size(); i++) {
-			vertexes.data[i].setTo( orig.vertexes.data[i]);
+			vertexes.data[i].setTo(orig.vertexes.data[i]);
 		}
 	}
 
-	public void set( int index , int x , int y ) {
-		vertexes.data[index].setTo(x,y);
+	public void set( int index, int x, int y ) {
+		vertexes.data[index].setTo(x, y);
 	}
 
 	public Polygon2D_I32 copy() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,7 +33,7 @@ public class UtilLine3D_F64 {
 	 * Converts a {@link LineSegment3D_F64} into {@link LineParametric3D_F64}.
 	 *
 	 * @param line Line segment
-	 * @param output Storage for converted line.  If null new line will be declared.
+	 * @param output Storage for converted line. If null new line will be declared.
 	 * @return Line in parametric format
 	 */
 	public static LineParametric3D_F64 convert( LineSegment3D_F64 line , @Nullable LineParametric3D_F64 output ) {

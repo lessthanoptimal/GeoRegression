@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,7 +24,7 @@ import org.ejml.FancyPrint;
 import java.io.Serializable;
 
 /**
- * Specifies a plane using the closest point on the plane to the origin.  This can also be viewed as specifying
+ * Specifies a plane using the closest point on the plane to the origin. This can also be viewed as specifying
  * vector which is tangent to the plane with a magnitude equal to the distance of the closest point. This formulation
  * cannot describe a plane which intersects with the origin.
  *

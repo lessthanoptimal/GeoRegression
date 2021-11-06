@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -75,7 +75,7 @@ public class UtilPolygons2D_I32 {
 	}
 
 	/**
-	 * Returns true if the polygon is ordered in a counter-clockwise order.  This is done by summing up the interior
+	 * Returns true if the polygon is ordered in a counter-clockwise order. This is done by summing up the interior
 	 * angles.
 	 *
 	 * @param polygon List of ordered points which define a polygon
@@ -99,7 +99,7 @@ public class UtilPolygons2D_I32 {
 	}
 
 	/**
-	 * Flips the order of points inside the polygon.  The first index will remain the same will otherwise be reversed
+	 * Flips the order of points inside the polygon. The first index will remain the same will otherwise be reversed
 	 *
 	 * @param a Polygon of order 3 or more.
 	 */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -119,7 +119,7 @@ public class UtilVector3D_F64 {
 	}
 
 	/**
-	 * Creates a matrix from the set of column vectors.  Each vector is a column in the new matrix.
+	 * Creates a matrix from the set of column vectors. Each vector is a column in the new matrix.
 	 *
 	 * @param v Set of vectors. Not modified.
 	 * @param R If not null the vectors are stored here.
@@ -140,7 +140,7 @@ public class UtilVector3D_F64 {
 	}
 
 	/**
-	 * Converts matrices into vectors.  All matrices must be vectors with 3 elements.
+	 * Converts matrices into vectors. All matrices must be vectors with 3 elements.
 	 *
 	 * @param m A 3x1 or 1x3 matrix
 	 * @return Equivalent 3D vector
@@ -156,7 +156,7 @@ public class UtilVector3D_F64 {
 	}
 
 	/**
-	 * Returns the acute angle between the two vectors.  Computed using the dot product.
+	 * Returns the acute angle between the two vectors. Computed using the dot product.
 	 * @param a vector
 	 * @param b vector
 	 * @return acute angle

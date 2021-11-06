@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,7 +35,7 @@ public class AffinePointOps_F64 {
 	 *
 	 * @param se	 The transform.
 	 * @param orig   Original point being transformed. Not modified.
-	 * @param result Where the results are stored.  Can be the same as orig. If null a new
+	 * @param result Where the results are stored. Can be the same as orig. If null a new
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
@@ -61,7 +61,7 @@ public class AffinePointOps_F64 {
 	 *
 	 * @param se	 The transform.
 	 * @param orig   Original point being transformed. Not modified.
-	 * @param result Where the results are stored.  Can be the same as orig. If null a new
+	 * @param result Where the results are stored. Can be the same as orig. If null a new
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
@@ -88,7 +88,7 @@ public class AffinePointOps_F64 {
 	 * @param se	 The transform.
 	 * @param x	  Original x-coordinate
 	 * @param y	  Original y-coordinate
-	 * @param result Where the results are stored.  Can be the same as orig. If null a new
+	 * @param result Where the results are stored. Can be the same as orig. If null a new
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */

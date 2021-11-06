@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,7 +34,7 @@ public class UtilHomography_F64 {
 	 * Converts the provided 3x3 matrix into a {@link Homography2D_F64}.
 	 *
 	 * @param m Input 3x3 matrix.
-	 * @param ret Storage for output.  If null then a new instance is created.
+	 * @param ret Storage for output. If null then a new instance is created.
 	 * @return Equivalent homography.
 	 */
 	public static Homography2D_F64 convert( DMatrixRMaj m , @Nullable Homography2D_F64 ret ) {
@@ -61,7 +61,7 @@ public class UtilHomography_F64 {
 	 * Converts a {@link Homography2D_F64} into a 3x3 matrix.
 	 *
 	 * @param m Homography
-	 * @param ret Storage for output.  If null then a new instance is created.
+	 * @param ret Storage for output. If null then a new instance is created.
 	 * @return Equivalent matrix.
 	 */
 	public static DMatrixRMaj convert( Homography2D_F64 m , @Nullable DMatrixRMaj ret ) {

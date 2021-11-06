@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,15 +33,15 @@ import java.util.List;
 
 /**
  * <p>
- * A straight forward implementation of the Iterative Closest Point (ICP) algorithm for 2D or 3D objects.  ICP
+ * A straight forward implementation of the Iterative Closest Point (ICP) algorithm for 2D or 3D objects. ICP
  * works by finding a locally optimal rigid body transform that minimizes the error between a set of points
- * and a model.  The model can be described in several different formats and is implement as an interface
+ * and a model. The model can be described in several different formats and is implement as an interface
  * {@link ClosestPointToModel}.
  * </p>
  * <p/>
  * <p>
  * While this implementation is primarily designed for simplicity, generic, and correctness, its performance will
- * be primarily determined by the efficiency of the ClosestPointToModel provided to it.  This is especially
+ * be primarily determined by the efficiency of the ClosestPointToModel provided to it. This is especially
  * true for complex models with large number of points.
  * </p>
  *
@@ -99,7 +99,7 @@ public class IterativeClosestPoint<SE extends InvertibleTransform, P extends Geo
 	/**
 	 * Computes the best fit transform
 	 *
-	 * @param points Points which are to matched to a model.  Their state is modified to the optimal fit location.
+	 * @param points Points which are to matched to a model. Their state is modified to the optimal fit location.
 	 */
 	public boolean process(List<P> points) {
 		foundModelToPoints.reset();

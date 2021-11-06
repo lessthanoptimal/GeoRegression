@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,8 +34,8 @@ import java.util.List;
 
 /**
  * <p>
- * Minimizes the Euclidean distance between an ellipse and a set of points which it has been fit to.  Minimization
- * is done using a user configurable unconstrained optimization algorithm.  The error for each observation 'i' is
+ * Minimizes the Euclidean distance between an ellipse and a set of points which it has been fit to. Minimization
+ * is done using a user configurable unconstrained optimization algorithm. The error for each observation 'i' is
  * computed using the following equation:<br>
  * [x,y] = [p_x,p_y] - ([x_0,y_0] - a*R*X)<br>
  * where R = [cos(phi),-sin(phi);sin(phi),cos(phi)] and X = [a*cos(theta),b*sin*(theta)], where theta is the angle
@@ -43,7 +43,7 @@ import java.util.List;
  * </p>
  *
  * <p>
- * NOTE: This implementation does not take advantage of the sparsity found in the Jacobian.  Could be speed up a bit.
+ * NOTE: This implementation does not take advantage of the sparsity found in the Jacobian. Could be speed up a bit.
  * </p>
  *
  * @author Peter Abeles

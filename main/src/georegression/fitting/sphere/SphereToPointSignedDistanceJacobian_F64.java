@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,7 +33,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-// DESIGN NOTE: Could speed up by coupling it to the distance function.  That way distance would only need
+// DESIGN NOTE: Could speed up by coupling it to the distance function. That way distance would only need
 //              to be computed once.
 @SuppressWarnings("NullAway.Init")
 public class SphereToPointSignedDistanceJacobian_F64 implements FunctionNtoMxN< /**/DMatrixRMaj > {

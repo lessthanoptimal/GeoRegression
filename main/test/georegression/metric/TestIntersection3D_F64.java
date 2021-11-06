@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -287,7 +287,7 @@ public class TestIntersection3D_F64 {
 		assertFalse(Intersection3D_F64.contained(box,new Box3D_F64(2,10,4, 3,12,6.5)));
 		assertFalse(Intersection3D_F64.contained(box,new Box3D_F64(2,3,10, 3,4.5,12)));
 
-		// assume the 1D tests are sufficient.  the above tests do check to see if each axis is handled
+		// assume the 1D tests are sufficient. the above tests do check to see if each axis is handled
 		// individually
 	}
 

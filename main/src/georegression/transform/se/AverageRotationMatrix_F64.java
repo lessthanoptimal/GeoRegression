@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -31,7 +31,7 @@ import java.util.List;
 
 /**
  * <p>Finds the average of a set of {@link Quaternion_F64 quaternions} by using a modification of the
- * method proposed in [1].  It works by finding the average rotation matrix then finds the best fit matrix
+ * method proposed in [1]. It works by finding the average rotation matrix then finds the best fit matrix
  * in SO-3, see page 200 of [2].</p>
  *
  * <p>[1] MLA Markley, F. Landis, et al. "Quaternion averaging." (2007)</p>
@@ -58,7 +58,7 @@ public class AverageRotationMatrix_F64 {
 		for (int i = 0; i < list.size(); i++) {
 			DMatrixRMaj m = list.get(i);
 
-			// unroll to make it faster.  M = M + m
+			// unroll to make it faster. M = M + m
 			// row 0
 			M.data[0]  += m.data[0]; M.data[1]  += m.data[1]; M.data[2]  += m.data[2];
 			// row 1
@@ -95,7 +95,7 @@ public class AverageRotationMatrix_F64 {
 		for (int i = 0; i < list.size(); i++) {
 			DMatrix3x3 m = list.get(i);
 
-			// unroll to make it faster.  M = M + m
+			// unroll to make it faster. M = M + m
 			// row 0
 			F.a11  += m.a11; F.a12  += m.a12; F.a13  += m.a13;
 			// row 1

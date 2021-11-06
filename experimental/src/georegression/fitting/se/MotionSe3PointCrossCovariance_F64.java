@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * <p>
- * Finds the rigid body motion which minimizes the different between the two sets of associated points in 3D.  Computes
+ * Finds the rigid body motion which minimizes the different between the two sets of associated points in 3D. Computes
  * the quaternions directly in closed form.
  * </p>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,9 +41,9 @@ public class Sphere3D_F64 implements Serializable {
 		center = new Point3D_F64();
 	}
 
-	public Sphere3D_F64( double x , double y , double z , double radius ) {
+	public Sphere3D_F64( double x, double y, double z, double radius ) {
 		this();
-		setTo(x,y,z,radius);
+		setTo(x, y, z, radius);
 	}
 
 	public Sphere3D_F64( Sphere3D_F64 o ) {
@@ -51,23 +51,23 @@ public class Sphere3D_F64 implements Serializable {
 		setTo(o);
 	}
 
-	public void setTo(double x , double y , double z , double radius ) {
+	public void setTo( double x, double y, double z, double radius ) {
 		this.center.x = x;
 		this.center.y = y;
 		this.center.z = z;
 		this.radius = radius;
 	}
 
-	public void setTo(Sphere3D_F64 o ) {
+	public void setTo( Sphere3D_F64 o ) {
 		this.center.setTo(o.center);
 		this.radius = o.radius;
 	}
 
-	public void setCenter(Point3D_F64 center) {
+	public void setCenter( Point3D_F64 center ) {
 		this.center = center;
 	}
 
-	public void setRadius(double radius) {
+	public void setRadius( double radius ) {
 		this.radius = radius;
 	}
 
@@ -81,6 +81,6 @@ public class Sphere3D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+" Center( "+center.x+" "+center.y+" "+center.z+" ) radius "+radius+" )";
+		return getClass().getSimpleName() + " Center( " + center.x + " " + center.y + " " + center.z + " ) radius " + radius + " )";
 	}
 }

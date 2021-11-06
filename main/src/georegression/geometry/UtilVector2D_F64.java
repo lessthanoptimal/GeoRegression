@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class UtilVector2D_F64 {
 	/**
-	 * Returns the acute angle between the two vectors.  Computed using the dot product.
+	 * Returns the acute angle between the two vectors. Computed using the dot product.
 	 * @param a vector
 	 * @param b vector
 	 * @return acute angle

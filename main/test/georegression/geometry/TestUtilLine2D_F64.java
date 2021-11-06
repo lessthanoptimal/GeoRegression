@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -52,7 +52,7 @@ public class TestUtilLine2D_F64 {
 		assertEquals(Math.PI/2, acuteAngle(new LineGeneral2D_F64(2, 2, 0.5), new LineGeneral2D_F64(-4, 4, 6)),
 				GrlConstants.TEST_F64);
 
-		// pathological cause with numerical round off.  acos( -1.000000000123 )
+		// pathological cause with numerical round off. acos( -1.000000000123 )
 		double a = Math.cos(Math.PI/4.0);
 		assertEquals(Math.PI, acuteAngle(new LineGeneral2D_F64(a, a, 0.5), new LineGeneral2D_F64(-a, -a, 6)),
 				GrlConstants.TEST_F64);

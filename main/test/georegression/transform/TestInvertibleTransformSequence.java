@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -48,7 +48,7 @@ public class TestInvertibleTransformSequence {
 	}
 
 	/**
-	 * Test a sequence where it goes forward twice.  This exposed a bug
+	 * Test a sequence where it goes forward twice. This exposed a bug
 	 * where a unique instances were not being passed in to concat().
 	 */
 	@Test

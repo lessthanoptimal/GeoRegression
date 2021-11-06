@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), width, and height.  The three
+ * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), width, and height. The three
  * other corners are (x0 + width,y0), (x0,y0 + height), (x0 + width,y0 + height).
  * </p>
  *

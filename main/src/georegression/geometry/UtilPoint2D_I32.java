@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -64,7 +64,7 @@ public class UtilPoint2D_I32 {
 	 * as the centroid.
 	 *
 	 * @param list List of points
-	 * @param mean Storage for mean point.  If null then a new instance will be declared
+	 * @param mean Storage for mean point. If null then a new instance will be declared
 	 * @return The found mean
 	 */
 	public static Point2D_I32 mean(List<Point2D_I32> list, @Nullable Point2D_I32 mean) {
@@ -92,7 +92,7 @@ public class UtilPoint2D_I32 {
 	 * as the centroid.
 	 *
 	 * @param list List of points
-	 * @param mean Storage for mean point.  If null then a new instance will be declared
+	 * @param mean Storage for mean point. If null then a new instance will be declared
 	 * @return The found mean
 	 */
 	public static Point2D_F32 mean(List<Point2D_I32> list, @Nullable Point2D_F32 mean) {
@@ -120,7 +120,7 @@ public class UtilPoint2D_I32 {
 	 * as the centroid.
 	 *
 	 * @param list List of points
-	 * @param mean Storage for mean point.  If null then a new instance will be declared
+	 * @param mean Storage for mean point. If null then a new instance will be declared
 	 * @return The found mean
 	 */
 	public static Point2D_F64 mean(List<Point2D_I32> list, @Nullable Point2D_F64 mean) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,7 +34,7 @@ public class ConvertCoordinates3D_F64 {
 	 *
 	 * @param lat Radian value from pi to -pi
 	 * @param lon Radian value from -pi/2 to pi/2
-	 * @param vector (output) Storage for unit vector.  If null is passed in a new instance will be created.
+	 * @param vector (output) Storage for unit vector. If null is passed in a new instance will be created.
 	 * @return Unit vector
 	 */
 	public static <T extends GeoTuple3D_F64<T>> T latlonToUnitVector(double lat , double lon , @Nullable T vector ) {

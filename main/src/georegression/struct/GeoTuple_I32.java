@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ package georegression.struct;
  */
 public abstract class GeoTuple_I32 <T extends GeoTuple_I32<T>> extends GeoTuple<T> {
 	/**
-	 * Checks to see if the two GeoTuple have values which are nearly the same.  False is always
+	 * Checks to see if the two GeoTuple have values which are nearly the same. False is always
 	 * returned if the dimension is different.
 	 *
 	 * @param t   The GeoTuple it is being compared against.

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,7 +37,7 @@ public class HomographyPointOps_F64 {
 	 *
 	 * @param H Homography transform
 	 * @param orig   Original point being transformed. Not modified.
-	 * @param result Where the results are stored.  Can be the same as orig. If null a new
+	 * @param result Where the results are stored. Can be the same as orig. If null a new
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
@@ -62,13 +62,13 @@ public class HomographyPointOps_F64 {
 
 	/**
 	 * Applies a 2D homography transform to the point and stores the results in another
-	 * variable.  b = H*a, where 'a' is the input/orig point, 'b' is the output/result point, and 'H'
+	 * variable. b = H*a, where 'a' is the input/orig point, 'b' is the output/result point, and 'H'
 	 * is a homography from a to b.
 	 *
 	 * @param H Homography transform
 	 * @param x  Original x-coordinate
 	 * @param y  Original y-coordinate
-	 * @param result Where the results are stored.  Can be the same as orig. If null a new
+	 * @param result Where the results are stored. Can be the same as orig. If null a new
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */

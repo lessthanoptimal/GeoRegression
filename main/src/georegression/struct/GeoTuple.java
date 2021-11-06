@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,8 +21,8 @@ package georegression.struct;
 import java.io.Serializable;
 
 /**
- * Describes geometric objects that are composed of N double values.  Where N is the dimension
- * of space the object is contained in.  Points and vectors are two examples of a GeoTuple.  Each
+ * Describes geometric objects that are composed of N double values. Where N is the dimension
+ * of space the object is contained in. Points and vectors are two examples of a GeoTuple. Each
  * value is the value of the object along a dimension in the space it occupies.
  *
  * @author Peter Abeles
@@ -52,7 +52,7 @@ public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
 	public abstract void setTo( T src );
 
 	/**
-	 * Generic copy routine.  It is recommended that this be overridden with a faster implementation.
+	 * Generic copy routine. It is recommended that this be overridden with a faster implementation.
 	 *
 	 * @return An exact copy of this GeoTuple.
 	 */

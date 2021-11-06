@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -32,7 +32,7 @@ import java.io.Serializable;
  * </p>
  * <p>
  * Design Note: A function to apply the transform has not been provided to any
- * data structures (e.g. {@link GeoTuple}).  Instead that has been pushed off onto specialized static
+ * data structures (e.g. {@link GeoTuple}). Instead that has been pushed off onto specialized static
  * functions in other classes due to the large number of needed functions.
  * </p>
  *
@@ -79,7 +79,7 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 * NOTE: 'second', 'result', and 'this' must all be unique instances.
 	 * </p>
 	 *
-	 * @param second The second transform which is applied.  Not modified.
+	 * @param second The second transform which is applied. Not modified.
 	 * @param result A transform which is equivalent to applying the first then the second.
 	 *               If null then a new instance is declared. Modified.
 	 * @return The equivalent transform.
@@ -99,7 +99,7 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 * where inv = invert( tran );
 	 * </p>
 	 *
-	 * @param inverse Where the inverse will be stored.  If null a new instance is created.  Modified.
+	 * @param inverse Where the inverse will be stored. If null a new instance is created. Modified.
 	 * @return The inverse transform.
 	 */
 	T invert( @Nullable T inverse );

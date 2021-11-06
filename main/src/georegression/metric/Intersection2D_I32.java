@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,7 +41,7 @@ public class Intersection2D_I32 {
 	}
 
 	/**
-	 * Finds the intersection between two rectangles.  If the rectangles don't intersect then false is returned.
+	 * Finds the intersection between two rectangles. If the rectangles don't intersect then false is returned.
 	 *
 	 * @param a Rectangle
 	 * @param b Rectangle
@@ -61,7 +61,7 @@ public class Intersection2D_I32 {
 	}
 
 	/**
-	 * Checks to see if the point is contained inside the convex polygon.  If the
+	 * Checks to see if the point is contained inside the convex polygon. If the
 	 * point is an the polygon's perimeter it is considered to NOT be inside.
 	 *
 	 * @param polygon Convex polygon. Not modified.

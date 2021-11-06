@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -39,12 +39,12 @@ public class FitPlane3D_F64 {
 	DMatrixRMaj nullspace = new DMatrixRMaj(3,1);
 
 	/**
-	 * SVD based method for fitting a plane to a set of points.  The plane's equation is returned
+	 * SVD based method for fitting a plane to a set of points. The plane's equation is returned
 	 * as a point on the plane and the normal vector.
 	 *
 	 * @param points (Input) Set of points on a plane.
 	 * @param outputCenter (Output) Centroid of the passed in points. Modified.
-	 * @param outputNormal (Output) Vector tangent to the plane.  Normalized.  Modified.
+	 * @param outputNormal (Output) Vector tangent to the plane. Normalized. Modified.
 	 * @return true if successful or false if it failed.
 	 */
 	public boolean svd( List<Point3D_F64> points , Point3D_F64 outputCenter , Vector3D_F64 outputNormal ) {
@@ -68,12 +68,12 @@ public class FitPlane3D_F64 {
 	}
 
 	/**
-	 * SVD based method for fitting a plane to a set of points and a known point on the plane.  The plane's
+	 * SVD based method for fitting a plane to a set of points and a known point on the plane. The plane's
 	 * equation is returned as a point on the plane and the normal vector.
 	 *
 	 * @param points (Input)Set of points on a plane.
 	 * @param pointOnPlane (Input) A known point on the plane
-	 * @param outputNormal (Output) Vector tangent to the plane.  Normalized. Modified.
+	 * @param outputNormal (Output) Vector tangent to the plane. Normalized. Modified.
 	 * @return true if successful or false if it failed.
 	 */
 	public boolean solvePoint(List<Point3D_F64> points , Point3D_F64 pointOnPlane , Vector3D_F64 outputNormal ) {

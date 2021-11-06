@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -49,38 +49,38 @@ public class Cylinder3D_F64 implements Serializable {
 						   double slopeX, double slopeY, double slopeZ,
 						   double radius ) {
 		this();
-		this.line.setTo(x_0,y_0,z_0,slopeX,slopeY,slopeZ);
+		this.line.setTo(x_0, y_0, z_0, slopeX, slopeY, slopeZ);
 		this.radius = radius;
 	}
 
-	public Cylinder3D_F64(LineParametric3D_F64 line , double radius) {
+	public Cylinder3D_F64( LineParametric3D_F64 line, double radius ) {
 		this();
-		setTo(line,radius);
+		setTo(line, radius);
 	}
 
-	public Cylinder3D_F64(Cylinder3D_F64 o) {
+	public Cylinder3D_F64( Cylinder3D_F64 o ) {
 		this();
 		setTo(o);
 	}
 
 	public Cylinder3D_F64( boolean declare ) {
-		if( declare )
+		if (declare)
 			line = new LineParametric3D_F64();
 	}
 
-	public void setTo(double x_0, double y_0, double z_0,
-					  double slopeX, double slopeY, double slopeZ,
-					  double radius ) {
-		this.line.setTo(x_0,y_0,z_0,slopeX,slopeY,slopeZ);
+	public void setTo( double x_0, double y_0, double z_0,
+					   double slopeX, double slopeY, double slopeZ,
+					   double radius ) {
+		this.line.setTo(x_0, y_0, z_0, slopeX, slopeY, slopeZ);
 		this.radius = radius;
 	}
 
-	public void setTo(LineParametric3D_F64 line , double radius ) {
+	public void setTo( LineParametric3D_F64 line, double radius ) {
 		this.line.setTo(line);
 		this.radius = radius;
 	}
 
-	public void setTo(Cylinder3D_F64 o ) {
+	public void setTo( Cylinder3D_F64 o ) {
 		this.line.setTo(o.line);
 		this.radius = o.radius;
 	}
@@ -92,8 +92,8 @@ public class Cylinder3D_F64 implements Serializable {
 		Point3D_F64 p = line.p;
 		Vector3D_F64 slope = line.slope;
 
-		return getClass().getSimpleName()+
-				" P( "+fancy.s(p.x)+" "+fancy.s(p.y)+" "+fancy.sf(p.z)+
-				" ) Slope( "+fancy.s(slope.x)+" "+fancy.s(slope.y)+" "+fancy.s(slope.z)+" ) radius "+fancy.s(radius);
+		return getClass().getSimpleName() +
+				" P( " + fancy.s(p.x) + " " + fancy.s(p.y) + " " + fancy.sf(p.z) +
+				" ) Slope( " + fancy.s(slope.x) + " " + fancy.s(slope.y) + " " + fancy.s(slope.z) + " ) radius " + fancy.s(radius);
 	}
 }

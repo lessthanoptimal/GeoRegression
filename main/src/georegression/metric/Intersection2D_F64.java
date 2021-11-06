@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -50,7 +50,7 @@ public class Intersection2D_F64 {
 
 	/**
 	 * <p>
-	 * Checks to see if the point is contained inside the convex polygon.  If the
+	 * Checks to see if the point is contained inside the convex polygon. If the
 	 * point is an the polygon's perimeter it is considered to NOT be inside.
 	 * </p>
 	 *
@@ -213,7 +213,7 @@ public class Intersection2D_F64 {
 	 * @param a Line.
 	 * @param b Line.
 	 * @param ret storage for the point of intersection. If null a new point will be declared.
-	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect or have infinite intersections.
+	 * @return If the two lines intersect it returns the point of intersection. null if they don't intersect or have infinite intersections.
 	 */
 	public static @Nullable Point2D_F64 intersection( LineParametric2D_F64 a, LineParametric2D_F64 b ,
 													  @Nullable Point2D_F64 ret )
@@ -242,7 +242,7 @@ public class Intersection2D_F64 {
 	 * @param b Line.
 	 * @param ray if true the lines are treated as a ray and only intersections on the positive side of both lines are allowed
 	 * @param ret storage for the point of intersection. If null a new point will be declared.
-	 * @return If the two lines/rays intersect it returns the point of intersection.  null if they don't intersect or have infinite intersections.
+	 * @return If the two lines/rays intersect it returns the point of intersection. null if they don't intersect or have infinite intersections.
 	 */
 	public static @Nullable Point2D_F64 intersection( LineParametric2D_F64 a, LineParametric2D_F64 b , boolean ray,
 													  @Nullable Point2D_F64 ret ) {
@@ -274,12 +274,12 @@ public class Intersection2D_F64 {
 	}
 
 	/**
-	 * Finds the point of intersection between two lines.  The point of intersection is specified as a point along
-	 * the parametric line 'a'.  (x,y) = (x_0,y_0) + t*(slope_x,slope_y), where 't' is the location returned.
+	 * Finds the point of intersection between two lines. The point of intersection is specified as a point along
+	 * the parametric line 'a'. (x,y) = (x_0,y_0) + t*(slope_x,slope_y), where 't' is the location returned.
 	 *
 	 * @param a Line.
 	 * @param b Line.
-	 * @return The location along 'target'.  If the lines do not intersect or have infinite intersections Double.
+	 * @return The location along 'target'. If the lines do not intersect or have infinite intersections Double.
 	 * NaN is returned.
 	 */
 	public static double intersection( LineParametric2D_F64 a, LineParametric2D_F64 b ) {
@@ -298,7 +298,7 @@ public class Intersection2D_F64 {
 	 * @param l_0 Line segment.
 	 * @param l_1 line segment.
 	 * @param ret storage for the point of intersection. If null a new point will be declared.
-	 * @return If the two lines intersect it returns the point of intersection.  null if they don't intersect or
+	 * @return If the two lines intersect it returns the point of intersection. null if they don't intersect or
 	 * have infinite intersections.
 	 */
 	public static @Nullable Point2D_F64 intersection( LineSegment2D_F64 l_0, LineSegment2D_F64 l_1,
@@ -415,7 +415,7 @@ public class Intersection2D_F64 {
 
 	/**
 	 * <p>
-	 * Finds the intersection of two lines as a 2D point in homogeneous coordinates.  Because the
+	 * Finds the intersection of two lines as a 2D point in homogeneous coordinates. Because the
 	 * solution is found in homogeneous coordinates it can even handle parallel lines which "intersect
 	 * at infinity".
 	 * </p>
@@ -475,7 +475,7 @@ public class Intersection2D_F64 {
 	 * @param a Line
 	 * @param b Line
 	 * @param ret Storage for point of intersection.
-	 * @return Point of intersection in 2D coordinates.  null if intersection at infinity
+	 * @return Point of intersection in 2D coordinates. null if intersection at infinity
 	 */
 	public static @Nullable Point2D_F64 intersection( LineGeneral2D_F64 a , LineGeneral2D_F64 b ,
 													  @Nullable Point2D_F64 ret )
@@ -532,13 +532,13 @@ public class Intersection2D_F64 {
 	}
 
 	/**
-	 * Finds the point of intersection between a line and a line segment.  The point of intersection
-	 * is specified as the distance along the parametric line.  If no intersection is found then
+	 * Finds the point of intersection between a line and a line segment. The point of intersection
+	 * is specified as the distance along the parametric line. If no intersection is found then
 	 * Double.NaN is returned.
 	 *
-	 * @param target A line whose location along which the point of intersection is being found.  Not modified.
+	 * @param target A line whose location along which the point of intersection is being found. Not modified.
 	 * @param l	  Line segment which is being tested for intersection. Not modified.
-	 * @return The location along 'target'.  If the lines do not intersect or have infinite intersections Double.NaN is returned.
+	 * @return The location along 'target'. If the lines do not intersect or have infinite intersections Double.NaN is returned.
 	 */
 	public static double intersection( LineParametric2D_F64 target, LineSegment2D_F64 l ) {
 		double a1 = l.b.x - l.a.x;
@@ -578,7 +578,7 @@ public class Intersection2D_F64 {
 
 	/**
 	 * <p>
-	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * Checks to see if the specified point is inside the rectangle. A point is inside
 	 * if it is &ge; the lower extend and &lt; the upper extent.
 	 * </p>
 	 * <p>
@@ -598,7 +598,7 @@ public class Intersection2D_F64 {
 
 	/**
 	 * <p>
-	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * Checks to see if the specified point is inside the rectangle. A point is inside
 	 * if it is &ge; the lower extend and &le; the upper extent.
 	 * </p>
 	 * <p>
@@ -618,7 +618,7 @@ public class Intersection2D_F64 {
 
 	/**
 	 * <p>
-	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * Checks to see if the specified point is inside the rectangle. A point is inside
 	 * if it is &ge; the lower extend and &lt; the upper extent.
 	 * </p>
 	 * <p>
@@ -635,7 +635,7 @@ public class Intersection2D_F64 {
 
 	/**
 	 * <p>
-	 * Checks to see if the specified point is inside the rectangle.  A point is inside
+	 * Checks to see if the specified point is inside the rectangle. A point is inside
 	 * if it is &ge; the lower extend and &le; the upper extent.
 	 * </p>
 	 * <p>
@@ -709,7 +709,7 @@ public class Intersection2D_F64 {
 	}
 
 	/**
-	 * Finds the intersection between two rectangles.  If the rectangles don't intersect then false is returned.
+	 * Finds the intersection between two rectangles. If the rectangles don't intersect then false is returned.
 	 *
 	 * @param a Rectangle
 	 * @param b Rectangle
@@ -748,15 +748,15 @@ public class Intersection2D_F64 {
 	}
 
 	/**
-	 * Determines the location(s) that a line and ellipse intersect.  Returns the number of intersections found.
+	 * Determines the location(s) that a line and ellipse intersect. Returns the number of intersections found.
 	 * NOTE: Due to floating point errors, it's possible for a single solution to returned as two points.
 	 *
 	 * @param line Line
 	 * @param ellipse Ellipse
 	 * @param intersection0 Storage for first point of intersection.
 	 * @param intersection1 Storage for second point of intersection.
-	 * @param EPS Numerical precision.  Set to a negative value to use default
-	 * @return Number of intersections.  Possible values are 0, 1, or 2.
+	 * @param EPS Numerical precision. Set to a negative value to use default
+	 * @return Number of intersections. Possible values are 0, 1, or 2.
 	 */
 	public static int intersection( LineGeneral2D_F64 line , EllipseRotated_F64 ellipse ,
 									Point2D_F64 intersection0 , Point2D_F64 intersection1 , double EPS ) {
@@ -775,7 +775,7 @@ public class Intersection2D_F64 {
 		double B = -line.A*sphi + line.B*cphi;
 
 		// Now solve for the intersections with the coordinate system centered and aligned to the ellipse
-		// There are two different ways to solve for this.  Pick the axis with the largest slope
+		// There are two different ways to solve for this. Pick the axis with the largest slope
 		// to avoid the pathological case
 		double a2 = ellipse.a*ellipse.a;
 		double b2 = ellipse.b*ellipse.b;

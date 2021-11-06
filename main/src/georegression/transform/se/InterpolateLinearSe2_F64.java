@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -34,7 +34,7 @@ public class InterpolateLinearSe2_F64 {
 	 *
 	 * @param a The first transform
 	 * @param b The second transform
-	 * @param where from 0 to 1, inclusive.  0 means it will be more similar to 'a'.
+	 * @param where from 0 to 1, inclusive. 0 means it will be more similar to 'a'.
 	 * @param output The interpolated transform
 	 */
 	public static void interpolate(Se2_F64 a , Se2_F64 b , double where, Se2_F64 output) {

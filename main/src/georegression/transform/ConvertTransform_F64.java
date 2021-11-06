@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 
 /**
- * Functions for converting one type of geometric transform into another type.  A conversion
+ * Functions for converting one type of geometric transform into another type. A conversion
  * function is only provided if a conversion can be performed with no approximation.
  *
  * @author Peter Abeles

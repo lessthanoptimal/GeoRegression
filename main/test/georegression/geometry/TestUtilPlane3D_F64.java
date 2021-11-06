@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -233,7 +233,7 @@ public class TestUtilPlane3D_F64 {
 	}
 
 	/**
-	 * Tests the planeToWorld function by randomly generating 2D points and converting them to 3D.  Then it
+	 * Tests the planeToWorld function by randomly generating 2D points and converting them to 3D. Then it
 	 * tests to see if the points lie on the plane.
 	 */
 	@Test

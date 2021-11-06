@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -32,15 +32,15 @@ import java.util.List;
 
 /**
  * <p>
- * Fits an ellipse to a set of points in "closed form" by minimizing algebraic least-squares error.  The method used is
+ * Fits an ellipse to a set of points in "closed form" by minimizing algebraic least-squares error. The method used is
  * described in [1] and is a repartitioning of the solution describe in [2], with the aim of improving numerical
- * stability.  The found ellipse is described using 6 coefficients, as is shown below.
+ * stability. The found ellipse is described using 6 coefficients, as is shown below.
  * {@code F(x,y) = a*x^2 + 2*b*x*y + c*y^2 + 2*d*x + 2*e*y + f = 0 and b^2 - 4*ac < 0}
  * <p>
  *
  * <p>
- * One peculiarity of this algorithm is that it's less stable when perfect data is provided.  This instability became
- * evident when constructing unit tests and some of them failed.  Tests on the original Matlab code also failed.
+ * One peculiarity of this algorithm is that it's less stable when perfect data is provided. This instability became
+ * evident when constructing unit tests and some of them failed. Tests on the original Matlab code also failed.
  * </p>
  *
  * <ul>
@@ -81,7 +81,7 @@ public class FitEllipseWeightedAlgebraic_F64 {
 	 * Fits the ellipse to the line
 	 *
 	 * @param points Set of points that are to be fit
-	 * @param weights Weight or importance of each point.  Each weight must be a positive number
+	 * @param weights Weight or importance of each point. Each weight must be a positive number
 	 * @return true if successful or false if it failed
 	 */
 	public boolean process( List<Point2D_F64> points , double weights[] ) {
@@ -91,7 +91,7 @@ public class FitEllipseWeightedAlgebraic_F64 {
 		}
 		int N = points.size();
 
-		// Construct the design matrices.  linear and quadratic
+		// Construct the design matrices. linear and quadratic
 		D1.reshape(N,3); D2.reshape(N,3);
 		int index = 0;
 		for( int i = 0; i < N; i++ ) {

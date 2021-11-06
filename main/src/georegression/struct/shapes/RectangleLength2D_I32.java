@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,7 +21,7 @@ package georegression.struct.shapes;
 import java.io.Serializable;
 
 /**
- * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), width, and height.  The three
+ * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), width, and height. The three
  * other corners are {@code (x0 + width-1,y0), (x0,y0 + height-1), (x0 + width-1,y0 + height-1)}.
  */
 public class RectangleLength2D_I32 implements Serializable {

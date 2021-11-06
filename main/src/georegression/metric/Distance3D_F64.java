@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,7 +36,7 @@ import georegression.struct.shapes.Triangle3D_F64;
  */
 public class Distance3D_F64 {
 	/**
-	 * Distance of the closest point between two lines.  Parallel lines are correctly
+	 * Distance of the closest point between two lines. Parallel lines are correctly
 	 * handled.
 	 *
 	 * @param l0 First line. Not modified.
@@ -165,8 +165,8 @@ public class Distance3D_F64 {
 	}
 
 	/**
-	 * Returns the signed distance a point is from the sphere's surface.  If the point is outside of the sphere
-	 * it's distance will be positive.  If it is inside it will be negative.
+	 * Returns the signed distance a point is from the sphere's surface. If the point is outside of the sphere
+	 * it's distance will be positive. If it is inside it will be negative.
 	 * <p></p>
 	 * distance = ||sphere.center - point|| - r
 	 *
@@ -181,8 +181,8 @@ public class Distance3D_F64 {
 	}
 
 	/**
-	 * Returns the signed distance a point is from the cylinder's surface.  If the point is outside of the cylinder
-	 * it's distance will be positive.  If it is inside it will be negative.
+	 * Returns the signed distance a point is from the cylinder's surface. If the point is outside of the cylinder
+	 * it's distance will be positive. If it is inside it will be negative.
 	 *
 	 * @param cylinder The cylinder
 	 * @param point The point
@@ -197,7 +197,7 @@ public class Distance3D_F64 {
 
 	/**
 	 * Signed distance from a 3D point to 3D triangle.   The sign indicates which side of the triangle the point
-	 * is on.  See {@link georegression.metric.alg.DistancePointTriangle3D_F64} for the details.
+	 * is on. See {@link georegression.metric.alg.DistancePointTriangle3D_F64} for the details.
 	 *
 	 * @param triangle 3D triangle
 	 * @param point Point for which the closest point on the triangle is found

@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -48,7 +48,7 @@ public abstract class MatchCloudToCloudIcp<SE extends InvertibleTransform, P ext
 
 	// reference to destination list
 	List<P> source;
-	// maximum distance apart two points can be.  Euclidean squared
+	// maximum distance apart two points can be. Euclidean squared
 	double maxDistanceSq;
 	// storage for NN results
 	NnData<P> storageNN = new NnData<>();

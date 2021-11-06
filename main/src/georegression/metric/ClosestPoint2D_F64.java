@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -42,7 +42,7 @@ public class ClosestPoint2D_F64 {
 	 *
 	 * @param line Line along which the closest point is to be found.
 	 * @param p Point.
-	 * @param output Where the solution is stored.  If null a new instance is created. Modified.
+	 * @param output Where the solution is stored. If null a new instance is created. Modified.
 	 * @return Closest point on the line.
 	 */
 	public static Point2D_F64 closestPoint( LineGeneral2D_F64 line,
@@ -71,7 +71,7 @@ public class ClosestPoint2D_F64 {
 	 *
 	 * @param line	Line along which the closest point is being found.
 	 * @param p	   Point.
-	 * @param output Where the solution is stored.  If null a new instance is created. Modified.
+	 * @param output Where the solution is stored. If null a new instance is created. Modified.
 	 * @return Closest point on the line.
 	 */
 	public static Point2D_F64 closestPoint( LineParametric2D_F64 line,
@@ -173,7 +173,7 @@ public class ClosestPoint2D_F64 {
 	 *
 	 * @param line Line segment
 	 * @param p Point`
-	 * @param output Optional storage for the closet point on the line to p.  If null a new instance is created.
+	 * @param output Optional storage for the closet point on the line to p. If null a new instance is created.
 	 * @return Closest point on the line to the point
 	 */
 	public static Point2D_F64 closestPoint( LineSegment2D_F64 line,
@@ -201,7 +201,7 @@ public class ClosestPoint2D_F64 {
 	}
 
 	/**
-	 * Computes the closest point on an ellipse to the provided point.  If there are multiple solutions then one
+	 * Computes the closest point on an ellipse to the provided point. If there are multiple solutions then one
 	 * is arbitrarily chosen.
 	 *
 	 * NOTE: When optimizing consider calling {@link ClosestPointEllipseAngle_F64} directly instead.

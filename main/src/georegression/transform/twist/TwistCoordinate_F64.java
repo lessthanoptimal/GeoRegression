@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,7 +21,7 @@ package georegression.transform.twist;
 import georegression.struct.point.Vector3D_F64;
 
 /**
- * <p>Representation of a twist coordinate, which is se(3).  The exponential is SE(3) or rigid body.  A twist
+ * <p>Representation of a twist coordinate, which is se(3). The exponential is SE(3) or rigid body. A twist
  * can be interpreted as a mapping of points from their initial coordinate to another coordinate after the
  * rigid motion has been applied [1].</p>
  *
@@ -29,7 +29,7 @@ import georegression.struct.point.Vector3D_F64;
  * p(t) = exp(hat{&xi;}*t)*p(0)<br>
  * p'(t) = w &times; (p(t) -q)<br>
  * v = -w &times; q<br>
- * where ||w|| = 1, q in Re<sup>3</sup> is a point on the axis.  The point in a body undergoing a constant
+ * where ||w|| = 1, q in Re<sup>3</sup> is a point on the axis. The point in a body undergoing a constant
  * screw motion which traces helices.
  * </p>
  *

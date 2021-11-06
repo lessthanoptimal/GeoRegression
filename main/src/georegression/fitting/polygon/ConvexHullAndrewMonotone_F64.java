@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,7 +25,7 @@ import org.ddogleg.struct.FastAccess;
 import org.ddogleg.struct.FastArray;
 
 /**
- * Computes the convex hull of a set of points using Andrew's monotone chain algorithm.  O(n log n) for sort and
+ * Computes the convex hull of a set of points using Andrew's monotone chain algorithm. O(n log n) for sort and
  * O(N) for convex hull computation, where N is number of input points.
  *
  * @author Peter Abeles
@@ -37,7 +37,7 @@ public class ConvexHullAndrewMonotone_F64 implements FitConvexHull_F64{
 	FastArray<Point2D_F64> stack = new FastArray<>(Point2D_F64.class);
 
 	public ConvexHullAndrewMonotone_F64() {
-		// Sort the points based on their x value.  If the same then use y value
+		// Sort the points based on their x value. If the same then use y value
 		sorter = new QuickSortComparator<>((a, b) -> {
 			if( a.x < b.x )
 				return -1;
@@ -52,9 +52,9 @@ public class ConvexHullAndrewMonotone_F64 implements FitConvexHull_F64{
 	}
 
 	/**
-	 * Computes the convex hull.  The output will be in counter-clockwise order.
+	 * Computes the convex hull. The output will be in counter-clockwise order.
 	 *
-	 * @param points List of input points.  The list will be modified by sorting
+	 * @param points List of input points. The list will be modified by sorting
 	 * @param output (Output) Where the complex hull is written to.
 	 */
 	@Override

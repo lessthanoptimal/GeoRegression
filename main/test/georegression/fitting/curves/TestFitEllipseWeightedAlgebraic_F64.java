@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -46,7 +46,7 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 
 	/**
 	 * Give it points which are nearly perfectly describe an ellipse.
-	 * Perfect points is actually a hard case.  See comments in random section.
+	 * Perfect points is actually a hard case. See comments in random section.
 	 */
 	@Test
 	void checkEllipse() {
@@ -150,7 +150,7 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 	/**
 	 * Randomly generate points and see if it produces a valid ellipse
 	 *
-	 * The paper mentions that the case of perfect data is actually numerically unstable.  The random test
+	 * The paper mentions that the case of perfect data is actually numerically unstable. The random test
 	 * below has been commented out since even the original algorithm run in octave can't pass that test.
 	 */
 	@Test

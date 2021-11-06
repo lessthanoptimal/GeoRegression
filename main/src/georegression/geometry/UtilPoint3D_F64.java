@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -234,7 +234,7 @@ public class UtilPoint3D_F64 {
 	 * Computes the mean of the list of points.
 	 *
 	 * @param points List of points
-	 * @param mean   (Optional) storage for the mean.  Can be null
+	 * @param mean   (Optional) storage for the mean. Can be null
 	 * @return Mean
 	 */
 	public static Point3D_F64 mean(List<Point3D_F64> points, @Nullable Point3D_F64 mean) {
@@ -261,7 +261,7 @@ public class UtilPoint3D_F64 {
 	 *
 	 * @param points List of points
 	 * @param num    use points up to num, exclusive.
-	 * @param mean   (Optional) storage for the mean.  Can be null
+	 * @param mean   (Optional) storage for the mean. Can be null
 	 * @return Mean
 	 */
 	public static Point3D_F64 mean(List<Point3D_F64> points, int num, @Nullable Point3D_F64 mean) {

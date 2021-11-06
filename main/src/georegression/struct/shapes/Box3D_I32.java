@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -37,57 +37,60 @@ public class Box3D_I32 implements Serializable {
 	 */
 	public Point3D_I32 p1 = new Point3D_I32();
 
-	public Box3D_I32(int x0, int y0, int z0, int x1, int y1, int z1) {
+	public Box3D_I32( int x0, int y0, int z0, int x1, int y1, int z1 ) {
 		this.p0.setTo(x0, y0, z0);
 		this.p1.setTo(x1, y1, z1);
 	}
 
-	public Box3D_I32(Box3D_I32 orig) {
+	public Box3D_I32( Box3D_I32 orig ) {
 		setTo(orig);
 	}
 
-	public void setTo(Box3D_I32 orig ) {
-		setTo(orig.p0.x,orig.p0.y,orig.p0.z,orig.p1.x,orig.p1.y,orig.p1.z);
+	public void setTo( Box3D_I32 orig ) {
+		setTo(orig.p0.x, orig.p0.y, orig.p0.z, orig.p1.x, orig.p1.y, orig.p1.z);
 	}
 
 	public Box3D_I32() {}
 
-	public void setTo(int x0, int y0, int z0, int x1, int y1, int z1 ) {
+	public void setTo( int x0, int y0, int z0, int x1, int y1, int z1 ) {
 		this.p0.setTo(x0, y0, z0);
 		this.p1.setTo(x1, y1, z1);
 	}
 
 	/**
-	 * The box's area.  area = lengthX*lengthY*lengthZ
+	 * The box's area. area = lengthX*lengthY*lengthZ
 	 *
 	 * @return area
 	 */
 	public int area() {
-		return (p1.x-p0.x)*(p1.y-p0.y)*(p1.z-p0.z);
+		return (p1.x - p0.x)*(p1.y - p0.y)*(p1.z - p0.z);
 	}
 
 	/**
 	 * Length of the box along the x-axis
+	 *
 	 * @return length
 	 */
 	public int getLengthX() {
-		return p1.x-p0.x;
+		return p1.x - p0.x;
 	}
 
 	/**
 	 * Length of the box along the y-axis
+	 *
 	 * @return length
 	 */
 	public int getLengthY() {
-		return p1.y-p0.y;
+		return p1.y - p0.y;
 	}
 
 	/**
 	 * Length of the box along the z-axis
+	 *
 	 * @return length
 	 */
 	public int getLengthZ() {
-		return p1.z-p0.z;
+		return p1.z - p0.z;
 	}
 
 	/**
@@ -97,7 +100,7 @@ public class Box3D_I32 implements Serializable {
 		return p0;
 	}
 
-	public void setP1(Point3D_I32 p1) {
+	public void setP1( Point3D_I32 p1 ) {
 		this.p1.setTo(p1);
 	}
 
@@ -108,12 +111,12 @@ public class Box3D_I32 implements Serializable {
 		return p1;
 	}
 
-	public void setP0(Point3D_I32 p0) {
+	public void setP0( Point3D_I32 p0 ) {
 		this.p0.setTo(p0);
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"{ P0( "+ p0.x+" "+ p0.y+" "+ p0.z+" ) P1( "+ p1.x+" "+ p1.y+" "+ p1.z+" ) }";
+		return getClass().getSimpleName() + "{ P0( " + p0.x + " " + p0.y + " " + p0.z + " ) P1( " + p1.x + " " + p1.y + " " + p1.z + " ) }";
 	}
 }

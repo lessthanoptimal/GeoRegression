@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -39,13 +39,13 @@ import org.ddogleg.struct.FastAccess;
 public class Intersection3D_F64 {
 
 	/**
-	 * Finds the intersection of a line and a plane.  Returns true if they intersect at a unique point or false if
+	 * Finds the intersection of a line and a plane. Returns true if they intersect at a unique point or false if
 	 * there is no intersection or an infinite number of intersections.
 	 *
 	 * @param plane (Input) Plane
 	 * @param line (Input) Line
 	 * @param intersection (Output) Where the intersection is written to
-	 * @return True if the intersection is at a unique point.  If false then no intersection or infinite.
+	 * @return True if the intersection is at a unique point. If false then no intersection or infinite.
 	 */
 	public static boolean intersection(PlaneNormal3D_F64 plane , LineParametric3D_F64 line , Point3D_F64 intersection ) {
 		double dx = plane.p.x - line.p.x;
@@ -68,13 +68,13 @@ public class Intersection3D_F64 {
 	}
 
 	/**
-	 * Finds the intersection of a line and a plane.  Returns true if they intersect at a unique point or false if
+	 * Finds the intersection of a line and a plane. Returns true if they intersect at a unique point or false if
 	 * there is no intersection or an infinite number of intersections.
 	 *
 	 * @param plane (Input) Plane
 	 * @param line (Input) Line
 	 * @param intersection (Output) Where the intersection is written to
-	 * @return True if the intersection is at a unique point.  If false then no intersection or infinite.
+	 * @return True if the intersection is at a unique point. If false then no intersection or infinite.
 	 */
 	public static boolean intersection(PlaneGeneral3D_F64 plane , LineParametric3D_F64 line , Point3D_F64 intersection ) {
 
@@ -94,8 +94,8 @@ public class Intersection3D_F64 {
 	}
 
 	/**
-	 * Finds the line which is the intersection between the two planes.  For a valid solution to be returned
-	 * the planes must not be parallel to each other.  If the planes are parallel then the slope of the returned line
+	 * Finds the line which is the intersection between the two planes. For a valid solution to be returned
+	 * the planes must not be parallel to each other. If the planes are parallel then the slope of the returned line
 	 * will have a value of zero for each element.
 	 *
 	 * @param a (Input) Plane
@@ -118,7 +118,7 @@ public class Intersection3D_F64 {
 		double closestY = a.B*a.D/n2;
 		double closestZ = a.C*a.D/n2;
 
-		// Cross product between normal of 'a' and the line's slope.  This points towards the intersection
+		// Cross product between normal of 'a' and the line's slope. This points towards the intersection
 		double slopeX = a.B * line.slope.z - a.C * line.slope.y;
 		double slopeY = a.C * line.slope.x - a.A * line.slope.z;
 		double slopeZ = a.A * line.slope.y - a.B * line.slope.x;
@@ -138,7 +138,7 @@ public class Intersection3D_F64 {
 	}
 
 	/**
-	 * <p>Finds the intersection between a 3D triangle and a line-segment.  Code ported from [1].</p>
+	 * <p>Finds the intersection between a 3D triangle and a line-segment. Code ported from [1].</p>
 	 *
 	 * <p>
 	 * [1] http://geomalgorithms.com/a06-_intersect-2.html
@@ -158,7 +158,7 @@ public class Intersection3D_F64 {
 	}
 
 	/**
-	 * <p>Finds the intersection between a 3D triangle and a line-segment.  Code ported from [1].  Internal
+	 * <p>Finds the intersection between a 3D triangle and a line-segment. Code ported from [1]. Internal
 	 * working variables are provided in this interface to reduce memory creation/destruction.</p>
 	 *
 	 * <p>
@@ -222,7 +222,7 @@ public class Intersection3D_F64 {
 	}
 
 	/**
-	 * <p>Finds the intersection between a 3D triangle and a line.  Code ported from [1].  Internal
+	 * <p>Finds the intersection between a 3D triangle and a line. Code ported from [1]. Internal
 	 * working variables are provided in this interface to reduce memory creation/destruction.</p>
 	 *
 	 * <p>
@@ -246,7 +246,7 @@ public class Intersection3D_F64 {
 	}
 
 	/**
-	 * <p>Finds the intersection between a 3D triangle and a line.  Code ported from [1].  Internal
+	 * <p>Finds the intersection between a 3D triangle and a line. Code ported from [1]. Internal
 	 * working variables are provided in this interface to reduce memory creation/destruction.</p>
 	 *
 	 * <p>
@@ -425,7 +425,7 @@ public class Intersection3D_F64 {
 
 	/**
 	 * Returns true if the point is contained inside the box. The point is considered to be inside the box
-	 * if the following test passes for each dimension.  box.x &le; point.x {@code <} box.x + box.lengthX
+	 * if the following test passes for each dimension. box.x &le; point.x {@code <} box.x + box.lengthX
 	 *
 	 * @param box Box
 	 * @param point Point which is tested to see if it is inside the box
@@ -534,13 +534,13 @@ public class Intersection3D_F64 {
 	}
 
 	/**
-	 * Finds the intersection of a line and sphere.  There can be 0, 1, or 2 intersections.  If there is
+	 * Finds the intersection of a line and sphere. There can be 0, 1, or 2 intersections. If there is
 	 * 1 intersection the same point is returned twice.
 	 *
 	 * @param line line
 	 * @param sphere sphere
-	 * @param a (Output) Storage for point of intersection.  t = max(t0,t1), where t is location on line
-	 * @param b (Output) Storage for point of intersection.  t = max(t0,t1), where t is location on line
+	 * @param a (Output) Storage for point of intersection. t = max(t0,t1), where t is location on line
+	 * @param b (Output) Storage for point of intersection. t = max(t0,t1), where t is location on line
 	 * @return true if the line intersects the sphere
 	 */
 	public static boolean intersection(LineParametric3D_F64 line , Sphere3D_F64 sphere ,

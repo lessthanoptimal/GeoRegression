@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,12 +26,12 @@ import java.io.Serializable;
 /**
  * <p>
  * Represents the line using three parameters such that any point on the line obeys the
- * following formula, A*x + B*y + C = 0.  Any 2D line can be represented using this notation.
- * This formulation is also known as standard and implicit.  The slope is -A/B.
+ * following formula, A*x + B*y + C = 0. Any 2D line can be represented using this notation.
+ * This formulation is also known as standard and implicit. The slope is -A/B.
  * </p>
  * <p>
- * If it is said the line is normalized that refers to it being scaled such that A*A + B*B = 1.  To
- * normalize a line call {@link #normalize()}.  After normalization several operations become less expensive.
+ * If it is said the line is normalized that refers to it being scaled such that A*A + B*B = 1. To
+ * normalize a line call {@link #normalize()}. After normalization several operations become less expensive.
  * </p>
  *
  * @see UtilLine2D_F64
@@ -117,7 +117,7 @@ public class LineGeneral2D_F64 implements Serializable {
 	}
 
 	/**
-	 * Returns the result of A*x + B*y + C.  If the line is normalized then this is also the signed distance
+	 * Returns the result of A*x + B*y + C. If the line is normalized then this is also the signed distance
 	 * away from the line.
 	 *
 	 * @param x x-coordinate of a point

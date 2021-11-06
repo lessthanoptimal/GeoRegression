@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -51,7 +51,7 @@ public class SpecialEuclideanOps_F64 {
 	/**
 	 * Converts {@link Se2_F64} into {@link Affine2D_F64}.
 	 * @param se (Input) Se2
-	 * @param affine (Output) Equivalent affine.  If null a new object will be declared.
+	 * @param affine (Output) Equivalent affine. If null a new object will be declared.
 	 * @return Equivalent affine.
 	 */
 	public static Affine2D_F64 toAffine( Se2_F64 se , @Nullable Affine2D_F64 affine ) {
@@ -73,7 +73,7 @@ public class SpecialEuclideanOps_F64 {
 	 * Converts it into a 4 by 4 homogeneous matrix.
 	 *
 	 * @param se  original 3D transform
-	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
+	 * @param ret Where the results will be written to. If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
 	public static DMatrixRMaj toHomogeneous( Se3_F64 se, @Nullable DMatrixRMaj ret ) {
@@ -121,7 +121,7 @@ public class SpecialEuclideanOps_F64 {
 	 * Converts it into a 3 by 3 homogeneous matrix.
 	 *
 	 * @param se  original 2D transform
-	 * @param ret Where the results will be written to.  If null a new matrix is declared. Modified.
+	 * @param ret Where the results will be written to. If null a new matrix is declared. Modified.
 	 * @return equivalent homogeneous transform.
 	 */
 	public static DMatrixRMaj toHomogeneous( Se2_F64 se, @Nullable DMatrixRMaj ret ) {
@@ -277,7 +277,7 @@ public class SpecialEuclideanOps_F64 {
 	}
 
 	/**
-	 * Finds the best fit projection of 'a' onto SE(3).  This is useful when a was estimated using a linear algorithm.
+	 * Finds the best fit projection of 'a' onto SE(3). This is useful when a was estimated using a linear algorithm.
 	 *
 	 * <p>See page 280 of "An Invitation to 3-D Vision, From Images to Geometric Models" 1st Ed. 2004. Springer.</p>
 	 * @param a Approximate SE(3). Modified.

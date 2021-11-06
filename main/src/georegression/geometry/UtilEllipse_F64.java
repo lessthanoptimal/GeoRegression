@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,7 +35,7 @@ public class UtilEllipse_F64 {
 
 	/**
 	 * <p>
-	 * Convert from quadratic to rotated formats.  Equations taken from [1].
+	 * Convert from quadratic to rotated formats. Equations taken from [1].
 	 * </p>
 	 *
 	 * <p>
@@ -43,7 +43,7 @@ public class UtilEllipse_F64 {
 	 * </p>
 	 *
 	 * @param input Input in quadratic format.
-	 * @param output (Optional) Storage for converted format.  Can be null.
+	 * @param output (Optional) Storage for converted format. Can be null.
 	 * @return Ellipse in rotated format.
 	 */
 	public static EllipseRotated_F64 convert( EllipseQuadratic_F64 input , @Nullable EllipseRotated_F64 output ) {
@@ -100,7 +100,7 @@ public class UtilEllipse_F64 {
 	 * Convert from rotated to quadratic.
 	 *
 	 * @param input Input rotated format.
-	 * @param output (Optional) Storage for quadratic format.  Can be null.
+	 * @param output (Optional) Storage for quadratic format. Can be null.
 	 * @return Ellipse in quadratic format.
 	 */
 	public static EllipseQuadratic_F64 convert( EllipseRotated_F64 input , @Nullable EllipseQuadratic_F64 output ) {
@@ -149,7 +149,7 @@ public class UtilEllipse_F64 {
 	}
 
 	/**
-	 * Computes the value of the quadratic ellipse function at point (x,y).  Should equal 1 if the point is on the
+	 * Computes the value of the quadratic ellipse function at point (x,y). Should equal 1 if the point is on the
 	 * ellipse.
 	 * @param x x-coordinate
 	 * @param y y-coordinate
@@ -178,7 +178,7 @@ public class UtilEllipse_F64 {
 	 *
 	 * @param t An angle in radians from 0 to 2*PI
 	 * @param ellipse Ellipse
-	 * @param output (Optional) point on the ellipse .  Can be null.
+	 * @param output (Optional) point on the ellipse . Can be null.
 	 * @return Point on the ellipse
 	 */
 	public static Point2D_F64 computePoint( double t , EllipseRotated_F64 ellipse ,
@@ -227,7 +227,7 @@ public class UtilEllipse_F64 {
 	/**
 	 * Computes the tangent to the ellipse at the specified location
 	 *
-	 * @param t Location on the ellipse.  Radians
+	 * @param t Location on the ellipse. Radians
 	 * @param ellipse Ellipse equation
 	 * @param output Optional storage for tangent
 	 * @return The tangent
@@ -362,7 +362,7 @@ public class UtilEllipse_F64 {
 	}
 
 	/**
-	 * <p>Finds four lines which are tangent to both ellipses.  Both ellipses must not intersect.  Line 0
+	 * <p>Finds four lines which are tangent to both ellipses. Both ellipses must not intersect. Line 0
 	 * and line 3 will not intersect the line joining the center of the two ellipses while line 1 and 2 will.</p>
 
 	 * @see TangentLinesTwoEllipses_F64

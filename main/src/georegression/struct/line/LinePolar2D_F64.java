@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,7 +24,7 @@ import java.io.Serializable;
 /**
  * <p>
  * Defines a line in 2D space based upon the distance of its closest point to the origin
- * and the angle of a line from the origin to that point.  Also referred to as the polar line
+ * and the angle of a line from the origin to that point. Also referred to as the polar line
  * equation.
  * </p>
  *

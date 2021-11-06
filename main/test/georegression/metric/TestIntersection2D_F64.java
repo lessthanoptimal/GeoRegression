@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -275,7 +275,7 @@ public class TestIntersection2D_F64 {
 
 	/**
 	 * Checks to see if the expected distance is returned and that the end points of the
-	 * line segment are respected.  The test cases are rotated around in a circle to test
+	 * line segment are respected. The test cases are rotated around in a circle to test
 	 * more geometric configurations
 	 */
 	@Test void intersection_p_to_ls() {
@@ -650,7 +650,7 @@ public class TestIntersection2D_F64 {
 		checkSingleIntersection(new LineGeneral2D_F64(0,1,-1),ellipse); // single point
 		checkNoIntersection(new LineGeneral2D_F64(1,0,20),ellipse);// no intersection
 
-		// Test to see if the rotation is handled correctly.  Still centered at the original but rotated 90 degrees
+		// Test to see if the rotation is handled correctly. Still centered at the original but rotated 90 degrees
 		ellipse = new EllipseRotated_F64(0,0,2,1, GrlConstants.PId2);
 
 		checkIntersection(new LineGeneral2D_F64(1,0,0),ellipse); // vertical line
@@ -667,7 +667,7 @@ public class TestIntersection2D_F64 {
 		checkIntersection(new LineGeneral2D_F64(1,0,0),ellipse); // vertical line
 		checkIntersection(new LineGeneral2D_F64(0,1,0),ellipse); // horizontal line
 
-		// Hardest case.  not at origin and rotated an arbitrary amount
+		// Hardest case. not at origin and rotated an arbitrary amount
 		ellipse = new EllipseRotated_F64(0.12,-0.13,2,1,0.4);
 		checkIntersection(new LineGeneral2D_F64(1,0,0),ellipse); // vertical line
 		checkIntersection(new LineGeneral2D_F64(0,1,0),ellipse); // horizontal line

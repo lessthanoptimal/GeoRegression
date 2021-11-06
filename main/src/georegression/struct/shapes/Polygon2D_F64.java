@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -53,7 +53,7 @@ public class Polygon2D_F64 implements Serializable {
 	}
 
 	public Polygon2D_F64( Polygon2D_F64 a ) {
-		vertexes = new DogArray<>(a.size(),Point2D_F64::new);
+		vertexes = new DogArray<>(a.size(), Point2D_F64::new);
 		for (int i = 0; i < a.size(); i++) {
 			vertexes.grow().setTo(a.get(i));
 		}
@@ -67,15 +67,15 @@ public class Polygon2D_F64 implements Serializable {
 	}
 
 	public Polygon2D_F64( double... xy ) {
-		if( xy.length % 2 == 1 )
+		if (xy.length%2 == 1)
 			throw new IllegalArgumentException("Expected an even number");
-		vertexes = new DogArray<>(xy.length/2,Point2D_F64::new);
+		vertexes = new DogArray<>(xy.length/2, Point2D_F64::new);
 		vertexes.reserve(xy.length/2);
 		vertexes.size = xy.length/2;
 
 		int count = 0;
 		for (int i = 0; i < xy.length; i += 2) {
-			vertexes.data[count++].setTo( xy[i],xy[i+1]);
+			vertexes.data[count++].setTo(xy[i], xy[i + 1]);
 		}
 	}
 
@@ -88,28 +88,29 @@ public class Polygon2D_F64 implements Serializable {
 	 */
 	public void zero() {
 		for (int i = 0; i < vertexes.size; i++) {
-			vertexes.get(i).setTo(0,0);
+			vertexes.get(i).setTo(0, 0);
 		}
 	}
 
-	public void setTo(Polygon2D_F64 orig ) {
+	public void setTo( Polygon2D_F64 orig ) {
 		vertexes.resize(orig.size());
 		for (int i = 0; i < orig.size(); i++) {
-			vertexes.data[i].setTo( orig.vertexes.data[i]);
+			vertexes.data[i].setTo(orig.vertexes.data[i]);
 		}
 	}
 
-	public void set( int index , double x , double y ) {
-		vertexes.data[index].setTo(x,y);
+	public void set( int index, double x, double y ) {
+		vertexes.data[index].setTo(x, y);
 	}
 
 	/**
 	 * Resturns the length of the specified side that is composed of point index and index+1
+	 *
 	 * @return Euclidean length of the side
 	 */
 	public double getSideLength( int index ) {
-		Point2D_F64 a = vertexes.get( index );
-		Point2D_F64 b = vertexes.get( (index+1)%vertexes.size );
+		Point2D_F64 a = vertexes.get(index);
+		Point2D_F64 b = vertexes.get((index + 1)%vertexes.size);
 
 		return (double)a.distance(b);
 	}
@@ -127,7 +128,8 @@ public class Polygon2D_F64 implements Serializable {
 	}
 
 	/**
-	 * Returns the area for simply polygons.  Non-self intersecting convex or concave.
+	 * Returns the area for simply polygons. Non-self intersecting convex or concave.
+	 *
 	 * @return area
 	 */
 	public double areaSimple() {
@@ -135,25 +137,25 @@ public class Polygon2D_F64 implements Serializable {
 	}
 
 	/**
-	 * Returns true if the point is inside the polygon.  Points along the border are ambiguously considered inside
+	 * Returns true if the point is inside the polygon. Points along the border are ambiguously considered inside
 	 * or outside.
-	 *
-	 * @see Intersection2D_F64#containsConcave(Polygon2D_F64, Point2D_F64)
-	 * @see Intersection2D_F64#containsConcave(Polygon2D_F64, Point2D_F64)
 	 *
 	 * @param p A point
 	 * @return true if inside and false if outside
+	 * @see Intersection2D_F64#containsConvex(Polygon2D_F64, Point2D_F64)
+	 * @see Intersection2D_F64#containsConcave(Polygon2D_F64, Point2D_F64)
 	 */
 	public boolean isInside( Point2D_F64 p ) {
-		if( isConvex() ) {
-			return Intersection2D_F64.containsConvex(this,p);
+		if (isConvex()) {
+			return Intersection2D_F64.containsConvex(this, p);
 		} else {
-			return Intersection2D_F64.containsConcave(this,p);
+			return Intersection2D_F64.containsConcave(this, p);
 		}
 	}
 
 	/**
-	 * true if the order of vertexes is in counter clockwise order.
+	 * true if the order of vertexes is in counter-clockwise order.
+	 *
 	 * @return true if ccw or false if cw
 	 */
 	public boolean isCCW() {
@@ -164,11 +166,11 @@ public class Polygon2D_F64 implements Serializable {
 		return UtilPolygons2D_F64.isConvex(this);
 	}
 
-	public boolean isIdentical( Polygon2D_F64 a , double tol ) {
-		return UtilPolygons2D_F64.isIdentical(this,a,tol);
+	public boolean isIdentical( Polygon2D_F64 a, double tol ) {
+		return UtilPolygons2D_F64.isIdentical(this, a, tol);
 	}
 
-	public boolean isEquivalent( Polygon2D_F64 a , double tol ) {
+	public boolean isEquivalent( Polygon2D_F64 a, double tol ) {
 		return UtilPolygons2D_F64.isEquivalent(this, a, tol);
 	}
 
@@ -178,7 +180,7 @@ public class Polygon2D_F64 implements Serializable {
 
 	/** Creates a copy of 'this' and flips it */
 	public Polygon2D_F64 flip( @Nullable Polygon2D_F64 storage ) {
-		if (storage==null)
+		if (storage == null)
 			storage = new Polygon2D_F64(this.size());
 		storage.setTo(this);
 		storage.flip();
@@ -187,14 +189,15 @@ public class Polygon2D_F64 implements Serializable {
 
 	/**
 	 * Returns the line/edge defined by vertex index and index+1.
+	 *
 	 * @param index Index of the line
 	 * @return A new instance of the line segment.
 	 */
-	public LineSegment2D_F64 getLine( int index , LineSegment2D_F64 storage ) {
-		if( storage == null )
+	public LineSegment2D_F64 getLine( int index, LineSegment2D_F64 storage ) {
+		if (storage == null)
 			storage = new LineSegment2D_F64();
 
-		int j = (index+1)%vertexes.size;
+		int j = (index + 1)%vertexes.size;
 
 		storage.a.setTo(get(index));
 		storage.b.setTo(get(j));
@@ -209,15 +212,15 @@ public class Polygon2D_F64 implements Serializable {
 	 * @param copy If points will be copied otherwise a reference of points will be returned
 	 * @return List of vertexes
 	 */
-	public List<Point2D_F64> convert( @Nullable List<Point2D_F64> storage , boolean copy ) {
-		if( storage == null )
+	public List<Point2D_F64> convert( @Nullable List<Point2D_F64> storage, boolean copy ) {
+		if (storage == null)
 			storage = new ArrayList<>();
 		else
 			storage.clear();
 
-		if( copy ) {
+		if (copy) {
 			for (int i = 0; i < vertexes.size; i++) {
-				storage.add( vertexes.get(i).copy() );
+				storage.add(vertexes.get(i).copy());
 			}
 		} else {
 			storage.addAll(vertexes.toList());
@@ -228,12 +231,13 @@ public class Polygon2D_F64 implements Serializable {
 	/**
 	 * Sets the polygon to be the same as the list. A true copy is created and no references
 	 * to points in the list are saved.
+	 *
 	 * @param list List which the polygon will be set to
 	 */
-	public void setTo(List<Point2D_F64> list ) {
+	public void setTo( List<Point2D_F64> list ) {
 		vertexes.resize(list.size());
 		for (int i = 0; i < list.size(); i++) {
-			vertexes.data[i].setTo( list.get(i));
+			vertexes.data[i].setTo(list.get(i));
 		}
 	}
 
@@ -241,11 +245,11 @@ public class Polygon2D_F64 implements Serializable {
 
 		final int length = MatrixIO.DEFAULT_LENGTH;
 		DecimalFormat format = new DecimalFormat("#");
-		String out = getClass().getSimpleName()+"{ order="+vertexes.size+", [ ";
+		String out = getClass().getSimpleName() + "{ order=" + vertexes.size + ", [ ";
 
 		for (int i = 0; i < vertexes.size; i++) {
 			Point2D_F64 p = vertexes.get(i);
-			out += "("+ fancyString(p.x,format,false,length,4)+", "+fancyString(p.y,format,false,length,4)+") ";
+			out += "(" + fancyString(p.x, format, false, length, 4) + ", " + fancyString(p.y, format, false, length, 4) + ") ";
 		}
 
 		out += "] }";

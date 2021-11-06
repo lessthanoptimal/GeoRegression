@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,7 +33,7 @@ public interface ClosestPointToModel<T extends GeoTuple> {
 	 * is returned.
 	 *
 	 * @param target The point where the closest point on the model is being searched for
-	 * @return Closest model point, if any has been found.  null otherwise.  The returned point should not
+	 * @return Closest model point, if any has been found. null otherwise. The returned point should not
 	 * be modified or saved since if the model is updated its value can change.
 	 */
 	@Nullable T findClosestPoint(T target);

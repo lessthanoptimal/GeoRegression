@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,7 +41,7 @@ public class SePointOps_F64 {
 	 *
 	 * @param se	 The transform.
 	 * @param orig   Original point being transformed. Not modified.
-	 * @param result Where the results are stored.  Can be the same as orig. If null a new
+	 * @param result Where the results are stored. Can be the same as orig. If null a new
 	 *               instance is created. Modified.
 	 * @return Transformed point.
 	 */
@@ -103,7 +103,7 @@ public class SePointOps_F64 {
 	 * Applies a 2D special euclidean transform to an array of points.
 	 *
 	 * @param se	 The transform.
-	 * @param points Array of points which are to be transformed.  Modified.
+	 * @param points Array of points which are to be transformed. Modified.
 	 * @param length The number of elements in the array that are to be processed.
 	 */
 	public static void transform(Se2_F64 se, Point2D_F64[] points, int length ) {
@@ -129,7 +129,7 @@ public class SePointOps_F64 {
 	 * Applies a 2D special euclidean transform to a list of points.
 	 *
 	 * @param se	 The transform.
-	 * @param points List of points which are to be transformed.  Modified.
+	 * @param points List of points which are to be transformed. Modified.
 	 */
 	public static void transform( Se2_F64 se, List<Point2D_F64> points ) {
 
@@ -152,7 +152,7 @@ public class SePointOps_F64 {
 	 * Applies a 3D special euclidean transform to a list of points.
 	 *
 	 * @param se	 The transform.
-	 * @param points List of points which are to be transformed.  Modified.
+	 * @param points List of points which are to be transformed. Modified.
 	 */
 	public static void transform( Se3_F64 se, Point3D_F64[] points , int start , int length ) {
 		for (int i = 0; i < length; i++) {
@@ -165,7 +165,7 @@ public class SePointOps_F64 {
 	 * Applies a 3D special euclidean transform to a list of points.
 	 *
 	 * @param se	 The transform.
-	 * @param points List of points which are to be transformed.  Modified.
+	 * @param points List of points which are to be transformed. Modified.
 	 */
 	public static void transform( Se3_F64 se, List<Point3D_F64> points ) {
 		for( Point3D_F64 p : points ) {
@@ -185,7 +185,7 @@ public class SePointOps_F64 {
 	 *
 	 * @param se SpecialEuclidean transform. Not modified.
 	 * @param src Original coordinate of the point. Not modified.
-	 * @param dst Storage for transformed coordinate of the point. Point declared if null.  Modified.
+	 * @param dst Storage for transformed coordinate of the point. Point declared if null. Modified.
 	 * @return Transformed point.
 	 */
 	public static Point3D_F64 transform( Se3_F64 se, Point3D_F64 src, @Nullable Point3D_F64 dst ) {
@@ -219,7 +219,7 @@ public class SePointOps_F64 {
 	 *
 	 * @param se SpecialEuclidean transform. Not modified.
 	 * @param src Original coordinate of the point. Not modified.
-	 * @param dst Storage for transformed coordinate of the point. Point declared if null.  Modified.
+	 * @param dst Storage for transformed coordinate of the point. Point declared if null. Modified.
 	 * @return Transformed point.
 	 */
 	public static Point3D_F64 transform(Se3_F64 se, Point4D_F64 src, @Nullable Point3D_F64 dst ) {
@@ -282,7 +282,7 @@ public class SePointOps_F64 {
 	 *
 	 * @param se SpecialEuclidean transform. Not modified.
 	 * @param src Original coordinate of the point. Not modified.
-	 * @param dst Storage for transformed coordinate of the point. Point declared if null.  Modified.
+	 * @param dst Storage for transformed coordinate of the point. Point declared if null. Modified.
 	 * @return Transformed point.
 	 */
 	public static Point4D_F64 transform(Se3_F64 se, Point4D_F64 src, @Nullable Point4D_F64 dst ) {

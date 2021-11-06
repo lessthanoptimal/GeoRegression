@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,7 +44,7 @@ public class FitLine_I32 {
 	 * @param points Set of points on the line.
 	 * @param start First index in the list
 	 * @param length number of variables used in the list
-	 * @param ret Storage for the line.  If null a new line will be declared.
+	 * @param ret Storage for the line. If null a new line will be declared.
 	 * @return Best fit line
 	 */
 	public static LinePolar2D_F32 polar(List<Point2D_I32> points , int start , int length ,
@@ -94,7 +94,7 @@ public class FitLine_I32 {
 	 * </p>
 	 *
 	 * @param points Set of points on the line.
-	 * @param ret Storage for the line.  If null a new line will be declared.
+	 * @param ret Storage for the line. If null a new line will be declared.
 	 * @return Best fit line
 	 */
 	public static LinePolar2D_F64 polar(List<Point2D_I32> points  , int start , int length ,
