@@ -82,6 +82,10 @@ public class RectangleLength2D_I32 implements Serializable {
 		this.height = r.height;
 	}
 
+	public int getX() {return x0;}
+
+	public int getY() {return y0;}
+
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + "{" +

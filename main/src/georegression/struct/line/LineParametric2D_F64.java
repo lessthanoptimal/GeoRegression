@@ -101,7 +101,7 @@ public class LineParametric2D_F64 implements Serializable {
 	 * @param angle Angle of the line specified in radians.
 	 */
 	public void setAngle( double angle ) {
-		slope.setTo(Math.cos(angle), Math.sin(angle));
+		slope.setTo( Math.cos(angle), Math.sin(angle));
 	}
 
 	public double getAngle() {

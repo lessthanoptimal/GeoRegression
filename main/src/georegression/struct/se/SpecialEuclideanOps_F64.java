@@ -165,7 +165,7 @@ public class SpecialEuclideanOps_F64 {
 		double c = (double)H.get(0, 0);
 		double s = (double)H.get(1, 0);
 
-		ret.setYaw(Math.atan2(s, c));
+		ret.setYaw( (double)Math.atan2(s, c));
 
 		return ret;
 	}
@@ -307,7 +307,7 @@ public class SpecialEuclideanOps_F64 {
 			b *= s[i];
 		}
 
-		b = Math.signum(det)/Math.pow(b, 1.0/3.0);
+		b = Math.signum(det)/ (double) Math.pow(b, 1.0/3.0);
 
 		GeometryMath_F64.scale(a.T, b);
 
