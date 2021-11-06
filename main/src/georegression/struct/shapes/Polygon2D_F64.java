@@ -83,6 +83,15 @@ public class Polygon2D_F64 implements Serializable {
 		vertexes = new DogArray<>(Point2D_F64::new);
 	}
 
+	/**
+	 * Sets the value of every vertex to be zero
+	 */
+	public void zero() {
+		for (int i = 0; i < vertexes.size; i++) {
+			vertexes.get(i).setTo(0,0);
+		}
+	}
+
 	public void setTo(Polygon2D_F64 orig ) {
 		vertexes.resize(orig.size());
 		for (int i = 0; i < orig.size(); i++) {

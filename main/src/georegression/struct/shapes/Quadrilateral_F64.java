@@ -79,6 +79,16 @@ public class Quadrilateral_F64 implements Serializable {
 	}
 
 	/**
+	 * Sets the value of all vertexes to be zero
+	 */
+	public void zero() {
+		a.setTo(0, 0);
+		b.setTo(0, 0);
+		c.setTo(0, 0);
+		d.setTo(0, 0);
+	}
+
+	/**
 	 * Returns the area of this quadrilateral
 	 * @return area
 	 */
