@@ -12,7 +12,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.24'
+    version = '0.25-SNAPSHOT'
 }
 
 project.ext.set("errorprone_version", '2.7.1')
@@ -40,7 +40,7 @@ subprojects {
     tasks.withType(JavaCompile).configureEach { options.encoding = "UTF-8" }
 
     // Creates Java 8 byte code
-    tasks.withType(JavaCompile).configureEach { options.release = 8 }
+    tasks.withType(JavaCompile).configureEach { options.release = 11 }
 
     // Enable incremental compile. Should make single file changes faster
     tasks.withType(JavaCompile) { options.incremental = true }
