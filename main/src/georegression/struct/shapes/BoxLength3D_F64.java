@@ -19,6 +19,8 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F64;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -28,6 +30,7 @@ import java.io.Serializable;
  * The point 'p' has the lowest values and is also known as the lower extent..  The corner which is farthest away from 'p'
  * is (x0+lengthX , y0+lengthY, z0+lengthZ), the upper extent.
  */
+@Getter @Setter
 public class BoxLength3D_F64 implements Serializable {
 	/** Point on the box with the lowest values. The lower extent. */
 	public Point3D_F64 p = new Point3D_F64();
@@ -46,11 +49,11 @@ public class BoxLength3D_F64 implements Serializable {
 		setTo(orig);
 	}
 
+	public BoxLength3D_F64() {}
+
 	public void setTo( BoxLength3D_F64 orig ) {
 		setTo(orig.p.x, orig.p.y, orig.p.z, orig.lengthX, orig.lengthY, orig.lengthZ);
 	}
-
-	public BoxLength3D_F64() {}
 
 	public void setTo( double x0, double y0, double z0, double lengthX, double lengthY, double lengthZ ) {
 		this.p.setTo(x0, y0, z0);
@@ -59,40 +62,16 @@ public class BoxLength3D_F64 implements Serializable {
 		this.lengthZ = lengthZ;
 	}
 
+	public void zero() {
+		setTo(0, 0, 0, 0, 0, 0);
+	}
+
 	public double area() {
 		return lengthX*lengthY*lengthZ;
 	}
 
-	public Point3D_F64 getP() {
-		return p;
-	}
-
-	public double getLengthX() {
-		return lengthX;
-	}
-
-	public double getLengthY() {
-		return lengthY;
-	}
-
-	public double getLengthZ() {
-		return lengthZ;
-	}
-
 	public void setP( Point3D_F64 p ) {
 		this.p.setTo(p);
-	}
-
-	public void setLengthX( double lengthX ) {
-		this.lengthX = lengthX;
-	}
-
-	public void setLengthY( double lengthY ) {
-		this.lengthY = lengthY;
-	}
-
-	public void setLengthZ( double lengthZ ) {
-		this.lengthZ = lengthZ;
 	}
 
 	/**

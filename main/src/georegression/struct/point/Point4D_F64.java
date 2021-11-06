@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,40 +22,38 @@ import georegression.struct.GeoTuple4D_F64;
 
 /**
  * Point in 4D or a 3D point in homogenous coordinates.
- *
  */
 @SuppressWarnings({"unchecked"})
 public class Point4D_F64 extends GeoTuple4D_F64<Point4D_F64> {
 
-	public Point4D_F64(Point4D_F64 pt) {
-		super( pt.x, pt.y, pt.z , pt.w );
+	public Point4D_F64( Point4D_F64 pt ) {
+		super(pt.x, pt.y, pt.z, pt.w);
 	}
 
-	public Point4D_F64(double x, double y, double z, double w) {
-		super( x, y, z , w);
+	public Point4D_F64( double x, double y, double z, double w ) {
+		super(x, y, z, w);
 	}
 
-	public Point4D_F64() {
-	}
+	public Point4D_F64() {}
 
 	public Point4D_F64 plus( Vector4D_F64 a ) {
-		return new Point4D_F64( x + a.getX(), y + a.getY(), z + a.getZ() , w + a.getW());
+		return new Point4D_F64(x + a.getX(), y + a.getY(), z + a.getZ(), w + a.getW());
 	}
 
 	// todo remove this?  Makes no sense mathematically
 
 	public Point4D_F64 plus( Point4D_F64 a ) {
-		return new Point4D_F64( x + a.getX(), y + a.getY(), z + a.getZ() , w + a.getW() );
+		return new Point4D_F64(x + a.getX(), y + a.getY(), z + a.getZ(), w + a.getW());
 	}
 
 	@Override
 	public Point4D_F64 copy() {
-		return new Point4D_F64( x, y, z , w);
+		return new Point4D_F64(x, y, z, w);
 	}
 
 	@Override
 	public void setTo( Point4D_F64 worldLoc ) {
-		_setTo( worldLoc );
+		_setTo(worldLoc);
 	}
 
 	@Override

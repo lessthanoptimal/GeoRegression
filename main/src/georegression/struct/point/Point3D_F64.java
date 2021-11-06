@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,21 +22,19 @@ import georegression.struct.GeoTuple3D_F64;
 
 /**
  *
- *
  */
 @SuppressWarnings({"unchecked"})
 public class Point3D_F64 extends GeoTuple3D_F64<Point3D_F64> {
 
 	public Point3D_F64( GeoTuple3D_F64 pt ) {
-		super( pt.x, pt.y, pt.z );
+		super(pt.x, pt.y, pt.z);
 	}
 
 	public Point3D_F64( double x, double y, double z ) {
-		super( x, y, z );
+		super(x, y, z);
 	}
 
-	public Point3D_F64() {
-	}
+	public Point3D_F64() {}
 
 	/**
 	 * Converts the point into a vector.
@@ -44,17 +42,17 @@ public class Point3D_F64 extends GeoTuple3D_F64<Point3D_F64> {
 	 * @return Vector with the same (x,y,z) values.
 	 */
 	public Vector3D_F64 toVector() {
-		return new Vector3D_F64(x,y,z);
+		return new Vector3D_F64(x, y, z);
 	}
 
 	@Override
 	public Point3D_F64 copy() {
-		return new Point3D_F64( x, y, z );
+		return new Point3D_F64(x, y, z);
 	}
 
 	@Override
-	public void setTo(Point3D_F64 worldLoc ) {
-		_setTo( worldLoc );
+	public void setTo( Point3D_F64 worldLoc ) {
+		_setTo(worldLoc);
 	}
 
 	@Override

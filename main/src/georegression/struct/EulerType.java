@@ -27,21 +27,20 @@ package georegression.struct;
  * @author Peter Abeles
  */
 public enum EulerType {
+	ZYX(2, 1, 0),
+	ZYZ(2, 1, 2),
+	ZXY(2, 0, 1),
+	ZXZ(2, 0, 2),
+	YXZ(1, 0, 2),
+	YXY(1, 0, 1),
+	YZX(1, 2, 0),
+	YZY(1, 2, 1),
+	XYZ(0, 1, 2),
+	XYX(0, 1, 0),
+	XZY(0, 2, 1),
+	XZX(0, 2, 0);
 
-	ZYX(2,1,0),
-	ZYZ(2,1,2),
-	ZXY(2,0,1),
-	ZXZ(2,0,2),
-	YXZ(1,0,2),
-	YXY(1,0,1),
-	YZX(1,2,0),
-	YZY(1,2,1),
-	XYZ(0,1,2),
-	XYX(0,1,0),
-	XZY(0,2,1),
-	XZX(0,2,0);
-
-	EulerType(int axisA, int axisB, int axisC) {
+	EulerType( int axisA, int axisB, int axisC ) {
 		this.axisA = axisA;
 		this.axisB = axisB;
 		this.axisC = axisC;
@@ -68,5 +67,5 @@ public enum EulerType {
 		return axisC;
 	}
 
-	final int axisA,axisB,axisC;
+	final int axisA, axisB, axisC;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,8 @@
 package georegression.struct.line;
 
 import georegression.struct.point.Point2D_F64;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -30,12 +32,12 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
+@Getter @Setter
 public class LineSegment2D_F64 implements Serializable {
 	public Point2D_F64 a = new Point2D_F64();
 	public Point2D_F64 b = new Point2D_F64();
 
-	public LineSegment2D_F64() {
-	}
+	public LineSegment2D_F64() {}
 
 	public LineSegment2D_F64( Point2D_F64 a, Point2D_F64 b ) {
 		setTo( a, b );
@@ -67,20 +69,9 @@ public class LineSegment2D_F64 implements Serializable {
 		b.setTo( x1, y1 );
 	}
 
-	public Point2D_F64 getA() {
-		return a;
-	}
-
-	public void setA( Point2D_F64 a ) {
-		this.a = a;
-	}
-
-	public Point2D_F64 getB() {
-		return b;
-	}
-
-	public void setB( Point2D_F64 b ) {
-		this.b = b;
+	public void zero() {
+		a.zero();
+		b.zero();
 	}
 
 	public double slopeX() {

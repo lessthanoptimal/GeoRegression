@@ -47,6 +47,7 @@ public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
 
 	/**
 	 * Sets this equal to 'src'
+	 *
 	 * @param src The tuple being copied
 	 */
 	public abstract void setTo( T src );

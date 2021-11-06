@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -42,9 +42,13 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 	public Point2D_I16() {
 	}
 
-	public void setTo(int x, int y ) {
+	public void setTo( int x, int y ) {
 		this.x = (short)x;
 		this.y = (short)y;
+	}
+
+	public void zero() {
+		setTo(0, 0);
 	}
 
 	public void setX( int x ) {
@@ -63,12 +67,12 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 		return y;
 	}
 
-	public boolean isIdentical( int x , int y ) {
+	public boolean isIdentical( int x, int y ) {
 		return this.x == x && this.y == y;
 	}
 
 	@Override
-	public void setTo(Point2D_I16 src) {
+	public void setTo( Point2D_I16 src ) {
 		this.x = src.x;
 		this.y = src.y;
 	}
@@ -83,13 +87,13 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 	}
 
 	@Override
-	public void setIdx( int index , int value ) {
-		if( index == 0 )
+	public void setIdx( int index, int value ) {
+		if (index == 0)
 			this.x = (short)value;
-		else if( index == 1 )
+		else if (index == 1)
 			this.y = (short)value;
 		else
-			throw new RuntimeException("Invalid index "+index);
+			throw new RuntimeException("Invalid index " + index);
 	}
 
 	public void print() {
@@ -108,23 +112,23 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 
 	@Override
 	public Point2D_I16 copy() {
-		return new Point2D_I16( x, y );
+		return new Point2D_I16(x, y);
 	}
 
 	@Override
 	public String toString() {
-		return "Point2D_I16{ x= " + x +", y= " + y +'}';
+		return "Point2D_I16{ x= " + x + ", y= " + y + '}';
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(this == obj)
+	public boolean equals( Object obj ) {
+		if (this == obj)
 			return true;
 
-		if(!(obj instanceof Point2D_I16))
+		if (!(obj instanceof Point2D_I16))
 			return false;
 
-		var o = (Point2D_I16) obj;
+		var o = (Point2D_I16)obj;
 		return x == o.x && y == o.y;
 	}
 

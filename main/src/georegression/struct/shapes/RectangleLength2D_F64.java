@@ -18,6 +18,9 @@
 
 package georegression.struct.shapes;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
@@ -28,29 +31,20 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
+@Getter @Setter
 public class RectangleLength2D_F64 implements Serializable {
-
-	/**
-	 * Lower extent x-axis
-	 */
+	/** Lower extent x-axis */
 	public double x0;
-	/**
-	 * Lower extent y-axis
-	 */
+	/** Lower extent y-axis */
 	public double y0;
-	/**
-	 * Rectangle's width
-	 */
+	/** Rectangle's width */
 	public double width;
-	/**
-	 * Rectangle's height
-	 */
+	/** Rectangle's height */
 	public double height;
 
-	public RectangleLength2D_F64() {
-	}
+	public RectangleLength2D_F64() {}
 
-	public RectangleLength2D_F64(double x0, double y0, double width, double height) {
+	public RectangleLength2D_F64( double x0, double y0, double width, double height ) {
 		this.width = width;
 		this.height = height;
 		this.x0 = x0;
@@ -68,68 +62,26 @@ public class RectangleLength2D_F64 implements Serializable {
 		this.y0 = y;
 	}
 
-	public double getWidth() {
-		return width;
-	}
-
-	public void setWidth( double width ) {
-		this.width = width;
-	}
-
-	public double getHeight() {
-		return height;
-	}
-
-	public void setHeight( double height ) {
-		this.height = height;
-	}
-
-	/**
-	 * @return Lower-extent x-coordinate
-	 */
-	public double getX() {
-		return x0;
-	}
-
-	/**
-	 * Sets the lower-extent x-coordinate
-	 *
-	 * @param x Lower-extent x-coordinate
-	 */
-	public void setX( double x ) {
-		this.x0 = x;
-	}
-
-	/**
-	 * @return Lower-extent y-coordinate
-	 */
-	public double getY() {
-		return y0;
-	}
-
-	/**
-	 * Sets the lower-extent y-coordinate
-	 *
-	 * @param y Lower-extent y-coordinate
-	 */
-	public void setY( double y ) {
-		this.y0 = y;
-	}
-
 	/**
 	 * Sets this rectangle to be equal to the passed in rectangle.
+	 *
 	 * @param r Rectangle which this is to be set equal to
 	 */
-	public void setTo(RectangleLength2D_I32 r) {
+	public void setTo( RectangleLength2D_I32 r ) {
 		this.x0 = r.x0;
 		this.y0 = r.y0;
 		this.width = r.width;
 		this.height = r.height;
 	}
 
+	/** Sets the value of all fields to zero */
+	public void zero() {
+		x0 = y0 = width = height = 0.0;
+	}
+
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"{" +
+		return getClass().getSimpleName() + "{" +
 				"p=[ " + x0 + " , " + y0 +
 				"], width=" + width + ", height=" + height + '}';
 	}

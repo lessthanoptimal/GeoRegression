@@ -59,7 +59,7 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 *
 	 * @param target The new value of 'this'.
 	 */
-	void setTo(T target );
+	void setTo( T target );
 
 	/**
 	 * <p>
@@ -81,7 +81,7 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 *
 	 * @param second The second transform which is applied. Not modified.
 	 * @param result A transform which is equivalent to applying the first then the second.
-	 *               If null then a new instance is declared. Modified.
+	 * If null then a new instance is declared. Modified.
 	 * @return The equivalent transform.
 	 */
 	T concat( T second, @Nullable T result );

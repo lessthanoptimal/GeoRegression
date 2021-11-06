@@ -20,6 +20,7 @@ package georegression.struct.plane;
 
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -32,69 +33,65 @@ import java.util.Objects;
  */
 public class PlaneNormal3D_F64 implements Serializable {
 	/** An arbitrary point in the plane */
-	public Point3D_F64 p = new Point3D_F64();
+	@Getter public Point3D_F64 p = new Point3D_F64();
 	/** The plane's normal */
-	public Vector3D_F64 n = new Vector3D_F64();
+	@Getter public Vector3D_F64 n = new Vector3D_F64();
 
-	public PlaneNormal3D_F64(PlaneNormal3D_F64 o) {
+	public PlaneNormal3D_F64( PlaneNormal3D_F64 o ) {
 		setTo(o);
 	}
 
-	public PlaneNormal3D_F64(Point3D_F64 point, Vector3D_F64 normal) {
-		setTo(point,normal);
+	public PlaneNormal3D_F64( Point3D_F64 point, Vector3D_F64 normal ) {
+		setTo(point, normal);
 	}
 
-	public PlaneNormal3D_F64( double px , double py , double pz , double nx , double ny, double nz ) {
-		setTo(px,py,pz,nx,ny,nz);
+	public PlaneNormal3D_F64( double px, double py, double pz, double nx, double ny, double nz ) {
+		setTo(px, py, pz, nx, ny, nz);
 	}
 
-	public PlaneNormal3D_F64() {
+	public PlaneNormal3D_F64() {}
+
+	public void setTo( double px, double py, double pz, double nx, double ny, double nz ) {
+		this.p.setTo(px, py, pz);
+		this.n.setTo(nx, ny, nz);
 	}
 
-	public Point3D_F64 getP() {
-		return p;
-	}
-
-	public void setTo(double px , double py , double pz , double nx , double ny, double nz ) {
-		this.p.setTo(px,py,pz);
-		this.n.setTo(nx,ny,nz);
-	}
-
-	public void setTo(Point3D_F64 point, Vector3D_F64 normal ) {
+	public void setTo( Point3D_F64 point, Vector3D_F64 normal ) {
 		this.p.setTo(point);
 		this.n.setTo(normal);
 	}
 
-	public void setTo(PlaneNormal3D_F64 o ) {
+	public void setTo( PlaneNormal3D_F64 o ) {
 		this.p.setTo(o.p);
 		this.n.setTo(o.n);
 	}
 
-	public void setP(Point3D_F64 p) {
+	public void zero() {
+		p.zero();
+		n.zero();
+	}
+
+	public void setP( Point3D_F64 p ) {
 		this.p.setTo(p);
 	}
 
-	public Vector3D_F64 getN() {
-		return n;
-	}
-
-	public void setN(Vector3D_F64 n) {
+	public void setN( Vector3D_F64 n ) {
 		this.n.setTo(n);
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"{" +
+		return getClass().getSimpleName() + "{" +
 				"p=" + p +
 				", n=" + n +
 				'}';
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals( Object o ) {
 		if (this == o) return true;
-		if( !(o instanceof PlaneNormal3D_F64)) return false;
-		PlaneNormal3D_F64 that = (PlaneNormal3D_F64) o;
+		if (!(o instanceof PlaneNormal3D_F64)) return false;
+		PlaneNormal3D_F64 that = (PlaneNormal3D_F64)o;
 		return p.equals(that.p) && n.equals(that.n);
 	}
 

@@ -19,6 +19,9 @@
 package georegression.struct.line;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
@@ -39,14 +42,12 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
+@Getter @Setter
 public class LinePolar2D_F64 implements Serializable{
-	/**
-	 * Distance from the origin to the closest point on the line.
-	 */
+	/** Distance from the origin to the closest point on the line. */
 	public double distance;
-	/**
-	 * Angle in radians from the origin to the closest point on the line.
-	 */
+
+	/** Angle in radians from the origin to the closest point on the line. */
 	public double angle;
 
 	public LinePolar2D_F64(double distance, double angle) {
@@ -61,20 +62,9 @@ public class LinePolar2D_F64 implements Serializable{
 		this.angle = src.angle;
 	}
 
-	public double getDistance() {
-		return distance;
-	}
-
-	public void setDistance(double distance) {
-		this.distance = distance;
-	}
-
-	public double getAngle() {
-		return angle;
-	}
-
-	public void setAngle(double angle) {
-		this.angle = angle;
+	public void zero() {
+		this.distance = 0;
+		this.angle = 0;
 	}
 
 	@Override

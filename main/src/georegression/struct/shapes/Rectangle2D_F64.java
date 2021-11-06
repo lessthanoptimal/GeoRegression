@@ -19,20 +19,19 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point2D_F64;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 /**
  * An axis aligned rectangle in 2D that is specified by its lower-extent p0, and upper-extent p1.
  */
+@Getter @Setter
 public class Rectangle2D_F64 implements Serializable {
-	/**
-	 * Lower extent
-	 */
+	/** Lower extent */
 	public Point2D_F64 p0 = new Point2D_F64();
-	/**
-	 * Upper extent
-	 */
+	/** Upper extent */
 	public Point2D_F64 p1 = new Point2D_F64();
 
 	public Rectangle2D_F64( double x0, double y0, double x1, double y1 ) {
@@ -42,6 +41,8 @@ public class Rectangle2D_F64 implements Serializable {
 	public Rectangle2D_F64( Rectangle2D_F64 orig ) {
 		setTo(orig);
 	}
+
+	public Rectangle2D_F64() {}
 
 	public void setTo( Rectangle2D_F64 orig ) {
 		this.p0.setTo(orig.p0);
@@ -53,7 +54,11 @@ public class Rectangle2D_F64 implements Serializable {
 		this.p1.setTo(x1, y1);
 	}
 
-	public Rectangle2D_F64() {}
+	/** Sets the value of all fields to zero */
+	public void zero() {
+		p0.setTo(0, 0);
+		p1.setTo(0, 0);
+	}
 
 	/**
 	 * Makes sure x0,y0 is the lower extent and x1,y1 is the upper extent
@@ -112,22 +117,6 @@ public class Rectangle2D_F64 implements Serializable {
 
 	public double area() {
 		return (p1.y - p0.y)*(p1.x - p0.x);
-	}
-
-	public Point2D_F64 getP0() {
-		return p0;
-	}
-
-	public void setP0( Point2D_F64 p0 ) {
-		this.p0 = p0;
-	}
-
-	public Point2D_F64 getP1() {
-		return p1;
-	}
-
-	public void setP1( Point2D_F64 p1 ) {
-		this.p1 = p1;
 	}
 
 	@Override

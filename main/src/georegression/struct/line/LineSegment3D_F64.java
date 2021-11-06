@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,76 +19,65 @@
 package georegression.struct.line;
 
 import georegression.struct.point.Point3D_F64;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
-
 
 /**
  * Defines a line segment by its two end points.
  *
- * @see georegression.geometry.UtilLine3D_F64
- *
  * @author Peter Abeles
+ * @see georegression.geometry.UtilLine3D_F64
  */
+@Getter @Setter
 public class LineSegment3D_F64 implements Serializable {
 	public Point3D_F64 a = new Point3D_F64();
 	public Point3D_F64 b = new Point3D_F64();
 
-	public LineSegment3D_F64() {
+	public LineSegment3D_F64() {}
+
+	public LineSegment3D_F64( Point3D_F64 a, Point3D_F64 b ) {
+		setTo(a, b);
 	}
 
-	public LineSegment3D_F64(Point3D_F64 a, Point3D_F64 b) {
-		setTo( a, b );
+	public LineSegment3D_F64( double x0, double y0, double z0, double x1, double y1, double z1 ) {
+		setTo(x0, y0, z0, x1, y1, z1);
 	}
 
-	public LineSegment3D_F64(double x0, double y0, double z0, double x1, double y1 , double z1) {
-		setTo( x0, y0, z0, x1, y1, z1 );
-	}
-	
-	public static LineSegment3D_F64 wrap( Point3D_F64 a , Point3D_F64 b ) {
+	public static LineSegment3D_F64 wrap( Point3D_F64 a, Point3D_F64 b ) {
 		LineSegment3D_F64 ret = new LineSegment3D_F64();
 		ret.a = a;
 		ret.b = b;
 		return ret;
 	}
 
-	public void setTo(LineSegment3D_F64 l ) {
-		this.a.setTo( l.a );
-		this.b.setTo( l.b );
+	public void setTo( LineSegment3D_F64 l ) {
+		this.a.setTo(l.a);
+		this.b.setTo(l.b);
 	}
 
-	public void setTo(Point3D_F64 a, Point3D_F64 b ) {
-		this.a.setTo( a );
-		this.b.setTo( b );
+	public void setTo( Point3D_F64 a, Point3D_F64 b ) {
+		this.a.setTo(a);
+		this.b.setTo(b);
 	}
 
-	public void setTo(double x0, double y0, double z0, double x1, double y1 , double z1 ) {
-		a.setTo( x0, y0, z0 );
-		b.setTo( x1, y1, z1 );
+	public void setTo( double x0, double y0, double z0, double x1, double y1, double z1 ) {
+		a.setTo(x0, y0, z0);
+		b.setTo(x1, y1, z1);
 	}
 
-	public Point3D_F64 getA() {
-		return a;
-	}
-
-	public void setA( Point3D_F64 a ) {
-		this.a = a;
-	}
-
-	public Point3D_F64 getB() {
-		return b;
-	}
-
-	public void setB( Point3D_F64 b ) {
-		this.b = b;
+	public void zero() {
+		a.zero();
+		b.zero();
 	}
 
 	public double slopeX() {
-		return b.x-a.x;
+		return b.x - a.x;
 	}
 
 	public double slopeY() {
-		return b.y-a.y;
+		return b.y - a.y;
 	}
 
 	public double getLength() {
@@ -100,26 +89,26 @@ public class LineSegment3D_F64 implements Serializable {
 	}
 
 	public LineSegment3D_F64 copy() {
-		return new LineSegment3D_F64( a, b );
+		return new LineSegment3D_F64(a, b);
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"{" +
+		return getClass().getSimpleName() + "{" +
 				"a=" + a +
 				", b=" + b +
 				'}';
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(this == obj)
+	public boolean equals( Object obj ) {
+		if (this == obj)
 			return true;
 
-		if(!(obj instanceof LineSegment3D_F64))
+		if (!(obj instanceof LineSegment3D_F64))
 			return false;
 
-		var o = (LineSegment3D_F64) obj;
+		var o = (LineSegment3D_F64)obj;
 		return a.equals(o.a) && b.equals(o.b);
 	}
 

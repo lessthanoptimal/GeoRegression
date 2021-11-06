@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,14 +25,13 @@ import georegression.struct.GeoTuple4D_F64;
  */
 public class Vector4D_F64 extends GeoTuple4D_F64<Vector4D_F64> {
 
-	public Vector4D_F64(double x, double y, double z , double w ) {
-		super( x, y, z , w );
+	public Vector4D_F64( double x, double y, double z, double w ) {
+		super(x, y, z, w);
 	}
 
-	public Vector4D_F64() {
-	}
+	public Vector4D_F64() {}
 
-	public Vector4D_F64(Point4D_F64 a, Point4D_F64 b) {
+	public Vector4D_F64( Point4D_F64 a, Point4D_F64 b ) {
 		x = b.getX() - a.getX();
 		y = b.getY() - a.getY();
 		z = b.getZ() - a.getZ();
@@ -49,12 +48,12 @@ public class Vector4D_F64 extends GeoTuple4D_F64<Vector4D_F64> {
 
 	@Override
 	public Vector4D_F64 times( double scalar ) {
-		return new Vector4D_F64( x * scalar, y * scalar, z * scalar , w * scalar );
+		return new Vector4D_F64(x*scalar, y*scalar, z*scalar, w*scalar);
 	}
 
 	@Override
 	public Vector4D_F64 copy() {
-		return new Vector4D_F64( x, y, z , w );
+		return new Vector4D_F64(x, y, z, w);
 	}
 
 	@Override
@@ -77,6 +76,6 @@ public class Vector4D_F64 extends GeoTuple4D_F64<Vector4D_F64> {
 	}
 
 	public double dot( Vector4D_F64 a ) {
-		return x * a.x + y * a.y + z * a.z + w * a.w;
+		return x*a.x + y*a.y + z*a.z + w*a.w;
 	}
 }

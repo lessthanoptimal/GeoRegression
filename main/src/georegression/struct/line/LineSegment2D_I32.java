@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,76 +19,65 @@
 package georegression.struct.line;
 
 import georegression.struct.point.Point2D_I32;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
-
 
 /**
  * Defines a line segment by its two end points.
  *
- * @see georegression.geometry.UtilLine2D_I32
- *
  * @author Peter Abeles
+ * @see georegression.geometry.UtilLine2D_I32
  */
+@Getter @Setter
 public class LineSegment2D_I32 implements Serializable {
 	public Point2D_I32 a = new Point2D_I32();
 	public Point2D_I32 b = new Point2D_I32();
 
-	public LineSegment2D_I32() {
+	public LineSegment2D_I32() {}
+
+	public LineSegment2D_I32( Point2D_I32 a, Point2D_I32 b ) {
+		setTo(a, b);
 	}
 
-	public LineSegment2D_I32(Point2D_I32 a, Point2D_I32 b) {
-		setTo( a, b );
+	public LineSegment2D_I32( int x0, int y0, int x1, int y1 ) {
+		setTo(x0, y0, x1, y1);
 	}
 
-	public LineSegment2D_I32(int x0, int y0, int x1, int y1) {
-		setTo( x0, y0, x1, y1 );
-	}
-	
-	public static LineSegment2D_I32 wrap( Point2D_I32 a , Point2D_I32 b ) {
+	public static LineSegment2D_I32 wrap( Point2D_I32 a, Point2D_I32 b ) {
 		LineSegment2D_I32 ret = new LineSegment2D_I32();
 		ret.a = a;
 		ret.b = b;
 		return ret;
 	}
 
-	public void setTo(LineSegment2D_I32 l ) {
-		this.a.setTo( l.a );
-		this.b.setTo( l.b );
+	public void setTo( LineSegment2D_I32 l ) {
+		this.a.setTo(l.a);
+		this.b.setTo(l.b);
 	}
 
-	public void setTo(Point2D_I32 a, Point2D_I32 b ) {
-		this.a.setTo( a );
-		this.b.setTo( b );
+	public void setTo( Point2D_I32 a, Point2D_I32 b ) {
+		this.a.setTo(a);
+		this.b.setTo(b);
 	}
 
-	public void setTo(int x0, int y0, int x1, int y1 ) {
-		a.setTo( x0, y0 );
-		b.setTo( x1, y1 );
+	public void setTo( int x0, int y0, int x1, int y1 ) {
+		a.setTo(x0, y0);
+		b.setTo(x1, y1);
 	}
 
-	public Point2D_I32 getA() {
-		return a;
-	}
-
-	public void setA( Point2D_I32 a ) {
-		this.a = a;
-	}
-
-	public Point2D_I32 getB() {
-		return b;
-	}
-
-	public void setB( Point2D_I32 b ) {
-		this.b = b;
+	public void zero() {
+		a.zero();
+		b.zero();
 	}
 
 	public int slopeX() {
-		return b.x-a.x;
+		return b.x - a.x;
 	}
 
 	public int slopeY() {
-		return b.y-a.y;
+		return b.y - a.y;
 	}
 
 	public double getLength() {
@@ -100,7 +89,7 @@ public class LineSegment2D_I32 implements Serializable {
 	}
 
 	public LineSegment2D_I32 copy() {
-		return new LineSegment2D_I32( a, b );
+		return new LineSegment2D_I32(a, b);
 	}
 
 	@Override
@@ -112,14 +101,14 @@ public class LineSegment2D_I32 implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(this == obj)
+	public boolean equals( Object obj ) {
+		if (this == obj)
 			return true;
 
-		if(!(obj instanceof LineSegment2D_I32))
+		if (!(obj instanceof LineSegment2D_I32))
 			return false;
 
-		LineSegment2D_I32 o = (LineSegment2D_I32) obj;
+		LineSegment2D_I32 o = (LineSegment2D_I32)obj;
 		return a.equals(o.a) && b.equals(o.b);
 	}
 

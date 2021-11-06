@@ -85,6 +85,11 @@ public class Cylinder3D_F64 implements Serializable {
 		this.radius = o.radius;
 	}
 
+	public void zero() {
+		this.line.setTo(0, 0, 0, 0, 0, 0);
+		this.radius = 0;
+	}
+
 	@Override
 	public String toString() {
 		FancyPrint fancy = new FancyPrint();

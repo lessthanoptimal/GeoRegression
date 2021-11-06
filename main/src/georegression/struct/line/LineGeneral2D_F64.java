@@ -19,6 +19,8 @@
 package georegression.struct.line;
 
 import georegression.geometry.UtilLine2D_F64;
+import lombok.Getter;
+import lombok.Setter;
 import org.ejml.FancyPrint;
 
 import java.io.Serializable;
@@ -34,16 +36,13 @@ import java.io.Serializable;
  * normalize a line call {@link #normalize()}. After normalization several operations become less expensive.
  * </p>
  *
- * @see UtilLine2D_F64
- *
  * @author Peter Abeles
+ * @see UtilLine2D_F64
  */
+@Getter @Setter
 public class LineGeneral2D_F64 implements Serializable {
-
-	/**
-	 * Coefficients which define the line.
-	 */
-	public double A,B,C;
+	/** Coefficients which define the line. */
+	public double A, B, C;
 
 	/**
 	 * A*x + B*y + C = 0
@@ -52,28 +51,15 @@ public class LineGeneral2D_F64 implements Serializable {
 	 * @param b parameter B
 	 * @param c parameter C
 	 */
-	public LineGeneral2D_F64(double a, double b, double c) {
-		setTo(a,b,c);
+	public LineGeneral2D_F64( double a, double b, double c ) {
+		setTo(a, b, c);
 	}
 
-	public LineGeneral2D_F64(LineGeneral2D_F64 line ) {
+	public LineGeneral2D_F64( LineGeneral2D_F64 line ) {
 		setTo(line);
 	}
 
-	public LineGeneral2D_F64() {
-	}
-
-	public double getA() {
-		return A;
-	}
-
-	public double getB() {
-		return B;
-	}
-
-	public double getC() {
-		return C;
-	}
+	public LineGeneral2D_F64() {}
 
 	public void setTo( LineGeneral2D_F64 original ) {
 		this.A = original.A;
@@ -88,22 +74,14 @@ public class LineGeneral2D_F64 implements Serializable {
 	 * @param b parameter B
 	 * @param c parameter C
 	 */
-	public void setTo(double a, double b, double c) {
+	public void setTo( double a, double b, double c ) {
 		this.A = a;
 		this.B = b;
 		this.C = c;
 	}
 
-	public void setA(double a) {
-		A = a;
-	}
-
-	public void setB(double b) {
-		B = b;
-	}
-
-	public void setC(double c) {
-		C = c;
+	public void zero() {
+		setTo(0, 0, 0);
 	}
 
 	/**
@@ -139,23 +117,23 @@ public class LineGeneral2D_F64 implements Serializable {
 	@Override
 	public String toString() {
 		FancyPrint f = new FancyPrint();
-		return getClass().getSimpleName()+"{ A="+f.s(A)+" B="+f.s(B)+" C="+f.s(C)+" }";
+		return getClass().getSimpleName() + "{ A=" + f.s(A) + " B=" + f.s(B) + " C=" + f.s(C) + " }";
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(this == obj)
+	public boolean equals( Object obj ) {
+		if (this == obj)
 			return true;
 
-		if(!(obj instanceof LineGeneral2D_F64))
+		if (!(obj instanceof LineGeneral2D_F64))
 			return false;
 
-		var o = (LineGeneral2D_F64) obj;
-		return A==o.A && B==o.B && C==o.C;
+		var o = (LineGeneral2D_F64)obj;
+		return A == o.A && B == o.B && C == o.C;
 	}
 
 	@Override
 	public int hashCode() {
-		return Double.hashCode(A+B+C);
+		return Double.hashCode(A + B + C);
 	}
 }

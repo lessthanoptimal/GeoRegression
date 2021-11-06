@@ -28,18 +28,17 @@ import georegression.struct.GeoTuple2D_F64;
 public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 
 	public Vector2D_F64( GeoTuple2D_F64 orig ) {
-		this(orig.x,orig.y);
+		this(orig.x, orig.y);
 	}
 
 	public Vector2D_F64( double x, double y ) {
-		setTo( x, y );
+		setTo(x, y);
 	}
 
-	public Vector2D_F64() {
-	}
+	public Vector2D_F64() {}
 
 	public Vector2D_F64( Vector2D_F64 pt ) {
-		setTo( pt.x, pt.y );
+		setTo(pt.x, pt.y);
 	}
 
 	@Override
@@ -48,12 +47,12 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 	}
 
 	public void set( Vector2D_F64 orig ) {
-		_setTo( orig );
+		_setTo(orig);
 	}
 
 	@Override
 	public Vector2D_F64 copy() {
-		return new Vector2D_F64( this );
+		return new Vector2D_F64(this);
 	}
 
 	public void normalize() {
@@ -68,7 +67,7 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 	 * @param a Point
 	 * @param b Point
 	 */
-	public void minus( Point2D_F64 a , Point2D_F64 b ) {
+	public void minus( Point2D_F64 a, Point2D_F64 b ) {
 		x = a.x - b.x;
 		y = a.y - b.y;
 	}
@@ -85,11 +84,12 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 	 * @return dot product.
 	 */
 	public double dot( Vector2D_F64 a ) {
-		return x * a.x + y * a.y;
+		return x*a.x + y*a.y;
 	}
 
 	/**
 	 * Returns the acute angle between the two vectors. Computed using the dot product.
+	 *
 	 * @param a Vector
 	 * @return Acute angle in radians between 'this' and 'a'.
 	 */

@@ -19,12 +19,15 @@
 package georegression.struct.point;
 
 import georegression.struct.GeoTuple_I32;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
 /**
  * An integer 2D point
  */
+@Getter @Setter
 public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 	public int x;
 	public int y;
@@ -41,37 +44,26 @@ public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 
 	public Point2D_I32() {}
 
-	public void setTo(int x, int y ) {
+	public void setTo( int x, int y ) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public void setX( int x ) {
-		this.x = x;
-	}
-
-	public void setY( int y ) {
-		this.y = y;
-	}
-
-	public final int getX() {
-		return x;
-	}
-
-	public final int getY() {
-		return y;
+	public void zero() {
+		this.x = 0;
+		this.y = 0;
 	}
 
 	public double distance( Point2D_I32 a ) {
-		int dx = x-a.x;
-		int dy = y-a.y;
+		int dx = x - a.x;
+		int dy = y - a.y;
 
 		return Math.sqrt(dx*dx + dy*dy);
 	}
 
-	public double distance( int x , int y ) {
-		int dx = this.x-x;
-		int dy = this.y-y;
+	public double distance( int x, int y ) {
+		int dx = this.x - x;
+		int dy = this.y - y;
 
 		return Math.sqrt(dx*dx + dy*dy);
 	}
@@ -90,46 +82,46 @@ public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 	 * @return Euclidean distance squared.
 	 */
 	public int distance2( Point2D_I32 a ) {
-		int dx = x-a.x;
-		int dy = y-a.y;
+		int dx = x - a.x;
+		int dy = y - a.y;
 
 		return dx*dx + dy*dy;
 	}
 
-	public int distance2( int x , int y ) {
-		int dx = this.x-x;
-		int dy = this.y-y;
+	public int distance2( int x, int y ) {
+		int dx = this.x - x;
+		int dy = this.y - y;
 
 		return dx*dx + dy*dy;
 	}
 
-	public boolean isIdentical( int x , int y ) {
+	public boolean isIdentical( int x, int y ) {
 		return this.x == x && this.y == y;
 	}
 
 	@Override
-	public void setTo(Point2D_I32 src) {
+	public void setTo( Point2D_I32 src ) {
 		this.x = src.x;
 		this.y = src.y;
 	}
 
 	@Override
 	public int getIdx( int index ) {
-		if( index == 0 )
+		if (index == 0)
 			return x;
-		else if( index == 1 )
+		else if (index == 1)
 			return y;
-		throw new RuntimeException("Invalid index "+index);
+		throw new RuntimeException("Invalid index " + index);
 	}
 
 	@Override
-	public void setIdx( int index , int value ) {
-		if( index == 0 )
+	public void setIdx( int index, int value ) {
+		if (index == 0)
 			this.x = value;
-		else if( index == 1 )
+		else if (index == 1)
 			this.y = value;
 		else
-			throw new RuntimeException("Invalid index "+index);
+			throw new RuntimeException("Invalid index " + index);
 	}
 
 	public void print() {
@@ -138,7 +130,7 @@ public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 
 	@Override
 	public Point2D_I32 copy() {
-		return new Point2D_I32( this );
+		return new Point2D_I32(this);
 	}
 
 	@Override
@@ -160,11 +152,11 @@ public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals( Object obj ) {
 		if (this == obj) return true;
-		if( !(obj instanceof Point2D_I32)) return false;
+		if (!(obj instanceof Point2D_I32)) return false;
 		Point2D_I32 p = (Point2D_I32)obj;
-		return x==p.x&&y==p.y;
+		return x == p.x && y == p.y;
 	}
 
 	@Override

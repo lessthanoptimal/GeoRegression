@@ -21,6 +21,8 @@ package georegression.struct.line;
 import georegression.geometry.UtilLine2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
+import lombok.Getter;
+import lombok.Setter;
 import org.ejml.FancyPrint;
 
 import java.io.Serializable;
@@ -36,18 +38,15 @@ import java.io.Serializable;
  * @see UtilLine2D_F64
  */
 public class LineParametric2D_F64 implements Serializable {
-	/**
-	 * A point on the line
-	 */
-	public Point2D_F64 p = new Point2D_F64();
-	/**
-	 * The line's slope
-	 */
-	public Vector2D_F64 slope = new Vector2D_F64();
+	/** A point on the line */
+	@Getter @Setter public Point2D_F64 p = new Point2D_F64();
+
+	/** The line's slope */
+	@Getter public Vector2D_F64 slope = new Vector2D_F64();
 
 	public LineParametric2D_F64( double x_0, double y_0, double slopeX, double slopeY ) {
-		p.setTo( x_0, y_0 );
-		slope.setTo( slopeX, slopeY );
+		p.setTo(x_0, y_0);
+		slope.setTo(slopeX, slopeY);
 	}
 
 	public LineParametric2D_F64( Point2D_F64 p, Vector2D_F64 slope ) {
@@ -58,24 +57,28 @@ public class LineParametric2D_F64 implements Serializable {
 	/**
 	 * Creates a line defined from two points. The slope will be in the direction from a to b.
 	 *
-	 * @see UtilLine2D_F64#convert(Point2D_F64, Point2D_F64, LineParametric2D_F64)
 	 * @param a point on line
 	 * @param b point on line which isn't a
+	 * @see UtilLine2D_F64#convert(Point2D_F64, Point2D_F64, LineParametric2D_F64)
 	 */
-	public LineParametric2D_F64( Point2D_F64 a , Point2D_F64 b ) {
-		UtilLine2D_F64.convert(a,b,this);
+	public LineParametric2D_F64( Point2D_F64 a, Point2D_F64 b ) {
+		UtilLine2D_F64.convert(a, b, this);
 	}
 
-	public LineParametric2D_F64() {
-	}
+	public LineParametric2D_F64() {}
 
 	public void setTo( LineParametric2D_F64 line ) {
 		this.p.setTo(line.p);
 		this.slope.set(line.slope);
 	}
-	
+
+	public void zero() {
+		p.zero();
+		slope.zero();
+	}
+
 	public void setPoint( Point2D_F64 pt ) {
-		this.p.setTo( pt );
+		this.p.setTo(pt);
 	}
 
 	public void setPoint( double x, double y ) {
@@ -84,7 +87,7 @@ public class LineParametric2D_F64 implements Serializable {
 	}
 
 	public void setSlope( Vector2D_F64 slope ) {
-		this.slope.set( slope );
+		this.slope.set(slope);
 	}
 
 	public void setSlope( double slopeX, double slopeY ) {
@@ -98,11 +101,11 @@ public class LineParametric2D_F64 implements Serializable {
 	 * @param angle Angle of the line specified in radians.
 	 */
 	public void setAngle( double angle ) {
-		slope.setTo( Math.cos( angle ), Math.sin( angle ) );
+		slope.setTo(Math.cos(angle), Math.sin(angle));
 	}
 
 	public double getAngle() {
-		return Math.atan2( slope.y, slope.x );
+		return Math.atan2(slope.y, slope.x);
 	}
 
 	/**
@@ -112,10 +115,10 @@ public class LineParametric2D_F64 implements Serializable {
 	 * @return Point on the line.
 	 */
 	public Point2D_F64 getPointOnLine( double t ) {
-		return new Point2D_F64( slope.x * t + p.x, slope.y * t + p.y );
+		return new Point2D_F64(slope.x*t + p.x, slope.y*t + p.y);
 	}
 
-	public void getPointOnLine(double t , Point2D_F64 x ) {
+	public void getPointOnLine( double t, Point2D_F64 x ) {
 		x.x = slope.x*t + p.x;
 		x.y = slope.y*t + p.y;
 	}
@@ -140,37 +143,25 @@ public class LineParametric2D_F64 implements Serializable {
 		return p.y;
 	}
 
-	public Point2D_F64 getP() {
-		return p;
-	}
-
-	public void setP(Point2D_F64 p) {
-		this.p = p;
-	}
-
-	public Vector2D_F64 getSlope() {
-		return slope;
-	}
-
 	public LineParametric2D_F64 copy() {
-		return new LineParametric2D_F64( p, slope );
+		return new LineParametric2D_F64(p, slope);
 	}
 
 	@Override
 	public String toString() {
 		FancyPrint f = new FancyPrint();
-		return getClass().getSimpleName()+" P( "+f.s(p.x)+" "+f.s(p.y)+" ) Slope( "+f.s(slope.x)+" "+f.s(slope.y)+" )";
+		return getClass().getSimpleName() + " P( " + f.s(p.x) + " " + f.s(p.y) + " ) Slope( " + f.s(slope.x) + " " + f.s(slope.y) + " )";
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(this == obj)
+	public boolean equals( Object obj ) {
+		if (this == obj)
 			return true;
 
-		if(!(obj instanceof LineParametric2D_F64))
+		if (!(obj instanceof LineParametric2D_F64))
 			return false;
 
-		var o = (LineParametric2D_F64) obj;
+		var o = (LineParametric2D_F64)obj;
 		return p.equals(o.p) && slope.equals(o.slope);
 	}
 

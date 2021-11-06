@@ -18,6 +18,8 @@
 
 package georegression.struct.plane;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.ejml.FancyPrint;
 
 import java.io.Serializable;
@@ -41,82 +43,52 @@ import java.util.Objects;
  *
  * @author Peter Abeles
  */
+@Getter @Setter
 public class PlaneGeneral3D_F64 implements Serializable {
-	/**
-	 * Coefficients which define the plane.
-	 */
-	public double A,B,C,D;
+	/** Coefficients which define the plane. */
+	public double A, B, C, D;
 
 	public PlaneGeneral3D_F64( PlaneGeneral3D_F64 src ) {
 		setTo(src);
 	}
 
-	public PlaneGeneral3D_F64(double a, double b, double c, double d) {
-		setTo(a,b,c,d);
+	public PlaneGeneral3D_F64( double a, double b, double c, double d ) {
+		setTo(a, b, c, d);
 	}
 
-	public PlaneGeneral3D_F64() {
-	}
+	public PlaneGeneral3D_F64() {}
 
-	public double getA() {
-		return A;
-	}
-
-	public double getB() {
-		return B;
-	}
-
-	public double getC() {
-		return C;
-	}
-
-	public double getD() {
-		return D;
-	}
-
-	public void setTo(double a, double b, double c, double d) {
+	public void setTo( double a, double b, double c, double d ) {
 		this.A = a;
 		this.B = b;
 		this.C = c;
 		this.D = d;
 	}
 
-	public void setTo(PlaneGeneral3D_F64 src ) {
+	public void setTo( PlaneGeneral3D_F64 src ) {
 		this.A = src.A;
 		this.B = src.B;
 		this.C = src.C;
 		this.D = src.D;
 	}
 
-	public void setA(double a) {
-		A = a;
-	}
-
-	public void setB(double b) {
-		B = b;
-	}
-
-	public void setC(double c) {
-		C = c;
-	}
-
-	public void setD(double d) {
-		D = d;
+	public void zero() {
+		setTo(0, 0, 0, 0);
 	}
 
 	@Override
 	public String toString() {
 		FancyPrint fancy = new FancyPrint();
-		return getClass().getSimpleName()+
-				"( A = "+fancy.s(A)+" B = "+fancy.s(B)+
-				" C = "+fancy.s(C)+" D = "+fancy.s(D)+" )";
+		return getClass().getSimpleName() +
+				"( A = " + fancy.s(A) + " B = " + fancy.s(B) +
+				" C = " + fancy.s(C) + " D = " + fancy.s(D) + " )";
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals( Object obj ) {
 		if (this == obj) return true;
-		if( !(obj instanceof PlaneGeneral3D_F64)) return false;
-		var o = (PlaneGeneral3D_F64) obj;
+		if (!(obj instanceof PlaneGeneral3D_F64)) return false;
+		var o = (PlaneGeneral3D_F64)obj;
 		return Double.compare(o.A, A) == 0 &&
 				Double.compare(o.B, B) == 0 &&
 				Double.compare(o.C, C) == 0 &&

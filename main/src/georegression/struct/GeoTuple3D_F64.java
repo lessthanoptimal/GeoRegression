@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,8 @@
 
 package georegression.struct;
 
-
+import lombok.Getter;
+import lombok.Setter;
 import org.ejml.UtilEjml;
 import org.ejml.ops.MatrixIO;
 
@@ -30,7 +31,8 @@ import java.util.Objects;
  *
  * @author Peter Abeles
  */
-public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple_F64<T> {
+@Getter @Setter
+public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_F64<T> {
 	public double x;
 	public double y;
 	public double z;
@@ -41,54 +43,45 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		this.z = z;
 	}
 
-	protected GeoTuple3D_F64() {
-	}
+	protected GeoTuple3D_F64() {}
 
 	@Override
 	public int getDimension() {
 		return 3;
 	}
 
-	protected void _setTo(GeoTuple3D_F64 a ) {
+	protected void _setTo( GeoTuple3D_F64 a ) {
 		x = a.x;
 		y = a.y;
 		z = a.z;
 	}
 
-	public void setTo(double x, double y, double z ) {
+	public void setTo( double x, double y, double z ) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
+	public void zero() {
+		setTo(0, 0, 0);
+	}
+
 	public boolean isIdentical( double x, double y, double z ) {
-		return ( this.x == x && this.y == y && this.z == z );
+		return (this.x == x && this.y == y && this.z == z);
 	}
 
 	public boolean isIdentical( double x, double y, double z, double tol ) {
-		return ( Math.abs( this.x - x ) <= tol && Math.abs( this.y - y ) <= tol && Math.abs( this.z - z ) <= tol );
+		return (Math.abs(this.x - x) <= tol && Math.abs(this.y - y) <= tol && Math.abs(this.z - z) <= tol);
 	}
 
 	@Override
 	public boolean isIdentical( GeoTuple3D_F64 t, double tol ) {
-		return ( Math.abs( this.x - t.x ) <= tol && Math.abs( this.y - t.y ) <= tol && Math.abs( this.z - t.z ) <= tol );
-	}
-
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public double getZ() {
-		return z;
+		return (Math.abs(this.x - t.x) <= tol && Math.abs(this.y - t.y) <= tol && Math.abs(this.z - t.z) <= tol);
 	}
 
 	@Override
-	public double getIdx(int index ) {
-		switch( index ) {
+	public double getIdx( int index ) {
+		switch (index) {
 			case 0:
 				return x;
 
@@ -99,13 +92,13 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 				return z;
 
 			default:
-				throw new IllegalArgumentException( "Invalid index" );
+				throw new IllegalArgumentException("Invalid index");
 		}
 	}
 
 	@Override
-	public void setIdx(int index, double value ) {
-		switch( index ) {
+	public void setIdx( int index, double value ) {
+		switch (index) {
 			case 0:
 				x = value;
 				break;
@@ -119,7 +112,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 				break;
 
 			default:
-				throw new IllegalArgumentException( "Invalid index" );
+				throw new IllegalArgumentException("Invalid index");
 		}
 	}
 
@@ -153,6 +146,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 
 	/**
 	 * In-place scalar multiplication
+	 *
 	 * @param scalar value that it is multiplied by
 	 */
 	public void timesIP( double scalar ) {
@@ -163,6 +157,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 
 	/**
 	 * In-place scalar multiplication
+	 *
 	 * @param scalar value that it is multiplied by
 	 */
 	public void scale( double scalar ) {
@@ -179,6 +174,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 
 	/**
 	 * Scalar multiplication
+	 *
 	 * @param scalar value which is it multiplied by
 	 * @return new matrix which is the original scaled
 	 */
@@ -192,24 +188,24 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 
 	@Override
 	public double norm() {
-		return Math.sqrt( x * x + y * y + z * z );
+		return Math.sqrt(x*x + y*y + z*z);
 	}
 
 	@Override
 	public double normSq() {
-		return x * x + y * y + z * z;
+		return x*x + y*y + z*z;
 	}
 
-	public double distance( double x , double y , double z ) {
+	public double distance( double x, double y, double z ) {
 		double dx = x - this.x;
 		double dy = y - this.y;
 		double dz = z - this.z;
 
-		return Math.sqrt( dx * dx + dy * dy + dz * dz );
+		return Math.sqrt(dx*dx + dy*dy + dz*dz);
 	}
 
 	@Override
-	public void setTo(T src) {
+	public void setTo( T src ) {
 		this.x = src.x;
 		this.y = src.y;
 		this.z = src.z;
@@ -221,7 +217,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		double dy = t.y - y;
 		double dz = t.z - z;
 
-		return Math.sqrt( dx * dx + dy * dy + dz * dz );
+		return Math.sqrt(dx*dx + dy*dy + dz*dz);
 	}
 
 	@Override
@@ -230,7 +226,7 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		double dy = t.y - y;
 		double dz = t.z - z;
 
-		return dx * dx + dy * dy + dz * dz;
+		return dx*dx + dy*dy + dz*dz;
 	}
 
 	public double distance2( double x, double y, double z ) {
@@ -238,48 +234,36 @@ public abstract class GeoTuple3D_F64 <T extends GeoTuple3D_F64> extends GeoTuple
 		double dy = y - this.y;
 		double dz = z - this.z;
 
-		return dx * dx + dy * dy + dz * dz;
+		return dx*dx + dy*dy + dz*dz;
 	}
 
 	public void print() {
-		System.out.println( this );
+		System.out.println(this);
 	}
 
 	public boolean isNaN() {
-		return ( Double.isNaN( x ) || Double.isNaN( y ) || Double.isNaN( z ) );
-	}
-
-	public void setX( double x ) {
-		this.x = x;
-	}
-
-	public void setY( double y ) {
-		this.y = y;
-	}
-
-	public void setZ( double z ) {
-		this.z = z;
+		return (Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z));
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(this == obj)
+	public boolean equals( Object obj ) {
+		if (this == obj)
 			return true;
 
-		if( this.getClass() != obj.getClass() )
+		if (this.getClass() != obj.getClass())
 			return false;
 
 		var o = (GeoTuple3D_F64)obj;
-		return Double.compare(x,o.x)==0 && Double.compare(y,o.y)==0 && Double.compare(z,o.z)==0;
+		return Double.compare(x, o.x) == 0 && Double.compare(y, o.y) == 0 && Double.compare(z, o.z) == 0;
 	}
 
 	public String toString( String name ) {
 		DecimalFormat format = new DecimalFormat("#");
-		String sx = UtilEjml.fancyString(x,format, MatrixIO.DEFAULT_LENGTH,4);
-		String sy = UtilEjml.fancyString(y,format, MatrixIO.DEFAULT_LENGTH,4);
-		String sz = UtilEjml.fancyString(z,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sx = UtilEjml.fancyString(x, format, MatrixIO.DEFAULT_LENGTH, 4);
+		String sy = UtilEjml.fancyString(y, format, MatrixIO.DEFAULT_LENGTH, 4);
+		String sz = UtilEjml.fancyString(z, format, MatrixIO.DEFAULT_LENGTH, 4);
 
-		return name+"( " + sx + " , " + sy + " , " + sz + " )";
+		return name + "( " + sx + " , " + sy + " , " + sz + " )";
 	}
 
 	@Override

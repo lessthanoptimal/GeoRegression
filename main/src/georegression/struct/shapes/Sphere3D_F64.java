@@ -19,6 +19,8 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F64;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -27,14 +29,12 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
+@Getter @Setter
 public class Sphere3D_F64 implements Serializable {
-	/**
-	 * Center point of the sphere
-	 */
+	/** Center point of the sphere */
 	public Point3D_F64 center;
-	/**
-	 * Radius of the sphere
-	 */
+
+	/** Radius of the sphere */
 	public double radius;
 
 	public Sphere3D_F64() {
@@ -63,20 +63,10 @@ public class Sphere3D_F64 implements Serializable {
 		this.radius = o.radius;
 	}
 
-	public void setCenter( Point3D_F64 center ) {
-		this.center = center;
-	}
-
-	public void setRadius( double radius ) {
-		this.radius = radius;
-	}
-
-	public Point3D_F64 getCenter() {
-		return center;
-	}
-
-	public double getRadius() {
-		return radius;
+	/** Sets the value of all fields to zero */
+	public void zero() {
+		this.center.setTo(0, 0, 0);
+		this.radius = 0;
 	}
 
 	@Override

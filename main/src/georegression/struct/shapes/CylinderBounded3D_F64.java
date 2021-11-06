@@ -19,6 +19,8 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F64;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -29,15 +31,12 @@ import java.io.Serializable;
  * @author Peter Abeles
  */
 @SuppressWarnings("NullAway.Init")
+@Getter @Setter
 public class CylinderBounded3D_F64 implements Serializable {
-	/**
-	 * End points of the cylinder
-	 */
+	/** End points of the cylinder */
 	public Point3D_F64 endA, endB;
 
-	/**
-	 * Radius of the cylinder
-	 */
+	/** Radius of the cylinder */
 	public double radius;
 
 	public CylinderBounded3D_F64() {
@@ -45,21 +44,21 @@ public class CylinderBounded3D_F64 implements Serializable {
 		endB = new Point3D_F64();
 	}
 
-	public CylinderBounded3D_F64(double x_0, double y_0, double z_0,
-								 double x_1, double y_1, double z_1,
-								 double radius) {
+	public CylinderBounded3D_F64( double x_0, double y_0, double z_0,
+								  double x_1, double y_1, double z_1,
+								  double radius ) {
 		this();
 		this.endA.setTo(x_0, y_0, z_0);
 		this.endB.setTo(x_1, y_1, z_1);
 		this.radius = radius;
 	}
 
-	public CylinderBounded3D_F64(Point3D_F64 endA, Point3D_F64 endB, double radius) {
+	public CylinderBounded3D_F64( Point3D_F64 endA, Point3D_F64 endB, double radius ) {
 		this();
-		setTo(endA, endB,radius);
+		setTo(endA, endB, radius);
 	}
 
-	public CylinderBounded3D_F64(CylinderBounded3D_F64 o) {
+	public CylinderBounded3D_F64( CylinderBounded3D_F64 o ) {
 		this();
 		setTo(o);
 	}
@@ -69,47 +68,41 @@ public class CylinderBounded3D_F64 implements Serializable {
 	 *
 	 * @param declare if true the end points will be declared, otherwise they will be initalized to null.
 	 */
-	public CylinderBounded3D_F64(boolean declare) {
-		if( declare ) {
+	public CylinderBounded3D_F64( boolean declare ) {
+		if (declare) {
 			endA = new Point3D_F64();
 			endB = new Point3D_F64();
 		}
 	}
 
-	public void setTo(double x_0, double y_0, double z_0,
-					  double x_1, double y_1, double z_1,
-					  double radius ) {
+	public void setTo( double x_0, double y_0, double z_0,
+					   double x_1, double y_1, double z_1,
+					   double radius ) {
 		this.endA.setTo(x_0, y_0, z_0);
 		this.endB.setTo(x_1, y_1, z_1);
 		this.radius = radius;
 	}
 
-	public void setTo(Point3D_F64 endA , Point3D_F64 endB , double radius ) {
+	public void setTo( Point3D_F64 endA, Point3D_F64 endB, double radius ) {
 		this.endA.setTo(endA);
 		this.endB.setTo(endB);
 		this.radius = radius;
 	}
 
-	public void setTo(CylinderBounded3D_F64 o ) {
+	public void setTo( CylinderBounded3D_F64 o ) {
 		this.endA.setTo(o.endA);
 		this.endB.setTo(o.endB);
 		this.radius = o.radius;
 	}
 
-	public Point3D_F64 getEndA() {
-		return endA;
-	}
-
-	public Point3D_F64 getEndB() {
-		return endB;
-	}
-
-	public double getRadius() {
-		return radius;
+	public void zero() {
+		endA.setTo(0, 0, 0);
+		endB.setTo(0, 0, 0);
+		radius = 0;
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+" A( "+ endA.x+" "+ endA.y+" "+ endA.z+" ) B( "+ endB.x+" "+ endB.y+" "+ endB.z+" ) radius "+radius;
+		return getClass().getSimpleName() + " A( " + endA.x + " " + endA.y + " " + endA.z + " ) B( " + endB.x + " " + endB.y + " " + endB.z + " ) radius " + radius;
 	}
 }

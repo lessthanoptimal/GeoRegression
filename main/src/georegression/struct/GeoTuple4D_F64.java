@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,8 @@
 package georegression.struct;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import org.ejml.UtilEjml;
 import org.ejml.ops.MatrixIO;
 
@@ -30,6 +32,7 @@ import java.util.Objects;
  *
  * @author Peter Abeles
  */
+@Getter @Setter
 public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple_F64<T> {
 	public double x;
 	public double y;
@@ -64,6 +67,10 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		this.w = w;
 	}
 
+	public void zero() {
+		setTo(0, 0, 0, 0);
+	}
+
 	public boolean isIdentical( double x, double y, double z , double w ) {
 		return ( this.x == x && this.y == y && this.z == z && this.w == w);
 	}
@@ -81,22 +88,6 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 				Math.abs( this.y - t.y ) <= tol && 
 				Math.abs( this.z - t.z ) <= tol &&
 				Math.abs( this.w - t.w ) <= tol );
-	}
-
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public double getZ() {
-		return z;
-	}
-
-	public double getW() {
-		return w;
 	}
 
 	@Override
@@ -227,22 +218,6 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 
 	public boolean isNaN() {
 		return ( Double.isNaN( x ) || Double.isNaN( y ) || Double.isNaN( z ) || Double.isNaN( w ));
-	}
-
-	public void setX( double x ) {
-		this.x = x;
-	}
-
-	public void setY( double y ) {
-		this.y = y;
-	}
-
-	public void setZ( double z ) {
-		this.z = z;
-	}
-
-	public void setW( double w ) {
-		this.w = w;
 	}
 
 	/**

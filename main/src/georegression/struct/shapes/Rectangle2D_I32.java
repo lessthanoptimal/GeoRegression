@@ -18,18 +18,18 @@
 
 package georegression.struct.shapes;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * An axis aligned rectangle in 2D that is specified by its lower extent (x0,y0), and upper extent (x1,y1).
  * x0 &le; x1 and y0 &le; y1. (x1,y1) is exclusive and not contained in the rectangle.
  */
+@Getter @Setter
 public class Rectangle2D_I32 {
-	/**
-	 * Lower extent
-	 */
+	/** Lower extent */
 	public int x0,y0;
-	/**
-	 * Upper extent
-	 */
+	/** Upper extent */
 	public int x1,y1;
 
 	public Rectangle2D_I32(int x0, int y0, int x1, int y1) {
@@ -39,6 +39,8 @@ public class Rectangle2D_I32 {
 	public Rectangle2D_I32(Rectangle2D_I32 orig) {
 		setTo(orig);
 	}
+
+	public Rectangle2D_I32() {}
 
 	public void setTo(Rectangle2D_I32 orig ) {
 		this.x0 = orig.x0;
@@ -54,7 +56,10 @@ public class Rectangle2D_I32 {
 		this.y1 = y1;
 	}
 
-	public Rectangle2D_I32() {}
+	/** Sets the value of all fields to zero */
+	public void zero() {
+		x0 = y0 = x1 = y1 = 0;
+	}
 
 	/**
 	 * Makes sure x0,y0 is the lower extent and x1,y1 is the upper extent
@@ -86,38 +91,6 @@ public class Rectangle2D_I32 {
 
 	public int area() {
 		return (y1-y0)*(x1-x0);
-	}
-
-	public int getX0() {
-		return x0;
-	}
-
-	public void setX0(int x0) {
-		this.x0 = x0;
-	}
-
-	public int getY0() {
-		return y0;
-	}
-
-	public void setY0(int y0) {
-		this.y0 = y0;
-	}
-
-	public int getX1() {
-		return x1;
-	}
-
-	public void setX1(int x1) {
-		this.x1 = x1;
-	}
-
-	public int getY1() {
-		return y1;
-	}
-
-	public void setY1(int y1) {
-		this.y1 = y1;
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,18 +27,17 @@ import georegression.struct.GeoTuple2D_F64;
 public class Point2D_F64 extends GeoTuple2D_F64<Point2D_F64> {
 
 	public Point2D_F64( GeoTuple2D_F64 orig ) {
-		this(orig.x,orig.y);
+		this(orig.x, orig.y);
 	}
 
 	public Point2D_F64( double x, double y ) {
-		setTo( x, y );
+		setTo(x, y);
 	}
 
-	public Point2D_F64() {
-	}
+	public Point2D_F64() {}
 
 	public Point2D_F64( Point2D_F64 pt ) {
-		setTo( pt.x, pt.y );
+		setTo(pt.x, pt.y);
 	}
 
 	@Override
@@ -48,12 +47,12 @@ public class Point2D_F64 extends GeoTuple2D_F64<Point2D_F64> {
 
 	@Override
 	public void setTo( Point2D_F64 orig ) {
-		_setTo( orig );
+		_setTo(orig);
 	}
 
 	@Override
 	public Point2D_F64 copy() {
-		return new Point2D_F64( this );
+		return new Point2D_F64(this);
 	}
 
 	@Override

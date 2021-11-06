@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,8 @@
 
 package georegression.struct;
 
-
+import lombok.Getter;
+import lombok.Setter;
 import org.ejml.UtilEjml;
 import org.ejml.ops.MatrixIO;
 
@@ -30,7 +31,8 @@ import java.util.Objects;
  *
  * @author Peter Abeles
  */
-public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple_F64<T> {
+@Getter @Setter
+public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_F64<T> {
 	public double x;
 	public double y;
 
@@ -41,14 +43,18 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 
 	protected GeoTuple2D_F64() {}
 
-	protected void _setTo(GeoTuple2D_F64 a ) {
+	protected void _setTo( GeoTuple2D_F64 a ) {
 		x = a.x;
 		y = a.y;
 	}
 
-	public void setTo(double x, double y ) {
+	public void setTo( double x, double y ) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public void zero() {
+		setTo(0, 0);
 	}
 
 	public boolean isIdentical( double x, double y ) {
@@ -56,28 +62,12 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 	}
 
 	public boolean isIdentical( double x, double y, double tol ) {
-		return ( Math.abs( this.x - x ) <= tol && Math.abs( this.y - y ) <= tol );
+		return (Math.abs(this.x - x) <= tol && Math.abs(this.y - y) <= tol);
 	}
 
 	@Override
 	public boolean isIdentical( T t, double tol ) {
-		return ( Math.abs( this.x - t.x ) <= tol && Math.abs( this.y - t.y ) <= tol );
-	}
-
-	public void setX( double x ) {
-		this.x = x;
-	}
-
-	public void setY( double y ) {
-		this.y = y;
-	}
-
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
+		return (Math.abs(this.x - t.x) <= tol && Math.abs(this.y - t.y) <= tol);
 	}
 
 	/**
@@ -108,6 +98,7 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 
 	/**
 	 * In-place scalar multiplication
+	 *
 	 * @param scalar value that it is multiplied by
 	 */
 	public void timesIP( double scalar ) {
@@ -117,6 +108,7 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 
 	/**
 	 * In-place scalar multiplication
+	 *
 	 * @param scalar value that it is multiplied by
 	 */
 	public void scale( double scalar ) {
@@ -126,6 +118,7 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 
 	/**
 	 * Scalar multiplication
+	 *
 	 * @param scalar value which is it multiplied by
 	 * @return new matrix which is the original scaled
 	 */
@@ -138,11 +131,12 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 
 	/**
 	 * Euclidean distance from the point
+	 *
 	 * @param x x-coordinate
 	 * @param y y-coordinate
 	 * @return distance
 	 */
-	public double distance( double x , double y ) {
+	public double distance( double x, double y ) {
 		double dx = x - this.x;
 		double dy = y - this.y;
 
@@ -151,11 +145,12 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 
 	/**
 	 * Euclidean squared distance from the point
+	 *
 	 * @param x x-coordinate
 	 * @param y y-coordinate
 	 * @return distance squared
 	 */
-	public double distance2( double x , double y ) {
+	public double distance2( double x, double y ) {
 		double dx = x - this.x;
 		double dy = y - this.y;
 
@@ -163,7 +158,7 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 	}
 
 	@Override
-	public void setTo(T src) {
+	public void setTo( T src ) {
 		this.x = src.x;
 		this.y = src.y;
 	}
@@ -173,7 +168,7 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 		double dx = t.x - x;
 		double dy = t.y - y;
 
-		return Math.sqrt( dx * dx + dy * dy );
+		return Math.sqrt(dx*dx + dy*dy);
 	}
 
 	@Override
@@ -181,12 +176,12 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 		double dx = t.x - x;
 		double dy = t.y - y;
 
-		return dx * dx + dy * dy;
+		return dx*dx + dy*dy;
 	}
 
 	@Override
-	public double getIdx(int index ) {
-		switch( index ) {
+	public double getIdx( int index ) {
+		switch (index) {
 			case 0:
 				return x;
 
@@ -194,13 +189,13 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 				return y;
 
 			default:
-				throw new IllegalArgumentException( "Invalid index" );
+				throw new IllegalArgumentException("Invalid index");
 		}
 	}
 
 	@Override
-	public void setIdx(int index, double value ) {
-		switch( index ) {
+	public void setIdx( int index, double value ) {
+		switch (index) {
 			case 0:
 				x = value;
 				break;
@@ -210,18 +205,18 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 				break;
 
 			default:
-				throw new IllegalArgumentException( "Invalid index" );
+				throw new IllegalArgumentException("Invalid index");
 		}
 	}
 
 	@Override
 	public double norm() {
-		return Math.sqrt( x * x + y * y );
+		return Math.sqrt(x*x + y*y);
 	}
 
 	@Override
 	public double normSq() {
-		return x * x + y * y;
+		return x*x + y*y;
 	}
 
 	@Override
@@ -230,31 +225,31 @@ public abstract class GeoTuple2D_F64 <T extends GeoTuple2D_F64> extends GeoTuple
 	}
 
 	public void print() {
-		System.out.println( this );
+		System.out.println(this);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(this == obj)
+	public boolean equals( Object obj ) {
+		if (this == obj)
 			return true;
 
-		if( this.getClass() != obj.getClass() )
+		if (this.getClass() != obj.getClass())
 			return false;
 
 		var o = (GeoTuple2D_F64)obj;
-		return Double.compare(x,o.x)==0 && Double.compare(y,o.y)==0;
+		return Double.compare(x, o.x) == 0 && Double.compare(y, o.y) == 0;
 	}
 
 	public boolean isNaN() {
-		return ( Double.isNaN( x ) || Double.isNaN( y ));
+		return (Double.isNaN(x) || Double.isNaN(y));
 	}
 
 	protected String toString( String name ) {
 		DecimalFormat format = new DecimalFormat("#");
-		String sx = UtilEjml.fancyString(x,format, MatrixIO.DEFAULT_LENGTH,4);
-		String sy = UtilEjml.fancyString(y,format, MatrixIO.DEFAULT_LENGTH,4);
+		String sx = UtilEjml.fancyString(x, format, MatrixIO.DEFAULT_LENGTH, 4);
+		String sy = UtilEjml.fancyString(y, format, MatrixIO.DEFAULT_LENGTH, 4);
 
-		return name+"( " + sx + " " + sy + " )";
+		return name + "( " + sx + " " + sy + " )";
 	}
 
 	@Override

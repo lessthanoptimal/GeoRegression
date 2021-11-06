@@ -19,6 +19,7 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F64;
+import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -27,15 +28,12 @@ import java.io.Serializable;
  * An axis aligned box in 3D that is specified by two points, p0 and p1, the lower and upper extents of the box.
  * Point p0 is less or equal to point p1, 0.x &le; p1.x, p0.y &le; p1.y, p0.z &le; p1.z.
  */
+@Getter
 public class Box3D_F64 implements Serializable {
-
-	/**
-	 * The lower point/extent.
-	 */
+	/** The lower point/extent. */
 	public Point3D_F64 p0 = new Point3D_F64();
-	/**
-	 * The upper point/extent
-	 */
+
+	/** The upper point/extent */
 	public Point3D_F64 p1 = new Point3D_F64();
 
 	public Box3D_F64( double x0, double y0, double z0, double x1, double y1, double z1 ) {
@@ -47,15 +45,19 @@ public class Box3D_F64 implements Serializable {
 		setTo(orig);
 	}
 
+	public Box3D_F64() {}
+
 	public void setTo( Box3D_F64 orig ) {
 		setTo(orig.p0.x, orig.p0.y, orig.p0.z, orig.p1.x, orig.p1.y, orig.p1.z);
 	}
 
-	public Box3D_F64() {}
-
 	public void setTo( double x0, double y0, double z0, double x1, double y1, double z1 ) {
 		this.p0.setTo(x0, y0, z0);
 		this.p1.setTo(x1, y1, z1);
+	}
+
+	public void zero() {
+		setTo(0, 0, 0, 0, 0, 0);
 	}
 
 	/**
@@ -130,22 +132,8 @@ public class Box3D_F64 implements Serializable {
 		return p1.z - p0.z;
 	}
 
-	/**
-	 * Returns the lower point/extend
-	 */
-	public Point3D_F64 getP0() {
-		return p0;
-	}
-
 	public void setP1( Point3D_F64 p1 ) {
 		this.p1.setTo(p1);
-	}
-
-	/**
-	 * Returns the upper point/extend
-	 */
-	public Point3D_F64 getP1() {
-		return p1;
 	}
 
 	public void setP0( Point3D_F64 p0 ) {

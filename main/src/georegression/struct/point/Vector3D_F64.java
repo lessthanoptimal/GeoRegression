@@ -27,9 +27,9 @@ import georegression.struct.GeoTuple3D_F64;
  */
 public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 
-	public Vector3D_F64( GeoTuple3D_F64 orig ) { this(orig.x,orig.y,orig.z); }
+	public Vector3D_F64( GeoTuple3D_F64 orig ) {this(orig.x, orig.y, orig.z);}
 
-	public Vector3D_F64( double x, double y, double z ) { super( x, y, z ); }
+	public Vector3D_F64( double x, double y, double z ) {super(x, y, z);}
 
 	public Vector3D_F64() {}
 
@@ -58,7 +58,7 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 	 * @param a Point
 	 * @param b Point
 	 */
-	public void minus( Point3D_F64 a , Point3D_F64 b ) {
+	public void minus( Point3D_F64 a, Point3D_F64 b ) {
 		x = a.x - b.x;
 		y = a.y - b.y;
 		z = a.z - b.z;
@@ -66,6 +66,7 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 
 	/**
 	 * In-place divide operation. x /= value;
+	 *
 	 * @param value The value each component is divided by
 	 */
 	public void divide( double value ) {
@@ -75,7 +76,7 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 	}
 
 	@Override public Vector3D_F64 copy() {
-		return new Vector3D_F64( x, y, z );
+		return new Vector3D_F64(x, y, z);
 	}
 
 	/**
@@ -84,26 +85,26 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 	 * @param a Vector
 	 * @param b Vector
 	 */
-	public void crossSetTo(Vector3D_F64 a, Vector3D_F64 b ) {
-		GeometryMath_F64.cross( a, b, this );
+	public void crossSetTo( Vector3D_F64 a, Vector3D_F64 b ) {
+		GeometryMath_F64.cross(a, b, this);
 	}
 
 	/**
 	 * Crosses this matrix with 'b' and returns the result
 	 */
-	public Vector3D_F64 crossWith(Vector3D_F64 b ) {
+	public Vector3D_F64 crossWith( Vector3D_F64 b ) {
 		Vector3D_F64 c = new Vector3D_F64();
-		GeometryMath_F64.cross( this, b, c );
+		GeometryMath_F64.cross(this, b, c);
 		return c;
 	}
 
-	@Override public Vector3D_F64 createNewInstance() { return new Vector3D_F64(); }
+	@Override public Vector3D_F64 createNewInstance() {return new Vector3D_F64();}
 
-	@Override public String toString() { return toString("V"); }
+	@Override public String toString() {return toString("V");}
 
 	public void normalize() {
 		// carefully normalize to avoid numerical overflow
-		double m = Math.max(Math.max(Math.abs(x),Math.abs(y)),Math.abs(z));
+		double m = Math.max(Math.max(Math.abs(x), Math.abs(y)), Math.abs(z));
 
 		double x_n = x/m;
 		double y_n = y/m;
@@ -122,17 +123,18 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 	 * @return dot product.
 	 */
 	public double dot( Vector3D_F64 a ) {
-		return x * a.x + y * a.y + z * a.z;
+		return x*a.x + y*a.y + z*a.z;
 	}
 
-	public double dot( double x, double y, double z) {
+	public double dot( double x, double y, double z ) {
 		return this.x*x + this.y*y + this.z*z;
 	}
 
 	/**
 	 * Returns the acute angle between the two vectors. Computed using the dot product.
+	 *
 	 * @param a Vector
 	 * @return Acute angle in radians between 'this' and 'a'.
 	 */
-	public double acute( Vector3D_F64 a ) { return UtilVector3D_F64.acute(this,a); }
+	public double acute( Vector3D_F64 a ) {return UtilVector3D_F64.acute(this, a);}
 }

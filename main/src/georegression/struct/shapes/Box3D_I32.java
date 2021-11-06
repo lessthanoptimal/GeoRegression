@@ -19,6 +19,7 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_I32;
+import lombok.Getter;
 
 import java.io.Serializable;
 
@@ -26,15 +27,12 @@ import java.io.Serializable;
  * An axis aligned box in 3D that is specified by two points, p0 and p1, the lower and upper extents of the box.
  * Point p0 is less or equal to point p1, 0.x &le; p1.x, p0.y &le; p1.y, p0.z &le; p1.z.
  */
+@Getter
 public class Box3D_I32 implements Serializable {
-
-	/**
-	 * The lower point/extent.
-	 */
+	/** The lower point/extent. */
 	public Point3D_I32 p0 = new Point3D_I32();
-	/**
-	 * The upper point/extent
-	 */
+
+	/** The upper point/extent */
 	public Point3D_I32 p1 = new Point3D_I32();
 
 	public Box3D_I32( int x0, int y0, int z0, int x1, int y1, int z1 ) {
@@ -55,6 +53,10 @@ public class Box3D_I32 implements Serializable {
 	public void setTo( int x0, int y0, int z0, int x1, int y1, int z1 ) {
 		this.p0.setTo(x0, y0, z0);
 		this.p1.setTo(x1, y1, z1);
+	}
+
+	public void zero() {
+		setTo(0, 0, 0, 0, 0, 0);
 	}
 
 	/**
@@ -93,22 +95,8 @@ public class Box3D_I32 implements Serializable {
 		return p1.z - p0.z;
 	}
 
-	/**
-	 * Returns the lower point/extend
-	 */
-	public Point3D_I32 getP0() {
-		return p0;
-	}
-
 	public void setP1( Point3D_I32 p1 ) {
 		this.p1.setTo(p1);
-	}
-
-	/**
-	 * Returns the upper point/extend
-	 */
-	public Point3D_I32 getP1() {
-		return p1;
 	}
 
 	public void setP0( Point3D_I32 p0 ) {

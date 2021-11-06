@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,7 +27,7 @@ import java.io.Serializable;
  * Special Euclidean or rigid body motion is a transform that preserves the norm and cross product
  * between any two vectors.
  * </p>
-
+ *
  * <UL>
  * <LI> norm: ||se(v)|| = ||v||
  * <LI> cross product: se(u) x se(v) = se(u x v)
@@ -36,4 +36,4 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public interface SpecialEuclidean<T extends SpecialEuclidean> extends InvertibleTransform<T> , Serializable {}
+public interface SpecialEuclidean<T extends SpecialEuclidean> extends InvertibleTransform<T>, Serializable {}

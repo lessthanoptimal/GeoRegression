@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,7 @@ package georegression.struct;
 
 /**
  * Used to specify which family of rotation parametrization is being used.
+ *
  * @author Peter Abeles
  */
 public enum RotationType {

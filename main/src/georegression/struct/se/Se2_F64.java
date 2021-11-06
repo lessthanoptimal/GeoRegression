@@ -43,34 +43,39 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	public double s; // sin(yaw)
 
 	public Se2_F64( GeoTuple2D_F64 T, double yaw ) {
-		this( T.getX(), T.getY(), yaw );
+		this(T.getX(), T.getY(), yaw);
 	}
 
 	public Se2_F64( double x, double y, double yaw ) {
-		setTo( x, y, yaw );
+		setTo(x, y, yaw);
 	}
 
 	public Se2_F64( double x, double y, double cosYaw, double sinYaw ) {
-		setTo( x, y, cosYaw, sinYaw );
+		setTo(x, y, cosYaw, sinYaw);
 	}
 
 	/**
 	 * Constructor which initializes it to no transform
 	 */
 	public Se2_F64() {
-		c=1.0;
+		c = 1.0;
 	}
 
-	public void setTo(double x, double y, double yaw ) {
+	public void setTo( double x, double y, double yaw ) {
 		this.T.setTo(x, y);
-		this.c = Math.cos( yaw );
-		this.s = Math.sin( yaw );
+		this.c = Math.cos(yaw);
+		this.s = Math.sin(yaw);
 	}
 
-	public void setTo(double x, double y, double cosYaw, double sinYaw ) {
+	public void setTo( double x, double y, double cosYaw, double sinYaw ) {
 		this.T.setTo(x, y);
 		this.c = cosYaw;
 		this.s = sinYaw;
+	}
+
+	public void zero() {
+		// equivalent of settings yaw=0
+		setTo(0, 0, 1.0, 0);
 	}
 
 	@Override
@@ -109,12 +114,12 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	}
 
 	public double getYaw() {
-		return Math.atan2( s, c );
+		return Math.atan2(s, c);
 	}
 
 	public void setYaw( double yaw ) {
-		this.c = Math.cos( yaw );
-		this.s = Math.sin( yaw );
+		this.c = Math.cos(yaw);
+		this.s = Math.sin(yaw);
 	}
 
 	public double getCosineYaw() {
@@ -137,20 +142,20 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 
 	@Override
 	public Se2_F64 concat( Se2_F64 second, @Nullable Se2_F64 result ) {
-		if( result == null )
+		if (result == null)
 			result = new Se2_F64();
 
-		result.setYaw( getYaw() + second.getYaw() );
+		result.setYaw(getYaw() + second.getYaw());
 
-		result.T.x = second.T.x + second.c * T.x - second.s * T.y;
-		result.T.y = second.T.y + second.s * T.x + second.c * T.y;
+		result.T.x = second.T.x + second.c*T.x - second.s*T.y;
+		result.T.y = second.T.y + second.s*T.x + second.c*T.y;
 
 		return result;
 	}
 
 	@Override
 	public Se2_F64 invert( @Nullable Se2_F64 inverse ) {
-		if( inverse == null )
+		if (inverse == null)
 			inverse = new Se2_F64();
 
 		double x = -T.x;
@@ -158,8 +163,8 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 
 		inverse.s = -s;
 		inverse.c = c;
-		inverse.T.x = c * x + s * y;
-		inverse.T.y = -s * x + c * y;
+		inverse.T.x = c*x + s*y;
+		inverse.T.y = -s*x + c*y;
 
 		return inverse;
 	}
@@ -172,7 +177,7 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	}
 
 	public Se2_F64 copy() {
-		return new Se2_F64( T.x, T.y, c, s );
+		return new Se2_F64(T.x, T.y, c, s);
 	}
 
 	@Override

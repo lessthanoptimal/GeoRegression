@@ -23,24 +23,24 @@ package georegression.struct;
  *
  * @author Peter Abeles
  */
-public abstract class GeoTuple_I32 <T extends GeoTuple_I32<T>> extends GeoTuple<T> {
+public abstract class GeoTuple_I32<T extends GeoTuple_I32<T>> extends GeoTuple<T> {
 	/**
 	 * Checks to see if the two GeoTuple have values which are nearly the same. False is always
 	 * returned if the dimension is different.
 	 *
-	 * @param t   The GeoTuple it is being compared against.
+	 * @param t The GeoTuple it is being compared against.
 	 * @param tol How similar each element must be for them to be considered identical.
 	 * @return if they are identical or not.
 	 */
 	public boolean isIdentical( T t, double tol ) {
-		if( t.getDimension() != getDimension() )
+		if (t.getDimension() != getDimension())
 			return false;
 
 		int N = getDimension();
-		for( int i = 0; i < N; i++ ) {
-			double diff = Math.abs( getIdx( i ) - t.getIdx( i ) );
+		for (int i = 0; i < N; i++) {
+			double diff = Math.abs(getIdx(i) - t.getIdx(i));
 
-			if( diff > tol )
+			if (diff > tol)
 				return false;
 		}
 
@@ -53,7 +53,7 @@ public abstract class GeoTuple_I32 <T extends GeoTuple_I32<T>> extends GeoTuple<
 	 * @param index Which axis in the coordinate system.
 	 * @return Its value.
 	 */
-	public abstract int getIdx(int index );
+	public abstract int getIdx( int index );
 
-	public abstract void setIdx(int index, int value );
+	public abstract void setIdx( int index, int value );
 }

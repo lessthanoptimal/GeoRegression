@@ -20,6 +20,8 @@ package georegression.struct.line;
 
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
+import lombok.Getter;
+import lombok.Setter;
 import org.ejml.FancyPrint;
 
 import java.io.Serializable;
@@ -36,14 +38,11 @@ import java.io.Serializable;
  */
 @SuppressWarnings("NullAway.Init")
 public class LineParametric3D_F64 implements Serializable {
-	/**
-	 * A point on the line
-	 */
-	public Point3D_F64 p;
-	/**
-	 * The line's slope
-	 */
-	public Vector3D_F64 slope;
+	/** A point on the line */
+	@Getter @Setter public Point3D_F64 p;
+
+	/** The line's slope */
+	@Getter public Vector3D_F64 slope;
 
 	public LineParametric3D_F64( double x_0, double y_0, double z_0,
 								 double slopeX, double slopeY, double slopeZ ) {
@@ -123,10 +122,6 @@ public class LineParametric3D_F64 implements Serializable {
 		return p;
 	}
 
-	public Vector3D_F64 getSlope() {
-		return slope;
-	}
-
 	public final double getSlopeX() {
 		return slope.x;
 	}
@@ -162,12 +157,9 @@ public class LineParametric3D_F64 implements Serializable {
 		this.slope.setTo(o.slope);
 	}
 
-	public Point3D_F64 getP() {
-		return p;
-	}
-
-	public void setP(Point3D_F64 p) {
-		this.p = p;
+	public void zero() {
+		p.zero();
+		slope.zero();
 	}
 
 	public LineParametric3D_F64 copy() {

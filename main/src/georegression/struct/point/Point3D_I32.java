@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,23 +19,25 @@
 package georegression.struct.point;
 
 import georegression.struct.GeoTuple_I32;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Point in 3D with integer values.
- *
  */
 @SuppressWarnings({"unchecked"})
+@Getter @Setter
 public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 
 	public int x;
 	public int y;
 	public int z;
 
-	public Point3D_I32(Point3D_I32 pt) {
-		this(pt.x,pt.y,pt.z);
+	public Point3D_I32( Point3D_I32 pt ) {
+		this(pt.x, pt.y, pt.z);
 	}
 
-	public Point3D_I32(int x, int y, int z) {
+	public Point3D_I32( int x, int y, int z ) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -45,71 +47,53 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 
 	@Override
 	public Point3D_I32 copy() {
-		return new Point3D_I32( x, y, z );
+		return new Point3D_I32(x, y, z);
 	}
 
 	@Override
 	public int getIdx( int index ) {
-		if( index == 0 )
+		if (index == 0)
 			return x;
-		else if( index == 1 )
+		else if (index == 1)
 			return y;
-		else if( index == 2 )
+		else if (index == 2)
 			return z;
-		throw new RuntimeException("Invalid index "+index);
+		throw new RuntimeException("Invalid index " + index);
 	}
 
 	@Override
-	public void setIdx( int index , int value ) {
-		if( index == 0 )
+	public void setIdx( int index, int value ) {
+		if (index == 0)
 			this.x = value;
-		else if( index == 1 )
+		else if (index == 1)
 			this.y = value;
-		else if( index == 2 )
+		else if (index == 2)
 			this.z = value;
 		else
-			throw new RuntimeException("Invalid index "+index);
+			throw new RuntimeException("Invalid index " + index);
 	}
 
-	public void setTo(int x, int y, int z) {
+	public void setTo( int x, int y, int z ) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
 	@Override
-	public void setTo(Point3D_I32 p ) {
+	public void setTo( Point3D_I32 p ) {
 		this.x = p.x;
 		this.y = p.y;
 		this.z = p.z;
 	}
 
+	public void zero() {
+		this.x = 0;
+		this.y = 0;
+		this.z = 0;
+	}
+
 	public boolean isIdentical( Point3D_I32 p ) {
 		return x == p.x && y == p.y && z == p.z;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getZ() {
-		return z;
-	}
-
-	public void setZ(int z) {
-		this.z = z;
 	}
 
 	@Override
@@ -128,15 +112,15 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals( Object obj ) {
 		if (this == obj) return true;
-		if( !(obj instanceof Point3D_I32)) return false;
+		if (!(obj instanceof Point3D_I32)) return false;
 		Point3D_I32 p = (Point3D_I32)obj;
-		return x==p.x&&y==p.y&&z==p.z;
+		return x == p.x && y == p.y && z == p.z;
 	}
 
 	@Override
 	public int hashCode() {
-		return Integer.hashCode(x+y+z);
+		return Integer.hashCode(x + y + z);
 	}
 }

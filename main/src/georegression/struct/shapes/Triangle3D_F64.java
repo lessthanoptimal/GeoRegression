@@ -19,6 +19,8 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F64;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -27,68 +29,51 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
+@Getter @Setter
 public class Triangle3D_F64 implements Serializable {
 	public Point3D_F64 v0 = new Point3D_F64();
 	public Point3D_F64 v1 = new Point3D_F64();
 	public Point3D_F64 v2 = new Point3D_F64();
 
-	public Triangle3D_F64(Point3D_F64 v0, Point3D_F64 v1, Point3D_F64 v2) {
+	public Triangle3D_F64( Point3D_F64 v0, Point3D_F64 v1, Point3D_F64 v2 ) {
 		this.v0.setTo(v0);
 		this.v1.setTo(v1);
 		this.v2.setTo(v2);
 	}
 
-	public Triangle3D_F64(double x0, double y0, double z0,
-						  double x1, double y1, double z1,
-						  double x2, double y2, double z2) {
-		this.v0.setTo(x0,y0,z0);
-		this.v1.setTo(x1,y1,z1);
-		this.v2.setTo(x2,y2,z2);
+	public Triangle3D_F64( double x0, double y0, double z0,
+						   double x1, double y1, double z1,
+						   double x2, double y2, double z2 ) {
+		this.v0.setTo(x0, y0, z0);
+		this.v1.setTo(x1, y1, z1);
+		this.v2.setTo(x2, y2, z2);
 	}
 
 	public Triangle3D_F64( Triangle3D_F64 orig ) {
 		setTo(orig);
 	}
 
-	public Triangle3D_F64() {
-	}
+	public Triangle3D_F64() {}
 
-	public void setTo(Triangle3D_F64 orig ) {
+	public void setTo( Triangle3D_F64 orig ) {
 		v0.setTo(orig.v0);
 		v1.setTo(orig.v1);
 		v2.setTo(orig.v2);
 	}
 
-	public void setTo(double x0, double y0, double z0,
-					  double x1, double y1, double z1,
-					  double x2, double y2, double z2) {
-		this.v0.setTo(x0,y0,z0);
-		this.v1.setTo(x1,y1,z1);
-		this.v2.setTo(x2,y2,z2);
+	public void setTo( double x0, double y0, double z0,
+					   double x1, double y1, double z1,
+					   double x2, double y2, double z2 ) {
+		this.v0.setTo(x0, y0, z0);
+		this.v1.setTo(x1, y1, z1);
+		this.v2.setTo(x2, y2, z2);
 	}
 
-	public Point3D_F64 getV0() {
-		return v0;
-	}
-
-	public void setV0(Point3D_F64 v0) {
-		this.v0 = v0;
-	}
-
-	public Point3D_F64 getV1() {
-		return v1;
-	}
-
-	public void setV1(Point3D_F64 v1) {
-		this.v1 = v1;
-	}
-
-	public Point3D_F64 getV2() {
-		return v2;
-	}
-
-	public void setV2(Point3D_F64 v2) {
-		this.v2 = v2;
+	/** Sets the value of all fields to zero */
+	public void zero() {
+		this.v0.setTo(0, 0, 0);
+		this.v1.setTo(0, 0, 0);
+		this.v2.setTo(0, 0, 0);
 	}
 
 	public Triangle3D_F64 copy() {

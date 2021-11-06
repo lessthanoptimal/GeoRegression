@@ -98,6 +98,15 @@ public class Polygon2D_I32 implements Serializable, Cloneable {
 		}
 	}
 
+	/**
+	 * Sets the value of every vertex to be zero
+	 */
+	public void zero() {
+		for (int i = 0; i < vertexes.size; i++) {
+			vertexes.get(i).setTo(0, 0);
+		}
+	}
+
 	public void set( int index, int x, int y ) {
 		vertexes.data[index].setTo(x, y);
 	}
