@@ -79,6 +79,10 @@ public class RectangleLength2D_F64 implements Serializable {
 		x0 = y0 = width = height = 0.0;
 	}
 
+	public double getX() {return x0;}
+
+	public double getY() {return y0;}
+
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + "{" +
