@@ -15,7 +15,8 @@ allprojects {
     version = '0.25-SNAPSHOT'
 }
 
-project.ext.set("errorprone_version", '2.7.1')
+project.ext.errorprone_version = '2.10.0'
+project.ext.nullaway_version = '0.9.2'
 
 gversion {
     srcDir       = "main/src"
@@ -100,8 +101,9 @@ subprojects {
         errorprone("com.google.errorprone:error_prone_core:$project.errorprone_version")
 
         // even if it's not used you still need to include the dependency
-        annotationProcessor "com.uber.nullaway:nullaway:0.8.0"
-        testAnnotationProcessor "com.uber.nullaway:nullaway:0.8.0"
+        // NOTE: nullaway is disabled due to switch expression bug https://github.com/uber/NullAway/issues/289
+//        annotationProcessor "com.uber.nullaway:nullaway:$project.nullaway_version"
+//        testAnnotationProcessor "com.uber.nullaway:nullaway:$project.nullaway_version"
     }
 
     tasks.withType(JavaCompile).configureEach {
@@ -119,11 +121,11 @@ subprojects {
             options.errorprone.disable("ReferenceEquality","IntLongMath","ClassCanBeStatic")
         }
 
-        options.errorprone {
-            check("NullAway", CheckSeverity.ERROR)
-            option("NullAway:TreatGeneratedAsUnannotated", true)
-            option("NullAway:AnnotatedPackages", "georegression")
-        }
+//        options.errorprone {
+//            check("NullAway", CheckSeverity.ERROR)
+//            option("NullAway:TreatGeneratedAsUnannotated", true)
+//            option("NullAway:AnnotatedPackages", "georegression")
+//        }
     }
 
     test {
