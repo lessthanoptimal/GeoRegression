@@ -16,7 +16,7 @@ allprojects {
 }
 
 project.ext.errorprone_version = '2.10.0'
-project.ext.nullaway_version = '0.9.3-SNAPSHOT'
+project.ext.nullaway_version = '0.9.3'
 project.ext.lombok_version = '1.18.20'
 project.ext.jabel_version = '0.3.0'
 project.ext.junit_version = '5.8.1'
