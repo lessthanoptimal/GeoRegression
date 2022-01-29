@@ -1,9 +1,3 @@
 dependencies {
-    compile project(':georegression')
-}
-
-idea {
-    module {
-        name = "GeoRegression Examples"
-    }
+    api project(':georegression')
 }

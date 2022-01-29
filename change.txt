@@ -1,11 +1,12 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2021
+Date    : 2022
 Version : 0.25
 
 - Build
  * Minimum version of Java is now 11. Was 8.
+ * Built using Java 17
  * Added Lombok
  * Starting to standardize formatting
 - zero() added to many geometric primitives

@@ -1,10 +1,4 @@
 dependencies {
-    compile project(':georegression')
-    testCompile project(':georegression').sourceSets.test.output
-}
-
-idea {
-    module {
-        name = "GeoRegression Experimental"
-    }
+    api project(':georegression')
+    testImplementation project(':georegression').sourceSets.test.output
 }
