@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -62,4 +62,9 @@ public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
 		dst.setTo(this);
 		return dst;
 	}
+
+	/**
+	 * Sets all coefficients and parameters to zero, which is typically the initial state.
+	 */
+	public abstract void zero();
 }

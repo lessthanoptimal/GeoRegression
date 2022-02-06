@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -32,9 +32,9 @@ public class ParabolaGeneral_F64 {
 	/**
 	 * Coefficients.
 	 */
-	public double A,C,D,E,F;
+	public double A, C, D, E, F;
 
-	public ParabolaGeneral_F64(double a, double c, double d, double e, double f) {
+	public ParabolaGeneral_F64( double a, double c, double d, double e, double f ) {
 		A = a;
 		C = c;
 		D = d;
@@ -46,9 +46,9 @@ public class ParabolaGeneral_F64 {
 		this.setTo(original);
 	}
 
-	public ParabolaGeneral_F64(){}
+	public ParabolaGeneral_F64() {}
 
-	public void setTo(ParabolaGeneral_F64 original ) {
+	public void setTo( ParabolaGeneral_F64 original ) {
 		this.A = original.A;
 		this.C = original.C;
 		this.D = original.D;
@@ -56,7 +56,7 @@ public class ParabolaGeneral_F64 {
 		this.F = original.F;
 	}
 
-	public void setTo(double a, double c, double d, double e, double f) {
+	public void setTo( double a, double c, double d, double e, double f ) {
 		A = a;
 		C = c;
 		D = d;
@@ -64,9 +64,13 @@ public class ParabolaGeneral_F64 {
 		F = f;
 	}
 
-	public double evaluate(double x , double y ) {
+	public void zero() {
+		A = C = D = E = F = 0.0;
+	}
+
+	public double evaluate( double x, double y ) {
 		double inner = A*x + C*y;
-		return inner*inner + D*x + E*y +F;
+		return inner*inner + D*x + E*y + F;
 	}
 
 	public void toArray( double[] array ) {
@@ -97,24 +101,24 @@ public class ParabolaGeneral_F64 {
 	public double relativeScale( ParabolaGeneral_F64 parabola ) {
 		double scale = A/parabola.A;
 		double max = Math.abs(parabola.A);
-		if( max < Math.abs(parabola.C)) {
+		if (max < Math.abs(parabola.C)) {
 			max = Math.abs(parabola.C);
 			scale = C/parabola.C;
 		}
-		if( max < Math.abs(parabola.D)) {
+		if (max < Math.abs(parabola.D)) {
 			max = Math.abs(parabola.D);
 			scale = D/parabola.D;
 		}
-		if( max < Math.abs(parabola.E)) {
+		if (max < Math.abs(parabola.E)) {
 			max = Math.abs(parabola.E);
 			scale = E/parabola.E;
 		}
-		if( max < Math.abs(parabola.F)) {
+		if (max < Math.abs(parabola.F)) {
 			max = Math.abs(parabola.F);
 			scale = F/parabola.F;
 		}
 
-		if( max == 0 )
+		if (max == 0)
 			scale = 0;
 		return scale;
 	}
@@ -122,18 +126,18 @@ public class ParabolaGeneral_F64 {
 	/**
 	 * Determines if they are equivalent up to a scale factor
 	 */
-	public boolean isEquivalent( ParabolaGeneral_F64 parabola , double tol ) {
+	public boolean isEquivalent( ParabolaGeneral_F64 parabola, double tol ) {
 		double scale = relativeScale(parabola);
 
-		if( Math.abs(A*scale-parabola.A) > tol )
+		if (Math.abs(A*scale - parabola.A) > tol)
 			return false;
-		if( Math.abs(C*scale-parabola.C) > tol )
+		if (Math.abs(C*scale - parabola.C) > tol)
 			return false;
-		if( Math.abs(D*scale-parabola.D) > tol )
+		if (Math.abs(D*scale - parabola.D) > tol)
 			return false;
-		if( Math.abs(E*scale-parabola.E) > tol )
+		if (Math.abs(E*scale - parabola.E) > tol)
 			return false;
-		if( Math.abs(F*scale-parabola.F) > tol )
+		if (Math.abs(F*scale - parabola.F) > tol)
 			return false;
 
 		return true;

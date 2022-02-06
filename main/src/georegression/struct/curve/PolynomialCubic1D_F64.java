@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -52,6 +52,11 @@ public class PolynomialCubic1D_F64 implements PolynomialCurve_F64 {
 	public void setTo(PolynomialCubic1D_F64 src )
 	{
 		this.a = src.a; this.b = src.b; this.c = src.c; this.d = src.d;
+	}
+
+	@Override
+	public void zero() {
+		setTo(0,0,0,0);
 	}
 
 	@Override

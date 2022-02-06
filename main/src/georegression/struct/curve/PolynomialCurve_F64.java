@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,4 +36,7 @@ public interface PolynomialCurve_F64 {
 	 * Polynomial's degree. This is the number of coefficients minus one.
 	 */
 	int degree();
+
+	/** Sets all coefficients to zero */
+	void zero();
 }

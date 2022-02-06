@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -53,6 +53,7 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 		this.y = y;
 	}
 
+	@Override
 	public void zero() {
 		setTo(0, 0);
 	}

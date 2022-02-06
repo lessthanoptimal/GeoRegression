@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -47,6 +47,7 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 		this.y = (short)y;
 	}
 
+	@Override
 	public void zero() {
 		setTo(0, 0);
 	}

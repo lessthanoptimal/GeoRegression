@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -90,5 +90,9 @@ public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
 	@Override
 	public int degree() {
 		return 2;
+	}
+
+	@Override public void zero() {
+		setTo(0, 0, 0);
 	}
 }

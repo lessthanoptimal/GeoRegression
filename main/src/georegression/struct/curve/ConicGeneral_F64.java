@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -94,6 +94,10 @@ public class ConicGeneral_F64 implements Serializable
 	public void setTo(double a, double b, double c, double d, double e, double f) {
 		A = a; B = b; C = c;
 		D = d; E = e; F = f;
+	}
+
+	public void zero() {
+		setTo(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 	}
 
 	public ConicGeneral_F64 copy() {

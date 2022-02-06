@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -17,6 +17,8 @@
  */
 
 package georegression.struct.curve;
+
+import java.util.Arrays;
 
 /**
  * Generalized polynomial curve
@@ -57,5 +59,9 @@ public class PolynomialGeneral1D_F64 implements PolynomialCurve_F64 {
 	@Override
 	public int degree() {
 		return coefs.length-1;
+	}
+
+	@Override public void zero() {
+		Arrays.fill(coefs, 0);
 	}
 }

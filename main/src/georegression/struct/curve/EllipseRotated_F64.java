@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -88,6 +88,11 @@ public class EllipseRotated_F64 implements Serializable {
 	}
 
 	public EllipseRotated_F64() {
+	}
+
+	public void zero() {
+		center.zero();
+		a = b = phi = 0;
 	}
 
 	public Point2D_F64 getCenter() {
