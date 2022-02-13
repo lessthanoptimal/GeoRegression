@@ -39,8 +39,7 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 		this.y = orig.y;
 	}
 
-	public Point2D_I16() {
-	}
+	public Point2D_I16() {}
 
 	public void setTo( int x, int y ) {
 		this.x = (short)x;
@@ -50,6 +49,28 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 	@Override
 	public void zero() {
 		setTo(0, 0);
+	}
+
+	public double distance( Point2D_I16 a ) {
+		return Math.sqrt(distance2(a));
+	}
+
+	public double distance( int x, int y ) {
+		return Math.sqrt(distance2(x, y));
+	}
+
+	public int distance2( Point2D_I16 a ) {
+		int dx = x - a.x;
+		int dy = y - a.y;
+
+		return dx*dx + dy*dy;
+	}
+
+	public int distance2( int x, int y ) {
+		int dx = this.x - x;
+		int dy = this.y - y;
+
+		return dx*dx + dy*dy;
 	}
 
 	public void setX( int x ) {
@@ -98,7 +119,7 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 	}
 
 	public void print() {
-		System.out.println(toString());
+		System.out.println(this);
 	}
 
 	@Override
