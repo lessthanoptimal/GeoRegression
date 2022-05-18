@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -29,23 +29,24 @@ import static java.lang.Math.PI;
 public class UtilAngle {
 
 	public static double radianToDegree( double angleRad ) {
-		return 180.0 * angleRad / Math.PI;
+		return 180.0*angleRad/Math.PI;
 	}
 
 	public static double degreeToRadian( double angleDegree ) {
-		return Math.PI * angleDegree / 180.0;
+		return Math.PI*angleDegree/180.0;
 	}
 
 	public static float radianToDegree( float angleRad ) {
-		return 180.0f * angleRad / GrlConstants.F_PI;
+		return 180.0f*angleRad/GrlConstants.F_PI;
 	}
 
 	public static float degreeToRadian( float angleDegree ) {
-		return GrlConstants.F_PI * angleDegree / 180.0f;
+		return GrlConstants.F_PI*angleDegree/180.0f;
 	}
 
 	/**
 	 * Converts radians into degrees
+	 *
 	 * @param angleDegree angle in degrees
 	 * @return angle in radians
 	 */
@@ -55,6 +56,7 @@ public class UtilAngle {
 
 	/**
 	 * Converts degrees into radians
+	 *
 	 * @param angleRad angle in radians
 	 * @return angle in degrees
 	 */
@@ -64,6 +66,7 @@ public class UtilAngle {
 
 	/**
 	 * Converts radians into degrees
+	 *
 	 * @param angleDegree angle in degrees
 	 * @return angle in radians
 	 */
@@ -73,6 +76,7 @@ public class UtilAngle {
 
 	/**
 	 * Converts degrees into radians
+	 *
 	 * @param angleRad angle in radians
 	 * @return angle in degrees
 	 */
@@ -80,20 +84,19 @@ public class UtilAngle {
 		return radianToDegree(angleRad);
 	}
 
-
-	public static double atanSafe( double y , double x ) {
-		if( x == 0.0 ) {
-			if( y >= 0.0)
-				return Math.PI / 2;
+	public static double atanSafe( double y, double x ) {
+		if (x == 0.0) {
+			if (y >= 0.0)
+				return Math.PI/2;
 			else
-				return -Math.PI / 2;
+				return -Math.PI/2;
 		}
 		return Math.atan(y/x);
 	}
 
-	public static float atanSafe( float y , float x ) {
-		if( x == 0.0 )
-			if( y >= 0.0)
+	public static float atanSafe( float y, float x ) {
+		if (x == 0.0)
+			if (y >= 0.0)
 				return GrlConstants.F_PId2;
 			else
 				return -GrlConstants.F_PId2;
@@ -109,10 +112,10 @@ public class UtilAngle {
 	 * @param b Angle in radians.
 	 * @return Average angle of the two. a + delta.
 	 */
-	public static double average( double a , double b ) {
-		double dist = UtilAngle.distanceCCW(bound(a),bound(b));
-		if( dist > GrlConstants.PI ) {
-			dist = GrlConstants.PI2-dist;
+	public static double average( double a, double b ) {
+		double dist = UtilAngle.distanceCCW(bound(a), bound(b));
+		if (dist > GrlConstants.PI) {
+			dist = GrlConstants.PI2 - dist;
 			return a - dist/2.0;
 		} else {
 			return a + dist/2.0;
@@ -128,10 +131,10 @@ public class UtilAngle {
 	 * @param b Angle in radians.
 	 * @return Average angle of the two. a + delta.
 	 */
-	public static float average( float a , float b ) {
-		float dist = UtilAngle.distanceCCW(bound(a),bound(b));
-		if( dist > GrlConstants.F_PI ) {
-			dist = GrlConstants.F_PI2-dist;
+	public static float average( float a, float b ) {
+		float dist = UtilAngle.distanceCCW(bound(a), bound(b));
+		if (dist > GrlConstants.F_PI) {
+			dist = GrlConstants.F_PI2 - dist;
 			return a - dist/2.0f;
 		} else {
 			return a + dist/2.0f;
@@ -145,9 +148,9 @@ public class UtilAngle {
 	 * @return -pi/2 to pi/2
 	 */
 	public static double toHalfCircle( double angle ) {
-		if( angle < 0 )
+		if (angle < 0)
 			angle += Math.PI;
-		if( angle > Math.PI/2.0 )
+		if (angle > Math.PI/2.0)
 			angle -= Math.PI;
 		return angle;
 	}
@@ -159,9 +162,9 @@ public class UtilAngle {
 	 * @return 0 to pi
 	 */
 	public static float toHalfCircle( float angle ) {
-		if( angle >= 0 )
+		if (angle >= 0)
 			return angle;
-		return GrlConstants.F_PI+angle;
+		return GrlConstants.F_PI + angle;
 	}
 
 	/**
@@ -171,7 +174,7 @@ public class UtilAngle {
 	 * @return true if it is between -&pi; and &pi;
 	 */
 	public static boolean isStandardDomain( double ang ) {
-		return ( ang <= Math.PI && ang >= -Math.PI );
+		return (ang <= Math.PI && ang >= -Math.PI);
 	}
 
 	/**
@@ -181,7 +184,7 @@ public class UtilAngle {
 	 * @return true if it is between -&pi;/2 and &pi;/2;
 	 */
 	public static boolean isHalfDomain( double ang ) {
-		return ( ang <= Math.PI/2 && ang >= -Math.PI/2 );
+		return (ang <= Math.PI/2 && ang >= -Math.PI/2);
 	}
 
 	/**
@@ -190,9 +193,9 @@ public class UtilAngle {
 	public static double bound( double ang ) {
 		ang %= GrlConstants.PI2;
 
-		if( ang > PI ) {
+		if (ang > PI) {
 			return ang - GrlConstants.PI2;
-		} else if( ang < -PI ) {
+		} else if (ang < -PI) {
 			return ang + GrlConstants.PI2;
 		}
 
@@ -205,9 +208,9 @@ public class UtilAngle {
 	public static float bound( float ang ) {
 		ang %= GrlConstants.F_PI2;
 
-		if( ang > GrlConstants.F_PI ) {
+		if (ang > GrlConstants.F_PI) {
 			return ang - GrlConstants.F_PI2;
-		} else if( ang < -GrlConstants.F_PI ) {
+		} else if (ang < -GrlConstants.F_PI) {
 			return ang + GrlConstants.F_PI2;
 		}
 
@@ -216,15 +219,16 @@ public class UtilAngle {
 
 	/**
 	 * Bounds the angle between -&pi;/2 and &pi;/2
+	 *
 	 * @param angle angle in radians
 	 * @return bounded angle
 	 */
 	public static double boundHalf( double angle ) {
 		angle = bound(angle);
 
-		if( angle > GrlConstants.PId2 ) {
+		if (angle > GrlConstants.PId2) {
 			angle -= Math.PI;
-		} else if( angle < -GrlConstants.PId2 ){
+		} else if (angle < -GrlConstants.PId2) {
 			angle += Math.PI;
 		}
 		return angle;
@@ -232,15 +236,16 @@ public class UtilAngle {
 
 	/**
 	 * Bounds the angle between -&pi;/2 and &pi;/2
+	 *
 	 * @param angle angle in radians
 	 * @return bounded angle
 	 */
 	public static float boundHalf( float angle ) {
 		angle = bound(angle);
 
-		if( angle > GrlConstants.F_PId2 ) {
+		if (angle > GrlConstants.F_PId2) {
 			angle -= GrlConstants.F_PI;
-		} else if( angle < -GrlConstants.F_PId2 ){
+		} else if (angle < -GrlConstants.F_PId2) {
 			angle += GrlConstants.F_PI;
 		}
 		return angle;
@@ -255,10 +260,10 @@ public class UtilAngle {
 	 * @return An angle from 0 to 2 &pi;
 	 */
 	public static double distanceCCW( double angA, double angB ) {
-		if( angB >= angA )
-			return angB-angA;
+		if (angB >= angA)
+			return angB - angA;
 		else
-			return GrlConstants.PI2 - (angA-angB);
+			return GrlConstants.PI2 - (angA - angB);
 	}
 
 	/**
@@ -273,10 +278,10 @@ public class UtilAngle {
 		angA = bound(angA);
 		angB = bound(angB);
 
-		if( angB >= angA )
-			return angB-angA;
+		if (angB >= angA)
+			return angB - angA;
 		else
-			return GrlConstants.PI2 - (angA-angB);
+			return GrlConstants.PI2 - (angA - angB);
 	}
 
 	/**
@@ -288,10 +293,10 @@ public class UtilAngle {
 	 * @return An angle from 0 to 2 &pi;
 	 */
 	public static float distanceCCW( float angA, float angB ) {
-		if( angB >= angA )
-			return angB-angA;
+		if (angB >= angA)
+			return angB - angA;
 		else
-			return GrlConstants.F_PI2 - (angA-angB);
+			return GrlConstants.F_PI2 - (angA - angB);
 	}
 
 	/**
@@ -306,10 +311,10 @@ public class UtilAngle {
 		angA = bound(angA);
 		angB = bound(angB);
 
-		if( angB >= angA )
-			return angB-angA;
+		if (angB >= angA)
+			return angB - angA;
 		else
-			return GrlConstants.F_PI2 - (angA-angB);
+			return GrlConstants.F_PI2 - (angA - angB);
 	}
 
 	/**
@@ -321,10 +326,10 @@ public class UtilAngle {
 	 * @return An angle from 0 to 2 &pi;
 	 */
 	public static double distanceCW( double angA, double angB ) {
-		if( angA >= angB )
-			return angA-angB;
+		if (angA >= angB)
+			return angA - angB;
 		else
-			return GrlConstants.PI2-(angB-angA);
+			return GrlConstants.PI2 - (angB - angA);
 	}
 
 	/**
@@ -339,10 +344,10 @@ public class UtilAngle {
 		angA = bound(angA);
 		angB = bound(angB);
 
-		if( angA >= angB )
-			return angA-angB;
+		if (angA >= angB)
+			return angA - angB;
 		else
-			return GrlConstants.PI2-(angB-angA);
+			return GrlConstants.PI2 - (angB - angA);
 	}
 
 	/**
@@ -354,10 +359,10 @@ public class UtilAngle {
 	 * @return An angle from 0 to 2 &pi;
 	 */
 	public static float distanceCW( float angA, float angB ) {
-		if( angA >= angB )
-			return angA-angB;
+		if (angA >= angB)
+			return angA - angB;
 		else
-			return GrlConstants.F_PI2-(angB-angA);
+			return GrlConstants.F_PI2 - (angB - angA);
 	}
 
 	/**
@@ -372,12 +377,12 @@ public class UtilAngle {
 		angA = bound(angA);
 		angB = bound(angB);
 
-		if( angA >= angB )
-			return angA-angB;
+		if (angA >= angB)
+			return angA - angB;
 		else
-			return GrlConstants.F_PI2-(angB-angA);
+			return GrlConstants.F_PI2 - (angB - angA);
 	}
-	
+
 	/**
 	 * <p>
 	 * Returns the difference between two angles and bounds the result between -pi and pi:<br>
@@ -390,14 +395,12 @@ public class UtilAngle {
 	 * @return an angle between -pi and pi
 	 */
 	public static double minus( double angA, double angB ) {
-		double diff = angA - angB;
+		double distCCW = distanceCCW(angA, angB);
+		double distCW = distanceCW(angA, angB);
 
-		if( diff > Math.PI ) {
-			return GrlConstants.PI2 - diff;
-		} else if( diff < -Math.PI )
-			return -GrlConstants.PI2 - diff;
-
-		return diff;
+		if (distCCW < distCW)
+			return -distCCW;
+		return distCW;
 	}
 
 	/**
@@ -412,14 +415,12 @@ public class UtilAngle {
 	 * @return an angle between -pi and pi
 	 */
 	public static float minus( float angA, float angB ) {
-		float diff = angA - angB;
+		float distCCW = distanceCCW(angA, angB);
+		float distCW = distanceCW(angA, angB);
 
-		if( diff > GrlConstants.F_PI ) {
-			return GrlConstants.F_PI2 - diff;
-		} else if( diff < -GrlConstants.F_PI )
-			return -GrlConstants.F_PI2 - diff;
-
-		return diff;
+		if (distCCW < distCW)
+			return -distCCW;
+		return distCW;
 	}
 
 	/**
@@ -433,7 +434,7 @@ public class UtilAngle {
 	 * @return an angle between 0 and pi
 	 */
 	public static double dist( double angA, double angB ) {
-		return Math.abs(minus(angA,angB));
+		return Math.abs(minus(angA, angB));
 	}
 
 	/**
@@ -447,7 +448,7 @@ public class UtilAngle {
 	 * @return an angle between 0 and pi
 	 */
 	public static double dist_u( double angA, double angB ) {
-		return Math.abs(minus(bound(angA),bound(angB)));
+		return Math.abs(minus(bound(angA), bound(angB)));
 	}
 
 	/**
@@ -461,7 +462,7 @@ public class UtilAngle {
 	 * @return an angle between 0 and pi
 	 */
 	public static float dist( float angA, float angB ) {
-		return Math.abs(minus(angA,angB));
+		return Math.abs(minus(angA, angB));
 	}
 
 	/**
@@ -475,7 +476,7 @@ public class UtilAngle {
 	 * @return an angle between 0 and pi
 	 */
 	public static float dist_u( float angA, float angB ) {
-		return Math.abs(minus(bound(angA),bound(angB)));
+		return Math.abs(minus(bound(angA), bound(angB)));
 	}
 
 	/**
@@ -485,21 +486,22 @@ public class UtilAngle {
 	 * @param angB Angle between -pi/2 and pi/2.
 	 * @return Acute angle between the two input angles.
 	 */
-	public static double distHalf( double angA , double angB ) {
-		double a = Math.abs(angA-angB);
-		if( a <= Math.PI/2 )
+	public static double distHalf( double angA, double angB ) {
+		double a = Math.abs(angA - angB);
+		if (a <= Math.PI/2)
 			return a;
 		else
-			return Math.PI-a;
+			return Math.PI - a;
 	}
 
 	/**
 	 * Converts an angle from -pi to pi into 0 to 2*pi domain
+	 *
 	 * @param angle angle from -pi to pi radians
 	 * @return angle from 0 to 2*pi radians
 	 */
 	public static double domain2PI( double angle ) {
-		if( angle < 0 ) {
+		if (angle < 0) {
 			return angle + 2*Math.PI;
 		} else {
 			return angle;
@@ -520,11 +522,11 @@ public class UtilAngle {
 	 *
 	 * @return A value from 0 to 1. [0,1)
 	 */
-	public static double wrapZeroToOne(double value ) {
-		if( value >= 0 )
-			return value % 1.0;
+	public static double wrapZeroToOne( double value ) {
+		if (value >= 0)
+			return value%1.0;
 		else {
-			return (1.0+(value%1.0))%1.0; // last bit is to ensure that 1.0 is returned as 0.0
+			return (1.0 + (value%1.0))%1.0; // last bit is to ensure that 1.0 is returned as 0.0
 		}
 	}
 
@@ -542,11 +544,11 @@ public class UtilAngle {
 	 *
 	 * @return A value from 0 to 1. [0,1)
 	 */
-	public static float wrapZeroToOne(float value ) {
-		if( value >= 0 )
-			return value % 1.0f;
+	public static float wrapZeroToOne( float value ) {
+		if (value >= 0)
+			return value%1.0f;
 		else {
-			return (1.0f+(value%1.0f))%1.0f; // last bit is to ensure that 1.0 is returned as 0.0
+			return (1.0f + (value%1.0f))%1.0f; // last bit is to ensure that 1.0 is returned as 0.0
 		}
 	}
 
@@ -565,11 +567,11 @@ public class UtilAngle {
 	 *
 	 * @return A value from 0 to 1. [0,1]
 	 */
-	public static double reflectZeroToOne(double value ) {
-		if( value < 0 )
+	public static double reflectZeroToOne( double value ) {
+		if (value < 0)
 			value = -value;
 		value = value%2.0;
-		if( value > 1.0 )
+		if (value > 1.0)
 			return 2.0 - value;
 		return value;
 	}
@@ -589,11 +591,11 @@ public class UtilAngle {
 	 *
 	 * @return A value from 0 to 1. [0,1]
 	 */
-	public static float reflectZeroToOne(float value ) {
-		if( value < 0 )
+	public static float reflectZeroToOne( float value ) {
+		if (value < 0)
 			value = -value;
 		value = value%2.0f;
-		if( value > 1.0f )
+		if (value > 1.0f)
 			return 2.0f - value;
 		return value;
 	}

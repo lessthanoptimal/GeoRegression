@@ -11,6 +11,8 @@ Version : 0.25
  * Starting to standardize formatting
 - zero() added to many geometric primitives
  * Zeros out all fields, typically this is the initial state
+- UtilAngle
+ * Fixed minus(). Incorrectly handled wrapping. Kinda embarrassing this wasn't found earlier
 
 ---------------------------------------------
 Date    : 2021-Jul-09
