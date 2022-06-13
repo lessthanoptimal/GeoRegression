@@ -312,6 +312,45 @@ public class SePointOps_F64 {
 	}
 
 	/**
+	 * Applies the transform to points in homogenous coordinates.
+	 *
+	 * @param se SpecialEuclidean transform. Not modified.
+	 * @param src Original coordinate of the point. Not modified.
+	 * @param dst Storage for transformed coordinate of the point. Point declared if null. Modified.
+	 * @return Transformed point.
+	 */
+	public static Point4D_F64 transformReverse(Se3_F64 se, Point4D_F64 src, @Nullable Point4D_F64 dst ) {
+		return transformReverse(se, src.x, src.y, src.z ,src.w, dst);
+	}
+
+	public static Point4D_F64 transformReverse(Se3_F64 se,
+											  final double x, final double y, final double z, final double w,
+											  @Nullable Point4D_F64 dst ) {
+		if( dst == null )
+			dst = new Point4D_F64();
+
+		DMatrixRMaj R = se.getR();
+		Vector3D_F64 T = se.getT();
+
+		// Construct inv(P) = [R' | -R'*T]
+		double P11 = R.data[0], P12 = R.data[3], P13 = R.data[6];
+		double P21 = R.data[1], P22 = R.data[4], P23 = R.data[7];
+		double P31 = R.data[2], P32 = R.data[5], P33 = R.data[8];
+
+		double P14 = -(P11*T.x + P12*T.y + P13*T.z);
+		double P24 = -(P21*T.x + P22*T.y + P23*T.z);
+		double P34 = -(P31*T.x + P32*T.y + P33*T.z);
+		// the bottom row is implicitly [0 0 0 1]
+
+		dst.x = P11*x + P12*y + P13*z + P14*w;
+		dst.y = P21*x + P22*y + P23*z + P24*w;
+		dst.z = P31*x + P32*y + P33*z + P34*w;
+		dst.w = w;
+
+		return dst;
+	}
+
+	/**
 	 * <p>.
 	 * Applies the transform in the reverse direction<br>
 	 * <br>

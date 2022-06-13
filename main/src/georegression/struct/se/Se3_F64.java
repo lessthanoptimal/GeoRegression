@@ -25,6 +25,7 @@ import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.RotationType;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Point4D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.ejml.UtilEjml;
@@ -290,6 +291,23 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 */
 	public Vector3D_F64 transformReverse( Vector3D_F64 src, @Nullable Vector3D_F64 dst ) {
 		return GeometryMath_F64.multTran(R, src, dst);
+	}
+
+	/**
+	 * Applies the transform to the src point and stores the result in dst. src and dst can be the same instance.
+	 * For points in 3D homogenous coordinates.
+	 *
+	 * @param src Input. Homogenous coordinate
+	 * @param dst Output. Homogenous coordinate
+	 * @return Output. Homogenous coordinate
+	 * @see SePointOps_F64#transform(Se3_F64, Point4D_F64, Point4D_F64)
+	 */
+	public Point4D_F64 transform(Point4D_F64 src, @Nullable Point4D_F64 dst ) {
+		return SePointOps_F64.transform(this, src, dst);
+	}
+
+	public Point4D_F64 transformReverse(Point4D_F64 src, @Nullable Point4D_F64 dst ) {
+		return SePointOps_F64.transform(this, src, dst);
 	}
 
 	public Se3_F64 copy() {

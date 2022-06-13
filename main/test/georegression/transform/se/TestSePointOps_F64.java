@@ -193,6 +193,31 @@ public class TestSePointOps_F64 {
 	}
 
 	@Test
+	void transformReverse_4d_4D() {
+		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
+		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
+
+		Point4D_F64 P = new Point4D_F64( 10, 9, 2 , 1);
+		Point4D_F64 Pt = new Point4D_F64();
+
+		Se3_F64 se = new Se3_F64( R, T );
+
+		SePointOps_F64.transformReverse( se, P, Pt );
+
+		assertEquals( 1, Pt.getX(), GrlConstants.TEST_F64);
+		assertEquals( 7 , Pt.getY(), GrlConstants.TEST_F64);
+		assertEquals( 9 , Pt.getZ(), GrlConstants.TEST_F64);
+		assertEquals( 1 , Pt.w, GrlConstants.TEST_F64);
+
+		P.setTo(9, 7, -1, 0);
+		SePointOps_F64.transformReverse( se, P, Pt );
+		assertEquals( 1 , Pt.getX(), GrlConstants.TEST_F64);
+		assertEquals( 7 , Pt.getY(), GrlConstants.TEST_F64);
+		assertEquals(9 , Pt.getZ(), GrlConstants.TEST_F64);
+		assertEquals(0 , Pt.w, GrlConstants.TEST_F64);
+	}
+
+	@Test
 	void transformV_4d_3d() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		var T = new Vector3D_F64( 1, 2, 3 );

@@ -13,6 +13,8 @@ Version : 0.25
  * Zeros out all fields, typically this is the initial state
 - UtilAngle
  * Fixed minus(). Incorrectly handled wrapping. Kinda embarrassing this wasn't found earlier
+- SePointOps
+ * transformReverse for 3D homogenous coordinates
 
 ---------------------------------------------
 Date    : 2021-Jul-09
