@@ -21,66 +21,86 @@ package georegression.struct.se;
 import georegression.struct.GenericInvertibleTransformTests_F64;
 import georegression.struct.InvertibleTransform;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.point.Point4D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.transform.se.SePointOps_F64;
+import org.ejml.UtilEjml;
 import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.SpecializedOps_DDRM;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
  */
 public class TestSe3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64> {
 
-	Random rand = new Random( 234234 );
+	Random rand = new Random(234234);
 
 	/**
 	 * Checks to see if the constructor correctly saves the reference or copies the values.
 	 */
 	@Test
 	void constructor_assign() {
-		DMatrixRMaj R = new DMatrixRMaj( 3, 3 );
-		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
+		DMatrixRMaj R = new DMatrixRMaj(3, 3);
+		Vector3D_F64 T = new Vector3D_F64(1, 2, 3);
 
-		Se3_F64 a = new Se3_F64( R, T, false );
+		Se3_F64 a = new Se3_F64(R, T, false);
 		assertNotSame(R, a.getR());
 		assertNotSame(T, a.getT());
 
-		a = new Se3_F64( R, T, true );
+		a = new Se3_F64(R, T, true);
 		assertSame(R, a.getR());
 		assertSame(T, a.getT());
 	}
 
+	@Test
+	void invertConcat() {
+		Se3_F64 found = new Se3_F64();
+
+		for (int i = 0; i < 100; i++) {
+			Se3_F64 transformA = (Se3_F64)createRandomTransform();
+			Se3_F64 transformB = (Se3_F64)createRandomTransform();
+
+			Se3_F64 combined = transformA.concat(transformB, null);
+
+			transformA.invertConcat(combined, found);
+
+			assertEquals(0.0, transformB.T.distance(found.T), UtilEjml.TEST_F64);
+			assertEquals(0.0, SpecializedOps_DDRM.diffNormF(transformB.R, found.R), UtilEjml.TEST_F64);
+		}
+	}
+
 	@Override
 	public Point3D_F64 createRandomPoint() {
-		return new Point3D_F64( rand.nextGaussian() * 3,
-				rand.nextGaussian() * 3, rand.nextGaussian() * 3 );
+		return new Point3D_F64(rand.nextGaussian()*3,
+				rand.nextGaussian()*3, rand.nextGaussian()*3);
 	}
 
 	@Override
 	public SpecialEuclidean createRandomTransform() {
 
-		double rotX = (double) ( ( rand.nextDouble() - 0.5 ) * 2.0 * Math.PI );
-		double rotY = (double) ( ( rand.nextDouble() - 0.5 ) * 2.0 * Math.PI );
-		double rotZ = (double) ( ( rand.nextDouble() - 0.5 ) * 2.0 * Math.PI );
-		double x = (double) ( rand.nextGaussian() * 2 );
-		double y = (double) ( rand.nextGaussian() * 2 );
-		double z = (double) ( rand.nextGaussian() * 2 );
+		double rotX = (double)((rand.nextDouble() - 0.5)*2.0*Math.PI);
+		double rotY = (double)((rand.nextDouble() - 0.5)*2.0*Math.PI);
+		double rotZ = (double)((rand.nextDouble() - 0.5)*2.0*Math.PI);
+		double x = (double)(rand.nextGaussian()*2);
+		double y = (double)(rand.nextGaussian()*2);
+		double z = (double)(rand.nextGaussian()*2);
 
 		Se3_F64 ret = new Se3_F64();
 
-		SpecialEuclideanOps_F64.eulerXyz(x, y, z, rotX, rotY, rotZ, ret );
+		SpecialEuclideanOps_F64.eulerXyz(x, y, z, rotX, rotY, rotZ, ret);
 
 		return ret;
 	}
 
 	@Override
 	public Point3D_F64 apply( InvertibleTransform se, Point3D_F64 point, @Nullable Point3D_F64 result ) {
-		return SePointOps_F64.transform( (Se3_F64) se, (Point3D_F64) point, (Point3D_F64) result );
+		return SePointOps_F64.transform((Se3_F64)se, (Point3D_F64)point, (Point3D_F64)result);
 	}
 }
