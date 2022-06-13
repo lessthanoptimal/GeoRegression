@@ -35,11 +35,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
 public class TestSe3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64> {
-
 	Random rand = new Random(234234);
 
 	/**
@@ -57,23 +53,6 @@ public class TestSe3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64
 		a = new Se3_F64(R, T, true);
 		assertSame(R, a.getR());
 		assertSame(T, a.getT());
-	}
-
-	@Test
-	void invertConcat() {
-		Se3_F64 found = new Se3_F64();
-
-		for (int i = 0; i < 100; i++) {
-			Se3_F64 transformA = (Se3_F64)createRandomTransform();
-			Se3_F64 transformB = (Se3_F64)createRandomTransform();
-
-			Se3_F64 combined = transformA.concat(transformB, null);
-
-			transformA.invertConcat(combined, found);
-
-			assertEquals(0.0, transformB.T.distance(found.T), UtilEjml.TEST_F64);
-			assertEquals(0.0, SpecializedOps_DDRM.diffNormF(transformB.R, found.R), UtilEjml.TEST_F64);
-		}
 	}
 
 	@Override

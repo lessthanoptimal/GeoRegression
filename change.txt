@@ -15,8 +15,9 @@ Version : 0.25
  * Fixed minus(). Incorrectly handled wrapping. Kinda embarrassing this wasn't found earlier
 - SePointOps
  * transformReverse for 3D homogenous coordinates
-- SE3
+- InvertibleTransform
  * added invertConcat() which implicity inverts 'this' before performing concatenation
+ * SE3 added specialized implementation of invertConcat()
 
 ---------------------------------------------
 Date    : 2021-Jul-09

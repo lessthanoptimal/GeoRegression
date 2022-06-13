@@ -19,6 +19,9 @@
 package georegression.struct;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.se.Se3_F64;
+import org.ejml.UtilEjml;
+import org.ejml.dense.row.SpecializedOps_DDRM;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
@@ -120,5 +123,26 @@ public abstract class GenericInvertibleTransformTests_F64 <T extends GeoTuple_F6
 		T found = apply( aInv, tran, null );
 
 		assertTrue( found.isIdentical( orig, GrlConstants.TEST_F64) );
+	}
+
+	@Test
+	void invertConcat() {
+		for (int i = 0; i < 20; i++) {
+			InvertibleTransform a = createRandomTransform();
+			InvertibleTransform b = createRandomTransform();
+
+			InvertibleTransform c = a.concat(b, null);
+
+			// Recompute B using invertCat
+			InvertibleTransform bb = a.invertConcat(c, null);
+
+			T orig = createRandomPoint();
+
+			// These should be the same
+			T expected = apply(b, orig, null);
+			T found = apply(bb, orig, null);
+
+			assertTrue( expected.isIdentical( found, GrlConstants.TEST_F64) );
+		}
 	}
 }

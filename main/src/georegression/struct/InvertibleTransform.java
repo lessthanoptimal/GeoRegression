@@ -105,6 +105,19 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	T invert( @Nullable T inverse );
 
 	/**
+	 * Computes a transform that's equivalent to 'invert(null).concat(second, result)'. The advantage of using
+	 * this function is that it might have been implemented so that the inversion is implicit, which can result in
+	 * no memory creation and more stable numerics.
+	 *
+	 * @param second The second transform which is applied. Not modified.
+	 * @param result (Output) storage for rsulting transform. Can be null
+	 * @return The computed transform. If result isn't null then result is returned.
+	 */
+	default T invertConcat(T second, @Nullable T result) {
+		return (T)invert(null).concat(second, result);
+	}
+
+	/**
 	 * Sets the transform to its initial state of no transform.
 	 */
 	void reset();
