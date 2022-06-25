@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -316,6 +316,11 @@ public class TestUtilPolygons2D_F64 {
 
 		UtilPolygons2D_F64.vertexAverage(poly, ave);
 
+		assertEquals((1 + 3 + 5) / 3.0, ave.x, TEST_F64);
+		assertEquals((2 + 4 + 6) / 3.0, ave.y, TEST_F64);
+
+		// Do it again and see if it gets the same result
+		UtilPolygons2D_F64.vertexAverage(poly, ave);
 		assertEquals((1 + 3 + 5) / 3.0, ave.x, TEST_F64);
 		assertEquals((2 + 4 + 6) / 3.0, ave.y, TEST_F64);
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -393,7 +393,7 @@ public class UtilPolygons2D_F64 {
 	 * @param average (output) average point
 	 */
 	public static void vertexAverage(Polygon2D_F64 input, Point2D_F64 average ) {
-		average.setIdx(0,0);
+		average.zero();
 
 		for (int i = 0; i < input.size(); i++) {
 			Point2D_F64 v = input.vertexes.data[i];
