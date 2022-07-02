@@ -202,13 +202,11 @@ public class TriangulateSimpleRemoveEars_F64 {
 	void convert(Polygon2D_F64 input, DogLinkedList<Vertex> output) {
 		output.reset();
 		// Predeclare memory
-		vertexes.resize(input.size());
-		vertexes.reset();
+		vertexes.resetResize(input.size());
 
 		for (int i = 0; i < input.size(); i++) {
 			Point2D_F64 p = input.get(i);
-
-			Vertex v = vertexes.grow();
+			Vertex v = vertexes.get(i);
 			v.index = i;
 			v.setTo(p.x,p.y);
 			polygon.pushTail(v);

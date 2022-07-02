@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -204,6 +204,19 @@ public class TestTriangulateSimpleRemoveEars_F64 {
 		assertTrue(alg.isInCone(e2,e4));
 		assertFalse(alg.isInCone(e1,e3));
 		assertFalse(alg.isInCone(e1,e4));
+	}
+
+	/**
+	 * Call it several times and see if it gets stuck. Issue which inspired this test was caused by a bug in ddogleg.
+	 */
+	@Test void multipleCalls() {
+		var polygon = new Polygon2D_F64(242, 27, 242, 53, 231, 47, 238, 40, 232, 39, 230, 30, 230, 20, 236, 33, 237, 25);
+		var alg = new TriangulateSimpleRemoveEars_F64();
+		var found = new DogArray<>(ThreeIndexes::new);
+
+		for (int i = 0; i < 10; i++) {
+			alg.process(polygon, found);
+		}
 	}
 
 	@Test void convert() {
