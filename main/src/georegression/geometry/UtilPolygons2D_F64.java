@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class UtilPolygons2D_F64 {
 	/**
-	 * Determines if the polugon is convex or concave.
+	 * Determines if the polygon is convex or concave.
 	 *
 	 * @param poly Polygon
 	 * @return true if convex and false if concave
@@ -75,7 +75,8 @@ public class UtilPolygons2D_F64 {
 	}
 
 	/**
-	 * Checks to see if a polygon is simple or not, see [1]. If complex then the
+	 * Checks to see if a polygon is simple or not, see [1]. A simple polygon is a polygon which does not intersect
+	 * itself and has no holes.
 	 *
 	 * <p>[1] Numerical Recipes. Third Edition. Section 21.4</p>
 	 *

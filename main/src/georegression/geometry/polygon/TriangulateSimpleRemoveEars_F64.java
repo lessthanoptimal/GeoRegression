@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -29,8 +29,8 @@ import org.ddogleg.struct.DogLinkedList.Element;
 import org.ejml.UtilEjml;
 
 /**
- * Triangulates a simple polygon by removing ears. Triangulation breaks a polygon up into triangle components.
- * There are many different ways to triangulate polygons and in most situations there are multiple solutions.
+ * Triangulates a {@link UtilPolygons2D_F64#isSimple simple polygon} by removing ears. Triangulation breaks a polygon up into triangle components.
+ * There are many ways to triangulate polygons and in most situations there are multiple solutions.
  * The approach employed here is described in [1] and works by selecting "ears" in the polygon and breaking
  * those off into triangles. The overall complexity is O(N^2).
  *
