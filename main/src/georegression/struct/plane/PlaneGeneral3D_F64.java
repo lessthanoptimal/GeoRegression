@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -58,18 +58,20 @@ public class PlaneGeneral3D_F64 implements Serializable {
 
 	public PlaneGeneral3D_F64() {}
 
-	public void setTo( double a, double b, double c, double d ) {
+	public PlaneGeneral3D_F64 setTo( double a, double b, double c, double d ) {
 		this.A = a;
 		this.B = b;
 		this.C = c;
 		this.D = d;
+		return this;
 	}
 
-	public void setTo( PlaneGeneral3D_F64 src ) {
+	public PlaneGeneral3D_F64 setTo( PlaneGeneral3D_F64 src ) {
 		this.A = src.A;
 		this.B = src.B;
 		this.C = src.C;
 		this.D = src.D;
+		return this;
 	}
 
 	public void zero() {
