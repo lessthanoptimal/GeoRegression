@@ -49,8 +49,9 @@ public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
 	 * Sets this equal to 'src'
 	 *
 	 * @param src The tuple being copied
+	 * @return Reference to 'this' class instance. Used to chain operations.
 	 */
-	public abstract void setTo( T src );
+	public abstract T setTo( T src );
 
 	/**
 	 * Generic copy routine. It is recommended that this be overridden with a faster implementation.
@@ -58,9 +59,7 @@ public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
 	 * @return An exact copy of this GeoTuple.
 	 */
 	public T copy() {
-		T dst = createNewInstance();
-		dst.setTo(this);
-		return dst;
+		return (T)createNewInstance().setTo(this);
 	}
 
 	/**

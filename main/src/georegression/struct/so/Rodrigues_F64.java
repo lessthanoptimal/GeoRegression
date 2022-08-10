@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,9 +19,10 @@
 package georegression.struct.so;
 
 import georegression.struct.point.Vector3D_F64;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
-
 
 /**
  * <p>
@@ -40,7 +41,7 @@ public class Rodrigues_F64 implements Serializable {
 	// unit vector defining the axis of rotation
 	public Vector3D_F64 unitAxisRotation = new Vector3D_F64();
 	// the angle it is rotated by
-	public double theta;
+	@Getter @Setter public double theta;
 
 	public Rodrigues_F64() {
 	}
@@ -49,9 +50,9 @@ public class Rodrigues_F64 implements Serializable {
 	 * Constructor which specifies the transform.
 	 *
 	 * @param theta Angle of rotation
-	 * @param unitAxisRotation  Axis of rotation   Must be normalized to 1.
+	 * @param unitAxisRotation Axis of rotation   Must be normalized to 1.
 	 */
-	public Rodrigues_F64(double theta, Vector3D_F64 unitAxisRotation) {
+	public Rodrigues_F64( double theta, Vector3D_F64 unitAxisRotation ) {
 		this.theta = theta;
 		this.unitAxisRotation.setTo(unitAxisRotation);
 	}
@@ -64,31 +65,24 @@ public class Rodrigues_F64 implements Serializable {
 	 * @param y Axis of rotation. y-component.
 	 * @param z Axis of rotation. z-component.
 	 */
-	public Rodrigues_F64(double theta, double x, double y, double z) {
+	public Rodrigues_F64( double theta, double x, double y, double z ) {
 		this.theta = theta;
-		this.unitAxisRotation.setTo( x, y, z );
+		this.unitAxisRotation.setTo(x, y, z);
 		unitAxisRotation.normalize();
 	}
 
-	public void setTo( Rodrigues_F64 src ) {
+	public Rodrigues_F64 setTo( Rodrigues_F64 src ) {
 		this.theta = src.theta;
 		this.unitAxisRotation.setTo(src.unitAxisRotation);
+		return this;
 	}
 
 	public Vector3D_F64 getUnitAxisRotation() {
 		return unitAxisRotation;
 	}
 
-	public void setUnitAxisRotation(Vector3D_F64 unitAxisRotation) {
+	public void setUnitAxisRotation( Vector3D_F64 unitAxisRotation ) {
 		this.unitAxisRotation.setTo(unitAxisRotation);
-	}
-
-	public double getTheta() {
-		return theta;
-	}
-
-	public void setTheta( double theta ) {
-		this.theta = theta;
 	}
 
 	/**
@@ -99,17 +93,17 @@ public class Rodrigues_F64 implements Serializable {
 	 * @param y y-component of 3 vector
 	 * @param z z-component of 3 vector
 	 */
-	public void setParamVector( double  x , double y , double z ) {
+	public void setParamVector( double x, double y, double z ) {
 		double ax = Math.abs(x);
 		double ay = Math.abs(y);
 		double az = Math.abs(z);
 
-		double max = Math.max(ax,ay);
-		max = Math.max(max,az);
-		
-		if( max == 0 ) {
+		double max = Math.max(ax, ay);
+		max = Math.max(max, az);
+
+		if (max == 0) {
 			theta = 0;
-			unitAxisRotation.setTo(1,0,0);
+			unitAxisRotation.setTo(1, 0, 0);
 		} else {
 			x /= max;
 			y /= max;
@@ -124,8 +118,8 @@ public class Rodrigues_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+
-				" v{ "+unitAxisRotation.x+" , "+unitAxisRotation.y+" , "+unitAxisRotation.z+" } theta = "+
+		return getClass().getSimpleName() +
+				" v{ " + unitAxisRotation.x + " , " + unitAxisRotation.y + " , " + unitAxisRotation.z + " } theta = " +
 				theta;
 	}
 }

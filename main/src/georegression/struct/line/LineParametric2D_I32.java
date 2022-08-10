@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,8 @@ package georegression.struct.line;
 
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -41,7 +43,7 @@ public class LineParametric2D_I32 implements Serializable {
 	/**
 	 * The line's slope
 	 */
-	public int slopeX,slopeY;
+	@Getter @Setter public int slopeX, slopeY;
 
 	public LineParametric2D_I32(int x_0, int y_0, int slopeX, int slopeY ) {
 		p.setTo( x_0, y_0 );
@@ -56,10 +58,11 @@ public class LineParametric2D_I32 implements Serializable {
 
 	public LineParametric2D_I32() {}
 
-	public void setTo(LineParametric2D_I32 line ) {
+	public LineParametric2D_I32 setTo(LineParametric2D_I32 line ) {
 		this.p.setTo(line.p);
 		this.slopeX = line.slopeX;
 		this.slopeY = line.slopeY;
+		return this;
 	}
 	
 	public void setPoint( Point2D_I32 pt ) {
@@ -88,14 +91,6 @@ public class LineParametric2D_I32 implements Serializable {
 
 	public Point2D_I32 getPoint() {
 		return p;
-	}
-
-	public final int getSlopeX() {
-		return slopeX;
-	}
-
-	public final int getSlopeY() {
-		return slopeY;
 	}
 
 	public final int getX() {

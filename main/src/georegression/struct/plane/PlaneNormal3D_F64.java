@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -51,19 +51,22 @@ public class PlaneNormal3D_F64 implements Serializable {
 
 	public PlaneNormal3D_F64() {}
 
-	public void setTo( double px, double py, double pz, double nx, double ny, double nz ) {
+	public PlaneNormal3D_F64 setTo( double px, double py, double pz, double nx, double ny, double nz ) {
 		this.p.setTo(px, py, pz);
 		this.n.setTo(nx, ny, nz);
+		return this;
 	}
 
-	public void setTo( Point3D_F64 point, Vector3D_F64 normal ) {
+	public PlaneNormal3D_F64 setTo( Point3D_F64 point, Vector3D_F64 normal ) {
 		this.p.setTo(point);
 		this.n.setTo(normal);
+		return this;
 	}
 
-	public void setTo( PlaneNormal3D_F64 o ) {
+	public PlaneNormal3D_F64 setTo( PlaneNormal3D_F64 o ) {
 		this.p.setTo(o.p);
 		this.n.setTo(o.n);
+		return this;
 	}
 
 	public void zero() {

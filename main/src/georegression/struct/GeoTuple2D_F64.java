@@ -48,9 +48,10 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 		y = a.y;
 	}
 
-	public void setTo( double x, double y ) {
+	public T setTo( double x, double y ) {
 		this.x = x;
 		this.y = y;
+		return (T)this;
 	}
 
 	@Override
@@ -159,9 +160,10 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 	}
 
 	@Override
-	public void setTo( T src ) {
+	public T setTo( T src ) {
 		this.x = src.x;
 		this.y = src.y;
+		return (T)this;
 	}
 
 	@Override

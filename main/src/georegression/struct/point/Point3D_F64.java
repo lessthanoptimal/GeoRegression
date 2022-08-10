@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -48,11 +48,6 @@ public class Point3D_F64 extends GeoTuple3D_F64<Point3D_F64> {
 	@Override
 	public Point3D_F64 copy() {
 		return new Point3D_F64(x, y, z);
-	}
-
-	@Override
-	public void setTo( Point3D_F64 worldLoc ) {
-		_setTo(worldLoc);
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -61,16 +61,18 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 		c = 1.0;
 	}
 
-	public void setTo( double x, double y, double yaw ) {
+	public Se2_F64 setTo( double x, double y, double yaw ) {
 		this.T.setTo(x, y);
 		this.c = Math.cos(yaw);
 		this.s = Math.sin(yaw);
+		return this;
 	}
 
-	public void setTo( double x, double y, double cosYaw, double sinYaw ) {
+	public Se2_F64 setTo( double x, double y, double cosYaw, double sinYaw ) {
 		this.T.setTo(x, y);
 		this.c = cosYaw;
 		this.s = sinYaw;
+		return this;
 	}
 
 	public void zero() {
@@ -79,10 +81,11 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 	}
 
 	@Override
-	public void setTo( Se2_F64 target ) {
-		this.T.set(target.T);
+	public Se2_F64 setTo( Se2_F64 target ) {
+		this.T.setTo(target.T);
 		this.c = target.c;
 		this.s = target.s;
+		return this;
 	}
 
 	public double getX() {

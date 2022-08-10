@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -47,13 +47,15 @@ public class Box3D_F64 implements Serializable {
 
 	public Box3D_F64() {}
 
-	public void setTo( Box3D_F64 orig ) {
+	public Box3D_F64 setTo( Box3D_F64 orig ) {
 		setTo(orig.p0.x, orig.p0.y, orig.p0.z, orig.p1.x, orig.p1.y, orig.p1.z);
+		return this;
 	}
 
-	public void setTo( double x0, double y0, double z0, double x1, double y1, double z1 ) {
+	public Box3D_F64 setTo( double x0, double y0, double z0, double x1, double y1, double z1 ) {
 		this.p0.setTo(x0, y0, z0);
 		this.p1.setTo(x1, y1, z1);
+		return this;
 	}
 
 	public void zero() {

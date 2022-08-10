@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -57,14 +57,7 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 	 */
 	@Override
 	public T copy() {
-		T ret = createNewInstance();
-
-		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			ret.setIdx(i, getIdx(i));
-		}
-
-		return ret;
+		return (T)createNewInstance().setTo(this);
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -42,18 +42,20 @@ public class Rectangle2D_I32 {
 
 	public Rectangle2D_I32() {}
 
-	public void setTo(Rectangle2D_I32 orig ) {
+	public Rectangle2D_I32 setTo(Rectangle2D_I32 orig ) {
 		this.x0 = orig.x0;
 		this.y0 = orig.y0;
 		this.x1 = orig.x1;
 		this.y1 = orig.y1;
+		return this;
 	}
 
-	public void setTo(int x0, int y0, int x1, int y1) {
+	public Rectangle2D_I32 setTo(int x0, int y0, int x1, int y1) {
 		this.x0 = x0;
 		this.y0 = y0;
 		this.x1 = x1;
 		this.y1 = y1;
+		return this;
 	}
 
 	/** Sets the value of all fields to zero */

@@ -32,31 +32,40 @@ public class PolynomialCubic1D_F64 implements PolynomialCurve_F64 {
 	/**
 	 * Coefficients
 	 */
-	public double a,b,c,d;
+	public double a, b, c, d;
 
-	public PolynomialCubic1D_F64(){}
+	public PolynomialCubic1D_F64() {}
 
-	public PolynomialCubic1D_F64(double a, double b , double c, double d){
-		this.a = a; this.b = b; this.c = c; this.d = d;
+	public PolynomialCubic1D_F64( double a, double b, double c, double d ) {
+		this.a = a;
+		this.b = b;
+		this.c = c;
+		this.d = d;
 	}
 
 	public double evaluate( double t ) {
 		return a + b*t + c*t*t + d*t*t*t;
 	}
 
-	public void setTo(double a, double b , double c , double d )
-	{
-		this.a = a; this.b = b; this.c = c; this.d = d;
+	public PolynomialCubic1D_F64 setTo( double a, double b, double c, double d ) {
+		this.a = a;
+		this.b = b;
+		this.c = c;
+		this.d = d;
+		return this;
 	}
 
-	public void setTo(PolynomialCubic1D_F64 src )
-	{
-		this.a = src.a; this.b = src.b; this.c = src.c; this.d = src.d;
+	public PolynomialCubic1D_F64 setTo( PolynomialCubic1D_F64 src ) {
+		this.a = src.a;
+		this.b = src.b;
+		this.c = src.c;
+		this.d = src.d;
+		return this;
 	}
 
 	@Override
 	public void zero() {
-		setTo(0,0,0,0);
+		setTo(0, 0, 0, 0);
 	}
 
 	@Override
@@ -71,25 +80,25 @@ public class PolynomialCubic1D_F64 implements PolynomialCurve_F64 {
 	}
 
 	@Override
-	public double get(int coefficient) {
-		switch( coefficient ) {
-			case 0: return a;
-			case 1: return b;
-			case 2: return c;
-			case 3: return d;
-		}
-		throw new IllegalArgumentException("Coefficient out of range. "+coefficient);
+	public double get( int coefficient ) {
+		return switch (coefficient) {
+			case 0 -> a;
+			case 1 -> b;
+			case 2 -> c;
+			case 3 -> d;
+			default -> throw new IllegalArgumentException("Coefficient out of range. " + coefficient);
+		};
 	}
 
 	@Override
-	public void set(int coefficient, double value) {
-		switch( coefficient ) {
-			case 0: a=value;return;
-			case 1: b=value;return;
-			case 2: c=value;return;
-			case 3: d=value;return;
+	public void set( int coefficient, double value ) {
+		switch (coefficient) {
+			case 0 -> a = value;
+			case 1 -> b = value;
+			case 2 -> c = value;
+			case 3 -> d = value;
+			default -> throw new IllegalArgumentException("Coefficient out of range. " + coefficient);
 		}
-		throw new IllegalArgumentException("Coefficient out of range. "+coefficient);
 	}
 
 	@Override

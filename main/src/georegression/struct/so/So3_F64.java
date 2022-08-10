@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Peter Abeles
  */
 public class So3_F64 implements InvertibleTransform<So3_F64> {
-	public final DMatrixRMaj R = new DMatrixRMaj(3,3);
+	public final DMatrixRMaj R = new DMatrixRMaj(3, 3);
 
 	public So3_F64() {}
 
@@ -48,12 +48,13 @@ public class So3_F64 implements InvertibleTransform<So3_F64> {
 	}
 
 	@Override
-	public void setTo(So3_F64 target) {
+	public So3_F64 setTo( So3_F64 target ) {
 		this.R.setTo(target.R);
+		return this;
 	}
 
 	@Override
-	public So3_F64 concat(So3_F64 second, @Nullable So3_F64 result) {
+	public So3_F64 concat( So3_F64 second, @Nullable So3_F64 result ) {
 		if (result == null)
 			result = new So3_F64();
 		CommonOps_DDRM.mult(second.R, R, result.R);
@@ -61,7 +62,7 @@ public class So3_F64 implements InvertibleTransform<So3_F64> {
 	}
 
 	@Override
-	public So3_F64 invert(@Nullable So3_F64 inverse) {
+	public So3_F64 invert( @Nullable So3_F64 inverse ) {
 		if (inverse == null)
 			inverse = new So3_F64();
 		CommonOps_DDRM.transpose(R, inverse.R);

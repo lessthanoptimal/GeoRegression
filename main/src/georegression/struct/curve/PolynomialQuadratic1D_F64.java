@@ -44,12 +44,14 @@ public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
 		return a + b*t + c*t*t;
 	}
 
-	public void setTo(double a, double b , double c ) {
+	public PolynomialQuadratic1D_F64 setTo(double a, double b , double c ) {
 		this.a = a; this.b = b; this.c = c;
+		return this;
 	}
 
-	public void setTo(PolynomialQuadratic1D_F64 src ) {
+	public PolynomialQuadratic1D_F64 setTo(PolynomialQuadratic1D_F64 src ) {
 		this.a = src.a; this.b = src.b; this.c = src.c;
+		return this;
 	}
 
 	@Override
@@ -74,12 +76,12 @@ public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
 
 	@Override
 	public void set(int coefficient, double value) {
-		switch( coefficient ) {
-			case 0: a=value;return;
-			case 1: b=value;return;
-			case 2: c=value;return;
+		switch (coefficient) {
+			case 0 -> a = value;
+			case 1 -> b = value;
+			case 2 -> c = value;
+			default -> throw new IllegalArgumentException("Coefficient out of range. " + coefficient);
 		}
-		throw new IllegalArgumentException("Coefficient out of range. "+coefficient);
 	}
 
 	@Override

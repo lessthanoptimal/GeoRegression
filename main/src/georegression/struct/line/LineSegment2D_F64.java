@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,13 +24,11 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-
 /**
  * Defines a line segment by its two end points.
  *
- * @see georegression.geometry.UtilLine2D_F64
- *
  * @author Peter Abeles
+ * @see georegression.geometry.UtilLine2D_F64
  */
 @Getter @Setter
 public class LineSegment2D_F64 implements Serializable {
@@ -40,33 +38,36 @@ public class LineSegment2D_F64 implements Serializable {
 	public LineSegment2D_F64() {}
 
 	public LineSegment2D_F64( Point2D_F64 a, Point2D_F64 b ) {
-		setTo( a, b );
+		setTo(a, b);
 	}
 
 	public LineSegment2D_F64( double x0, double y0, double x1, double y1 ) {
-		setTo( x0, y0, x1, y1 );
+		setTo(x0, y0, x1, y1);
 	}
-	
-	public static LineSegment2D_F64 wrap( Point2D_F64 a , Point2D_F64 b ) {
+
+	public static LineSegment2D_F64 wrap( Point2D_F64 a, Point2D_F64 b ) {
 		LineSegment2D_F64 ret = new LineSegment2D_F64();
 		ret.a = a;
 		ret.b = b;
 		return ret;
 	}
 
-	public void setTo(LineSegment2D_F64 l ) {
-		this.a.setTo( l.a );
-		this.b.setTo( l.b );
+	public LineSegment2D_F64 setTo( LineSegment2D_F64 l ) {
+		this.a.setTo(l.a);
+		this.b.setTo(l.b);
+		return this;
 	}
 
-	public void setTo(Point2D_F64 a, Point2D_F64 b ) {
-		this.a.setTo( a );
-		this.b.setTo( b );
+	public LineSegment2D_F64 setTo( Point2D_F64 a, Point2D_F64 b ) {
+		this.a.setTo(a);
+		this.b.setTo(b);
+		return this;
 	}
 
-	public void setTo(double x0, double y0, double x1, double y1 ) {
-		a.setTo( x0, y0 );
-		b.setTo( x1, y1 );
+	public LineSegment2D_F64 setTo( double x0, double y0, double x1, double y1 ) {
+		a.setTo(x0, y0);
+		b.setTo(x1, y1);
+		return this;
 	}
 
 	public void zero() {
@@ -75,11 +76,11 @@ public class LineSegment2D_F64 implements Serializable {
 	}
 
 	public double slopeX() {
-		return b.x-a.x;
+		return b.x - a.x;
 	}
 
 	public double slopeY() {
-		return b.y-a.y;
+		return b.y - a.y;
 	}
 
 	public double getLength() {
@@ -91,26 +92,26 @@ public class LineSegment2D_F64 implements Serializable {
 	}
 
 	public LineSegment2D_F64 copy() {
-		return new LineSegment2D_F64( a, b );
+		return new LineSegment2D_F64(a, b);
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"{" +
+		return getClass().getSimpleName() + "{" +
 				"a=" + a +
 				", b=" + b +
 				'}';
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(this == obj)
+	public boolean equals( Object obj ) {
+		if (this == obj)
 			return true;
 
-		if(!(obj instanceof LineSegment2D_F64))
+		if (!(obj instanceof LineSegment2D_F64))
 			return false;
 
-		var o = (LineSegment2D_F64) obj;
+		var o = (LineSegment2D_F64)obj;
 		return a.equals(o.a) && b.equals(o.b);
 	}
 

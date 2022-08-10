@@ -24,28 +24,28 @@ import georegression.struct.point.Point2D_F64;
  * Parametric form of parabola with 4 parameters.
  *
  * <p> x=A*t<sup>2</sup> + B*t + C<br>
- *     y=D*t<sup>2</sup> + E*t + F</p>
- *
+ * y=D*t<sup>2</sup> + E*t + F</p>
  *
  * @author Peter Abeles
  */
 public class ParabolaParametric_F64 {
-	public double A,B,C,D,E,F;
+	public double A, B, C, D, E, F;
 
-	public ParabolaParametric_F64(){}
+	public ParabolaParametric_F64() {}
 
-	public ParabolaParametric_F64(ParabolaParametric_F64 src){setTo(src);}
+	public ParabolaParametric_F64( ParabolaParametric_F64 src ) {setTo(src);}
 
-	public void setTo( ParabolaParametric_F64 src ) {
+	public ParabolaParametric_F64 setTo( ParabolaParametric_F64 src ) {
 		this.A = src.A;
 		this.B = src.B;
 		this.C = src.C;
 		this.D = src.D;
 		this.E = src.E;
 		this.F = src.F;
+		return this;
 	}
 
-	public void setTo(double a, double b, double c, double d, double e, double f) {
+	public void setTo( double a, double b, double c, double d, double e, double f ) {
 		A = a; B = b; C = c;
 		D = d; E = e; F = f;
 	}
@@ -54,14 +54,14 @@ public class ParabolaParametric_F64 {
 		setTo(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 	}
 
-	public void evaluate(double t , Point2D_F64 location ) {
+	public void evaluate( double t, Point2D_F64 location ) {
 		location.x = A*t*t + B*t + C;
 		location.y = D*t*t + E*t + F;
 	}
 
 	public Point2D_F64 evaluate( double t ) {
 		Point2D_F64 p = new Point2D_F64();
-		evaluate(t,p);
+		evaluate(t, p);
 		return p;
 	}
 }

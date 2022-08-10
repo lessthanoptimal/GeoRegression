@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -58,8 +58,9 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 * Assigns 'this' to the value of target.
 	 *
 	 * @param target The new value of 'this'.
+	 * @return A reference to 'this' to enable chaining
 	 */
-	void setTo( T target );
+	T setTo( T target );
 
 	/**
 	 * <p>

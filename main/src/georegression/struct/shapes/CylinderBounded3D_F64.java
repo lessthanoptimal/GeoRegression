@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -75,24 +75,27 @@ public class CylinderBounded3D_F64 implements Serializable {
 		}
 	}
 
-	public void setTo( double x_0, double y_0, double z_0,
-					   double x_1, double y_1, double z_1,
-					   double radius ) {
+	public CylinderBounded3D_F64 setTo( double x_0, double y_0, double z_0,
+										double x_1, double y_1, double z_1,
+										double radius ) {
 		this.endA.setTo(x_0, y_0, z_0);
 		this.endB.setTo(x_1, y_1, z_1);
 		this.radius = radius;
+		return this;
 	}
 
-	public void setTo( Point3D_F64 endA, Point3D_F64 endB, double radius ) {
+	public CylinderBounded3D_F64 setTo( Point3D_F64 endA, Point3D_F64 endB, double radius ) {
 		this.endA.setTo(endA);
 		this.endB.setTo(endB);
 		this.radius = radius;
+		return this;
 	}
 
-	public void setTo( CylinderBounded3D_F64 o ) {
+	public CylinderBounded3D_F64 setTo( CylinderBounded3D_F64 o ) {
 		this.endA.setTo(o.endA);
 		this.endB.setTo(o.endB);
 		this.radius = o.radius;
+		return this;
 	}
 
 	public void zero() {

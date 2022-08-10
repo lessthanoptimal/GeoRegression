@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -32,16 +32,21 @@ import java.io.Serializable;
  */
 public class PlaneTangent3D_F64 extends Point3D_F64 implements Serializable {
 
-	public PlaneTangent3D_F64(double x, double y, double z) {
+	public PlaneTangent3D_F64( double x, double y, double z ) {
 		super(x, y, z);
 	}
 
 	public PlaneTangent3D_F64() {}
 
+	public PlaneTangent3D_F64 setTo( PlaneTangent3D_F64 src ) {
+		super.setTo(src);
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		FancyPrint fancy = new FancyPrint();
-		return getClass().getSimpleName()+"{" +
+		return getClass().getSimpleName() + "{" +
 				"x=" + fancy.s(x) +
 				", y=" + fancy.s(y) +
 				", z=" + fancy.s(z) +

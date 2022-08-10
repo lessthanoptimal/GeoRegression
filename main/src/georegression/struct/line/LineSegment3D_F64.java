@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -52,19 +52,22 @@ public class LineSegment3D_F64 implements Serializable {
 		return ret;
 	}
 
-	public void setTo( LineSegment3D_F64 l ) {
+	public LineSegment3D_F64 setTo( LineSegment3D_F64 l ) {
 		this.a.setTo(l.a);
 		this.b.setTo(l.b);
+		return this;
 	}
 
-	public void setTo( Point3D_F64 a, Point3D_F64 b ) {
+	public LineSegment3D_F64 setTo( Point3D_F64 a, Point3D_F64 b ) {
 		this.a.setTo(a);
 		this.b.setTo(b);
+		return this;
 	}
 
-	public void setTo( double x0, double y0, double z0, double x1, double y1, double z1 ) {
+	public LineSegment3D_F64 setTo( double x0, double y0, double z0, double x1, double y1, double z1 ) {
 		a.setTo(x0, y0, z0);
 		b.setTo(x1, y1, z1);
+		return this;
 	}
 
 	public void zero() {

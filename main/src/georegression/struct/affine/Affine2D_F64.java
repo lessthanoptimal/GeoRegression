@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,13 +41,14 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 		reset();
 	}
 
-	public void setTo(double a11, double a12, double a21, double a22, double tx, double ty ) {
+	public Affine2D_F64 setTo(double a11, double a12, double a21, double a22, double tx, double ty ) {
 		this.a11 = a11;
 		this.a12 = a12;
 		this.a21 = a21;
 		this.a22 = a22;
 		this.tx = tx;
 		this.ty = ty;
+		return this;
 	}
 
 	@Override
@@ -61,13 +62,14 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 	}
 
 	@Override
-	public void setTo(Affine2D_F64 target ) {
+	public Affine2D_F64 setTo(Affine2D_F64 target ) {
 		this.a11 = target.a11;
 		this.a12 = target.a12;
 		this.a21 = target.a21;
 		this.a22 = target.a22;
 		this.tx = target.tx;
 		this.ty = target.ty;
+		return this;
 	}
 
 	@Override

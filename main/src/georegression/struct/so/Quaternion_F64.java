@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -17,7 +17,6 @@
  */
 
 package georegression.struct.so;
-
 
 import java.io.Serializable;
 
@@ -43,35 +42,37 @@ public class Quaternion_F64 implements Serializable {
 	/**
 	 * Axis of rotation
 	 */
-	public double x,y,z;
+	public double x, y, z;
 
 	public Quaternion_F64() {
 		w = 1;
 	}
 
-	public Quaternion_F64(double w, double x, double y, double z) {
+	public Quaternion_F64( double w, double x, double y, double z ) {
 		setTo(w, x, y, z);
 	}
 
-	public void setTo(Quaternion_F64 quaternion ) {
+	public Quaternion_F64 setTo( Quaternion_F64 quaternion ) {
 		this.w = quaternion.w;
 		this.x = quaternion.x;
 		this.y = quaternion.y;
 		this.z = quaternion.z;
+		return this;
 	}
 
-	public void setTo(double w, double x, double y, double z ) {
+	public Quaternion_F64 setTo( double w, double x, double y, double z ) {
 		this.w = w;
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		return this;
 	}
 
 	/**
 	 * Converts the quaternion into a unit quaternion.
 	 */
 	public void normalize() {
-		double n = Math.sqrt( w * w + x * x + y * y + z * z);
+		double n = Math.sqrt(w*w + x*x + y*y + z*z);
 
 		w /= n;
 		x /= n;
@@ -79,8 +80,8 @@ public class Quaternion_F64 implements Serializable {
 		z /= n;
 	}
 
-   @Override
-   public String toString() {
-      return getClass().getSimpleName()+"{ w = "+ w +" axis( "+ x +" "+ y +" "+ z +") }";
-   }
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "{ w = " + w + " axis( " + x + " " + y + " " + z + ") }";
+	}
 }

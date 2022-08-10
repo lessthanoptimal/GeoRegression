@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -94,9 +94,10 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param se The transform that is being copied.
 	 */
 	@Override
-	public void setTo(Se3_F64 se) {
+	public Se3_F64 setTo(Se3_F64 se) {
 		R.setTo(se.getR());
 		T.setTo(se.getT());
+		return this;
 	}
 
 	public void zero() {
@@ -363,7 +364,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		String ret = "Se3_F64: T=(" + tx + ", " + ty + ", " + tz + "), ";
 
 		switch (type) {
-			case EULER: {
+			case EULER -> {
 				double[] euler = new double[3];
 				ConvertRotation3D_F64.matrixToEuler(R, EulerType.XYZ, euler);
 				ret += "EulerXYZ=(" +
@@ -371,9 +372,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 						UtilEjml.fancyString(euler[1], format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
 						UtilEjml.fancyString(euler[2], format, false, MatrixIO.DEFAULT_LENGTH, sig) + ")";
 			}
-			break;
-
-			case RODRIGUES: {
+			case RODRIGUES -> {
 				var rod = ConvertRotation3D_F64.matrixToRodrigues(R, null);
 				ret += "Rodrigues={n=(" +
 						UtilEjml.fancyString(rod.unitAxisRotation.x, format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
@@ -381,9 +380,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 						UtilEjml.fancyString(rod.unitAxisRotation.z, format, false, MatrixIO.DEFAULT_LENGTH, sig) + "), theta=" +
 						UtilEjml.fancyString(rod.theta, format, false, MatrixIO.DEFAULT_LENGTH, sig) + "}";
 			}
-			break;
-
-			case QUATERNION: {
+			case QUATERNION -> {
 				var quat = ConvertRotation3D_F64.matrixToQuaternion(R, null);
 				ret += "Quaternion=(" +
 						UtilEjml.fancyString(quat.x, format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
@@ -391,7 +388,6 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 						UtilEjml.fancyString(quat.z, format, false, MatrixIO.DEFAULT_LENGTH, sig) + ", " +
 						UtilEjml.fancyString(quat.w, format, false, MatrixIO.DEFAULT_LENGTH, sig) + ")";
 			}
-			break;
 		}
 		return ret;
 	}

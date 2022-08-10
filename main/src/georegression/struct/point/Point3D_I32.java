@@ -80,10 +80,11 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 	}
 
 	@Override
-	public void setTo( Point3D_I32 p ) {
+	public Point3D_I32 setTo( Point3D_I32 p ) {
 		this.x = p.x;
 		this.y = p.y;
 		this.z = p.z;
+		return this;
 	}
 
 	@Override

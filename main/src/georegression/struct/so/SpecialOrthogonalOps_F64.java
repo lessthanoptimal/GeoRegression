@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -33,18 +33,17 @@ public class SpecialOrthogonalOps_F64 {
 	 * @param A 3x3 matrix. Modified.
 	 */
 	public static void bestFit( DMatrixRMaj A ) {
+		SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(true, true, true);
 
-		SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(true,true,true);
-
-		if( !svd.decompose(A))
+		if (!svd.decompose(A))
 			throw new RuntimeException("SVD Failed");
 
-		CommonOps_DDRM.multTransB(svd.getU(null,false),svd.getV(null,false),A);
+		CommonOps_DDRM.multTransB(svd.getU(null, false), svd.getV(null, false), A);
 
 		// determinant should be +1
 		double det = CommonOps_DDRM.det(A);
 
-		if( det < 0 )
-			CommonOps_DDRM.scale(-1,A);
+		if (det < 0)
+			CommonOps_DDRM.scale(-1, A);
 	}
 }

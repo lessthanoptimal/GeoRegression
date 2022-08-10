@@ -45,8 +45,7 @@ public class Circle2D_F64 {
 		this.center.setTo(x,y);
 	}
 
-	public Circle2D_F64() {
-	}
+	public Circle2D_F64() {}
 
 	public Circle2D_F64 setTo( Circle2D_F64 src ) {
 		this.radius = src.radius;

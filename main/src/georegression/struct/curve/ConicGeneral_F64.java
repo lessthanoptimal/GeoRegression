@@ -82,18 +82,20 @@ public class ConicGeneral_F64 implements Serializable
 		return B*B-tol > 4*A*C;
 	}
 
-	public void setTo(ConicGeneral_F64 original ) {
+	public ConicGeneral_F64 setTo(ConicGeneral_F64 original ) {
 		this.A = original.A;
 		this.B = original.B;
 		this.C = original.C;
 		this.D = original.D;
 		this.E = original.E;
 		this.F = original.F;
+		return this;
 	}
 
-	public void setTo(double a, double b, double c, double d, double e, double f) {
+	public ConicGeneral_F64 setTo(double a, double b, double c, double d, double e, double f) {
 		A = a; B = b; C = c;
 		D = d; E = e; F = f;
+		return this;
 	}
 
 	public void zero() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,15 +44,16 @@ public class Box3D_I32 implements Serializable {
 		setTo(orig);
 	}
 
-	public void setTo( Box3D_I32 orig ) {
-		setTo(orig.p0.x, orig.p0.y, orig.p0.z, orig.p1.x, orig.p1.y, orig.p1.z);
+	public Box3D_I32 setTo( Box3D_I32 orig ) {
+		return setTo(orig.p0.x, orig.p0.y, orig.p0.z, orig.p1.x, orig.p1.y, orig.p1.z);
 	}
 
 	public Box3D_I32() {}
 
-	public void setTo( int x0, int y0, int z0, int x1, int y1, int z1 ) {
+	public Box3D_I32 setTo( int x0, int y0, int z0, int x1, int y1, int z1 ) {
 		this.p0.setTo(x0, y0, z0);
 		this.p1.setTo(x1, y1, z1);
+		return this;
 	}
 
 	public void zero() {

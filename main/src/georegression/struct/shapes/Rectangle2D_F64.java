@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -44,14 +44,16 @@ public class Rectangle2D_F64 implements Serializable {
 
 	public Rectangle2D_F64() {}
 
-	public void setTo( Rectangle2D_F64 orig ) {
+	public Rectangle2D_F64 setTo( Rectangle2D_F64 orig ) {
 		this.p0.setTo(orig.p0);
 		this.p1.setTo(orig.p1);
+		return this;
 	}
 
-	public void setTo( double x0, double y0, double x1, double y1 ) {
+	public Rectangle2D_F64 setTo( double x0, double y0, double x1, double y1 ) {
 		this.p0.setTo(x0, y0);
 		this.p1.setTo(x1, y1);
+		return this;
 	}
 
 	/** Sets the value of all fields to zero */

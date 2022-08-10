@@ -48,20 +48,22 @@ public class ParabolaGeneral_F64 {
 
 	public ParabolaGeneral_F64() {}
 
-	public void setTo( ParabolaGeneral_F64 original ) {
+	public ParabolaGeneral_F64 setTo( ParabolaGeneral_F64 original ) {
 		this.A = original.A;
 		this.C = original.C;
 		this.D = original.D;
 		this.E = original.E;
 		this.F = original.F;
+		return this;
 	}
 
-	public void setTo( double a, double c, double d, double e, double f ) {
+	public ParabolaGeneral_F64 setTo( double a, double c, double d, double e, double f ) {
 		A = a;
 		C = c;
 		D = d;
 		E = e;
 		F = f;
+		return this;
 	}
 
 	public void zero() {

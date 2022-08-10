@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -146,15 +146,17 @@ public class LineParametric3D_F64 implements Serializable {
 		return p.z;
 	}
 
-	public void setTo(double x_0, double y_0, double z_0,
-					  double slopeX, double slopeY, double slopeZ ) {
-		p.setTo( x_0, y_0, z_0 );
-		slope.setTo( slopeX, slopeY, slopeZ );
+	public LineParametric3D_F64 setTo( double x_0, double y_0, double z_0,
+									   double slopeX, double slopeY, double slopeZ ) {
+		p.setTo(x_0, y_0, z_0);
+		slope.setTo(slopeX, slopeY, slopeZ);
+		return this;
 	}
 
-	public void setTo(LineParametric3D_F64 o ) {
+	public LineParametric3D_F64 setTo( LineParametric3D_F64 o ) {
 		this.p.setTo(o.p);
 		this.slope.setTo(o.slope);
+		return this;
 	}
 
 	public void zero() {

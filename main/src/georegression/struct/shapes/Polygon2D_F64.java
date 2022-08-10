@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -92,11 +92,12 @@ public class Polygon2D_F64 implements Serializable {
 		}
 	}
 
-	public void setTo( Polygon2D_F64 orig ) {
+	public Polygon2D_F64 setTo( Polygon2D_F64 orig ) {
 		vertexes.resize(orig.size());
 		for (int i = 0; i < orig.size(); i++) {
 			vertexes.data[i].setTo(orig.vertexes.data[i]);
 		}
+		return this;
 	}
 
 	public void set( int index, double x, double y ) {

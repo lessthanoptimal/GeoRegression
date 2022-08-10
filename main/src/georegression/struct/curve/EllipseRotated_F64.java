@@ -19,6 +19,8 @@
 package georegression.struct.curve;
 
 import georegression.struct.point.Point2D_F64;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -40,15 +42,15 @@ public class EllipseRotated_F64 implements Serializable {
 	/**
 	 * semi major-axis
 	 */
-	public double a;
+	@Getter @Setter public double a;
 	/**
 	 * semi minor-axis
 	 */
-	public double b;
+	@Getter @Setter public double b;
 	/**
 	 * counter clockwise angle of rotation from x-axis to the major axis. Standard range is from -PI/2 to PI/2
 	 */
-	public double phi;
+	@Getter @Setter public double phi;
 
 	/**
 	 * Constructor
@@ -103,54 +105,20 @@ public class EllipseRotated_F64 implements Serializable {
 		this.center.setTo(center);
 	}
 
-	/**
-	 * Returns the major axis
-	 * @return major axis
-	 */
-	public double getA() {
-		return a;
-	}
-
-	public void setA(double a) {
-		this.a = a;
-	}
-
-	/**
-	 * Returns the minor axis
-	 * @return minor axis
-	 */
-	public double getB() {
-		return b;
-	}
-
-	public void setB(double b) {
-		this.b = b;
-	}
-
-	/**
-	 * Returns the orientation
-	 * @return orientation is randians
-	 */
-	public double getPhi() {
-		return phi;
-	}
-
-	public void setPhi(double phi) {
-		this.phi = phi;
-	}
-
-	public void setTo(double x0 , double y0, double a, double b, double phi) {
+	public EllipseRotated_F64 setTo(double x0 , double y0, double a, double b, double phi) {
 		this.center.setTo(x0,y0);
 		this.a = a;
 		this.b = b;
 		this.phi = phi;
+		return this;
 	}
 
-	public void setTo(EllipseRotated_F64 ellipse ) {
+	public EllipseRotated_F64 setTo(EllipseRotated_F64 ellipse ) {
 		this.center.setTo( ellipse.center );
 		this.a = ellipse.a;
 		this.b = ellipse.b;
 		this.phi = ellipse.phi;
+		return this;
 	}
 
 	@Override

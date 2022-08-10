@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -52,19 +52,22 @@ public class LineSegment2D_I32 implements Serializable {
 		return ret;
 	}
 
-	public void setTo( LineSegment2D_I32 l ) {
+	public LineSegment2D_I32 setTo( LineSegment2D_I32 l ) {
 		this.a.setTo(l.a);
 		this.b.setTo(l.b);
+		return this;
 	}
 
-	public void setTo( Point2D_I32 a, Point2D_I32 b ) {
+	public LineSegment2D_I32 setTo( Point2D_I32 a, Point2D_I32 b ) {
 		this.a.setTo(a);
 		this.b.setTo(b);
+		return this;
 	}
 
-	public void setTo( int x0, int y0, int x1, int y1 ) {
+	public LineSegment2D_I32 setTo( int x0, int y0, int x1, int y1 ) {
 		a.setTo(x0, y0);
 		b.setTo(x1, y1);
+		return this;
 	}
 
 	public void zero() {

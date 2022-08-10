@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,8 @@ package georegression.struct.shapes;
 import georegression.metric.Area2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -31,10 +33,10 @@ import java.util.List;
  * A polygon with 4 vertices, a,b,c, and d. The vertices are in order sequential order of a,b,c,d.
  */
 public class Quadrilateral_F64 implements Serializable {
-	public Point2D_F64 a;
-	public Point2D_F64 b;
-	public Point2D_F64 c;
-	public Point2D_F64 d;
+	@Getter @Setter public Point2D_F64 a;
+	@Getter @Setter public Point2D_F64 b;
+	@Getter @Setter public Point2D_F64 c;
+	@Getter @Setter public Point2D_F64 d;
 
 	public Quadrilateral_F64() {
 		a = new Point2D_F64();
@@ -106,47 +108,15 @@ public class Quadrilateral_F64 implements Serializable {
 		};
 	}
 
-	public Point2D_F64 getA() {
-		return a;
-	}
-
-	public void setA( Point2D_F64 a ) {
-		this.a = a;
-	}
-
-	public Point2D_F64 getB() {
-		return b;
-	}
-
-	public void setB( Point2D_F64 b ) {
-		this.b = b;
-	}
-
-	public Point2D_F64 getC() {
-		return c;
-	}
-
-	public void setC( Point2D_F64 c ) {
-		this.c = c;
-	}
-
-	public Point2D_F64 getD() {
-		return d;
-	}
-
-	public void setD( Point2D_F64 d ) {
-		this.d = d;
-	}
-
 	public LineSegment2D_F64 getLine( int which, LineSegment2D_F64 storage ) {
 		if (storage == null)
 			storage = new LineSegment2D_F64();
 
-		switch( which ) {
-			case 0->{storage.a.setTo(a);storage.b.setTo(b);}
-			case 1->{storage.a.setTo(b);storage.b.setTo(c);}
-			case 2->{storage.a.setTo(c);storage.b.setTo(d);}
-			case 3->{storage.a.setTo(d);storage.b.setTo(a);}
+		switch (which) {
+			case 0->{storage.a.setTo(a); storage.b.setTo(b);}
+			case 1->{storage.a.setTo(b); storage.b.setTo(c);}
+			case 2->{storage.a.setTo(c); storage.b.setTo(d);}
+			case 3->{storage.a.setTo(d); storage.b.setTo(a);}
 			default -> throw new IllegalArgumentException("Requested index out of range. " + which);
 		}
 		return storage;

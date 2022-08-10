@@ -41,9 +41,10 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 
 	public Point2D_I16() {}
 
-	public void setTo( int x, int y ) {
+	public Point2D_I16 setTo( int x, int y ) {
 		this.x = (short)x;
 		this.y = (short)y;
+		return this;
 	}
 
 	@Override
@@ -94,9 +95,10 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 	}
 
 	@Override
-	public void setTo( Point2D_I16 src ) {
+	public Point2D_I16 setTo( Point2D_I16 src ) {
 		this.x = src.x;
 		this.y = src.y;
+		return this;
 	}
 
 	@Override

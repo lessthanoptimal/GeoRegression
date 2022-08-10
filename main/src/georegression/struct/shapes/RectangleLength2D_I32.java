@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -47,11 +47,12 @@ public class RectangleLength2D_I32 implements Serializable {
 		this.height = height;
 	}
 
-	public void setTo( int tl_x, int tl_y, int width, int height ) {
+	public RectangleLength2D_I32 setTo( int tl_x, int tl_y, int width, int height ) {
 		this.x0 = tl_x;
 		this.y0 = tl_y;
 		this.width = width;
 		this.height = height;
+		return this;
 	}
 
 	/** Sets the value of all fields to zero */
@@ -75,11 +76,12 @@ public class RectangleLength2D_I32 implements Serializable {
 	 *
 	 * @param r Rectangle which this is to be set equal to
 	 */
-	public void setTo( RectangleLength2D_I32 r ) {
+	public RectangleLength2D_I32 setTo( RectangleLength2D_I32 r ) {
 		this.x0 = r.x0;
 		this.y0 = r.y0;
 		this.width = r.width;
 		this.height = r.height;
+		return this;
 	}
 
 	public int getX() {return x0;}

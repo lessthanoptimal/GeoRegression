@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -51,6 +51,22 @@ public class RectangleLength2D_F64 implements Serializable {
 		this.y0 = y0;
 	}
 
+	public RectangleLength2D_F64 setTo( double x0, double y0, double width, double height ) {
+		this.width = width;
+		this.height = height;
+		this.x0 = x0;
+		this.y0 = y0;
+		return this;
+	}
+
+	public RectangleLength2D_F64 setTo( RectangleLength2D_F64 src ) {
+		this.x0 = src.x0;
+		this.y0 = src.y0;
+		this.width = src.width;
+		this.height = src.height;
+		return this;
+	}
+
 	/**
 	 * Sets lower extent
 	 *
@@ -67,11 +83,12 @@ public class RectangleLength2D_F64 implements Serializable {
 	 *
 	 * @param r Rectangle which this is to be set equal to
 	 */
-	public void setTo( RectangleLength2D_I32 r ) {
+	public RectangleLength2D_F64 setTo( RectangleLength2D_I32 r ) {
 		this.x0 = r.x0;
 		this.y0 = r.y0;
 		this.width = r.width;
 		this.height = r.height;
+		return this;
 	}
 
 	/** Sets the value of all fields to zero */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -17,7 +17,6 @@
  */
 
 package georegression.struct.line;
-
 
 import lombok.Getter;
 import lombok.Setter;
@@ -38,28 +37,34 @@ import java.io.Serializable;
  * an angle tangent to the line.
  * </p>
  *
- * @see georegression.geometry.UtilLine2D_F64
- *
  * @author Peter Abeles
+ * @see georegression.geometry.UtilLine2D_F64
  */
 @Getter @Setter
-public class LinePolar2D_F64 implements Serializable{
+public class LinePolar2D_F64 implements Serializable {
 	/** Distance from the origin to the closest point on the line. */
 	public double distance;
 
 	/** Angle in radians from the origin to the closest point on the line. */
 	public double angle;
 
-	public LinePolar2D_F64(double distance, double angle) {
+	public LinePolar2D_F64( double distance, double angle ) {
 		this.distance = distance;
 		this.angle = angle;
 	}
 
 	public LinePolar2D_F64() {}
 
-	public void setTo( LinePolar2D_F64 src ) {
+	public LinePolar2D_F64 setTo( LinePolar2D_F64 src ) {
 		this.distance = src.distance;
 		this.angle = src.angle;
+		return this;
+	}
+
+	public LinePolar2D_F64 setTo( double distance, double angle ) {
+		this.distance = distance;
+		this.angle = angle;
+		return this;
 	}
 
 	public void zero() {
@@ -69,6 +74,6 @@ public class LinePolar2D_F64 implements Serializable{
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"{ d = "+distance+" angle = "+angle+" }";
+		return getClass().getSimpleName() + "{ d = " + distance + " angle = " + angle + " }";
 	}
 }

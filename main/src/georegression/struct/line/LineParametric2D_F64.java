@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -67,9 +67,10 @@ public class LineParametric2D_F64 implements Serializable {
 
 	public LineParametric2D_F64() {}
 
-	public void setTo( LineParametric2D_F64 line ) {
+	public LineParametric2D_F64 setTo( LineParametric2D_F64 line ) {
 		this.p.setTo(line.p);
-		this.slope.set(line.slope);
+		this.slope.setTo(line.slope);
+		return this;
 	}
 
 	public void zero() {
@@ -87,7 +88,7 @@ public class LineParametric2D_F64 implements Serializable {
 	}
 
 	public void setSlope( Vector2D_F64 slope ) {
-		this.slope.set(slope);
+		this.slope.setTo(slope);
 	}
 
 	public void setSlope( double slopeX, double slopeY ) {
