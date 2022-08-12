@@ -19,6 +19,8 @@ Version : 0.25
 - InvertibleTransform
  * added invertConcat() which implicitly inverts 'this' before performing concatenation
  * SE3 added specialized implementation of invertConcat()
+- ConvertRotation3D
+ * Fixed edge case with matrixToRodrigues()
 
 ---------------------------------------------
 Date    : 2021-Jul-09

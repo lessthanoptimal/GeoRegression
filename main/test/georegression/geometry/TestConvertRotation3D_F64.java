@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -36,11 +36,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-
-
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
@@ -262,6 +258,7 @@ public class TestConvertRotation3D_F64 {
 
 		Rodrigues_F64 found = ConvertRotation3D_F64.matrixToRodrigues( R, (Rodrigues_F64)null );
 
+		assertFalse(found.unitAxisRotation.isNaN());
 		assertEquals(0,found.getTheta(),GrlConstants.TEST_F64);
 	}
 
@@ -274,7 +271,21 @@ public class TestConvertRotation3D_F64 {
 
 		Rodrigues_F64 found = ConvertRotation3D_F64.matrixToRodrigues( R, (Rodrigues_F64)null );
 
+		assertFalse(found.unitAxisRotation.isNaN());
 		assertEquals(0,found.getTheta(),50*GrlConstants.TEST_F64);
+	}
+
+	@Test
+	void matrixToRodrigues_case2() {
+		DMatrixRMaj R = UtilEjml.parse_DDRM(
+					"-1.00000000000000000000 0.00000000000000122667 0.00000000000014407366 \n" +
+					"0.00000000000000122667 1.00000000000000070000 -0.00000000011962268676 \n" +
+					"-0.00000000000014406908 -0.00000000011962270063 -1.00000000000000070000", 3);
+
+		Rodrigues_F64 found = ConvertRotation3D_F64.matrixToRodrigues( R, (Rodrigues_F64)null );
+
+		assertFalse(found.unitAxisRotation.isNaN());
+		assertEquals(Math.PI,found.getTheta(),GrlConstants.TEST_F64);
 	}
 
 	@Test

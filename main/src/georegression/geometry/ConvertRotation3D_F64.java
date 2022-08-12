@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -389,10 +389,10 @@ public class ConvertRotation3D_F64 {
 			else
 				rodrigues.theta = Math.acos(diagSum);
 
-			// compute the value of x,y,z up to a sign ambiguity
-			rodrigues.unitAxisRotation.x = Math.sqrt((R.get(0, 0) + 1) / 2);
-			rodrigues.unitAxisRotation.y = Math.sqrt((R.get(1, 1) + 1) / 2);
-			rodrigues.unitAxisRotation.z = Math.sqrt((R.get(2, 2) + 1) / 2);
+			// compute the value of x, y, z up to a sign ambiguity
+			rodrigues.unitAxisRotation.x = Math.sqrt((Math.max(0.0, R.get(0, 0) + 1)) / 2);
+			rodrigues.unitAxisRotation.y = Math.sqrt((Math.max(0.0, R.get(1, 1) + 1)) / 2);
+			rodrigues.unitAxisRotation.z = Math.sqrt((Math.max(0.0, R.get(2, 2) + 1)) / 2);
 
 			double x = rodrigues.unitAxisRotation.x;
 			double y = rodrigues.unitAxisRotation.y;
