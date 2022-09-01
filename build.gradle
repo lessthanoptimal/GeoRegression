@@ -10,7 +10,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.25-SNAPSHOT'
+    version = '0.25'
 }
 
 project.ext.errorprone_version = '2.11.0'
@@ -89,7 +89,7 @@ subprojects {
     }
 
     dependencies {
-        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.22-SNAPSHOT')
+        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.22')
 
         compileOnly 'org.jetbrains:annotations:20.0.0' // @Nullable
         compileOnly 'javax.annotation:jsr250-api:1.0'  // @Generated
@@ -237,7 +237,7 @@ subprojects {
 def mainProjects = [':georegression',":experimental"]
 task createLibraryDirectory( dependsOn: mainProjects.collect {[ it+':jar',it+':sourcesJar']}.flatten() ) {
     doLast {
-        ext.listExternal = files(mainProjects.collect { project(it).configurations.compile })
+        ext.listExternal = files(mainProjects.collect { project(it).configurations.runtimeClasspath })
         ext.listInternal = files(mainProjects.collect { project(it).tasks.jar.archivePath })
         ext.listSource = files(mainProjects.collect { project(it).tasks.sourcesJar.archivePath })
 
