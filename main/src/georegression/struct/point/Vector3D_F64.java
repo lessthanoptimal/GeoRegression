@@ -45,6 +45,11 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 		z = b.getZ() - a.getZ();
 	}
 
+	public Vector3D_F64 setTo( Vector3D_F64 src ) {
+		_setTo(src);
+		return this;
+	}
+
 	/**
 	 * In-place minus operation. this = a - b.
 	 *

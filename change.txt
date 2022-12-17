@@ -1,6 +1,13 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2023-
+Version : 0.26
+
+- Point
+ * Proper implementation of setTo()
+
+---------------------------------------------
 Date    : 2022-Sep-01
 Version : 0.25
 

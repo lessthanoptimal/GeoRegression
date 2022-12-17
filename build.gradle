@@ -10,7 +10,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.25'
+    version = '0.26-SNAPSHOT'
 }
 
 project.ext.errorprone_version = '2.11.0'
