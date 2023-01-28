@@ -51,6 +51,7 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 		return new Vector2D_F64(this);
 	}
 
+	@Override
 	public Vector2D_F64 setTo( Vector2D_F64 src ) {
 		_setTo(src);
 		return this;

@@ -45,6 +45,7 @@ public class Point3D_F64 extends GeoTuple3D_F64<Point3D_F64> {
 		return new Vector3D_F64(x, y, z);
 	}
 
+	@Override
 	public Point3D_F64 setTo( Point3D_F64 src ) {
 		_setTo(src);
 		return this;

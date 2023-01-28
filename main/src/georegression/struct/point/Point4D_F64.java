@@ -36,6 +36,7 @@ public class Point4D_F64 extends GeoTuple4D_F64<Point4D_F64> {
 
 	public Point4D_F64() {}
 
+	@Override
 	public Point4D_F64 setTo( Point4D_F64 src ) {
 		_setTo(src);
 		return this;

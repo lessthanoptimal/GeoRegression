@@ -40,6 +40,7 @@ public class Point2D_F64 extends GeoTuple2D_F64<Point2D_F64> {
 		setTo(pt.x, pt.y);
 	}
 
+	@Override
 	public Point2D_F64 setTo( Point2D_F64 src ) {
 		_setTo(src);
 		return this;

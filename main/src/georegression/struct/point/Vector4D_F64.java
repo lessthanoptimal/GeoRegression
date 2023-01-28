@@ -38,6 +38,7 @@ public class Vector4D_F64 extends GeoTuple4D_F64<Vector4D_F64> {
 		w = b.getW() - a.getW();
 	}
 
+	@Override
 	public Vector4D_F64 setTo( Vector4D_F64 src ) {
 		_setTo(src);
 		return this;
