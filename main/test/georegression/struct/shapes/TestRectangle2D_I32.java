@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,25 +21,30 @@ package georegression.struct.shapes;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
 public class TestRectangle2D_I32 {
-	@Test
-	void enforceExtents() {
-		Rectangle2D_I32 a = new Rectangle2D_I32(-1,-2,50,10);
+	@Test void enforceExtents() {
+		var a = new Rectangle2D_I32(-1, -2, 50, 10);
 		a.enforceExtents();
-		assertEquals(-1,a.x0);
-		assertEquals(-2,a.y0);
-		assertEquals(50,a.x1);
-		assertEquals(10,a.y1);
+		assertEquals(-1, a.x0);
+		assertEquals(-2, a.y0);
+		assertEquals(50, a.x1);
+		assertEquals(10, a.y1);
 
-		a = new Rectangle2D_I32(50,10,-1,-2);
+		a = new Rectangle2D_I32(50, 10, -1, -2);
 		a.enforceExtents();
-		assertEquals(-1,a.x0);
-		assertEquals(-2,a.y0);
-		assertEquals(50,a.x1);
-		assertEquals(10,a.y1);
+		assertEquals(-1, a.x0);
+		assertEquals(-2, a.y0);
+		assertEquals(50, a.x1);
+		assertEquals(10, a.y1);
+	}
+
+	@Test void getCorner() {
+		var rect = new Rectangle2D_I32(-1, -2, 2, 3);
+		assertTrue(rect.getCorner(0, null).isIdentical(-1, -2));
+		assertTrue(rect.getCorner(1, null).isIdentical(2, -2));
+		assertTrue(rect.getCorner(2, null).isIdentical(2, 3));
+		assertTrue(rect.getCorner(3, null).isIdentical(-1, 3));
 	}
 }

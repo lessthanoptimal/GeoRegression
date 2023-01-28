@@ -18,8 +18,10 @@
 
 package georegression.struct.shapes;
 
+import georegression.struct.point.Point2D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -76,6 +78,33 @@ public class RectangleLength2D_F64 implements Serializable {
 	public void setLowerExtent( double x, double y ) {
 		this.x0 = x;
 		this.y0 = y;
+	}
+
+	/**
+	 * Provides access to corners in the order specified below.
+	 * <pre>
+	 * [0] = (x0, y0)
+	 * [1] = (x0 + w, y0)
+	 * [2] = (x0 + w, y0 + h)
+	 * [3] = (x0, y0 + h)
+	 * </pre>
+	 * where w = width, and h = height.
+	 *
+	 * @param index Which corner
+	 * @param corner (Optional) storage for the corner
+	 * @return The corner
+	 */
+	public Point2D_F64 getCorner( int index, @Nullable Point2D_F64 corner ) {
+		if (corner == null)
+			corner = new Point2D_F64();
+		switch (index) {
+			case 0 -> corner.setTo(x0, y0);
+			case 1 -> corner.setTo(x0 + width, y0);
+			case 2 -> corner.setTo(x0 + width, y0 + height);
+			case 3 -> corner.setTo(x0, y0 + height);
+			default -> throw new IllegalArgumentException("index must be from 0 to 3.");
+		}
+		return corner;
 	}
 
 	/**

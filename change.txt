@@ -6,6 +6,8 @@ Version : 0.26
 
 - Point
  * Proper implementation of setTo()
+- Rectangle2D (all types)
+ * getCorner()
 
 ---------------------------------------------
 Date    : 2022-Sep-01
