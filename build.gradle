@@ -89,7 +89,7 @@ subprojects {
     }
 
     dependencies {
-        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.22')
+        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.23-SNAPSHOT')
 
         compileOnly 'org.jetbrains:annotations:20.0.0' // @Nullable
         compileOnly 'javax.annotation:jsr250-api:1.0'  // @Generated
