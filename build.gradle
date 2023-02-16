@@ -10,7 +10,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.26-SNAPSHOT'
+    version = '0.25.1'
 }
 
 project.ext.errorprone_version = '2.11.0'
@@ -148,9 +148,9 @@ subprojects {
 
     javadoc {
         configure(options) {
-            links = ['http://docs.oracle.com/javase/8/docs/api/',
-                     'http://ejml.org/javadoc/',
-                     'http://ddogleg.org/javadoc/']
+            links = ['https://docs.oracle.com/en/java/javase/11/docs/api/',
+                     'https://ejml.org/javadoc/',
+                     'https://ddogleg.org/javadoc/']
             failOnError = false
             enabled = !project.version.contains("SNAPSHOT") // disable to stop it from spamming stdout
         }
@@ -289,8 +289,8 @@ task alljavadoc(type: Javadoc) {
         failOnError = false
         docTitle = "GeoRegression v$project.version"
         links = [ 'https://docs.oracle.com/en/java/javase/11/docs/api/',
-                  'http://ejml.org/javadoc/',
-                  'http://ddogleg.org/javadoc/' ]
+                  'https://ejml.org/javadoc/',
+                  'https://ddogleg.org/javadoc/' ]
     }
 }
 
