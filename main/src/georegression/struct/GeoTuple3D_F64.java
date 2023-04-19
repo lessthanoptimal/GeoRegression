@@ -244,6 +244,7 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		System.out.println(this);
 	}
 
+	@Override
 	public boolean isNaN() {
 		return (Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z));
 	}

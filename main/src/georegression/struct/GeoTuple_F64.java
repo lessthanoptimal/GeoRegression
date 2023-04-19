@@ -50,6 +50,28 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 		return true;
 	}
 
+	/** Returns true if at least one value is NaN */
+	public boolean isNaN() {
+		int N = getDimension();
+		for (int i = 0; i < N; i++) {
+			if (Double.isNaN(getIdx(i)))
+				return true;
+		}
+
+		return false;
+	}
+
+	/** Returns true if at least one value is INFINITE */
+	public boolean isInfinite() {
+		int N = getDimension();
+		for (int i = 0; i < N; i++) {
+			if (Double.isInfinite(getIdx(i)))
+				return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Generic copy routine. It is recommended that this be overridden with a faster implementation.
 	 *

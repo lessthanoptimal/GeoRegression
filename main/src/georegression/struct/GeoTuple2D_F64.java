@@ -243,6 +243,7 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 		return Double.compare(x, o.x) == 0 && Double.compare(y, o.y) == 0;
 	}
 
+	@Override
 	public boolean isNaN() {
 		return (Double.isNaN(x) || Double.isNaN(y));
 	}

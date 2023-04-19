@@ -390,9 +390,9 @@ public class ConvertRotation3D_F64 {
 				rodrigues.theta = Math.acos(diagSum);
 
 			// compute the value of x, y, z up to a sign ambiguity
-			rodrigues.unitAxisRotation.x = Math.sqrt((Math.max(0.0, R.get(0, 0) + 1)) / 2);
-			rodrigues.unitAxisRotation.y = Math.sqrt((Math.max(0.0, R.get(1, 1) + 1)) / 2);
-			rodrigues.unitAxisRotation.z = Math.sqrt((Math.max(0.0, R.get(2, 2) + 1)) / 2);
+			rodrigues.unitAxisRotation.x = Math.sqrt(Math.max(0.0, R.get(0, 0) + 1) / 2);
+			rodrigues.unitAxisRotation.y = Math.sqrt(Math.max(0.0, R.get(1, 1) + 1) / 2);
+			rodrigues.unitAxisRotation.z = Math.sqrt(Math.max(0.0, R.get(2, 2) + 1) / 2);
 
 			double x = rodrigues.unitAxisRotation.x;
 			double y = rodrigues.unitAxisRotation.y;

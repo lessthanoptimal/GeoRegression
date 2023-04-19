@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,7 +21,7 @@ package georegression.struct;
 import georegression.misc.GrlConstants;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
@@ -109,6 +109,42 @@ public class TestGeoTuple3D_F64 {
 
 		double found = a.distance(2,-1,4);
 		assertEquals(Math.sqrt(1+9+1),found,GrlConstants.TEST_F64);
+	}
+
+	@Test void isNaN() {
+		var a = new Dummy(1,2,3);
+		assertFalse(a.isNaN());
+
+		a.x = Double.NaN;
+		assertTrue(a.isNaN());
+		a.x = 1;
+		a.y = Double.NaN;
+		assertTrue(a.isNaN());
+		a.y = 1;
+		a.z = Double.NaN;
+		assertTrue(a.isNaN());
+
+		// Sanity check
+		a.z = 1;
+		assertFalse(a.isNaN());
+	}
+
+	@Test void isInfinite() {
+		var a = new Dummy(1,2,3);
+		assertFalse(a.isInfinite());
+
+		a.x = Double.POSITIVE_INFINITY;
+		assertTrue(a.isInfinite());
+		a.x = 1;
+		a.y = Double.POSITIVE_INFINITY;
+		assertTrue(a.isInfinite());
+		a.y = 1;
+		a.z = Double.POSITIVE_INFINITY;
+		assertTrue(a.isInfinite());
+
+		// Sanity check
+		a.z = 1;
+		assertFalse(a.isInfinite());
 	}
 
 	public static class Dummy extends GeoTuple3D_F64<Dummy> {

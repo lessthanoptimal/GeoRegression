@@ -6,6 +6,9 @@ Version : 0.26
 
 - Point
  * Proper implementation of setTo()
+- GeoTuple_F64
+ * Added isNaN() and isInfinite()
+ * Note was already in some specific implementations
 - Rectangle2D (all types)
  * getCorner()
 
