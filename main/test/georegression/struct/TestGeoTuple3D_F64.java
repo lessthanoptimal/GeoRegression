@@ -24,120 +24,111 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestGeoTuple3D_F64 {
-	@Test
-	void plusIP() {
-		Dummy a = new Dummy(1,2,3);
-		Dummy b = new Dummy(4,5,6);
+	@Test void plusIP() {
+		var a = new Dummy(1, 2, 3);
+		var b = new Dummy(4, 5, 6);
 
 		a.plusIP(b);
 
-		assertEquals(5,a.x, GrlConstants.TEST_F64);
-		assertEquals(7,a.y, GrlConstants.TEST_F64);
-		assertEquals(9,a.z, GrlConstants.TEST_F64);
+		assertEquals(5, a.x, GrlConstants.TEST_F64);
+		assertEquals(7, a.y, GrlConstants.TEST_F64);
+		assertEquals(9, a.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void plus() {
-		Dummy a = new Dummy(1,2,3);
-		Dummy b = new Dummy(4,5,6);
+	@Test void plus() {
+		var a = new Dummy(1, 2, 3);
+		var b = new Dummy(4, 5, 6);
 
 		Dummy c = a.plus(b);
 
-		assertEquals(1,a.x, GrlConstants.TEST_F64);
-		assertEquals(2,a.y, GrlConstants.TEST_F64);
-		assertEquals(3,a.z, GrlConstants.TEST_F64);
+		assertEquals(1, a.x, GrlConstants.TEST_F64);
+		assertEquals(2, a.y, GrlConstants.TEST_F64);
+		assertEquals(3, a.z, GrlConstants.TEST_F64);
 
-		assertEquals(5,c.x, GrlConstants.TEST_F64);
-		assertEquals(7,c.y, GrlConstants.TEST_F64);
-		assertEquals(9,c.z, GrlConstants.TEST_F64);
+		assertEquals(5, c.x, GrlConstants.TEST_F64);
+		assertEquals(7, c.y, GrlConstants.TEST_F64);
+		assertEquals(9, c.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void plusIP_alpha() {
-		Dummy a = new Dummy(1,2,3);
-		Dummy b = new Dummy(4,5,6);
+	@Test void plusIP_alpha() {
+		var a = new Dummy(1, 2, 3);
+		var b = new Dummy(4, 5, 6);
 
 		a.plusIP(2.0, b);
 
-		assertEquals(9,a.x, GrlConstants.TEST_F64);
-		assertEquals(12,a.y, GrlConstants.TEST_F64);
-		assertEquals(15,a.z, GrlConstants.TEST_F64);
+		assertEquals(9, a.x, GrlConstants.TEST_F64);
+		assertEquals(12, a.y, GrlConstants.TEST_F64);
+		assertEquals(15, a.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void plus_alpha() {
-		Dummy a = new Dummy(1,2,3);
-		Dummy b = new Dummy(4,5,6);
+	@Test void plus_alpha() {
+		var a = new Dummy(1, 2, 3);
+		var b = new Dummy(4, 5, 6);
 
 		Dummy c = a.plus(2.0, b);
 
-		assertEquals(1,a.x, GrlConstants.TEST_F64);
-		assertEquals(2,a.y, GrlConstants.TEST_F64);
-		assertEquals(3,a.z, GrlConstants.TEST_F64);
+		assertEquals(1, a.x, GrlConstants.TEST_F64);
+		assertEquals(2, a.y, GrlConstants.TEST_F64);
+		assertEquals(3, a.z, GrlConstants.TEST_F64);
 
-		assertEquals(9,c.x, GrlConstants.TEST_F64);
-		assertEquals(12,c.y, GrlConstants.TEST_F64);
-		assertEquals(15,c.z, GrlConstants.TEST_F64);
+		assertEquals(9, c.x, GrlConstants.TEST_F64);
+		assertEquals(12, c.y, GrlConstants.TEST_F64);
+		assertEquals(15, c.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void timesIP() {
-		Dummy a = new Dummy(1,2,3);
+	@Test void timesIP() {
+		var a = new Dummy(1, 2, 3);
 
 		a.timesIP(2.5);
 
-		assertEquals(2.5,a.x, GrlConstants.TEST_F64);
-		assertEquals(5,a.y, GrlConstants.TEST_F64);
-		assertEquals(7.5,a.z, GrlConstants.TEST_F64);
+		assertEquals(2.5, a.x, GrlConstants.TEST_F64);
+		assertEquals(5, a.y, GrlConstants.TEST_F64);
+		assertEquals(7.5, a.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void scale() {
-		Dummy a = new Dummy(1,2,3);
+	@Test void scale() {
+		var a = new Dummy(1, 2, 3);
 
 		a.scale(2.5);
 
-		assertEquals(2.5,a.x, GrlConstants.TEST_F64);
-		assertEquals(5,a.y, GrlConstants.TEST_F64);
-		assertEquals(7.5,a.z, GrlConstants.TEST_F64);
+		assertEquals(2.5, a.x, GrlConstants.TEST_F64);
+		assertEquals(5, a.y, GrlConstants.TEST_F64);
+		assertEquals(7.5, a.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void divideIP() {
-		Dummy a = new Dummy(1,2,3);
+	@Test void divideIP() {
+		var a = new Dummy(1, 2, 3);
 
 		a.divideIP(2.5);
 
-		assertEquals(1.0/2.5,a.x, GrlConstants.TEST_F64);
-		assertEquals(2.0/2.5,a.y, GrlConstants.TEST_F64);
-		assertEquals(3.0/2.5,a.z, GrlConstants.TEST_F64);
+		assertEquals(1.0/2.5, a.x, GrlConstants.TEST_F64);
+		assertEquals(2.0/2.5, a.y, GrlConstants.TEST_F64);
+		assertEquals(3.0/2.5, a.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void times() {
-		Dummy a = new Dummy(1,2,3);
+	@Test void times() {
+		var a = new Dummy(1, 2, 3);
 
 		Dummy b = a.times(2.5);
 
-		assertEquals(1,a.x, GrlConstants.TEST_F64);
-		assertEquals(2,a.y, GrlConstants.TEST_F64);
-		assertEquals(3,a.z, GrlConstants.TEST_F64);
+		assertEquals(1, a.x, GrlConstants.TEST_F64);
+		assertEquals(2, a.y, GrlConstants.TEST_F64);
+		assertEquals(3, a.z, GrlConstants.TEST_F64);
 
-		assertEquals(2.5,b.x, GrlConstants.TEST_F64);
-		assertEquals(5,b.y, GrlConstants.TEST_F64);
+		assertEquals(2.5, b.x, GrlConstants.TEST_F64);
+		assertEquals(5, b.y, GrlConstants.TEST_F64);
 		assertEquals(7.5, b.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_xyz(){
-		Dummy a = new Dummy(1,2,3);
+	@Test void distance_xyz() {
+		var a = new Dummy(1, 2, 3);
 
-		double found = a.distance(2,-1,4);
-		assertEquals(Math.sqrt(1+9+1),found,GrlConstants.TEST_F64);
+		double found = a.distance(2, -1, 4);
+		assertEquals(Math.sqrt(1 + 9 + 1), found, GrlConstants.TEST_F64);
 	}
 
 	@Test void isNaN() {
-		var a = new Dummy(1,2,3);
+		var a = new Dummy(1, 2, 3);
 		assertFalse(a.isNaN());
 
 		a.x = Double.NaN;
@@ -155,7 +146,7 @@ public class TestGeoTuple3D_F64 {
 	}
 
 	@Test void isInfinite() {
-		var a = new Dummy(1,2,3);
+		var a = new Dummy(1, 2, 3);
 		assertFalse(a.isInfinite());
 
 		a.x = Double.POSITIVE_INFINITY;
@@ -176,7 +167,7 @@ public class TestGeoTuple3D_F64 {
 		public Dummy() {
 		}
 
-		public Dummy(double x, double y, double z) {
+		public Dummy( double x, double y, double z ) {
 			super(x, y, z);
 		}
 

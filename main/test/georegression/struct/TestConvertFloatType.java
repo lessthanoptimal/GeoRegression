@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,15 +35,10 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
 public class TestConvertFloatType {
-
 	Random rand = new Random(234);
 
-	@Test
-	void convert_Se_64_32() {
+	@Test void convert_Se_64_32() {
 		Se3_F64 src = new Se3_F64();
 		RandomMatrices_DDRM.fillUniform(src.getR(), rand);
 		src.getT().setTo(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
@@ -56,9 +51,8 @@ public class TestConvertFloatType {
 		assertEquals(src.T.z, dst.T.z, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_Affine2D_64_32() {
-		Affine2D_F64 src = new Affine2D_F64(1,2,3,4,5,6);
+	@Test void convert_Affine2D_64_32() {
+		Affine2D_F64 src = new Affine2D_F64(1, 2, 3, 4, 5, 6);
 
 		Affine2D_F32 dst = ConvertFloatType.convert(src, null);
 
@@ -70,9 +64,8 @@ public class TestConvertFloatType {
 		assertEquals(src.ty, dst.ty, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_Affine2D_32_64() {
-		Affine2D_F32 src = new Affine2D_F32(1,2,3,4,5,6);
+	@Test void convert_Affine2D_32_64() {
+		Affine2D_F32 src = new Affine2D_F32(1, 2, 3, 4, 5, 6);
 
 		Affine2D_F64 dst = ConvertFloatType.convert(src, null);
 
@@ -84,8 +77,7 @@ public class TestConvertFloatType {
 		assertEquals(src.ty, dst.ty, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_Point3D_64_32() {
+	@Test void convert_Point3D_64_32() {
 		Point3D_F64 src = new Point3D_F64(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
 
 		Point3D_F32 dst = ConvertFloatType.convert(src, null);
@@ -95,8 +87,7 @@ public class TestConvertFloatType {
 		assertEquals(src.z, dst.z, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_Point2D_64_32() {
+	@Test void convert_Point2D_64_32() {
 		Point2D_F64 src = new Point2D_F64(rand.nextDouble(), rand.nextDouble());
 
 		Point2D_F32 dst = ConvertFloatType.convert(src, null);
@@ -105,8 +96,7 @@ public class TestConvertFloatType {
 		assertEquals(src.y, dst.y, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_Vector3D_64_32() {
+	@Test void convert_Vector3D_64_32() {
 		Vector3D_F64 src = new Vector3D_F64(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
 
 		Vector3D_F32 dst = ConvertFloatType.convert(src, null);
@@ -116,8 +106,7 @@ public class TestConvertFloatType {
 		assertEquals(src.z, dst.z, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_Vector2D_64_32() {
+	@Test void convert_Vector2D_64_32() {
 		Vector2D_F64 src = new Vector2D_F64(rand.nextDouble(), rand.nextDouble());
 
 		Vector2D_F32 dst = ConvertFloatType.convert(src, null);
@@ -126,8 +115,7 @@ public class TestConvertFloatType {
 		assertEquals(src.y, dst.y, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_LinePolar2D_64_32() {
+	@Test void convert_LinePolar2D_64_32() {
 		LinePolar2D_F64 src = new LinePolar2D_F64(rand.nextDouble(), rand.nextDouble());
 
 		LinePolar2D_F32 dst = ConvertFloatType.convert(src, null);
@@ -136,8 +124,7 @@ public class TestConvertFloatType {
 		assertEquals(src.distance, dst.distance, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_LinePolar2D_32_64() {
+	@Test void convert_LinePolar2D_32_64() {
 		LinePolar2D_F32 src = new LinePolar2D_F32(rand.nextFloat(), rand.nextFloat());
 
 		LinePolar2D_F64 dst = ConvertFloatType.convert(src, null);
@@ -146,8 +133,7 @@ public class TestConvertFloatType {
 		assertEquals(src.distance, dst.distance, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_LineSegment2D_64_32() {
+	@Test void convert_LineSegment2D_64_32() {
 		LineSegment2D_F64 src = new LineSegment2D_F64(
 				rand.nextDouble(), rand.nextDouble(),
 				rand.nextDouble(), rand.nextDouble());
@@ -160,8 +146,7 @@ public class TestConvertFloatType {
 		assertEquals(src.b.y, dst.b.y, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_LineSegment2D_32_64() {
+	@Test void convert_LineSegment2D_32_64() {
 		LineSegment2D_F32 src = new LineSegment2D_F32(
 				rand.nextFloat(), rand.nextFloat(),
 				rand.nextFloat(), rand.nextFloat());
@@ -174,8 +159,7 @@ public class TestConvertFloatType {
 		assertEquals(src.b.y, dst.b.y, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_LineSegment3D_64_32() {
+	@Test void convert_LineSegment3D_64_32() {
 		LineSegment3D_F64 src = new LineSegment3D_F64(
 				rand.nextDouble(), rand.nextDouble(), rand.nextDouble(),
 				rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
@@ -190,8 +174,7 @@ public class TestConvertFloatType {
 		assertEquals(src.b.z, dst.b.z, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_LineSegment3D_32_64() {
+	@Test void convert_LineSegment3D_32_64() {
 		LineSegment3D_F32 src = new LineSegment3D_F32(
 				rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
 				rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
@@ -206,8 +189,7 @@ public class TestConvertFloatType {
 		assertEquals(src.b.z, dst.b.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_LineParametric2D_64_32() {
+	@Test void convert_LineParametric2D_64_32() {
 		LineParametric2D_F32 src = new LineParametric2D_F32(
 				rand.nextFloat(), rand.nextFloat(),
 				rand.nextFloat(), rand.nextFloat());
@@ -220,8 +202,7 @@ public class TestConvertFloatType {
 		assertEquals(src.slope.y, dst.slope.y, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_LineParametric2D_32_64() {
+	@Test void convert_LineParametric2D_32_64() {
 		LineParametric2D_F64 src = new LineParametric2D_F64(
 				rand.nextDouble(), rand.nextDouble(),
 				rand.nextDouble(), rand.nextDouble());
@@ -234,8 +215,7 @@ public class TestConvertFloatType {
 		assertEquals(src.slope.y, dst.slope.y, GrlConstants.TEST_F32);
 	}
 
-	@Test
-	void convert_LineParametric3D_32_64() {
+	@Test void convert_LineParametric3D_32_64() {
 		LineParametric3D_F32 src = new LineParametric3D_F32(
 				rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
 				rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
@@ -250,8 +230,7 @@ public class TestConvertFloatType {
 		assertEquals(src.slope.z, dst.slope.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_LineParametric3D_64_32() {
+	@Test void convert_LineParametric3D_64_32() {
 		LineParametric3D_F64 src = new LineParametric3D_F64(
 				rand.nextDouble(), rand.nextDouble(), rand.nextDouble(),
 				rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
@@ -266,7 +245,7 @@ public class TestConvertFloatType {
 		assertEquals(src.slope.z, dst.slope.z, GrlConstants.TEST_F32);
 	}
 
-	public static boolean isIdentical(DMatrixRMaj a, FMatrixRMaj b, double tol) {
+	public static boolean isIdentical( DMatrixRMaj a, FMatrixRMaj b, double tol ) {
 		if (a.numRows != b.numRows || a.numCols != b.numCols) {
 			return false;
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,17 +23,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
 public class TestMatrix3x3_F64 {
 
-	@Test
-	void set_matrix() {
-		Matrix3x3_F64 a = new Matrix3x3_F64();
+	@Test void set_matrix() {
+		var a = new Matrix3x3_F64();
 		a.setTo(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-		Matrix3x3_F64 m = new Matrix3x3_F64();
+		var m = new Matrix3x3_F64();
 		m.setTo(a);
 
 		assertEquals(m.a11, 1);
@@ -47,10 +43,9 @@ public class TestMatrix3x3_F64 {
 		assertEquals(m.a33, 9);
 	}
 
-	@Test
-	void set_values() {
-		Matrix3x3_F64 m = new Matrix3x3_F64();
-		m.setTo(1,2,3,4,5,6,7,8,9);
+	@Test void set_values() {
+		var m = new Matrix3x3_F64();
+		m.setTo(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 		assertEquals(m.a11, 1);
 		assertEquals(m.a12, 2);
@@ -63,20 +58,19 @@ public class TestMatrix3x3_F64 {
 		assertEquals(m.a33, 9);
 	}
 
-	@Test
-	void scale() {
-		Matrix3x3_F64 m = new Matrix3x3_F64();
-		m.setTo(1,2,3,4,5,6,7,8,9);
+	@Test void scale() {
+		var m = new Matrix3x3_F64();
+		m.setTo(1, 2, 3, 4, 5, 6, 7, 8, 9);
 		m.scale(2);
 
-		assertEquals(2,m.a11, GrlConstants.TEST_F64);
-		assertEquals(4,m.a12, GrlConstants.TEST_F64);
-		assertEquals(6,m.a13, GrlConstants.TEST_F64);
-		assertEquals(8,m.a21, GrlConstants.TEST_F64);
-		assertEquals(10,m.a22, GrlConstants.TEST_F64);
-		assertEquals(12,m.a23, GrlConstants.TEST_F64);
-		assertEquals(14,m.a31, GrlConstants.TEST_F64);
-		assertEquals(16,m.a32, GrlConstants.TEST_F64);
-		assertEquals(18,m.a33, GrlConstants.TEST_F64);
+		assertEquals(2, m.a11, GrlConstants.TEST_F64);
+		assertEquals(4, m.a12, GrlConstants.TEST_F64);
+		assertEquals(6, m.a13, GrlConstants.TEST_F64);
+		assertEquals(8, m.a21, GrlConstants.TEST_F64);
+		assertEquals(10, m.a22, GrlConstants.TEST_F64);
+		assertEquals(12, m.a23, GrlConstants.TEST_F64);
+		assertEquals(14, m.a31, GrlConstants.TEST_F64);
+		assertEquals(16, m.a32, GrlConstants.TEST_F64);
+		assertEquals(18, m.a33, GrlConstants.TEST_F64);
 	}
 }

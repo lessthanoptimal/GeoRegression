@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,19 +19,13 @@
 package georegression.struct;
 
 import georegression.misc.GrlConstants;
-import georegression.struct.se.Se3_F64;
-import org.ejml.UtilEjml;
-import org.ejml.dense.row.SpecializedOps_DDRM;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
 @SuppressWarnings({"unchecked"})
-public abstract class GenericInvertibleTransformTests_F64 <T extends GeoTuple_F64> {
+public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64> {
 
 	public abstract T createRandomPoint();
 
@@ -42,91 +36,85 @@ public abstract class GenericInvertibleTransformTests_F64 <T extends GeoTuple_F6
 	/**
 	 * Makes sure that after reset is called the transform applies no transform
 	 */
-	@Test
-	void testReset() {
+	@Test void testReset() {
 		InvertibleTransform tran1 = createRandomTransform();
 
 		T orig = createRandomPoint();
-		T before = (T) orig.createNewInstance();
+		T before = (T)orig.createNewInstance();
 
 		// it should modify the point
-		apply( tran1, orig, before );
-		assertFalse( orig.isIdentical( before, GrlConstants.TEST_F64) );
+		apply(tran1, orig, before);
+		assertFalse(orig.isIdentical(before, GrlConstants.TEST_F64));
 
 		// after reset it shouldn't modify the point
 		tran1.reset();
-		apply( tran1, orig, before );
-		assertTrue( orig.isIdentical( before, GrlConstants.TEST_F64) );
+		apply(tran1, orig, before);
+		assertTrue(orig.isIdentical(before, GrlConstants.TEST_F64));
 	}
 
 	/**
 	 * See if applying the two transforms is the same as applying the concat of those
 	 * two transforms once.
 	 */
-	@Test
-	void testConcat() {
+	@Test void testConcat() {
 		InvertibleTransform tran1 = createRandomTransform();
 		InvertibleTransform tran2 = createRandomTransform();
 
-		InvertibleTransform tran12 = tran1.concat( tran2, null );
+		InvertibleTransform tran12 = tran1.concat(tran2, null);
 
 		T orig = createRandomPoint();
-		T expected = apply( tran1, orig, null );
-		expected = apply( tran2, expected, expected );
+		T expected = apply(tran1, orig, null);
+		expected = apply(tran2, expected, expected);
 
-		T found = apply( tran12, orig, null );
+		T found = apply(tran12, orig, null);
 
-		assertTrue( found.isIdentical( expected, GrlConstants.TEST_F64) );
+		assertTrue(found.isIdentical(expected, GrlConstants.TEST_F64));
 
 		// do the same, but providing a place for it to write the result
-		tran12 = tran1.concat( tran2, createRandomTransform() );
-		found = apply( tran12, orig, null );
-		assertTrue( found.isIdentical( expected, GrlConstants.TEST_F64) );
-
+		tran12 = tran1.concat(tran2, createRandomTransform());
+		found = apply(tran12, orig, null);
+		assertTrue(found.isIdentical(expected, GrlConstants.TEST_F64));
 	}
 
 	/**
 	 * Sees if inverting a transform produces the same solution as the point's
 	 * original location
 	 */
-	@Test
-	void testInvert() {
+	@Test void testInvert() {
 		InvertibleTransform a = createRandomTransform();
 		T orig = createRandomPoint();
-		T tran = apply( a, orig, null );
+		T tran = apply(a, orig, null);
 
-		InvertibleTransform aInv = a.invert( null );
-		T found = apply( aInv, tran, null );
+		InvertibleTransform aInv = a.invert(null);
+		T found = apply(aInv, tran, null);
 
-		assertTrue( found.isIdentical( orig, GrlConstants.TEST_F64) );
+		assertTrue(found.isIdentical(orig, GrlConstants.TEST_F64));
 
 		// do the same, but providing a place for it to write the result
-		aInv = a.invert( createRandomTransform() );
+		aInv = a.invert(createRandomTransform());
 
-		found = apply( aInv, tran, null );
+		found = apply(aInv, tran, null);
 
-		assertTrue( found.isIdentical( orig, GrlConstants.TEST_F64) );
+		assertTrue(found.isIdentical(orig, GrlConstants.TEST_F64));
 	}
 
 	/**
 	 * Makes sure it uses the storage correctlyt
 	 */
-	@Test
-	void testInvert_input() {
+	@Test void testInvert_input() {
 		InvertibleTransform aInv = createRandomTransform();
 
 		InvertibleTransform a = createRandomTransform();
 		T orig = createRandomPoint();
-		T tran = apply( a, orig, null );
+		T tran = apply(a, orig, null);
 
 		assertSame(aInv, a.invert(aInv));
-		T found = apply( aInv, tran, null );
+		T found = apply(aInv, tran, null);
 
-		assertTrue( found.isIdentical( orig, GrlConstants.TEST_F64) );
+		assertTrue(found.isIdentical(orig, GrlConstants.TEST_F64));
 	}
 
-	@Test
-	void invertConcat() {
+	@Test void invertConcat() {
 		for (int i = 0; i < 20; i++) {
 			InvertibleTransform a = createRandomTransform();
 			InvertibleTransform b = createRandomTransform();
@@ -142,7 +130,7 @@ public abstract class GenericInvertibleTransformTests_F64 <T extends GeoTuple_F6
 			T expected = apply(b, orig, null);
 			T found = apply(bb, orig, null);
 
-			assertTrue( expected.isIdentical( found, GrlConstants.TEST_F64) );
+			assertTrue(expected.isIdentical(found, GrlConstants.TEST_F64));
 		}
 	}
 }
