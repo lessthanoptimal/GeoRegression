@@ -23,9 +23,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
 public class TestGeoTuple3D_F64 {
 	@Test
 	void plusIP() {
@@ -36,7 +33,7 @@ public class TestGeoTuple3D_F64 {
 
 		assertEquals(5,a.x, GrlConstants.TEST_F64);
 		assertEquals(7,a.y, GrlConstants.TEST_F64);
-		assertEquals(9, a.z, GrlConstants.TEST_F64);
+		assertEquals(9,a.z, GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -53,6 +50,34 @@ public class TestGeoTuple3D_F64 {
 		assertEquals(5,c.x, GrlConstants.TEST_F64);
 		assertEquals(7,c.y, GrlConstants.TEST_F64);
 		assertEquals(9,c.z, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	void plusIP_alpha() {
+		Dummy a = new Dummy(1,2,3);
+		Dummy b = new Dummy(4,5,6);
+
+		a.plusIP(2.0, b);
+
+		assertEquals(9,a.x, GrlConstants.TEST_F64);
+		assertEquals(12,a.y, GrlConstants.TEST_F64);
+		assertEquals(15,a.z, GrlConstants.TEST_F64);
+	}
+
+	@Test
+	void plus_alpha() {
+		Dummy a = new Dummy(1,2,3);
+		Dummy b = new Dummy(4,5,6);
+
+		Dummy c = a.plus(2.0, b);
+
+		assertEquals(1,a.x, GrlConstants.TEST_F64);
+		assertEquals(2,a.y, GrlConstants.TEST_F64);
+		assertEquals(3,a.z, GrlConstants.TEST_F64);
+
+		assertEquals(9,c.x, GrlConstants.TEST_F64);
+		assertEquals(12,c.y, GrlConstants.TEST_F64);
+		assertEquals(15,c.z, GrlConstants.TEST_F64);
 	}
 
 	@Test

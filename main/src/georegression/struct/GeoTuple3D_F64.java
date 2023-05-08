@@ -147,6 +147,34 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 	}
 
 	/**
+	 * <p>In-place addition</p>
+	 *
+	 * this.x = this.x + alpha*a.x;
+	 *
+	 * @param a value which is to be added
+	 */
+	public void plusIP( double alpha, GeoTuple3D_F64 a ) {
+		x += alpha*a.x;
+		y += alpha*a.y;
+		z += alpha*a.z;
+	}
+
+	/**
+	 * <p>Addition</p>
+	 *
+	 * ret.x = this.x + alpha*a.x;
+	 *
+	 * @param a value which is to be added
+	 */
+	public T plus( double alpha, GeoTuple3D_F64 a ) {
+		T ret = createNewInstance();
+		ret.x = x + alpha*a.x;
+		ret.y = y + alpha*a.y;
+		ret.z = z + alpha*a.z;
+		return ret;
+	}
+
+	/**
 	 * In-place scalar multiplication
 	 *
 	 * @param scalar value that it is multiplied by

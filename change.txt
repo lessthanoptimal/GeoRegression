@@ -6,6 +6,8 @@ Version : 0.26
 
 - Point
  * Proper implementation of setTo()
+- GeoTuple3D
+ * Added plus(alpha, point)
 - GeoTuple_F64
  * Added isNaN() and isInfinite()
  * Note was already in some specific implementations
