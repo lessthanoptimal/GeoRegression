@@ -24,10 +24,7 @@ import georegression.metric.Distance2D_F64;
 import georegression.metric.Intersection2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.Polygon2D_F64;
-import georegression.struct.shapes.Quadrilateral_F64;
-import georegression.struct.shapes.Rectangle2D_F64;
-import georegression.struct.shapes.RectangleLength2D_I32;
+import georegression.struct.shapes.*;
 import org.ddogleg.struct.DogArray;
 import org.jetbrains.annotations.Nullable;
 
@@ -303,7 +300,7 @@ public class UtilPolygons2D_F64 {
 
 	/**
 	 * Finds the minimum area bounding rectangle around the quadrilateral that is aligned with coordinate
-	 * system axises.
+	 * system axises. This is also known as the Axis Aligned Bounding Box (AABB).
 	 *
 	 * @param polygon (Input) Polygon
 	 * @param rectangle (Output) Minimum area rectangle
@@ -330,6 +327,50 @@ public class UtilPolygons2D_F64 {
 	}
 
 	/**
+	 * Finds the minimum area bounding rectangle around the quadrilateral that is aligned with coordinate
+	 * system axises. This is also known as the Axis Aligned Bounding Box (AABB).
+	 *
+	 * @param polygon (Input) Polygon
+	 * @param aabb (Output) Minimum area rectangle a.k.a. AABB. lower extent is inclusive, upper is exclusive.
+	 */
+	public static Rectangle2D_I32 bounding( Polygon2D_F64 polygon, @Nullable Rectangle2D_I32 aabb ) {
+		double x0 = polygon.vertexes.get(0).x;
+		double y0 = polygon.vertexes.get(0).y;
+		double x1 = x0;
+		double y1 = y0;
+
+		for (int i = 1; i < polygon.size(); i++) {
+			Point2D_F64 p = polygon.get(i);
+			if (p.x < x0)
+				x0 = p.x;
+			else if (p.x > x1)
+				x1 = p.x;
+
+			if (p.y < y0)
+				y0 = p.y;
+			else if (p.y > y1)
+				y1 = p.y;
+		}
+
+		if (aabb == null)
+			aabb = new Rectangle2D_I32();
+
+		aabb.x0 = (int)Math.floor(x0);
+		aabb.y0 = (int)Math.floor(y0);
+		aabb.x1 = (int)Math.ceil(x1);
+		aabb.y1 = (int)Math.ceil(y1);
+
+		// Upper limit is exclusive. Handle the special case.
+		if (aabb.x1 == x1)
+			aabb.x1 += 1;
+
+		if (aabb.y1 == y1)
+			aabb.y1 += 1;
+
+		return aabb;
+	}
+
+	/**
 	 * Computes the center or average point in the quadrilateral.
 	 *
 	 * @param quad (Input) Quadrilateral
@@ -352,7 +393,7 @@ public class UtilPolygons2D_F64 {
 	/**
 	 * Returns true if the polygon is ordered in a counter-clockwise order. This is done by summing up the interior
 	 * angles.
-	 * 
+	 *
 	 * @param polygon List of ordered points which define a polygon
 	 * @return true if CCW and false if CW
 	 */

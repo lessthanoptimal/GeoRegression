@@ -13,6 +13,8 @@ Version : 0.26
  * Note was already in some specific implementations
 - Rectangle2D (all types)
  * getCorner()
+- UtilPolygons2D
+ * Added bound(poly, rect int)
 
 ---------------------------------------------
 Date    : 2023-Feb-15

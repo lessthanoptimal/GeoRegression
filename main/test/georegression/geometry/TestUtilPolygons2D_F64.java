@@ -21,10 +21,7 @@ package georegression.geometry;
 import georegression.geometry.polygon.ThreeIndexes;
 import georegression.geometry.polygon.TriangulateSimpleRemoveEars_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.struct.shapes.Polygon2D_F64;
-import georegression.struct.shapes.Quadrilateral_F64;
-import georegression.struct.shapes.Rectangle2D_F64;
-import georegression.struct.shapes.RectangleLength2D_I32;
+import georegression.struct.shapes.*;
 import org.ddogleg.struct.DogArray;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
@@ -271,6 +268,31 @@ public class TestUtilPolygons2D_F64 {
 		assertEquals(-3, out.p0.y, TEST_F64);
 		assertEquals(3, out.p1.x, TEST_F64);
 		assertEquals(5, out.p1.y, TEST_F64);
+	}
+
+	@Test void bounding_polygon_aabbInt() {
+		var q = new Polygon2D_F64(3, 0, 2, -3, -2, 3, 1, 5);
+		var out = new Rectangle2D_I32();
+
+		UtilPolygons2D_F64.bounding(q, out);
+
+		assertEquals(-2, out.x0);
+		assertEquals(-3, out.y0);
+		assertEquals(4, out.x1);
+		assertEquals(6, out.y1);
+
+		// Test to see if it rounds correctly
+		q.get(2).x += 0.01;
+		q.get(0).x += 0.01;
+		q.get(1).y += 0.01;
+		q.get(3).y += 0.01;
+
+		UtilPolygons2D_F64.bounding(q, out);
+
+		assertEquals(-2, out.x0);
+		assertEquals(-3, out.y0);
+		assertEquals(4, out.x1);
+		assertEquals(6, out.y1);
 	}
 
 	@Test void center_quadrilateral() {
