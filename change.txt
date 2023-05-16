@@ -2,6 +2,12 @@ YEAR-MONTH-DAY
 
 ---------------------------------------------
 Date    : 2023-May-15
+Version : 0.26.1
+
+- GeoRegressionVersion is generated again
+
+---------------------------------------------
+Date    : 2023-May-15
 Version : 0.26
 
 - Point

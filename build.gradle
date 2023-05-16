@@ -10,7 +10,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.27-SNAPSHOT'
+    version = '0.26.1'
 
     createVersionFile.enabled = false // run only once. enabled in types
 }
@@ -20,13 +20,6 @@ project.ext.nullaway_version = '0.9.5'
 project.ext.lombok_version = '1.18.24'
 project.ext.jabel_version = '1.0.0'
 project.ext.junit_version = '5.8.2'
-
-gversion {
-    srcDir       = "main/src"
-    classPackage = "georegression"
-    className    = "GeoRegressionVersion"
-    annotate     = true
-}
 
 subprojects {
     apply plugin: 'java-library'
@@ -303,8 +296,6 @@ task javadocWeb() {
     }
 }
 javadocWeb.finalizedBy(alljavadoc)
-
-project(':georegression').compileJava.dependsOn(createVersionFile)
 
 wrapper {
     distributionType = Wrapper.DistributionType.BIN

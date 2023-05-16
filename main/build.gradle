@@ -1,0 +1,10 @@
+createVersionFile.enabled = true
+
+gversion {
+    srcDir       = "src"
+    classPackage = "georegression"
+    className    = "GeoRegressionVersion"
+    annotate     = true
+}
+
+project.compileJava.dependsOn(createVersionFile)
