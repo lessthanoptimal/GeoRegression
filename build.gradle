@@ -2,7 +2,7 @@ import net.ltgt.gradle.errorprone.CheckSeverity
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    id "com.peterabeles.gversion" version "1.10.1" apply false
+    id "com.peterabeles.gversion" version "1.10.2" apply false
     id "net.ltgt.errorprone" version "2.0.1" apply false
 }
 
@@ -10,7 +10,9 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.26-SNAPSHOT'
+    version = '0.26'
+
+    createVersionFile.enabled = false // run only once. enabled in types
 }
 
 project.ext.errorprone_version = '2.11.0'

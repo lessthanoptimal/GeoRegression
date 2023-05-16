@@ -20,7 +20,7 @@
   * Euler Angles (all possible)
   * Rodrigues (axis-angle)
   * Quaternions
-  * Convert between each aother and into 3x3 rotation matices
+  * Convert between each anther and into 3x3 rotation matrices
 * Homogenous Coordinates
   * Implicit 2D z=1 and 3D w=1
 * Best Fit
@@ -36,7 +36,7 @@ GeoRegression is on [Maven Central](https://mvnrepository.com/artifact/org.geore
 be added to your Gradle project as follows:
 
 ```Groovy
-compile group: 'org.georegression', name: 'georegression', version: '0.25.2'
+compile group: 'org.georegression', name: 'georegression', version: '0.26'
 ```
 
 ## Build Instructions
