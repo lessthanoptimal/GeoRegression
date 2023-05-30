@@ -10,9 +10,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.26.1'
-
-    createVersionFile.enabled = false // run only once. enabled in types
+    version = '0.26.2-SNAPSHOT'
 }
 
 project.ext.errorprone_version = '2.11.0'
@@ -20,6 +18,10 @@ project.ext.nullaway_version = '0.9.5'
 project.ext.lombok_version = '1.18.24'
 project.ext.jabel_version = '1.0.0'
 project.ext.junit_version = '5.8.2'
+project.ext.guava_version = '31.1-jre'
+project.ext.jetnull_version = '23.0.0'
+project.ext.jsr250_version = '1.0'
+project.ext.jsr305_version = '3.0.2'
 
 subprojects {
     apply plugin: 'java-library'
@@ -48,10 +50,10 @@ subprojects {
     // To make ErrorProne and Kotlin plugins happy
     configurations.configureEach {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:23.0.0'
-            force 'com.google.guava:guava:31.0.1-jre'
+            force "org.jetbrains:annotations:$project.jetnull_version"
+            force "com.google.guava:guava:$project.guava_version"
             force "com.google.errorprone:error_prone_annotations:$project.errorprone_version"
-            force 'com.google.code.findbugs:jsr305:3.0.2'
+            force "com.google.code.findbugs:jsr305:$project.jsr305_version"
             force 'org.checkerframework:checker-qual:2.10.0'
         }
     }
@@ -86,8 +88,8 @@ subprojects {
     dependencies {
         implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.23')
 
-        compileOnly 'org.jetbrains:annotations:20.0.0' // @Nullable
-        compileOnly 'javax.annotation:jsr250-api:1.0'  // @Generated
+        compileOnly "org.jetbrains:annotations:$project.jetnull_version" // @Nullable
+        compileOnly "javax.annotation:jsr250-api:$project.jsr250_version"  // @Generated
         testCompileOnly project.sourceSets.main.compileClasspath
 
         testImplementation( "org.junit.jupiter:junit-jupiter-api:$project.junit_version" )
