@@ -21,6 +21,7 @@ package georegression.struct.line;
 import georegression.struct.point.Point2D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -73,6 +74,31 @@ public class LineSegment2D_F64 implements Serializable {
 	public void zero() {
 		a.zero();
 		b.zero();
+	}
+
+	/**
+	 * Computes a point on the line based on the fraction distance between 'a' and 'b'
+	 */
+	public Point2D_F64 pointOnLine( double fraction, @Nullable Point2D_F64 p ) {
+		if (p == null)
+			p = new Point2D_F64();
+		p.x = axisOnLineX(fraction);
+		p.y = axisOnLineY(fraction);
+		return p;
+	}
+
+	/**
+	 * Value of x-axis for a point on the line at this fractional location between 'a' and 'b'
+	 */
+	public double axisOnLineX( double fraction ) {
+		return slopeX()*fraction + a.x;
+	}
+
+	/**
+	 * Value of y-axis for a point on the line at this fractional location between 'a' and 'b'
+	 */
+	public double axisOnLineY( double fraction ) {
+		return slopeY()*fraction + a.y;
 	}
 
 	public double slopeX() {

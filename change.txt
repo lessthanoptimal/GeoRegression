@@ -1,6 +1,13 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2023-XXX-X
+Version : 0.26.2
+
+- LineSegment2D
+  * Added pointOnLine functions
+
+---------------------------------------------
 Date    : 2023-May-15
 Version : 0.26.1
 
