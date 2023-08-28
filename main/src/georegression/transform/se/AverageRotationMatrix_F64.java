@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -41,16 +41,31 @@ import java.util.List;
  */
 public class AverageRotationMatrix_F64 {
 
-	DMatrixRMaj M = new DMatrixRMaj(3,3);
-	DMatrix3x3 F = new DMatrix3x3();
+	// Internal workspace to store the average
+	private DMatrixRMaj M = new DMatrixRMaj(3, 3);
+	private DMatrix3x3 F = new DMatrix3x3();
 
-	SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(3,3,true,true,true);
+	// Used to store an extracted matrix
+	private DMatrix3x3 ftmp = new DMatrix3x3();
 
-	public boolean process(List<DMatrixRMaj> list , DMatrixRMaj average ) {
+	SingularValueDecomposition_F64<DMatrixRMaj> svd = DecompositionFactory_DDRM.svd(3, 3, true, true, true);
 
-		if( list.isEmpty() )
+	// Storage for U,V in SVD
+	private DMatrixRMaj U = new DMatrixRMaj(3, 3);
+	private DMatrixRMaj V = new DMatrixRMaj(3, 3);
+
+	/**
+	 * Finds average rotation matrix for matrices stored in {@link DMatrixRMaj} format.
+	 *
+	 * @param list (Input) rotation matrices
+	 * @param average (Output) average rotation.
+	 * @return true if successful or false if it failed
+	 */
+	public boolean process( List<DMatrixRMaj> list, DMatrixRMaj average ) {
+
+		if (list.isEmpty())
 			throw new IllegalArgumentException("Input list is empty");
-		if( average == null )
+		if (average == null)
 			throw new IllegalArgumentException("average is null");
 
 		M.zero();
@@ -59,67 +74,108 @@ public class AverageRotationMatrix_F64 {
 			DMatrixRMaj m = list.get(i);
 
 			// unroll to make it faster. M = M + m
-			// row 0
-			M.data[0]  += m.data[0]; M.data[1]  += m.data[1]; M.data[2]  += m.data[2];
-			// row 1
-			M.data[3]  += m.data[3]; M.data[4]  += m.data[4]; M.data[5]  += m.data[5];
-			// row 2
-			M.data[6]  += m.data[6]; M.data[7]  += m.data[7]; M.data[8]  += m.data[8];
+			//@formatter:off
+			M.data[0]  += m.data[0]; M.data[1]  += m.data[1]; M.data[2]  += m.data[2]; // row 0
+			M.data[3]  += m.data[3]; M.data[4]  += m.data[4]; M.data[5]  += m.data[5]; // row 1
+			M.data[6]  += m.data[6]; M.data[7]  += m.data[7]; M.data[8]  += m.data[8]; // row 2
+			//@formatter:on
 		}
 
-		CommonOps_DDRM.divide(M,list.size());
+		CommonOps_DDRM.divide(M, list.size());
 
-		if( !svd.decompose(M) )
+		if (!svd.decompose(M))
 			return false;
 
-		CommonOps_DDRM.multTransB(svd.getU(null,false),svd.getV(null,false),average);
+		CommonOps_DDRM.multTransB(svd.getU(U, false), svd.getV(V, false), average);
 
 		// determinant should be +1
 		double det = CommonOps_DDRM.det(average);
 
-		if( det < 0 )
-			CommonOps_DDRM.scale(-1,average);
+		if (det < 0)
+			CommonOps_DDRM.scale(-1, average);
 
 		return true;
 	}
 
-	public boolean process(List<DMatrix3x3> list , DMatrix3x3 average ) {
+	/**
+	 * Finds average rotation matrix for matrices stored in {@link DMatrix3x3} format.
+	 *
+	 * @param list (Input) rotation matrices
+	 * @param average (Output) average rotation.
+	 * @return true if successful or false if it failed
+	 */
+	public boolean process( List<DMatrix3x3> list, DMatrix3x3 average ) {
 
-		if( list.isEmpty() )
+		if (list.isEmpty())
 			throw new IllegalArgumentException("Input list is empty");
-		if( average == null )
+		if (average == null)
 			throw new IllegalArgumentException("average is null");
 
-		CommonOps_DDF3.fill(F,0);
+		CommonOps_DDF3.fill(F, 0);
 
 		for (int i = 0; i < list.size(); i++) {
-			DMatrix3x3 m = list.get(i);
-
-			// unroll to make it faster. M = M + m
-			// row 0
-			F.a11  += m.a11; F.a12  += m.a12; F.a13  += m.a13;
-			// row 1
-			F.a21  += m.a21; F.a22  += m.a22; F.a23  += m.a23;
-			// row 2
-			F.a31  += m.a31; F.a32  += m.a32; F.a33  += m.a33;
+			CommonOps_DDF3.add(F, list.get(i), F);
 		}
 
-		CommonOps_DDF3.divide(F,list.size());
+		CommonOps_DDF3.divide(F, list.size());
 
-		DConvertMatrixStruct.convert(F,M);
-		if( !svd.decompose(M) )
+		DConvertMatrixStruct.convert(F, M);
+		if (!svd.decompose(M))
 			return false;
 
-		CommonOps_DDRM.multTransB(svd.getU(null,false),svd.getV(null,false),M);
+		CommonOps_DDRM.multTransB(svd.getU(U, false), svd.getV(V, false), M);
 
 		// determinant should be +1
 		double det = CommonOps_DDRM.det(M);
 
-		if( det < 0 )
-			CommonOps_DDRM.scale(-1,M);
+		if (det < 0)
+			CommonOps_DDRM.scale(-1, M);
 
-		DConvertMatrixStruct.convert(M,average);
+		DConvertMatrixStruct.convert(M, average);
 
 		return true;
+	}
+
+	/**
+	 * Computes average rotation matrix given a list with an arbitrary data type that can be converted into
+	 * a {@link DMatrix3x3}.
+	 *
+	 * @param list List of data structures with rotation matrix in it
+	 * @param average (Output) Storage for computed average matrix
+	 * @param op Converts input data type to {@link DMatrix3x3}
+	 * @return true if successful or false if it failed
+	 */
+	public <T> boolean processOp( List<T> list, DMatrixRMaj average, Convert<T> op ) {
+		if (list.isEmpty())
+			throw new IllegalArgumentException("Input list is empty");
+		if (average == null)
+			throw new IllegalArgumentException("average is null");
+
+		CommonOps_DDF3.fill(F, 0);
+
+		for (int i = 0; i < list.size(); i++) {
+			op.convert(list.get(i), ftmp);
+			CommonOps_DDF3.add(F, ftmp, F);
+		}
+
+		CommonOps_DDF3.divide(F, list.size());
+
+		DConvertMatrixStruct.convert(F, average);
+		if (!svd.decompose(average))
+			return false;
+
+		CommonOps_DDRM.multTransB(svd.getU(U, false), svd.getV(V, false), average);
+
+		// determinant should be +1
+		double det = CommonOps_DDRM.det(average);
+
+		if (det < 0)
+			CommonOps_DDRM.scale(-1, average);
+
+		return true;
+	}
+
+	public interface Convert<T> {
+		void convert( T src, DMatrix3x3 dst );
 	}
 }

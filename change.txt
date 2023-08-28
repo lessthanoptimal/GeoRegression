@@ -6,6 +6,8 @@ Version : 0.26.2
 
 - LineSegment2D
   * Added pointOnLine functions
+- AverageRotationMatrix
+  * Quality of life improvements
 
 ---------------------------------------------
 Date    : 2023-May-15
