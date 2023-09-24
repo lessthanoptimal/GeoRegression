@@ -1,7 +1,7 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2023-XXX-X
+Date    : 2023-Sep-24
 Version : 0.26.2
 
 - LineSegment2D
