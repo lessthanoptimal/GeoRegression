@@ -56,6 +56,13 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		z = a.z;
 	}
 
+	public T setTo( GeoTuple2D_F64<?> p, double z ) {
+		this.x = p.x;
+		this.y = p.y;
+		this.z = z;
+		return (T)this;
+	}
+
 	public T setTo( double x, double y, double z ) {
 		this.x = x;
 		this.y = y;

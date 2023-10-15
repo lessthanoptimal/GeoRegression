@@ -60,6 +60,14 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		w = a.w;
 	}
 
+	public T setTo( GeoTuple3D_F64<?> p, double w ) {
+		this.x = p.x;
+		this.y = p.y;
+		this.z = p.z;
+		this.w = w;
+		return (T)this;
+	}
+
 	public T setTo(double x, double y, double z , double w ) {
 		this.x = x;
 		this.y = y;
@@ -78,16 +86,16 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 	}
 
 	public boolean isIdentical( double x, double y, double z, double w , double tol ) {
-		return ( Math.abs( this.x - x ) <= tol && 
-				Math.abs( this.y - y ) <= tol && 
-				Math.abs( this.z - z ) <= tol && 
+		return ( Math.abs( this.x - x ) <= tol &&
+				Math.abs( this.y - y ) <= tol &&
+				Math.abs( this.z - z ) <= tol &&
 				Math.abs( this.w - w ) <= tol );
 	}
 
 	@Override
 	public boolean isIdentical( GeoTuple4D_F64 t, double tol ) {
-		return ( Math.abs( this.x - t.x ) <= tol && 
-				Math.abs( this.y - t.y ) <= tol && 
+		return ( Math.abs( this.x - t.x ) <= tol &&
+				Math.abs( this.y - t.y ) <= tol &&
 				Math.abs( this.z - t.z ) <= tol &&
 				Math.abs( this.w - t.w ) <= tol );
 	}
