@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,13 +22,12 @@ import georegression.geometry.UtilPolygons2D_F64;
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
+import org.ddogleg.struct.DogArray;
 
 /**
  * <p>
  * Computes the area of intersection between two convex polygons. Port of code found at [1] and Java version by Lagado.
  * </p>
- *
- * WARNING: No effort has been made to reduce the number of calls to new internally from original code.
  *
  * [1] http://www.cap-lore.com/MathPhys/IP/
  *
@@ -37,66 +36,88 @@ import georegression.struct.shapes.Rectangle2D_F64;
 @SuppressWarnings("NullAway.Init")
 public class AreaIntersectionPolygon2D_F64 {
 	static final double gamut = (double)500000000.0;
-	static final double mid = gamut / (double)2.0;
+	static final double mid = gamut/(double)2.0;
 
 	private long ssss;
 	private double sclx;
 	private double scly;
 
+	// Internal workspace
+	DogArray<Vertex> ipa = new DogArray<>(Vertex::new, Vertex::reset);
+	DogArray<Vertex> ipb = new DogArray<>(Vertex::new, Vertex::reset);
+	Rectangle2D_F64 bbox = new Rectangle2D_F64();
+
 	/**
-	 * Computes the area of the intersection between the two polygons.
+	 * <p>Computes the area of the intersection between the two polygons.</p>
 	 *
 	 * Note: the area result has little more accuracy than a float
-	 *  This is true even if the polygon is specified with doubles.
+	 * This is true even if the polygon is specified with doubles.
 	 *
 	 * @param a Polygon A
 	 * @param b Polygon B
-	 * @return area of area of intersection. Negative if the order (CW vs CCW) do not match.
+	 * @return area of intersection. Negative if the order (CW vs CCW) do not match.
 	 */
-	public double computeArea(Polygon2D_F64 a , Polygon2D_F64 b ) {
+	public double computeArea( Polygon2D_F64 a, Polygon2D_F64 b ) {
 		ssss = 0;
 		sclx = 0;
 		scly = 0;
-		return inter(a,b);
+		return inter(a, b);
 	}
 
 	//--------------------------------------------------------------------------
 
 	static class Rng {
-		int mn; int mx;
-		Rng(int mn, int mx) { this.mn = mn; this.mx = mx; }
+		int mn;
+		int mx;
+
+		Rng( int mn, int mx ) {
+			this.mn = mn;
+			this.mx = mx;
+		}
 	}
-	static class Vertex { Point2D_I32 ip; Rng rx; Rng ry; int in; }
+
+	static class Vertex {
+		Point2D_I32 ip;
+		Rng rx;
+		Rng ry;
+		int in;
+
+		@SuppressWarnings("NullAway")
+		public void reset() {
+			ip = null;
+			rx = null;
+			ry = null;
+			in = 0;
+		}
+	}
 
 	//--------------------------------------------------------------------------
 
-	private static void range(Polygon2D_F64 points, Rectangle2D_F64 bbox)
-	{
-		UtilPolygons2D_F64.bounding(points,bbox);
+	private static void range( Polygon2D_F64 points, Rectangle2D_F64 bbox ) {
+		UtilPolygons2D_F64.bounding(points, bbox);
 	}
 
-	private static long area(Point2D_I32 a, Point2D_I32 p, Point2D_I32 q) {
-		return (long)p.x * q.y - (long)p.y * q.x +
-				(long)a.x * (p.y - q.y) + (long)a.y * (q.x - p.x);
+	private static long area( Point2D_I32 a, Point2D_I32 p, Point2D_I32 q ) {
+		return (long)p.x*q.y - (long)p.y*q.x +
+				(long)a.x*(p.y - q.y) + (long)a.y*(q.x - p.x);
 	}
 
-	private static boolean ovl(Rng p, Rng q) {
+	private static boolean ovl( Rng p, Rng q ) {
 		return p.mn < q.mx && q.mn < p.mx;
 	}
 
-	private void cntrib(int f_x, int f_y, int t_x, int t_y, int w) {
-		ssss += (long)w * (t_x - f_x) * (t_y + f_y) / 2;
+	private void cntrib( int f_x, int f_y, int t_x, int t_y, int w ) {
+		ssss += (long)w*(t_x - f_x)*(t_y + f_y)/2;
 	}
 
-	private void fit(Polygon2D_F64 x, Vertex[] ix, int fudge, Rectangle2D_F64 B)
-	{
+	private void fit( Polygon2D_F64 x, Vertex[] ix, int fudge, Rectangle2D_F64 B ) {
 		int c = x.size();
 		while (c-- > 0) {
 			ix[c] = new Vertex();
 			ix[c].ip = new Point2D_I32();
-			ix[c].ip.x = ((int)((x.get(c).getX() - B.p0.x) * sclx - mid) & ~7)
+			ix[c].ip.x = ((int)((x.get(c).getX() - B.p0.x)*sclx - mid) & ~7)
 					| fudge | (c & 1);
-			ix[c].ip.y = ((int)((x.get(c).getY() - B.p0.y) * scly - mid) & ~7)
+			ix[c].ip.y = ((int)((x.get(c).getY() - B.p0.y)*scly - mid) & ~7)
 					| fudge;
 		}
 
@@ -115,25 +136,23 @@ public class AreaIntersectionPolygon2D_F64 {
 		}
 	}
 
-	private void cross(Vertex a, Vertex b, Vertex c, Vertex d,
-		  double a1, double a2, double a3, double a4)
-	{
-		double r1 = a1 / ((double) a1 + a2);
-		double r2 = a3 / ((double) a3 + a4);
+	private void cross( Vertex a, Vertex b, Vertex c, Vertex d,
+						double a1, double a2, double a3, double a4 ) {
+		double r1 = a1/((double) a1 + a2);
+		double r2 = a3/((double) a3 + a4);
 
-		cntrib((int)(a.ip.x + r1 * (b.ip.x - a.ip.x)),
-				(int)(a.ip.y + r1 * (b.ip.y - a.ip.y)),
+		cntrib((int)(a.ip.x + r1*(b.ip.x - a.ip.x)),
+				(int)(a.ip.y + r1*(b.ip.y - a.ip.y)),
 				b.ip.x, b.ip.y, 1);
 		cntrib(d.ip.x, d.ip.y,
-				(int)(c.ip.x + r2 * (d.ip.x - c.ip.x)),
-				(int)(c.ip.y + r2 * (d.ip.y - c.ip.y)),
+				(int)(c.ip.x + r2*(d.ip.x - c.ip.x)),
+				(int)(c.ip.y + r2*(d.ip.y - c.ip.y)),
 				1);
 		++a.in;
 		--c.in;
 	}
 
-	private void inness(Vertex[] P, int cP, Vertex[] Q, int cQ)
-	{
+	private void inness( Vertex[] P, int cP, Vertex[] Q, int cQ ) {
 		int s = 0;
 		int c = cQ;
 		Point2D_I32 p = P[0].ip;
@@ -154,28 +173,27 @@ public class AreaIntersectionPolygon2D_F64 {
 
 	//-------------------------------------------------------------------------
 
-	private double inter(Polygon2D_F64 a, Polygon2D_F64 b)
-	{
+	private double inter( Polygon2D_F64 a, Polygon2D_F64 b ) {
 		if (a.size() < 3 || b.size() < 3)
 			return 0;
 
-		//		int na = a.size();
-//		int nb = b.size();
-		Vertex[] ipa = new Vertex[a.size() + 1];
-		Vertex[] ipb = new Vertex[b.size()+ 1];
-		Rectangle2D_F64 bbox = new Rectangle2D_F64(
-				Double.MAX_VALUE, Double.MAX_VALUE,
-				-Double.MAX_VALUE, -Double.MAX_VALUE);
+		// Recycle / allocate memory
+		ipa.reset().resize(a.size() + 1);
+		ipb.reset().resize(b.size() + 1);
+		Vertex[] ipa = this.ipa.data;
+		Vertex[] ipb = this.ipb.data;
+
+		bbox.setTo(Double.MAX_VALUE, Double.MAX_VALUE, -Double.MAX_VALUE, -Double.MAX_VALUE);
 
 
 		range(a, bbox);
 		range(b, bbox);
 
 		double rngx = bbox.p1.x - bbox.p0.x;
-		sclx = gamut / rngx;
+		sclx = gamut/rngx;
 		double rngy = bbox.p1.y - bbox.p0.y;
-		scly = gamut / rngy;
-		double ascale = sclx * scly;
+		scly = gamut/rngy;
+		double ascale = sclx*scly;
 
 		fit(a, ipa, 0, bbox);
 		fit(b, ipb, 2, bbox);
@@ -206,6 +224,6 @@ public class AreaIntersectionPolygon2D_F64 {
 		inness(ipa, a.size(), ipb, b.size());
 		inness(ipb, b.size(), ipa, a.size());
 
-		return ssss / ascale;
+		return ssss/ascale;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,9 +25,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
 public class TestAreaIntersectionPolygon_F64 {
 	/**
 	 * Unit tests provided by the original author
@@ -39,7 +36,7 @@ public class TestAreaIntersectionPolygon_F64 {
 		// as good test cases should.
 		// It is not necessary to duplicate the first vertex at the end.
 
-		double[][] a2 = {{1,7}, {4,7}, {4, 6}, {2,6}, {2, 3}, {4,3}, {4,2}, {1,2}};
+		double[][] a2 = {{1,7}, {4,7}, {4,6}, {2,6}, {2,3}, {4,3}, {4,2}, {1,2}};
 		double[][] b2 = {{3,1}, {5,1}, {5,4}, {3,4}, {3,5}, {6,5}, {6,0}, {3,0}}; // 0, 9
 
 		double[][] a3 = {{1,1}, {1,2}, {2,1}, {2,2}};

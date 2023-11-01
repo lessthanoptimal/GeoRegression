@@ -6,6 +6,8 @@ Version : 0.26.3
 
 - GeoTuple
  * Provided setTo() where you can assign it from a lower dimension
+- AreaIntersectionPolygon2D_F64
+ * Now recycles memory when possible
 
 ---------------------------------------------
 Date    : 2023-Sep-24
