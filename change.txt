@@ -1,7 +1,7 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2023-??
+Date    : 2023-Nov-05
 Version : 0.26.3
 
 - GeoTuple

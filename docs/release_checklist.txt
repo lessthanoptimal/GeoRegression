@@ -11,7 +11,7 @@
   cd docs/website
   conf.py <--- text substitution is now used to spread the version name
   index.rst <-- just the date
-  rm -rf _build;make html;cd _build;rm html.zip;zip -r html.zip html/
+  rm -rf _build && make html && cd _build && rm html.zip && zip -r html.zip html/
 - Commit and tag release
 - Create zip and jar files
   VERSION=v0.22;PRJNAME=georegression-$VERSION
