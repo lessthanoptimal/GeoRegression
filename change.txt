@@ -1,6 +1,13 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2023-??
+Version : 0.27.0
+
+- Added method for estimating surface normals on a point cloud
+- Added functions for estimating a cylinder from points and surface normals
+
+---------------------------------------------
 Date    : 2023-Nov-05
 Version : 0.26.3
 
