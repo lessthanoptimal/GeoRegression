@@ -89,7 +89,7 @@ public class Cylinder3D_F64 implements Serializable {
 	}
 
 	public void zero() {
-		this.line.setTo(0, 0, 0, 0, 0, 0);
+		this.line.zero();
 		this.radius = 0;
 	}
 
