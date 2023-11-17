@@ -19,7 +19,7 @@
 package georegression.fitting.cylinder;
 
 import georegression.metric.Distance3D_F64;
-import georegression.struct.point.PointNormal3D_F64;
+import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.shapes.Cylinder3D_F64;
 import org.ejml.UtilEjml;
@@ -53,8 +53,8 @@ class TestGenerateCylinderFromPointNormals_F64 {
 
 			// Create two points that should be good for estimating the cylinder. They can't be close to each other.
 			double theta = 0;// rand.nextDouble()*Math.PI*2.0;
-			PointNormal3D_F64 p0 = paramToPointOnCylinder(cylinder, rand.nextGaussian(), theta);
-			PointNormal3D_F64 p1 = paramToPointOnCylinder(cylinder, rand.nextGaussian(), theta + Math.PI/2.0);
+			PlaneNormal3D_F64 p0 = paramToPointOnCylinder(cylinder, rand.nextGaussian(), theta);
+			PlaneNormal3D_F64 p1 = paramToPointOnCylinder(cylinder, rand.nextGaussian(), theta + Math.PI/2.0);
 
 			// Sanity check
 			assertEquals(0.0, Distance3D_F64.distance(cylinder, p0.p), UtilEjml.TEST_F64);
@@ -68,8 +68,8 @@ class TestGenerateCylinderFromPointNormals_F64 {
 		}
 	}
 
-	PointNormal3D_F64 paramToPointOnCylinder( Cylinder3D_F64 cylinder, double axis, double angle ) {
-		var point = new PointNormal3D_F64();
+	PlaneNormal3D_F64 paramToPointOnCylinder( Cylinder3D_F64 cylinder, double axis, double angle ) {
+		var point = new PlaneNormal3D_F64();
 
 		// Put it on a point that's on the axis
 		point.p.x = cylinder.line.p.x + cylinder.line.slope.x*axis;
