@@ -18,21 +18,23 @@
 
 package georegression.fitting.plane;
 
+import georegression.geometry.UtilPlane3D_F64;
+import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import org.ddogleg.fitting.modelset.ModelGenerator;
 
 import java.util.List;
 
 /**
- * Estimates a {@link PlaneNormal3D_F64} from {@link PlaneNormal3D_F64}. A bit silly, but needed when the
+ * Estimates a {@link PlaneGeneral3D_F64} from {@link PlaneNormal3D_F64}. A bit silly, but needed when the
  * surface is described using a point and their normal.
  */
-public class GeneratorPlaneFromPlane_F64 implements ModelGenerator<PlaneNormal3D_F64, PlaneNormal3D_F64> {
-	@Override public boolean generate( List<PlaneNormal3D_F64> dataSet, PlaneNormal3D_F64 output ) {
+public class GeneratorPlaneFromPlane_F64 implements ModelGenerator<PlaneGeneral3D_F64, PlaneNormal3D_F64> {
+	@Override public boolean generate( List<PlaneNormal3D_F64> dataSet, PlaneGeneral3D_F64 output ) {
 		if (dataSet.size() != 1)
 			throw new IllegalArgumentException("Must have one and only one point");
 
-		output.setTo(dataSet.get(0));
+		UtilPlane3D_F64.convert(dataSet.get(0), output);
 		return true;
 	}
 

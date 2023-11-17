@@ -4,8 +4,13 @@ YEAR-MONTH-DAY
 Date    : 2023-??
 Version : 0.27.0
 
+- Added RobustFittingOps to make robust fitting of shapes easier.
+  * Supports plane and cylinders for now.
 - Added method for estimating surface normals on a point cloud
-- Added functions for estimating a cylinder from points and surface normals
+- Shape fitting using points with surface normals
+  * Plane and Cylinder
+- Added ShapeFittingRobustOps
+  * Easy interface for using standard robust algorithms to fit points to shapes
 
 ---------------------------------------------
 Date    : 2023-Nov-05
