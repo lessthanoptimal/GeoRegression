@@ -22,7 +22,7 @@ import georegression.geometry.GeometryMath_F64;
 import georegression.metric.ClosestPoint3D_F64;
 import georegression.metric.Distance3D_F64;
 import georegression.struct.line.LineParametric3D_F64;
-import georegression.struct.point.PointNormal3D_F64;
+import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.shapes.Cylinder3D_F64;
 import org.ddogleg.fitting.modelset.ModelGenerator;
 
@@ -31,12 +31,12 @@ import java.util.List;
 /**
  * Given a list of two point and surface normal pairs, first a cylinder using an analytic equation.
  */
-public class GenerateCylinderFromPointNormals_F64 implements ModelGenerator<Cylinder3D_F64, PointNormal3D_F64> {
+public class GenerateCylinderFromPointNormals_F64 implements ModelGenerator<Cylinder3D_F64, PlaneNormal3D_F64> {
 
 	LineParametric3D_F64 lineA = new LineParametric3D_F64();
 	LineParametric3D_F64 lineB = new LineParametric3D_F64();
 
-	@Override public boolean generate( List<PointNormal3D_F64> dataSet, Cylinder3D_F64 output ) {
+	@Override public boolean generate( List<PlaneNormal3D_F64> dataSet, Cylinder3D_F64 output ) {
 		if (dataSet.size() == 2) {
 			return twoPointFormula(dataSet.get(0), dataSet.get(1), output);
 		}
@@ -50,7 +50,7 @@ public class GenerateCylinderFromPointNormals_F64 implements ModelGenerator<Cyli
 	 *
 	 * @return true if no error detected
 	 */
-	public boolean twoPointFormula( PointNormal3D_F64 a, PointNormal3D_F64 b, Cylinder3D_F64 output ) {
+	public boolean twoPointFormula( PlaneNormal3D_F64 a, PlaneNormal3D_F64 b, Cylinder3D_F64 output ) {
 
 		// The closest point between the two lines defined by the surface normals and each point lies on
 		// the axis of the cylinder

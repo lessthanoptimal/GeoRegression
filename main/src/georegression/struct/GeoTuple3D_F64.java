@@ -285,6 +285,7 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 	}
 
 	@Override
+	@SuppressWarnings("EqualsGetClass")
 	public boolean equals( Object obj ) {
 		if (this == obj)
 			return true;
@@ -292,7 +293,7 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		if (this.getClass() != obj.getClass())
 			return false;
 
-		var o = (GeoTuple3D_F64)obj;
+		var o = (GeoTuple3D_F64<?>)obj;
 		return Double.compare(x, o.x) == 0 && Double.compare(y, o.y) == 0 && Double.compare(z, o.z) == 0;
 	}
 

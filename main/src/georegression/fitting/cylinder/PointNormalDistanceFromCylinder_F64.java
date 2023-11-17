@@ -19,19 +19,19 @@
 package georegression.fitting.cylinder;
 
 import georegression.metric.Distance3D_F64;
-import georegression.struct.point.PointNormal3D_F64;
+import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.shapes.Cylinder3D_F64;
 import org.ddogleg.fitting.modelset.DistanceFromModel;
 
 import java.util.List;
 
 /**
- * Implementation of {@link DistanceFromModel} for {@link Cylinder3D_F64} and {@link PointNormal3D_F64}. It
+ * Implementation of {@link DistanceFromModel} for {@link Cylinder3D_F64} and {@link PlaneNormal3D_F64}. It
  * returns the distance the point is from the cylinder's surface. The normal vector is ignored.
  *
  * @author Peter Abeles
  */
-public class PointNormalDistanceFromCylinder_F64 implements DistanceFromModel<Cylinder3D_F64, PointNormal3D_F64> {
+public class PointNormalDistanceFromCylinder_F64 implements DistanceFromModel<Cylinder3D_F64, PlaneNormal3D_F64> {
 	Cylinder3D_F64 cylinder = new Cylinder3D_F64();
 
 	@Override
@@ -40,20 +40,20 @@ public class PointNormalDistanceFromCylinder_F64 implements DistanceFromModel<Cy
 	}
 
 	@Override
-	public /**/double distance( PointNormal3D_F64 point ) {
+	public /**/double distance( PlaneNormal3D_F64 point ) {
 		return Math.abs(Distance3D_F64.distance(cylinder, point.p));
 	}
 
 	@Override
-	public void distances( List<PointNormal3D_F64> list, /**/double[] errors ) {
+	public void distances( List<PlaneNormal3D_F64> list, /**/double[] errors ) {
 		for (int i = 0; i < list.size(); i++) {
 			errors[i] = Math.abs(Distance3D_F64.distance(cylinder, list.get(i).p));
 		}
 	}
 
 	@Override
-	public Class<PointNormal3D_F64> getPointType() {
-		return PointNormal3D_F64.class;
+	public Class<PlaneNormal3D_F64> getPointType() {
+		return PlaneNormal3D_F64.class;
 	}
 
 	@Override

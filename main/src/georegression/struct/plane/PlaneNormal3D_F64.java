@@ -21,8 +21,11 @@ package georegression.struct.plane;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import lombok.Getter;
+import org.ejml.UtilEjml;
+import org.ejml.ops.MatrixIO;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -31,11 +34,12 @@ import java.util.Objects;
  *
  * @author Peter Abeles
  */
+@Getter
 public class PlaneNormal3D_F64 implements Serializable {
 	/** An arbitrary point in the plane */
-	@Getter public Point3D_F64 p = new Point3D_F64();
+	public Point3D_F64 p = new Point3D_F64();
 	/** The plane's normal */
-	@Getter public Vector3D_F64 n = new Vector3D_F64();
+	public Vector3D_F64 n = new Vector3D_F64();
 
 	public PlaneNormal3D_F64( PlaneNormal3D_F64 o ) {
 		setTo(o);
@@ -82,24 +86,26 @@ public class PlaneNormal3D_F64 implements Serializable {
 		this.n.setTo(n);
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + "{" +
-				"p=" + p +
-				", n=" + n +
-				'}';
+	@Override public String toString() {
+		var format = new DecimalFormat("#");
+		String sx = UtilEjml.fancyString(p.x, format, MatrixIO.DEFAULT_LENGTH, 4);
+		String sy = UtilEjml.fancyString(p.y, format, MatrixIO.DEFAULT_LENGTH, 4);
+		String sz = UtilEjml.fancyString(p.z, format, MatrixIO.DEFAULT_LENGTH, 4);
+
+		String nx = UtilEjml.fancyString(n.x, format, MatrixIO.DEFAULT_LENGTH, 4);
+		String ny = UtilEjml.fancyString(n.y, format, MatrixIO.DEFAULT_LENGTH, 4);
+		String nz = UtilEjml.fancyString(n.z, format, MatrixIO.DEFAULT_LENGTH, 4);
+
+		return getClass().getSimpleName() + "{ P(" + sx + " , " + sy + " , " + sz + " ), V( " + nx + " , " + ny + " , " + nz + ") }";
 	}
 
-	@Override
-	public boolean equals( Object o ) {
+	@Override public boolean equals( Object o ) {
 		if (this == o) return true;
-		if (!(o instanceof PlaneNormal3D_F64)) return false;
-		PlaneNormal3D_F64 that = (PlaneNormal3D_F64)o;
+		if (!(o instanceof PlaneNormal3D_F64 that)) return false;
 		return p.equals(that.p) && n.equals(that.n);
 	}
 
-	@Override
-	public int hashCode() {
+	@Override public int hashCode() {
 		return Objects.hash(p, n);
 	}
 }

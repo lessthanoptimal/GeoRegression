@@ -16,34 +16,26 @@
  * limitations under the License.
  */
 
-package georegression.struct.point;
+package georegression.fitting.plane;
 
+import georegression.struct.plane.PlaneNormal3D_F64;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
-/**
- * @author Peter Abeles
- */
-public class TestPoint2D_F64 extends GenericGeoTupleTests_F64<Point2D_F64> {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-	public TestPoint2D_F64() {
-		super( new Point2D_F64(), 2 );
-	}
+public class TestGeneratorPlaneFromPlane_F64 {
+	@Test void simple() {
+		var alg = new GeneratorPlaneFromPlane_F64();
+		var found = new PlaneNormal3D_F64();
+		alg.generate(List.of(new PlaneNormal3D_F64(1,2,3,4,5,6)), found);
 
-	@Test
-	void equals_vector() {
-		var a = new Point2D_F64();
-		var b = new Vector2D_F64();
-
-		// numerically they are identical, but not the same type so this should fail
-		assertNotEquals(a, b);
-	}
-
-	@Test void equals() {
-		var a = new Point2D_F64(1, 2);
-		assertFalse(a.equals(new Point2D_F64(1, 3)));
-		assertTrue(a.equals(new Point2D_F64(1, 2)));
-		assertFalse(a.equals(new Vector2D_F64(1, 2)));
+		assertEquals(1.0, found.p.x);
+		assertEquals(2.0, found.p.y);
+		assertEquals(3.0, found.p.z);
+		assertEquals(4.0, found.n.x);
+		assertEquals(5.0, found.n.y);
+		assertEquals(6.0, found.n.z);
 	}
 }

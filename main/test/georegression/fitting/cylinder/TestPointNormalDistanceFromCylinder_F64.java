@@ -18,7 +18,7 @@
 
 package georegression.fitting.cylinder;
 
-import georegression.struct.point.PointNormal3D_F64;
+import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.shapes.Cylinder3D_F64;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
@@ -31,18 +31,18 @@ class TestPointNormalDistanceFromCylinder_F64 {
 		alg.setModel(new Cylinder3D_F64().setTo(0, 0, 1, 0, 0, 1, 3.0));
 
 		// see if it's invariant to points along the axis
-		assertEquals(3.0, alg.distance(new PointNormal3D_F64().setTo(0, 0, 0,0, 0, -1)), UtilEjml.TEST_F64);
-		assertEquals(3.0, alg.distance(new PointNormal3D_F64().setTo(0, 0, 10,0, 0, -1)), UtilEjml.TEST_F64);
-		assertEquals(3.0, alg.distance(new PointNormal3D_F64().setTo(0, 0, -10,0, 0, -1)), UtilEjml.TEST_F64);
-		assertEquals(1, alg.distance(new PointNormal3D_F64().setTo(2, 0, 0,0, 0, -1)), UtilEjml.TEST_F64);
-		assertEquals(1, alg.distance(new PointNormal3D_F64().setTo(-2, 0, 10,0, 0, -1)), UtilEjml.TEST_F64);
-		assertEquals(1, alg.distance(new PointNormal3D_F64().setTo(0, 2, -10,0, 0, -1)), UtilEjml.TEST_F64);
-		assertEquals(1, alg.distance(new PointNormal3D_F64().setTo(0, 4, -10,0, 0, -1)), UtilEjml.TEST_F64);
+		assertEquals(3.0, alg.distance(new PlaneNormal3D_F64().setTo(0, 0, 0,0, 0, -1)), UtilEjml.TEST_F64);
+		assertEquals(3.0, alg.distance(new PlaneNormal3D_F64().setTo(0, 0, 10,0, 0, -1)), UtilEjml.TEST_F64);
+		assertEquals(3.0, alg.distance(new PlaneNormal3D_F64().setTo(0, 0, -10,0, 0, -1)), UtilEjml.TEST_F64);
+		assertEquals(1, alg.distance(new PlaneNormal3D_F64().setTo(2, 0, 0,0, 0, -1)), UtilEjml.TEST_F64);
+		assertEquals(1, alg.distance(new PlaneNormal3D_F64().setTo(-2, 0, 10,0, 0, -1)), UtilEjml.TEST_F64);
+		assertEquals(1, alg.distance(new PlaneNormal3D_F64().setTo(0, 2, -10,0, 0, -1)), UtilEjml.TEST_F64);
+		assertEquals(1, alg.distance(new PlaneNormal3D_F64().setTo(0, 4, -10,0, 0, -1)), UtilEjml.TEST_F64);
 
 		// Point in another direction
 		alg.setModel(new Cylinder3D_F64().setTo(0, 0, 1, 0, 1, 0, 3.0));
-		assertEquals(1, alg.distance(new PointNormal3D_F64().setTo(2, 0, 1,0, 0, -1)), UtilEjml.TEST_F64);
-		assertEquals(1, alg.distance(new PointNormal3D_F64().setTo(-2, 0, 1,0, 0, -1)), UtilEjml.TEST_F64);
-		assertEquals(1, alg.distance(new PointNormal3D_F64().setTo(2, 10, 1,0, 0, -1)), UtilEjml.TEST_F64);
+		assertEquals(1, alg.distance(new PlaneNormal3D_F64().setTo(2, 0, 1,0, 0, -1)), UtilEjml.TEST_F64);
+		assertEquals(1, alg.distance(new PlaneNormal3D_F64().setTo(-2, 0, 1,0, 0, -1)), UtilEjml.TEST_F64);
+		assertEquals(1, alg.distance(new PlaneNormal3D_F64().setTo(2, 10, 1,0, 0, -1)), UtilEjml.TEST_F64);
 	}
 }
