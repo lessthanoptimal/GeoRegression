@@ -61,6 +61,9 @@ public class ShapeFittingRobustOps {
 	/** Inlier fraction for LMedS */
 	public double lsmedInlierFraction = 0.5;
 
+	/** How good the fit was according to the robust algorithm */
+	public double outputFitQuality = 0.0;
+
 	/**
 	 * Configures RANSAC parameters
 	 */
@@ -147,6 +150,8 @@ public class ShapeFittingRobustOps {
 			throw new RuntimeException("LMedS failed");
 		}
 
+		outputFitQuality = robust.getFitQuality();
+
 		return robust.getModelParameters();
 	}
 
@@ -178,6 +183,8 @@ public class ShapeFittingRobustOps {
 		if (!robust.process(points)) {
 			throw new RuntimeException("LMedS failed");
 		}
+
+		outputFitQuality = robust.getFitQuality();
 
 		return robust.getModelParameters();
 	}
