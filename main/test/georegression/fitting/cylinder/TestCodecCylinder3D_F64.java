@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -28,21 +28,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Peter Abeles
  */
 public class TestCodecCylinder3D_F64 {
+	@Test void basicCheck() {
+		var cylinder = new Cylinder3D_F64(1, 2, 3, 4, 5, 6, 7);
+		var found = new Cylinder3D_F64();
+		/**/double param[] = new /**/double[7];
 
-	@Test
-	void basicCheck() {
-		Cylinder3D_F64 cylinder = new Cylinder3D_F64(1,2,3,4,5,6,7);
-		Cylinder3D_F64 found = new Cylinder3D_F64();
-		/**/double param[] = new /**/double[ 7 ];
+		var alg = new CodecCylinder3D_F64();
 
-		CodecCylinder3D_F64 alg = new CodecCylinder3D_F64();
-
-		alg.encode(cylinder,param);
-		alg.decode(param,found);
+		alg.encode(cylinder, param);
+		alg.decode(param, found);
 
 		assertEquals(0, cylinder.line.p.distance(found.line.p), GrlConstants.TEST_F64);
 		assertEquals(0, cylinder.line.slope.distance(found.line.slope), GrlConstants.TEST_F64);
-		assertEquals(cylinder.radius,found.radius, GrlConstants.TEST_F64);
+		assertEquals(cylinder.radius, found.radius, GrlConstants.TEST_F64);
 	}
-
 }
