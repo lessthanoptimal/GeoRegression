@@ -47,14 +47,14 @@ public class LineParametric3D_F64 implements Serializable {
 	public LineParametric3D_F64( double x_0, double y_0, double z_0,
 								 double slopeX, double slopeY, double slopeZ ) {
 		this();
-		p.setTo( x_0, y_0, z_0 );
-		slope.setTo( slopeX, slopeY, slopeZ );
+		p.setTo(x_0, y_0, z_0);
+		slope.setTo(slopeX, slopeY, slopeZ);
 	}
 
 	public LineParametric3D_F64( Point3D_F64 p, Vector3D_F64 slope ) {
 		this();
-		setPoint( p );
-		setSlope( slope );
+		setPoint(p);
+		setSlope(slope);
 	}
 
 	public LineParametric3D_F64() {
@@ -70,10 +70,11 @@ public class LineParametric3D_F64 implements Serializable {
 
 	/**
 	 * Should it declare the point and slope
+	 *
 	 * @param declare true means to declares the data otherwise they are left as null
 	 */
 	public LineParametric3D_F64( boolean declare ) {
-		if( declare ) {
+		if (declare) {
 			p = new Point3D_F64();
 			slope = new Vector3D_F64();
 		}
@@ -82,27 +83,27 @@ public class LineParametric3D_F64 implements Serializable {
 	/**
 	 * where = p + t*slope.
 	 */
-	public void setPointOnLine( double t , Point3D_F64 where ) {
+	public void setPointOnLine( double t, Point3D_F64 where ) {
 		where.x = p.x + t*slope.x;
 		where.y = p.y + t*slope.y;
 		where.z = p.z + t*slope.z;
 	}
 
 	public void setPoint( Point3D_F64 pt ) {
-		this.p.setTo( pt );
+		this.p.setTo(pt);
 	}
 
-	public void setPoint( double x, double y , double z ) {
+	public void setPoint( double x, double y, double z ) {
 		this.p.x = x;
 		this.p.y = y;
 		this.p.z = z;
 	}
 
 	public void setSlope( Vector3D_F64 slope ) {
-		this.slope.setTo( slope );
+		this.slope.setTo(slope);
 	}
 
-	public void setSlope( double slopeX, double slopeY , double slopeZ ) {
+	public void setSlope( double slopeX, double slopeY, double slopeZ ) {
 		this.slope.x = slopeX;
 		this.slope.y = slopeY;
 		this.slope.z = slopeZ;
@@ -115,7 +116,7 @@ public class LineParametric3D_F64 implements Serializable {
 	 * @return Point on the line.
 	 */
 	public Point3D_F64 getPointOnLine( double t ) {
-		return new Point3D_F64( slope.x * t + p.x, slope.y * t + p.y, slope.z * t + p.z );
+		return new Point3D_F64(slope.x*t + p.x, slope.y*t + p.y, slope.z*t + p.z);
 	}
 
 	public Point3D_F64 getPoint() {
@@ -164,27 +165,31 @@ public class LineParametric3D_F64 implements Serializable {
 		slope.zero();
 	}
 
+	public boolean isIdentical( LineParametric3D_F64 l, double tol ) {
+		return p.isIdentical(l.p, tol) && slope.isIdentical(l.slope, tol);
+	}
+
 	public LineParametric3D_F64 copy() {
-		return new LineParametric3D_F64( p, slope );
+		return new LineParametric3D_F64(p, slope);
 	}
 
 	@Override
 	public String toString() {
 		FancyPrint f = new FancyPrint();
 
-		return getClass().getSimpleName()+" P( "+f.s(p.x)+" "+f.s(p.y)+" "+f.s(p.z)+
-				" ) Slope( "+f.s(slope.x)+" "+f.s(slope.y)+" "+f.s(slope.z)+" )";
+		return getClass().getSimpleName() + " P( " + f.s(p.x) + " " + f.s(p.y) + " " + f.s(p.z) +
+				" ) Slope( " + f.s(slope.x) + " " + f.s(slope.y) + " " + f.s(slope.z) + " )";
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(this == obj)
+	public boolean equals( Object obj ) {
+		if (this == obj)
 			return true;
 
-		if(!(obj instanceof LineParametric3D_F64))
+		if (!(obj instanceof LineParametric3D_F64))
 			return false;
 
-		var o = (LineParametric3D_F64) obj;
+		var o = (LineParametric3D_F64)obj;
 		return p.equals(o.p) && slope.equals(o.slope);
 	}
 

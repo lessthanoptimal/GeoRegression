@@ -34,7 +34,7 @@ import java.util.Objects;
  *
  * <p>
  * If in Hessian normal form, then (A,B,C) is the unit normal, and D is distance of the plane from the origin. The
- * sign of D determines the side on the plane on which the origin is located.
+ * sign of D determines the side on the plane on which the origin is located. {@link #normalize()}
  * </p>
  *
  * <p>
@@ -78,6 +78,29 @@ public class PlaneGeneral3D_F64 implements Serializable {
 		setTo(0, 0, 0, 0);
 	}
 
+	public double evaluate( double x, double y, double z ) {
+		return A*x + B*y + C*z + D;
+	}
+
+	/**
+	 * Ensures that A*A + B*B + C*C == 1
+	 */
+	public void normalize() {
+		double n = Math.sqrt(A*A + B*B + C*C);
+		A /= n;
+		B /= n;
+		C /= n;
+		D /= n;
+	}
+
+	public PlaneGeneral3D_F64 copy() {
+		return new PlaneGeneral3D_F64().setTo(this);
+	}
+
+	public boolean isIdentical( PlaneGeneral3D_F64 o ) {
+		return A == o.A && B == o.B && C == o.C && D == o.D;
+	}
+
 	@Override
 	public String toString() {
 		FancyPrint fancy = new FancyPrint();
@@ -90,11 +113,7 @@ public class PlaneGeneral3D_F64 implements Serializable {
 	public boolean equals( Object obj ) {
 		if (this == obj) return true;
 		if (!(obj instanceof PlaneGeneral3D_F64)) return false;
-		var o = (PlaneGeneral3D_F64)obj;
-		return Double.compare(o.A, A) == 0 &&
-				Double.compare(o.B, B) == 0 &&
-				Double.compare(o.C, C) == 0 &&
-				Double.compare(o.D, D) == 0;
+		return isIdentical((PlaneGeneral3D_F64)obj);
 	}
 
 	@Override
