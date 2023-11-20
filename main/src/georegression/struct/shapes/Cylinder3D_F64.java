@@ -21,6 +21,8 @@ package georegression.struct.shapes;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
+import lombok.Getter;
+import lombok.Setter;
 import org.ejml.FancyPrint;
 
 import java.io.Serializable;
@@ -31,6 +33,7 @@ import java.io.Serializable;
  * @author Peter Abeles
  */
 @SuppressWarnings("NullAway.Init")
+@Getter @Setter
 public class Cylinder3D_F64 implements Serializable {
 	/**
 	 * Line which defines the cylinder's axis
@@ -93,6 +96,24 @@ public class Cylinder3D_F64 implements Serializable {
 		this.radius = 0;
 	}
 
+	/**
+	 * Returns true if every parameter is identical to the passed in Cylinder to within the specified tolerance
+	 */
+	public boolean isIdentical(Cylinder3D_F64 c, double tol) {
+		return Math.abs(radius - c.radius) <= tol && line.isIdentical(c.line, tol);
+	}
+
+	@Override
+	public boolean equals( Object obj ) {
+		if (this == obj)
+			return true;
+
+		if (!(obj instanceof Cylinder3D_F64))
+			return false;
+
+		return ((Cylinder3D_F64)obj).isIdentical(this, 0.0);
+	}
+
 	@Override
 	public String toString() {
 		FancyPrint fancy = new FancyPrint();
@@ -103,5 +124,10 @@ public class Cylinder3D_F64 implements Serializable {
 		return getClass().getSimpleName() +
 				" P( " + fancy.s(p.x) + " " + fancy.s(p.y) + " " + fancy.sf(p.z) +
 				" ) Slope( " + fancy.s(slope.x) + " " + fancy.s(slope.y) + " " + fancy.s(slope.z) + " ) radius " + fancy.s(radius);
+	}
+
+	@Override
+	public int hashCode() {
+		return Double.hashCode(radius) + line.hashCode();
 	}
 }
