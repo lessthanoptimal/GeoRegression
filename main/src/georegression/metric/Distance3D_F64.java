@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -28,7 +28,6 @@ import georegression.struct.shapes.Cylinder3D_F64;
 import georegression.struct.shapes.Sphere3D_F64;
 import georegression.struct.shapes.Triangle3D_F64;
 
-
 /**
  * Distance of various shapes in 3D space
  *
@@ -50,33 +49,33 @@ public class Distance3D_F64 {
 		double z = l0.p.z - l1.p.z;
 
 		// this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
-		double dv01v1 = MiscOps.dot( x,y,z, l1.slope );
-		double dv1v0 = MiscOps.dot( l1.slope, l0.slope );
-		double dv1v1 = MiscOps.dot( l1.slope, l1.slope );
+		double dv01v1 = MiscOps.dot(x, y, z, l1.slope);
+		double dv1v0 = MiscOps.dot(l1.slope, l0.slope);
+		double dv1v1 = MiscOps.dot(l1.slope, l1.slope);
 
-		double bottom = MiscOps.dot( l0.slope, l0.slope ) * dv1v1 - dv1v0 * dv1v0;
+		double bottom = MiscOps.dot(l0.slope, l0.slope)*dv1v1 - dv1v0*dv1v0;
 		double t0;
 
-		if( bottom == 0 ) {
+		if (bottom == 0) {
 			// handle parallel lines
 			t0 = 0;
 		} else {
-			t0 = (dv01v1 * dv1v0 - MiscOps.dot( x,y,z, l0.slope ) * dv1v1)/bottom;
+			t0 = (dv01v1*dv1v0 - MiscOps.dot(x, y, z, l0.slope)*dv1v1)/bottom;
 		}
 
 		// ( d1343 + mua d4321 ) / d4343
-		double t1 = ( dv01v1 + t0 * dv1v0 ) / dv1v1;
+		double t1 = (dv01v1 + t0*dv1v0)/dv1v1;
 
-		double dx = ( l0.p.x + t0 * l0.slope.x ) - ( l1.p.x + t1 * l1.slope.x );
-		double dy = ( l0.p.y + t0 * l0.slope.y ) - ( l1.p.y + t1 * l1.slope.y );
-		double dz = ( l0.p.z + t0 * l0.slope.z ) - ( l1.p.z + t1 * l1.slope.z );
+		double dx = (l0.p.x + t0*l0.slope.x) - (l1.p.x + t1*l1.slope.x);
+		double dy = (l0.p.y + t0*l0.slope.y) - (l1.p.y + t1*l1.slope.y);
+		double dz = (l0.p.z + t0*l0.slope.z) - (l1.p.z + t1*l1.slope.z);
 
 		// round off error can make distanceSq go negative when it is very close to zero
-		double distanceSq = dx * dx + dy * dy + dz * dz;
-		if( distanceSq < 0 )
+		double distanceSq = dx*dx + dy*dy + dz*dz;
+		if (distanceSq < 0)
 			return 0;
 		else
-			return Math.sqrt( distanceSq );
+			return Math.sqrt(distanceSq);
 	}
 
 	/**
@@ -86,8 +85,7 @@ public class Distance3D_F64 {
 	 * @param p Point. Not modified.
 	 * @return distance.
 	 */
-	public static double distance( LineParametric3D_F64 l,
-								   Point3D_F64 p ) {
+	public static double distance( LineParametric3D_F64 l, Point3D_F64 p ) {
 
 		double x = l.p.x - p.x;
 		double y = l.p.y - p.y;
@@ -98,12 +96,12 @@ public class Distance3D_F64 {
 		// could avoid a square root here by computing b*b directly
 		// however that is most likely more prone to numerical overflow since the numerator will need to be squared
 		// before division can reduce its "power"
-		double b = MiscOps.dot(x,y,z,l.slope)/l.slope.norm();
+		double b = MiscOps.dot(x, y, z, l.slope)/l.slope.norm();
 
-		double distanceSq = cc-b*b;
+		double distanceSq = cc - b*b;
 
 		// round off error can make distanceSq go negative when it is very close to zero
-		if( distanceSq < 0 ) {
+		if (distanceSq < 0) {
 			return 0;
 		} else {
 			return Math.sqrt(distanceSq);
@@ -130,20 +128,20 @@ public class Distance3D_F64 {
 		double slope_y = l.b.y - l.a.y;
 		double slope_z = l.b.z - l.a.z;
 
-		double n = (double) Math.sqrt(slope_x*slope_x + slope_y*slope_y + slope_z*slope_z);
+		double n = (double)Math.sqrt(slope_x*slope_x + slope_y*slope_y + slope_z*slope_z);
 
-		double d = (slope_x*dx + slope_y*dy + slope_z*dz) / n;
+		double d = (slope_x*dx + slope_y*dy + slope_z*dz)/n;
 
 		// check end points
-		if( d <= 0 )
+		if (d <= 0)
 			return p.distance(l.a);
-		else if( d >= n )
+		else if (d >= n)
 			return p.distance(l.b);
 
-		double distanceSq = cc-d*d;
+		double distanceSq = cc - d*d;
 
 		// round off error can make distanceSq go negative when it is very close to zero
-		if( distanceSq < 0 ) {
+		if (distanceSq < 0) {
 			return 0;
 		} else {
 			return Math.sqrt(distanceSq);
@@ -158,10 +156,10 @@ public class Distance3D_F64 {
 	 * @param point The point
 	 * @return Signed distance
 	 */
-	public static double distanceSigned( PlaneGeneral3D_F64 plane , Point3D_F64 point ) {
+	public static double distanceSigned( PlaneGeneral3D_F64 plane, Point3D_F64 point ) {
 		double top = plane.A*point.x + plane.B*point.y + plane.C*point.z - plane.D;
 
-		return top / Math.sqrt( plane.A*plane.A + plane.B*plane.B + plane.C*plane.C);
+		return top/(double)Math.sqrt(plane.A*plane.A + plane.B*plane.B + plane.C*plane.C);
 	}
 
 	/**
@@ -174,10 +172,9 @@ public class Distance3D_F64 {
 	 * @param point The point
 	 * @return Signed distance
 	 */
-	public static double distance( Sphere3D_F64 sphere , Point3D_F64 point ) {
-
+	public static double distance( Sphere3D_F64 sphere, Point3D_F64 point ) {
 		double r = point.distance(sphere.center);
-		return r-sphere.radius;
+		return r - sphere.radius;
 	}
 
 	/**
@@ -189,9 +186,7 @@ public class Distance3D_F64 {
 	 * @return Signed distance
 	 */
 	public static double distance( Cylinder3D_F64 cylinder, Point3D_F64 point ) {
-
-		double r = Distance3D_F64.distance(cylinder.line,point);
-
+		double r = Distance3D_F64.distance(cylinder.line, point);
 		return r - cylinder.radius;
 	}
 
@@ -206,11 +201,11 @@ public class Distance3D_F64 {
 	public static double distance( Triangle3D_F64 triangle, Point3D_F64 point ) {
 
 		DistancePointTriangle3D_F64 alg = new DistancePointTriangle3D_F64();
-		alg.setTriangle(triangle.v0,triangle.v1,triangle.v2);
+		alg.setTriangle(triangle.v0, triangle.v1, triangle.v2);
 
 		Point3D_F64 cp = new Point3D_F64();
 
-		alg.closestPoint(point,cp);
+		alg.closestPoint(point, cp);
 
 		double d = point.distance(cp);
 
@@ -225,7 +220,7 @@ public class Distance3D_F64 {
 	 * @return IoU score
 	 */
 	public static double scoreIoU( Box3D_F64 a, Box3D_F64 b ) {
-		double areaI = Intersection3D_F64.intersectionArea(a,b);
+		double areaI = Intersection3D_F64.intersectionArea(a, b);
 
 		if (areaI == 0.0)
 			return 0.0;
