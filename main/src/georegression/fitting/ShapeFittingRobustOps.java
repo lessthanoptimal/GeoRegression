@@ -56,7 +56,7 @@ public class ShapeFittingRobustOps {
 	public double ransacThreshold = 0.0;
 
 	/** LMedS will return else if the inlier error is more than this value */
-	public double lsmedMaxAllowedError = Double.MAX_VALUE;
+	public double lsmedMaxAllowedError = 1e30; // Double.MAX_VALUE; <-- DDogleg bug prevents that. Update in future
 
 	/** Inlier fraction for LMedS */
 	public double lsmedInlierFraction = 0.5;
