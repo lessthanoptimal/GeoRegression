@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -31,7 +31,7 @@ import java.util.Objects;
 
 /**
  * Computes the signed Euclidean distance between a cylinder and a set of points, see
- * {@link Distance3D_F64#distance(georegression.struct.shapes.Cylinder3D_F64, georegression.struct.point.Point3D_F64)}.
+ * {@link Distance3D_F64#distanceSigned(georegression.struct.shapes.Cylinder3D_F64, georegression.struct.point.Point3D_F64)}.
  *
  * See {@link CodecCylinder3D_F64} for how the model is parametrized.
  *

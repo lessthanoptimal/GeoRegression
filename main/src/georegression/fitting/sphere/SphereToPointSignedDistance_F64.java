@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * Computes the signed Euclidean distance between a sphere and a set of points, see
- * {@link Distance3D_F64#distance(georegression.struct.shapes.Sphere3D_F64, georegression.struct.point.Point3D_F64)}.
+ * {@link Distance3D_F64#distanceSigned(georegression.struct.shapes.Sphere3D_F64, georegression.struct.point.Point3D_F64)}.
  *
  * See {@link georegression.fitting.sphere.CodecSphere3D_F64} for how the model is parametrized.
  * For use in least-squares non-linear minimization.
@@ -65,7 +65,7 @@ public class SphereToPointSignedDistance_F64 implements FunctionNtoM {
 		codec.decode(input,sphere);
 
 		for( int i = 0; i < points.size(); i++ ) {
-			output[i] = Distance3D_F64.distance(sphere,points.get(i));
+			output[i] = Distance3D_F64.distanceSigned(sphere,points.get(i));
 		}
 	}
 }

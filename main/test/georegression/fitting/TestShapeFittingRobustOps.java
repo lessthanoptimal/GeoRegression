@@ -142,7 +142,7 @@ class TestShapeFittingRobustOps {
 		// See if the points lie on the found plane, except for the outlier
 		int count = 0;
 		for (int i = 0; i < points.size(); i++) {
-			if (Math.abs(Distance3D_F64.distance(found, points.get(i).p)) < 1) {
+			if (Math.abs(Distance3D_F64.distanceSigned(found, points.get(i).p)) < 1) {
 				count++;
 			}
 		}
@@ -165,7 +165,7 @@ class TestShapeFittingRobustOps {
 		// See if the points lie on the found plane, except for the outlier
 		int count = 0;
 		for (int i = 0; i < points.size(); i++) {
-			if (Math.abs(Distance3D_F64.distance(found, points.get(i).p)) < 1) {
+			if (Math.abs(Distance3D_F64.distanceSigned(found, points.get(i).p)) < 1) {
 				count++;
 			}
 		}

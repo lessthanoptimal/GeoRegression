@@ -42,8 +42,7 @@ public class Distance3D_F64 {
 	 * @param l1 Second line. Not modified.
 	 * @return Distance between the closest point on both lines.
 	 */
-	public static double distance( LineParametric3D_F64 l0,
-								   LineParametric3D_F64 l1 ) {
+	public static double distance( LineParametric3D_F64 l0, LineParametric3D_F64 l1 ) {
 		double x = l0.p.x - l1.p.x;
 		double y = l0.p.y - l1.p.y;
 		double z = l0.p.z - l1.p.z;
@@ -86,10 +85,22 @@ public class Distance3D_F64 {
 	 * @return distance.
 	 */
 	public static double distance( LineParametric3D_F64 l, Point3D_F64 p ) {
+		return distance(l, p.x, p.y, p.z);
+	}
 
-		double x = l.p.x - p.x;
-		double y = l.p.y - p.y;
-		double z = l.p.z - p.z;
+	/**
+	 * Distance from the point to the closest point on the line.
+	 *
+	 * @param l Line. Not modified.
+	 * @param px x-axis coordinate of point
+	 * @param py y-axis coordinate of point
+	 * @param pz z-axis coordinate of point
+	 * @return distance.
+	 */
+	public static double distance( LineParametric3D_F64 l, double px, double py, double pz ) {
+		double x = l.p.x - px;
+		double y = l.p.y - py;
+		double z = l.p.z - pz;
 
 		double cc = x*x + y*y + z*z;
 
@@ -115,8 +126,7 @@ public class Distance3D_F64 {
 	 * @param p Point. Not modified.
 	 * @return distance.
 	 */
-	public static double distance( LineSegment3D_F64 l,
-								   Point3D_F64 p ) {
+	public static double distance( LineSegment3D_F64 l, Point3D_F64 p ) {
 
 		double dx = p.x - l.a.x;
 		double dy = p.y - l.a.y;
@@ -163,35 +173,40 @@ public class Distance3D_F64 {
 	}
 
 	/**
+	 * <p>
 	 * Returns the signed distance a point is from the sphere's surface. If the point is outside of the sphere
 	 * it's distance will be positive. If it is inside it will be negative.
-	 * <p></p>
+	 * </p>
 	 * distance = ||sphere.center - point|| - r
 	 *
 	 * @param sphere The sphere
 	 * @param point The point
 	 * @return Signed distance
 	 */
-	public static double distance( Sphere3D_F64 sphere, Point3D_F64 point ) {
+	public static double distanceSigned( Sphere3D_F64 sphere, Point3D_F64 point ) {
 		double r = point.distance(sphere.center);
 		return r - sphere.radius;
 	}
 
 	/**
-	 * Returns the signed distance a point is from the cylinder's surface. If the point is outside of the cylinder
+	 * Returns the signed distance a point is from the cylinder's surface. If the point is outside the cylinder
 	 * it's distance will be positive. If it is inside it will be negative.
 	 *
 	 * @param cylinder The cylinder
 	 * @param point The point
 	 * @return Signed distance
 	 */
-	public static double distance( Cylinder3D_F64 cylinder, Point3D_F64 point ) {
-		double r = Distance3D_F64.distance(cylinder.line, point);
+	public static double distanceSigned( Cylinder3D_F64 cylinder, Point3D_F64 point ) {
+		return distanceSigned(cylinder, point.x, point.y, point.z);
+	}
+
+	public static double distanceSigned( Cylinder3D_F64 cylinder, double px, double py, double pz ) {
+		double r = Distance3D_F64.distance(cylinder.line, px, py, pz);
 		return r - cylinder.radius;
 	}
 
 	/**
-	 * Signed distance from a 3D point to 3D triangle.   The sign indicates which side of the triangle the point
+	 * Signed distance from a 3D point to 3D triangle. The sign indicates which side of the triangle the point
 	 * is on. See {@link georegression.metric.alg.DistancePointTriangle3D_F64} for the details.
 	 *
 	 * @param triangle 3D triangle
@@ -199,11 +214,10 @@ public class Distance3D_F64 {
 	 * @return The closest point
 	 */
 	public static double distance( Triangle3D_F64 triangle, Point3D_F64 point ) {
-
-		DistancePointTriangle3D_F64 alg = new DistancePointTriangle3D_F64();
+		var alg = new DistancePointTriangle3D_F64();
 		alg.setTriangle(triangle.v0, triangle.v1, triangle.v2);
 
-		Point3D_F64 cp = new Point3D_F64();
+		var cp = new Point3D_F64();
 
 		alg.closestPoint(point, cp);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -60,7 +60,7 @@ public class TestSphereToPointSignedDistance_F64 {
 		alg.process(param,output);
 
 		for( int i = 0; i < points.size(); i++ ) {
-			double expected = Distance3D_F64.distance(sphere,points.get(i));
+			double expected = Distance3D_F64.distanceSigned(sphere,points.get(i));
 			assertEquals(expected,(double) output[i], GrlConstants.TEST_F64);
 		}
 	}

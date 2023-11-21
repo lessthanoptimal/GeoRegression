@@ -57,14 +57,14 @@ class TestGenerateCylinderFromPointNormals_F64 {
 			PlaneNormal3D_F64 p1 = paramToPointOnCylinder(cylinder, rand.nextGaussian(), theta + Math.PI/2.0);
 
 			// Sanity check
-			assertEquals(0.0, Distance3D_F64.distance(cylinder, p0.p), UtilEjml.TEST_F64);
-			assertEquals(0.0, Distance3D_F64.distance(cylinder, p1.p), UtilEjml.TEST_F64);
+			assertEquals(0.0, Distance3D_F64.distanceSigned(cylinder, p0.p), UtilEjml.TEST_F64);
+			assertEquals(0.0, Distance3D_F64.distanceSigned(cylinder, p1.p), UtilEjml.TEST_F64);
 
 			assertTrue(alg.generate(List.of(p0, p1), found));
 
 			// Verify the found cylinder is correct by seeing if the two points lie on it
-			assertEquals(0.0, Distance3D_F64.distance(found, p0.p), UtilEjml.TEST_F64);
-			assertEquals(0.0, Distance3D_F64.distance(found, p1.p), UtilEjml.TEST_F64);
+			assertEquals(0.0, Distance3D_F64.distanceSigned(found, p0.p), UtilEjml.TEST_F64);
+			assertEquals(0.0, Distance3D_F64.distanceSigned(found, p1.p), UtilEjml.TEST_F64);
 		}
 	}
 

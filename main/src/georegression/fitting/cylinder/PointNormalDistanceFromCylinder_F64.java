@@ -41,13 +41,13 @@ public class PointNormalDistanceFromCylinder_F64 implements DistanceFromModel<Cy
 
 	@Override
 	public /**/double distance( PlaneNormal3D_F64 point ) {
-		return Math.abs(Distance3D_F64.distance(cylinder, point.p));
+		return Math.abs(Distance3D_F64.distanceSigned(cylinder, point.p));
 	}
 
 	@Override
 	public void distances( List<PlaneNormal3D_F64> list, /**/double[] errors ) {
 		for (int i = 0; i < list.size(); i++) {
-			errors[i] = Math.abs(Distance3D_F64.distance(cylinder, list.get(i).p));
+			errors[i] = Math.abs(Distance3D_F64.distanceSigned(cylinder, list.get(i).p));
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -159,8 +159,8 @@ public class TestDistance3D_F64 {
 		assertTrue(ro>4.5);
 		assertTrue(ri<4.5);
 
-		assertEquals(ro-4.5,Distance3D_F64.distance(sphere,outside), GrlConstants.TEST_F64);
-		assertEquals(ri-4.5,Distance3D_F64.distance(sphere,inside), GrlConstants.TEST_F64);
+		assertEquals(ro-4.5,Distance3D_F64.distanceSigned(sphere,outside), GrlConstants.TEST_F64);
+		assertEquals(ri-4.5,Distance3D_F64.distanceSigned(sphere,inside), GrlConstants.TEST_F64);
 	}
 
 	@Test
@@ -176,8 +176,8 @@ public class TestDistance3D_F64 {
 		assertTrue(ro>3.5);
 		assertTrue(ri<3.5);
 
-		assertEquals(ro-3.5,Distance3D_F64.distance(cylinder,outside), GrlConstants.TEST_F64);
-		assertEquals(ri-3.5,Distance3D_F64.distance(cylinder,inside), GrlConstants.TEST_F64);
+		assertEquals(ro-3.5,Distance3D_F64.distanceSigned(cylinder,outside), GrlConstants.TEST_F64);
+		assertEquals(ri-3.5,Distance3D_F64.distanceSigned(cylinder,inside), GrlConstants.TEST_F64);
 	}
 
 	@Test
