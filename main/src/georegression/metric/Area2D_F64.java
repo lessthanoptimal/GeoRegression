@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -40,7 +40,7 @@ public class Area2D_F64 {
 	 * @param c Corner point 3
 	 * @return area
 	 */
-	public static double triangle( Point2D_F64 a, Point2D_F64 b, Point2D_F64  c ) {
+	public static double triangle( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c ) {
 		double inner = a.x*(b.y - c.y) + b.x*(c.y - a.y) + c.x*(a.y - b.y);
 
 		return Math.abs(inner/2.0);
@@ -53,22 +53,23 @@ public class Area2D_F64 {
 	 * @return area
 	 */
 	public static double quadrilateral( Quadrilateral_F64 quad ) {
-		double bx = quad.b.x-quad.a.x;
-		double by = quad.b.y-quad.a.y;
-		double cx = quad.c.x-quad.a.x;
-		double cy = quad.c.y-quad.a.y;
-		double dx = quad.d.x-quad.a.x;
-		double dy = quad.d.y-quad.a.y;
+		double bx = quad.b.x - quad.a.x;
+		double by = quad.b.y - quad.a.y;
+		double cx = quad.c.x - quad.a.x;
+		double cy = quad.c.y - quad.a.y;
+		double dx = quad.d.x - quad.a.x;
+		double dy = quad.d.y - quad.a.y;
 
-		if( (bx * cy - by * cx >= 0) == (cx * dy - cy * dx >= 0)) {
-			return triangle(quad.a,quad.b,quad.c) + triangle(quad.a,quad.c,quad.d);
+		if ((bx*cy - by*cx >= 0) == (cx*dy - cy*dx >= 0)) {
+			return triangle(quad.a, quad.b, quad.c) + triangle(quad.a, quad.c, quad.d);
 		} else {
-			return triangle(quad.a,quad.b,quad.d) + triangle(quad.b,quad.c,quad.d);
+			return triangle(quad.a, quad.b, quad.d) + triangle(quad.b, quad.c, quad.d);
 		}
 	}
 
 	/**
 	 * Area of a simple polygon. Meaning it can be concave or convex, but can't have self intersections
+	 *
 	 * @param poly Simple polygon
 	 * @return area
 	 */
@@ -80,22 +81,25 @@ public class Area2D_F64 {
 		for (int i = 2; i < poly.size(); i++) {
 			Point2D_F64 v2 = poly.get(i);
 
-			total += v1.x*( v2.y - v0.y);
+			total += v1.x*(v2.y - v0.y);
 
-			v0 = v1; v1 = v2;
+			v0 = v1;
+			v1 = v2;
 		}
 
 		Point2D_F64 v2 = poly.get(0);
-		total += v1.x*( v2.y - v0.y);
-		v0 = v1; v1 = v2;
+		total += v1.x*(v2.y - v0.y);
+		v0 = v1;
+		v1 = v2;
 		v2 = poly.get(1);
-		total += v1.x*( v2.y - v0.y);
+		total += v1.x*(v2.y - v0.y);
 
 		return Math.abs(total/2.0);
 	}
 
 	/**
 	 * Returns the area of the Rectangle
+	 *
 	 * @param r Rectangle
 	 * @return area
 	 */

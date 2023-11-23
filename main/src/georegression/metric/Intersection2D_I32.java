@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,8 +24,6 @@ import georegression.struct.shapes.Rectangle2D_I32;
 import georegression.struct.shapes.RectangleLength2D_I32;
 
 /**
- *
- *
  * @author Peter Abeles
  */
 public class Intersection2D_I32 {
@@ -36,8 +34,8 @@ public class Intersection2D_I32 {
 	 * @param b Rectangle
 	 * @return true if intersection
 	 */
-	public static boolean intersects( Rectangle2D_I32 a , Rectangle2D_I32 b ) {
-		return( a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0 );
+	public static boolean intersects( Rectangle2D_I32 a, Rectangle2D_I32 b ) {
+		return (a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0);
 	}
 
 	/**
@@ -48,14 +46,14 @@ public class Intersection2D_I32 {
 	 * @param result Storage for the found intersection
 	 * @return true if intersection
 	 */
-	public static boolean intersection( Rectangle2D_I32 a , Rectangle2D_I32 b , Rectangle2D_I32 result ) {
-		if( !intersects(a,b) )
+	public static boolean intersection( Rectangle2D_I32 a, Rectangle2D_I32 b, Rectangle2D_I32 result ) {
+		if (!intersects(a, b))
 			return false;
 
-		result.x0 = Math.max(a.x0,b.x0);
+		result.x0 = Math.max(a.x0, b.x0);
 		result.x1 = Math.min(a.x1, b.x1);
-		result.y0 = Math.max(a.y0,b.y0);
-		result.y1 = Math.min(a.y1,b.y1);
+		result.y0 = Math.max(a.y0, b.y0);
+		result.y1 = Math.min(a.y1, b.y1);
 
 		return true;
 	}
@@ -70,15 +68,15 @@ public class Intersection2D_I32 {
 	 */
 	// Ported from internet code 12/2011
 	// http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-	public static boolean containsConvex(Polygon2D_I32 polygon , Point2D_I32 pt ) {
+	public static boolean containsConvex( Polygon2D_I32 polygon, Point2D_I32 pt ) {
 		final int N = polygon.size();
 
 		boolean c = false;
-		for (int i = 0, j = N-1; i < N; j = i++) {
+		for (int i = 0, j = N - 1; i < N; j = i++) {
 			Point2D_I32 a = polygon.vertexes.data[i];
 			Point2D_I32 b = polygon.vertexes.data[j];
 
-			if ( ((a.y>pt.y) != (b.y>pt.y)) && (pt.x < (b.x-a.x) * (pt.y-a.y) / (b.y-a.y) + a.x) )
+			if (((a.y > pt.y) != (b.y > pt.y)) && (pt.x < (b.x - a.x)*(pt.y - a.y)/(b.y - a.y) + a.x))
 				c = !c;
 		}
 		return c;
@@ -93,40 +91,40 @@ public class Intersection2D_I32 {
 	 * @param pt Point. Not modified.
 	 * @return True if the point is contained inside the polygon.
 	 */
-	public static boolean containsConcave(Polygon2D_I32 polygon , Point2D_I32 pt ) {
+	public static boolean containsConcave( Polygon2D_I32 polygon, Point2D_I32 pt ) {
 		final int N = polygon.size();
 
-		int left=0;
-		int right=0;
-		for (int i = 0; i < N-1; i++) {
+		int left = 0;
+		int right = 0;
+		for (int i = 0; i < N - 1; i++) {
 			Point2D_I32 a = polygon.vertexes.data[i];
-			Point2D_I32 b = polygon.vertexes.data[i+1];
+			Point2D_I32 b = polygon.vertexes.data[i + 1];
 
-			if( (pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y) ) {
+			if ((pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y)) {
 				// location of line segment along x-axis at y = pt.y
-				double x = b.y==a.y ? pt.x : (pt.y-a.y)*(b.x-a.x)/(double)(b.y-a.y) + a.x;
+				double x = b.y == a.y ? pt.x : (pt.y - a.y)*(b.x - a.x)/(double)(b.y - a.y) + a.x;
 
-				if( x <= pt.x )
+				if (x <= pt.x)
 					left++;
-				else if( x > pt.x )
+				else if (x > pt.x)
 					right++;
 			}
 		}
 
-		Point2D_I32 a = polygon.vertexes.data[N-1];
+		Point2D_I32 a = polygon.vertexes.data[N - 1];
 		Point2D_I32 b = polygon.vertexes.data[0];
 
-		if( (pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y) ) {
+		if ((pt.y >= a.y && pt.y < b.y) || (pt.y >= b.y && pt.y < a.y)) {
 			// location of line segment along x-axis at y = pt.y
-			double x = b.y==a.y ? pt.x : (pt.y-a.y)*(b.x-a.x)/(double)(b.y-a.y) + a.x;
+			double x = b.y == a.y ? pt.x : (pt.y - a.y)*(b.x - a.x)/(double)(b.y - a.y) + a.x;
 
-			if( x <= pt.x )
+			if (x <= pt.x)
 				left++;
-			else if( x > pt.x )
+			else if (x > pt.x)
 				right++;
 		}
 
-		return (left % 2 == 1 && right % 2 == 1);
+		return (left%2 == 1 && right%2 == 1);
 	}
 
 	/**
@@ -138,7 +136,7 @@ public class Intersection2D_I32 {
 	 * @return true if the point is inside and false it is not
 	 */
 	public static boolean contains( RectangleLength2D_I32 a, int x, int y ) {
-		if( a.getX() <= x && a.getX() + a.getWidth() > x ) {
+		if (a.getX() <= x && a.getX() + a.getWidth() > x) {
 			return a.getY() <= y && a.getY() + a.getHeight() > y;
 		}
 		return false;
@@ -153,6 +151,6 @@ public class Intersection2D_I32 {
 	 * @return true if the point is inside and false it is not
 	 */
 	public static boolean contains( Rectangle2D_I32 a, int x, int y ) {
-		return( x >= a.x0 && y >= a.y0 && x < a.x1 && y < a.y1 );
+		return (x >= a.x0 && y >= a.y0 && x < a.x1 && y < a.y1);
 	}
 }
