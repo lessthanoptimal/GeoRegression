@@ -19,6 +19,7 @@
 package georegression.metric;
 
 import georegression.geometry.GeometryMath_F64;
+import georegression.geometry.UtilPoint3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.line.LineSegment3D_F64;
@@ -26,10 +27,7 @@ import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
-import georegression.struct.shapes.Box3D_F64;
-import georegression.struct.shapes.BoxLength3D_F64;
-import georegression.struct.shapes.Sphere3D_F64;
-import georegression.struct.shapes.Triangle3D_F64;
+import georegression.struct.shapes.*;
 import org.ddogleg.struct.FastAccess;
 
 /**
@@ -575,6 +573,76 @@ public class Intersection3D_F64 {
 
 		line.setPointOnLine(t0, a);
 		line.setPointOnLine(t1, b);
+
+		return true;
+	}
+
+	/**
+	 * Finds the intersection between the ray and the cylinder. If there are two points of intersection then
+	 * the point closest to the ray's origin is returned. If there are infinite or no intersections then false
+	 * is returned. Points "behind" the ray are ignored.
+	 *
+	 * @return true if one valid intersection was found
+	 */
+	public static boolean intersection1( LineParametric3D_F64 ray, Cylinder3D_F64 cylinder, Point3D_F64 output ) {
+		// Find the point of interestion as a function of 't' along the line 'ray'
+		output.x = ray.p.x - cylinder.line.p.x;
+		output.y = ray.p.y - cylinder.line.p.y;
+		output.z = ray.p.z - cylinder.line.p.z;
+
+		// this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
+		double dv01v1 = MiscOps.dot(output, cylinder.line.slope);
+		double dv1v0 = MiscOps.dot(cylinder.line.slope, ray.slope);
+		double dv1v1 = MiscOps.dot(cylinder.line.slope, cylinder.line.slope);
+
+		double t0 = dv01v1*dv1v0 - MiscOps.dot(output, ray.slope)*dv1v1;
+
+		double bottom = MiscOps.dot(ray.slope, ray.slope)*dv1v1 - dv1v0*dv1v0;
+		if (bottom == 0)
+			return false;
+
+		t0 /= bottom;
+
+		// Ignore points behind the ray
+		if (t0 < 0.0)
+			return false;
+
+		// Closest point on the ray
+		double rayX = ray.p.x + t0*ray.slope.x;
+		double rayY = ray.p.y + t0*ray.slope.y;
+		double rayZ = ray.p.z + t0*ray.slope.z;
+
+		// Closest point on the cylinder's axis
+		double t1 = (dv01v1 + t0*dv1v0)/dv1v1;
+		double cylX = cylinder.line.p.x + t1*cylinder.line.slope.x;
+		double cylY = cylinder.line.p.y + t1*cylinder.line.slope.y;
+		double cylZ = cylinder.line.p.z + t1*cylinder.line.slope.z;
+
+		// How far from the cylinder's axis are these two closest points
+		double distance = UtilPoint3D_F64.distance(rayX, rayY, rayZ, cylX, cylY, cylZ);
+
+		// See if they don't interest
+		if (distance > cylinder.radius)
+			return false;
+
+		// see if it perfectly intersects
+		if (distance == cylinder.radius) {
+			output.setTo(rayX, rayY, rayZ);
+			return true;
+		}
+
+		// distance from closest point to the cylinder's shell
+		double a = Math.sqrt(cylinder.radius*cylinder.radius - distance*distance);
+
+		// Find new intersection location, which is closest to the ray's origin
+		if (t0 >= a)
+			t0 -= a;
+		else
+			t0 += a;
+
+		output.x = ray.p.x + t0*ray.slope.x;
+		output.y = ray.p.y + t0*ray.slope.y;
+		output.z = ray.p.z + t0*ray.slope.z;
 
 		return true;
 	}
