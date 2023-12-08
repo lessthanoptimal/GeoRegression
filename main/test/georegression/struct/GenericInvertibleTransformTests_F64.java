@@ -133,4 +133,25 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 			assertTrue(expected.isIdentical(found, GrlConstants.TEST_F64));
 		}
 	}
+
+	@Test void concatInvert() {
+		for (int i = 0; i < 20; i++) {
+			InvertibleTransform a = createRandomTransform();
+			InvertibleTransform b = createRandomTransform();
+
+			InvertibleTransform c = a.concat(b, null);
+
+			// Recompute B using concatInvert
+			InvertibleTransform aa = c.concatInvert(b, null);
+
+			T orig = createRandomPoint();
+
+			// These should be the same
+			T expected = apply(a, orig, null);
+			T found = apply(aa, orig, null);
+
+			// Use the norm to scale the tolerance
+			assertTrue(expected.isIdentical(found, expected.norm()*GrlConstants.TEST_F64), "trial: " + i);
+		}
+	}
 }

@@ -11,6 +11,9 @@ Version : 0.27.0
   * Plane and Cylinder
 - Added ShapeFittingRobustOps
   * Easy interface for using standard robust algorithms to fit points to shapes
+- InvertibleTransform
+  * Added concatInvert
+  * Se3 supports concatInvert natively
 
 ---------------------------------------------
 Date    : 2023-Nov-05

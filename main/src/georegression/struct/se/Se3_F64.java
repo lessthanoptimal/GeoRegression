@@ -219,6 +219,30 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		return result;
 	}
 
+	/**
+	 * Implicitly inverts this transform before concating it to the second transform.
+	 * Equivalent to invert(null).concat(second, null);
+	 */
+	@Override
+	public Se3_F64 concatInvert(Se3_F64 second, @Nullable Se3_F64 result) {
+		if (result == null)
+			result = new Se3_F64();
+
+		// [R' | -R'*T]
+
+		// Compute new rotation matrix first
+		CommonOps_DDRM.multTransA(second.getR(), R, result.R);
+
+		// Store -R'*T inside of result
+		GeometryMath_F64.multTran(second.getR(), second.T, result.T);
+		result.T.scale(-1);
+
+		// Now find the translation
+		GeometryMath_F64.addMultTrans(result.T, second.R, T, result.T);
+
+		return result;
+	}
+
 	@Override
 	public Se3_F64 invert(@Nullable Se3_F64 inverse) {
 
