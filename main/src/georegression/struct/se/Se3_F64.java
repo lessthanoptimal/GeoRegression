@@ -333,7 +333,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	public Point4D_F64 transformReverse(Point4D_F64 src, @Nullable Point4D_F64 dst) {
-		return SePointOps_F64.transform(this, src, dst);
+		return SePointOps_F64.transformReverse(this, src, dst);
 	}
 
 	public Se3_F64 copy() {
