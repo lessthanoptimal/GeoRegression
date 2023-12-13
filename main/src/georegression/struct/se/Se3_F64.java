@@ -66,7 +66,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param R Rotation matrix.
 	 * @param T Translation.
 	 */
-	public Se3_F64(DMatrixRMaj R, Vector3D_F64 T) {
+	public Se3_F64( DMatrixRMaj R, Vector3D_F64 T ) {
 		this(R, T, false);
 	}
 
@@ -74,11 +74,11 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * Initializes the Se3_F64 with the rotation matrix and translation vector. If assign
 	 * is true the reference to the provided parameters is saved, otherwise a copy is made.
 	 *
-	 * @param R      Rotation matrix.
-	 * @param T      Translation.
+	 * @param R Rotation matrix.
+	 * @param T Translation.
 	 * @param assign If a reference is saved (true) or a copy made (false).
 	 */
-	public Se3_F64(DMatrixRMaj R, Vector3D_F64 T, boolean assign) {
+	public Se3_F64( DMatrixRMaj R, Vector3D_F64 T, boolean assign ) {
 		if (assign) {
 			this.R = R;
 			this.T = T;
@@ -94,7 +94,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param se The transform that is being copied.
 	 */
 	@Override
-	public Se3_F64 setTo(Se3_F64 se) {
+	public Se3_F64 setTo( Se3_F64 se ) {
 		R.setTo(se.getR());
 		T.setTo(se.getT());
 		return this;
@@ -113,7 +113,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 *
 	 * @param R New rotation.
 	 */
-	public void setRotation(DMatrixRMaj R) {
+	public void setRotation( DMatrixRMaj R ) {
 		this.R.setTo(R);
 	}
 
@@ -122,7 +122,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 *
 	 * @param T New translation
 	 */
-	public void setTranslation(Vector3D_F64 T) {
+	public void setTranslation( Vector3D_F64 T ) {
 		this.T.setTo(T);
 	}
 
@@ -133,7 +133,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param y y component of translation
 	 * @param z z component of translation
 	 */
-	public void setTranslation(double x, double y, double z) {
+	public void setTranslation( double x, double y, double z ) {
 		this.T.setTo(x, y, z);
 	}
 
@@ -186,7 +186,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	@Override
-	public Se3_F64 concat(Se3_F64 second, @Nullable Se3_F64 result) {
+	public Se3_F64 concat( Se3_F64 second, @Nullable Se3_F64 result ) {
 		if (result == null)
 			result = new Se3_F64();
 
@@ -202,7 +202,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * Equivalent to invert(null).concat(second, null);
 	 */
 	@Override
-	public Se3_F64 invertConcat(Se3_F64 second, @Nullable Se3_F64 result) {
+	public Se3_F64 invertConcat( Se3_F64 second, @Nullable Se3_F64 result ) {
 		if (result == null)
 			result = new Se3_F64();
 
@@ -227,7 +227,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * Equivalent to invert(null).concat(second, null);
 	 */
 	@Override
-	public Se3_F64 concatInvert(Se3_F64 second, @Nullable Se3_F64 result) {
+	public Se3_F64 concatInvert( Se3_F64 second, @Nullable Se3_F64 result ) {
 		if (result == null)
 			result = new Se3_F64();
 
@@ -247,7 +247,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	@Override
-	public Se3_F64 invert(@Nullable Se3_F64 inverse) {
+	public Se3_F64 invert( @Nullable Se3_F64 inverse ) {
 
 		if (inverse == null)
 			inverse = new Se3_F64();
@@ -277,7 +277,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 *
 	 * @return Reference to 'this'
 	 */
-	public Se3_F64 setTo(double x, double y, double z, EulerType type, double rotA, double rotB, double rotC) {
+	public Se3_F64 setTo( double x, double y, double z, EulerType type, double rotA, double rotB, double rotC ) {
 		T.setTo(x, y, z);
 		ConvertRotation3D_F64.eulerToMatrix(type, rotA, rotB, rotC, R);
 		return this;
@@ -289,7 +289,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 *
 	 * @return Reference to 'this'
 	 */
-	public Se3_F64 setTo(double x, double y, double z, RotationType type, double A, double B, double C, double D) {
+	public Se3_F64 setTo( double x, double y, double z, RotationType type, double A, double B, double C, double D ) {
 		T.setTo(x, y, z);
 		switch (type) {
 			case RODRIGUES:
@@ -314,7 +314,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @return Output
 	 * @see SePointOps_F64#transform(Se3_F64, Point3D_F64, Point3D_F64)
 	 */
-	public Point3D_F64 transform(Point3D_F64 src, @Nullable Point3D_F64 dst) {
+	public Point3D_F64 transform( Point3D_F64 src, @Nullable Point3D_F64 dst ) {
 		return SePointOps_F64.transform(this, src, dst);
 	}
 
@@ -326,7 +326,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @return Output
 	 * @see SePointOps_F64#transformReverse(Se3_F64, Point3D_F64, Point3D_F64)
 	 */
-	public Point3D_F64 transformReverse(Point3D_F64 src, @Nullable Point3D_F64 dst) {
+	public Point3D_F64 transformReverse( Point3D_F64 src, @Nullable Point3D_F64 dst ) {
 		return SePointOps_F64.transformReverse(this, src, dst);
 	}
 
@@ -337,7 +337,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param dst Output
 	 * @see GeometryMath_F64#mult(DMatrixRMaj, GeoTuple2D_F64, GeoTuple2D_F64)
 	 */
-	public Vector3D_F64 transform(Vector3D_F64 src, @Nullable Vector3D_F64 dst) {
+	public Vector3D_F64 transform( Vector3D_F64 src, @Nullable Vector3D_F64 dst ) {
 		return GeometryMath_F64.mult(R, src, dst);
 	}
 
@@ -348,7 +348,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @param dst Output
 	 * @see GeometryMath_F64#multTran(DMatrixRMaj, GeoTuple3D_F64, GeoTuple3D_F64)
 	 */
-	public Vector3D_F64 transformReverse(Vector3D_F64 src, @Nullable Vector3D_F64 dst) {
+	public Vector3D_F64 transformReverse( Vector3D_F64 src, @Nullable Vector3D_F64 dst ) {
 		return GeometryMath_F64.multTran(R, src, dst);
 	}
 
@@ -361,11 +361,11 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	 * @return Output. Homogenous coordinate
 	 * @see SePointOps_F64#transform(Se3_F64, Point4D_F64, Point4D_F64)
 	 */
-	public Point4D_F64 transform(Point4D_F64 src, @Nullable Point4D_F64 dst) {
+	public Point4D_F64 transform( Point4D_F64 src, @Nullable Point4D_F64 dst ) {
 		return SePointOps_F64.transform(this, src, dst);
 	}
 
-	public Point4D_F64 transformReverse(Point4D_F64 src, @Nullable Point4D_F64 dst) {
+	public Point4D_F64 transformReverse( Point4D_F64 src, @Nullable Point4D_F64 dst ) {
 		return SePointOps_F64.transformReverse(this, src, dst);
 	}
 
@@ -387,7 +387,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	/**
 	 * More compact toString() where the rotation matrix is encoded in one of the specified formats.
 	 */
-	public String toString(RotationType type) {
+	public String toString( RotationType type ) {
 		DecimalFormat format = new DecimalFormat("#");
 
 		final int sig = 4; // number of significant digits
@@ -429,7 +429,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		System.out.println(this);
 	}
 
-	public void print(RotationType type) {
+	public void print( RotationType type ) {
 		System.out.println(toString(type));
 	}
 }
