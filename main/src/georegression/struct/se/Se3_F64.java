@@ -100,6 +100,9 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		return this;
 	}
 
+	/**
+	 * Sets the rotation and translation to all zeros
+	 */
 	public void zero() {
 		R.zero();
 		T.zero();
@@ -270,18 +273,23 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 	}
 
 	/**
-	 * Fully specify the transform using Euler angles
+	 * Assigns the value of this transform using Euler angles
+	 *
+	 * @return Reference to 'this'
 	 */
-	public void setTo(double x, double y, double z, EulerType type, double rotA, double rotB, double rotC) {
+	public Se3_F64 setTo(double x, double y, double z, EulerType type, double rotA, double rotB, double rotC) {
 		T.setTo(x, y, z);
 		ConvertRotation3D_F64.eulerToMatrix(type, rotA, rotB, rotC, R);
+		return this;
 	}
 
 	/**
-	 * Fully specifies the transform using Rodrigues (axis angle) or Quaternions. If Rodrigues then A=axisX, B=axisY,
-	 * C=axisZ, D=theta. If Quaternion then A=w, B=x, C=y, D=z.
+	 * Assigns the value of this transform using Rodrigues (axis angle) or Quaternions.
+	 * If Rodrigues then A=axisX, B=axisY, C=axisZ, D=theta. If Quaternion then A=w, B=x, C=y, D=z.
+	 *
+	 * @return Reference to 'this'
 	 */
-	public void setTo(double x, double y, double z, RotationType type, double A, double B, double C, double D) {
+	public Se3_F64 setTo(double x, double y, double z, RotationType type, double A, double B, double C, double D) {
 		T.setTo(x, y, z);
 		switch (type) {
 			case RODRIGUES:
@@ -295,6 +303,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 			default:
 				throw new IllegalArgumentException("Type is not supported. " + type);
 		}
+		return this;
 	}
 
 	/**
