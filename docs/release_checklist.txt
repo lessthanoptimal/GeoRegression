@@ -16,7 +16,7 @@
 - Create zip and jar files
   VERSION=v0.22;PRJNAME=georegression-$VERSION
   git clone -b SNAPSHOT git@github.com:lessthanoptimal/GeoRegression.git $PRJNAME
-  cd $PRJNAME&&./gradlew autogenerate&&./gradlew createVersionFile&&rm -rf .git&&cd ..&&zip -r $PRJNAME-src.zip $PRJNAME
+  cd $PRJNAME&&./gradlew autogenerate&&./gradlew :georegression:createVersionFile&&rm -rf .git&&cd ..&&zip -r $PRJNAME-src.zip $PRJNAME
   cd $PRJNAME&&./gradlew createLibraryDirectory&&mv libraries ../$PRJNAME-libs&&cd ..&&zip -r $PRJNAME-libs.zip $PRJNAME-libs
 - Update JavaDoc
   rm -rf build/doc/javadoc;./gradlew javadocWeb;zip -r api.zip build/docs/api-web
