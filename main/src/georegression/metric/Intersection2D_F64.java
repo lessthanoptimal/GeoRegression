@@ -655,6 +655,32 @@ public class Intersection2D_F64 {
 		return (UtilEllipse_F64.evaluate(x, y, ellipse) <= 1.0);
 	}
 
+	/**
+	 * Checks to see if the line segment and rectangle intersect each other.
+	 * @param line Line segment
+	 * @param rect Rectangle
+	 * @param tol (Input) tolerance for lines being colinear
+	 * @return true if they intersect
+	 */
+	public static boolean intersects( LineSegment2D_F64 line, Rectangle2D_F64 rect, double tol ) {
+		// If the end points are inside they will intersect, these cases would be covered by the tests below too
+		if (Intersection2D_F64.contains(rect, line.a.x, line.a.y))
+			return true;
+		if (Intersection2D_F64.contains(rect, line.b.x, line.b.y))
+			return true;
+
+		// Extract line segments from the rectangle and check for intersections
+		var side = new LineSegment2D_F64();
+		for (int i = 0; i < 4; i++) {
+			rect.getCorner(i, side.a);
+			rect.getCorner((i + 1)%4, side.b);
+			if (Intersection2D_F64.intersects(side, line, tol))
+				return true;
+		}
+
+		return false;
+	}
+
 	public static @Nullable RectangleLength2D_F64 intersection( RectangleLength2D_F64 a, RectangleLength2D_F64 b ) {
 		double tl_x, tl_y, w, h;
 
