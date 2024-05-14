@@ -28,7 +28,7 @@ To post a SNAPSHOT:
 ./gradlew publish
 
 To post a full release:
-git clean -fd main/;./gradlew autogenerate;./gradlew assemble;./gradlew publish -Dorg.gradle.parallel=false
+git clean -fd main/ && ./gradlew autogenerate && ./gradlew assemble && ./gradlew publish -Dorg.gradle.parallel=false
 
 A SNAPSHOT is created if SNAPSHOT is in its name.
 
