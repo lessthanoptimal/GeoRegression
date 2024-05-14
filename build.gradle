@@ -10,7 +10,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.27.1-SNAPSHOT'
+    version = '0.27.1'
 }
 
 project.ext.errorprone_version = '2.11.0'
@@ -301,5 +301,5 @@ javadocWeb.finalizedBy(alljavadoc)
 
 wrapper {
     distributionType = Wrapper.DistributionType.BIN
-    gradleVersion = '7.3.3'
+    gradleVersion = '7.6.4'
 }
