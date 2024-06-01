@@ -197,10 +197,7 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		return result;
 	}
 
-	/**
-	 * Implicitly inverts this transform before concating it to the second transform.
-	 * Equivalent to invert(null).concat(second, null);
-	 */
+
 	@Override
 	public Se3_F64 invertConcat( Se3_F64 second, @Nullable Se3_F64 result ) {
 		if (result == null)
@@ -222,10 +219,6 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		return result;
 	}
 
-	/**
-	 * Implicitly inverts this transform before concating it to the second transform.
-	 * Equivalent to invert(null).concat(second, null);
-	 */
 	@Override
 	public Se3_F64 concatInvert( Se3_F64 second, @Nullable Se3_F64 result ) {
 		if (result == null)
