@@ -1,6 +1,13 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2024-XXX-YY
+Version : 0.27.2
+
+- ConvertRotation3D
+  * Supports rodrigues encoded as a vector
+
+---------------------------------------------
 Date    : 2024-May-14
 Version : 0.27.1
 

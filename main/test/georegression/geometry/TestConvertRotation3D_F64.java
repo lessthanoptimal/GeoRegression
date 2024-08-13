@@ -46,7 +46,7 @@ public class TestConvertRotation3D_F64 {
 	Random rand = new Random( 234234 );
 
 	@Test
-	void rodriguesToMatrix() {
+	void rodrigues4ToMatrix() {
 		DMatrixRMaj rotZ = ConvertRotation3D_F64.rotZ( 0.5, null );
 
 		Rodrigues_F64 r = new Rodrigues_F64( 0.5, 0, 0, 1 );
@@ -56,6 +56,16 @@ public class TestConvertRotation3D_F64 {
 		assertTrue( MatrixFeatures_DDRM.isIdentical( rotZ, rod, GrlConstants.TEST_F64) );
 	}
 
+	@Test
+	void rodrigues3ToMatrix() {
+		double x = 0.5, y = -1.1, z = 1.4;
+		
+		DMatrixRMaj expected = ConvertRotation3D_F64.rodriguesToMatrix( new Rodrigues_F64(x,y,z), null );
+		DMatrixRMaj found = ConvertRotation3D_F64.rodriguesToMatrix(x,y,z, null);
+
+		assertTrue( MatrixFeatures_DDRM.isIdentical( expected, found, GrlConstants.TEST_F64) );
+	}
+	
 	@Test
 	void rodriguesToEuler() throws InvocationTargetException, IllegalAccessException {
 		somethingToEulerTest("rodriguesToEuler",rand);

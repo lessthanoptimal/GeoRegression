@@ -71,6 +71,10 @@ public class Rodrigues_F64 implements Serializable {
 		unitAxisRotation.normalize();
 	}
 
+	public Rodrigues_F64( double x, double y, double z ) {
+		setParamVector(x, y, z);
+	}
+
 	public Rodrigues_F64 setTo( Rodrigues_F64 src ) {
 		this.theta = src.theta;
 		this.unitAxisRotation.setTo(src.unitAxisRotation);
@@ -92,8 +96,9 @@ public class Rodrigues_F64 implements Serializable {
 	 * @param x x-component of 3 vector
 	 * @param y y-component of 3 vector
 	 * @param z z-component of 3 vector
+	 * @return Reference to this so that commands can be chained.
 	 */
-	public void setParamVector( double x, double y, double z ) {
+	public Rodrigues_F64 setParamVector( double x, double y, double z ) {
 		double ax = Math.abs(x);
 		double ay = Math.abs(y);
 		double az = Math.abs(z);
@@ -114,6 +119,7 @@ public class Rodrigues_F64 implements Serializable {
 			unitAxisRotation.z = z/theta;
 			theta *= max;
 		}
+		return this;
 	}
 
 	@Override

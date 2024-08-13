@@ -52,7 +52,51 @@ public class ConvertRotation3D_F64 {
 	}
 
 	/**
-	 * Converts axis angle ({@link Rodrigues_F64}) into a rotation matrix with out needing to declare a storage
+	 * Converts axis angle ({@link Rodrigues_F64}) into a rotation matrix without needing to declare a storage
+	 * variable.
+	 *
+	 * @see Rodrigues_F64#setParamVector(double, double, double)
+	 *
+	 * @param x x-component of rotation vector
+	 * @param y y-component of rotation vector
+	 * @param z z-component of rotation vector
+	 * @param R (Optional) storage for 3x3 rotation matrix. If null one will be declared internally.
+	 * @return Rotation matrix.
+	 */
+	public static DMatrixRMaj rodriguesToMatrix( double x, double y, double z, @Nullable DMatrixRMaj R ) {
+		// Convert the rotation axis with magnitude vector into an angle and normalized vector
+
+		// scale the inputs so that their inputs are close to 1
+		double ax = Math.abs(x);
+		double ay = Math.abs(y);
+		double az = Math.abs(z);
+
+		double max = Math.max(ax, ay);
+		max = Math.max(max, az);
+
+		double axisX, axisY, axisZ, theta;
+
+		// Catch pathological case where there is no rotation
+		if (max == 0) {
+			// when there is no rotation the selected axis of rotation is arbitrary
+			axisX = 1;
+			axisY = axisZ = theta = 0;
+		} else {
+			x /= max;
+			y /= max;
+			z /= max;
+			theta = Math.sqrt(x*x + y*y + z*z);
+			axisX = x/theta;
+			axisY = y/theta;
+			axisZ = z/theta;
+			theta *= max;
+		}
+
+		return rodriguesToMatrix(axisX, axisY, axisZ, theta, R);
+	}
+
+	/**
+	 * Converts axis angle ({@link Rodrigues_F64}) into a rotation matrix without needing to declare a storage
 	 * variable.
 	 *
 	 * @param axisX x-component of normalized rotation vector
