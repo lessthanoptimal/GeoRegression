@@ -42,9 +42,16 @@ public class PointCloudToNormals_F64 {
 
 	public int numNeighbors = 3;
 
-	public void convert( List<Point3D_F64> input, DogArray<Vector3D_F64> output ) {
+	/**
+	 * Computes surface normals for all the inputs using the provided cloud.
+	 *
+	 * @param input (Input) Points which will have their normals computed
+	 * @param cloud (Input) The point cloud which will be sampled for the local planes
+	 * @param output (Output) Storage for the found normals of the input
+	 */
+	public void convert( List<Point3D_F64> input, List<Point3D_F64> cloud, DogArray<Vector3D_F64> output ) {
 		output.resize(input.size());
-		nn.setPoints(input, false);
+		nn.setPoints(cloud, false);
 
 		convert(0, input.size(), input, output, helper);
 

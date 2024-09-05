@@ -41,11 +41,11 @@ class TestPointCloudToNormals_MT_F64 {
 		var single = new DogArray<>(Vector3D_F64::new);
 		var multi = new DogArray<>(Vector3D_F64::new);
 
-		new PointCloudToNormals_F64().convert(points.toList(), single);
+		new PointCloudToNormals_F64().convert(points.toList(), points.toList(), single);
 
 		var alg = new PointCloudToNormals_MT_F64();
 		alg.minimumPointsConcurrent = 0; // make sure it runs it with the threaded code
-		alg.convert(points.toList(), multi);
+		alg.convert(points.toList(), points.toList(), multi);
 
 		assertEquals(single.size, multi.size);
 		for (int i = 0; i < single.size; i++) {

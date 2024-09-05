@@ -6,6 +6,8 @@ Version : 0.27.2
 
 - ConvertRotation3D
   * Supports rodrigues encoded as a vector
+- PointCloudToNormals
+  * It can now compute the normals from a different of set of points than the cloud
 
 ---------------------------------------------
 Date    : 2024-May-14

@@ -37,9 +37,9 @@ public class PointCloudToNormals_MT_F64 extends PointCloudToNormals_F64 {
 	GrowArray<Helper> concurrentHelper = new GrowArray<>(Helper::new);
 
 	@Override
-	public void convert( List<Point3D_F64> input, DogArray<Vector3D_F64> output ) {
+	public void convert( List<Point3D_F64> input, List<Point3D_F64> cloud, DogArray<Vector3D_F64> output ) {
 		output.resize(input.size());
-		nn.setPoints(input, false);
+		nn.setPoints(cloud, false);
 
 		if (input.size() < minimumPointsConcurrent) {
 			convert(0, input.size(), input, output, helper);

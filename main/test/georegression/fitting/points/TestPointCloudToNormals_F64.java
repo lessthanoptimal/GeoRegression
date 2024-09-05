@@ -43,7 +43,7 @@ class TestPointCloudToNormals_F64 {
 
 		var found = new DogArray<>(Vector3D_F64::new);
 		var alg = new PointCloudToNormals_F64();
-		alg.convert(points.toList(), found);
+		alg.convert(points.toList(), points.toList(), found);
 
 		for (int i = 0; i < found.size; i++) {
 			Vector3D_F64 v = found.get(i);
