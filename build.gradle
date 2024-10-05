@@ -10,9 +10,10 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.27.3-SNAPSHOT'
+    version = '0.27.3'
 }
 
+project.ext.ddogleg_version = '0.23.4'
 project.ext.errorprone_version = '2.11.0'
 project.ext.nullaway_version = '0.9.5'
 project.ext.lombok_version = '1.18.24'
@@ -86,7 +87,7 @@ subprojects {
     }
 
     dependencies {
-        implementation (group: 'org.ddogleg', name: 'ddogleg', version: '0.23.3')
+        implementation "org.ddogleg:ddogleg:$project.ddogleg_version"
 
         compileOnly "org.jetbrains:annotations:$project.jetnull_version" // @Nullable
         compileOnly "javax.annotation:jsr250-api:$project.jsr250_version"  // @Generated
