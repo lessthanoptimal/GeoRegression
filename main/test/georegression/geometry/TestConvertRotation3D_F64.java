@@ -86,6 +86,19 @@ public class TestConvertRotation3D_F64 {
 	}
 
 	@Test
+	void rodriguesToQuaternion_3() {
+		double rx = 0.4;
+		double ry = 2;
+		double rz = -0.5;
+		Rodrigues_F64 rod = new Rodrigues_F64(rx, ry, rz);
+
+		Quaternion_F64 expected = ConvertRotation3D_F64.rodriguesToQuaternion(rod, null);
+		Quaternion_F64 found = ConvertRotation3D_F64.rodriguesToQuaternion(rx, ry, rz, null);
+
+		assertTrue(expected.isIdentical(found, GrlConstants.TEST_F64));
+	}
+
+	@Test
 	void rodriguesToQuaternion() {
 		Rodrigues_F64 rod = new Rodrigues_F64(-1.5,1,3,-4);
 

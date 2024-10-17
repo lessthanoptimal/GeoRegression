@@ -80,6 +80,19 @@ public class Quaternion_F64 implements Serializable {
 		z /= n;
 	}
 
+	/** Returns true if the two quaternions are identical. Note that they might be equivalent and fail this test */
+	public boolean isIdentical( Quaternion_F64 q, double tol ) {
+		if (Math.abs(q.w - w) > tol)
+			return false;
+		if (Math.abs(q.x - x) > tol)
+			return false;
+		if (Math.abs(q.y - y) > tol)
+			return false;
+		if (Math.abs(q.z - z) > tol)
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + "{ w = " + w + " axis( " + x + " " + y + " " + z + ") }";

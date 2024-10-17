@@ -131,7 +131,7 @@ public class ConvertRotation3D_F64 {
 	}
 
 	/**
-	 * <p>Converts{@link georegression.struct.so.Rodrigues_F64} into an euler rotation of different types</p>
+	 * <p>Converts{@link Rodrigues_F64} into an euler rotation of different types</p>
 	 *
 	 * @param rodrigues rotation defined using rotation axis angle notation.
 	 * @param type Type of Euler rotation
@@ -142,6 +142,34 @@ public class ConvertRotation3D_F64 {
 	{
 		DMatrixRMaj R = rodriguesToMatrix(rodrigues,null);
 		return matrixToEuler(R,type,euler);
+	}
+
+	/**
+	 * <p>
+	 * Converts 3-dof {@link Rodrigues_F64} into a unit {@link georegression.struct.so.Quaternion_F64}.
+	 * </p>
+	 *
+	 * @param rx x-axis in rotation vector
+	 * @param ry y-axis in rotation vector
+	 * @param rz z-axis in rotation vector
+	 * @param quat Storage for quaternion coordinate. If null a new quaternion is created. Modified.
+	 * @return unit quaternion coordinate.
+	 */
+	public static Quaternion_F64 rodriguesToQuaternion( double rx, double ry, double rz,
+														@Nullable Quaternion_F64 quat ) {
+		if( quat == null )
+			quat = new Quaternion_F64();
+
+		double theta = Math.sqrt(rx*rx + ry*ry + rz*rz);
+
+		quat.w = Math.cos( theta / 2.0 );
+		double s = Math.sin( theta / 2.0 );
+
+		quat.x = rx*s/theta;
+		quat.y = ry*s/theta;
+		quat.z = rz*s/theta;
+
+		return quat;
 	}
 
 	/**
@@ -406,7 +434,7 @@ public class ConvertRotation3D_F64 {
 		double diagSum = ( (R.unsafe_get( 0, 0 ) + R.unsafe_get( 1, 1 ) + R.unsafe_get( 2, 2 )) - 1.0 ) / 2.0;
 
 		double absDiagSum = Math.abs(diagSum);
-		
+
 		if( absDiagSum <= 1.0 && 1.0-absDiagSum > 10.0*GrlConstants.EPS ) {
 			// if numerically stable use a faster technique
 			rodrigues.theta = Math.acos(diagSum);
