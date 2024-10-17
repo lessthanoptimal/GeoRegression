@@ -10,7 +10,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.27.3'
+    version = '0.27.4-SNAPSHOT'
 }
 
 project.ext.ddogleg_version = '0.23.4'
