@@ -801,6 +801,46 @@ public class ConvertRotation3D_F64 {
 		return quaternionToMatrix(quat.w,quat.x,quat.y,quat.z,R);
 	}
 
+	/**
+	 * <p>Converts a unit quaternion into a rotation matrix. Uses a more common but equivalent formulation.
+	 * Can be used when you need the exact same solution as another implementation.</p>
+	 *
+	 * @param quat Unit quaternion.
+	 * @param R Storage for rotation matrix. If null a new matrix is created. Modified.
+	 * @return Rotation matrix
+	 */
+	public static DMatrixRMaj quaternionToMatrix2( Quaternion_F64 quat, @Nullable DMatrixRMaj R ) {
+		return quaternionToMatrix(quat.w,quat.x,quat.y,quat.z,R);
+	}
+
+	/** Most common formulation. Explicitly takes advantage of norm=1 */
+	@SuppressWarnings("UnnecessaryLocalVariable")
+	public static DMatrixRMaj quaternionToMatrix2(double w, double x , double y , double z ,
+												 @Nullable DMatrixRMaj R )
+	{
+		R = checkDeclare3x3( R );
+
+		final double q0 = w;
+		final double q1 = x;
+		final double q2 = y;
+		final double q3 = z;
+
+		R.data[0] = 1.0 - 2.0*(q2*q2 + q3*q3);  // (0,0)
+		R.data[1] = 2.0*( q1*q2 - q0*q3 );      // (0,1)
+		R.data[2] = 2.0*( q1*q3 + q0*q2 );      // (0,2)
+
+		R.data[3] = 2.0*( q1*q2 + q0*q3 );      // (1,0)
+		R.data[4] = 1.0 - 2.0*(q1*q1 + q3*q3);  // (1,1)
+		R.data[5] = 2.0*( q2*q3 - q0*q1 );      // (1,2)
+
+		R.data[6] = 2.0*( q1*q3 - q0*q2 );      // (2,0)
+		R.data[7] = 2.0*( q2*q3 + q0*q1 );      // (2,1)
+		R.data[8] = 1.0 - 2.0*(q1*q1 + q2*q2);  // (2,2)
+
+		return R;
+	}
+
+	/** Alternative formulation */
 	@SuppressWarnings("UnnecessaryLocalVariable")
 	public static DMatrixRMaj quaternionToMatrix(double w, double x , double y , double z ,
 												 @Nullable DMatrixRMaj R )

@@ -30,6 +30,7 @@ import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
 import org.ejml.dense.row.RandomMatrices_DDRM;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -462,41 +463,53 @@ public class TestConvertRotation3D_F64 {
 	 */
 	@Test
 	void quaternionToMatrix() {
-		// rotate around z-axis 90 degrees
-		Quaternion_F64 q = ConvertRotation3D_F64.rodriguesToQuaternion( new Rodrigues_F64( Math.PI / 2.0, 0, 0, 1 ), null );
 
-		DMatrixRMaj R = ConvertRotation3D_F64.quaternionToMatrix( q, null );
+		// Test al the different implementations
+		for (int formula = 0; formula < 2; formula++) {
+			// rotate around z-axis 90 degrees
+			Quaternion_F64 q = ConvertRotation3D_F64.rodriguesToQuaternion( new Rodrigues_F64( Math.PI / 2.0, 0, 0, 1 ), null );
 
-		Point3D_F64 p = new Point3D_F64( 1, 0, 0 );
-		GeometryMath_F64.mult( R, p, p );
-		GeometryUnitTest.assertEquals( p, 0, 1, 0, GrlConstants.TEST_F64);
+			DMatrixRMaj R = quaternionToMatrix( formula, q, null );
+
+			Point3D_F64 p = new Point3D_F64( 1, 0, 0 );
+			GeometryMath_F64.mult( R, p, p );
+			GeometryUnitTest.assertEquals( p, 0, 1, 0, GrlConstants.TEST_F64);
 
 
-		// rotate around y-axis 90 degrees
-		q = ConvertRotation3D_F64.rodriguesToQuaternion( new Rodrigues_F64( Math.PI / 2.0, 0, 1, 0 ), null );
-		q.normalize();
-
-		R = ConvertRotation3D_F64.quaternionToMatrix( q, R );
-
-		p.setTo( 1, 0, 0 );
-		GeometryMath_F64.mult( R, p, p );
-		GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.TEST_F64);
-
-		for (int i = 0; i < 30; i++) {
-			Rodrigues_F64 rod = new Rodrigues_F64();
-			rod.theta = Math.PI*(2*rand.nextDouble()-1);
-			rod.setParamVector(rand.nextDouble()-0.5,rand.nextDouble()-0.5,rand.nextDouble()-0.5);
-			rod.unitAxisRotation.normalize();
-
-			q = ConvertRotation3D_F64.rodriguesToQuaternion( rod, null );
+			// rotate around y-axis 90 degrees
+			q = ConvertRotation3D_F64.rodriguesToQuaternion( new Rodrigues_F64( Math.PI / 2.0, 0, 1, 0 ), null );
 			q.normalize();
-			DMatrixRMaj expected = ConvertRotation3D_F64.rodriguesToMatrix( rod, null );
-			DMatrixRMaj found = ConvertRotation3D_F64.quaternionToMatrix( q, null );
 
-			DMatrixRMaj difference = new DMatrixRMaj(3,3);
-			CommonOps_DDRM.multTransB(expected,found,difference);
-			assertTrue(MatrixFeatures_DDRM.isIdentity(difference,GrlConstants.TEST_F64));
+			R = quaternionToMatrix( formula, q, R );
+
+			p.setTo( 1, 0, 0 );
+			GeometryMath_F64.mult( R, p, p );
+			GeometryUnitTest.assertEquals( p, 0, 0, -1, GrlConstants.TEST_F64);
+
+			for (int i = 0; i < 30; i++) {
+				Rodrigues_F64 rod = new Rodrigues_F64();
+				rod.theta = Math.PI*(2*rand.nextDouble()-1);
+				rod.setParamVector(rand.nextDouble()-0.5,rand.nextDouble()-0.5,rand.nextDouble()-0.5);
+				rod.unitAxisRotation.normalize();
+
+				q = ConvertRotation3D_F64.rodriguesToQuaternion( rod, null );
+				q.normalize();
+				DMatrixRMaj expected = ConvertRotation3D_F64.rodriguesToMatrix( rod, null );
+				DMatrixRMaj found = quaternionToMatrix( formula, q, null );
+
+				DMatrixRMaj difference = new DMatrixRMaj(3,3);
+				CommonOps_DDRM.multTransB(expected,found,difference);
+				assertTrue(MatrixFeatures_DDRM.isIdentity(difference,GrlConstants.TEST_F64));
+			}
 		}
+	}
+	DMatrixRMaj quaternionToMatrix( int formula, Quaternion_F64 q, @Nullable DMatrixRMaj out) {
+		out = switch(formula) {
+			case 0 -> ConvertRotation3D_F64.quaternionToMatrix( q, out );
+			case 1 -> ConvertRotation3D_F64.quaternionToMatrix2( q, out );
+			default -> throw new IllegalArgumentException("Unknown formula "+formula);
+		};
+		return out;
 	}
 
 	/**
