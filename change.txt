@@ -1,12 +1,15 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2024-Oct-05
+Date    : 2025-XX-XX
 Version : 0.27.4
 
 ConvertRotation3D_F64
 - Added another method for converting rodrigues 3-dof into quaternion
 - Added another formula for converting quaternion to rotation matrix
+GeometryMath
+- Support for implicit 3x4 and 4x4 from 3x3 matrices for homogeneous points
+- Added multTran for homogeneous points
 
 ---------------------------------------------
 Date    : 2024-Oct-05
