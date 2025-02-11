@@ -152,7 +152,6 @@ public class TestConvertRotation3D_F64 {
 
 	@Test
 	void matrixToQuaternion() {
-
 		double pid2 = Math.PI/2.0;
 
 		matrixToQuaternion(ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ,0,0,0,null));
@@ -187,7 +186,10 @@ public class TestConvertRotation3D_F64 {
 
 	public void matrixToQuaternion( DMatrixRMaj R ) {
 		Quaternion_F64 q = ConvertRotation3D_F64.matrixToQuaternion(R,null);
-		q.normalize();
+
+		// Ensure that it's a unit quaternion
+		assertEquals(1.0, q.norm(), UtilEjml.TEST_F64);
+
 		DMatrixRMaj found = ConvertRotation3D_F64.quaternionToMatrix(q,null);
 
 		DMatrixRMaj result = new DMatrixRMaj(3,3);
