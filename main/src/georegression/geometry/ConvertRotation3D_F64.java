@@ -360,10 +360,10 @@ public class ConvertRotation3D_F64 {
 	}
 
 	/**
-	 * Extracts quaternions from the provided rotation matrix.
+	 * Extracts a unit quaternions from the provided rotation matrix.
 	 *
 	 * @param R (Input) rotation matrix
-	 * @param quat (Output) Optional storage for quaternion. If null a new class will be used.
+	 * @param quat (Output) Optional storage for unit quaternion. If null a new class will be used.
 	 * @return unit quaternion representation of the rotation matrix.
 	 */
 	public static Quaternion_F64 matrixToQuaternion( DMatrixRMaj R, @Nullable Quaternion_F64 quat ) {

@@ -72,12 +72,19 @@ public class Quaternion_F64 implements Serializable {
 	 * Converts the quaternion into a unit quaternion.
 	 */
 	public void normalize() {
-		double n = Math.sqrt(w*w + x*x + y*y + z*z);
+		double n = norm();
 
 		w /= n;
 		x /= n;
 		y /= n;
 		z /= n;
+	}
+
+	/**
+	 * Returns the f-norm of this quaternion
+	 */
+	public double norm() {
+		return Math.sqrt(w*w + x*x + y*y + z*z);
 	}
 
 	/** Returns true if the two quaternions are identical. Note that they might be equivalent and fail this test */
