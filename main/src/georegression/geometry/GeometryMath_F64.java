@@ -460,26 +460,28 @@ public class GeometryMath_F64 {
 	 *
 	 * @param P Projective 3x4 matrix or 3x3 matrix with implicit [0,0,0,1]' last column
 	 * @param X 3D point in homogenous coordinates
-	 * @param mod 2D point in homogenous coordinates
+	 * @param mod 2D point in homogenous coordinates. Can be same instance as X.
 	 */
 	public static void mult( DMatrixRMaj P, GeoTuple4D_F64 X, GeoTuple3D_F64 mod ) {
+		final double x = X.x, y = X.y, z = X.z, w = X.w;
+
 		if (P.numCols == 4) {
-			mod.x = P.data[0]*X.x + P.data[1]*X.y + P.data[2]*X.z + P.data[3]*X.w;
-			mod.y = P.data[4]*X.x + P.data[5]*X.y + P.data[6]*X.z + P.data[7]*X.w;
-			mod.z = P.data[8]*X.x + P.data[9]*X.y + P.data[10]*X.z + P.data[11]*X.w;
+			mod.x = P.data[0]*x + P.data[1]*y + P.data[2]*z + P.data[3]*w;
+			mod.y = P.data[4]*x + P.data[5]*y + P.data[6]*z + P.data[7]*w;
+			mod.z = P.data[8]*x + P.data[9]*y + P.data[10]*z + P.data[11]*w;
 		} else if (P.numCols == 3) {
-			mod.x = P.data[0]*X.x + P.data[1]*X.y + P.data[2]*X.z;
-			mod.y = P.data[3]*X.x + P.data[4]*X.y + P.data[5]*X.z;
-			mod.z = P.data[6]*X.x + P.data[7]*X.y + P.data[8]*X.z;
+			mod.x = P.data[0]*x + P.data[1]*y + P.data[2]*z;
+			mod.y = P.data[3]*x + P.data[4]*y + P.data[5]*z;
+			mod.z = P.data[6]*x + P.data[7]*y + P.data[8]*z;
 		} else {
 			throw new IllegalArgumentException("Input matrix must have 3 or 4 columns not " + P.numCols);
 		}
 
 		if (P.numRows == 4) {
-			double w = P.data[12]*X.x + P.data[13]*X.y + P.data[14]*X.z + P.data[15]*X.w;
-			mod.x /= w;
-			mod.y /= w;
-			mod.z /= w;
+			double ww = P.data[12]*x + P.data[13]*y + P.data[14]*z + P.data[15]*w;
+			mod.x /= ww;
+			mod.y /= ww;
+			mod.z /= ww;
 		} else if (P.numRows != 3) {
 			throw new IllegalArgumentException("rows must be 3 or 4 and not " + P.numRows);
 		}
@@ -490,22 +492,24 @@ public class GeometryMath_F64 {
 	 *
 	 * @param P 4x4 matrix or 3x3 with implicit [0,0,0,1] right column and bottom row
 	 * @param X 3D point in homogenous coordinates
-	 * @param mod 3D point in homogenous coordinates
+	 * @param mod 3D point in homogenous coordinates. Can be same instance as X.
 	 */
 	public static void mult( DMatrixRMaj P, GeoTuple4D_F64 X, GeoTuple4D_F64 mod ) {
 		if (!MatrixFeatures_DDRM.isSquare(P))
 			throw new RuntimeException("Expected P to be a square matrix");
 
+		final double x = X.x, y = X.y, z = X.z, w = X.w;
+
 		if (P.numRows == 4) {
-			mod.x = P.data[0]*X.x + P.data[1]*X.y + P.data[2]*X.z + P.data[3]*X.w;
-			mod.y = P.data[4]*X.x + P.data[5]*X.y + P.data[6]*X.z + P.data[7]*X.w;
-			mod.z = P.data[8]*X.x + P.data[9]*X.y + P.data[10]*X.z + P.data[11]*X.w;
-			mod.w = P.data[12]*X.x + P.data[13]*X.y + P.data[14]*X.z + P.data[15]*X.w;
+			mod.x = P.data[0]*x + P.data[1]*y + P.data[2]*z + P.data[3]*w;
+			mod.y = P.data[4]*x + P.data[5]*y + P.data[6]*z + P.data[7]*w;
+			mod.z = P.data[8]*x + P.data[9]*y + P.data[10]*z + P.data[11]*w;
+			mod.w = P.data[12]*x + P.data[13]*y + P.data[14]*z + P.data[15]*w;
 		} else if (P.numCols == 3) {
-			mod.x = P.data[0]*X.x + P.data[1]*X.y + P.data[2]*X.z;
-			mod.y = P.data[3]*X.x + P.data[4]*X.y + P.data[5]*X.z;
-			mod.z = P.data[6]*X.x + P.data[7]*X.y + P.data[8]*X.z;
-			mod.w = X.w;
+			mod.x = P.data[0]*x + P.data[1]*y + P.data[2]*z;
+			mod.y = P.data[3]*x + P.data[4]*y + P.data[5]*z;
+			mod.z = P.data[6]*x + P.data[7]*y + P.data[8]*z;
+			mod.w = w;
 		} else {
 			throw new IllegalArgumentException("Expected P to be a 3x3 or 4x4 matrix not " + P.numRows + "x" + P.numCols);
 		}
@@ -516,22 +520,24 @@ public class GeometryMath_F64 {
 	 *
 	 * @param P 4x4 matrix or 3x3 with implicit [0,0,0,1] right column and bottom row
 	 * @param X 3D point in homogenous coordinates
-	 * @param mod 3D point in homogenous coordinates
+	 * @param mod 3D point in homogenous coordinates. Can be same instance as X.
 	 */
 	public static void multTran( DMatrixRMaj P, GeoTuple4D_F64 X, GeoTuple4D_F64 mod ) {
 		if (!MatrixFeatures_DDRM.isSquare(P))
 			throw new RuntimeException("Expected P to be a square matrix");
 
+		final double x = X.x, y = X.y, z = X.z, w = X.w;
+
 		if (P.numRows == 4) {
-			mod.x = P.data[0]*X.x + P.data[4]*X.y + P.data[8]*X.z + P.data[12]*X.w;
-			mod.y = P.data[1]*X.x + P.data[5]*X.y + P.data[9]*X.z + P.data[13]*X.w;
-			mod.z = P.data[2]*X.x + P.data[6]*X.y + P.data[10]*X.z + P.data[14]*X.w;
-			mod.w = P.data[3]*X.x + P.data[7]*X.y + P.data[11]*X.z + P.data[15]*X.w;
+			mod.x = P.data[0]*x + P.data[4]*y + P.data[8]*z + P.data[12]*w;
+			mod.y = P.data[1]*x + P.data[5]*y + P.data[9]*z + P.data[13]*w;
+			mod.z = P.data[2]*x + P.data[6]*y + P.data[10]*z + P.data[14]*w;
+			mod.w = P.data[3]*x + P.data[7]*y + P.data[11]*z + P.data[15]*w;
 		} else if (P.numCols == 3) {
-			mod.x = P.data[0]*X.x + P.data[3]*X.y + P.data[6]*X.z;
-			mod.y = P.data[1]*X.x + P.data[4]*X.y + P.data[7]*X.z;
-			mod.z = P.data[2]*X.x + P.data[5]*X.y + P.data[8]*X.z;
-			mod.w = X.w;
+			mod.x = P.data[0]*x + P.data[3]*y + P.data[6]*z;
+			mod.y = P.data[1]*x + P.data[4]*y + P.data[7]*z;
+			mod.z = P.data[2]*x + P.data[5]*y + P.data[8]*z;
+			mod.w = w;
 		} else {
 			throw new IllegalArgumentException("Expected P to be a 3x3 or 4x4 matrix not " + P.numRows + "x" + P.numCols);
 		}
