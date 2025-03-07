@@ -10,7 +10,7 @@ ConvertRotation3D_F64
 GeometryMath
 - Support for implicit 3x4 and 4x4 from 3x3 matrices for homogeneous points
 - Added multTran for homogeneous points
-- homogenous point multiplication supports the same instance being passed in
+- homogeneous point multiplication supports the same instance being passed in
 Quaternion
 - Added norm()
 
