@@ -307,5 +307,5 @@ javadocWeb.finalizedBy(alljavadoc)
 
 wrapper {
     distributionType = Wrapper.DistributionType.BIN
-    gradleVersion = '7.6.4'
+    gradleVersion = '8.12.1'
 }
