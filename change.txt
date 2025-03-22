@@ -1,6 +1,13 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2025-Mar-21
+Version : 0.27.5
+
+- Updated various dependencies
+- Gradle 8
+
+---------------------------------------------
 Date    : 2025-Mar-06
 Version : 0.27.4
 
@@ -27,7 +34,7 @@ Version : 0.27.2
 - ConvertRotation3D
   * Supports rodrigues encoded as a vector
 - PointCloudToNormals
-  * It can now compute the normals from a different of set of points than the cloud
+  * It can now compute the normals from a different set of points than the cloud
 
 ---------------------------------------------
 Date    : 2024-May-14
