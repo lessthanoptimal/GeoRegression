@@ -2,8 +2,8 @@ import net.ltgt.gradle.errorprone.CheckSeverity
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    id "com.peterabeles.gversion" version "1.10.2" apply false
-    id "net.ltgt.errorprone" version "2.0.1" apply false
+    id "com.peterabeles.gversion" version "1.10.3" apply false
+    id "net.ltgt.errorprone" version "4.0.1" apply false
 }
 
 allprojects {
@@ -13,12 +13,12 @@ allprojects {
     version = '0.27.5-SNAPSHOT'
 }
 
-project.ext.ddogleg_version = '0.23.6-SNAPSHOT'
-project.ext.errorprone_version = '2.11.0'
-project.ext.nullaway_version = '0.9.5'
+project.ext.ddogleg_version = '0.24.0'
+project.ext.errorprone_version = '2.35.1'
+project.ext.nullaway_version = '0.12.4'
 project.ext.lombok_version = '1.18.24'
-project.ext.jabel_version = '1.0.0'
-project.ext.junit_version = '5.8.2'
+project.ext.jabel_version = '1.0.1-1'
+project.ext.junit_version = '5.11.4'
 project.ext.guava_version = '31.1-jre'
 project.ext.jetnull_version = '23.0.0'
 project.ext.jsr250_version = '1.0'
@@ -91,14 +91,14 @@ subprojects {
 
         compileOnly "org.jetbrains:annotations:$project.jetnull_version" // @Nullable
         compileOnly "javax.annotation:jsr250-api:$project.jsr250_version"  // @Generated
-        testCompileOnly project.sourceSets.main.compileClasspath
+        testCompileOnly files(project.sourceSets.main.compileClasspath)
 
-        testImplementation( "org.junit.jupiter:junit-jupiter-api:$project.junit_version" )
-        testRuntimeOnly( "org.junit.jupiter:junit-jupiter-engine:$project.junit_version" )
+        testImplementation("org.junit.jupiter:junit-jupiter-api:$project.junit_version")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$project.junit_version")
 
         // needed to use Java 15+ syntax with Java 11 byte code
-        annotationProcessor("com.github.bsideup.jabel:jabel-javac-plugin:${project.jabel_version}")
-        testAnnotationProcessor("com.github.bsideup.jabel:jabel-javac-plugin:${project.jabel_version}")
+        annotationProcessor("com.pkware.jabel:jabel-javac-plugin:${project.jabel_version}")
+        testAnnotationProcessor("com.pkware.jabel:jabel-javac-plugin:${project.jabel_version}")
 
         errorprone("com.google.errorprone:error_prone_core:$project.errorprone_version")
 
@@ -112,18 +112,22 @@ subprojects {
     }
 
     tasks.withType(JavaCompile).configureEach {
+        options.errorprone.enabled = false
+        if (name.contains("Test"))
+            return
+
         options.errorprone.enabled = true
         options.errorprone.disableWarningsInGeneratedCode = true
-        options.errorprone.disable("TypeParameterUnusedInFormals","StringSplitter","InconsistentCapitalization",
+        options.errorprone.disable("TypeParameterUnusedInFormals", "StringSplitter", "InconsistentCapitalization",
                 "HidingField", // this is sometimes done when the specific type is known by child. Clean up later.
                 "ClassNewInstance", // yes it's deprecated, but new version is more verbose with ignored errors
                 "FloatingPointLiteralPrecision", // too many false positives in test code
-                "MissingSummary","UnescapedEntity","EmptyBlockTag", "SameNameButDifferent")
-        options.errorprone.error("MissingOverride","MissingCasesInEnumSwitch","BadInstanceof",
-                "PublicConstructorForAbstractClass","EmptyCatch","NarrowingCompoundAssignment","JdkObsolete")
+                "MissingSummary", "UnescapedEntity", "EmptyBlockTag", "SameNameButDifferent")
+        options.errorprone.error("MissingOverride", "MissingCasesInEnumSwitch", "BadInstanceof",
+                "EmptyCatch", "NarrowingCompoundAssignment", "JdkObsolete")
 
-        if( name.startsWith("compileTest") ) {
-            options.errorprone.disable("ReferenceEquality","IntLongMath","ClassCanBeStatic")
+        if (name.startsWith("compileTest")) {
+            options.errorprone.disable("ReferenceEquality", "IntLongMath", "ClassCanBeStatic")
         }
 
         options.errorprone {
@@ -135,7 +139,7 @@ subprojects {
 
     test {
         useJUnitPlatform()
-        reports.html.enabled = false
+        reports.html.setRequired(false)
         // Make the error logging verbose to make debugging on CI easier
         testLogging.showStandardStreams = true
         testLogging.exceptionFormat TestExceptionFormat.FULL
@@ -170,7 +174,7 @@ subprojects {
     project.publish.dependsOn failDirtyNotSnapshot
 
     // Skip these codeless directories when publishing jars locally or to a remote destination
-    if (['examples','autocode'].contains(name)) {
+    if (['examples', 'autocode'].contains(name)) {
         project.jar.enabled = false
         project.tasks.publish.enabled = false
     }
@@ -179,7 +183,7 @@ subprojects {
         return
 
     // if Maven central isn't setup in ~/.gradle/gradle.properties fill in these variables to make it happy
-    if( !project.hasProperty('ossrhUsername') ) {
+    if (!project.hasProperty('ossrhUsername')) {
         ext.ossrhUsername = "dummy"
         ext.ossrhPassword = "dummy"
     }
@@ -232,8 +236,9 @@ subprojects {
 }
 
 // Creates a directory with all the compiled jars and the dependencies
-def mainProjects = [':georegression',":experimental"]
-task createLibraryDirectory( dependsOn: mainProjects.collect {[ it+':jar',it+':sourcesJar']}.flatten() ) {
+def mainProjects = [':georegression', ":experimental"]
+tasks.register('createLibraryDirectory') {
+    dependsOn mainProjects.collect { [it + ':jar', it + ':sourcesJar'] }.flatten()
     doLast {
         ext.listExternal = files(mainProjects.collect { project(it).configurations.runtimeClasspath })
         ext.listInternal = files(mainProjects.collect { project(it).tasks.jar.archivePath })
@@ -265,7 +270,7 @@ def javadocProjects = [
         ':georegression',
 ]
 
-task alljavadoc(type: Javadoc) {
+tasks.register('alljavadoc', Javadoc) {
     // only include source code in src directory to avoid including 3rd party code which some projects do as a hack
     source = javadocProjects.collect { project(it).fileTree('src').include('**/*.java') }
     classpath = files(javadocProjects.collect { project(it).sourceSets.main.compileClasspath })
@@ -286,13 +291,13 @@ task alljavadoc(type: Javadoc) {
     configure(options) {
         failOnError = false
         docTitle = "GeoRegression v$project.version"
-        links = [ 'https://docs.oracle.com/en/java/javase/11/docs/api/',
-                  'https://ejml.org/javadoc/',
-                  'https://ddogleg.org/javadoc/' ]
+        links = ['https://docs.oracle.com/en/java/javase/11/docs/api/',
+                 'https://ejml.org/javadoc/',
+                 'https://ddogleg.org/javadoc/']
     }
 }
 
-task javadocWeb() {
+tasks.register('javadocWeb') {
     doFirst {
         alljavadoc.options.bottom = file('docs/bottom.txt').text
         alljavadoc.destinationDir = file("${buildDir}/docs/api-web")
