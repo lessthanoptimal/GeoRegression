@@ -10,16 +10,16 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.27.5'
+    version = '0.27.6-SNAPSHOT'
 }
 
 project.ext.ddogleg_version = '0.24.0'
 project.ext.errorprone_version = '2.35.1'
 project.ext.nullaway_version = '0.12.4'
-project.ext.lombok_version = '1.18.24'
+project.ext.lombok_version = '1.18.28'
 project.ext.jabel_version = '1.0.1-1'
 project.ext.junit_version = '5.11.4'
-project.ext.guava_version = '31.1-jre'
+project.ext.guava_version = '33.2.0-jre'
 project.ext.jetnull_version = '23.0.0'
 project.ext.jsr250_version = '1.0'
 project.ext.jsr305_version = '3.0.2'
