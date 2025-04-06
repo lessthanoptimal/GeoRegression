@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -57,6 +57,10 @@ public class LineParametric2D_I32 implements Serializable {
 	}
 
 	public LineParametric2D_I32() {}
+
+	public void zero() {
+		p.setTo(0, 0);
+	}
 
 	public LineParametric2D_I32 setTo(LineParametric2D_I32 line ) {
 		this.p.setTo(line.p);
