@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -254,6 +254,25 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	@Test
+	void closestPointT_lineSeg_pt() {
+		LineSegment3D_F64 lineA;
+
+		// closest point is on the line
+		lineA = new LineSegment3D_F64(2,3,4,7,8,9);
+		checkIsClosestT(lineA,new Point3D_F64(2,3.5,3.5));
+
+		// closest point is past a
+		checkIsClosestT(lineA, new Point3D_F64(1, 1.95, 3));
+
+		// closest point is past b
+		checkIsClosestT(lineA, new Point3D_F64(8, 9, 10.1));
+
+		// this was a bug
+		lineA = new LineSegment3D_F64(0,0,0,0,2,0);
+		checkIsClosestT(lineA, new Point3D_F64(0, 1.5, 0));
+	}
+
+	@Test
 	void closestPoint_lineSeg_lineSeg() {
 		Point3D_F64 found;
 
@@ -311,7 +330,6 @@ public class TestClosestPoint3D_F64 {
 	}
 
 	private void checkIsClosest( LineSegment3D_F64 line ,  Point3D_F64 target  ) {
-
 		Point3D_F64 pointOnLine = ClosestPoint3D_F64.closestPoint(line,target,null);
 
 		LineParametric3D_F64 para = UtilLine3D_F64.convert(line,null);
@@ -328,6 +346,28 @@ public class TestClosestPoint3D_F64 {
 		Point3D_F64 work1 = para.getPointOnLine(t1);
 
 		double dist = pointOnLine.distance(target);
+		double dist0 = work0.distance(target);
+		double dist1 = work1.distance(target);
+
+		assertTrue( dist <= dist0 );
+		assertTrue( dist <= dist1 );
+	}
+
+	private void checkIsClosestT( LineSegment3D_F64 line ,  Point3D_F64 target  ) {
+		double t = ClosestPoint3D_F64.closestPointT(line,target);
+		assertTrue( t >= 0 && t <= 1);
+
+		var pointAtT = new Point3D_F64();
+		line.pointOnLine(t, pointAtT);
+
+		// bound the test points so that they are still on the line
+		double t0 = Math.max(0, t - Math.sqrt(GrlConstants.TEST_F64));
+		double t1 = Math.min(1, t + Math.sqrt(GrlConstants.TEST_F64));
+
+		Point3D_F64 work0 = line.pointOnLine(t0, null);
+		Point3D_F64 work1 = line.pointOnLine(t1, null);
+
+		double dist = pointAtT.distance(target);
 		double dist0 = work0.distance(target);
 		double dist1 = work1.distance(target);
 

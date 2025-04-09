@@ -1,6 +1,13 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2025-XXX-YY
+Version : 0.27.6
+
+- ClosetPoint2D and ClosestPoint3D
+  * closestPointT(LineSegment)
+
+---------------------------------------------
 Date    : 2025-Mar-21
 Version : 0.27.5
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -312,6 +312,34 @@ public class ClosestPoint3D_F64 {
 	}
 
 	/**
+	 * Finds the closest point on a line segment to the specified point. Closest point is specified as 't' the
+	 * fractional distance along the line starting at 'a'.
+	 *
+	 * @param line Line on which the closest point is being found. Not modified.
+	 * @param pt The point whose closest point is being looked for. Not modified.
+	 * @return Distance as a function of 't'. 0 to 1, inclusive.
+	 */
+	public static double closestPointT( LineSegment3D_F64 line, Point3D_F64 pt ) {
+		double dx = pt.x - line.a.x;
+		double dy = pt.y - line.a.y;
+		double dz = pt.z - line.a.z;
+
+		double slope_x = line.b.x - line.a.x;
+		double slope_y = line.b.y - line.a.y;
+		double slope_z = line.b.z - line.a.z;
+
+		double n = slope_x*slope_x + slope_y*slope_y + slope_z*slope_z;
+
+		double d = (slope_x*dx + slope_y*dy + slope_z*dz)/n;
+
+		// if it is past the end points just return one of the end points
+		if (d <= 0) {
+			return 0;
+		}
+		return Math.min(d, 1.0);
+	}
+
+	/**
 	 * Find the point which minimizes its distance from the two line segments.
 	 *
 	 * @param l0 First line. Not modified.
@@ -341,8 +369,12 @@ public class ClosestPoint3D_F64 {
 		double n0 = (double)Math.sqrt(slope0_x*slope0_x + slope0_y*slope0_y + slope0_z*slope0_z);
 		double n1 = (double)Math.sqrt(slope1_x*slope1_x + slope1_y*slope1_y + slope1_z*slope1_z);
 
-		slope0_x /= n0; slope0_y /= n0; slope0_z /= n0;
-		slope1_x /= n1; slope1_y /= n1; slope1_z /= n1;
+		slope0_x /= n0;
+		slope0_y /= n0;
+		slope0_z /= n0;
+		slope1_x /= n1;
+		slope1_y /= n1;
+		slope1_z /= n1;
 
 		// this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
 		double dv01v1 = ret.x*slope1_x + ret.y*slope1_y + ret.z*slope1_z;

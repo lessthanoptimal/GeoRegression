@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -29,7 +29,7 @@ import georegression.struct.point.Point2D_F64;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Abeles
@@ -75,14 +75,13 @@ public class TestClosestPoint2D_F64 {
 	}
 
 	@Test
-	void closestPoint_LS() {
+	void closestPoint_LineSegment() {
 		LineSegment2D_F64 ls; Point2D_F64 found;
 		// test middle
 		ls = new LineSegment2D_F64(1,2,4,5);
 		found = ClosestPoint2D_F64.closestPoint(ls,new Point2D_F64(2-0.1,3+0.1),null);
 		assertEquals(2,found.x,GrlConstants.TEST_F64);
 		assertEquals(3,found.y,GrlConstants.TEST_F64);
-
 
 		// test before a
 		found = ClosestPoint2D_F64.closestPoint(ls,new Point2D_F64(0,0),null);
@@ -91,6 +90,35 @@ public class TestClosestPoint2D_F64 {
 
 		// test after b
 		found = ClosestPoint2D_F64.closestPoint(ls,new Point2D_F64(10,20),null);
+		assertEquals(4,found.x,GrlConstants.TEST_F64);
+		assertEquals(5,found.y,GrlConstants.TEST_F64);
+	}
+
+	@Test
+	void closestPointT_LineSegment() {
+		LineSegment2D_F64 ls; Point2D_F64 found = new Point2D_F64();
+		double t;
+
+		// test middle
+		ls = new LineSegment2D_F64(1,2,4,5);
+		t = ClosestPoint2D_F64.closestPointT(ls,new Point2D_F64(2-0.1,3+0.1));
+		assertTrue(t >= 0.0 && t <= 1.0);
+		ls.pointOnLine(t, found);
+		assertEquals(2,found.x,GrlConstants.TEST_F64);
+		assertEquals(3,found.y,GrlConstants.TEST_F64);
+
+
+		// test before a
+		t = ClosestPoint2D_F64.closestPointT(ls,new Point2D_F64(0,0));
+		assertTrue(t >= 0.0 && t <= 1.0);
+		ls.pointOnLine(t, found);
+		assertEquals(1,found.x,GrlConstants.TEST_F64);
+		assertEquals(2,found.y,GrlConstants.TEST_F64);
+
+		// test after b
+		t = ClosestPoint2D_F64.closestPointT(ls,new Point2D_F64(10,20));
+		assertTrue(t >= 0.0 && t <= 1.0);
+		ls.pointOnLine(t, found);
 		assertEquals(4,found.x,GrlConstants.TEST_F64);
 		assertEquals(5,found.y,GrlConstants.TEST_F64);
 	}

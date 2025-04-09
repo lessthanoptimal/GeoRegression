@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,7 +27,6 @@ import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.jetbrains.annotations.Nullable;
 
-
 /**
  * Functions related to finding the closest point(s) on one shape from another shape.
  *
@@ -48,7 +47,7 @@ public class ClosestPoint2D_F64 {
 	public static Point2D_F64 closestPoint( LineGeneral2D_F64 line,
 											Point2D_F64 p,
 											@Nullable Point2D_F64 output ) {
-		if( output == null )
+		if (output == null)
 			output = new Point2D_F64();
 
 		double AA = line.A*line.A;
@@ -56,10 +55,10 @@ public class ClosestPoint2D_F64 {
 		double BB = line.B*line.B;
 
 		output.y = AA*p.y - AB*p.x - line.B*line.C;
-		output.y /= AA+BB;
+		output.y /= AA + BB;
 
 		output.x = BB*p.x - AB*p.y - line.A*line.C;
-		output.x /= AA+BB;
+		output.x /= AA + BB;
 
 		return output;
 	}
@@ -69,21 +68,21 @@ public class ClosestPoint2D_F64 {
 	 * Finds the closest point on 'line' to the specified point.
 	 * </p>
 	 *
-	 * @param line	Line along which the closest point is being found.
-	 * @param p	   Point.
+	 * @param line Line along which the closest point is being found.
+	 * @param p Point.
 	 * @param output Where the solution is stored. If null a new instance is created. Modified.
 	 * @return Closest point on the line.
 	 */
 	public static Point2D_F64 closestPoint( LineParametric2D_F64 line,
 											Point2D_F64 p,
 											@Nullable Point2D_F64 output ) {
-		if( output == null )
+		if (output == null)
 			output = new Point2D_F64();
 
-		double t = closestPointT( line, p );
+		double t = closestPointT(line, p);
 
-		output.x = line.p.x + line.slope.x * t;
-		output.y = line.p.y + line.slope.y * t;
+		output.x = line.p.x + line.slope.x*t;
+		output.y = line.p.y + line.slope.y*t;
 
 		return output;
 	}
@@ -95,13 +94,13 @@ public class ClosestPoint2D_F64 {
 	 * </p>
 	 *
 	 * @param line The line along which the closest point is being found. Not modified.
-	 * @param p	A point. Not modified.
+	 * @param p A point. Not modified.
 	 * @return Distance as a function of 't'
 	 */
 	public static double closestPointT( LineParametric2D_F64 line,
 										Point2D_F64 p ) {
-		double t = line.slope.x * ( p.x - line.p.x ) + line.slope.y * ( p.y - line.p.y );
-		t /= line.slope.x * line.slope.x + line.slope.y * line.slope.y;
+		double t = line.slope.x*(p.x - line.p.x) + line.slope.y*(p.y - line.p.y);
+		t /= line.slope.x*line.slope.x + line.slope.y*line.slope.y;
 
 		return t;
 	}
@@ -114,16 +113,16 @@ public class ClosestPoint2D_F64 {
 	 *
 	 * @param line The line along which the closest point is being found. Not modified.
 	 * @param scale Scale factor. used to avoid numerical issues
-	 * @param p	A point. Not modified.
+	 * @param p A point. Not modified.
 	 * @return Distance as a function of 't'
 	 */
 	public static double closestPointT( LineParametric2D_F64 line,
-										Point2D_F64 p , double scale ) {
+										Point2D_F64 p, double scale ) {
 		double sx = line.slope.x/scale;
 		double sy = line.slope.y/scale;
 
-		double t = sx * ( p.x - line.p.x ) + sy * ( p.y - line.p.y );
-		t /= sx * sx + sy * sy;
+		double t = sx*(p.x - line.p.x) + sy*(p.y - line.p.y);
+		t /= sx*sx + sy*sy;
 
 		return t;
 	}
@@ -139,9 +138,9 @@ public class ClosestPoint2D_F64 {
 	 * @param y Point's y-coordinate
 	 * @return Distance as a function of 't'
 	 */
-	public static double closestPointT( LineParametric2D_F64 line, double x, double y) {
-		double t = line.slope.x * ( x - line.p.x ) + line.slope.y * ( y - line.p.y );
-		t /= line.slope.x * line.slope.x + line.slope.y * line.slope.y;
+	public static double closestPointT( LineParametric2D_F64 line, double x, double y ) {
+		double t = line.slope.x*(x - line.p.x) + line.slope.y*(y - line.p.y);
+		t /= line.slope.x*line.slope.x + line.slope.y*line.slope.y;
 
 		return t;
 	}
@@ -162,8 +161,8 @@ public class ClosestPoint2D_F64 {
 		double sx = line.slope.x/scale;
 		double sy = line.slope.y/scale;
 
-		double t = sx * ( x - line.p.x ) + sy * ( y - line.p.y );
-		t /= sx * sx + sy * sy;
+		double t = sx*(x - line.p.x) + sy*(y - line.p.y);
+		t /= sx*sx + sy*sy;
 
 		return t;
 	}
@@ -180,24 +179,48 @@ public class ClosestPoint2D_F64 {
 											Point2D_F64 p,
 											@Nullable Point2D_F64 output ) {
 
-		if( output == null )
+		if (output == null)
 			output = new Point2D_F64();
 
 		double slopeX = line.b.x - line.a.x;
 		double slopeY = line.b.y - line.a.y;
 
-		double t = slopeX * ( p.x - line.a.x ) + slopeY * ( p.y - line.a.y );
+		double t = slopeX*(p.x - line.a.x) + slopeY*(p.y - line.a.y);
 		t /= slopeX*slopeX + slopeY*slopeY;
 
-		if( t < 0 )
+		if (t < 0)
 			t = 0;
-		else if( t > 1 )
+		else if (t > 1)
 			t = 1;
 
-		output.x = line.a.x + slopeX * t;
-		output.y = line.a.y + slopeY * t;
+		output.x = line.a.x + slopeX*t;
+		output.y = line.a.y + slopeY*t;
 
 		return output;
+	}
+
+	/**
+	 * Computes the closest point along the line as a function of 't':<br>
+	 * [x, y] = [x_0, y_0] + t·[slopeX, slopeY]
+	 *
+	 * @param line Line segment
+	 * @param p Point`
+	 * @return Closest point on the line to the point
+	 */
+	public static double closestPointT( LineSegment2D_F64 line, Point2D_F64 p ) {
+		double slopeX = line.b.x - line.a.x;
+		double slopeY = line.b.y - line.a.y;
+
+		double t = slopeX*(p.x - line.a.x) + slopeY*(p.y - line.a.y);
+		t /= slopeX*slopeX + slopeY*slopeY;
+
+		// Enforce the end points of the line segment
+		if (t < 0)
+			t = 0;
+		else if (t > 1)
+			t = 1;
+
+		return t;
 	}
 
 	/**
@@ -210,11 +233,10 @@ public class ClosestPoint2D_F64 {
 	 * @param p Point
 	 * @return Closest point on the ellipse
 	 */
-	public static Point2D_F64 closestPoint( EllipseRotated_F64 ellipse , Point2D_F64 p ) {
-		ClosestPointEllipseAngle_F64 alg = new ClosestPointEllipseAngle_F64(GrlConstants.TEST_F64,30);
+	public static Point2D_F64 closestPoint( EllipseRotated_F64 ellipse, Point2D_F64 p ) {
+		ClosestPointEllipseAngle_F64 alg = new ClosestPointEllipseAngle_F64(GrlConstants.TEST_F64, 30);
 		alg.setEllipse(ellipse);
 		alg.process(p);
 		return alg.getClosest();
 	}
-
 }
