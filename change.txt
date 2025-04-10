@@ -1,11 +1,13 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2025-XXX-YY
+Date    : 2025-Apr-10
 Version : 0.27.6
 
 - ClosetPoint2D and ClosestPoint3D
   * closestPointT(LineSegment)
+- LineParametric2D_I32
+  * Added missing zero()
 
 ---------------------------------------------
 Date    : 2025-Mar-21
