@@ -187,7 +187,7 @@ public class ClosestPoint3D_F64 {
 	 *
 	 * @param line Line on which the closest point is being found. Not modified.
 	 * @param pt The point whose closest point is being looked for. Not modified.
-	 * @return The location 'd' along the line of the closeset point
+	 * @return The location 'd' along the line of the closest point
 	 */
 	public static double closestPoint( LineParametric3D_F64 line, Point3D_F64 pt ) {
 		double dx = pt.x - line.p.x;
@@ -337,6 +337,16 @@ public class ClosestPoint3D_F64 {
 			return 0;
 		}
 		return Math.min(d, 1.0);
+	}
+
+	/**
+	 * Finds the closest point on a line to the specified point. Closest point is specified as 't' the
+	 * as in, "xx = p.x + t*slope.x"
+	 *
+	 * This is the same as {@link #closestPoint(LineParametric3D_F64, Point3D_F64)}
+	 */
+	public static double closestPointT( LineParametric3D_F64 line, Point3D_F64 pt ) {
+		return closestPoint(line, pt);
 	}
 
 	/**
