@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -119,6 +119,16 @@ public class LineSegment2D_F64 implements Serializable {
 
 	public LineSegment2D_F64 copy() {
 		return new LineSegment2D_F64(a, b);
+	}
+
+	/**
+	 * Returns true if the value of the two line segments is within tol of each other
+	 */
+	public boolean isIdentical( LineSegment2D_F64 other, double tol ) {
+		if (!other.a.isIdentical(a, tol))
+			return false;
+
+		return other.b.isIdentical(b, tol);
 	}
 
 	@Override

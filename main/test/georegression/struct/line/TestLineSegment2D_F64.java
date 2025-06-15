@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,17 +21,26 @@ package georegression.struct.line;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Peter Abeles
  */
 public class TestLineSegment2D_F64 {
-	@Test
-	void equals() {
-		LineSegment2D_F64 a = new LineSegment2D_F64(1,2,3,4);
-		LineSegment2D_F64 b = new LineSegment2D_F64(1,2,3,4);
+	@Test void isIdentical() {
+		var a = new LineSegment2D_F64(1, 2, 3, 4);
+		var b = new LineSegment2D_F64(1, 2, 3, 4);
+
+		assertTrue(a.isIdentical(b, 0.0));
+
+		b.a.x += 0.0001;
+		assertFalse(a.isIdentical(b, 0.0));
+		assertTrue(a.isIdentical(b, 0.0001));
+	}
+
+	@Test void equals() {
+		var a = new LineSegment2D_F64(1,2,3,4);
+		var b = new LineSegment2D_F64(1,2,3,4);
 
 		assertEquals(a, b);
 		b.a.x += UtilEjml.TEST_F64;
