@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -215,6 +215,20 @@ public class TestIntersection2D_F64 {
 
 		// check parallel closestPoint
 		checkIntersection(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, 1, 0, 3), null);
+	}
+
+	@Test void isLineSegmentIntersection() {
+		assertTrue(Intersection2D_F64.isLineSegmentIntersection(true, 0.0));
+		assertTrue(Intersection2D_F64.isLineSegmentIntersection(true, 1.0));
+		assertTrue(Intersection2D_F64.isLineSegmentIntersection(true, 0.6));
+		assertFalse(Intersection2D_F64.isLineSegmentIntersection(true, -0.1));
+		assertFalse(Intersection2D_F64.isLineSegmentIntersection(true, 1.1));
+
+		assertFalse(Intersection2D_F64.isLineSegmentIntersection(false, 0.0));
+		assertFalse(Intersection2D_F64.isLineSegmentIntersection(false, 1.0));
+		assertTrue(Intersection2D_F64.isLineSegmentIntersection(false, 0.6));
+		assertFalse(Intersection2D_F64.isLineSegmentIntersection(false, -0.1));
+		assertFalse(Intersection2D_F64.isLineSegmentIntersection(false, 1.1));
 	}
 
 	public void checkIntersection( LineSegment2D_F64 a, LineSegment2D_F64 b, @Nullable Point2D_F64 expected ) {

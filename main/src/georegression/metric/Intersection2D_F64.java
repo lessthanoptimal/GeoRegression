@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -297,6 +297,23 @@ public class Intersection2D_F64 {
 	 */
 	public static @Nullable Point2D_F64 intersection( LineSegment2D_F64 l_0, LineSegment2D_F64 l_1,
 													  @Nullable Point2D_F64 ret ) {
+		return intersection(l_0, l_1, true, ret);
+	}
+
+	/**
+	 * Finds the point of intersection between two lines segments with a flag that indicates if end points are
+	 * inclusive or exclusive.
+	 *
+	 * @param l_0 Line segment.
+	 * @param l_1 line segment.
+	 * @param includeEndPoints If true then an end point intersection is considered an intersection.
+	 * @param ret storage for the point of intersection. If null a new point will be declared.
+	 * @return If the two lines intersect it returns the point of intersection. null if they don't intersect or
+	 * have infinite intersections.
+	 */
+	public static @Nullable Point2D_F64 intersection( LineSegment2D_F64 l_0, LineSegment2D_F64 l_1,
+													  boolean includeEndPoints,
+													  @Nullable Point2D_F64 ret ) {
 		double a0 = l_0.b.x - l_0.a.x;
 		double b0 = l_0.b.y - l_0.a.y;
 		double a1 = l_1.b.x - l_1.a.x;
@@ -309,18 +326,16 @@ public class Intersection2D_F64 {
 			return null;
 		double t_1 = top/bottom;
 
-		// does not intersect along the second line segment
-		if (t_1 < 0 || t_1 > 1)
-			return null;
+		// Check to see if it intersects inside the second line segment
+		if (!isLineSegmentIntersection(includeEndPoints, t_1)) return null;
 
 		top = b1*(l_0.a.x - l_1.a.x) + a1*(l_1.a.y - l_0.a.y);
 		bottom = a1*b0 - b1*a0;
 
 		double t_0 = top/bottom;
 
-		// does not intersect along the first line segment
-		if (t_0 < 0 || t_0 > 1)
-			return null;
+		// Check to see if it intersects inside the first line segment
+		if (!isLineSegmentIntersection(includeEndPoints, t_0)) return null;
 
 		if (ret == null) {
 			ret = new Point2D_F64();
@@ -329,6 +344,20 @@ public class Intersection2D_F64 {
 		ret.setTo(l_1.a.x + a1*t_1, l_1.a.y + b1*t_1);
 
 		return ret;
+	}
+
+	/**
+	 * Uses fractional location of intersection to decide if the line segment intersects
+	 *
+	 * @param t fractional location inside the line segment
+	 * @return true if they intersect
+	 */
+	static boolean isLineSegmentIntersection( boolean includeEndPoints, double t ) {
+		if (includeEndPoints) {
+			return t >= 0.0 && t <= 1.0;
+		} else {
+			return t > 0.0 && t < 1.0;
+		}
 	}
 
 	/**
@@ -657,6 +686,7 @@ public class Intersection2D_F64 {
 
 	/**
 	 * Checks to see if the line segment and rectangle intersect each other.
+	 *
 	 * @param line Line segment
 	 * @param rect Rectangle
 	 * @param tol (Input) tolerance for lines being colinear
