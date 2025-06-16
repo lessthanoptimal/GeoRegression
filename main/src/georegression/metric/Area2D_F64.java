@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -42,6 +42,15 @@ public class Area2D_F64 {
 	 */
 	public static double triangle( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c ) {
 		double inner = a.x*(b.y - c.y) + b.x*(c.y - a.y) + c.x*(a.y - b.y);
+
+		return Math.abs(inner/2.0);
+	}
+
+	/**
+	 * Computes area af a triangle
+	 */
+	public static double triangle( double ax, double ay, double bx, double by, double cx, double cy ) {
+		double inner = ax*(by - cy) + bx*(cy - ay) + cx*(ay - by);
 
 		return Math.abs(inner/2.0);
 	}
