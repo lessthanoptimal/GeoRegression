@@ -413,17 +413,28 @@ public class Intersection2D_F64 {
 
 	public static boolean intersects2( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, double tol ) {
 		// See if there's a special case where 3 of the points are colinear
-		if (UtilLine2D_F64.isColinear(a, b, c, tol) || UtilLine2D_F64.isColinear(a, b, d, tol) ||
-				UtilLine2D_F64.isColinear(c, d, a, tol) || UtilLine2D_F64.isColinear(c, d, b, tol)) {
+		boolean co_abc = UtilLine2D_F64.isColinear(a, b, c, tol);
+		boolean co_abd = UtilLine2D_F64.isColinear(a, b, d, tol);
+		boolean co_cda = UtilLine2D_F64.isColinear(c, d, a, tol);
+		boolean co_cdb = UtilLine2D_F64.isColinear(c, d, b, tol);
 
-			if (UtilLine2D_F64.isColinear(a, b, c, tol) && UtilLine2D_F64.isBetweenColinearExclusive(a, b, c))
+		if (co_abc || co_abd || co_cda || co_cdb) {
+			if (co_abc && UtilLine2D_F64.isBetweenColinearExclusive(a, b, c))
 				return true;
-			if (UtilLine2D_F64.isColinear(a, b, d, tol) && UtilLine2D_F64.isBetweenColinearExclusive(a, b, d))
+			if (co_abd && UtilLine2D_F64.isBetweenColinearExclusive(a, b, d))
 				return true;
-			if (UtilLine2D_F64.isColinear(c, d, a, tol) && UtilLine2D_F64.isBetweenColinearExclusive(c, d, a))
+			if (co_cda && UtilLine2D_F64.isBetweenColinearExclusive(c, d, a))
 				return true;
-			if (UtilLine2D_F64.isColinear(c, d, b, tol) && UtilLine2D_F64.isBetweenColinearExclusive(c, d, b))
+			if (co_cdb && UtilLine2D_F64.isBetweenColinearExclusive(c, d, b))
 				return true;
+
+			// special case of (a,b) and (c,d) being the same line segment
+			if (co_abc && co_abd) {
+				// the two lines are parallel. If they were parallel and intersected on of the previous conditions
+				// would have been true. We just need to check to see if both endpoints lie on this line
+				return UtilLine2D_F64.isBetweenColinear(a, b, c) && UtilLine2D_F64.isBetweenColinear(a, b, d);
+			}
+
 			return false;
 		}
 

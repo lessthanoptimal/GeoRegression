@@ -33,9 +33,9 @@ public class TestLineSegment2D_F64 {
 
 		assertTrue(a.isIdentical(b, 0.0));
 
-		b.a.x += 0.0001;
+		b.a.x += UtilEjml.TEST_F64_SQ;
 		assertFalse(a.isIdentical(b, 0.0));
-		assertTrue(a.isIdentical(b, 0.0001));
+		assertTrue(a.isIdentical(b, UtilEjml.TEST_F64_SQ*1.01));
 	}
 
 	@Test void equals() {

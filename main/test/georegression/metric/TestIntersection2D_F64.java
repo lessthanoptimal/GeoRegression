@@ -261,6 +261,18 @@ public class TestIntersection2D_F64 {
 		// check parallel
 		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, 1, 0, 3), tol));
 		assertFalse(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, -0.5, 0, 1.5), tol));
+
+		// Lines partially overlap each other
+		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(1, 1, 1, 5), new LineSegment2D_F64(1, 4, 1, 7), tol));
+
+		// Check same line
+		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(1, 2, 4, 5), new LineSegment2D_F64(1, 2, 4, 5), tol));
+
+		// one inside the other
+		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(1, 2, 1, 8), new LineSegment2D_F64(1, 3, 1, 7), tol));
+
+		// same line but with end point order swapped
+		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(1, 2, 4, 5), new LineSegment2D_F64(4, 5, 1, 2), tol));
 	}
 
 	@Test void intersects2_ls_to_ls() {
@@ -284,6 +296,17 @@ public class TestIntersection2D_F64 {
 		// check parallel
 		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, 1, 0, 3), tol));
 		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, -0.5, 0, 1.5), tol));
+
+		// Lines partially overlap each other
+		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 1, 1, 5), new LineSegment2D_F64(1, 4, 1, 7), tol));
+
+		// Check same line
+		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 2, 4, 5), new LineSegment2D_F64(1, 2, 4, 5), tol));
+		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 2, 4, 5), new LineSegment2D_F64(4, 5, 1, 2), tol));
+
+		// one inside the other
+		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 2, 1, 8), new LineSegment2D_F64(1, 3, 1, 7), tol));
+		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 3, 1, 7), new LineSegment2D_F64(1, 2, 1, 8), tol));
 	}
 
 	/**
