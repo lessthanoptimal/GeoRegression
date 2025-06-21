@@ -31,7 +31,6 @@ import georegression.struct.point.Vector2D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.shapes.*;
 import georegression.transform.se.SePointOps_F64;
-import org.ejml.UtilEjml;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
@@ -328,7 +327,7 @@ public class TestIntersection2D_F64 extends GeoStandardJUnit {
 	}
 
 	@Test void intersects_ls_to_ls() {
-		final double tol = UtilEjml.TEST_F64;
+		final double tol = GrlConstants.TEST_F64;
 		// check positive, none pathological cases
 		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 3), tol));
 		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(0, 2, 2, 0), new LineSegment2D_F64(0, 0, 2, 2), tol));
@@ -361,7 +360,7 @@ public class TestIntersection2D_F64 extends GeoStandardJUnit {
 	}
 
 	@Test void intersectsEx_ls_to_ls() {
-		final double tol = UtilEjml.TEST_F64;
+		final double tol = GrlConstants.TEST_F64;
 		// check positive, none pathological cases
 		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 3), tol));
 		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(0, 2, 2, 0), new LineSegment2D_F64(0, 0, 2, 2), tol));
@@ -488,7 +487,7 @@ public class TestIntersection2D_F64 extends GeoStandardJUnit {
 		b.slope.setTo(0, 1);
 		Point2D_F64 found = Intersection2D_F64.intersection(a, b, true, null);
 		assertNotNull(found);
-		assertEquals(0, found.distance(-2, 3), UtilEjml.TEST_F64);
+		assertEquals(0, found.distance(-2, 3), GrlConstants.TEST_F64);
 	}
 
 	@Test void intersection_l_to_l_parametric_t() {
@@ -703,7 +702,7 @@ public class TestIntersection2D_F64 extends GeoStandardJUnit {
 	}
 
 	@Test void intersects_lineseg_rect() {
-		final double tol = UtilEjml.TEST_F64;
+		final double tol = GrlConstants.TEST_F64;
 		var rect = new Rectangle2D_F64(-1, -2, 1, 2);
 
 		// line is outside of rectangle, but a naive check along one axis would cause a false positive
