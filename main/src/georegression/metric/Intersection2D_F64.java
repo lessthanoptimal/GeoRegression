@@ -29,10 +29,7 @@ import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
-import georegression.struct.shapes.Polygon2D_F64;
-import georegression.struct.shapes.Quadrilateral_F64;
-import georegression.struct.shapes.Rectangle2D_F64;
-import georegression.struct.shapes.RectangleLength2D_F64;
+import georegression.struct.shapes.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -172,12 +169,18 @@ public class Intersection2D_F64 {
 	 * @return true if the point is inside and false if it is not.
 	 */
 	public static boolean contains( Quadrilateral_F64 quad, Point2D_F64 pt ) {
-		return containTriangle(quad.a, quad.b, quad.d, pt) ||
-				containTriangle(quad.b, quad.c, quad.d, pt);
+		return containsTriangle(quad.a, quad.b, quad.d, pt) ||
+				containsTriangle(quad.b, quad.c, quad.d, pt);
+	}
+
+	/** Use {@link #containsTriangle(Point2D_F64, Point2D_F64, Point2D_F64, Point2D_F64)} instead */
+	@Deprecated
+	public static boolean containTriangle( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 pt ) {
+		return containsTriangle(a, b, c, pt);
 	}
 
 	/**
-	 * Returns true of the the point is inside the triangle.
+	 * <p>Returns true of the point is inside the triangle.</p>
 	 *
 	 * This function is simply an unrolled version of {@link #containsConcave(Polygon2D_F64, Point2D_F64)}.
 	 *
@@ -187,7 +190,7 @@ public class Intersection2D_F64 {
 	 * @param pt Point which is being tested for containment inside of triangle
 	 * @return true if the point is inside of triangle
 	 */
-	public static boolean containTriangle( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 pt ) {
+	public static boolean containsTriangle( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 pt ) {
 		boolean ret = false;
 
 		if (((a.y > pt.y) != (b.y > pt.y)) && (pt.x < (b.x - a.x)*(pt.y - a.y)/(b.y - a.y) + a.x))
@@ -200,6 +203,188 @@ public class Intersection2D_F64 {
 			ret = !ret;
 
 		return ret;
+	}
+
+	/** See {@link #insideTriangle(double, double, double, double, double, double, double, double)} */
+	public static int insideTriangle( Triangle2D_F64 t, double px, double py ) {
+		return insideTriangle(t.v0.x, t.v0.y, t.v1.x, t.v1.y, t.v2.x, t.v2.y, px, py);
+	}
+
+	/** See {@link #insideTriangle(double, double, double, double, double, double, double, double)} */
+	public static int insideTriangle( Triangle2D_F64 t, Point2D_F64 pt ) {
+		return insideTriangle(t.v0, t.v1, t.v2, pt);
+	}
+
+	/** See {@link #insideTriangle(double, double, double, double, double, double, double, double)} */
+	public static int insideTriangle( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 pt ) {
+		return insideTriangle(a.x, a.y, b.x, b.y, c.x, c.y, pt.x, pt.y);
+	}
+
+	/**
+	 * Test to see if a point "p" is inside a triangle defined by 3 points. It will return 0 if the point is not
+	 * inside, 1 if the point is strictly inside, and 2 if the point is not strictly inside. Strictly inside
+	 * means a point is inside the triangle, excluding the triangle's border.
+	 *
+	 * @param ax Triangle corner A, x-coordinate
+	 * @param ay Triangle corner A, y-coordinate
+	 * @param bx Triangle corner B, x-coordinate
+	 * @param by Triangle corner B, y-coordinate
+	 * @param cx Triangle corner C, x-coordinate
+	 * @param cy Triangle corner C, y-coordinate
+	 * @param px Point being tested. x-coordinate
+	 * @param py Point being tested. y-coordinate
+	 * @return 0 = not inside. 1 = strictly inside. 2 = inside.
+	 */
+	public static int insideTriangle( double ax, double ay, double bx, double by, double cx, double cy,
+									  double px, double py ) {
+		// Find the magnitude
+		double scale = Math.max(Math.abs(ax), Math.abs(ay));
+		scale = Math.max(scale, Math.max(Math.abs(bx), Math.abs(by)));
+		scale = Math.max(scale, Math.max(Math.abs(cx), Math.abs(cy)));
+
+		// Re-scale points to avoid numerical issues
+		// @formatter:off
+		ax /= scale; ay /= scale; bx /= scale; by /= scale; cx /= scale; cy /= scale; px /= scale; py /= scale;
+		// @formatter:on
+
+		// Compute vectors c-a, b-a, p-a
+		double ac_x = cx - ax, ac_y = cy - ay;
+		double ab_x = bx - ax, ab_y = by - ay;
+		double ap_x = px - ax, ap_y = py - ay;
+
+		// Compute dot products
+		double dot00 = ac_x*ac_x + ac_y*ac_y;
+		double dot01 = ac_x*ab_x + ac_y*ab_y;
+		double dot02 = ac_x*ap_x + ac_y*ap_y;
+		double dot11 = ab_x*ab_x + ab_y*ab_y;
+		double dot12 = ab_x*ap_x + ab_y*ap_y;
+
+		// Barycentric coordinates
+		double divisor = dot00*dot11 - dot01*dot01;
+
+		if (divisor == 0.0)
+			return 0;
+
+		double u = (dot11*dot02 - dot01*dot12)/divisor;
+		double v = (dot00*dot12 - dot01*dot02)/divisor;
+
+		// See if it's strictly inside
+		if (u > 0 && v > 0 && (u + v) < 1.0)
+			return 1;
+
+		// See if its inside, including the border
+		if (u >= 0 && v >= 0 && (u + v) <= 1.0)
+			return 2;
+
+		return 0;
+	}
+
+	/** See {@link #insideTriangle(double, double, double, double, double, double, double, double)} */
+	public static int insideTriangleV2( Triangle2D_F64 t, double px, double py ) {
+		return insideTriangleV2(t.v0.x, t.v0.y, t.v1.x, t.v1.y, t.v2.x, t.v2.y, px, py);
+	}
+
+	/**
+	 * Another version of inside triangle test that checks orientation using a cross product and avoid
+	 * division. Making it better able to handle extreme differences in numerical scale.
+	 *
+	 * @param ax Triangle corner A, x-coordinate
+	 * @param ay Triangle corner A, y-coordinate
+	 * @param bx Triangle corner B, x-coordinate
+	 * @param by Triangle corner B, y-coordinate
+	 * @param cx Triangle corner C, x-coordinate
+	 * @param cy Triangle corner C, y-coordinate
+	 * @param px Point being tested. x-coordinate
+	 * @param py Point being tested. y-coordinate
+	 * @return 0 = not inside. 1 = strictly inside. 2 = inside.
+	 */
+	public static int insideTriangleV2( double ax, double ay, double bx, double by, double cx, double cy,
+										double px, double py ) {
+		// Find the magnitude
+		double scale = Math.max(Math.abs(ax), Math.abs(ay));
+		scale = Math.max(scale, Math.max(Math.abs(bx), Math.abs(by)));
+		scale = Math.max(scale, Math.max(Math.abs(cx), Math.abs(cy)));
+
+		// Re-scale points to avoid numerical issues
+		// @formatter:off
+		ax /= scale; ay /= scale; bx /= scale; by /= scale; cx /= scale; cy /= scale; px /= scale; py /= scale;
+		// @formatter:on
+
+		double o1 = orientCross(ax, ay, bx, by, px, py);
+		double o2 = orientCross(bx, by, cx, cy, px, py);
+		double o3 = orientCross(cx, cy, ax, ay, px, py);
+
+		boolean border = Math.abs(o1) <= 0.0 || Math.abs(o2) <= 0.0 || Math.abs(o3) <= 0.0;
+
+		boolean hasNegative = (o1 < 0) || (o2 < 0) || (o3 < 0);
+		boolean hasPositives = (o1 > 0) || (o2 > 0) || (o3 > 0);
+
+		if (hasNegative && hasPositives) {
+			return 0;
+		}
+
+		if (border)
+			return 2;
+
+		return 1;
+	}
+
+	/// Computes cross product between vector (a,b) and (a,p) for use in orientation based inside triangle test
+	private static double orientCross( double ax, double ay, double bx, double by, double px, double py ) {
+		return (bx - ax)*(py - ay) - (by - ay)*(px - ax);
+	}
+
+	/** See {@link #insideCircumcircleCCW(double, double, double, double, double, double, double, double, double)} */
+	public static int insideCircumcircleCCW( Triangle2D_F64 t, double px, double py, double tol ) {
+		return insideCircumcircleCCW(t.v0.x, t.v0.y, t.v1.x, t.v1.y, t.v2.x, t.v2.y, px, py, tol);
+	}
+
+	/**
+	 * Tests to see if the point is inside the circumcircle of the passed in triangle. A counter-clockwise
+	 * order of triangle corners is assumed.
+	 *
+	 * @param ax Triangle corner A, x-coordinate
+	 * @param ay Triangle corner A, y-coordinate
+	 * @param bx Triangle corner B, x-coordinate
+	 * @param by Triangle corner B, y-coordinate
+	 * @param cx Triangle corner C, x-coordinate
+	 * @param cy Triangle corner C, y-coordinate
+	 * @param px Point being tested. x-coordinate
+	 * @param py Point being tested. y-coordinate
+	 * @param tol Tolerance for it being on the circumcircle. Try 1e-8.
+	 * @return 1 = inside, -1 = outside, 0 = on circumcircle
+	 */
+	public static int insideCircumcircleCCW( double ax, double ay,
+											 double bx, double by,
+											 double cx, double cy,
+											 double px, double py,
+											 double tol ) {
+		// Find the magnitude
+		double scale = Math.max(Math.abs(ax), Math.abs(ay));
+		scale = Math.max(scale, Math.max(Math.abs(bx), Math.abs(by)));
+		scale = Math.max(scale, Math.max(Math.abs(cx), Math.abs(cy)));
+
+		// Re-scale points to avoid numerical issues
+		// @formatter:off
+		ax /= scale; ay /= scale; bx /= scale; by /= scale; cx /= scale; cy /= scale; px /= scale; py /= scale;
+		// @formatter:on
+
+		// Translate coordinates so that p is at the origin. Improves stability and simplifies math
+		double a11 = ax - px, a12 = ay - py;
+		double a21 = bx - px, a22 = by - py;
+		double a31 = cx - px, a32 = cy - py;
+
+		// Determinant of 3x3 matrix
+		// | a11, a12, a11*a11 + a12*a12 |
+		// | a21, a22, a21*a21 + a22*a22 |
+		// | a31, a32, a31*a31 + a32*a32 |
+		double det = (a11*a11 + a12*a12)*(a21*a32 - a31*a22) -
+				(a21*a21 + a22*a22)*(a11*a32 - a31*a12) +
+				(a31*a31 + a32*a32)*(a11*a22 - a21*a12);
+
+		if (det > tol) return 1;    // Inside
+		if (det < -tol) return -1;   // Outside
+		return 0;                 // On the circumcircle
 	}
 
 	/**
@@ -361,7 +546,7 @@ public class Intersection2D_F64 {
 	}
 
 	/**
-	 * Returns true if the two line segments intersect. Two end points touching will be considered an
+	 * Returns true if the two line-segments intersect. Two end points touching will be considered an
 	 * intersection.
 	 *
 	 * @param a (Input) Line segment
@@ -370,10 +555,16 @@ public class Intersection2D_F64 {
 	 * @return true if they intersect
 	 */
 	public static boolean intersects( LineSegment2D_F64 a, LineSegment2D_F64 b, double tol ) {
-		return intersects(a.a, a.b, b.a, b.b, tol);
+		return intersectsLine(a.a, a.b, b.a, b.b, tol);
 	}
 
+	/** Use {@link #intersectsLine} instead because it's ambiguous what the data type is here */
+	@Deprecated
 	public static boolean intersects( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, double tol ) {
+		return intersectsLine(a, b, c, d, tol);
+	}
+
+	public static boolean intersectsLine( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, double tol ) {
 		// See if there's a special case where 3 of the points are colinear
 		if (UtilLine2D_F64.isColinear(a, b, c, tol) || UtilLine2D_F64.isColinear(a, b, d, tol) ||
 				UtilLine2D_F64.isColinear(c, d, a, tol) || UtilLine2D_F64.isColinear(c, d, b, tol)) {
@@ -407,11 +598,17 @@ public class Intersection2D_F64 {
 	 * @param tol (Input) tolerance for lines being colinear
 	 * @return true if they intersect
 	 */
-	public static boolean intersects2( LineSegment2D_F64 a, LineSegment2D_F64 b, double tol ) {
-		return intersects2(a.a, a.b, b.a, b.b, tol);
+	public static boolean intersectsEx( LineSegment2D_F64 a, LineSegment2D_F64 b, double tol ) {
+		return intersectsLineEx(a.a, a.b, b.a, b.b, tol);
 	}
 
-	public static boolean intersects2( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, double tol ) {
+	/** Use {@link #intersectsLineEx} instead because it's ambiguous what the data type is here */
+	@Deprecated
+	public static boolean intersectsEx( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, double tol ) {
+		return intersectsLineEx(a, b, c, d, tol);
+	}
+
+	public static boolean intersectsLineEx( Point2D_F64 a, Point2D_F64 b, Point2D_F64 c, Point2D_F64 d, double tol ) {
 		// See if there's a special case where 3 of the points are colinear
 		boolean co_abc = UtilLine2D_F64.isColinear(a, b, c, tol);
 		boolean co_abd = UtilLine2D_F64.isColinear(a, b, d, tol);

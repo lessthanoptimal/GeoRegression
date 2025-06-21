@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -151,21 +151,7 @@ public class Distance2D_F64 {
 	 * @return Euclidean distance squared of the closest point on a line is away from a point.
 	 */
 	public static double distanceSq( LineSegment2D_F64 line, Point2D_F64 p ) {
-		double a = line.b.x - line.a.x;
-		double b = line.b.y - line.a.y;
-
-		double t = a*(p.x - line.a.x) + b*(p.y - line.a.y);
-		t /= (a*a + b*b);
-
-		// if the point of intersection is past the end points return the distance
-		// from the closest end point
-		if (t < 0) {
-			return UtilPoint2D_F64.distanceSq(line.a.x, line.a.y, p.x, p.y);
-		} else if (t > 1.0)
-			return UtilPoint2D_F64.distanceSq(line.b.x, line.b.y, p.x, p.y);
-
-		// return the distance of the closest point on the line
-		return UtilPoint2D_F64.distanceSq(line.a.x + t*a, line.a.y + t*b, p.x, p.y);
+		return distanceLineSq(line.a.x, line.a.y, line.b.x, line.b.y, p.x, p.y);
 	}
 
 	/**
@@ -179,21 +165,36 @@ public class Distance2D_F64 {
 	 * @return Euclidean distance squared of the closest point on a line is away from a point.
 	 */
 	public static double distanceSq( LineSegment2D_F64 line, double x, double y ) {
-		double a = line.b.x - line.a.x;
-		double b = line.b.y - line.a.y;
+		return distanceLineSq(line.a.x, line.a.y, line.b.x, line.b.y, x, y);
+	}
 
-		double t = a*(x - line.a.x) + b*(y - line.a.y);
-		t /= (a*a + b*b);
+	/**
+	 * Returns the distance squared of point P from the specified line segment.
+	 *
+	 * @param ax Line segment end point A. x-axis
+	 * @param ay Line segment end point A. y-axis
+	 * @param bx Line segment end point B. x-axis
+	 * @param by Line segment end point B. y-axis
+	 * @param px Point's x-coordinate
+	 * @param py Point's y-coordinate
+	 * @return Euclidean distance squared of the closest point on a line is away from a point.
+	 */
+	public static double distanceLineSq( double ax, double ay, double bx, double by, double px, double py ) {
+		double ab_x = bx - ax;
+		double ab_y = by - ay;
+
+		double t = ab_x*(px - ax) + ab_y*(py - ay);
+		t /= (ab_x*ab_x + ab_y*ab_y);
 
 		// if the point of intersection is past the end points return the distance
 		// from the closest end point
 		if (t < 0) {
-			return UtilPoint2D_F64.distanceSq(line.a.x, line.a.y, x, y);
+			return UtilPoint2D_F64.distanceSq(ax, ay, px, py);
 		} else if (t > 1.0)
-			return UtilPoint2D_F64.distanceSq(line.b.x, line.b.y, x, y);
+			return UtilPoint2D_F64.distanceSq(bx, by, px, py);
 
 		// return the distance of the closest point on the line
-		return UtilPoint2D_F64.distanceSq(line.a.x + t*a, line.a.y + t*b, x, y);
+		return UtilPoint2D_F64.distanceSq(ax + t*ab_x, ay + t*ab_y, px, py);
 	}
 
 	/**
@@ -268,11 +269,14 @@ public class Distance2D_F64 {
 	public static double distanceSq( Quadrilateral_F64 quad, Point2D_F64 p ) {
 		LineSegment2D_F64 seg = LineSegment2D_F64.wrap(quad.a, quad.b);
 		double a = distanceSq(seg, p);
-		seg.a = quad.b;seg.b = quad.c;
-		a = Math.min(a,distanceSq(seg,p));
-		seg.a = quad.c;seg.b = quad.d;
-		a = Math.min(a,distanceSq(seg,p));
-		seg.a = quad.d;seg.b = quad.a;
+		seg.a = quad.b;
+		seg.b = quad.c;
+		a = Math.min(a, distanceSq(seg, p));
+		seg.a = quad.c;
+		seg.b = quad.d;
+		a = Math.min(a, distanceSq(seg, p));
+		seg.a = quad.d;
+		seg.b = quad.a;
 		return Math.min(a, distanceSq(seg, p));
 	}
 

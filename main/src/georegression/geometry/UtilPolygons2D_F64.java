@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -48,27 +48,27 @@ public class UtilPolygons2D_F64 {
 		final int N = poly.size();
 		int numPositive = 0;
 		for (int i = 0; i < N; i++) {
-			int j = (i+1)%N;
-			int k = (i+2)%N;
+			int j = (i + 1)%N;
+			int k = (i + 2)%N;
 
 			Point2D_F64 a = poly.vertexes.data[i];
 			Point2D_F64 b = poly.vertexes.data[j];
 			Point2D_F64 c = poly.vertexes.data[k];
 
-			double dx0 = a.x-b.x;
-			double dy0 = a.y-b.y;
+			double dx0 = a.x - b.x;
+			double dy0 = a.y - b.y;
 
-			double dx1 = c.x-b.x;
-			double dy1 = c.y-b.y;
+			double dx1 = c.x - b.x;
+			double dy1 = c.y - b.y;
 
-			double z = dx0 * dy1 - dy0 * dx1;
-			if( z > 0 )
+			double z = dx0*dy1 - dy0*dx1;
+			if (z > 0)
 				numPositive++;
 			// z can be zero if there are duplicate points.
 			// not sure if it should throw an exception if its "bad" or not
 		}
 
-		return( numPositive == 0 || numPositive == N );
+		return (numPositive == 0 || numPositive == N);
 	}
 
 	/**
@@ -80,8 +80,8 @@ public class UtilPolygons2D_F64 {
 	 * @param tol (Input) tolerance for testing if lines are colinear
 	 * @return true if simple or false if complex.
 	 */
-	public static PolygonInfo isSimple(Polygon2D_F64 p, @Nullable PolygonInfo result, double tol) {
-		if (result==null)
+	public static PolygonInfo isSimple( Polygon2D_F64 p, @Nullable PolygonInfo result, double tol ) {
+		if (result == null)
 			result = new PolygonInfo();
 		result.reset();
 
@@ -94,15 +94,15 @@ public class UtilPolygons2D_F64 {
 		final int N = p.size();
 
 		int wind = 0; // winding number
- 		boolean concave = false; // true concave
+		boolean concave = false; // true concave
 
 		double crsp = 0.0; // previous cross product
 
 		// vector of previous side
-		double p0 = p.get(N-1).x - p.get(N-2).x;
-		double p1 = p.get(N-1).y - p.get(N-2).y;
+		double p0 = p.get(N - 1).x - p.get(N - 2).x;
+		double p1 = p.get(N - 1).y - p.get(N - 2).y;
 
-		for (int i = 0, ii=N-1; i < N; ii=i,i++) {
+		for (int i = 0, ii = N - 1; i < N; ii = i, i++) {
 			Point2D_F64 pa = p.get(ii);
 			Point2D_F64 pb = p.get(i);
 
@@ -110,7 +110,7 @@ public class UtilPolygons2D_F64 {
 			double d0 = pb.x - pa.x;
 			double d1 = pb.y - pa.y;
 
-			double crs = p0*d1-p1*d0; // cross product of vectors
+			double crs = p0*d1 - p1*d0; // cross product of vectors
 			if (crs*crsp < 0.0)
 				concave = true; // there is a sign change and this means a concavity was found
 			if (p1 <= 0.0) {
@@ -153,17 +153,17 @@ public class UtilPolygons2D_F64 {
 	 * @param tol (Input) tolerance for testing if lines are colinear
 	 * @return true if self intersection
 	 */
-	public static boolean isSelfIntersectingBrute(Polygon2D_F64 p, double tol) {
+	public static boolean isSelfIntersectingBrute( Polygon2D_F64 p, double tol ) {
 		final int N = p.size();
 
-		for (int i = 0, j = N-1; i < N; j=i,i++) {
+		for (int i = 0, j = N - 1; i < N; j = i, i++) {
 			Point2D_F64 a = p.get(j);
 			Point2D_F64 b = p.get(i);
 
-			for (int ii = i+1, jj=i; ii < N; jj=ii, ii++) {
+			for (int ii = i + 1, jj = i; ii < N; jj = ii, ii++) {
 				Point2D_F64 aa = p.get(jj);
 				Point2D_F64 bb = p.get(ii);
-				if (Intersection2D_F64.intersects2(a, b, aa, bb, tol))
+				if (Intersection2D_F64.intersectsLineEx(a, b, aa, bb, tol))
 					return true;
 			}
 		}
@@ -175,14 +175,13 @@ public class UtilPolygons2D_F64 {
 	 * Triangulates the simple polygon in O(N^2). Output is represented by sets of indexes where
 	 * each index is the index of the vertex in the input polygon.
 	 *
-	 * @see TriangulateSimpleRemoveEars_F64
-	 *
 	 * @param p (Input) Polygon
 	 * @param triangles (Output) Triangles.
+	 * @see TriangulateSimpleRemoveEars_F64
 	 */
-	public static void triangulate(Polygon2D_F64 p, DogArray<ThreeIndexes> triangles) {
+	public static void triangulate( Polygon2D_F64 p, DogArray<ThreeIndexes> triangles ) {
 		var alg = new TriangulateSimpleRemoveEars_F64();
-		alg.process(p,triangles);
+		alg.process(p, triangles);
 	}
 
 	/**
@@ -191,7 +190,7 @@ public class UtilPolygons2D_F64 {
 	 * @param input Rectangle.
 	 * @param output Quadrilateral. Modified.
 	 */
-	public static void convert( Rectangle2D_F64 input , Quadrilateral_F64 output ) {
+	public static void convert( Rectangle2D_F64 input, Quadrilateral_F64 output ) {
 		output.a.x = input.p0.x;
 		output.a.y = input.p0.y;
 
@@ -211,7 +210,7 @@ public class UtilPolygons2D_F64 {
 	 * @param input Rectangle.
 	 * @param output Polygon2D_F64. Modified.
 	 */
-	public static void convert( Rectangle2D_F64 input , Polygon2D_F64 output ) {
+	public static void convert( Rectangle2D_F64 input, Polygon2D_F64 output ) {
 		if (output.size() != 4)
 			throw new IllegalArgumentException("polygon of order 4 expected");
 
@@ -227,7 +226,7 @@ public class UtilPolygons2D_F64 {
 	 * @param input Quadrilateral.
 	 * @param output Polygon2D_F64. Modified.
 	 */
-	public static void convert( Quadrilateral_F64 input , Polygon2D_F64 output ) {
+	public static void convert( Quadrilateral_F64 input, Polygon2D_F64 output ) {
 		if (output.size() != 4)
 			throw new IllegalArgumentException("polygon of order 4 expected");
 
@@ -243,8 +242,8 @@ public class UtilPolygons2D_F64 {
 	 * @param input polygon.
 	 * @param output Quadrilateral. Modified.
 	 */
-	public static void convert( Polygon2D_F64 input , Quadrilateral_F64 output ) {
-		if( input.size() != 4 )
+	public static void convert( Polygon2D_F64 input, Quadrilateral_F64 output ) {
+		if (input.size() != 4)
 			throw new IllegalArgumentException("Expected 4-sided polygon as input");
 
 		output.a.setTo(input.get(0));
@@ -259,18 +258,18 @@ public class UtilPolygons2D_F64 {
 	 * @param input Rectangle.
 	 * @param output Quadrilateral. Modified.
 	 */
-	public static void convert( RectangleLength2D_I32 input , Quadrilateral_F64 output ) {
+	public static void convert( RectangleLength2D_I32 input, Quadrilateral_F64 output ) {
 		output.a.x = input.x0;
 		output.a.y = input.y0;
 
-		output.b.x = input.x0+input.width-1;
+		output.b.x = input.x0 + input.width - 1;
 		output.b.y = input.y0;
 
-		output.c.x = input.x0+input.width-1;
-		output.c.y = input.y0+input.height-1;
+		output.c.x = input.x0 + input.width - 1;
+		output.c.y = input.y0 + input.height - 1;
 
 		output.d.x = input.x0;
-		output.d.y = input.y0+input.height-1;
+		output.d.y = input.y0 + input.height - 1;
 	}
 
 	/**
@@ -279,23 +278,23 @@ public class UtilPolygons2D_F64 {
 	 * @param quad (Input) Quadrilateral
 	 * @param rectangle (Output) Minimum area rectangle
 	 */
-	public static void bounding( Quadrilateral_F64 quad , Rectangle2D_F64 rectangle ) {
+	public static void bounding( Quadrilateral_F64 quad, Rectangle2D_F64 rectangle ) {
 
-		rectangle.p0.x = Math.min(quad.a.x,quad.b.x);
-		rectangle.p0.x = Math.min(rectangle.p0.x,quad.c.x);
-		rectangle.p0.x = Math.min(rectangle.p0.x,quad.d.x);
+		rectangle.p0.x = Math.min(quad.a.x, quad.b.x);
+		rectangle.p0.x = Math.min(rectangle.p0.x, quad.c.x);
+		rectangle.p0.x = Math.min(rectangle.p0.x, quad.d.x);
 
-		rectangle.p0.y = Math.min(quad.a.y,quad.b.y);
-		rectangle.p0.y = Math.min(rectangle.p0.y,quad.c.y);
-		rectangle.p0.y = Math.min(rectangle.p0.y,quad.d.y);
+		rectangle.p0.y = Math.min(quad.a.y, quad.b.y);
+		rectangle.p0.y = Math.min(rectangle.p0.y, quad.c.y);
+		rectangle.p0.y = Math.min(rectangle.p0.y, quad.d.y);
 
-		rectangle.p1.x = Math.max(quad.a.x,quad.b.x);
-		rectangle.p1.x = Math.max(rectangle.p1.x,quad.c.x);
-		rectangle.p1.x = Math.max(rectangle.p1.x,quad.d.x);
+		rectangle.p1.x = Math.max(quad.a.x, quad.b.x);
+		rectangle.p1.x = Math.max(rectangle.p1.x, quad.c.x);
+		rectangle.p1.x = Math.max(rectangle.p1.x, quad.d.x);
 
-		rectangle.p1.y = Math.max(quad.a.y,quad.b.y);
-		rectangle.p1.y = Math.max(rectangle.p1.y,quad.c.y);
-		rectangle.p1.y = Math.max(rectangle.p1.y,quad.d.y);
+		rectangle.p1.y = Math.max(quad.a.y, quad.b.y);
+		rectangle.p1.y = Math.max(rectangle.p1.y, quad.c.y);
+		rectangle.p1.y = Math.max(rectangle.p1.y, quad.d.y);
 	}
 
 	/**
@@ -305,22 +304,22 @@ public class UtilPolygons2D_F64 {
 	 * @param polygon (Input) Polygon
 	 * @param rectangle (Output) Minimum area rectangle
 	 */
-	public static void bounding( Polygon2D_F64 polygon , Rectangle2D_F64 rectangle ) {
+	public static void bounding( Polygon2D_F64 polygon, Rectangle2D_F64 rectangle ) {
 
 		rectangle.p0.setTo(polygon.get(0));
 		rectangle.p1.setTo(polygon.get(0));
 
 		for (int i = 0; i < polygon.size(); i++) {
 			Point2D_F64 p = polygon.get(i);
-			if( p.x < rectangle.p0.x ) {
+			if (p.x < rectangle.p0.x) {
 				rectangle.p0.x = p.x;
-			} else if( p.x > rectangle.p1.x ) {
+			} else if (p.x > rectangle.p1.x) {
 				rectangle.p1.x = p.x;
 			}
 
-			if( p.y < rectangle.p0.y ) {
+			if (p.y < rectangle.p0.y) {
 				rectangle.p0.y = p.y;
-			} else if( p.y > rectangle.p1.y ) {
+			} else if (p.y > rectangle.p1.y) {
 				rectangle.p1.y = p.y;
 			}
 		}
@@ -377,8 +376,8 @@ public class UtilPolygons2D_F64 {
 	 * @param center (output) Center point of the quadrilateral. Can be null.
 	 * @return The center point.
 	 */
-	public static Point2D_F64 center( Quadrilateral_F64 quad , @Nullable Point2D_F64 center ) {
-		if( center == null )
+	public static Point2D_F64 center( Quadrilateral_F64 quad, @Nullable Point2D_F64 center ) {
+		if (center == null)
 			center = new Point2D_F64();
 
 		center.x = quad.a.x + quad.b.x + quad.c.x + quad.d.x;
@@ -401,21 +400,21 @@ public class UtilPolygons2D_F64 {
 		final int N = polygon.size();
 		int sign = 0;
 		for (int i = 0; i < N; i++) {
-			int j = (i+1)%N;
-			int k = (i+2)%N;
+			int j = (i + 1)%N;
+			int k = (i + 2)%N;
 
 			Point2D_F64 a = polygon.get(i);
 			Point2D_F64 b = polygon.get(j);
 			Point2D_F64 c = polygon.get(k);
 
-			double dx0 = a.x-b.x;
-			double dy0 = a.y-b.y;
+			double dx0 = a.x - b.x;
+			double dy0 = a.y - b.y;
 
-			double dx1 = c.x-b.x;
-			double dy1 = c.y-b.y;
+			double dx1 = c.x - b.x;
+			double dy1 = c.y - b.y;
 
-			double z = dx0 * dy1 - dy0 * dx1;
-			if( z > 0 )
+			double z = dx0*dy1 - dy0*dx1;
+			if (z > 0)
 				sign++;
 			else
 				sign--;
@@ -428,12 +427,26 @@ public class UtilPolygons2D_F64 {
 		return isCCW(polygon.vertexes.toList());
 	}
 
+	public static boolean isCCW( Triangle2D_F64 shape ) {
+		double ab_x = shape.v1.x - shape.v0.x;
+		double ab_y = shape.v1.y - shape.v0.y;
+		double ac_x = shape.v2.x - shape.v0.x;
+		double ac_y = shape.v2.y - shape.v0.y;
+
+		// Avoid overflow issues
+		double scale = Math.max(Math.abs(ab_x), Math.abs(ab_y));
+		scale = Math.max(scale, Math.max(Math.abs(ac_x), Math.abs(ac_y)));
+
+		return (ab_x/scale)*(ac_y/scale) > (ab_y/scale)*(ac_x/scale);
+	}
+
 	/**
 	 * Computes the average of all the vertexes
+	 *
 	 * @param input (input) polygon
 	 * @param average (output) average point
 	 */
-	public static void vertexAverage(Polygon2D_F64 input, Point2D_F64 average ) {
+	public static void vertexAverage( Polygon2D_F64 input, Point2D_F64 average ) {
 		average.zero();
 
 		for (int i = 0; i < input.size(); i++) {
@@ -453,13 +466,13 @@ public class UtilPolygons2D_F64 {
 	 * @param tol tolerance
 	 * @return true if identical up to tolerance or false if not
 	 */
-	public static boolean isIdentical( Polygon2D_F64 a , Polygon2D_F64 b , double tol ) {
-		if( a.size() != b.size())
+	public static boolean isIdentical( Polygon2D_F64 a, Polygon2D_F64 b, double tol ) {
+		if (a.size() != b.size())
 			return false;
 
 		double tol2 = tol*tol;
 		for (int i = 0; i < a.size(); i++) {
-			if( a.get(i).distance2(b.get(i)) > tol2 )
+			if (a.get(i).distance2(b.get(i)) > tol2)
 				return false;
 		}
 		return true;
@@ -474,8 +487,8 @@ public class UtilPolygons2D_F64 {
 	 * @param tol tolerance
 	 * @return true if identical up to tolerance or false if not
 	 */
-	public static boolean isEquivalent( Polygon2D_F64 a , Polygon2D_F64 b , double tol ) {
-		if( a.size() != b.size())
+	public static boolean isEquivalent( Polygon2D_F64 a, Polygon2D_F64 b, double tol ) {
+		if (a.size() != b.size())
 			return false;
 
 		double tol2 = tol*tol;
@@ -484,21 +497,21 @@ public class UtilPolygons2D_F64 {
 		Point2D_F64 a0 = a.get(0);
 		int match = -1;
 		for (int i = 0; i < b.size(); i++) {
-			if( a0.distance2(b.get(i)) <= tol2 ) {
+			if (a0.distance2(b.get(i)) <= tol2) {
 				match = i;
 				break;
 			}
 		}
 
-		if( match < 0 )
+		if (match < 0)
 			return false;
 
 		// now go in a circle and see if they all line up
 		for (int i = 1; i < b.size(); i++) {
 			Point2D_F64 ai = a.get(i);
-			Point2D_F64 bi = b.get((match+i)%b.size());
+			Point2D_F64 bi = b.get((match + i)%b.size());
 
-			if( ai.distance2(bi) > tol2 ) {
+			if (ai.distance2(bi) > tol2) {
 				return false;
 			}
 		}
@@ -515,7 +528,7 @@ public class UtilPolygons2D_F64 {
 		int H = N/2;
 
 		for (int i = 1; i <= H; i++) {
-			int j = N-i;
+			int j = N - i;
 			Point2D_F64 tmp = a.vertexes.data[i];
 			a.vertexes.data[i] = a.vertexes.data[j];
 			a.vertexes.data[j] = tmp;
@@ -524,6 +537,7 @@ public class UtilPolygons2D_F64 {
 
 	/**
 	 * Shifts all the vertexes in the polygon up one element. Wraps around at the end
+	 *
 	 * @param a Polygon
 	 */
 	public static void shiftUp( Polygon2D_F64 a ) {
@@ -531,48 +545,50 @@ public class UtilPolygons2D_F64 {
 
 		Point2D_F64 first = a.get(0);
 
-		for (int i = 0; i < N-1; i++ ) {
-			a.vertexes.data[i] = a.vertexes.data[i+1];
+		for (int i = 0; i < N - 1; i++) {
+			a.vertexes.data[i] = a.vertexes.data[i + 1];
 		}
-		a.vertexes.data[N-1] = first;
+		a.vertexes.data[N - 1] = first;
 	}
 
 	/**
 	 * Shifts all the vertexes in the polygon up one element. Wraps around at the end
+	 *
 	 * @param a Polygon
 	 */
 	public static void shiftDown( Polygon2D_F64 a ) {
 		final int N = a.size();
 
-		Point2D_F64 last = a.get(N-1);
+		Point2D_F64 last = a.get(N - 1);
 
-		for (int i = N-1; i > 0; i-- ) {
-			a.vertexes.data[i] = a.vertexes.data[i-1];
+		for (int i = N - 1; i > 0; i--) {
+			a.vertexes.data[i] = a.vertexes.data[i - 1];
 		}
 		a.vertexes.data[0] = last;
 	}
 
 	/**
 	 * Removes a node from a polygon if the two lines its attached two are almost parallel
+	 *
 	 * @param polygon The polygon being modified
 	 * @param tol Tolerance in radians
 	 */
-	public static void removeAlmostParallel( Polygon2D_F64 polygon , double tol ) {
+	public static void removeAlmostParallel( Polygon2D_F64 polygon, double tol ) {
 
 		for (int i = 0; i < polygon.vertexes.size(); ) {
-			int j = (i+1)%polygon.vertexes.size();
-			int k = (i+2)%polygon.vertexes.size();
+			int j = (i + 1)%polygon.vertexes.size();
+			int k = (i + 2)%polygon.vertexes.size();
 
 			Point2D_F64 p0 = polygon.vertexes.get(i);
 			Point2D_F64 p1 = polygon.vertexes.get(j);
 			Point2D_F64 p2 = polygon.vertexes.get(k);
 
-			double angle = UtilVector2D_F64.acute(p1.x-p0.x,p1.y-p0.y,p2.x-p1.x,p2.y-p1.y);
+			double angle = UtilVector2D_F64.acute(p1.x - p0.x, p1.y - p0.y, p2.x - p1.x, p2.y - p1.y);
 
-			if( angle <= tol) {
+			if (angle <= tol) {
 				polygon.vertexes.remove(j);
-				if( j < i )
-					i = polygon.vertexes.size()-1;
+				if (j < i)
+					i = polygon.vertexes.size() - 1;
 			} else {
 				i++;
 			}
@@ -585,10 +601,10 @@ public class UtilPolygons2D_F64 {
 	 * @param polygon The polygon being modified
 	 * @param tol Tolerance in radians
 	 */
-	public static void removeAdjacentDuplicates( Polygon2D_F64 polygon , double tol ) {
+	public static void removeAdjacentDuplicates( Polygon2D_F64 polygon, double tol ) {
 
-		for (int i = polygon.vertexes.size()-1,j=0; i >= 0 && polygon.size()>1; j=i,i--) {
-			if( polygon.get(i).isIdentical(polygon.get(j),tol)) {
+		for (int i = polygon.vertexes.size() - 1, j = 0; i >= 0 && polygon.size() > 1; j = i, i--) {
+			if (polygon.get(i).isIdentical(polygon.get(j), tol)) {
 				polygon.vertexes.remove(i);
 			}
 		}
@@ -600,10 +616,10 @@ public class UtilPolygons2D_F64 {
 	 * @param polygon The polygon being modified
 	 * @param tol Tolerance in radians
 	 */
-	public static boolean hasAdjacentDuplicates( Polygon2D_F64 polygon , double tol ) {
+	public static boolean hasAdjacentDuplicates( Polygon2D_F64 polygon, double tol ) {
 
-		for (int i = polygon.vertexes.size()-1,j=0; i >= 0 && polygon.size()>1; j=i,i--) {
-			if( polygon.get(i).isIdentical(polygon.get(j),tol)) {
+		for (int i = polygon.vertexes.size() - 1, j = 0; i >= 0 && polygon.size() > 1; j = i, i--) {
+			if (polygon.get(i).isIdentical(polygon.get(j), tol)) {
 				return true;
 			}
 		}
@@ -621,14 +637,14 @@ public class UtilPolygons2D_F64 {
 	 * @param target Target polygon
 	 * @return average of closest point error
 	 */
-	public static double averageOfClosestPointError(Polygon2D_F64 model , Polygon2D_F64 target , int numberOfSamples ) {
+	public static double averageOfClosestPointError( Polygon2D_F64 model, Polygon2D_F64 target, int numberOfSamples ) {
 		LineSegment2D_F64 line = new LineSegment2D_F64();
 
-		double[] cornerLocationsB = new double[target.size()+1];
+		double[] cornerLocationsB = new double[target.size() + 1];
 		double totalLength = 0;
 		for (int i = 0; i < target.size(); i++) {
 			Point2D_F64 b0 = target.get(i%target.size());
-			Point2D_F64 b1 = target.get((i+1)%target.size());
+			Point2D_F64 b1 = target.get((i + 1)%target.size());
 
 			cornerLocationsB[i] = totalLength;
 			totalLength += b0.distance(b1);
@@ -646,22 +662,22 @@ public class UtilPolygons2D_F64 {
 				cornerB++;
 			}
 			Point2D_F64 b0 = target.get(cornerB);
-			Point2D_F64 b1 = target.get((cornerB+1)%target.size());
+			Point2D_F64 b1 = target.get((cornerB + 1)%target.size());
 
 			double locationCornerB = cornerLocationsB[cornerB];
-			double fraction = (location-locationCornerB)/(cornerLocationsB[cornerB+1]-locationCornerB);
+			double fraction = (location - locationCornerB)/(cornerLocationsB[cornerB + 1] - locationCornerB);
 
-			pointOnB.x = (b1.x-b0.x)*fraction + b0.x;
-			pointOnB.y = (b1.y-b0.y)*fraction + b0.y;
+			pointOnB.x = (b1.x - b0.x)*fraction + b0.x;
+			pointOnB.y = (b1.y - b0.y)*fraction + b0.y;
 
 			// find the best fit point on A to the point in B
 			double best = Double.MAX_VALUE;
-			for (int i = 0; i < model.size()+1; i++) {
+			for (int i = 0; i < model.size() + 1; i++) {
 				line.a = model.get(i%model.size());
-				line.b = model.get((i+1)%model.size());
+				line.b = model.get((i + 1)%model.size());
 
-				double d = Distance2D_F64.distance(line,pointOnB);
-				if( d < best ) {
+				double d = Distance2D_F64.distance(line, pointOnB);
+				if (d < best) {
 					best = d;
 				}
 			}
@@ -669,5 +685,122 @@ public class UtilPolygons2D_F64 {
 		}
 
 		return error/numberOfSamples;
+	}
+
+	/** See {@link #closestSideTriangleInside(double, double, double, double, double, double, double, double)} */
+	public static int closestSideTriangleInside( Triangle2D_F64 t, double px, double py ) {
+		return closestSideTriangleInside(t.v0.x, t.v0.y, t.v1.x, t.v1.y, t.v2.x, t.v2.y, px, py);
+	}
+
+	/**
+	 * Finds the side on the triangle which is closest to point P. P must be inside the triangle
+	 *
+	 * @param ax Triangle corner A, x-coordinate
+	 * @param ay Triangle corner A, y-coordinate
+	 * @param bx Triangle corner B, x-coordinate
+	 * @param by Triangle corner B, y-coordinate
+	 * @param cx Triangle corner C, x-coordinate
+	 * @param cy Triangle corner C, y-coordinate
+	 * @param px Point being tested. x-coordinate
+	 * @param py Point being tested. y-coordinate
+	 * @return 0 = ab, 1 = bc, 2 = ca, -1 = equidistant ab and bc, -2 equidistant from bc and ca,
+	 * -3 equidistant from ca and ab, -4 equidistant from all
+	 */
+	public static int closestSideTriangleInside( double ax, double ay, double bx, double by, double cx, double cy,
+												 double px, double py ) {
+		// Find the magnitude
+		double scale = Math.max(Math.abs(ax), Math.abs(ay));
+		scale = Math.max(scale, Math.max(Math.abs(bx), Math.abs(by)));
+		scale = Math.max(scale, Math.max(Math.abs(cx), Math.abs(cy)));
+
+		// Re-scale points to avoid numerical issues
+		// @formatter:off
+		ax /= scale; ay /= scale; bx /= scale; by /= scale; cx /= scale; cy /= scale; px /= scale; py /= scale;
+		// @formatter:on
+
+		// Compute vectors c-a, b-a, c-b
+		double ab_x = bx - ax, ab_y = by - ay;
+		double ac_x = cx - ax, ac_y = cy - ay;
+		double bc_x = cx - bx, bc_y = cy - by;
+
+		// distance to side AB
+		double cross_ab = ab_x*(py - ax) - ab_y*(px - ax);
+		double distance_ab = cross_ab*cross_ab/(ab_x*ab_x + ab_y*ab_y);
+
+		// distance to side AC
+		double cross_ac = ac_x*(py - ax) - ac_y*(px - ax);
+		double distance_ac = cross_ac*cross_ac/(ac_x*ac_x + ac_y*ac_y);
+
+		// distance to side BC
+		double cross_bc = bc_x*(py - bx) - bc_y*(px - bx);
+		double distance_bc = cross_bc*cross_bc/(bc_x*bc_x + bc_y*bc_y);
+
+		System.out.println("closest side distance: " + Math.min(Math.min(distance_ab, distance_bc), distance_ac));
+
+		return closetSideOnTriangleFromDistance(distance_ab, distance_bc, distance_ac);
+	}
+
+	/** See {@link #closestSideTriangle(double, double, double, double, double, double, double, double)} */
+	public static int closestSideTriangle( Triangle2D_F64 t, double px, double py ) {
+		return closestSideTriangle(t.v0.x, t.v0.y, t.v1.x, t.v1.y, t.v2.x, t.v2.y, px, py);
+	}
+
+	/**
+	 * Finds the side on the triangle which is closest to point P. P must be inside the triangle
+	 *
+	 * @param ax Triangle corner A, x-coordinate
+	 * @param ay Triangle corner A, y-coordinate
+	 * @param bx Triangle corner B, x-coordinate
+	 * @param by Triangle corner B, y-coordinate
+	 * @param cx Triangle corner C, x-coordinate
+	 * @param cy Triangle corner C, y-coordinate
+	 * @param px Point being tested. x-coordinate
+	 * @param py Point being tested. y-coordinate
+	 * @return 0 = ab, 1 = bc, 2 = ca, -1 = equidistant ab and bc, -2 equidistant from bc and ca,
+	 * -3 equidistant from ca and ab, -4 equidistant from all
+	 */
+	public static int closestSideTriangle( double ax, double ay, double bx, double by, double cx, double cy,
+										   double px, double py ) {
+		// Find the magnitude
+		double scale = Math.max(Math.abs(ax), Math.abs(ay));
+		scale = Math.max(scale, Math.max(Math.abs(bx), Math.abs(by)));
+		scale = Math.max(scale, Math.max(Math.abs(cx), Math.abs(cy)));
+
+		scale = 1;
+
+		// Re-scale points to avoid numerical issues
+		// @formatter:off
+		ax /= scale; ay /= scale; bx /= scale; by /= scale; cx /= scale; cy /= scale; px /= scale; py /= scale;
+		// @formatter:on
+
+		double distance_ab = Distance2D_F64.distanceLineSq(ax, ay, bx, by, px, py);
+		double distance_bc = Distance2D_F64.distanceLineSq(bx, by, cx, cy, px, py);
+		double distance_ca = Distance2D_F64.distanceLineSq(cx, cy, ax, ay, px, py);
+
+		return closetSideOnTriangleFromDistance(distance_ab, distance_bc, distance_ca);
+	}
+
+	/**
+	 * Using distance from each side on the triangle determine which side is the greatest distance
+	 *
+	 * @param distance_ab distance from side ab
+	 * @param distance_bc distance from side bc
+	 * @param distance_ca distance from side ca
+	 * @return 0 = ab, 1 = bc, 2 = ca, -1 = equidistant ab and bc, -2 equidistant from bc and ca,
+	 * -3 equidistant from ca and ab, -4 equidistant from all
+	 */
+	protected static int closetSideOnTriangleFromDistance( double distance_ab, double distance_bc, double distance_ca ) {
+		if (distance_ab < distance_bc) {
+			if (distance_ab < distance_ca) {
+				return 0;
+			}
+			return distance_ca < distance_ab ? 2 : -3;
+		} else if (distance_bc < distance_ca) {
+			return distance_bc < distance_ab ? 1 : -1;
+		} else if (distance_ca < distance_ab) {
+			return distance_ca < distance_bc ? 2 : -2;
+		}
+
+		return -4;
 	}
 }

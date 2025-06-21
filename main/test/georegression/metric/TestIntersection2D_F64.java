@@ -18,6 +18,7 @@
 
 package georegression.metric;
 
+import georegression.GeoStandardJUnit;
 import georegression.geometry.UtilEllipse_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.EllipseRotated_F64;
@@ -28,25 +29,15 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector2D_F64;
 import georegression.struct.se.Se2_F64;
-import georegression.struct.shapes.Polygon2D_F64;
-import georegression.struct.shapes.Quadrilateral_F64;
-import georegression.struct.shapes.Rectangle2D_F64;
-import georegression.struct.shapes.RectangleLength2D_F64;
+import georegression.struct.shapes.*;
 import georegression.transform.se.SePointOps_F64;
 import org.ejml.UtilEjml;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
-public class TestIntersection2D_F64 {
-	Random rand = new Random(234);
-
+public class TestIntersection2D_F64 extends GeoStandardJUnit {
 	@Test void containsConvex() {
 		var poly = new Polygon2D_F64(4);
 		poly.vertexes.data[0].setTo(-1, -1);
@@ -127,7 +118,7 @@ public class TestIntersection2D_F64 {
 		assertFalse(Intersection2D_F64.contains(quad, new Point2D_F64(0, -2)));
 	}
 
-	@Test void containTriangle() {
+	@Test void containsTriangle() {
 		var a = new Point2D_F64(1, 2);
 		var b = new Point2D_F64(4, 2);
 		var c = new Point2D_F64(4, 5);
@@ -135,13 +126,107 @@ public class TestIntersection2D_F64 {
 		var inside = new Point2D_F64(3, 3);
 		var outside = new Point2D_F64(-10, 2);
 
-		assertTrue(Intersection2D_F64.containTriangle(a, b, c, inside));
-		assertFalse(Intersection2D_F64.containTriangle(a, b, c, outside));
+		assertTrue(Intersection2D_F64.containsTriangle(a, b, c, inside));
+		assertFalse(Intersection2D_F64.containsTriangle(a, b, c, outside));
+	}
+
+	@Test void insideTriangle() {
+		var t = new Triangle2D_F64().setTo(1, 2, 4, 2, 4, 5);
+
+		var inside = new Point2D_F64(3, 3);
+		var outside = new Point2D_F64(-10, 2);
+
+		assertEquals(1, Intersection2D_F64.insideTriangle(t, inside));
+		assertEquals(0, Intersection2D_F64.insideTriangle(t, outside));
+
+		// Test points on corners
+		assertEquals(2, Intersection2D_F64.insideTriangle(t, t.v0));
+		assertEquals(2, Intersection2D_F64.insideTriangle(t, t.v1));
+		assertEquals(2, Intersection2D_F64.insideTriangle(t, t.v2));
+
+		// test point on border exactly
+		assertEquals(2, Intersection2D_F64.insideTriangle(t, new Point2D_F64(2, 2)));
+	}
+
+	// Create a triangle with a very large value and see if it blows up
+	@Test void insideTriangle_LargeValue() {
+		double v = Math.pow(10, Double.MAX_EXPONENT/5.0);
+		var t = new Triangle2D_F64().setTo(-v, -v, v, -v, 0, v);
+
+		assertEquals(1, Intersection2D_F64.insideTriangle(t, 1, 2));
+		assertEquals(0, Intersection2D_F64.insideTriangle(t, -3*v, 2));
+
+		// The code below fails since the approach becomes numerically unstable
+//		t.setTo(-v,-v, v, -v, 0, 0);
+//		assertEquals(0, Intersection2D_F64.insideTriangle(t, 0, 0.1));
+	}
+
+	@Test void insideTriangleV2() {
+		var t = new Triangle2D_F64().setTo(1, 2, 4, 2, 4, 5);
+
+		assertEquals(1, Intersection2D_F64.insideTriangleV2(t, 3, 3));
+		assertEquals(0, Intersection2D_F64.insideTriangleV2(t, -10, 2));
+
+		// Test points on corners
+		assertEquals(2, Intersection2D_F64.insideTriangleV2(t, t.v0.x, t.v0.y));
+		assertEquals(2, Intersection2D_F64.insideTriangleV2(t, t.v1.x, t.v1.y));
+		assertEquals(2, Intersection2D_F64.insideTriangleV2(t, t.v2.x, t.v2.y));
+
+		// test point on border exactly
+		assertEquals(2, Intersection2D_F64.insideTriangleV2(t, 2, 2));
+	}
+
+	// Create a triangle with a very large value and see if it blows up
+	@Test void insideTriangleV2_LargeValue() {
+		double v = Math.pow(10, Double.MAX_EXPONENT/5.0);
+		var t = new Triangle2D_F64().setTo(-v, -v, v, -v, 0, v);
+
+		assertEquals(1, Intersection2D_F64.insideTriangleV2(t, 1, 2));
+		assertEquals(0, Intersection2D_F64.insideTriangleV2(t, -3*v, 2));
+
+		t.setTo(-v,-v, v, -v, 0, 0);
+		assertEquals(0, Intersection2D_F64.insideTriangleV2(t, 0, 0.1));
+		assertEquals(2, Intersection2D_F64.insideTriangleV2(t, 0, 0.0));
+
+		// It incorrectly identifies this case as being on the border.
+//		assertEquals(1, Intersection2D_F64.insideTriangle2(t, 0, -0.1));
+	}
+
+	@Test void insideCircumcircleCCW() {
+		// triangle
+		var t = new Triangle2D_F64().setTo(
+				1, 1,
+				5, 1,
+				3, 5);
+
+		// inside
+		assertEquals(1, Intersection2D_F64.insideCircumcircleCCW(t, 3, 2, GrlConstants.EPS));
+		// outside
+		assertEquals(-1, Intersection2D_F64.insideCircumcircleCCW(t, 6, 6, GrlConstants.EPS));
+		// on circumcircle
+		assertEquals(0, Intersection2D_F64.insideCircumcircleCCW(t, t.v1.x, t.v1.y, GrlConstants.EPS));
+	}
+
+	@Test void insideCircumcircleCCW_LargeValue() {
+		double v = Math.pow(10, Double.MAX_EXPONENT/5.0);
+		var t = new Triangle2D_F64().setTo(
+				v, v,
+				5*v, v,
+				3*v, 5*v);
+
+		// inside
+		assertEquals(1, Intersection2D_F64.insideCircumcircleCCW(t, 3*v, 2*v, GrlConstants.EPS));
+
+		// outside
+		assertEquals(-1, Intersection2D_F64.insideCircumcircleCCW(t, 6*v, 6*v, GrlConstants.EPS));
+		assertEquals(-1, Intersection2D_F64.insideCircumcircleCCW(t, -1, -2, GrlConstants.EPS));
+
+		// on circumcircle
+		assertEquals(0, Intersection2D_F64.insideCircumcircleCCW(t, t.v1.x, t.v1.y, GrlConstants.EPS));
 	}
 
 	@Test void containEllipseRotated() {
-
-		EllipseRotated_F64 ellipse = new EllipseRotated_F64(5, 6, 4, 3, GrlConstants.PId2);
+		var ellipse = new EllipseRotated_F64(5, 6, 4, 3, GrlConstants.PId2);
 
 		assertFalse(Intersection2D_F64.contains(ellipse, 0, 0));
 		assertTrue(Intersection2D_F64.contains(ellipse, 5, 6));
@@ -275,38 +360,38 @@ public class TestIntersection2D_F64 {
 		assertTrue(Intersection2D_F64.intersects(new LineSegment2D_F64(1, 2, 4, 5), new LineSegment2D_F64(4, 5, 1, 2), tol));
 	}
 
-	@Test void intersects2_ls_to_ls() {
+	@Test void intersectsEx_ls_to_ls() {
 		final double tol = UtilEjml.TEST_F64;
 		// check positive, none pathological cases
-		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 3), tol));
-		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 0), new LineSegment2D_F64(0, 0, 2, 2), tol));
+		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 3), tol));
+		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(0, 2, 2, 0), new LineSegment2D_F64(0, 0, 2, 2), tol));
 
 		// Two end points touching will not be considered an intersection
-		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 2), tol));
-		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 2), tol));
+		assertFalse(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 2), tol));
+		assertFalse(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 2), tol));
 
 		// However a line passing through an end point is an intersection
-		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 0, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), tol));
+		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(1, 0, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), tol));
 
 		// check clear negative
-		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 1.9), tol));
-		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 1.9), tol));
-		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 0.1, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), tol));
+		assertFalse(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(0, 0, 0, 1.9), tol));
+		assertFalse(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(0, 2, 2, 2), new LineSegment2D_F64(2, 0, 2, 1.9), tol));
+		assertFalse(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(1, 0.1, 1, 2), new LineSegment2D_F64(0, 0, 2, 0), tol));
 
 		// check parallel
-		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, 1, 0, 3), tol));
-		assertFalse(Intersection2D_F64.intersects2(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, -0.5, 0, 1.5), tol));
+		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, 1, 0, 3), tol));
+		assertFalse(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(0, 2, 0, 5), new LineSegment2D_F64(0, -0.5, 0, 1.5), tol));
 
 		// Lines partially overlap each other
-		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 1, 1, 5), new LineSegment2D_F64(1, 4, 1, 7), tol));
+		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(1, 1, 1, 5), new LineSegment2D_F64(1, 4, 1, 7), tol));
 
 		// Check same line
-		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 2, 4, 5), new LineSegment2D_F64(1, 2, 4, 5), tol));
-		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 2, 4, 5), new LineSegment2D_F64(4, 5, 1, 2), tol));
+		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(1, 2, 4, 5), new LineSegment2D_F64(1, 2, 4, 5), tol));
+		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(1, 2, 4, 5), new LineSegment2D_F64(4, 5, 1, 2), tol));
 
 		// one inside the other
-		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 2, 1, 8), new LineSegment2D_F64(1, 3, 1, 7), tol));
-		assertTrue(Intersection2D_F64.intersects2(new LineSegment2D_F64(1, 3, 1, 7), new LineSegment2D_F64(1, 2, 1, 8), tol));
+		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(1, 2, 1, 8), new LineSegment2D_F64(1, 3, 1, 7), tol));
+		assertTrue(Intersection2D_F64.intersectsEx(new LineSegment2D_F64(1, 3, 1, 7), new LineSegment2D_F64(1, 2, 1, 8), tol));
 	}
 
 	/**
