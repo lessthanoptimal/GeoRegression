@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -73,9 +73,9 @@ public class Triangle3D_F64 implements Serializable {
 
 	/** Sets the value of all fields to zero */
 	public void zero() {
-		this.v0.setTo(0, 0, 0);
-		this.v1.setTo(0, 0, 0);
-		this.v2.setTo(0, 0, 0);
+		this.v0.zero();
+		this.v1.zero();
+		this.v2.zero();
 	}
 
 	public Triangle3D_F64 copy() {

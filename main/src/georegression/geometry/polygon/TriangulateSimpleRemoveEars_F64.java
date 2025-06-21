@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -154,7 +154,7 @@ public class TriangulateSimpleRemoveEars_F64 {
 
 			// skip edges incident to 'a' or 'b'
 			if ( (c!=a && c1 != a) && (c!=b && c1!=b) &&
-					Intersection2D_F64.intersects(a.object, b.object, c.object, c1.object,tol))
+					Intersection2D_F64.intersectsLine(a.object, b.object, c.object, c1.object,tol))
 				return false;
 
 			c = c.next;

@@ -122,6 +122,16 @@ public class LineSegment2D_F64 implements Serializable {
 	}
 
 	/**
+	 * True if the two line segments are the same, ignoring the order of their end points.
+	 */
+	public boolean isEquivalent( LineSegment2D_F64 other, double tol ) {
+		if (isIdentical(other.a.x, other.a.y, other.b.x, other.b.y, tol))
+			return true;
+
+		return isIdentical(other.b.x, other.b.y, other.a.x, other.a.y, tol);
+	}
+
+	/**
 	 * Returns true if the value of the two line segments is within tol of each other
 	 */
 	public boolean isIdentical( LineSegment2D_F64 other, double tol ) {
@@ -129,6 +139,13 @@ public class LineSegment2D_F64 implements Serializable {
 			return false;
 
 		return other.b.isIdentical(b, tol);
+	}
+
+	public boolean isIdentical( double ax, double ay, double bx, double by, double tol ) {
+		if (!a.isIdentical(ax, ay, tol))
+			return false;
+
+		return b.isIdentical(bx, by, tol);
 	}
 
 	@Override
