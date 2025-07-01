@@ -1,6 +1,15 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
+Date    : 2025-June-30
+Version : 0.28.0
+
+- Added Delaunay triangulation
+- Added Triangle2D shape
+- Added more distance operations for 2D shapes
+- Added LineSegment2D_F64.isIdentical()
+
+---------------------------------------------
 Date    : 2025-Apr-10
 Version : 0.27.6
 

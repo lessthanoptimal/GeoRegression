@@ -36,7 +36,7 @@ GeoRegression is on [Maven Central](https://mvnrepository.com/artifact/org.geore
 be added to your Gradle project as follows:
 
 ```Groovy
-api "org.georegression:georegression:0.27.6"
+api "org.georegression:georegression:0.28.0"
 ```
 
 ## Build Instructions
