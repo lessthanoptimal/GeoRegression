@@ -195,6 +195,38 @@ public class Mesh2D_F64 {
 		}
 	}
 
+	/// Prunes triangles if the op returns true. The order triangles are specified will change.
+	///
+	/// @return number of triangles pruned
+	public int pruneTriangles( TriOp op ) {
+		int count = 0;
+		var shape = new Triangle2D_F64();
+
+		for (int id = 0; id < triangles.size; ) {
+			int v0 = triangles.get(id);
+			int v1 = triangles.get(id + 1);
+			int v2 = triangles.get(id + 2);
+
+			getTriangle(id, shape);
+
+			// Go to next triangle if this one is kept
+			if (!op.op(id, v0, v1, v2, shape)) {
+				id += 3;
+				continue;
+			}
+
+			// swap with the last triangle. This method of reminding a triangle does not require shifting every
+			// element in the array
+			triangles.set(id, triangles.getTail(2));
+			triangles.set(id + 1, triangles.getTail(1));
+			triangles.set(id + 2, triangles.getTail(0));
+			triangles.size -= 3;
+			count++;
+		}
+
+		return count;
+	}
+
 	private static class Results {
 		boolean found;
 	}
@@ -202,7 +234,12 @@ public class Mesh2D_F64 {
 	@FunctionalInterface public interface LineOp {
 		/// line segment for the given triangle and side on the triangle
 		///
-		/// @return true if it should continue processing or false if its done
+		/// @return true if it should continue processing or false if it's done
 		boolean op( int triangleID, int side, int p0, int p1, LineSegment2D_F64 line );
+	}
+
+	/// Operation for processing a triangle
+	@FunctionalInterface public interface TriOp {
+		boolean op( int triangleID, int v0, int v1, int v2, Triangle2D_F64 shape );
 	}
 }

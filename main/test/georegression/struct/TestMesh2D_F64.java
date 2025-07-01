@@ -43,7 +43,7 @@ public class TestMesh2D_F64 extends GeoStandardJUnit {
 		alg.points.append(0, 0);
 		alg.points.append(1, 0);
 		alg.points.append(1, 1);
-		alg.addTriangle(0,1,2);
+		alg.addTriangle(0, 1, 2);
 		assertSame(alg, alg.stripUnusedPoints());
 		assertEquals(3, alg.points.size());
 
@@ -94,11 +94,11 @@ public class TestMesh2D_F64 extends GeoStandardJUnit {
 		mesh.points.append(1, 1);
 		int ref = mesh.addTriangle(2, 1, 0);
 
-		var triangle = new  Triangle2D_F64();
+		var triangle = new Triangle2D_F64();
 		mesh.getTriangle(ref, triangle);
-		assertEquals(0.0, triangle.v0.distance(1,1), UtilEjml.TEST_F64);
-		assertEquals(0.0, triangle.v1.distance(1,0), UtilEjml.TEST_F64);
-		assertEquals(0.0, triangle.v2.distance(0,0), UtilEjml.TEST_F64);
+		assertEquals(0.0, triangle.v0.distance(1, 1), UtilEjml.TEST_F64);
+		assertEquals(0.0, triangle.v1.distance(1, 0), UtilEjml.TEST_F64);
+		assertEquals(0.0, triangle.v2.distance(0, 0), UtilEjml.TEST_F64);
 	}
 
 	// Adds a grid with no strict line segment intersections
@@ -176,13 +176,13 @@ public class TestMesh2D_F64 extends GeoStandardJUnit {
 		alg.points.append(11, 0);
 		alg.points.append(11, 1);
 
-		alg.addTriangle(0,1,2);
-		alg.addTriangle(3,4,5);
+		alg.addTriangle(0, 1, 2);
+		alg.addTriangle(3, 4, 5);
 
 		assertTrue(alg.checkCircumcircleCCW(GrlConstants.TEST_F64));
 
 		// Add a new triangle which will contain other points
-		alg.addTriangle(0,1,5);
+		alg.addTriangle(0, 1, 5);
 		assertFalse(alg.checkCircumcircleCCW(GrlConstants.TEST_F64));
 	}
 
@@ -197,13 +197,43 @@ public class TestMesh2D_F64 extends GeoStandardJUnit {
 		alg.points.append(1, 1);
 		alg.points.append(0, 1);
 
-		alg.addTriangle(0,1,2);
-		alg.addTriangle(0,2,3);
+		alg.addTriangle(0, 1, 2);
+		alg.addTriangle(0, 2, 3);
 
 		assertTrue(alg.checkCircumcircleCCW(GrlConstants.TEST_F64));
 
 		// sanity check, add a failure
 		alg.points.append(0.5, 0.5);
 		assertFalse(alg.checkCircumcircleCCW(GrlConstants.TEST_F64));
+	}
+
+	@Test void pruneTriangles() {
+		var alg = new Mesh2D_F64();
+
+		// Add points. Their values don't matter
+		for (int i = 0; i < 10; i++) {
+			alg.points.append(0, 0);
+		}
+
+		// do nothing with nothing
+		assertEquals(0, alg.pruneTriangles(( id, v0, v1, v2, shape ) -> true));
+
+		// Just one triangle
+		alg.addTriangle(0, 1, 2);
+		assertEquals(1, alg.pruneTriangles(( id, v0, v1, v2, shape ) -> true));
+		assertEquals(0, alg.triangleCount());
+		assertEquals(10, alg.pointCount());
+
+		// Remove one in the middle
+		alg.addTriangle(0, 1, 2);
+		alg.addTriangle(3, 4, 5);
+		alg.addTriangle(3, 6, 7);
+
+		assertEquals(1, alg.pruneTriangles(( id, v0, v1, v2, shape ) -> v1 == 4));
+		assertEquals(2, alg.triangleCount());
+		assertEquals(10, alg.pointCount());
+
+		assertTrue(0 == alg.triangles.get(0) && 1 == alg.triangles.get(1) && 2 == alg.triangles.get(2));
+		assertTrue(3 == alg.triangles.get(3) && 6 == alg.triangles.get(4) && 7 == alg.triangles.get(5));
 	}
 }
