@@ -5,7 +5,7 @@ Geometric Regression Library (GeoRegression) is an open source Java geometry lib
 
 ===================   =====================
 **Latest Version**    v\ |geo_version|
-**Released**          March 21, 2025
+**Released**          June 30, 2025
 **Source Code**       `GitHub <https://github.com/lessthanoptimal/GeoRegression>`_
 **License**           `Apache 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_
 ===================   =====================
@@ -47,6 +47,7 @@ Functionality
 
   - Shapes (e.g. lines, ellipses)
   - Motion/Transform (e.g. rigid body, affine)
+  - Triangulation (e.g. points to mesh)
 * **32-bit and 64-bit Floating Support:**
 
   - Limited support for integers types.

@@ -37,15 +37,14 @@ import java.util.Random;
 public class ExampleTriangulation {
 	public static void main( String[] args ) {
 
-		// Size of the image the points will be randomly put into
+		// Rectangular region points will be randomly put into
 		int width = 400, height = 300;
-
-		// Randomly generate points
-		var random = new Random(0xF00D);
 
 		// border that points won't be place inside of
 		int border = 10;
 
+		// Randomly generate points
+		var random = new Random(0xF00D);
 		var points = new DogArray<>(Point2D_F64::new);
 		for (int i = 0; i < 50; i++) {
 			// Avoid generating points right on the image edge. This is for appearance only
@@ -56,7 +55,9 @@ public class ExampleTriangulation {
 
 		// Compute the Delaunay triangulation
 		var delaunay = new DelaunayIncrementalWalk();
-//		delaunay.setVerbose(System.out, null);
+
+		// Uncomment below to print debug info to stdout
+		// delaunay.setVerbose(System.out, null);
 
 		// To make it more generic a function interface is used for the points array. This avoids making you
 		// convert it into a specific array format
@@ -120,6 +121,7 @@ public class ExampleTriangulation {
 		panel.setPreferredSize(new Dimension(width + 10, height + 10));
 
 		var frame = new JFrame();
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.add(panel);
 		frame.pack();
 		frame.setVisible(true);

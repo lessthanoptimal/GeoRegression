@@ -19,6 +19,7 @@ List of Example Code:
 * :doc:`/MetricLines`
 * :doc:`/TransformFitting`
 * :doc:`/TransformSequence`
+* :doc:`/Triangulation`
 
 Building the Library
 --------------------
