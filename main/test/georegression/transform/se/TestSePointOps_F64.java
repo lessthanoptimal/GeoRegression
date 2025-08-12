@@ -35,13 +35,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
 public class TestSePointOps_F64 {
 
-	@Test
-	void transform_2d_single() {
+	@Test void transform_2d_single() {
 		Se2_F64 tran = new Se2_F64( -2, 3, Math.PI );
 
 		Point2D_F64 pt = new Point2D_F64( 2, 4 );
@@ -66,8 +62,7 @@ public class TestSePointOps_F64 {
 		assertEquals( -1, pt.getY(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void transformReverse_2d_single() {
+	@Test void transformReverse_2d_single() {
 		Se2_F64 tran = new Se2_F64( -2, 3, Math.PI / 2.0 );
 
 		Point2D_F64 pt = new Point2D_F64( 2, 4 );
@@ -92,8 +87,7 @@ public class TestSePointOps_F64 {
 		assertEquals( -4, pt.getY(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void transform_2d_array() {
+	@Test void transform_2d_array() {
 		Se2_F64 tran = new Se2_F64( -2, 3, Math.PI );
 
 		Point2D_F64 pts[] = new Point2D_F64[20];
@@ -114,8 +108,7 @@ public class TestSePointOps_F64 {
 		}
 	}
 
-	@Test
-	void transform_2d_list() {
+	@Test void transform_2d_list() {
 		Se2_F64 tran = new Se2_F64( -2, 3, Math.PI );
 
 		List<Point2D_F64> pts = new ArrayList<Point2D_F64>();
@@ -130,8 +123,7 @@ public class TestSePointOps_F64 {
 		}
 	}
 
-	@Test
-	void transform_3d_single() {
+	@Test void transform_3d_single() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
@@ -147,8 +139,7 @@ public class TestSePointOps_F64 {
 		assertEquals( 2 , Pt.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void transform_4d_3D() {
+	@Test void transform_4d_3D() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
@@ -167,8 +158,7 @@ public class TestSePointOps_F64 {
 		assertEquals( P3.z , Pt.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void transform_4d_4D() {
+	@Test void transform_4d_4D() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
@@ -192,8 +182,7 @@ public class TestSePointOps_F64 {
 		assertEquals(0 , Pt.w, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void transformReverse_4d_4D() {
+	@Test void transformReverse_4d_4D() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
@@ -217,8 +206,7 @@ public class TestSePointOps_F64 {
 		assertEquals(0 , Pt.w, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void transformV_4d_3d() {
+	@Test void transformV_4d_3d() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		var T = new Vector3D_F64( 1, 2, 3 );
 
@@ -234,8 +222,7 @@ public class TestSePointOps_F64 {
 		assertEquals( 2 , Pt.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void transformReverse_3d_single() {
+	@Test void transformReverse_3d_single() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0, Math.PI / 2, 0, null );
 		Vector3D_F64 T = new Vector3D_F64( 1, 2, 3 );
 
