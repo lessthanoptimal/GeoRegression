@@ -25,12 +25,18 @@ project.ext.jetnull_version = '23.0.0'
 project.ext.jsr250_version = '1.0'
 project.ext.jsr305_version = '3.0.2'
 
+if (!project.hasProperty('ossrhUsername')) {
+    ext.ossrhUsername = "dummy"
+    ext.ossrhPassword = "dummy"
+}
+
 nexusPublishing {
     repositories {
         sonatype {
             nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
             snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
 
+            // if Maven central isn't setup in ~/.gradle/gradle.properties fill in these variables to make it happy
             username = ossrhUsername
             password = ossrhPassword
         }
@@ -195,12 +201,6 @@ subprojects {
     if (!project.tasks.publish.enabled)
         return
 
-    // if Maven central isn't setup in ~/.gradle/gradle.properties fill in these variables to make it happy
-    if (!project.hasProperty('ossrhUsername')) {
-        ext.ossrhUsername = "dummy"
-        ext.ossrhPassword = "dummy"
-    }
-
     publishing {
         publications {
             mavenJava(MavenPublication) {
@@ -243,7 +243,7 @@ subprojects {
         }
     }
 
-    if (ext.ossrhUsername != "dummy") {
+    if (project.hasProperty('ossrhUsername')) {
         signing { sign publishing.publications.mavenJava }
     }
 }
