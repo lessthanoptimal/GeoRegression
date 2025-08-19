@@ -154,6 +154,64 @@ public class ClosestPoint3D_F64 {
 	}
 
 	/**
+	 * <p>
+	 * Finds the closest point on each line to the other line in homogenous coordinates. Because it's in homogenous
+	 * coordinates it can handle parallel lines and points at infinity
+	 * </p>
+	 *
+	 * @param l0 first line. Not modified.
+	 * @param l1 second line. Not modified.
+	 * @param pointOn0 (Output) Closest point that's on l0
+	 * @param pointOn1 (Output) Closest point that's on l1
+	 */
+	public static void closestPoints( LineParametric3D_F64 l0,
+									  LineParametric3D_F64 l1,
+									  Point4D_F64 pointOn0, Point4D_F64 pointOn1 ) {
+		double dX = l0.p.x - l1.p.x;
+		double dY = l0.p.y - l1.p.y;
+		double dZ = l0.p.z - l1.p.z;
+
+		// this solution is from: http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
+		double dv01v1 = MiscOps.dot(dX, dY, dZ, l1.slope);
+		double dv10v0 = -MiscOps.dot(dX, dY, dZ, l0.slope);
+		double dv1v0 = MiscOps.dot(l1.slope, l0.slope);
+		double dv1v1 = MiscOps.dot(l1.slope, l1.slope);
+		double dv0v0 = MiscOps.dot(l0.slope, l0.slope);
+
+		double t0 = dv01v1*dv1v0 + dv10v0*dv1v1;
+		double t1 = dv10v0*dv1v0 + dv01v1*dv0v0;
+		double bottom = dv0v0*dv1v1 - dv1v0*dv1v0;
+
+		// See if the lines are parallel
+		if (bottom == 0.0) {
+			// there are an infinite number of closest points. Just pick the origin of line[0] as one of the points.
+			pointOn0.setTo(l0.p.x, l0.p.y, l0.p.z, 1.0);
+			closestPointH(l1, l0.p, pointOn1);
+
+			pointOn0.normalize();
+			pointOn1.normalize();
+			return;
+		}
+
+		pointOn0.x = bottom*l0.p.x + t0*l0.slope.x;
+		pointOn0.y = bottom*l0.p.y + t0*l0.slope.y;
+		pointOn0.z = bottom*l0.p.z + t0*l0.slope.z;
+		pointOn0.w = bottom;
+
+		// carefully normalize to avoid precision issues
+		pointOn0.divideIP(pointOn0.maxAbs());
+		pointOn0.normalize();
+
+		pointOn1.x = bottom*l1.p.x + t1*l1.slope.x;
+		pointOn1.y = bottom*l1.p.y + t1*l1.slope.y;
+		pointOn1.z = bottom*l1.p.z + t1*l1.slope.z;
+		pointOn1.w = bottom;
+
+		pointOn1.divideIP(pointOn1.maxAbs());
+		pointOn1.normalize();
+	}
+
+	/**
 	 * Finds the closest point on a line to the specified point.
 	 *
 	 * @param line Line on which the closest point is being found. Not modified.
@@ -177,6 +235,38 @@ public class ClosestPoint3D_F64 {
 		ret.x = line.p.x + d*line.slope.x/n2;
 		ret.y = line.p.y + d*line.slope.y/n2;
 		ret.z = line.p.z + d*line.slope.z/n2;
+
+		return ret;
+	}
+
+	/**
+	 * Finds the closest point on a line to the specified point, with the result in homogeneous coordinates.
+	 *
+	 * @param line Line on which the closest point is being found. Not modified.
+	 * @param pt The point whose closest point is being looked for. Not modified.
+	 * @param ret Storage for the solution. Can be same as instance as 'pt'. If null is passed in a new point is created. Modified.
+	 */
+	public static Point4D_F64 closestPointH( LineParametric3D_F64 line, Point3D_F64 pt,
+											 @Nullable Point4D_F64 ret ) {
+		if (ret == null) {
+			ret = new Point4D_F64();
+		}
+
+		double dx = pt.x - line.p.x;
+		double dy = pt.y - line.p.y;
+		double dz = pt.z - line.p.z;
+
+		double n2 = line.slope.normSq();
+
+		double d = (line.slope.x*dx + line.slope.y*dy + line.slope.z*dz);
+
+		ret.x = line.p.x*n2 + d*line.slope.x;
+		ret.y = line.p.y*n2 + d*line.slope.y;
+		ret.z = line.p.z*n2 + d*line.slope.z;
+		ret.w = n2;
+
+		ret.divideIP(ret.maxAbs());
+		ret.normalize();
 
 		return ret;
 	}

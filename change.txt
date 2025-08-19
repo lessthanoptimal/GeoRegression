@@ -5,6 +5,8 @@ Date    : ???
 Version : 0.28.1
 
 - Added AverageSe3
+- ClosestPoint3D
+  * Added new function to find homogenous coordinates of closest points to two lines
 
 ---------------------------------------------
 Date    : 2025-June-30
