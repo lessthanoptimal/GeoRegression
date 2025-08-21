@@ -7,6 +7,10 @@ Version : 0.28.1
 - Added AverageSe3
 - ClosestPoint3D
   * Added new function to find homogenous coordinates of closest points to two lines
+- GeoTuple{2D|3d}
+  * added maxAbs()
+- Vector{2D|3d}_F64
+  * added normalize and made sure it was not prone to overflow
 
 ---------------------------------------------
 Date    : 2025-June-30

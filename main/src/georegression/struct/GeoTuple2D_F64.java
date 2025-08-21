@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -210,6 +210,17 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 			default:
 				throw new IllegalArgumentException("Invalid index");
 		}
+	}
+
+	/**
+	 * Returns the absolute value of the component with the largest absolute value
+	 * @return max absolute value
+	 */
+	public double maxAbs() {
+		double absX = Math.abs(x);
+		double absY = Math.abs(y);
+
+		return Math.max(absX,absY);
 	}
 
 	@Override

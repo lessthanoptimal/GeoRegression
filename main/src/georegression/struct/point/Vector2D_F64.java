@@ -57,10 +57,22 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 		return this;
 	}
 
+	/** Normalize the vector so that the f-norm is 1. Care is taken to avoid overflow */
 	public void normalize() {
-		double r = norm();
-		x /= r;
-		y /= r;
+		double m = maxAbs();
+
+		// Avoid divide by zero
+		if (m == 0.0)
+			return;
+
+		// It's now at a more reasonable scale
+		double xm = x/m;
+		double ym = y/m;
+
+		// Compute the f-norm
+		double mn = Math.sqrt(xm*xm + ym*ym);
+		x = xm/mn;
+		y = ym/mn;
 	}
 
 	/**
