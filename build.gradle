@@ -25,22 +25,22 @@ project.ext.jetnull_version = '23.0.0'
 project.ext.jsr250_version = '1.0'
 project.ext.jsr305_version = '3.0.2'
 
-if (!project.hasProperty('ossrhUsername')) {
-    ext.ossrhUsername = "dummy"
-    ext.ossrhPassword = "dummy"
-}
+// if Maven central isn't setup in ~/.gradle/gradle.properties fill in these variables to make it happy
+if (project.hasProperty('ossrhUsername')) {
+    nexusPublishing {
+        repositories {
+            sonatype {
+                nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
+                snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
 
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
-
-            // if Maven central isn't setup in ~/.gradle/gradle.properties fill in these variables to make it happy
-            username = ossrhUsername
-            password = ossrhPassword
+                username = ossrhUsername
+                password = ossrhPassword
+            }
         }
     }
+} else {
+    ext.ossrhUsername = "dummy"
+    ext.ossrhPassword = "dummy"
 }
 
 subprojects {
@@ -85,7 +85,6 @@ subprojects {
         mavenCentral()
         mavenLocal()
 
-        maven { url = "https://central.sonatype.com/repository/maven-snapshots/" }
         maven { url = 'https://jitpack.io' } // Allows annotations past Java 8 to be used
     }
 
@@ -243,7 +242,7 @@ subprojects {
         }
     }
 
-    if (project.hasProperty('ossrhUsername')) {
+    if (ext.ossrhUsername != 'dummy') {
         signing { sign publishing.publications.mavenJava }
     }
 }
