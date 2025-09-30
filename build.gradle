@@ -242,7 +242,7 @@ subprojects {
         }
     }
 
-    if (ext.ossrhUsername != 'dummy') {
+    if (rootProject.ext.ossrhUsername != 'dummy') {
         signing { sign publishing.publications.mavenJava }
     }
 }
