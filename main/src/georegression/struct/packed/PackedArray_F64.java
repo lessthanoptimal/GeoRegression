@@ -61,4 +61,8 @@ public abstract class PackedArray_F64<T> implements PackedArray<T> {
 
 	/** True if the two arrays are equal to within the specified tolerance */
 	public boolean isEquals( PackedArray<T> b, double tol ) {return array.isEquals(((PackedArray_F64<T>)b).array, tol);}
+
+	@Override public void resize( int size ) {
+		array.resize(size*DOF, 0.0);
+	}
 }

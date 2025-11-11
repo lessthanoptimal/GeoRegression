@@ -58,7 +58,12 @@ public abstract class PackedBigArray_F64<T> implements PackedArray<T> {
 		return array.size/DOF;
 	}
 
-	@Override public boolean isEquals( PackedArray<T> b ) {return array.isEquivalent(((PackedBigArray_F64<T>)b).array, 0.0);}
+	@Override
+	public boolean isEquals( PackedArray<T> b ) {return array.isEquivalent(((PackedBigArray_F64<T>)b).array, 0.0);}
+
+	@Override public void resize( int size ) {
+		array.resize(size*DOF, 0);
+	}
 
 	/** True if the two arrays are equal to within the specified tolerance */
 	public boolean isEquals( PackedArray<T> b, double tol ) {return array.isEquivalent(((PackedBigArray_F64<T>)b).array, tol);}

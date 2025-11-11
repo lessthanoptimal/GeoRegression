@@ -77,4 +77,25 @@ public class TestPackedArrayPoint2D_F64 extends GenericPackedArrayChecks<Point2D
 		assertEquals(2, dst.size());
 		src.forIdx(0, 2, ( idx, a ) -> assertEquals(0.0, a.distance(dst.getTemp(idx))));
 	}
+
+	@Test void resize() {
+		var a = new PackedArrayPoint2D_F64();
+		a.append(1, 2);
+		a.resize(3);
+
+		// See if it has the expected grow behavior
+		assertEquals(3, a.size());
+		assertTrue(a.getTemp(0).isIdentical(1, 2));
+		assertTrue(a.getTemp(1).isIdentical(0, 0));
+		assertTrue(a.getTemp(2).isIdentical(0, 0));
+
+		// this is equivalent to reset
+		a.resize(0);
+		assertEquals(0, a.size());
+
+		// Grow should overwrite the old first value
+		a.resize(1);
+		assertEquals(1, a.size());
+		assertTrue(a.getTemp(0).isIdentical(0, 0));
+	}
 }
