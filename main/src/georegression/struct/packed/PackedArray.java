@@ -34,6 +34,9 @@ public interface PackedArray<T> extends LArrayAccessor<T> {
 	 */
 	PackedArray<T> reset();
 
+	/** Resizes the array. If the size has increased then new elements are given the default value */
+	void resize( int size );
+
 	/** Removes the index and copies in the last element. O(1), but changes the order */
 	void removeSwap( int index );
 

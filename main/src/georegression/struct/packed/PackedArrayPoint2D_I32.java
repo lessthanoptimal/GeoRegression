@@ -46,6 +46,10 @@ public class PackedArrayPoint2D_I32 implements PackedArray<Point2D_I32> {
 		return this;
 	}
 
+	@Override public void resize( int size ) {
+		array.resize(size*DOF, 0);
+	}
+
 	@Override public PackedArrayPoint2D_I32 reserve( int numTuples ) {
 		array.reserve(numTuples*2);
 		return this;
