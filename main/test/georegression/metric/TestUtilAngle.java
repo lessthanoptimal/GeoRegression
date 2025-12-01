@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -272,6 +272,30 @@ public class TestUtilAngle {
 		assertEquals(0.2, UtilAngle.distHalf(0.1, -0.1), 1e-8);
 		assertEquals(Math.PI/2.0, UtilAngle.distHalf(0, Math.PI/2.0), 1e-8);
 		assertEquals(Math.PI/2.0 - 0.1, UtilAngle.distHalf(-0.1, Math.PI/2.0), 1e-8);
+	}
+
+	@Test void distHalf_F32() {
+		assertEquals(0, UtilAngle.distHalf(0.0f, 0.0f), 1e-4f);
+		assertEquals(0, UtilAngle.distHalf(F_PId2, F_PId2), 1e-4f);
+		assertEquals(0, UtilAngle.distHalf(-F_PId2, -F_PId2), 1e-4f);
+		assertEquals(0, UtilAngle.distHalf(F_PId2, -F_PId2), 1e-4f);
+		assertEquals(0, UtilAngle.distHalf(-F_PId2, F_PId2), 1e-4f);
+
+		assertEquals(0.2, UtilAngle.distHalf(0.1f, -0.1f), 1e-4f);
+		assertEquals(F_PId2, UtilAngle.distHalf(0f, F_PId2), 1e-4f);
+		assertEquals(F_PId2 - 0.1f, UtilAngle.distHalf(-0.1f, F_PId2), 1e-4f);
+	}
+
+	@Test void distHalf_u_F64() {
+		assertEquals(0.2, UtilAngle.distHalf_u(0.1, -0.1), 1e-8);
+		assertEquals(0.2, UtilAngle.distHalf_u(0.1 + Math.PI, -0.1), 1e-8);
+		assertEquals(0.2, UtilAngle.distHalf_u(0.1, -0.1 + Math.PI), 1e-8);
+	}
+
+	@Test void distHalf_u_F32() {
+		assertEquals(0.2f, UtilAngle.distHalf_u(0.1f, -0.1f), 1e-4f);
+		assertEquals(0.2f, UtilAngle.distHalf_u(0.1f + F_PI, -0.1f), 1e-4f);
+		assertEquals(0.2f, UtilAngle.distHalf_u(0.1f, -0.1f + F_PI), 1e-4f);
 	}
 
 	@Test void domain2PI() {

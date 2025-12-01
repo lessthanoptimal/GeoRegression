@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -492,6 +492,43 @@ public class UtilAngle {
 			return a;
 		else
 			return Math.PI - a;
+	}
+
+	/**
+	 * Angular distance between two half circle angles.
+	 *
+	 * @param angA Angle between -pi/2 and pi/2.
+	 * @param angB Angle between -pi/2 and pi/2.
+	 * @return Acute angle between the two input angles.
+	 */
+	public static float distHalf( float angA, float angB ) {
+		float a = Math.abs(angA - angB);
+		if (a <= GrlConstants.F_PI/2)
+			return a;
+		else
+			return GrlConstants.F_PI - a;
+	}
+
+	/**
+	 * Angular distance between two half circle angles. Inputs are unbounded.
+	 *
+	 * @param angA first angle. Radians.
+	 * @param angB second angle. Radians.
+	 * @return Acute angle between the two input angles.
+	 */
+	public static double distHalf_u( double angA, double angB ) {
+		return distHalf(boundHalf(angA), boundHalf(angB));
+	}
+
+	/**
+	 * Angular distance between two half circle angles. Inputs are unbounded.
+	 *
+	 * @param angA first angle. Radians.
+	 * @param angB second angle. Radians.
+	 * @return Acute angle between the two input angles.
+	 */
+	public static float distHalf_u( float angA, float angB ) {
+		return distHalf(boundHalf(angA), boundHalf(angB));
 	}
 
 	/**

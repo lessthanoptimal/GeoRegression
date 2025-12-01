@@ -6,7 +6,8 @@ Version : 0.28.2
 
 - PackedArray
   * Added resize()
-
+- UtilAngle
+  * Added unbounded version of distHalf
 
 ---------------------------------------------
 Date    : 2025-Sep-05
