@@ -11,7 +11,7 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.28.2-SNAPSHOT'
+    version = '0.28.3-SNAPSHOT'
 }
 
 project.ext.ddogleg_version = '0.24.2'
