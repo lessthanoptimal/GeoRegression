@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,6 +22,7 @@ import georegression.misc.GrlConstants;
 import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.GeoTuple4D_F64;
 import georegression.struct.point.*;
+import georegression.struct.so.Quaternion_F64;
 import org.ejml.UtilEjml;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
@@ -45,16 +46,15 @@ public class TestGeometryMath_F64 {
 	/**
 	 * Sees if crossMatrix produces a valid output
 	 */
-	@Test
-	void crossMatrix_validOut() {
+	@Test void crossMatrix_validOut() {
 		double a = 1.1, b = -0.5, c = 2.2;
 
-		Vector3D_F64 v = new Vector3D_F64(a, b, c);
+		var v = new Vector3D_F64(a, b, c);
 
-		Vector3D_F64 x = new Vector3D_F64(7.6, 2.9, 0.5);
+		var x = new Vector3D_F64(7.6, 2.9, 0.5);
 
-		Vector3D_F64 found0 = new Vector3D_F64();
-		Vector3D_F64 found1 = new Vector3D_F64();
+		var found0 = new Vector3D_F64();
+		var found1 = new Vector3D_F64();
 
 		GeometryMath_F64.cross(v, x, found0);
 		DMatrixRMaj V = GeometryMath_F64.crossMatrix(a, b, c, null);
@@ -69,11 +69,10 @@ public class TestGeometryMath_F64 {
 	/**
 	 * Sees if both crossMatrix functions produce the same output
 	 */
-	@Test
-	void crossMatrix_sameOut() {
+	@Test void crossMatrix_sameOut() {
 		double a = 1.1, b = -0.5, c = 2.2;
 
-		Vector3D_F64 v = new Vector3D_F64(a, b, c);
+		var v = new Vector3D_F64(a, b, c);
 
 		DMatrixRMaj V1 = GeometryMath_F64.crossMatrix(v, null);
 		DMatrixRMaj V2 = GeometryMath_F64.crossMatrix(a, b, c, null);
@@ -81,11 +80,10 @@ public class TestGeometryMath_F64 {
 		assertTrue(MatrixFeatures_DDRM.isIdentical(V1, V2, GrlConstants.TEST_F64));
 	}
 
-	@Test
-	void cross_3d_3d() {
-		Vector3D_F64 a = new Vector3D_F64(1, 0, 0);
-		Vector3D_F64 b = new Vector3D_F64(0, 1, 0);
-		Vector3D_F64 c = new Vector3D_F64();
+	@Test void cross_3d_3d() {
+		var a = new Vector3D_F64(1, 0, 0);
+		var b = new Vector3D_F64(0, 1, 0);
+		var c = new Vector3D_F64();
 
 		GeometryMath_F64.cross(a, b, c);
 
@@ -100,12 +98,11 @@ public class TestGeometryMath_F64 {
 		assertEquals(-1, c.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void cross_3d_3d_double() {
-		Vector3D_F64 a = new Vector3D_F64(1, 2, 3);
-		Vector3D_F64 b = new Vector3D_F64(0.5, 1.5, -3);
-		Vector3D_F64 expected = new Vector3D_F64();
-		Vector3D_F64 found = new Vector3D_F64();
+	@Test void cross_3d_3d_double() {
+		var a = new Vector3D_F64(1, 2, 3);
+		var b = new Vector3D_F64(0.5, 1.5, -3);
+		var expected = new Vector3D_F64();
+		var found = new Vector3D_F64();
 
 		GeometryMath_F64.cross(a, b, expected);
 		GeometryMath_F64.cross(a.x, a.y, a.z, b.x, b.y, b.z, found);
@@ -115,13 +112,12 @@ public class TestGeometryMath_F64 {
 		assertEquals(expected.z, found.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void cross_2d_3d() {
-		Vector2D_F64 aa = new Vector2D_F64(0.75, 2);
-		Vector3D_F64 a = new Vector3D_F64(0.75, 2, 1);
-		Vector3D_F64 b = new Vector3D_F64(3, 0.1, 4);
-		Vector3D_F64 expected = new Vector3D_F64();
-		Vector3D_F64 found = new Vector3D_F64();
+	@Test void cross_2d_3d() {
+		var aa = new Vector2D_F64(0.75, 2);
+		var a = new Vector3D_F64(0.75, 2, 1);
+		var b = new Vector3D_F64(3, 0.1, 4);
+		var expected = new Vector3D_F64();
+		var found = new Vector3D_F64();
 
 		GeometryMath_F64.cross(a, b, expected);
 		GeometryMath_F64.cross(aa, b, found);
@@ -131,14 +127,13 @@ public class TestGeometryMath_F64 {
 		assertEquals(expected.z, found.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void cross_2d_2d() {
-		Vector2D_F64 aa = new Vector2D_F64(0.75, 2);
-		Vector3D_F64 a = new Vector3D_F64(0.75, 2, 1);
-		Vector2D_F64 bb = new Vector2D_F64(3, 0.1);
-		Vector3D_F64 b = new Vector3D_F64(3, 0.1, 1);
-		Vector3D_F64 expected = new Vector3D_F64();
-		Vector3D_F64 found = new Vector3D_F64();
+	@Test void cross_2d_2d() {
+		var aa = new Vector2D_F64(0.75, 2);
+		var a = new Vector3D_F64(0.75, 2, 1);
+		var bb = new Vector2D_F64(3, 0.1);
+		var b = new Vector3D_F64(3, 0.1, 1);
+		var expected = new Vector3D_F64();
+		var found = new Vector3D_F64();
 
 		GeometryMath_F64.cross(a, b, expected);
 		GeometryMath_F64.cross(aa, bb, found);
@@ -148,11 +143,10 @@ public class TestGeometryMath_F64 {
 		assertEquals(expected.z, found.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void add() {
-		Vector3D_F64 a = new Vector3D_F64(1, 2, 3);
-		Vector3D_F64 b = new Vector3D_F64(3, 1, 4);
-		Vector3D_F64 c = new Vector3D_F64();
+	@Test void add() {
+		var a = new Vector3D_F64(1, 2, 3);
+		var b = new Vector3D_F64(3, 1, 4);
+		var c = new Vector3D_F64();
 
 		GeometryMath_F64.add(a, b, c);
 
@@ -161,11 +155,10 @@ public class TestGeometryMath_F64 {
 		assertEquals(7, c.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void add_scale() {
-		Vector3D_F64 a = new Vector3D_F64(1, 2, 3);
-		Vector3D_F64 b = new Vector3D_F64(3, 1, 4);
-		Vector3D_F64 c = new Vector3D_F64();
+	@Test void add_scale() {
+		var a = new Vector3D_F64(1, 2, 3);
+		var b = new Vector3D_F64(3, 1, 4);
+		var c = new Vector3D_F64();
 
 		GeometryMath_F64.add(2, a, -1, b, c);
 
@@ -174,12 +167,11 @@ public class TestGeometryMath_F64 {
 		assertEquals(2, c.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void addMult() {
-		Vector3D_F64 a = new Vector3D_F64(1, 2, 3);
-		Vector3D_F64 b = new Vector3D_F64(2, 3, 4);
-		Vector3D_F64 c = new Vector3D_F64();
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+	@Test void addMult() {
+		var a = new Vector3D_F64(1, 2, 3);
+		var b = new Vector3D_F64(2, 3, 4);
+		var c = new Vector3D_F64();
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 		GeometryMath_F64.addMult(a, M, b, c);
 
@@ -199,12 +191,11 @@ public class TestGeometryMath_F64 {
 		assertEquals(expected.get(2), a.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void addMultTran() {
-		Vector3D_F64 a = new Vector3D_F64(1, 2, 3);
-		Vector3D_F64 b = new Vector3D_F64(2, 3, 4);
-		Vector3D_F64 c = new Vector3D_F64();
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+	@Test void addMultTran() {
+		var a = new Vector3D_F64(1, 2, 3);
+		var b = new Vector3D_F64(2, 3, 4);
+		var c = new Vector3D_F64();
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 		GeometryMath_F64.addMultTrans(a, M, b, c);
 
@@ -224,11 +215,10 @@ public class TestGeometryMath_F64 {
 		assertEquals(expected.get(2), a.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void sub() {
-		Vector3D_F64 a = new Vector3D_F64(1, 2, 3);
-		Vector3D_F64 b = new Vector3D_F64(3, 1, 4);
-		Vector3D_F64 c = new Vector3D_F64();
+	@Test void sub() {
+		var a = new Vector3D_F64(1, 2, 3);
+		var b = new Vector3D_F64(3, 1, 4);
+		var c = new Vector3D_F64();
 
 		GeometryMath_F64.sub(a, b, c);
 
@@ -237,12 +227,11 @@ public class TestGeometryMath_F64 {
 		assertEquals(-1, c.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void rotate_2d_theta() {
-		Vector2D_F64 a = new Vector2D_F64(1, 2);
+	@Test void rotate_2d_theta() {
+		var a = new Vector2D_F64(1, 2);
 		double theta = 0.6;
 
-		Vector2D_F64 b = new Vector2D_F64();
+		var b = new Vector2D_F64();
 
 		GeometryMath_F64.rotate(theta, a, b);
 
@@ -257,12 +246,11 @@ public class TestGeometryMath_F64 {
 		assertEquals(y, b.y, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void rotate_2d_c_s() {
-		Vector2D_F64 a = new Vector2D_F64(1, 2);
+	@Test void rotate_2d_c_s() {
+		var a = new Vector2D_F64(1, 2);
 		double theta = 0.6;
 
-		Vector2D_F64 b = new Vector2D_F64();
+		var b = new Vector2D_F64();
 
 		double c = Math.cos(theta);
 		double s = Math.sin(theta);
@@ -277,11 +265,10 @@ public class TestGeometryMath_F64 {
 		assertEquals(y, b.y, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void mult_3d_3d() {
-		Vector3D_F64 a = new Vector3D_F64(-1, 2, 3);
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-		Vector3D_F64 c = new Vector3D_F64();
+	@Test void mult_3d_3d() {
+		var a = new Vector3D_F64(-1, 2, 3);
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+		var c = new Vector3D_F64();
 
 		GeometryMath_F64.mult(M, a, c);
 
@@ -290,13 +277,12 @@ public class TestGeometryMath_F64 {
 		assertEquals(36, c.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void mult4_3d_3d() {
-		Vector3D_F64 a = new Vector3D_F64(-1, 2, 3);
-		Vector4D_F64 aa = new Vector4D_F64(-1, 2, 3, 1);
-		DMatrixRMaj M = new DMatrixRMaj(4, 4, true, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7);
-		Vector3D_F64 c = new Vector3D_F64();
-		Vector3D_F64 cc = new Vector3D_F64();
+	@Test void mult4_3d_3d() {
+		var a = new Vector3D_F64(-1, 2, 3);
+		var aa = new Vector4D_F64(-1, 2, 3, 1);
+		var M = new DMatrixRMaj(4, 4, true, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7);
+		var c = new Vector3D_F64();
+		var cc = new Vector3D_F64();
 
 		GeometryMath_F64.mult4(M, a, c);
 		GeometryMath_F64.mult(M, aa, cc);
@@ -306,10 +292,9 @@ public class TestGeometryMath_F64 {
 		assertEquals(cc.z, c.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void mult_3d_2d() {
-		Vector3D_F64 a = new Vector3D_F64(-1, 2, 3);
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+	@Test void mult_3d_2d() {
+		var a = new Vector3D_F64(-1, 2, 3);
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 		Vector2D_F64 c = new Vector2D_F64();
 
 		GeometryMath_F64.mult(M, a, c);
@@ -318,16 +303,15 @@ public class TestGeometryMath_F64 {
 		assertEquals(24.0/36.0, c.getY(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void mult_2d_3d() {
-		Vector3D_F64 a3 = new Vector3D_F64(-1, 2, 1);
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-		Vector3D_F64 expected = new Vector3D_F64();
+	@Test void mult_2d_3d() {
+		var a3 = new Vector3D_F64(-1, 2, 1);
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+		var expected = new Vector3D_F64();
 
 		GeometryMath_F64.mult(M, a3, expected);
 
-		Vector2D_F64 a2 = new Vector2D_F64(-1, 2);
-		Vector3D_F64 found = new Vector3D_F64();
+		var a2 = new Vector2D_F64(-1, 2);
+		var found = new Vector3D_F64();
 		GeometryMath_F64.mult(M, a2, found);
 
 		assertEquals(expected.x, found.x, GrlConstants.TEST_F64);
@@ -335,11 +319,10 @@ public class TestGeometryMath_F64 {
 		assertEquals(expected.z, found.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void mult_2d_2d() {
+	@Test void mult_2d_2d() {
 		Vector3D_F64 a3 = new Vector3D_F64(-1, 2, 1);
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-		Vector3D_F64 expected = new Vector3D_F64();
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+		var expected = new Vector3D_F64();
 
 		GeometryMath_F64.mult(M, a3, expected);
 
@@ -353,11 +336,10 @@ public class TestGeometryMath_F64 {
 		assertEquals(expected.y/z, found.y, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void multTran_3d_3d() {
-		Vector3D_F64 a = new Vector3D_F64(-1, 2, 3);
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-		Vector3D_F64 c = new Vector3D_F64();
+	@Test void multTran_3d_3d() {
+		var a = new Vector3D_F64(-1, 2, 3);
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+		var c = new Vector3D_F64();
 
 		GeometryMath_F64.multTran(M, a, c);
 
@@ -366,11 +348,10 @@ public class TestGeometryMath_F64 {
 		assertEquals(36, c.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void multTran_2d_3d() {
-		Vector2D_F64 a = new Vector2D_F64(-1, 2);
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-		Vector3D_F64 c = new Vector3D_F64();
+	@Test void multTran_2d_3d() {
+		var a = new Vector2D_F64(-1, 2);
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+		var c = new Vector3D_F64();
 
 		GeometryMath_F64.multTran(M, a, c);
 
@@ -379,21 +360,19 @@ public class TestGeometryMath_F64 {
 		assertEquals(18, c.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void mult_3x4_4d_3d() {
+	@Test void mult_3x4_4d_3d() {
 		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(3, 4, rand);
-		Point4D_F64 X = new Point4D_F64(1, 2, 3, 4);
+		var X = new Point4D_F64(1, 2, 3, 4);
 
-		Point3D_F64 Y = new Point3D_F64();
+		var Y = new Point3D_F64();
 		GeometryMath_F64.mult(P, X, Y);
 
-		GEquation eq = new GEquation(P, "P", X, "X");
+		var eq = new GEquation(P, "P", X, "X");
 		eq.process("Y=P*X");
 		checkEquals(eq, "Y", Y);
 	}
 
-	@Test
-	void mult_3x3_4d_3d() {
+	@Test void mult_3x3_4d_3d() {
 		DMatrixRMaj P34 = RandomMatrices_DDRM.rectangle(3, 4, rand);
 		DMatrixRMaj P33 = new DMatrixRMaj(3, 3);
 
@@ -409,7 +388,7 @@ public class TestGeometryMath_F64 {
 		var Y = new Point3D_F64();
 		GeometryMath_F64.mult(P33, X, Y);
 
-		GEquation eq = new GEquation(P34, "P", X, "X");
+		var eq = new GEquation(P34, "P", X, "X");
 		eq.process("Y=P*X");
 		checkEquals(eq, "Y", Y);
 	}
@@ -430,69 +409,64 @@ public class TestGeometryMath_F64 {
 		}
 	}
 
-	@Test
-	void mult_4x4_4d_4d() {
+	@Test void mult_4x4_4d_4d() {
 		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(4, 4, rand);
-		Point4D_F64 X = new Point4D_F64(1, 2, 3, 4);
+		var X = new Point4D_F64(1, 2, 3, 4);
 
-		Point4D_F64 Y = new Point4D_F64();
+		var Y = new Point4D_F64();
 		GeometryMath_F64.mult(P, X, Y);
 
-		GEquation eq = new GEquation(P, "P", X, "X");
+		var eq = new GEquation(P, "P", X, "X");
 		eq.process("Y=P*X");
 		checkEquals(eq, "Y", Y);
 	}
 
-	@Test
-	void mult_3x3_4d_4d() {
+	@Test void mult_3x3_4d_4d() {
 		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(3, 3, rand);
-		Point4D_F64 X = new Point4D_F64(1, 2, 3, 4);
+		var X = new Point4D_F64(1, 2, 3, 4);
 
-		Point4D_F64 Y = new Point4D_F64();
+		var Y = new Point4D_F64();
 		GeometryMath_F64.mult(P, X, Y);
 
-		GEquation eq = new GEquation(P, "P", X, "X");
+		var eq = new GEquation(P, "P", X, "X");
 		eq.process("P=[[P,[0,0,0]'];[0,0,0,1]]");
 		eq.process("Y=P*X");
 		checkEquals(eq, "Y", Y);
 	}
 
-	@Test
-	void multTran_4x4_4d_4d() {
+	@Test void multTran_4x4_4d_4d() {
 		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(4, 4, rand);
-		Point4D_F64 X = new Point4D_F64(1, 2, 3, 4);
+		var X = new Point4D_F64(1, 2, 3, 4);
 
-		Point4D_F64 Y = new Point4D_F64();
+		var Y = new Point4D_F64();
 		GeometryMath_F64.multTran(P, X, Y);
 
-		GEquation eq = new GEquation(P, "P", X, "X");
+		var eq = new GEquation(P, "P", X, "X");
 		eq.process("Y=P'*X");
 		checkEquals(eq, "Y", Y);
 	}
 
-	@Test
-	void multTran_3x3_4d_4d() {
+	@Test void multTran_3x3_4d_4d() {
 		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(3, 3, rand);
-		Point4D_F64 X = new Point4D_F64(1, 2, 3, 4);
+		var X = new Point4D_F64(1, 2, 3, 4);
 
-		Point4D_F64 Y = new Point4D_F64();
+		var Y = new Point4D_F64();
 		GeometryMath_F64.multTran(P, X, Y);
 
-		GEquation eq = new GEquation(P, "P", X, "X");
+		var eq = new GEquation(P, "P", X, "X");
 		eq.process("P=[[P,[0,0,0]'];[0,0,0,1]]");
 		eq.process("Y=P'*X");
 		checkEquals(eq, "Y", Y);
 	}
 
-	@Test
-	void mult_4d_2d() {
+	@Test void mult_4d_2d() {
 		DMatrixRMaj P = RandomMatrices_DDRM.rectangle(3, 4, rand);
-		Point4D_F64 X = new Point4D_F64(1, 2, 3, 4);
+		var X = new Point4D_F64(1, 2, 3, 4);
 
-		Point2D_F64 Y = new Point2D_F64();
+		var Y = new Point2D_F64();
 		GeometryMath_F64.mult(P, X, Y);
 
-		GEquation eq = new GEquation(P, "P", X, "X");
+		var eq = new GEquation(P, "P", X, "X");
 		eq.process("Y=P*X");
 		DMatrixRMaj expected = eq.lookupDDRM("Y");
 
@@ -502,13 +476,12 @@ public class TestGeometryMath_F64 {
 		}
 	}
 
-	@Test
-	void multCrossA_2D() {
-		Point2D_F64 a = new Point2D_F64(3, 2);
+	@Test void multCrossA_2D() {
+		var a = new Point2D_F64(3, 2);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3, 3, rand);
 
 		DMatrixRMaj a_hat = GeometryMath_F64.crossMatrix(a.x, a.y, 1, null);
-		DMatrixRMaj expected = new DMatrixRMaj(3, 3);
+		var expected = new DMatrixRMaj(3, 3);
 		CommonOps_DDRM.mult(a_hat, b, expected);
 
 		DMatrixRMaj found = GeometryMath_F64.multCrossA(a, b, null);
@@ -516,13 +489,12 @@ public class TestGeometryMath_F64 {
 		assertTrue(MatrixFeatures_DDRM.isIdentical(expected, found, GrlConstants.TEST_F64));
 	}
 
-	@Test
-	void multCrossATransA_2D() {
-		Point2D_F64 a = new Point2D_F64(3, 2);
+	@Test void multCrossATransA_2D() {
+		var a = new Point2D_F64(3, 2);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3, 3, rand);
 
 		DMatrixRMaj a_hat = GeometryMath_F64.crossMatrix(a.x, a.y, 1, null);
-		DMatrixRMaj expected = new DMatrixRMaj(3, 3);
+		var expected = new DMatrixRMaj(3, 3);
 		CommonOps_DDRM.multTransA(a_hat, b, expected);
 
 		DMatrixRMaj found = GeometryMath_F64.multCrossATransA(a, b, null);
@@ -530,13 +502,12 @@ public class TestGeometryMath_F64 {
 		assertTrue(MatrixFeatures_DDRM.isIdentical(expected, found, GrlConstants.TEST_F64));
 	}
 
-	@Test
-	void multCrossA_3D() {
-		Point3D_F64 a = new Point3D_F64(1, 2, 3);
+	@Test void multCrossA_3D() {
+		var a = new Point3D_F64(1, 2, 3);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3, 3, rand);
 
 		DMatrixRMaj a_hat = GeometryMath_F64.crossMatrix(a.x, a.y, a.z, null);
-		DMatrixRMaj expected = new DMatrixRMaj(3, 3);
+		var expected = new DMatrixRMaj(3, 3);
 		CommonOps_DDRM.mult(a_hat, b, expected);
 
 		DMatrixRMaj found = GeometryMath_F64.multCrossA(a, b, null);
@@ -544,9 +515,8 @@ public class TestGeometryMath_F64 {
 		assertTrue(MatrixFeatures_DDRM.isIdentical(expected, found, GrlConstants.TEST_F64));
 	}
 
-	@Test
-	void multCrossATransA_3D() {
-		Point3D_F64 a = new Point3D_F64(1, 2, 3);
+	@Test void multCrossATransA_3D() {
+		var a = new Point3D_F64(1, 2, 3);
 		DMatrixRMaj b = RandomMatrices_DDRM.rectangle(3, 3, rand);
 
 		DMatrixRMaj a_hat = GeometryMath_F64.crossMatrix(a.x, a.y, a.z, null);
@@ -558,44 +528,40 @@ public class TestGeometryMath_F64 {
 		assertTrue(MatrixFeatures_DDRM.isIdentical(expected, found, GrlConstants.TEST_F64));
 	}
 
-	@Test
-	void innerProd_3D() {
-		Vector3D_F64 a = new Vector3D_F64(2, -2, 3);
-		Vector3D_F64 b = new Vector3D_F64(4, 3, 2);
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+	@Test void innerProd_3D() {
+		var a = new Vector3D_F64(2, -2, 3);
+		var b = new Vector3D_F64(4, 3, 2);
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 		double found = GeometryMath_F64.innerProd(a, M, b);
 
 		assertEquals(156, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void innerProdTranM() {
-		Vector3D_F64 a = new Vector3D_F64(2, -2, 3);
-		Vector3D_F64 b = new Vector3D_F64(4, 3, 2);
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+	@Test void innerProdTranM() {
+		var a = new Vector3D_F64(2, -2, 3);
+		var b = new Vector3D_F64(4, 3, 2);
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 		double found = GeometryMath_F64.innerProdTranM(a, M, b);
 
 		assertEquals(126, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void innerProd_2D() {
-		Vector2D_F64 a = new Vector2D_F64(2, -2);
-		Vector2D_F64 b = new Vector2D_F64(4, 3);
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+	@Test void innerProd_2D() {
+		var a = new Vector2D_F64(2, -2);
+		var b = new Vector2D_F64(4, 3);
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 		double found = GeometryMath_F64.innerProd(a, M, b);
 
 		assertEquals(13, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void outerProd_3D() {
-		Vector3D_F64 a = new Vector3D_F64(2, -2, 5);
-		Vector3D_F64 b = new Vector3D_F64(4, 3, 9);
-		DMatrixRMaj M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+	@Test void outerProd_3D() {
+		var a = new Vector3D_F64(2, -2, 5);
+		var b = new Vector3D_F64(4, 3, 9);
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 		DMatrixRMaj expected = new DMatrixRMaj(3, 3, true, 8, 6, 18, -8, -6, -18, 20, 15, 45);
 
@@ -604,10 +570,9 @@ public class TestGeometryMath_F64 {
 		assertTrue(MatrixFeatures_DDRM.isIdentical(expected, M, GrlConstants.TEST_F64));
 	}
 
-	@Test
-	void addOuterProd_3D() {
-		Vector3D_F64 a = new Vector3D_F64(2, -2, 5);
-		Vector3D_F64 b = new Vector3D_F64(4, 3, 9);
+	@Test void addOuterProd_3D() {
+		var a = new Vector3D_F64(2, -2, 5);
+		var b = new Vector3D_F64(4, 3, 9);
 		DMatrixRMaj A = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 		DMatrixRMaj found = new DMatrixRMaj(3, 3);
@@ -619,18 +584,16 @@ public class TestGeometryMath_F64 {
 		assertTrue(MatrixFeatures_DDRM.isIdentical(expected, found, GrlConstants.TEST_F64));
 	}
 
-	@Test
-	void dot() {
-		Vector3D_F64 a = new Vector3D_F64(2, -2, 3);
-		Vector3D_F64 b = new Vector3D_F64(4, 3, 2);
+	@Test void dot() {
+		var a = new Vector3D_F64(2, -2, 3);
+		var b = new Vector3D_F64(4, 3, 2);
 		double found = GeometryMath_F64.dot(a, b);
 
 		assertEquals(8, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void scale() {
-		Vector3D_F64 a = new Vector3D_F64(1, -2, 3);
+	@Test void scale() {
+		var a = new Vector3D_F64(1, -2, 3);
 		GeometryMath_F64.scale(a, 2);
 
 		assertEquals(2, a.x, GrlConstants.TEST_F64);
@@ -638,9 +601,8 @@ public class TestGeometryMath_F64 {
 		assertEquals(6, a.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void divide() {
-		Vector3D_F64 a = new Vector3D_F64(1, -2, 3);
+	@Test void divide() {
+		var a = new Vector3D_F64(1, -2, 3);
 		GeometryMath_F64.divide(a, 2);
 
 		assertEquals(0.5, a.x, GrlConstants.TEST_F64);
@@ -648,9 +610,8 @@ public class TestGeometryMath_F64 {
 		assertEquals(1.5, a.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void changeSign() {
-		Vector3D_F64 a = new Vector3D_F64(1, -2, 3);
+	@Test void changeSign() {
+		var a = new Vector3D_F64(1, -2, 3);
 		GeometryMath_F64.changeSign(a);
 
 		assertEquals(-1, a.x, GrlConstants.TEST_F64);
@@ -658,9 +619,8 @@ public class TestGeometryMath_F64 {
 		assertEquals(-3, a.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void toMatrix() {
-		Vector3D_F64 a = new Vector3D_F64(1, -2, 3);
+	@Test void toMatrix() {
+		var a = new Vector3D_F64(1, -2, 3);
 		DMatrixRMaj found = GeometryMath_F64.toMatrix(a, null);
 
 		assertEquals(1, found.get(0), GrlConstants.TEST_F64);
@@ -668,14 +628,34 @@ public class TestGeometryMath_F64 {
 		assertEquals(3, found.get(2), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void toTuple3D() {
-		DMatrixRMaj a = new DMatrixRMaj(3, 1, true, 1, -2, 3);
-		Vector3D_F64 b = new Vector3D_F64();
+	@Test void toTuple3D() {
+		var a = new DMatrixRMaj(3, 1, true, 1, -2, 3);
+		var b = new Vector3D_F64();
 		GeometryMath_F64.toTuple3D(a, b);
 
 		assertEquals(b.x, a.get(0), GrlConstants.TEST_F64);
 		assertEquals(b.y, a.get(1), GrlConstants.TEST_F64);
 		assertEquals(b.z, a.get(2), GrlConstants.TEST_F64);
+	}
+
+	@Test void quatFromTwoVectors() {
+		quatFromTwoVectors(1,0,0, -1, 0, 0);
+		quatFromTwoVectors(0,1,0, -1, 0, 0);
+		quatFromTwoVectors(1,0,0, -1, 0, 0);
+		quatFromTwoVectors(0,0,-1, 0, 0, -1);
+		quatFromTwoVectors(0,0,-1, 0, 1, 0);
+	}
+
+	void quatFromTwoVectors( double ax, double ay, double az, double bx, double by, double bz) {
+		var a = new Vector3D_F64(ax, ay, az);
+		var b = new Vector3D_F64(bx, by, bz);
+
+		Quaternion_F64 q = GeometryMath_F64.quatFromTwoVectors(a, b, null);
+		DMatrixRMaj rotation = ConvertRotation3D_F64.quaternionToMatrix(q, null);
+
+		var found = new Vector3D_F64();
+		GeometryMath_F64.mult(rotation, a, found);
+
+		assertTrue(found.isIdentical(b, GrlConstants.TEST_F64));
 	}
 }

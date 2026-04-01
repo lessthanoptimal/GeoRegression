@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,8 @@ package georegression.geometry;
 import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.GeoTuple4D_F64;
+import georegression.struct.point.Vector3D_F64;
+import georegression.struct.so.Quaternion_F64;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
 import org.jetbrains.annotations.Nullable;
@@ -124,8 +126,8 @@ public class GeometryMath_F64 {
 	 * @param c Modified.
 	 */
 	public static void cross( double a_x, double a_y, double a_z,
-							  double b_x, double b_y, double b_z,
-							  GeoTuple3D_F64 c ) {
+	                          double b_x, double b_y, double b_z,
+	                          GeoTuple3D_F64 c ) {
 		c.x = a_y*b_z - a_z*b_y;
 		c.y = a_z*b_x - a_x*b_z;
 		c.z = a_x*b_y - a_y*b_x;
@@ -849,7 +851,7 @@ public class GeometryMath_F64 {
 	 * @return outer product of two 3d vectors
 	 */
 	public static DMatrixRMaj outerProd( GeoTuple3D_F64 a, GeoTuple3D_F64 b,
-										 @Nullable DMatrixRMaj ret ) {
+	                                     @Nullable DMatrixRMaj ret ) {
 		if (ret == null)
 			ret = new DMatrixRMaj(3, 3);
 
@@ -877,7 +879,7 @@ public class GeometryMath_F64 {
 	 * @return outer product of two 3d vectors
 	 */
 	public static DMatrixRMaj addOuterProd( DMatrixRMaj A, double scalar, GeoTuple3D_F64 b, GeoTuple3D_F64 c,
-											@Nullable DMatrixRMaj ret ) {
+	                                        @Nullable DMatrixRMaj ret ) {
 		if (ret == null)
 			ret = new DMatrixRMaj(3, 3);
 
@@ -1004,5 +1006,56 @@ public class GeometryMath_F64 {
 		out.x = (double)in.get(0);
 		out.y = (double)in.get(1);
 		out.z = (double)in.get(2);
+	}
+
+	/// Computes quaternion which will rotate vector 'a' into the same direction as 'b'.
+	///
+	/// @return Resulting rotation quaternion
+	public static Quaternion_F64 quatFromTwoVectors(
+			double ax, double ay, double az, double bx, double by, double bz,
+			@Nullable Quaternion_F64 result ) {
+		if (result == null)
+			result = new Quaternion_F64();
+
+		// Normalize the two input vectors
+		double anorm = Math.sqrt(ax*ax + ay*ay + az*az);
+		double bnorm = Math.sqrt(bx*bx + by*by + bz*bz);
+
+		ax /= anorm;
+		ay /= anorm;
+		az /= anorm;
+
+		bx /= bnorm;
+		by /= bnorm;
+		bz /= bnorm;
+
+		// dot(a,b) = cos(theta)
+		double dot = ax*bx + ay*by + az*bz;
+
+		// Antiparallel case (180 deg rotation). Pick one axis.
+		var axis = new Vector3D_F64();
+		if (dot < -1.0 + 1e-10) {
+			double perpX = 0, perpY = 0;
+			if (Math.abs(ax) < 0.9) {
+				perpX = 1;
+			} else {
+				perpY = 1;
+			}
+			cross(ax, ay, az, perpX, perpY, 0.0, axis);
+			axis.normalize();
+			return new Quaternion_F64(0, axis.x, axis.y, axis.z); // 180° rotation
+		}
+
+		// Cross product gives the rotation axis (scaled by sin(theta))
+		cross(ax, ay, az, bx, by, bz, axis);
+
+		// w = 1 + cos(theta)  (using the half-angle identity shortcut)
+		result.setTo(1.0 + dot, axis.x, axis.y, axis.z);
+		result.normalize();
+		return result;
+	}
+
+	public static Quaternion_F64 quatFromTwoVectors( Vector3D_F64 a, Vector3D_F64 b, @Nullable Quaternion_F64 result ) {
+		return quatFromTwoVectors(a.x, a.y, a.z, b.x, b.y, b.z, result);
 	}
 }
