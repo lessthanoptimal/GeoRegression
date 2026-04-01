@@ -1058,4 +1058,92 @@ public class GeometryMath_F64 {
 	public static Quaternion_F64 quatFromTwoVectors( Vector3D_F64 a, Vector3D_F64 b, @Nullable Quaternion_F64 result ) {
 		return quatFromTwoVectors(a.x, a.y, a.z, b.x, b.y, b.z, result);
 	}
+
+	/// Computes 3x3 rotation which will rotate vector 'a' into the same direction as 'b'.
+	///
+	/// @return Resulting rotation matrix
+	public static DMatrixRMaj rotationFromTwoVectors(
+			double ax, double ay, double az, double bx, double by, double bz,
+			@Nullable DMatrixRMaj result ) {
+		if (result == null)
+			result = new DMatrixRMaj(3, 3);
+		result.reshape(3, 3);
+
+		// Convert inputs into a unit vector
+		double anorm = Math.sqrt(ax*ax + ay*ay + az*az);
+		double bnorm = Math.sqrt(bx*bx + by*by + bz*bz);
+
+		ax /= anorm;
+		ay /= anorm;
+		az /= anorm;
+
+		bx /= bnorm;
+		by /= bnorm;
+		bz /= bnorm;
+
+		// c = dot(a,b) = cos(theta)
+		double c = ax*bx + ay*by + az*bz;
+
+		// Antiparallel case (180 deg rotation). Pick a vector that is perpendicular to a
+		if (c < -1.0 + 1e-10) {
+
+			// Pick a vector which is perpendicular. We need to make sure we use an axis which isn't zero
+			if (Math.abs(ax) > 0.25) {
+				bx = ay;
+				by = -ax;
+				bz = az;
+			} else if (Math.abs(by) > 0.25) {
+				bx = ax;
+				by = az;
+				bz = -ay;
+			} else {
+				bx = -az;
+				by = ay;
+				bz = ax;
+			}
+			// cross(a, b)
+			double vx = ay*bz - az*by;
+			double vy = az*bx - ax*bz;
+			double vz = ax*by - ay*bx;
+
+			// 180 deg rotation matrix around axis a: R = 2*v*v - I
+			result.set(0, 0, 2*vx*vx - 1);
+			result.set(0, 1, 2*vx*vy);
+			result.set(0, 2, 2*vx*vz);
+			result.set(1, 0, 2*vy*vx);
+			result.set(1, 1, 2*vy*vy - 1);
+			result.set(1, 2, 2*vy*vz);
+			result.set(2, 0, 2*vz*vx);
+			result.set(2, 1, 2*vz*vy);
+			result.set(2, 2, 2*vz*vz - 1);
+			return result;
+		}
+
+		// cross(a, b)
+		double vx = ay*bz - az*by;
+		double vy = az*bx - ax*bz;
+		double vz = ax*by - ay*bx;
+
+		double k = 1.0/(1.0 + c);
+
+		// Rodrigues rotation formula in matrix form
+		// R = I + [v]x + [v]x^2 + (1/(1+c))
+		// [v]x is a skew-symmetric matrix
+
+		result.set(0, 0, 1 + k*(vx*vx - 1 + c));
+		result.set(0, 1, k*vx*vy - vz);
+		result.set(0, 2, k*vx*vz + vy);
+		result.set(1, 0, k*vx*vy + vz);
+		result.set(1, 1, 1 + k*(vy*vy - 1 + c));
+		result.set(1, 2, k*vy*vz - vx);
+		result.set(2, 0, k*vx*vz - vy);
+		result.set(2, 1, k*vy*vz + vx);
+		result.set(2, 2, 1 + k*(vz*vz - 1 + c));
+
+		return result;
+	}
+
+	public static DMatrixRMaj rotationFromTwoVectors( Vector3D_F64 a, Vector3D_F64 b, @Nullable DMatrixRMaj result ) {
+		return rotationFromTwoVectors(a.x, a.y, a.z, b.x, b.y, b.z, result);
+	}
 }

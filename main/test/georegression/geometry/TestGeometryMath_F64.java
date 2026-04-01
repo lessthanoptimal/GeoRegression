@@ -658,4 +658,24 @@ public class TestGeometryMath_F64 {
 
 		assertTrue(found.isIdentical(b, GrlConstants.TEST_F64));
 	}
+
+	@Test void rotationFromTwoVectors() {
+		rotationFromTwoVectors(1,0,0, -1, 0, 0);
+		rotationFromTwoVectors(0,1,0, -1, 0, 0);
+		rotationFromTwoVectors(1,0,0, -1, 0, 0);
+		rotationFromTwoVectors(0,0,-1, 0, 0, -1);
+		rotationFromTwoVectors(0,0,-1, 0, 1, 0);
+	}
+
+	void rotationFromTwoVectors( double ax, double ay, double az, double bx, double by, double bz) {
+		var a = new Vector3D_F64(ax, ay, az);
+		var b = new Vector3D_F64(bx, by, bz);
+
+		DMatrixRMaj rotation = GeometryMath_F64.rotationFromTwoVectors(a, b, null);
+
+		var found = new Vector3D_F64();
+		GeometryMath_F64.mult(rotation, a, found);
+
+		assertTrue(found.isIdentical(b, GrlConstants.TEST_F64));
+	}
 }
