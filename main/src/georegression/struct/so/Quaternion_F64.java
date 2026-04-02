@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -17,6 +17,8 @@
  */
 
 package georegression.struct.so;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -78,6 +80,25 @@ public class Quaternion_F64 implements Serializable {
 		x /= n;
 		y /= n;
 		z /= n;
+	}
+
+	/// Returns a new quaternion which is equal to 'this', but normalized
+	public Quaternion_F64 normalized( @Nullable Quaternion_F64 out ) {
+		if (out == null)
+			out = new Quaternion_F64();
+		out.setTo(this).normalize();
+		return out;
+	}
+
+	/// Returns a new quaternion which is the conjugate of 'this'
+	public Quaternion_F64 conjugated( @Nullable Quaternion_F64 out ) {
+		if (out == null)
+			out = new Quaternion_F64();
+		out.w = this.w;
+		out.x = -this.x;
+		out.y = -this.y;
+		out.z = -this.z;
+		return out;
 	}
 
 	/**
