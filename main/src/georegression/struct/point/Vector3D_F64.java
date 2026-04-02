@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -114,6 +114,14 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 		x = x_n/v;
 		y = y_n/v;
 		z = z_n/v;
+	}
+
+	/// Returns a new vector which is a normalized version of this vector
+	/// @see #normalize()
+	public Vector3D_F64 normalized() {
+		var out = new Vector3D_F64(this);
+		out.normalize();
+		return out;
 	}
 
 	/**

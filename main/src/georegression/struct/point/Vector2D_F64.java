@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -73,6 +73,14 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 		double mn = Math.sqrt(xm*xm + ym*ym);
 		x = xm/mn;
 		y = ym/mn;
+	}
+
+	/// Returns a new vector which is a normalized version of this vector
+	/// @see #normalize()
+	public Vector2D_F64 normalized() {
+		var out = new Vector2D_F64(this);
+		out.normalize();
+		return out;
 	}
 
 	/**
