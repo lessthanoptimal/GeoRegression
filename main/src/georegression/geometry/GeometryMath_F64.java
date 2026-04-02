@@ -23,8 +23,10 @@ import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.GeoTuple4D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.so.Quaternion_F64;
+import org.ejml.data.DGrowArray;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
+import org.ejml.dense.row.SingularOps_DDRM;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -1057,6 +1059,64 @@ public class GeometryMath_F64 {
 
 	public static Quaternion_F64 quatFromTwoVectors( Vector3D_F64 a, Vector3D_F64 b, @Nullable Quaternion_F64 result ) {
 		return quatFromTwoVectors(a.x, a.y, a.z, b.x, b.y, b.z, result);
+	}
+
+	/// Finds a rotation represented by a quaternion for rotation a into b using SVD. This implementation will
+	/// be more computationally expensive, but select a solution (from the infinite number of valid solutions)
+	/// which are less sensitive to noise.
+	///
+	/// Note: This formulation is taken from Eigen, but won't produce identical solutions because the SVD
+	/// implementations are different.
+	public static Quaternion_F64 quatFromTwoVectorsSvd( Vector3D_F64 a, Vector3D_F64 b, @Nullable Quaternion_F64 result ) {
+		// Normalize inputs
+		Vector3D_F64 v0 = new Vector3D_F64(a).normalized();
+		Vector3D_F64 v1 = new Vector3D_F64(b).normalized();
+
+		double c = v0.dot(v1);
+
+		// If dot == -1, vectors are nearly opposite
+		// => accurately compute the rotation axis by computing the
+		//    intersection of the two planes. This is done by solving:
+		//       x^T v0 = 0
+		//       x^T v1 = 0
+		//    under the constraint:
+		//       ||x|| = 1
+		//    which yields a singular value problem
+		if (c < -1.0 + 1e-10) {  // dummy_precision for double is ~1e-10
+			c = Math.max(c, -1.0);
+
+			// Build 2x3 matrix [v0; v1]
+			var m = new DMatrixRMaj(new double[][]{
+					{v0.x, v0.y, v0.z},
+					{v1.x, v1.y, v1.z}
+			});
+
+			// SVD to find axis (last column of V). Note that V transpose is computed
+			var Vt = new DMatrixRMaj(1, 1);
+			SingularOps_DDRM.svd(m, null, new DGrowArray(), Vt);
+
+			// Last row of V.transposed is the rotation axis
+			var axis = new Vector3D_F64(
+					Vt.get(1, 0),
+					Vt.get(1, 1),
+					Vt.get(1, 2));
+
+			double w2 = (1.0 + c) * 0.5;
+			double w = Math.sqrt(w2);
+			double s = Math.sqrt(1.0 - w2);
+
+			// Quaternion_F64 is stored as w, x, y, z
+			return new Quaternion_F64(w, axis.x * s, axis.y * s, axis.z * s);
+		}
+
+		// Normal case. axis = v0 x v1
+		Vector3D_F64 axis = v0.crossWith(v1);
+
+		double s = Math.sqrt((1.0 + c) * 2.0);
+		double invs = 1.0 / s;
+
+		// Quaternion_F64 is stored as w, x, y, z
+		return new Quaternion_F64(s * 0.5, axis.x * invs, axis.y * invs, axis.z * invs);
 	}
 
 	/// Computes 3x3 rotation which will rotate vector 'a' into the same direction as 'b'.

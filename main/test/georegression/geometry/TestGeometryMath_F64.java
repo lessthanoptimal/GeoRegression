@@ -659,6 +659,27 @@ public class TestGeometryMath_F64 {
 		assertTrue(found.isIdentical(b, GrlConstants.TEST_F64));
 	}
 
+	@Test void quatFromTwoVectorsSvd() {
+		quatFromTwoVectorsSvd(1,0,0, -1, 0, 0);
+		quatFromTwoVectorsSvd(0,1,0, -1, 0, 0);
+		quatFromTwoVectorsSvd(1,0,0, -1, 0, 0);
+		quatFromTwoVectorsSvd(0,0,-1, 0, 0, -1);
+		quatFromTwoVectorsSvd(0,0,-1, 0, 1, 0);
+	}
+
+	void quatFromTwoVectorsSvd( double ax, double ay, double az, double bx, double by, double bz) {
+		var a = new Vector3D_F64(ax, ay, az);
+		var b = new Vector3D_F64(bx, by, bz);
+
+		Quaternion_F64 q = GeometryMath_F64.quatFromTwoVectorsSvd(a, b, null);
+		DMatrixRMaj rotation = ConvertRotation3D_F64.quaternionToMatrix(q, null);
+
+		var found = new Vector3D_F64();
+		GeometryMath_F64.mult(rotation, a, found);
+
+		assertTrue(found.isIdentical(b, GrlConstants.TEST_F64));
+	}
+
 	@Test void rotationFromTwoVectors() {
 		rotationFromTwoVectors(1,0,0, -1, 0, 0);
 		rotationFromTwoVectors(0,1,0, -1, 0, 0);
