@@ -42,7 +42,7 @@ import org.jetbrains.annotations.Nullable;
 public class GeometryMath_F64 {
 
 	/**
-	 * Creates a skew symmetric cross product matrix from the provided tuple.
+	 * Creates a 3x3 skew symmetric cross product matrix from the provided tuple.
 	 *
 	 * @param x0 Element 0.
 	 * @param x1 Element 1.
@@ -54,6 +54,7 @@ public class GeometryMath_F64 {
 		if (ret == null) {
 			ret = new DMatrixRMaj(3, 3);
 		} else {
+			ret.reshape(3, 3);
 			ret.zero();
 		}
 
@@ -68,7 +69,7 @@ public class GeometryMath_F64 {
 	}
 
 	/**
-	 * Creates a skew symmetric cross product matrix from the provided tuple.
+	 * Creates a 3x3 skew symmetric cross product matrix from the provided tuple.
 	 *
 	 * @param v Tuple. Not modified.
 	 * @param ret If not null the results are stored here, otherwise a new matrix is created.
@@ -78,6 +79,7 @@ public class GeometryMath_F64 {
 		if (ret == null) {
 			ret = new DMatrixRMaj(3, 3);
 		} else {
+			ret.reshape(3, 3);
 			ret.zero();
 		}
 
@@ -1101,22 +1103,22 @@ public class GeometryMath_F64 {
 					Vt.get(1, 1),
 					Vt.get(1, 2));
 
-			double w2 = (1.0 + c) * 0.5;
+			double w2 = (1.0 + c)*0.5;
 			double w = Math.sqrt(w2);
 			double s = Math.sqrt(1.0 - w2);
 
 			// Quaternion_F64 is stored as w, x, y, z
-			return new Quaternion_F64(w, axis.x * s, axis.y * s, axis.z * s);
+			return new Quaternion_F64(w, axis.x*s, axis.y*s, axis.z*s);
 		}
 
 		// Normal case. axis = v0 x v1
 		Vector3D_F64 axis = v0.crossWith(v1);
 
-		double s = Math.sqrt((1.0 + c) * 2.0);
-		double invs = 1.0 / s;
+		double s = Math.sqrt((1.0 + c)*2.0);
+		double invs = 1.0/s;
 
 		// Quaternion_F64 is stored as w, x, y, z
-		return new Quaternion_F64(s * 0.5, axis.x * invs, axis.y * invs, axis.z * invs);
+		return new Quaternion_F64(s*0.5, axis.x*invs, axis.y*invs, axis.z*invs);
 	}
 
 	/// Computes 3x3 rotation which will rotate vector 'a' into the same direction as 'b'.

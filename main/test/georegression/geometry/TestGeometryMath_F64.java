@@ -50,7 +50,6 @@ public class TestGeometryMath_F64 {
 		double a = 1.1, b = -0.5, c = 2.2;
 
 		var v = new Vector3D_F64(a, b, c);
-
 		var x = new Vector3D_F64(7.6, 2.9, 0.5);
 
 		var found0 = new Vector3D_F64();
@@ -64,6 +63,20 @@ public class TestGeometryMath_F64 {
 		assertEquals(found0.x, found1.x, GrlConstants.TEST_F64);
 		assertEquals(found0.y, found1.y, GrlConstants.TEST_F64);
 		assertEquals(found0.z, found1.z, GrlConstants.TEST_F64);
+	}
+
+	@Test void crossMatrix_scalars_output_reshaped() {
+		var out = new DMatrixRMaj(1, 1);
+		GeometryMath_F64.crossMatrix(1, 2, 3, out);
+		assertEquals(3, out.numCols);
+		assertEquals(3, out.numRows);
+	}
+
+	@Test void crossMatrix_vector_output_reshaped() {
+		var out = new DMatrixRMaj(1, 1);
+		GeometryMath_F64.crossMatrix(new Vector3D_F64(1, 2, 3), out);
+		assertEquals(3, out.numCols);
+		assertEquals(3, out.numRows);
 	}
 
 	/**
@@ -639,14 +652,14 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test void quatFromTwoVectors() {
-		quatFromTwoVectors(1,0,0, -1, 0, 0);
-		quatFromTwoVectors(0,1,0, -1, 0, 0);
-		quatFromTwoVectors(1,0,0, -1, 0, 0);
-		quatFromTwoVectors(0,0,-1, 0, 0, -1);
-		quatFromTwoVectors(0,0,-1, 0, 1, 0);
+		quatFromTwoVectors(1, 0, 0, -1, 0, 0);
+		quatFromTwoVectors(0, 1, 0, -1, 0, 0);
+		quatFromTwoVectors(1, 0, 0, -1, 0, 0);
+		quatFromTwoVectors(0, 0, -1, 0, 0, -1);
+		quatFromTwoVectors(0, 0, -1, 0, 1, 0);
 	}
 
-	void quatFromTwoVectors( double ax, double ay, double az, double bx, double by, double bz) {
+	void quatFromTwoVectors( double ax, double ay, double az, double bx, double by, double bz ) {
 		var a = new Vector3D_F64(ax, ay, az);
 		var b = new Vector3D_F64(bx, by, bz);
 
@@ -660,14 +673,14 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test void quatFromTwoVectorsSvd() {
-		quatFromTwoVectorsSvd(1,0,0, -1, 0, 0);
-		quatFromTwoVectorsSvd(0,1,0, -1, 0, 0);
-		quatFromTwoVectorsSvd(1,0,0, -1, 0, 0);
-		quatFromTwoVectorsSvd(0,0,-1, 0, 0, -1);
-		quatFromTwoVectorsSvd(0,0,-1, 0, 1, 0);
+		quatFromTwoVectorsSvd(1, 0, 0, -1, 0, 0);
+		quatFromTwoVectorsSvd(0, 1, 0, -1, 0, 0);
+		quatFromTwoVectorsSvd(1, 0, 0, -1, 0, 0);
+		quatFromTwoVectorsSvd(0, 0, -1, 0, 0, -1);
+		quatFromTwoVectorsSvd(0, 0, -1, 0, 1, 0);
 	}
 
-	void quatFromTwoVectorsSvd( double ax, double ay, double az, double bx, double by, double bz) {
+	void quatFromTwoVectorsSvd( double ax, double ay, double az, double bx, double by, double bz ) {
 		var a = new Vector3D_F64(ax, ay, az);
 		var b = new Vector3D_F64(bx, by, bz);
 
@@ -681,14 +694,14 @@ public class TestGeometryMath_F64 {
 	}
 
 	@Test void rotationFromTwoVectors() {
-		rotationFromTwoVectors(1,0,0, -1, 0, 0);
-		rotationFromTwoVectors(0,1,0, -1, 0, 0);
-		rotationFromTwoVectors(1,0,0, -1, 0, 0);
-		rotationFromTwoVectors(0,0,-1, 0, 0, -1);
-		rotationFromTwoVectors(0,0,-1, 0, 1, 0);
+		rotationFromTwoVectors(1, 0, 0, -1, 0, 0);
+		rotationFromTwoVectors(0, 1, 0, -1, 0, 0);
+		rotationFromTwoVectors(1, 0, 0, -1, 0, 0);
+		rotationFromTwoVectors(0, 0, -1, 0, 0, -1);
+		rotationFromTwoVectors(0, 0, -1, 0, 1, 0);
 	}
 
-	void rotationFromTwoVectors( double ax, double ay, double az, double bx, double by, double bz) {
+	void rotationFromTwoVectors( double ax, double ay, double az, double bx, double by, double bz ) {
 		var a = new Vector3D_F64(ax, ay, az);
 		var b = new Vector3D_F64(bx, by, bz);
 
