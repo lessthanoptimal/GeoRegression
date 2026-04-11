@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.misc.GrlConstants;
 import georegression.struct.so.Quaternion_F64;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestQuaternionMath_F64 {
 	@Test void multiply() {
-		double tol = 1e-12;
+		double tol = GrlConstants.TEST_F64;
 
 		// Test 1: identity * identity = identity
 		var identity = new Quaternion_F64(1, 0, 0, 0);
