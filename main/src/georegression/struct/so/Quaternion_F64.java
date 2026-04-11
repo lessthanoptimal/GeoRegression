@@ -22,28 +22,18 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
-/**
- * <p>
- * Specifies a 3D rotation using a quaternion. q = w + x*i + y*j + z*k, where (w,x,y,z) are the parameters of
- * the quaternion and (i,j,k) are unit vectors representing the Cartesian axis.
- * </p>
- *
- * <p>
- * If the quaternion is a unit quaternion then the following is true:<br>
- * q = cos(theta/2) + (x*i + y*j + z*k)*sin(theta/2)<br>
- * where 'theta' is the angle of rotation, (x,y,z) is the unit axis of rotation.
- * </p>
- *
- * @author Peter Abeles
- */
+/// Specifies a 3D rotation using a quaternion. q = w + x\*i + y\*j + z\*k, where (w,x,y,z) are the parameters of
+/// the quaternion and (i,j,k) are unit vectors representing the Cartesian axis.
+///
+/// If the quaternion is a unit quaternion then the following is true:
+///
+/// q = cos(theta/2) + (x\*i + y\*j + z\*k)\*sin(theta/2)
+///
+/// where 'theta' is the angle of rotation, (x,y,z) is the unit axis of rotation.
 public class Quaternion_F64 implements Serializable {
-	/**
-	 * Describes the angle of rotation. See above for how it is encoded.
-	 */
+	/// Describes the angle of rotation. See above for how it is encoded.
 	public double w;
-	/**
-	 * Axis of rotation
-	 */
+	/// Axis of rotation
 	public double x, y, z;
 
 	public Quaternion_F64() {
@@ -70,9 +60,14 @@ public class Quaternion_F64 implements Serializable {
 		return this;
 	}
 
-	/**
-	 * Converts the quaternion into a unit quaternion.
-	 */
+	/// Sets the quaternion to identity and returns a reference to itself
+	public Quaternion_F64 setToIdentity() {
+		this.w = 1;
+		this.x = this.y = this.z = 0;
+		return this;
+	}
+
+	/// Converts the quaternion into a unit quaternion.
 	public void normalize() {
 		double n = norm();
 
@@ -101,14 +96,12 @@ public class Quaternion_F64 implements Serializable {
 		return out;
 	}
 
-	/**
-	 * Returns the f-norm of this quaternion
-	 */
+	/// Returns the f-norm of this quaternion
 	public double norm() {
 		return Math.sqrt(w*w + x*x + y*y + z*z);
 	}
 
-	/** Returns true if the two quaternions are identical. Note that they might be equivalent and fail this test */
+	/// Returns true if the two quaternions are identical. Note that they might be equivalent and fail this test
 	public boolean isIdentical( Quaternion_F64 q, double tol ) {
 		if (Math.abs(q.w - w) > tol)
 			return false;
@@ -121,7 +114,7 @@ public class Quaternion_F64 implements Serializable {
 		return true;
 	}
 
-	/** Returns true if the two quaternions are identical. Note that they might be equivalent and fail this test */
+	/// Returns true if the two quaternions are identical. Note that they might be equivalent and fail this test
 	public boolean isIdentical( double qw, double qx, double qy, double qz, double tol ) {
 		if (Math.abs(qw - w) > tol)
 			return false;

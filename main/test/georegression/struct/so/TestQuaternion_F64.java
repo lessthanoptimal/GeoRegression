@@ -40,6 +40,15 @@ public class TestQuaternion_F64 {
 		assertEquals(4, found.z);
 	}
 
+	@Test void setToIdentity() {
+		var found = new Quaternion_F64().setTo(0, 2, 3, 4);
+		assertSame(found, found.setToIdentity());
+		assertEquals(1, found.w);
+		assertEquals(0, found.x);
+		assertEquals(0, found.y);
+		assertEquals(0, found.z);
+	}
+
 	@Test void norm() {
 		double found = new Quaternion_F64().setTo(1, 2, 3, 4).norm();
 		double expected = Math.sqrt(1 + 4 + 9 + 16);
