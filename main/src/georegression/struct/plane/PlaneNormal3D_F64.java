@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,11 +21,10 @@ package georegression.struct.plane;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import lombok.Getter;
-import org.ejml.UtilEjml;
-import org.ejml.ops.MatrixIO;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -86,17 +85,21 @@ public class PlaneNormal3D_F64 implements Serializable {
 		this.n.setTo(n);
 	}
 
+	/// Converts into a [String] using a Matrix like format.
+	public String format( MatrixPrintFormat format ) {
+		return format.prefix + p.format(format) + format.rowSeparator + n.format(format) + format.suffix;
+	}
+
+	/// Converts into a [String] using a Map like format.
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				"p" + format.valueSeparator + p.format(format) + format.pairSeparator +
+				"n" + format.valueSeparator + n.format(format) +
+				format.itemSuffix;
+	}
+
 	@Override public String toString() {
-		var format = new DecimalFormat("#");
-		String sx = UtilEjml.fancyString(p.x, format, MatrixIO.DEFAULT_LENGTH, 4);
-		String sy = UtilEjml.fancyString(p.y, format, MatrixIO.DEFAULT_LENGTH, 4);
-		String sz = UtilEjml.fancyString(p.z, format, MatrixIO.DEFAULT_LENGTH, 4);
-
-		String nx = UtilEjml.fancyString(n.x, format, MatrixIO.DEFAULT_LENGTH, 4);
-		String ny = UtilEjml.fancyString(n.y, format, MatrixIO.DEFAULT_LENGTH, 4);
-		String nz = UtilEjml.fancyString(n.z, format, MatrixIO.DEFAULT_LENGTH, 4);
-
-		return getClass().getSimpleName() + "{ P(" + sx + " , " + sy + " , " + sz + " ), V( " + nx + " , " + ny + " , " + nz + ") }";
+		return getClass().getSimpleName() + format(new MapPrintFormat());
 	}
 
 	@Override public boolean equals( Object o ) {

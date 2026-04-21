@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.struct.packed;
 
 import georegression.struct.point.Point4D_F64;
+import org.ejml.MapPrintFormat;
 
 /**
  * Packed array of {@link Point4D_F64}. Internally the point is stored in an interleaved format.
@@ -114,6 +115,10 @@ public class PackedArrayPoint4D_F64 extends PackedArray_F64<Point4D_F64> {
 			array.data[i + 2] = temp.z;
 			array.data[i + 3] = temp.w;
 		}
+	}
+
+	public String format( MapPrintFormat format ) {
+		return format(format, new String[]{"x", "y", "z", "w"});
 	}
 
 	/**

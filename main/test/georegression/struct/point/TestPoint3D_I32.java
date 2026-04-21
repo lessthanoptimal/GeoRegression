@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,8 @@
 
 package georegression.struct.point;
 
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,28 +31,28 @@ public class TestPoint3D_I32 {
 
 	@Test
 	void getDimension() {
-		assertEquals(3,new Point3D_I32().getDimension());
+		assertEquals(3, new Point3D_I32().getDimension());
 	}
 
 	@Test
 	void set() {
 		Point3D_I32 p = new Point3D_I32();
-		p.setTo(1,2,3);
+		p.setTo(1, 2, 3);
 
-		assertEquals(1,p.x);
-		assertEquals(2,p.y);
-		assertEquals(3,p.z);
+		assertEquals(1, p.x);
+		assertEquals(2, p.y);
+		assertEquals(3, p.z);
 	}
 
 	@Test
 	void isIdentical() {
-		Point3D_I32 a = new Point3D_I32(1,2,3);
-		Point3D_I32 b = new Point3D_I32(1,2,3);
+		Point3D_I32 a = new Point3D_I32(1, 2, 3);
+		Point3D_I32 b = new Point3D_I32(1, 2, 3);
 
 		assertTrue(a.isIdentical(b));
-		assertFalse(a.isIdentical(new Point3D_I32(2,2,3)));
-		assertFalse(a.isIdentical(new Point3D_I32(1,3,3)));
-		assertFalse(a.isIdentical(new Point3D_I32(1,2,4)));
+		assertFalse(a.isIdentical(new Point3D_I32(2, 2, 3)));
+		assertFalse(a.isIdentical(new Point3D_I32(1, 3, 3)));
+		assertFalse(a.isIdentical(new Point3D_I32(1, 2, 4)));
 	}
 
 	@Test
@@ -60,21 +62,33 @@ public class TestPoint3D_I32 {
 
 	@Test
 	void copy() {
-		Point3D_I32 p = new Point3D_I32(1,2,3).copy();
+		Point3D_I32 p = new Point3D_I32(1, 2, 3).copy();
 
-		assertEquals(1,p.x);
-		assertEquals(2,p.y);
-		assertEquals(3,p.z);
+		assertEquals(1, p.x);
+		assertEquals(2, p.y);
+		assertEquals(3, p.z);
 	}
 
 	@Test
 	void setTo() {
-		Point3D_I32 a = new Point3D_I32(1,2,3);
+		Point3D_I32 a = new Point3D_I32(1, 2, 3);
 		Point3D_I32 b = new Point3D_I32();
 		b.setTo(a);
 
-		assertEquals(1,b.x);
-		assertEquals(2,b.y);
-		assertEquals(3,b.z);
+		assertEquals(1, b.x);
+		assertEquals(2, b.y);
+		assertEquals(3, b.z);
+	}
+
+	@Test void format_Matrix() {
+		var a = new Point3D_I32(1, 2, 3);
+		String found = a.format(new MatrixPrintFormat());
+		assertEquals("{1, 2, 3}", found);
+	}
+
+	@Test void format_Map() {
+		var a = new Point3D_I32(1, 2, 3);
+		String found = a.format(new MapPrintFormat());
+		assertEquals("{x: 1, y: 2, z: 3}", found);
 	}
 }

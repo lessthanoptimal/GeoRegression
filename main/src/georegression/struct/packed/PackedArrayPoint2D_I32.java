@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,8 @@ package georegression.struct.packed;
 import georegression.struct.point.Point2D_I32;
 import lombok.Getter;
 import org.ddogleg.struct.DogArray_I32;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 
 /**
  * Packed array of {@link Point2D_I32}. Internally the point is stored in an interleaved format.
@@ -125,6 +127,56 @@ public class PackedArrayPoint2D_I32 implements PackedArray<Point2D_I32> {
 
 	@Override public boolean isEquals( PackedArray<Point2D_I32> o ) {
 		return this.array.isEquals(((PackedArrayPoint2D_I32)o).array);
+	}
+
+	public String format( MatrixPrintFormat format ) {
+		var builder = new StringBuilder();
+		builder.append(format.prefix);
+		for (int i = 0; i < size(); i++) {
+			int idxRow = i*DOF;
+
+			builder.append(format.rowPrefix);
+			for (int col = 0; col < DOF; col++) {
+				int value = array.data[idxRow+col];
+				builder.append(value);
+				if (col < DOF-1)
+					builder.append(format.colSeparator);
+			}
+			builder.append(format.rowSuffix);
+			if (i < size() - 1)
+				builder.append(format.rowSeparator);
+		}
+		builder.append(format.suffix);
+		return builder.toString();
+	}
+
+	public String format( MapPrintFormat format ) {
+		return format(format, new String[]{"x", "y"});
+	}
+
+	protected String format( MapPrintFormat format, String[] keys ) {
+		if (keys.length != DOF)
+			throw new IllegalArgumentException("Number of keys should match DOF");
+
+		var builder = new StringBuilder();
+		builder.append(format.listPrefix);
+		for (int i = 0; i < size(); i++) {
+			int idxRow = i*DOF;
+
+			builder.append(format.itemPrefix);
+			for (int col = 0; col < DOF; col++) {
+				int value = array.data[idxRow+col];
+				builder.append(keys[col]).append(format.valueSeparator);
+				builder.append(value);
+				if (col < DOF-1)
+					builder.append(format.pairSeparator);
+			}
+			builder.append(format.itemSuffix);
+			if (i < size() - 1)
+				builder.append(format.itemSeparator);
+		}
+		builder.append(format.listSuffix);
+		return builder.toString();
 	}
 
 	/**

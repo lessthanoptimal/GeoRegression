@@ -95,7 +95,6 @@ public class Vector3D_F64 extends GeoTuple3D_F64<Vector3D_F64> {
 
 	@Override public Vector3D_F64 createNewInstance() {return new Vector3D_F64();}
 
-	@Override public String toString() {return toString("V");}
 
 	/** Normalize the vector so that the f-norm is 1. Care is taken to avoid overflow. */
 	public void normalize() {

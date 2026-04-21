@@ -94,11 +94,6 @@ public class Vector2D_F64 extends GeoTuple2D_F64<Vector2D_F64> {
 		y = a.y - b.y;
 	}
 
-	@Override
-	public String toString() {
-		return toString("V");
-	}
-
 	/**
 	 * Dot product between this and 'a' = this.x * a.x + this.y * a.y
 	 *

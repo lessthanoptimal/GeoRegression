@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,8 @@ package georegression.struct.line;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
+import org.ejml.UtilEjml;
 
 import java.io.Serializable;
 
@@ -72,8 +74,17 @@ public class LinePolar2D_F64 implements Serializable {
 		this.angle = 0;
 	}
 
+	public String format( MapPrintFormat format ) {
+		int precision = format.precision;
+		char decimal = format.decimal;
+		return format.itemPrefix +
+				"distance" + format.valueSeparator + UtilEjml.fancyString2(distance, precision, decimal) + format.pairSeparator +
+				"angle" + format.valueSeparator + UtilEjml.fancyString2(angle, precision, decimal) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "{ d = " + distance + " angle = " + angle + " }";
+		return getClass().getSimpleName() + format(new MapPrintFormat());
 	}
 }

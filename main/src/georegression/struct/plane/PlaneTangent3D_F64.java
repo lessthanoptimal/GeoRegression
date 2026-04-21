@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,7 +19,7 @@
 package georegression.struct.plane;
 
 import georegression.struct.point.Point3D_F64;
-import org.ejml.FancyPrint;
+import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
 
@@ -45,11 +45,6 @@ public class PlaneTangent3D_F64 extends Point3D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		FancyPrint fancy = new FancyPrint();
-		return getClass().getSimpleName() + "{" +
-				"x=" + fancy.s(x) +
-				", y=" + fancy.s(y) +
-				", z=" + fancy.s(z) +
-				'}';
+		return getClass().getSimpleName() + format(new MapPrintFormat());
 	}
 }

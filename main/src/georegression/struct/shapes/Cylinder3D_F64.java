@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,6 +24,8 @@ import georegression.struct.point.Vector3D_F64;
 import lombok.Getter;
 import lombok.Setter;
 import org.ejml.FancyPrint;
+import org.ejml.MapPrintFormat;
+import org.ejml.UtilEjml;
 
 import java.io.Serializable;
 
@@ -49,8 +51,8 @@ public class Cylinder3D_F64 implements Serializable {
 	}
 
 	public Cylinder3D_F64( double x_0, double y_0, double z_0,
-						   double slopeX, double slopeY, double slopeZ,
-						   double radius ) {
+	                       double slopeX, double slopeY, double slopeZ,
+	                       double radius ) {
 		this();
 		this.line.setTo(x_0, y_0, z_0, slopeX, slopeY, slopeZ);
 		this.radius = radius;
@@ -72,8 +74,8 @@ public class Cylinder3D_F64 implements Serializable {
 	}
 
 	public Cylinder3D_F64 setTo( double x_0, double y_0, double z_0,
-								 double slopeX, double slopeY, double slopeZ,
-								 double radius ) {
+	                             double slopeX, double slopeY, double slopeZ,
+	                             double radius ) {
 		this.line.setTo(x_0, y_0, z_0, slopeX, slopeY, slopeZ);
 		this.radius = radius;
 		return this;
@@ -99,7 +101,7 @@ public class Cylinder3D_F64 implements Serializable {
 	/**
 	 * Returns true if every parameter is identical to the passed in Cylinder to within the specified tolerance
 	 */
-	public boolean isIdentical(Cylinder3D_F64 c, double tol) {
+	public boolean isIdentical( Cylinder3D_F64 c, double tol ) {
 		return Math.abs(radius - c.radius) <= tol && line.isIdentical(c.line, tol);
 	}
 
@@ -112,6 +114,15 @@ public class Cylinder3D_F64 implements Serializable {
 			return false;
 
 		return ((Cylinder3D_F64)obj).isIdentical(this, 0.0);
+	}
+
+	public String format( MapPrintFormat format ) {
+		int precision = format.precision;
+		char decimal = format.decimal;
+		return format.itemPrefix +
+				"line" + format.valueSeparator + line.format(format) + format.pairSeparator +
+				"radius" + format.valueSeparator + UtilEjml.fancyString2(radius, precision, decimal) +
+				format.itemSuffix;
 	}
 
 	@Override

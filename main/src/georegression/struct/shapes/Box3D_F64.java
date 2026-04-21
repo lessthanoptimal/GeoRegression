@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,8 @@ package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -155,6 +157,21 @@ public class Box3D_F64 implements Serializable {
 		storage.y = (p0.y + p1.y)/2.0;
 		storage.z = (p0.z + p1.z)/2.0;
 		return storage;
+	}
+
+	public String format( MatrixPrintFormat format ) {
+		return format.getPrefix() +
+				p0.format(format) +
+				format.getRowSeparator() +
+				p1.format(format) +
+				format.getSuffix();
+	}
+
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				"p0" + format.valueSeparator + p0.format(format) + format.pairSeparator +
+				"p1" + format.valueSeparator + p1.format(format) +
+				format.itemSuffix;
 	}
 
 	@Override

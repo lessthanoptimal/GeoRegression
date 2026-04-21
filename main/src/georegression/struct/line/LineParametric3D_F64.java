@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,7 +22,7 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import lombok.Getter;
 import lombok.Setter;
-import org.ejml.FancyPrint;
+import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
 
@@ -45,7 +45,7 @@ public class LineParametric3D_F64 implements Serializable {
 	@Getter public Vector3D_F64 slope;
 
 	public LineParametric3D_F64( double x_0, double y_0, double z_0,
-								 double slopeX, double slopeY, double slopeZ ) {
+	                             double slopeX, double slopeY, double slopeZ ) {
 		this();
 		p.setTo(x_0, y_0, z_0);
 		slope.setTo(slopeX, slopeY, slopeZ);
@@ -148,7 +148,7 @@ public class LineParametric3D_F64 implements Serializable {
 	}
 
 	public LineParametric3D_F64 setTo( double x_0, double y_0, double z_0,
-									   double slopeX, double slopeY, double slopeZ ) {
+	                                   double slopeX, double slopeY, double slopeZ ) {
 		p.setTo(x_0, y_0, z_0);
 		slope.setTo(slopeX, slopeY, slopeZ);
 		return this;
@@ -173,12 +173,16 @@ public class LineParametric3D_F64 implements Serializable {
 		return new LineParametric3D_F64(p, slope);
 	}
 
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				"line" + format.valueSeparator + p.format(format) + format.pairSeparator +
+				"slope" + format.valueSeparator + slope.format(format) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		FancyPrint f = new FancyPrint();
-
-		return getClass().getSimpleName() + " P( " + f.s(p.x) + " " + f.s(p.y) + " " + f.s(p.z) +
-				" ) Slope( " + f.s(slope.x) + " " + f.s(slope.y) + " " + f.s(slope.z) + " )";
+		return getClass().getSimpleName() + format(new MapPrintFormat());
 	}
 
 	@Override

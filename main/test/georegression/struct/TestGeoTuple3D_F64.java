@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,8 @@
 package georegression.struct;
 
 import georegression.misc.GrlConstants;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -161,6 +163,18 @@ public class TestGeoTuple3D_F64 {
 		// Sanity check
 		a.z = 1;
 		assertFalse(a.isInfinite());
+	}
+
+	@Test void format_Matrix() {
+		var a = new Dummy(1, 2, 0.00000213);
+		String found = a.format(new MatrixPrintFormat().fsetPrecision(2));
+		assertEquals("{1, 2, 2.13e-06}", found);
+	}
+
+	@Test void format_Map() {
+		var a = new Dummy(1, 2, 0.00000213);
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{x: 1, y: 2, z: 2.13e-06}", found);
 	}
 
 	public static class Dummy extends GeoTuple3D_F64<Dummy> {

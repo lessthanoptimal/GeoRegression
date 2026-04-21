@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,17 +20,14 @@ package georegression.struct.so;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F64;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
 public class TestRodrigues_F64 {
-
-	@Test
-	void setParamVector() {
+	@Test void setParamVector() {
 		Vector3D_F64 v = new Vector3D_F64(1,2,3);
 		double theta = v.norm();
 		v.normalize();
@@ -43,5 +40,16 @@ public class TestRodrigues_F64 {
 		assertEquals(a.unitAxisRotation.x,b.unitAxisRotation.x, GrlConstants.TEST_F64);
 		assertEquals(a.unitAxisRotation.y,b.unitAxisRotation.y, GrlConstants.TEST_F64);
 		assertEquals(a.unitAxisRotation.z,b.unitAxisRotation.z, GrlConstants.TEST_F64);
+	}
+
+	@Test void format_matric() {
+		var a = new Rodrigues_F64(1, 0, Math.sqrt(0.5), Math.sqrt(0.5));
+		String found = a.format(new MatrixPrintFormat().fsetPrecision(2));
+		assertEquals("{1, 0, 0.71, 0.71}", found);
+	}
+	@Test void Rodrigues_F64() {
+		var a = new Rodrigues_F64(1, 0, Math.sqrt(0.5), Math.sqrt(0.5));
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{theta: 1, x: 0, y: 0.71, z: 0.71}", found);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,7 @@ package georegression.struct.shapes;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
+import org.ejml.MapPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -111,4 +112,9 @@ public class TestBoxLength3D_F64 {
 		}
 	}
 
+	@Test void format_Map() {
+		var box = new BoxLength3D_F64(1,2,3,4,5,6);
+		String found = box.format(new MapPrintFormat());
+		assertEquals("{p: {x: 1, y: 2, z: 3}, lengthX: 4, lengthY: 5, lengthZ: 6}", found);
+	}
 }

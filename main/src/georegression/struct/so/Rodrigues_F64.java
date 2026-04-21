@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,9 @@ package georegression.struct.so;
 import georegression.struct.point.Vector3D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
+import org.ejml.UtilEjml;
 
 import java.io.Serializable;
 
@@ -122,10 +125,36 @@ public class Rodrigues_F64 implements Serializable {
 		return this;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() +
-				" v{ " + unitAxisRotation.x + " , " + unitAxisRotation.y + " , " + unitAxisRotation.z + " } theta = " +
-				theta;
+	/// Converts into a string using a Matrix like format.
+	public String format( MatrixPrintFormat format ) {
+		char decimal = format.decimal;
+		return format.getPrefix() +
+				UtilEjml.fancyString2(theta, format.getPrecision(), decimal) +
+				format.getColSeparator() +
+				UtilEjml.fancyString2(unitAxisRotation.x, format.getPrecision(), decimal) +
+				format.getColSeparator() +
+				UtilEjml.fancyString2(unitAxisRotation.y, format.getPrecision(), decimal) +
+				format.getColSeparator() +
+				UtilEjml.fancyString2(unitAxisRotation.z, format.getPrecision(), decimal) +
+				format.getSuffix();
+	}
+
+	/// Converts into a [String] using a Map like format.
+	public String format( MapPrintFormat format ) {
+		char decimal = format.decimal;
+		return format.listPrefix + "theta" + format.valueSeparator +
+				UtilEjml.fancyString2(theta, format.getPrecision(), decimal) +
+				format.pairSeparator + "x" + format.valueSeparator +
+				UtilEjml.fancyString2(unitAxisRotation.x, format.getPrecision(), decimal) +
+				format.pairSeparator + "y" + format.valueSeparator +
+				UtilEjml.fancyString2(unitAxisRotation.y, format.getPrecision(), decimal) +
+				format.pairSeparator + "z" + format.valueSeparator +
+				UtilEjml.fancyString2(unitAxisRotation.z, format.getPrecision(), decimal) +
+
+				format.itemSuffix;
+	}
+
+	@Override public String toString() {
+		return getClass().getSimpleName() + format(new MapPrintFormat());
 	}
 }

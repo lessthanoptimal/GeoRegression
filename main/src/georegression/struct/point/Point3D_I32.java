@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.struct.point;
 import georegression.struct.GeoTuple_I32;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
 
 /**
  * Point in 3D with integer values.
@@ -98,9 +99,12 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 		return x == p.x && y == p.y && z == p.z;
 	}
 
-	@Override
-	public String toString() {
-		return "P( " + x + " " + y + " " + z + " )";
+	/// Converts into a [String] using a Map like format.
+	@Override public String format( MapPrintFormat format ) {
+		return format.listPrefix + "x" + format.valueSeparator + x +
+				format.pairSeparator + "y" + format.valueSeparator + y +
+				format.pairSeparator + "z" + format.valueSeparator + z +
+				format.itemSuffix;
 	}
 
 	@Override

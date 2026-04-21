@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,7 +20,9 @@ package georegression.struct.plane;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.ejml.FancyPrint;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
+import org.ejml.UtilEjml;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -101,12 +103,37 @@ public class PlaneGeneral3D_F64 implements Serializable {
 		return A == o.A && B == o.B && C == o.C && D == o.D;
 	}
 
+	/// Converts into a [String] using a Matrix like format.
+	public String format( MatrixPrintFormat format ) {
+		char decimal = format.decimal;
+		return format.rowPrefix +
+				UtilEjml.fancyString2(A, format.getPrecision(), decimal) +
+				format.colSeparator +
+				UtilEjml.fancyString2(B, format.getPrecision(), decimal) +
+				format.colSeparator +
+				UtilEjml.fancyString2(C, format.getPrecision(), decimal) +
+				format.colSeparator +
+				UtilEjml.fancyString2(D, format.getPrecision(), decimal) +
+				format.rowSuffix;
+	}
+
+	/// Converts into a [String] using a Map like format.
+	public String format( MapPrintFormat format ) {
+		char decimal = format.decimal;
+		return format.listPrefix + "A" + format.valueSeparator +
+				UtilEjml.fancyString2(A, format.getPrecision(), decimal) +
+				format.pairSeparator + "B" + format.valueSeparator +
+				UtilEjml.fancyString2(B, format.getPrecision(), decimal) +
+				format.pairSeparator + "C" + format.valueSeparator +
+				UtilEjml.fancyString2(C, format.getPrecision(), decimal) +
+				format.pairSeparator + "D" + format.valueSeparator +
+				UtilEjml.fancyString2(D, format.getPrecision(), decimal) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		FancyPrint fancy = new FancyPrint();
-		return getClass().getSimpleName() +
-				"( A = " + fancy.s(A) + " B = " + fancy.s(B) +
-				" C = " + fancy.s(C) + " D = " + fancy.s(D) + " )";
+		return getClass().getSimpleName() +format(new MapPrintFormat());
 	}
 
 	@Override

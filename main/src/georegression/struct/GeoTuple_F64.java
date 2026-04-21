@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -17,6 +17,9 @@
  */
 
 package georegression.struct;
+
+import org.ejml.MatrixPrintFormat;
+import org.ejml.UtilEjml;
 
 /**
  * Describes geometric objects that are composed of N double values. Where N is the dimension
@@ -135,6 +138,20 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 	public abstract double getIdx( int index );
 
 	public abstract void setIdx( int index, double value );
+
+	@Override public String format( MatrixPrintFormat format ) {
+		int size = getDimension();
+		char decimal = format.decimal;
+		var builder = new StringBuilder();
+		builder.append(format.getRowPrefix());
+		for (int i = 0; i < size - 1; i++) {
+			builder.append(UtilEjml.fancyString2(getIdx(i), format.getPrecision(), decimal));
+			builder.append(format.getColSeparator());
+		}
+		builder.append(UtilEjml.fancyString2(getIdx(size - 1), format.getPrecision(), decimal));
+		builder.append(format.getRowSuffix());
+		return builder.toString();
+	}
 
 	@Override
 	public boolean equals( Object obj ) {

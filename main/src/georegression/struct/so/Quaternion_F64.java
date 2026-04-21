@@ -18,6 +18,9 @@
 
 package georegression.struct.so;
 
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
+import org.ejml.UtilEjml;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -125,6 +128,34 @@ public class Quaternion_F64 implements Serializable {
 		if (Math.abs(qz - z) > tol)
 			return false;
 		return true;
+	}
+
+	/// Converts into a string using a Matrix like format.
+	public String format( MatrixPrintFormat format ) {
+		char decimal = format.decimal;
+		return format.getRowPrefix() +
+				UtilEjml.fancyString2(w, format.getPrecision(), decimal) +
+				format.getColSeparator() +
+				UtilEjml.fancyString2(x, format.getPrecision(), decimal) +
+				format.getColSeparator() +
+				UtilEjml.fancyString2(y, format.getPrecision(), decimal) +
+				format.getColSeparator() +
+				UtilEjml.fancyString2(z, format.getPrecision(), decimal) +
+				format.getRowSuffix();
+	}
+
+	/// Converts into a string using a Map like format.
+	public String format( MapPrintFormat format ) {
+		char decimal = format.decimal;
+		return format.listPrefix + "w" + format.valueSeparator +
+				UtilEjml.fancyString2(w, format.getPrecision(), decimal) +
+				format.pairSeparator + "x" + format.valueSeparator +
+				UtilEjml.fancyString2(x, format.getPrecision(), decimal) +
+				format.pairSeparator + "y" + format.valueSeparator +
+				UtilEjml.fancyString2(y, format.getPrecision(), decimal) +
+				format.pairSeparator + "z" + format.valueSeparator +
+				UtilEjml.fancyString2(z, format.getPrecision(), decimal) +
+				format.itemSuffix;
 	}
 
 	@Override
