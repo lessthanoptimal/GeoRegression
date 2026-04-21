@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -50,11 +50,6 @@ public class Point4D_F64 extends GeoTuple4D_F64<Point4D_F64> {
 
 	public Point4D_F64 plus( Point4D_F64 a ) {
 		return new Point4D_F64(x + a.getX(), y + a.getY(), z + a.getZ(), w + a.getW());
-	}
-
-	@Override
-	public String toString() {
-		return toString("P");
 	}
 
 	@Override

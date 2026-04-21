@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,7 +21,8 @@ package georegression.struct.line;
 import georegression.geometry.UtilLine2D_F64;
 import lombok.Getter;
 import lombok.Setter;
-import org.ejml.FancyPrint;
+import org.ejml.MapPrintFormat;
+import org.ejml.UtilEjml;
 
 import java.io.Serializable;
 
@@ -116,10 +117,19 @@ public class LineGeneral2D_F64 implements Serializable {
 		return new LineGeneral2D_F64(this);
 	}
 
+	public String format( MapPrintFormat format ) {
+		int precision = format.precision;
+		char decimal = format.decimal;
+		return format.itemPrefix +
+				"A" + format.valueSeparator + UtilEjml.fancyString2(A, precision, decimal) + format.pairSeparator +
+				"B" + format.valueSeparator + UtilEjml.fancyString2(B, precision, decimal) + format.pairSeparator +
+				"C" + format.valueSeparator + UtilEjml.fancyString2(C, precision, decimal) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		FancyPrint f = new FancyPrint();
-		return getClass().getSimpleName() + "{ A=" + f.s(A) + " B=" + f.s(B) + " C=" + f.s(C) + " }";
+		return getClass().getSimpleName() + format(new MapPrintFormat());
 	}
 
 	@Override

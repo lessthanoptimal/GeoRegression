@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -17,6 +17,9 @@
  */
 
 package georegression.struct;
+
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 
 import java.io.Serializable;
 
@@ -66,4 +69,15 @@ public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
 	 * Sets all coefficients and parameters to zero, which is typically the initial state.
 	 */
 	public abstract void zero();
+
+	/// Converts into a [String] using a Matrix like format.
+	public abstract String format( MatrixPrintFormat format );
+
+	/// Converts into a [String] using a Map like format.
+	public abstract String format( MapPrintFormat format );
+
+	public @Override String toString() {
+		return getClass().getSimpleName() + format(new MatrixPrintFormat());
+	}
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,10 +20,9 @@ package georegression.struct;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
-import org.ejml.ops.MatrixIO;
 
-import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -214,13 +213,14 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 
 	/**
 	 * Returns the absolute value of the component with the largest absolute value
+	 *
 	 * @return max absolute value
 	 */
 	public double maxAbs() {
 		double absX = Math.abs(x);
 		double absY = Math.abs(y);
 
-		return Math.max(absX,absY);
+		return Math.max(absX, absY);
 	}
 
 	@Override
@@ -261,12 +261,14 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 		return (Double.isNaN(x) || Double.isNaN(y));
 	}
 
-	protected String toString( String name ) {
-		DecimalFormat format = new DecimalFormat("#");
-		String sx = UtilEjml.fancyString(x, format, MatrixIO.DEFAULT_LENGTH, 4);
-		String sy = UtilEjml.fancyString(y, format, MatrixIO.DEFAULT_LENGTH, 4);
-
-		return name + "( " + sx + " " + sy + " )";
+	/// Converts into a [String] using a Map like format.
+	@Override public String format( MapPrintFormat format ) {
+		char decimal = format.decimal;
+		return format.listPrefix + "x" + format.valueSeparator +
+				UtilEjml.fancyString2(x, format.getPrecision(), decimal) +
+				format.pairSeparator + "y" + format.valueSeparator +
+				UtilEjml.fancyString2(y, format.getPrecision(), decimal) +
+				format.itemSuffix;
 	}
 
 	@Override

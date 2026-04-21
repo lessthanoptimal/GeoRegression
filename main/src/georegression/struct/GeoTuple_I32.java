@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -17,6 +17,8 @@
  */
 
 package georegression.struct;
+
+import org.ejml.MatrixPrintFormat;
 
 /**
  * Integer tuple class
@@ -56,4 +58,17 @@ public abstract class GeoTuple_I32<T extends GeoTuple_I32<T>> extends GeoTuple<T
 	public abstract int getIdx( int index );
 
 	public abstract void setIdx( int index, int value );
+
+	@Override public String format( MatrixPrintFormat format ) {
+		int size = getDimension();
+		var builder = new StringBuilder();
+		builder.append(format.getRowPrefix());
+		for (int i = 0; i < size - 1; i++) {
+			builder.append(getIdx(i));
+			builder.append(format.getColSeparator());
+		}
+		builder.append(getIdx(size - 1));
+		builder.append(format.getRowSuffix());
+		return builder.toString();
+	}
 }

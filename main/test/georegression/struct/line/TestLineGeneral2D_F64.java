@@ -19,32 +19,14 @@
 package georegression.struct.line;
 
 import org.ejml.MapPrintFormat;
-import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestLineparametric2D_F64 {
-	@Test
-	void equals() {
-		LineParametric2D_F64 a = new LineParametric2D_F64(1,2,3,4);
-		LineParametric2D_F64 b = new LineParametric2D_F64(1,2,3,4);
-
-		assertEquals(a, b);
-		b.p.x += UtilEjml.TEST_F64;
-		assertNotEquals(a, b);
-		b.p.x = 1;
-		b.slope.y += UtilEjml.TEST_F64;
-		assertNotEquals(a, b);
-	}
-
+public class TestLineGeneral2D_F64 {
 	@Test void format_Map() {
-		var line = new LineParametric2D_F64(1, 2, 3, 4.1234);
+		var line = new LineGeneral2D_F64(1, 2, 4.1234);
 		String found = line.format(new MapPrintFormat().fsetPrecision(2));
-		assertEquals("{line: {x: 1, y: 2}, slope: {x: 3, y: 4.12}}", found);
+		assertEquals("{A: 1, B: 2, C: 4.12}", found);
 	}
 }

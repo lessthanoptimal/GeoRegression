@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,8 @@ package georegression.struct.shapes;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,94 +31,96 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class TestBox3D_F64 {
 
-	@Test
-	void constructor_box() {
-		Box3D_F64 boxA = new Box3D_F64(1,2,3,4,5,6);
+	@Test void constructor_box() {
+		Box3D_F64 boxA = new Box3D_F64(1, 2, 3, 4, 5, 6);
 		Box3D_F64 box = new Box3D_F64(boxA);
 
-		assertEquals(1,box.p0.x, GrlConstants.TEST_F64);
-		assertEquals(2,box.p0.y, GrlConstants.TEST_F64);
-		assertEquals(3,box.p0.z, GrlConstants.TEST_F64);
-		assertEquals(4,box.p1.x, GrlConstants.TEST_F64);
-		assertEquals(5,box.p1.y, GrlConstants.TEST_F64);
-		assertEquals(6,box.p1.z, GrlConstants.TEST_F64);
+		assertEquals(1, box.p0.x, GrlConstants.TEST_F64);
+		assertEquals(2, box.p0.y, GrlConstants.TEST_F64);
+		assertEquals(3, box.p0.z, GrlConstants.TEST_F64);
+		assertEquals(4, box.p1.x, GrlConstants.TEST_F64);
+		assertEquals(5, box.p1.y, GrlConstants.TEST_F64);
+		assertEquals(6, box.p1.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void constructor_floats() {
-		Box3D_F64 box = new Box3D_F64(1,2,3,4,5,6);
+	@Test void constructor_floats() {
+		Box3D_F64 box = new Box3D_F64(1, 2, 3, 4, 5, 6);
 
-		assertEquals(1,box.p0.x, GrlConstants.TEST_F64);
-		assertEquals(2,box.p0.y, GrlConstants.TEST_F64);
-		assertEquals(3,box.p0.z, GrlConstants.TEST_F64);
-		assertEquals(4,box.p1.x, GrlConstants.TEST_F64);
-		assertEquals(5,box.p1.y, GrlConstants.TEST_F64);
-		assertEquals(6,box.p1.z, GrlConstants.TEST_F64);
+		assertEquals(1, box.p0.x, GrlConstants.TEST_F64);
+		assertEquals(2, box.p0.y, GrlConstants.TEST_F64);
+		assertEquals(3, box.p0.z, GrlConstants.TEST_F64);
+		assertEquals(4, box.p1.x, GrlConstants.TEST_F64);
+		assertEquals(5, box.p1.y, GrlConstants.TEST_F64);
+		assertEquals(6, box.p1.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void set_box() {
+	@Test void set_box() {
 		Box3D_F64 box = new Box3D_F64();
-		box.setTo(1,2,3,4,5,6);
+		box.setTo(1, 2, 3, 4, 5, 6);
 
-		assertEquals(1,box.p0.x, GrlConstants.TEST_F64);
-		assertEquals(2,box.p0.y, GrlConstants.TEST_F64);
-		assertEquals(3,box.p0.z, GrlConstants.TEST_F64);
-		assertEquals(4,box.p1.x, GrlConstants.TEST_F64);
-		assertEquals(5,box.p1.y, GrlConstants.TEST_F64);
-		assertEquals(6,box.p1.z, GrlConstants.TEST_F64);
+		assertEquals(1, box.p0.x, GrlConstants.TEST_F64);
+		assertEquals(2, box.p0.y, GrlConstants.TEST_F64);
+		assertEquals(3, box.p0.z, GrlConstants.TEST_F64);
+		assertEquals(4, box.p1.x, GrlConstants.TEST_F64);
+		assertEquals(5, box.p1.y, GrlConstants.TEST_F64);
+		assertEquals(6, box.p1.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void set_floats() {
-		Box3D_F64 boxA = new Box3D_F64(1,2,3,4,5,6);
+	@Test void set_floats() {
+		Box3D_F64 boxA = new Box3D_F64(1, 2, 3, 4, 5, 6);
 		Box3D_F64 box = new Box3D_F64();
 		box.setTo(boxA);
 
-		assertEquals(1,box.p0.x, GrlConstants.TEST_F64);
-		assertEquals(2,box.p0.y, GrlConstants.TEST_F64);
-		assertEquals(3,box.p0.z, GrlConstants.TEST_F64);
-		assertEquals(4,box.p1.x, GrlConstants.TEST_F64);
-		assertEquals(5,box.p1.y, GrlConstants.TEST_F64);
-		assertEquals(6,box.p1.z, GrlConstants.TEST_F64);
+		assertEquals(1, box.p0.x, GrlConstants.TEST_F64);
+		assertEquals(2, box.p0.y, GrlConstants.TEST_F64);
+		assertEquals(3, box.p0.z, GrlConstants.TEST_F64);
+		assertEquals(4, box.p1.x, GrlConstants.TEST_F64);
+		assertEquals(5, box.p1.y, GrlConstants.TEST_F64);
+		assertEquals(6, box.p1.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void area() {
-		Box3D_F64 box = new Box3D_F64(1,2,3,4,5,6);
+	@Test void area() {
+		Box3D_F64 box = new Box3D_F64(1, 2, 3, 4, 5, 6);
 
 		double expected = 3*3*3;
-		assertEquals(expected,box.area(),GrlConstants.TEST_F64);
+		assertEquals(expected, box.area(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void getLengthX() {
-		Box3D_F64 box = new Box3D_F64(1,2,3,4,6,8);
+	@Test void getLengthX() {
+		Box3D_F64 box = new Box3D_F64(1, 2, 3, 4, 6, 8);
 
-		assertEquals(3,box.getLengthX(),GrlConstants.TEST_F64);
+		assertEquals(3, box.getLengthX(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void getLengthY() {
-		Box3D_F64 box = new Box3D_F64(1,2,3,4,6,8);
+	@Test void getLengthY() {
+		Box3D_F64 box = new Box3D_F64(1, 2, 3, 4, 6, 8);
 
-		assertEquals(4,box.getLengthY(),GrlConstants.TEST_F64);
+		assertEquals(4, box.getLengthY(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void getLengthZ() {
-		Box3D_F64 box = new Box3D_F64(1,2,3,4,6,8);
+	@Test void getLengthZ() {
+		Box3D_F64 box = new Box3D_F64(1, 2, 3, 4, 6, 8);
 
-		assertEquals(5,box.getLengthZ(),GrlConstants.TEST_F64);
+		assertEquals(5, box.getLengthZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void center() {
-		Point3D_F64 center = new Box3D_F64(1,2,3,4,5,6).center(null);
+	@Test void center() {
+		Point3D_F64 center = new Box3D_F64(1, 2, 3, 4, 5, 6).center(null);
 
-		assertEquals(2.5,center.x,GrlConstants.TEST_F64);
-		assertEquals(3.5,center.y,GrlConstants.TEST_F64);
-		assertEquals(4.5,center.z,GrlConstants.TEST_F64);
+		assertEquals(2.5, center.x, GrlConstants.TEST_F64);
+		assertEquals(3.5, center.y, GrlConstants.TEST_F64);
+		assertEquals(4.5, center.z, GrlConstants.TEST_F64);
 	}
 
+	@Test void format_Matrix() {
+		var box = new Box3D_F64(1, 2, 3, 4, 5, 6);
+		String found = box.format(new MatrixPrintFormat());
+		assertEquals("{{1, 2, 3},\n{4, 5, 6}}", found);
+	}
+
+	@Test void format_Map() {
+		var box = new Box3D_F64(1, 2, 3, 4, 5, 6);
+		String found = box.format(new MapPrintFormat());
+		assertEquals("{p0: {x: 1, y: 2, z: 3}, p1: {x: 4, y: 5, z: 6}}", found);
+	}
 }

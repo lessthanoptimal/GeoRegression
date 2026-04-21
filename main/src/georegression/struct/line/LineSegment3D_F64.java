@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.struct.line;
 import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -133,12 +134,16 @@ public class LineSegment3D_F64 implements Serializable {
 		return new LineSegment3D_F64(a, b);
 	}
 
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				"a" + format.valueSeparator + a.format(format) + format.pairSeparator +
+				"b" + format.valueSeparator + b.format(format) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "{" +
-				"a=" + a +
-				", b=" + b +
-				'}';
+		return getClass().getSimpleName() + format(new MapPrintFormat());
 	}
 
 	@Override

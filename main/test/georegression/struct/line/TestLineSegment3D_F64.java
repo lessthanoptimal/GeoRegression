@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.struct.line;
 
+import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +34,8 @@ public class TestLineSegment3D_F64 {
 	}
 
 	@Test void equals() {
-		LineSegment3D_F64 a = new LineSegment3D_F64(1, 2, 3, 4, 5, 6);
-		LineSegment3D_F64 b = new LineSegment3D_F64(1, 2, 3, 4, 5, 6);
+		var a = new LineSegment3D_F64(1, 2, 3, 4, 5, 6);
+		var b = new LineSegment3D_F64(1, 2, 3, 4, 5, 6);
 
 		assertEquals(a, b);
 		b.a.x += UtilEjml.TEST_F64;
@@ -42,5 +43,11 @@ public class TestLineSegment3D_F64 {
 		b.a.x = 1;
 		b.b.y += UtilEjml.TEST_F64;
 		assertNotEquals(a, b);
+	}
+
+	@Test void format_Map() {
+		var line = new LineSegment3D_F64(1, 2, 3, 4.1234, 5, 6);
+		String found = line.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{a: {x: 1, y: 2, z: 3}, b: {x: 4.12, y: 5, z: 6}}", found);
 	}
 }

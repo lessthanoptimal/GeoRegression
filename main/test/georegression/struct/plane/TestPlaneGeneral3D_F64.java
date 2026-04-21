@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,8 @@
 package georegression.struct.plane;
 
 import georegression.geometry.UtilPoint3D_F64;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
@@ -43,6 +45,7 @@ public class TestPlaneGeneral3D_F64 {
 		assertEquals(4.0/div, a.D, UtilEjml.TEST_F64);
 	}
 
+	@SuppressWarnings("SimplifiableAssertion")
 	@Test void equals() {
 		var a = new PlaneGeneral3D_F64(1, 2, 3, 4);
 		assertTrue(a.equals(new PlaneGeneral3D_F64(1, 2, 3, 4)));
@@ -50,5 +53,17 @@ public class TestPlaneGeneral3D_F64 {
 		assertFalse(a.equals(new PlaneGeneral3D_F64(2, 2, 3, 4)));
 		assertFalse(a.equals(new PlaneGeneral3D_F64(1, 2, 0, 4)));
 		assertFalse(a.equals(new PlaneGeneral3D_F64(1, 2, 3, 0)));
+	}
+
+	@Test void format_Matrix() {
+		var a = new PlaneGeneral3D_F64(1, 2, 3, 4.1234);
+		String found = a.format(new MatrixPrintFormat().fsetPrecision(2));
+		assertEquals("{1, 2, 3, 4.12}", found);
+	}
+
+	@Test void format_Map() {
+		var a = new PlaneGeneral3D_F64(1, 2, 3, 4.1234);
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{A: 1, B: 2, C: 3, D: 4.12}", found);
 	}
 }

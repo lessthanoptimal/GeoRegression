@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,13 +18,11 @@
 
 package georegression.struct;
 
-
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
-import org.ejml.ops.MatrixIO;
 
-import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -271,14 +269,18 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 				Double.compare(z,o.z)==0 && Double.compare(w,o.w)==0;
 	}
 
-	protected String toString( String name ) {
-		DecimalFormat format = new DecimalFormat("#");
-		String sx = UtilEjml.fancyString(x,format, MatrixIO.DEFAULT_LENGTH,4);
-		String sy = UtilEjml.fancyString(y,format, MatrixIO.DEFAULT_LENGTH,4);
-		String sz = UtilEjml.fancyString(z,format, MatrixIO.DEFAULT_LENGTH,4);
-		String sw = UtilEjml.fancyString(w,format, MatrixIO.DEFAULT_LENGTH,4);
-
-		return name+"( " + sx + " " + sy + " " + sz + " " + sw + " )";
+	/// Converts into a [String] using a Map like format.
+	@Override public String format( MapPrintFormat format ) {
+		char decimal = format.decimal;
+		return format.listPrefix + "x" + format.valueSeparator +
+				UtilEjml.fancyString2(x, format.getPrecision(), decimal) +
+				format.pairSeparator + "y" + format.valueSeparator +
+				UtilEjml.fancyString2(y, format.getPrecision(), decimal) +
+				format.pairSeparator + "z" + format.valueSeparator +
+				UtilEjml.fancyString2(z, format.getPrecision(), decimal) +
+				format.pairSeparator + "w" + format.valueSeparator +
+				UtilEjml.fancyString2(w, format.getPrecision(), decimal) +
+				format.itemSuffix;
 	}
 
 	@Override

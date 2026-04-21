@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -54,10 +54,5 @@ public class Point2D_F64 extends GeoTuple2D_F64<Point2D_F64> {
 	@Override
 	public Point2D_F64 copy() {
 		return new Point2D_F64(this);
-	}
-
-	@Override
-	public String toString() {
-		return toString("P");
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,9 @@ package georegression.struct.packed;
 
 import lombok.Getter;
 import org.ddogleg.struct.DogArray_F64;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
+import org.ejml.UtilEjml;
 
 public abstract class PackedArray_F64<T> implements PackedArray<T> {
 	/** Degrees of freedom */
@@ -64,5 +67,53 @@ public abstract class PackedArray_F64<T> implements PackedArray<T> {
 
 	@Override public void resize( int size ) {
 		array.resize(size*DOF, 0.0);
+	}
+
+	public String format( MatrixPrintFormat format ) {
+		char decimal = format.decimal;
+		var builder = new StringBuilder();
+		builder.append(format.prefix);
+		for (int i = 0; i < size(); i++) {
+			int idxRow = i*DOF;
+
+			builder.append(format.rowPrefix);
+			for (int col = 0; col < DOF; col++) {
+				double value = array.data[idxRow+col];
+				builder.append(UtilEjml.fancyString2(value, format.getPrecision(), decimal));
+				if (col < DOF-1)
+					builder.append(format.colSeparator);
+			}
+			builder.append(format.rowSuffix);
+			if (i < size() - 1)
+				builder.append(format.rowSeparator);
+		}
+		builder.append(format.suffix);
+		return builder.toString();
+	}
+
+	protected String format( MapPrintFormat format, String[] keys ) {
+		if (keys.length != DOF)
+			throw new IllegalArgumentException("Number of keys should match DOF");
+
+		char decimal = format.decimal;
+		var builder = new StringBuilder();
+		builder.append(format.listPrefix);
+		for (int i = 0; i < size(); i++) {
+			int idxRow = i*DOF;
+
+			builder.append(format.itemPrefix);
+			for (int col = 0; col < DOF; col++) {
+				double value = array.data[idxRow+col];
+				builder.append(keys[col]).append(format.valueSeparator);
+				builder.append(UtilEjml.fancyString2(value, format.getPrecision(), decimal));
+				if (col < DOF-1)
+					builder.append(format.pairSeparator);
+			}
+			builder.append(format.itemSuffix);
+			if (i < size() - 1)
+				builder.append(format.itemSeparator);
+		}
+		builder.append(format.listSuffix);
+		return builder.toString();
 	}
 }

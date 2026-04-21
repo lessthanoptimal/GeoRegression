@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,8 @@
 package georegression.struct.point;
 
 import georegression.misc.GrlConstants;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -61,5 +63,17 @@ public class TestPoint2D_I32 {
 
 		assertEquals(a.x,b.x);
 		assertEquals(a.y,b.y);
+	}
+
+	@Test void format_Matrix() {
+		var a = new Point2D_I32(1, 2);
+		String found = a.format(new MatrixPrintFormat());
+		assertEquals("{1, 2}", found);
+	}
+
+	@Test void format_Map() {
+		var a = new Point2D_I32(1, 2);
+		String found = a.format(new MapPrintFormat());
+		assertEquals("{x: 1, y: 2}", found);
 	}
 }

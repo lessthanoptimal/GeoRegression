@@ -16,35 +16,24 @@
  * limitations under the License.
  */
 
-package georegression.struct.line;
+package georegression.struct.plane;
 
 import org.ejml.MapPrintFormat;
-import org.ejml.UtilEjml;
+import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestLineparametric2D_F64 {
-	@Test
-	void equals() {
-		LineParametric2D_F64 a = new LineParametric2D_F64(1,2,3,4);
-		LineParametric2D_F64 b = new LineParametric2D_F64(1,2,3,4);
-
-		assertEquals(a, b);
-		b.p.x += UtilEjml.TEST_F64;
-		assertNotEquals(a, b);
-		b.p.x = 1;
-		b.slope.y += UtilEjml.TEST_F64;
-		assertNotEquals(a, b);
+public class TestPlaneNormal3D_F64 {
+	@Test void format_Matrix() {
+		var a = new PlaneNormal3D_F64(1, 2, 3.1234, 4, 5, 6.1234);
+		String found = a.format(new MatrixPrintFormat().fsetPrecision(2));
+		assertEquals("{{1, 2, 3.12},\n{4, 5, 6.12}}", found);
 	}
 
 	@Test void format_Map() {
-		var line = new LineParametric2D_F64(1, 2, 3, 4.1234);
-		String found = line.format(new MapPrintFormat().fsetPrecision(2));
-		assertEquals("{line: {x: 1, y: 2}, slope: {x: 3, y: 4.12}}", found);
+		var a = new PlaneNormal3D_F64(1, 2, 3.1234, 4, 5, 6.1234);
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{p: {x: 1, y: 2, z: 3.12}, n: {x: 4, y: 5, z: 6.12}}", found);
 	}
 }

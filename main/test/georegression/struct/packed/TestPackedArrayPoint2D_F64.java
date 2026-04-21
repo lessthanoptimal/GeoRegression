@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,8 @@
 package georegression.struct.packed;
 
 import georegression.struct.point.Point2D_F64;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
@@ -97,5 +99,19 @@ public class TestPackedArrayPoint2D_F64 extends GenericPackedArrayChecks<Point2D
 		a.resize(1);
 		assertEquals(1, a.size());
 		assertTrue(a.getTemp(0).isIdentical(0, 0));
+	}
+
+	@Test void format_Matrix() {
+		var alg = new PackedArrayPoint2D_F64();
+		alg.append(1, 3);
+		alg.append(2, -4.01);
+		assertEquals("{{1, 3},\n{2, -4.01}}", alg.format(new MatrixPrintFormat()));
+	}
+
+	@Test void format_Map() {
+		var alg = new PackedArrayPoint2D_F64();
+		alg.append(1, 3);
+		alg.append(2, -4.01);
+		assertEquals("{{x: 1, y: 3},\n{x: 2, y: -4.01}}", alg.format(new MapPrintFormat()));
 	}
 }

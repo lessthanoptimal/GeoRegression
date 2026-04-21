@@ -19,6 +19,8 @@
 package georegression.struct.so;
 
 import georegression.misc.GrlConstants;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,5 +79,16 @@ public class TestQuaternion_F64 {
 		assertEquals(q.x, -found.x);
 		assertEquals(q.y, -found.y);
 		assertEquals(q.z, -found.z);
+	}
+
+	@Test void format_matric() {
+		var a = new Quaternion_F64(1, 2, 0.00000213, 0.5);
+		String found = a.format(new MatrixPrintFormat().fsetPrecision(2));
+		assertEquals("{1, 2, 2.13e-06, 0.5}", found);
+	}
+	@Test void format_map() {
+		var a = new Quaternion_F64(1, 2, 0.00000213, 0.5);
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{w: 1, x: 2, y: 2.13e-06, z: 0.5}", found);
 	}
 }
