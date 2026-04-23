@@ -47,9 +47,10 @@ public class TestRodrigues_F64 {
 		String found = a.format(new MatrixPrintFormat().fsetPrecision(2));
 		assertEquals("{1, 0, 0.71, 0.71}", found);
 	}
-	@Test void Rodrigues_F64() {
+
+	@Test void format_Map() {
 		var a = new Rodrigues_F64(1, 0, Math.sqrt(0.5), Math.sqrt(0.5));
 		String found = a.format(new MapPrintFormat().fsetPrecision(2));
-		assertEquals("{theta: 1, x: 0, y: 0.71, z: 0.71}", found);
+		assertEquals("{theta: 1, axis: {x: 0, y: 0.71, z: 0.71}}", found);
 	}
 }

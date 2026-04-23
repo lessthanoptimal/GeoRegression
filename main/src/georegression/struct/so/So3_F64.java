@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,8 @@
 package georegression.struct.so;
 
 import georegression.struct.InvertibleTransform;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.jetbrains.annotations.Nullable;
@@ -72,5 +74,20 @@ public class So3_F64 implements InvertibleTransform<So3_F64> {
 	@Override
 	public void reset() {
 		CommonOps_DDRM.setIdentity(R);
+	}
+
+	public String format( MatrixPrintFormat format ) {
+		return R.format(format);
+	}
+
+	public String format( MapPrintFormat format ) {
+		MatrixPrintFormat matFormat = format.convertToMatrix();
+		return format.itemPrefix +
+				format.pair("R", R.format(matFormat), false) +
+				format.itemSuffix;
+	}
+
+	@Override public String toString() {
+		return getClass()+format(MatrixPrintFormat.DEFAULT);
 	}
 }

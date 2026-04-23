@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,7 @@ package georegression.struct.se;
 
 import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.point.Vector2D_F64;
+import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -183,9 +184,16 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 		return new Se2_F64(T.x, T.y, c, s);
 	}
 
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("yaw", getYaw(), true) +
+				format.pair("T", T.format(format), false) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		return "Se2( x = " + T.x + " y = " + T.y + " yaw = " + getYaw() + " )";
+		return getClass().getSimpleName()+format(MapPrintFormat.DEFAULT);
 	}
 
 	public void print() {

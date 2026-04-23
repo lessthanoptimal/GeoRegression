@@ -115,7 +115,7 @@ public class TestBox3D_F64 {
 	@Test void format_Matrix() {
 		var box = new Box3D_F64(1, 2, 3, 4, 5, 6);
 		String found = box.format(new MatrixPrintFormat());
-		assertEquals("{{1, 2, 3},\n{4, 5, 6}}", found);
+		assertEquals("[{1, 2, 3},\n{4, 5, 6}]", found);
 	}
 
 	@Test void format_Map() {

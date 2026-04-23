@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,7 @@
 
 package georegression.struct.curve;
 
-import org.ejml.FancyPrint;
+import org.ejml.MapPrintFormat;
 
 /**
  * Quadratic curve in 2D: f(x,y) = a + b&middot;x + c&middot;y + d&middot;xy + e&middot;x<sup>2</sup> + f&middot;y<sup>2</sup>.
@@ -58,16 +58,19 @@ public class PolynomialQuadratic2D_F64 {
 		setTo(0, 0, 0, 0, 0, 0);
 	}
 
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("a", a, true) +
+				format.pair("b", b, true) +
+				format.pair("c", c, true) +
+				format.pair("d", d, true) +
+				format.pair("e", e, true) +
+				format.pair("f", f, false) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		FancyPrint fp = new FancyPrint();
-		return "PolynomialQuadratic2D_F64{" +
-				"a=" + fp.p(a) +
-				", b=" + fp.p(b) +
-				", c=" + fp.p(c) +
-				", d=" + fp.p(d) +
-				", e=" + fp.p(e) +
-				", f=" + fp.p(f) +
-				'}';
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 }

@@ -23,7 +23,6 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
 import lombok.Getter;
 import lombok.Setter;
-import org.ejml.FancyPrint;
 import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
@@ -158,7 +157,7 @@ public class LineParametric2D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + format(new MapPrintFormat());
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 
 	@Override

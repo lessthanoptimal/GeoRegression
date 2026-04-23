@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.struct.shapes;
 
 import georegression.misc.GrlConstants;
+import org.ejml.MapPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,5 +48,11 @@ public class TestRectangle2D_F64 {
 		assertTrue(rect.getCorner(1, null).isIdentical(2, -2));
 		assertTrue(rect.getCorner(2, null).isIdentical(2, 3));
 		assertTrue(rect.getCorner(3, null).isIdentical(-1, 3));
+	}
+
+	@Test void format_Map() {
+		var a = new Rectangle2D_F64(-1, -2, 2.1234, 120);
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{p0: {x: -1, y: -2}, p1: {x: 2.12, y: 12}}", found);
 	}
 }

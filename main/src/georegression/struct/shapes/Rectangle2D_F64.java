@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point2D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -148,9 +149,16 @@ public class Rectangle2D_F64 implements Serializable {
 		return (p1.y - p0.y)*(p1.x - p0.x);
 	}
 
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("p0", p0.format(format), true) +
+				format.pair("p1", p1.format(format), false) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "{ p0(" + p0.x + " " + p0.y + ") p1(" + p1.x + " " + p1.y + ") }";
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 
 	@Override

@@ -93,13 +93,13 @@ public class PlaneNormal3D_F64 implements Serializable {
 	/// Converts into a [String] using a Map like format.
 	public String format( MapPrintFormat format ) {
 		return format.itemPrefix +
-				"p" + format.valueSeparator + p.format(format) + format.pairSeparator +
-				"n" + format.valueSeparator + n.format(format) +
+				format.pair("p", p.format(format), true) +
+				format.pair("n", n.format(format), false) +
 				format.itemSuffix;
 	}
 
 	@Override public String toString() {
-		return getClass().getSimpleName() + format(new MapPrintFormat());
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 
 	@Override public boolean equals( Object o ) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,13 +21,10 @@ package georegression.struct.se;
 import georegression.struct.GenericInvertibleTransformTests_F64;
 import georegression.struct.InvertibleTransform;
 import georegression.struct.point.Point3D_F64;
-import georegression.struct.point.Point4D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.transform.se.SePointOps_F64;
-import org.ejml.UtilEjml;
+import org.ejml.MapPrintFormat;
 import org.ejml.data.DMatrixRMaj;
-import org.ejml.dense.row.CommonOps_DDRM;
-import org.ejml.dense.row.SpecializedOps_DDRM;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
@@ -81,5 +78,11 @@ public class TestSe3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64
 	@Override
 	public Point3D_F64 apply( InvertibleTransform se, Point3D_F64 point, @Nullable Point3D_F64 result ) {
 		return SePointOps_F64.transform((Se3_F64)se, (Point3D_F64)point, (Point3D_F64)result);
+	}
+
+	@Test void format_Map() {
+		var a = new Se3_F64(new DMatrixRMaj(new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9.1234}}), new Vector3D_F64(0, 3, 2));
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{R: [{1, 2, 3},\n{4, 5, 6},\n{7, 8, 9.12}], T: {x: 0, y: 3, z: 2}}", found);
 	}
 }

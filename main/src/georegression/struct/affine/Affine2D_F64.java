@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.struct.affine;
 
 
+import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -118,9 +119,19 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 		return new Affine2D_F64(a11,a12,a21,a22,tx,ty);
 	}
 
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("a11", a11, true) +
+				format.pair("a12", a12, true) +
+				format.pair("a22", a22, true) +
+				format.pair("a21", a21, true) +
+				format.pair("tx", tx, true) +
+				format.pair("ty", ty, false) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		return getClass().getSimpleName()+String.format("[ %5.2e %5.2e %5.2e ; %5.2e %5.2e %5.2e ]",
-				a11,a12,tx,a21,a22,ty);
+		return getClass().getSimpleName()+ format(MapPrintFormat.DEFAULT);
 	}
 }

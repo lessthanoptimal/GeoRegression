@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.struct.curve;
 
 import org.ejml.FancyPrint;
+import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 
 import java.io.Serializable;
@@ -39,12 +40,11 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public class ConicGeneral_F64 implements Serializable
-{
+public class ConicGeneral_F64 implements Serializable {
 	/**
 	 * Coefficients
 	 */
-	public double A,B,C,D,E,F;
+	public double A, B, C, D, E, F;
 
 	public ConicGeneral_F64(double a, double b, double c, double d, double e, double f) {
 		A = a; B = b; C = c;
@@ -58,7 +58,7 @@ public class ConicGeneral_F64 implements Serializable
 	public ConicGeneral_F64() {
 	}
 
-	public double evaluate(double x , double y ) {
+	public double evaluate( double x, double y ) {
 		return A*x*x + B*x*y + C*y*y + D*x + E*y + F;
 	}
 
@@ -71,18 +71,18 @@ public class ConicGeneral_F64 implements Serializable
 	}
 
 	public boolean isEllipse( double tol ) {
-		return B*B+tol < 4*A*C;
+		return B*B + tol < 4*A*C;
 	}
 
 	public boolean isParabola( double tol ) {
-		return Math.abs(B*B - 4*A*C) <= tol ;
+		return Math.abs(B*B - 4*A*C) <= tol;
 	}
 
 	public boolean isHyperbola( double tol ) {
-		return B*B-tol > 4*A*C;
+		return B*B - tol > 4*A*C;
 	}
 
-	public ConicGeneral_F64 setTo(ConicGeneral_F64 original ) {
+	public ConicGeneral_F64 setTo( ConicGeneral_F64 original ) {
 		this.A = original.A;
 		this.B = original.B;
 		this.C = original.C;
@@ -103,19 +103,22 @@ public class ConicGeneral_F64 implements Serializable
 	}
 
 	public ConicGeneral_F64 copy() {
-		return new ConicGeneral_F64(A,B,C,D,E,F);
+		return new ConicGeneral_F64(A, B, C, D, E, F);
+	}
+
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("A", A, true) +
+				format.pair("B", B, true) +
+				format.pair("C", C, true) +
+				format.pair("D", D, true) +
+				format.pair("E", E, true) +
+				format.pair("F", F, false) +
+				format.itemSuffix;
 	}
 
 	@Override
 	public String toString() {
-		FancyPrint fp = new FancyPrint();
-		return "ConicGeneral_F64{" +
-				"A=" + fp.p(A) +
-				", B=" + fp.p(B) +
-				", C=" + fp.p(C) +
-				", D=" + fp.p(D) +
-				", E=" + fp.p(E) +
-				", F=" + fp.p(F) +
-				'}';
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 }

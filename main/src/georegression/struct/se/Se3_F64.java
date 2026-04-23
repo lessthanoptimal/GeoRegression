@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -28,6 +28,8 @@ import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Point4D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.transform.se.SePointOps_F64;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.ejml.UtilEjml;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
@@ -369,12 +371,17 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		return ret;
 	}
 
+	public String format( MapPrintFormat format ) {
+		MatrixPrintFormat matFormat = format.convertToMatrix();
+		return format.itemPrefix +
+				format.pair("R", R.format(matFormat), true) +
+				format.pair("T", T.format(format), false) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		String ret = "Se3_F64: T = " + T.toString() + "\n";
-		ret += R;
-
-		return ret;
+		return getClass().getSimpleName()+format(MapPrintFormat.DEFAULT);
 	}
 
 	/**

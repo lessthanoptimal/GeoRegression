@@ -86,7 +86,7 @@ public class Box3D_F64 implements Serializable {
 	 * @return true if equal or false if not
 	 */
 	public boolean isEquals( double x0, double y0, double z0,
-							 double x1, double y1, double z1, double tol ) {
+	                         double x1, double y1, double z1, double tol ) {
 		if (Math.abs(x0 - this.p0.x) > tol)
 			return false;
 		if (Math.abs(y0 - this.p0.y) > tol)
@@ -169,8 +169,8 @@ public class Box3D_F64 implements Serializable {
 
 	public String format( MapPrintFormat format ) {
 		return format.itemPrefix +
-				"p0" + format.valueSeparator + p0.format(format) + format.pairSeparator +
-				"p1" + format.valueSeparator + p1.format(format) +
+				format.pair("p0", p0.format(format), true) +
+				format.pair("p1", p1.format(format), false) +
 				format.itemSuffix;
 	}
 

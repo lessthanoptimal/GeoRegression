@@ -93,7 +93,6 @@ public class PackedArrayPoint2D_F64 extends PackedArray_F64<Point2D_F64> {
 		return format(format, new String[]{"x", "y"});
 	}
 
-
 	/**
 	 * Makes this array have a value identical to 'src'
 	 *

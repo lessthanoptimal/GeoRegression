@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,55 +19,61 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point2D_F64;
+import org.ejml.MapPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
 public class TestQuadrilateral2D_F64 {
-	@Test
-	void convert() {
-		Quadrilateral_F64 polygon = new Quadrilateral_F64();
+	@Test void convert() {
+		var polygon = new Quadrilateral_F64();
 		polygon.a.setTo(1,2);
 		polygon.b.setTo(2,3);
 		polygon.c.setTo(3,4);
-		polygon.c.setTo(4,5);
+		polygon.d.setTo(4,5);
 
 		List<Point2D_F64> list = polygon.convert(null,false);
 		assertEquals(4,list.size());
 		for ( int i = 0; i < list.size(); i++ ) {
-			assertTrue(list.get(i) == polygon.get(i));
+			assertSame(list.get(i), polygon.get(i));
 		}
 
 		list = polygon.convert(null,true);
 		assertEquals(4,list.size());
 		for ( int i = 0; i < list.size(); i++ ) {
-			assertTrue(list.get(i) != polygon.get(i));
-			assertTrue(list.get(i).equals(polygon.get(i)));
+			assertNotSame(list.get(i), polygon.get(i));
+			assertEquals(list.get(i), polygon.get(i));
 		}
 	}
 
-	@Test
-	void set_list() {
-		List<Point2D_F64> list = new ArrayList<>();
+	@Test void set_list() {
+		var list = new ArrayList<Point2D_F64>();
 
 		list.add( new Point2D_F64(2,3));
 		list.add( new Point2D_F64(3,4));
 		list.add( new Point2D_F64(4,5));
 		list.add( new Point2D_F64(5,6));
 
-		Quadrilateral_F64 polygon = new Quadrilateral_F64();
+		var polygon = new Quadrilateral_F64();
 		polygon.setTo(list);
 		assertEquals(4,list.size());
 		for ( int i = 0; i < list.size(); i++ ) {
-			assertTrue(list.get(i) != polygon.get(i));
-			assertTrue(list.get(i).equals(polygon.get(i)));
+			assertNotSame(list.get(i), polygon.get(i));
+			assertEquals(list.get(i), polygon.get(i));
 		}
+	}
+
+	@Test void format_Map() {
+		var polygon = new Quadrilateral_F64();
+		polygon.a.setTo(1,2);
+		polygon.b.setTo(2,3.1234);
+		polygon.c.setTo(3,4);
+		polygon.d.setTo(4,5);
+
+		String found = polygon.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{a: {x: 1, y: 2}, b: {x: 2, y: 3.12}, c: {x: 3, y: 4}, d: {x: 4, y: 5}}", found);
 	}
 }

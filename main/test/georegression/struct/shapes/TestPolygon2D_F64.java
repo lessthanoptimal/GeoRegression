@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,8 @@
 package georegression.struct.shapes;
 
 import georegression.struct.point.Point2D_F64;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -27,13 +29,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
 public class TestPolygon2D_F64 {
-	@Test
-	void convert() {
-		Polygon2D_F64 polygon = new Polygon2D_F64(3);
+	@Test void convert() {
+		var polygon = new Polygon2D_F64(3);
 		polygon.get(0).setTo(1,2);
 		polygon.get(1).setTo(2,3);
 		polygon.get(2).setTo(3,4);
@@ -56,20 +54,39 @@ public class TestPolygon2D_F64 {
 		assertEquals(4,list.size());
 	}
 
-	@Test
-	void set_list() {
-		List<Point2D_F64> list = new ArrayList<>();
+	@Test void set_list() {
+		var list = new ArrayList<Point2D_F64>();
 
 		list.add( new Point2D_F64(2,3));
 		list.add( new Point2D_F64(3,4));
 		list.add( new Point2D_F64(4,5));
 
-		Polygon2D_F64 polygon = new Polygon2D_F64(2);
+		var polygon = new Polygon2D_F64(2);
 		polygon.setTo(list);
 		assertEquals(polygon.size(),list.size());
 		for ( int i = 0; i < list.size(); i++ ) {
 			assertTrue(list.get(i) != polygon.get(i));
 			assertTrue(list.get(i).equals(polygon.get(i)));
 		}
+	}
+
+	@Test void format_Matrix() {
+		var polygon = new Polygon2D_F64(3);
+		polygon.get(0).setTo(1, 2);
+		polygon.get(1).setTo(2.1234, 3);
+		polygon.get(2).setTo(3, 4);
+
+		String found = polygon.format(new MatrixPrintFormat().fsetPrecision(2));
+		assertEquals("[{1, 2},\n{2.12, 3},\n{3, 4}]", found);
+	}
+
+	@Test void format_Map() {
+		var polygon = new Polygon2D_F64(3);
+		polygon.get(0).setTo(1, 2);
+		polygon.get(1).setTo(2.1234, 3);
+		polygon.get(2).setTo(3, 4);
+
+		String found = polygon.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("[{x: 1, y: 2},\n{x: 2.12, y: 3},\n{x: 3, y: 4}]", found);
 	}
 }

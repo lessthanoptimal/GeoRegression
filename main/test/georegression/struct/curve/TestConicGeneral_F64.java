@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,24 +19,20 @@
 package georegression.struct.curve;
 
 import georegression.misc.GrlConstants;
+import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
 public class TestConicGeneral_F64 {
-	@Test
-	void evaluate() {
+	@Test void evaluate() {
 		// arbitrary but hand constructed conic
 		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);
 		assertEquals(0,conic.evaluate(10,5), UtilEjml.TEST_F64);
 	}
 
-	@Test
-	void isEllipse() {
+	@Test void isEllipse() {
 		double A = 1.5, C = 0.9;
 		double B = Math.sqrt(4*A*C)+0.01;
 		ConicGeneral_F64 conic = new ConicGeneral_F64(A,B,C,3,2,-217.5);
@@ -45,8 +41,7 @@ public class TestConicGeneral_F64 {
 		assertTrue(conic.isEllipse( GrlConstants.EPS ));
 	}
 
-	@Test
-	void isHyperbola() {
+	@Test void isHyperbola() {
 		double A = 1.5, C = 0.9;
 		double B = Math.sqrt(4*A*C)-0.01;
 		ConicGeneral_F64 conic = new ConicGeneral_F64(A,B,C,3,2,-217.5);
@@ -55,13 +50,18 @@ public class TestConicGeneral_F64 {
 		assertTrue(conic.isHyperbola( GrlConstants.EPS ));
 	}
 
-	@Test
-	void isParabola() {
+	@Test void isParabola() {
 		double A = 1.5, C = 0.9;
 		double B = Math.sqrt(4*A*C)+0.01;
 		ConicGeneral_F64 conic = new ConicGeneral_F64(A,B,C,3,2,-217.5);
 		assertFalse(conic.isParabola( GrlConstants.EPS ));
 		conic.B -= 0.01;
 		assertTrue(conic.isParabola (GrlConstants.EPS ));
+	}
+
+	@Test void format_Map() {
+		var a = new ConicGeneral_F64(1.5,0.1,0.9123,3,2,-217.5);
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{A: 1.5, B: 0.1, C: 0.91, D: 3, E: 2, F: -217.5}", found);
 	}
 }

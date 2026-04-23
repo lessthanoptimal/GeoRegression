@@ -19,13 +19,9 @@
 package georegression.struct.shapes;
 
 import georegression.struct.line.LineParametric3D_F64;
-import georegression.struct.point.Point3D_F64;
-import georegression.struct.point.Vector3D_F64;
 import lombok.Getter;
 import lombok.Setter;
-import org.ejml.FancyPrint;
 import org.ejml.MapPrintFormat;
-import org.ejml.UtilEjml;
 
 import java.io.Serializable;
 
@@ -117,24 +113,15 @@ public class Cylinder3D_F64 implements Serializable {
 	}
 
 	public String format( MapPrintFormat format ) {
-		int precision = format.precision;
-		char decimal = format.decimal;
 		return format.itemPrefix +
-				"line" + format.valueSeparator + line.format(format) + format.pairSeparator +
-				"radius" + format.valueSeparator + UtilEjml.fancyString2(radius, precision, decimal) +
+				format.pair("line", line.format(format), true) +
+				format.pair("radius", radius, false) +
 				format.itemSuffix;
 	}
 
 	@Override
 	public String toString() {
-		FancyPrint fancy = new FancyPrint();
-
-		Point3D_F64 p = line.p;
-		Vector3D_F64 slope = line.slope;
-
-		return getClass().getSimpleName() +
-				" P( " + fancy.s(p.x) + " " + fancy.s(p.y) + " " + fancy.sf(p.z) +
-				" ) Slope( " + fancy.s(slope.x) + " " + fancy.s(slope.y) + " " + fancy.s(slope.z) + " ) radius " + fancy.s(radius);
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 
 	@Override

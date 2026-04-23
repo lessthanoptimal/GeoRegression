@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,6 +19,7 @@
 package georegression.struct.curve;
 
 import georegression.struct.point.Point2D_F64;
+import org.ejml.MapPrintFormat;
 
 /**
  * Parametric form of parabola with 4 parameters.
@@ -34,6 +35,15 @@ public class ParabolaParametric_F64 {
 	public ParabolaParametric_F64() {}
 
 	public ParabolaParametric_F64( ParabolaParametric_F64 src ) {setTo(src);}
+
+	public ParabolaParametric_F64( double a, double b, double c, double d, double e, double f ) {
+		A = a;
+		B = b;
+		C = c;
+		D = d;
+		E = e;
+		F = f;
+	}
 
 	public ParabolaParametric_F64 setTo( ParabolaParametric_F64 src ) {
 		this.A = src.A;
@@ -63,5 +73,21 @@ public class ParabolaParametric_F64 {
 		Point2D_F64 p = new Point2D_F64();
 		evaluate(t, p);
 		return p;
+	}
+
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("A", A, true) +
+				format.pair("B", B, true) +
+				format.pair("C", C, true) +
+				format.pair("D", D, true) +
+				format.pair("E", E, true) +
+				format.pair("F", F, false) +
+				format.itemSuffix;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 }

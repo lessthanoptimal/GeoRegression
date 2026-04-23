@@ -119,21 +119,17 @@ public class PlaneGeneral3D_F64 implements Serializable {
 
 	/// Converts into a [String] using a Map like format.
 	public String format( MapPrintFormat format ) {
-		char decimal = format.decimal;
-		return format.listPrefix + "A" + format.valueSeparator +
-				UtilEjml.fancyString2(A, format.getPrecision(), decimal) +
-				format.pairSeparator + "B" + format.valueSeparator +
-				UtilEjml.fancyString2(B, format.getPrecision(), decimal) +
-				format.pairSeparator + "C" + format.valueSeparator +
-				UtilEjml.fancyString2(C, format.getPrecision(), decimal) +
-				format.pairSeparator + "D" + format.valueSeparator +
-				UtilEjml.fancyString2(D, format.getPrecision(), decimal) +
+		return format.itemPrefix +
+				format.pair("A" ,A, true) +
+				format.pair("B" ,B, true) +
+				format.pair("C" ,C, true) +
+				format.pair("D" ,D, false) +
 				format.itemSuffix;
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() +format(new MapPrintFormat());
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 
 	@Override

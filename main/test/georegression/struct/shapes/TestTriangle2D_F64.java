@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,6 +20,7 @@ package georegression.struct.shapes;
 
 import georegression.GeoStandardJUnit;
 import georegression.struct.point.Point2D_F64;
+import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
@@ -82,5 +83,11 @@ public class TestTriangle2D_F64 extends GeoStandardJUnit {
 		assertTrue(alg.sideTangent(0, null).isIdentical(0, -1,0.0));
 		assertTrue(alg.sideTangent(1, null).isIdentical(1, 0,0.0));
 		assertTrue(alg.sideTangent(2, null).isIdentical(-a, a, UtilEjml.TEST_F64));
+	}
+
+	@Test void format_Map() {
+		var a = new Triangle2D_F64().setTo(1, 2, 3.1234, 4, 5, 6);
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{v0: {x: 1, y: 2}, v1: {x: 3.12, y: 4}, v2: {x: 5, y: 6}}", found);
 	}
 }

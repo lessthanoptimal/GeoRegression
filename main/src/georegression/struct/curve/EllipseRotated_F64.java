@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.struct.curve;
 import georegression.struct.point.Point2D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
 
@@ -48,7 +49,7 @@ public class EllipseRotated_F64 implements Serializable {
 	 */
 	@Getter @Setter public double b;
 	/**
-	 * counter clockwise angle of rotation from x-axis to the major axis. Standard range is from -PI/2 to PI/2
+	 * counterclockwise angle of rotation from x-axis to the major axis. Standard range is from -PI/2 to PI/2
 	 */
 	@Getter @Setter public double phi;
 
@@ -60,7 +61,7 @@ public class EllipseRotated_F64 implements Serializable {
 	 * @param b minor axis
 	 * @param phi orientation in radians
 	 */
-	public EllipseRotated_F64(Point2D_F64 center, double a, double b, double phi) {
+	public EllipseRotated_F64( Point2D_F64 center, double a, double b, double phi ) {
 		this.center.setTo(center);
 		this.a = a;
 		this.b = b;
@@ -76,8 +77,8 @@ public class EllipseRotated_F64 implements Serializable {
 	 * @param b minor axis
 	 * @param phi orientation in radians
 	 */
-	public EllipseRotated_F64( double x0 , double y0, double a, double b, double phi) {
-		setTo(x0,y0,a,b,phi);
+	public EllipseRotated_F64( double x0, double y0, double a, double b, double phi ) {
+		setTo(x0, y0, a, b, phi);
 	}
 
 	/**
@@ -86,7 +87,7 @@ public class EllipseRotated_F64 implements Serializable {
 	 * @param original Ellipse which is to be copied
 	 */
 	public EllipseRotated_F64( EllipseRotated_F64 original ) {
-		this(original.center,original.getA(),original.getB(),original.getPhi());
+		this(original.center, original.getA(), original.getB(), original.getPhi());
 	}
 
 	public EllipseRotated_F64() {
@@ -101,24 +102,33 @@ public class EllipseRotated_F64 implements Serializable {
 		return center;
 	}
 
-	public void setCenter(Point2D_F64 center) {
+	public void setCenter( Point2D_F64 center ) {
 		this.center.setTo(center);
 	}
 
-	public EllipseRotated_F64 setTo(double x0 , double y0, double a, double b, double phi) {
-		this.center.setTo(x0,y0);
+	public EllipseRotated_F64 setTo( double x0, double y0, double a, double b, double phi ) {
+		this.center.setTo(x0, y0);
 		this.a = a;
 		this.b = b;
 		this.phi = phi;
 		return this;
 	}
 
-	public EllipseRotated_F64 setTo(EllipseRotated_F64 ellipse ) {
-		this.center.setTo( ellipse.center );
+	public EllipseRotated_F64 setTo( EllipseRotated_F64 ellipse ) {
+		this.center.setTo(ellipse.center);
 		this.a = ellipse.a;
 		this.b = ellipse.b;
 		this.phi = ellipse.phi;
 		return this;
+	}
+
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				"center" + format.valueSeparator + center.format(format) + format.pairSeparator +
+				format.pair("a", a, true) +
+				format.pair("b", b, true) +
+				format.pair("phi", phi, false) +
+				format.itemSuffix;
 	}
 
 	@Override

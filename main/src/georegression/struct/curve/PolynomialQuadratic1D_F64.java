@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,7 @@
 
 package georegression.struct.curve;
 
-import org.ejml.FancyPrint;
+import org.ejml.MapPrintFormat;
 
 /**
  * Quadratic curve in 1D: f(x) = a + bx + c x<sup>2</sup>.
@@ -55,16 +55,6 @@ public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
 	}
 
 	@Override
-	public String toString() {
-		FancyPrint fp = new FancyPrint();
-		return "PolynomialQuadratic1D_F64{" +
-				"a=" + fp.p(a) +
-				", b=" + fp.p(b) +
-				", c=" + fp.p(c) +
-				'}';
-	}
-
-	@Override
 	public double get(int coefficient) {
 		switch( coefficient ) {
 			case 0: return a;
@@ -96,5 +86,18 @@ public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
 
 	@Override public void zero() {
 		setTo(0, 0, 0);
+	}
+
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("a", a, true) +
+				format.pair("b", b, true) +
+				format.pair("c", c, false) +
+				format.itemSuffix;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 }

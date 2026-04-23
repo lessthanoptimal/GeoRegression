@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,9 +22,13 @@ import georegression.struct.GenericInvertibleTransformTests_F64;
 import georegression.struct.InvertibleTransform;
 import georegression.struct.point.Point2D_F64;
 import georegression.transform.affine.AffinePointOps_F64;
+import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -55,5 +59,11 @@ public class TestAffine2D_F64 extends GenericInvertibleTransformTests_F64<Point2
 	@Override
 	public Point2D_F64 apply( InvertibleTransform se, Point2D_F64 point, @Nullable Point2D_F64 result ) {
 		return AffinePointOps_F64.transform((Affine2D_F64) se, point, result);
+	}
+
+	@Test void format_Map() {
+		var a = new Affine2D_F64(1.2345, -2, 0.56, 4, 5, 6);
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{a11: 1.23, a12: -2, a22: 4, a21: 0.56, tx: 5, ty: 6}", found);
 	}
 }

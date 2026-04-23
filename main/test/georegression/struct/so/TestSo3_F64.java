@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,9 +24,14 @@ import georegression.struct.EulerType;
 import georegression.struct.GenericInvertibleTransformTests_F64;
 import georegression.struct.InvertibleTransform;
 import georegression.struct.point.Point3D_F64;
+import org.ejml.MapPrintFormat;
+import org.ejml.data.DMatrixRMaj;
 import org.jetbrains.annotations.Nullable;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Abeles
@@ -56,5 +61,11 @@ class TestSo3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64> {
 	@Override
 	public Point3D_F64 apply(InvertibleTransform transform, Point3D_F64 point, @Nullable Point3D_F64 result ) {
 		return GeometryMath_F64.mult(((So3_F64)transform).R, point, result);
+	}
+
+	@Test void format_Map() {
+		var a = new So3_F64(new DMatrixRMaj(new double[][]{{1,2,3},{4,5,6},{7,8,9.1234}}));
+		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		assertEquals("{R: [{1, 2, 3},\n{4, 5, 6},\n{7, 8, 9.12}]}", found);
 	}
 }

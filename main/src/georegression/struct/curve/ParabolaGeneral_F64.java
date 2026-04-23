@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.struct.curve;
 
+import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 
 /**
@@ -143,5 +144,20 @@ public class ParabolaGeneral_F64 {
 			return false;
 
 		return true;
+	}
+
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("A", A, true) +
+				format.pair("C", C, true) +
+				format.pair("D", D, true) +
+				format.pair("E", E, true) +
+				format.pair("F", F, false) +
+				format.itemSuffix;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 }

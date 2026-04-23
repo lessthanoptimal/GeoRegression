@@ -21,7 +21,6 @@ package georegression.struct;
 import lombok.Getter;
 import lombok.Setter;
 import org.ejml.MapPrintFormat;
-import org.ejml.UtilEjml;
 
 import java.util.Objects;
 
@@ -263,11 +262,9 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 
 	/// Converts into a [String] using a Map like format.
 	@Override public String format( MapPrintFormat format ) {
-		char decimal = format.decimal;
-		return format.listPrefix + "x" + format.valueSeparator +
-				UtilEjml.fancyString2(x, format.getPrecision(), decimal) +
-				format.pairSeparator + "y" + format.valueSeparator +
-				UtilEjml.fancyString2(y, format.getPrecision(), decimal) +
+		return format.itemPrefix +
+				format.pair("x", x, true) +
+				format.pair("y", y, false) +
 				format.itemSuffix;
 	}
 

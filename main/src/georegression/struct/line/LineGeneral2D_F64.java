@@ -129,7 +129,7 @@ public class LineGeneral2D_F64 implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + format(new MapPrintFormat());
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 
 	@Override

@@ -128,7 +128,7 @@ public class Rodrigues_F64 implements Serializable {
 	/// Converts into a string using a Matrix like format.
 	public String format( MatrixPrintFormat format ) {
 		char decimal = format.decimal;
-		return format.getPrefix() +
+		return format.getRowPrefix() +
 				UtilEjml.fancyString2(theta, format.getPrecision(), decimal) +
 				format.getColSeparator() +
 				UtilEjml.fancyString2(unitAxisRotation.x, format.getPrecision(), decimal) +
@@ -136,25 +136,18 @@ public class Rodrigues_F64 implements Serializable {
 				UtilEjml.fancyString2(unitAxisRotation.y, format.getPrecision(), decimal) +
 				format.getColSeparator() +
 				UtilEjml.fancyString2(unitAxisRotation.z, format.getPrecision(), decimal) +
-				format.getSuffix();
+				format.getRowSuffix();
 	}
 
 	/// Converts into a [String] using a Map like format.
 	public String format( MapPrintFormat format ) {
-		char decimal = format.decimal;
-		return format.listPrefix + "theta" + format.valueSeparator +
-				UtilEjml.fancyString2(theta, format.getPrecision(), decimal) +
-				format.pairSeparator + "x" + format.valueSeparator +
-				UtilEjml.fancyString2(unitAxisRotation.x, format.getPrecision(), decimal) +
-				format.pairSeparator + "y" + format.valueSeparator +
-				UtilEjml.fancyString2(unitAxisRotation.y, format.getPrecision(), decimal) +
-				format.pairSeparator + "z" + format.valueSeparator +
-				UtilEjml.fancyString2(unitAxisRotation.z, format.getPrecision(), decimal) +
-
+		return format.itemPrefix +
+				format.pair("theta", theta, true) +
+				format.pair("axis", unitAxisRotation.format(format), false) +
 				format.itemSuffix;
 	}
 
 	@Override public String toString() {
-		return getClass().getSimpleName() + format(new MapPrintFormat());
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 }

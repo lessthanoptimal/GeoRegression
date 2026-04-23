@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,15 +24,13 @@ import georegression.metric.Intersection2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.struct.DogArray;
-import org.ejml.ops.MatrixIO;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.ejml.UtilEjml.fancyString;
 
 /**
  * Describes a polygon in 2D.
@@ -242,19 +240,35 @@ public class Polygon2D_F64 implements Serializable {
 		}
 	}
 
-	@Override public String toString() {
-
-		final int length = MatrixIO.DEFAULT_LENGTH;
-		DecimalFormat format = new DecimalFormat("#");
-		String out = getClass().getSimpleName() + "{ order=" + vertexes.size + ", [ ";
-
+	public String format( MatrixPrintFormat fmt ) {
+		var builder = new StringBuilder();
+		builder.append(fmt.prefix);
 		for (int i = 0; i < vertexes.size; i++) {
-			Point2D_F64 p = vertexes.get(i);
-			out += "(" + fancyString(p.x, format, false, length, 4) + ", " + fancyString(p.y, format, false, length, 4) + ") ";
+			builder.append(fmt.rowPrefix);
+			var a = vertexes.get(i);
+			builder.append(fmt.f(a.x)).append(fmt.colSeparator);
+			builder.append(fmt.f(a.y));
+			builder.append(fmt.rowSuffix);
+			if (i < vertexes.size - 1)
+				builder.append(fmt.rowSeparator);
 		}
+		builder.append(fmt.suffix);
+		return builder.toString();
+	}
 
-		out += "] }";
+	public String format( MapPrintFormat fmt ) {
+		var builder = new StringBuilder();
+		builder.append(fmt.listPrefix);
+		for (int i = 0; i < vertexes.size; i++) {
+			builder.append(vertexes.get(i).format(fmt));
+			if (i < vertexes.size - 1)
+				builder.append(fmt.itemSeparator);
+		}
+		builder.append(fmt.listSuffix);
+		return builder.toString();
+	}
 
-		return out;
+	@Override public String toString() {
+		return getClass().getSimpleName()+format(MapPrintFormat.DEFAULT);
 	}
 }

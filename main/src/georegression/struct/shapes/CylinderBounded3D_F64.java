@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
 
@@ -104,8 +105,16 @@ public class CylinderBounded3D_F64 implements Serializable {
 		radius = 0;
 	}
 
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("endA", endA.format(format), true) +
+				format.pair("endB", endB.format(format), true) +
+				format.pair("radius", radius, false) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " A( " + endA.x + " " + endA.y + " " + endA.z + " ) B( " + endB.x + " " + endB.y + " " + endB.z + " ) radius " + radius;
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 }

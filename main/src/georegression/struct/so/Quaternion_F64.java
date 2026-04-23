@@ -146,20 +146,15 @@ public class Quaternion_F64 implements Serializable {
 
 	/// Converts into a string using a Map like format.
 	public String format( MapPrintFormat format ) {
-		char decimal = format.decimal;
-		return format.listPrefix + "w" + format.valueSeparator +
-				UtilEjml.fancyString2(w, format.getPrecision(), decimal) +
-				format.pairSeparator + "x" + format.valueSeparator +
-				UtilEjml.fancyString2(x, format.getPrecision(), decimal) +
-				format.pairSeparator + "y" + format.valueSeparator +
-				UtilEjml.fancyString2(y, format.getPrecision(), decimal) +
-				format.pairSeparator + "z" + format.valueSeparator +
-				UtilEjml.fancyString2(z, format.getPrecision(), decimal) +
+		return format.itemPrefix +
+				format.pair("w", w, true) +
+				format.pair("x", x, true) +
+				format.pair("y", y, true) +
+				format.pair("z", z, false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + "{ w = " + w + " axis( " + x + " " + y + " " + z + ") }";
+	@Override public String toString() {
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 }

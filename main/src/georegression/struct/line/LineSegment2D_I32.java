@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.struct.line;
 import georegression.struct.point.Point2D_I32;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
 
@@ -95,12 +96,16 @@ public class LineSegment2D_I32 implements Serializable {
 		return new LineSegment2D_I32(a, b);
 	}
 
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("a", a.format(format), true) +
+				format.pair("b", b.format(format), false) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		return "LineSegment2D_I32{" +
-				"a=" + a +
-				", b=" + b +
-				'}';
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 
 	@Override

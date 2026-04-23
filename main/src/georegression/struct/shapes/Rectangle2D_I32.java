@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point2D_I32;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -124,10 +125,17 @@ public class Rectangle2D_I32 {
 		return (y1 - y0)*(x1 - x0);
 	}
 
-	@Override
-	public String toString() {
-		return "RectangleCorner2D_I32( " + x0 + " " + y0 + " " + x1 + " " + y1 + " )";
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("x0", x0, true) +
+				format.pair("y0", y0, true) +
+				format.pair("x1", x1, true) +
+				format.pair("y1", y1, false) +
+				format.itemSuffix;
 	}
+
+	@Override
+	public String toString() {return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);}
 
 	@Override
 	public boolean equals( Object obj ) {

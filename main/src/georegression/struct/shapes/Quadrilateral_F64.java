@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,6 +23,7 @@ import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -208,13 +209,17 @@ public class Quadrilateral_F64 implements Serializable {
 		return d.distance2(quad.d) <= tol;
 	}
 
+	public String format( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("a", a.format(format), true) +
+				format.pair("b", b.format(format), true) +
+				format.pair("c", c.format(format), true) +
+				format.pair("d", d.format(format), false) +
+				format.itemSuffix;
+	}
+
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "{" +
-				"a=" + a +
-				", b=" + b +
-				", c=" + c +
-				", d=" + d +
-				'}';
+		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
 	}
 }

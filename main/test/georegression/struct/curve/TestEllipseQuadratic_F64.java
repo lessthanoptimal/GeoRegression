@@ -16,24 +16,17 @@
  * limitations under the License.
  */
 
-package georegression.struct.plane;
+package georegression.struct.curve;
 
 import org.ejml.MapPrintFormat;
-import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestPlaneNormal3D_F64 {
-	@Test void format_Matrix() {
-		var a = new PlaneNormal3D_F64(1, 2, 3.1234, 4, 5, 6.1234);
-		String found = a.format(new MatrixPrintFormat().fsetPrecision(2));
-		assertEquals("[{1, 2, 3.12},\n{4, 5, 6.12}]", found);
-	}
-
+public class TestEllipseQuadratic_F64 {
 	@Test void format_Map() {
-		var a = new PlaneNormal3D_F64(1, 2, 3.1234, 4, 5, 6.1234);
+		var a = new EllipseQuadratic_F64(1.5,0.1,0.9123,3,2,-217.5);
 		String found = a.format(new MapPrintFormat().fsetPrecision(2));
-		assertEquals("{p: {x: 1, y: 2, z: 3.12}, n: {x: 4, y: 5, z: 6.12}}", found);
+		assertEquals("{A: 1.5, B: 0.1, C: 0.91, D: 3, E: 2, F: -217.5}", found);
 	}
 }

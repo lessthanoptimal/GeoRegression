@@ -101,9 +101,10 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 
 	/// Converts into a [String] using a Map like format.
 	@Override public String format( MapPrintFormat format ) {
-		return format.listPrefix + "x" + format.valueSeparator + x +
-				format.pairSeparator + "y" + format.valueSeparator + y +
-				format.pairSeparator + "z" + format.valueSeparator + z +
+		return format.itemPrefix +
+				format.pair("x", x, true) +
+				format.pair("y", y, true) +
+				format.pair("z", z, false) +
 				format.itemSuffix;
 	}
 
