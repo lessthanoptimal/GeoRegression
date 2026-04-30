@@ -61,9 +61,9 @@ public class TestAffine2D_F64 extends GenericInvertibleTransformTests_F64<Point2
 		return AffinePointOps_F64.transform((Affine2D_F64) se, point, result);
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Affine2D_F64(1.2345, -2, 0.56, 4, 5, 6);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{a11: 1.23, a12: -2, a22: 4, a21: 0.56, tx: 5, ty: 6}", found);
 	}
 }

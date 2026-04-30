@@ -21,6 +21,7 @@ package georegression.struct.curve;
 import georegression.struct.point.Point2D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
@@ -35,7 +36,7 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public class EllipseRotated_F64 implements Serializable {
+public class EllipseRotated_F64 implements Serializable, MapFormattable {
 	/**
 	 * Center of the ellipse
 	 */
@@ -122,22 +123,14 @@ public class EllipseRotated_F64 implements Serializable {
 		return this;
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				"center" + format.valueSeparator + center.format(format) + format.pairSeparator +
+				format.pair("center", center.formatMap(format), true) +
 				format.pair("a", a, true) +
 				format.pair("b", b, true) +
 				format.pair("phi", phi, false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return "EllipseRotated_F64{" +
-				"center=" + center +
-				", a=" + a +
-				", b=" + b +
-				", phi=" + phi +
-				'}';
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 }

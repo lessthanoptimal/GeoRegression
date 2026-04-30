@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestRectangleLength2D_I32 {
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new RectangleLength2D_I32(-1, -2, 2, 3);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{x0: -1, y0: -2, width: 2, height: 3}", found);
 	}
 }

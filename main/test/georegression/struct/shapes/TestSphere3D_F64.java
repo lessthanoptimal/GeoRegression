@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestSphere3D_F64 {
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Sphere3D_F64(-1, -2.1234, 2, 3);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{center: {x: -1, y: -2.12, z: 2}, radius: 3}", found);
 	}
 }

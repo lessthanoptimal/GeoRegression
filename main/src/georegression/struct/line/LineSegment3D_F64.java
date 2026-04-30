@@ -21,6 +21,7 @@ package georegression.struct.line;
 import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,7 +34,7 @@ import java.io.Serializable;
  * @see georegression.geometry.UtilLine3D_F64
  */
 @Getter @Setter
-public class LineSegment3D_F64 implements Serializable {
+public class LineSegment3D_F64 implements Serializable, MapFormattable {
 	public Point3D_F64 a = new Point3D_F64();
 	public Point3D_F64 b = new Point3D_F64();
 
@@ -134,17 +135,15 @@ public class LineSegment3D_F64 implements Serializable {
 		return new LineSegment3D_F64(a, b);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				"a" + format.valueSeparator + a.format(format) + format.pairSeparator +
-				"b" + format.valueSeparator + b.format(format) +
+				"a" + format.valueSeparator + a.formatMap(format) + format.pairSeparator +
+				"b" + format.valueSeparator + b.formatMap(format) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
+
 
 	@Override
 	public boolean equals( Object obj ) {

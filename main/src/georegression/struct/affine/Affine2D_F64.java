@@ -119,7 +119,7 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 		return new Affine2D_F64(a11,a12,a21,a22,tx,ty);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("a11", a11, true) +
 				format.pair("a12", a12, true) +
@@ -130,8 +130,5 @@ public class Affine2D_F64 implements Affine<Affine2D_F64> {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName()+ format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

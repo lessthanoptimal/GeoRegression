@@ -19,6 +19,7 @@
 package georegression.struct.curve;
 
 import georegression.struct.point.Point2D_F64;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
 /**
@@ -29,7 +30,7 @@ import org.ejml.MapPrintFormat;
  *
  * @author Peter Abeles
  */
-public class ParabolaParametric_F64 {
+public class ParabolaParametric_F64 implements MapFormattable {
 	public double A, B, C, D, E, F;
 
 	public ParabolaParametric_F64() {}
@@ -75,7 +76,7 @@ public class ParabolaParametric_F64 {
 		return p;
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("A", A, true) +
 				format.pair("B", B, true) +
@@ -86,8 +87,5 @@ public class ParabolaParametric_F64 {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 }

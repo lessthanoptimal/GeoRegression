@@ -21,9 +21,7 @@ package georegression.struct.so;
 import georegression.struct.point.Vector3D_F64;
 import lombok.Getter;
 import lombok.Setter;
-import org.ejml.MapPrintFormat;
-import org.ejml.MatrixPrintFormat;
-import org.ejml.UtilEjml;
+import org.ejml.*;
 
 import java.io.Serializable;
 
@@ -40,7 +38,7 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public class Rodrigues_F64 implements Serializable {
+public class Rodrigues_F64 implements Serializable, MapFormattable, MatrixFormattable {
 	// unit vector defining the axis of rotation
 	public Vector3D_F64 unitAxisRotation = new Vector3D_F64();
 	// the angle it is rotated by
@@ -126,7 +124,7 @@ public class Rodrigues_F64 implements Serializable {
 	}
 
 	/// Converts into a string using a Matrix like format.
-	public String format( MatrixPrintFormat format ) {
+	@Override public String format( MatrixPrintFormat format ) {
 		char decimal = format.decimal;
 		return format.getRowPrefix() +
 				UtilEjml.fancyString2(theta, format.getPrecision(), decimal) +
@@ -140,14 +138,12 @@ public class Rodrigues_F64 implements Serializable {
 	}
 
 	/// Converts into a [String] using a Map like format.
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("theta", theta, true) +
-				format.pair("axis", unitAxisRotation.format(format), false) +
+				format.pair("axis", unitAxisRotation.formatMap(format), false) +
 				format.itemSuffix;
 	}
 
-	@Override public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 }

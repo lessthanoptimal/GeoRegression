@@ -71,9 +71,9 @@ public class TestPoint2D_I32 {
 		assertEquals("{1, 2}", found);
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Point2D_I32(1, 2);
-		String found = a.format(new MapPrintFormat());
+		String found = a.formatMap(new MapPrintFormat());
 		assertEquals("{x: 1, y: 2}", found);
 	}
 }

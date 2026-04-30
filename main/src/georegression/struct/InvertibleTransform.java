@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.struct;
 
+import org.ejml.MapFormattable;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -38,7 +39,7 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public interface InvertibleTransform<T extends InvertibleTransform> extends Serializable {
+public interface InvertibleTransform<T extends InvertibleTransform> extends Serializable, MapFormattable {
 
 	/**
 	 * Returns the dimension of the space which this transform operates on.

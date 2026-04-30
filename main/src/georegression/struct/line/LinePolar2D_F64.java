@@ -20,6 +20,7 @@ package georegression.struct.line;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 
@@ -43,7 +44,7 @@ import java.io.Serializable;
  * @see georegression.geometry.UtilLine2D_F64
  */
 @Getter @Setter
-public class LinePolar2D_F64 implements Serializable {
+public class LinePolar2D_F64 implements Serializable, MapFormattable {
 	/** Distance from the origin to the closest point on the line. */
 	public double distance;
 
@@ -74,7 +75,7 @@ public class LinePolar2D_F64 implements Serializable {
 		this.angle = 0;
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		int precision = format.precision;
 		char decimal = format.decimal;
 		return format.itemPrefix +
@@ -83,8 +84,6 @@ public class LinePolar2D_F64 implements Serializable {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
+
 }

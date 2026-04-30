@@ -50,9 +50,9 @@ public class TestRectangle2D_F64 {
 		assertTrue(rect.getCorner(3, null).isIdentical(-1, 3));
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Rectangle2D_F64(-1, -2, 2.1234, 120);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
-		assertEquals("{p0: {x: -1, y: -2}, p1: {x: 2.12, y: 12}}", found);
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
+		assertEquals("{p0: {x: -1, y: -2}, p1: {x: 2.12, y: 120}}", found);
 	}
 }

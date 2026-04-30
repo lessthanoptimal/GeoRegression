@@ -91,10 +91,10 @@ public class TestPackedArrayPoint4D_F64 extends GenericPackedArrayChecks<Point4D
 		alg.append(2, 3, -4.01, 0.234);
 		assertEquals("[{1, 2, 3, 2.34},\n{2, 3, -4.01, 0.234}]", alg.format(new MatrixPrintFormat()));
 	}
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var alg = new PackedArrayPoint4D_F64();
 		alg.append(1, 2, 3, 2.34);
 		alg.append(2, 3, -4.01, 0.234);
-		assertEquals("[{x: 1, y: 2, z: 3, w: 2.34},\n{x: 2, y: 3, z: -4.01, w: 0.234}]", alg.format(new MapPrintFormat()));
+		assertEquals("[{x: 1, y: 2, z: 3, w: 2.34},\n{x: 2, y: 3, z: -4.01, w: 0.234}]", alg.formatMap(new MapPrintFormat()));
 	}
 }

@@ -66,14 +66,14 @@ public class TestQuadrilateral2D_F64 {
 		}
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var polygon = new Quadrilateral_F64();
 		polygon.a.setTo(1,2);
 		polygon.b.setTo(2,3.1234);
 		polygon.c.setTo(3,4);
 		polygon.d.setTo(4,5);
 
-		String found = polygon.format(new MapPrintFormat().fsetPrecision(2));
+		String found = polygon.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{a: {x: 1, y: 2}, b: {x: 2, y: 3.12}, c: {x: 3, y: 4}, d: {x: 4, y: 5}}", found);
 	}
 }

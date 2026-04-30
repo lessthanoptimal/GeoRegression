@@ -118,9 +118,9 @@ public class TestBox3D_F64 {
 		assertEquals("[{1, 2, 3},\n{4, 5, 6}]", found);
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var box = new Box3D_F64(1, 2, 3, 4, 5, 6);
-		String found = box.format(new MapPrintFormat());
+		String found = box.formatMap(new MapPrintFormat());
 		assertEquals("{p0: {x: 1, y: 2, z: 3}, p1: {x: 4, y: 5, z: 6}}", found);
 	}
 }

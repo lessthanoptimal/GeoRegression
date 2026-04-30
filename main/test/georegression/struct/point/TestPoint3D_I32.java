@@ -86,9 +86,9 @@ public class TestPoint3D_I32 {
 		assertEquals("{1, 2, 3}", found);
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Point3D_I32(1, 2, 3);
-		String found = a.format(new MapPrintFormat());
+		String found = a.formatMap(new MapPrintFormat());
 		assertEquals("{x: 1, y: 2, z: 3}", found);
 	}
 }

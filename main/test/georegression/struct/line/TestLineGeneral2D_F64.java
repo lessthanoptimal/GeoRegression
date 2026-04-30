@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestLineGeneral2D_F64 {
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var line = new LineGeneral2D_F64(1, 2, 4.1234);
-		String found = line.format(new MapPrintFormat().fsetPrecision(2));
+		String found = line.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{A: 1, B: 2, C: 4.12}", found);
 	}
 }

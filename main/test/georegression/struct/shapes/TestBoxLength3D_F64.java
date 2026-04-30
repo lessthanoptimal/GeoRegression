@@ -112,9 +112,9 @@ public class TestBoxLength3D_F64 {
 		}
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var box = new BoxLength3D_F64(1,2,3,4,5,6);
-		String found = box.format(new MapPrintFormat());
+		String found = box.formatMap(new MapPrintFormat());
 		assertEquals("{p: {x: 1, y: 2, z: 3}, lengthX: 4, lengthY: 5, lengthZ: 6}", found);
 	}
 }

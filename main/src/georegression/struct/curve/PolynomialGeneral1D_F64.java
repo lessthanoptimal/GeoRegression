@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -17,6 +17,8 @@
  */
 
 package georegression.struct.curve;
+
+import org.ejml.MapPrintFormat;
 
 import java.util.Arrays;
 
@@ -63,5 +65,9 @@ public class PolynomialGeneral1D_F64 implements PolynomialCurve_F64 {
 
 	@Override public void zero() {
 		Arrays.fill(coefs, 0);
+	}
+
+	@Override public String formatMap( MapPrintFormat format ) {
+		return "not implemented";
 	}
 }

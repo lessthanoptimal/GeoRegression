@@ -131,18 +131,12 @@ public class Point2D_I32 extends GeoTuple_I32<Point2D_I32> {
 		System.out.println(toString());
 	}
 
-	@Override
-	public Point2D_I32 copy() {
+	@Override public Point2D_I32 copy() {
 		return new Point2D_I32(this);
 	}
 
-	@Override
-	public String toString() {
-		return "Point2D_I32" + format(MapPrintFormat.DEFAULT);
-	}
-
 	/// Converts into a [String] using a Map like format.
-	@Override public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("x", x, true) +
 				format.pair("y", y, false) +

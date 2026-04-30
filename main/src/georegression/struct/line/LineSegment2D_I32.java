@@ -21,6 +21,7 @@ package georegression.struct.line;
 import georegression.struct.point.Point2D_I32;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
@@ -32,7 +33,7 @@ import java.io.Serializable;
  * @see georegression.geometry.UtilLine2D_I32
  */
 @Getter @Setter
-public class LineSegment2D_I32 implements Serializable {
+public class LineSegment2D_I32 implements Serializable, MapFormattable {
 	public Point2D_I32 a = new Point2D_I32();
 	public Point2D_I32 b = new Point2D_I32();
 
@@ -96,17 +97,14 @@ public class LineSegment2D_I32 implements Serializable {
 		return new LineSegment2D_I32(a, b);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("a", a.format(format), true) +
-				format.pair("b", b.format(format), false) +
+				format.pair("a", a.formatMap(format), true) +
+				format.pair("b", b.formatMap(format), false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 
 	@Override
 	public boolean equals( Object obj ) {
@@ -116,7 +114,7 @@ public class LineSegment2D_I32 implements Serializable {
 		if (!(obj instanceof LineSegment2D_I32))
 			return false;
 
-		LineSegment2D_I32 o = (LineSegment2D_I32)obj;
+		var o = (LineSegment2D_I32)obj;
 		return a.equals(o.a) && b.equals(o.b);
 	}
 

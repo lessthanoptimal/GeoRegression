@@ -83,12 +83,12 @@ public class TestQuaternion_F64 {
 
 	@Test void format_matric() {
 		var a = new Quaternion_F64(1, 2, 0.00000213, 0.5);
-		String found = a.format(new MatrixPrintFormat().fsetPrecision(2));
+		String found = a.format(new MatrixPrintFormat().withPrecision(2));
 		assertEquals("{1, 2, 2.13e-06, 0.5}", found);
 	}
-	@Test void format_map() {
+	@Test void formatMap() {
 		var a = new Quaternion_F64(1, 2, 0.00000213, 0.5);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{w: 1, x: 2, y: 2.13e-06, z: 0.5}", found);
 	}
 }

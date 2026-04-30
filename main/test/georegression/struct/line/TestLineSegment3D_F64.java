@@ -45,9 +45,9 @@ public class TestLineSegment3D_F64 {
 		assertNotEquals(a, b);
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var line = new LineSegment3D_F64(1, 2, 3, 4.1234, 5, 6);
-		String found = line.format(new MapPrintFormat().fsetPrecision(2));
+		String found = line.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{a: {x: 1, y: 2, z: 3}, b: {x: 4.12, y: 5, z: 6}}", found);
 	}
 }

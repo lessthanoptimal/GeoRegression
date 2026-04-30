@@ -20,6 +20,7 @@ package georegression.struct.shapes;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
@@ -29,7 +30,7 @@ import java.io.Serializable;
  * other corners are {@code (x0 + width-1,y0), (x0,y0 + height-1), (x0 + width-1,y0 + height-1)}.
  */
 @Getter @Setter
-public class RectangleLength2D_I32 implements Serializable {
+public class RectangleLength2D_I32 implements Serializable, MapFormattable {
 	/** Lower extent x-axis */
 	public int x0;
 	/** Lower extent y-axis */
@@ -89,7 +90,7 @@ public class RectangleLength2D_I32 implements Serializable {
 
 	public int getY() {return y0;}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("x0", x0, true) +
 				format.pair("y0", y0, true) +
@@ -98,8 +99,5 @@ public class RectangleLength2D_I32 implements Serializable {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

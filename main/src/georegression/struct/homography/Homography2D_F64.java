@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,8 +18,9 @@
 
 package georegression.struct.homography;
 
-
 import georegression.struct.Matrix3x3_F64;
+import org.ejml.MapPrintFormat;
+import org.ejml.MatrixPrintFormat;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.ops.DConvertMatrixStruct;
 import org.jetbrains.annotations.Nullable;
@@ -29,12 +30,11 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Peter Abeles
  */
-public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homography2D_F64>{
+public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homography2D_F64> {
 
-
-	public Homography2D_F64(double a11, double a12, double a13,
-							double a21, double a22, double a23,
-							double a31, double a32, double a33) {
+	public Homography2D_F64( double a11, double a12, double a13,
+	                         double a21, double a22, double a23,
+	                         double a31, double a32, double a33 ) {
 		this.a11 = a11;
 		this.a12 = a12;
 		this.a13 = a13;
@@ -54,97 +54,101 @@ public class Homography2D_F64 extends Matrix3x3_F64 implements Homography<Homogr
 		reset();
 	}
 
-	@Override
-	public int getDimension() {
+	@Override public int getDimension() {
 		return 2;
 	}
 
-	@Override
-	public Homography2D_F64 createInstance() {
+	@Override public Homography2D_F64 createInstance() {
 		return new Homography2D_F64();
 	}
 
-	@Override
-	public Homography2D_F64 setTo(Homography2D_F64 target) {
+	@Override public Homography2D_F64 setTo( Homography2D_F64 target ) {
 		super.setTo(target);
 		return this;
 	}
 
-	@Override
-	public Homography2D_F64 concat(Homography2D_F64 second, @Nullable Homography2D_F64 ret) {
-		if( ret == null )
+	@Override public Homography2D_F64 concat( Homography2D_F64 second, @Nullable Homography2D_F64 ret ) {
+		if (ret == null)
 			ret = new Homography2D_F64();
 
-		ret.a11 = second.a11 * a11 + second.a12 * a21 + second.a13 * a31;
-		ret.a12 = second.a11 * a12 + second.a12 * a22 + second.a13 * a32;
-		ret.a13 = second.a11 * a13 + second.a12 * a23 + second.a13 * a33;
-		ret.a21 = second.a21 * a11 + second.a22 * a21 + second.a23 * a31;
-		ret.a22 = second.a21 * a12 + second.a22 * a22 + second.a23 * a32;
-		ret.a23 = second.a21 * a13 + second.a22 * a23 + second.a23 * a33;
-		ret.a31 = second.a31 * a11 + second.a32 * a21 + second.a33 * a31;
-		ret.a32 = second.a31 * a12 + second.a32 * a22 + second.a33 * a32;
-		ret.a33 = second.a31 * a13 + second.a32 * a23 + second.a33 * a33;
+		ret.a11 = second.a11*a11 + second.a12*a21 + second.a13*a31;
+		ret.a12 = second.a11*a12 + second.a12*a22 + second.a13*a32;
+		ret.a13 = second.a11*a13 + second.a12*a23 + second.a13*a33;
+		ret.a21 = second.a21*a11 + second.a22*a21 + second.a23*a31;
+		ret.a22 = second.a21*a12 + second.a22*a22 + second.a23*a32;
+		ret.a23 = second.a21*a13 + second.a22*a23 + second.a23*a33;
+		ret.a31 = second.a31*a11 + second.a32*a21 + second.a33*a31;
+		ret.a32 = second.a31*a12 + second.a32*a22 + second.a33*a32;
+		ret.a33 = second.a31*a13 + second.a32*a23 + second.a33*a33;
 
 		return ret;
 	}
 
-	@Override
-	public Homography2D_F64 invert( @Nullable Homography2D_F64 ret) {
-	    if( ret == null )
+	@Override public Homography2D_F64 invert( @Nullable Homography2D_F64 ret ) {
+		if (ret == null)
 			ret = new Homography2D_F64();
 
 		// invert the matrix using the inverse from minor technique
 		double m11 = a22*a33 - a23*a32;
-		double m12 = -( a21*a33 - a23*a31);
+		double m12 = -(a21*a33 - a23*a31);
 		double m13 = a21*a32 - a22*a31;
-		double m21 = -( a12*a33 - a13*a32);
+		double m21 = -(a12*a33 - a13*a32);
 		double m22 = a11*a33 - a13*a31;
-		double m23 = -( a11*a32 - a12*a31);
+		double m23 = -(a11*a32 - a12*a31);
 		double m31 = a12*a23 - a13*a22;
-		double m32 = -( a11*a23 - a13*a21);
+		double m32 = -(a11*a23 - a13*a21);
 		double m33 = a11*a22 - a12*a21;
 
 		double det = (a11*m11 + a12*m12 + a13*m13);
 
-		ret.a11 = m11 / det;
-		ret.a12 = m21 / det;
-		ret.a13 = m31 / det;
-		ret.a21 = m12 / det;
-		ret.a22 = m22 / det;
-		ret.a23 = m32 / det;
-		ret.a31 = m13 / det;
-		ret.a32 = m23 / det;
-		ret.a33 = m33 / det;
+		ret.a11 = m11/det;
+		ret.a12 = m21/det;
+		ret.a13 = m31/det;
+		ret.a21 = m12/det;
+		ret.a22 = m22/det;
+		ret.a23 = m32/det;
+		ret.a31 = m13/det;
+		ret.a32 = m23/det;
+		ret.a33 = m33/det;
 
 		return ret;
 	}
 
-	@Override
-	public void reset() {
+	@Override public void reset() {
 		a11 = a22 = a33 = 1;
 		a12 = a13 = a21 = a23 = a31 = a32 = 0;
 	}
 
-	public DMatrixRMaj ddrm(){
+	public DMatrixRMaj ddrm() {
 		return ddrm(null);
 	}
+
 	public DMatrixRMaj ddrm( @Nullable DMatrixRMaj output ) {
-		if( output == null ) {
-			output = new DMatrixRMaj(3,3);
+		if (output == null) {
+			output = new DMatrixRMaj(3, 3);
 		}
 
-		DConvertMatrixStruct.convert(this,output);
+		DConvertMatrixStruct.convert(this, output);
 		return output;
 	}
 
-	@Override
-	public Homography2D_F64 copy() {
+	@Override public Homography2D_F64 copy() {
 		return new Homography2D_F64(this);
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName()+String.format("[ %5.2e %5.2e %5.2e ; %5.2e %5.2e %5.2e ; %5.2e %5.2e %5.2e ]",
-				a11, a12, a13, a21, a22, a23, a31, a32, a33);
+	@Override public String toString() { return MatrixPrintFormat.DEFAULT.toString(this); }
+
+	@Override public String formatMap( MapPrintFormat format ) {
+		return format.itemPrefix +
+				format.pair("a11", a11, true) +
+				format.pair("a12", a12, true) +
+				format.pair("a13", a13, true) +
+				format.pair("a21", a21, true) +
+				format.pair("a22", a22, true) +
+				format.pair("a23", a23, true) +
+				format.pair("a31", a31, true) +
+				format.pair("a32", a32, true) +
+				format.pair("a33", a33, false) +
+				format.itemSuffix;
 	}
 }

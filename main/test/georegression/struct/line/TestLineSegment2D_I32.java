@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestLineSegment2D_I32 {
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var line = new LineSegment2D_I32(1, 2, 3, -4);
-		String found = line.format(new MapPrintFormat());
+		String found = line.formatMap(new MapPrintFormat());
 		assertEquals("{a: {x: 1, y: 2}, b: {x: 3, y: -4}}", found);
 	}
 }

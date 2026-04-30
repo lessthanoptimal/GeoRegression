@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPolynomialQuadratic2D_F64 {
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new PolynomialQuadratic2D_F64(1.5,0.1,0.9123,3,2, -217.5);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{a: 1.5, b: 0.1, c: 0.91, d: 3, e: 2, f: -217.5}", found);
 	}
 }

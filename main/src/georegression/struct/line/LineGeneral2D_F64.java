@@ -21,6 +21,7 @@ package georegression.struct.line;
 import georegression.geometry.UtilLine2D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 
@@ -41,7 +42,7 @@ import java.io.Serializable;
  * @see UtilLine2D_F64
  */
 @Getter @Setter
-public class LineGeneral2D_F64 implements Serializable {
+public class LineGeneral2D_F64 implements Serializable, MapFormattable {
 	/** Coefficients which define the line. */
 	public double A, B, C;
 
@@ -117,7 +118,7 @@ public class LineGeneral2D_F64 implements Serializable {
 		return new LineGeneral2D_F64(this);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		int precision = format.precision;
 		char decimal = format.decimal;
 		return format.itemPrefix +
@@ -127,10 +128,7 @@ public class LineGeneral2D_F64 implements Serializable {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 
 	@Override
 	public boolean equals( Object obj ) {

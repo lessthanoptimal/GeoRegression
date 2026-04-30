@@ -23,6 +23,7 @@ import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,7 +34,7 @@ import java.util.List;
 /**
  * A polygon with 4 vertices, a,b,c, and d. The vertices are in order sequential order of a,b,c,d.
  */
-public class Quadrilateral_F64 implements Serializable {
+public class Quadrilateral_F64 implements Serializable, MapFormattable {
 	@Getter @Setter public Point2D_F64 a;
 	@Getter @Setter public Point2D_F64 b;
 	@Getter @Setter public Point2D_F64 c;
@@ -209,17 +210,14 @@ public class Quadrilateral_F64 implements Serializable {
 		return d.distance2(quad.d) <= tol;
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("a", a.format(format), true) +
-				format.pair("b", b.format(format), true) +
-				format.pair("c", c.format(format), true) +
-				format.pair("d", d.format(format), false) +
+				format.pair("a", a.formatMap(format), true) +
+				format.pair("b", b.formatMap(format), true) +
+				format.pair("c", c.formatMap(format), true) +
+				format.pair("d", d.formatMap(format), false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

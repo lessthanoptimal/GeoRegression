@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,10 +18,12 @@
 
 package georegression.struct.curve;
 
+import org.ejml.MapFormattable;
+
 /**
  * Interface for all polynomials
  */
-public interface PolynomialCurve_F64 {
+public interface PolynomialCurve_F64 extends MapFormattable {
 
 	double get( int coefficient );
 

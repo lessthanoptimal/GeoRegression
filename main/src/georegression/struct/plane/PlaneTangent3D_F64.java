@@ -43,8 +43,5 @@ public class PlaneTangent3D_F64 extends Point3D_F64 implements Serializable {
 		return this;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

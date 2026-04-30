@@ -54,9 +54,9 @@ public class TestSe2_F64 extends GenericInvertibleTransformTests_F64<Point2D_F64
 		return SePointOps_F64.transform( (Se2_F64) se, point, result );
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Se2_F64(1.2345, -2, 0.56);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{yaw: 0.56, T: {x: 1.23, y: -2}}", found);
 	}
 }

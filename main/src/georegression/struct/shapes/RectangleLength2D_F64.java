@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point2D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,7 +36,7 @@ import java.io.Serializable;
  * @author Peter Abeles
  */
 @Getter @Setter
-public class RectangleLength2D_F64 implements Serializable {
+public class RectangleLength2D_F64 implements Serializable, MapFormattable {
 	/** Lower extent x-axis */
 	public double x0;
 	/** Lower extent y-axis */
@@ -130,7 +131,7 @@ public class RectangleLength2D_F64 implements Serializable {
 
 	public double getY() {return y0;}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("x0", x0, true) +
 				format.pair("y0", y0, true) +
@@ -139,8 +140,6 @@ public class RectangleLength2D_F64 implements Serializable {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
+
 }

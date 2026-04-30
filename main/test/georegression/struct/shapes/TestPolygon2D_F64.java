@@ -76,17 +76,17 @@ public class TestPolygon2D_F64 {
 		polygon.get(1).setTo(2.1234, 3);
 		polygon.get(2).setTo(3, 4);
 
-		String found = polygon.format(new MatrixPrintFormat().fsetPrecision(2));
+		String found = polygon.format(new MatrixPrintFormat().withPrecision(2));
 		assertEquals("[{1, 2},\n{2.12, 3},\n{3, 4}]", found);
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var polygon = new Polygon2D_F64(3);
 		polygon.get(0).setTo(1, 2);
 		polygon.get(1).setTo(2.1234, 3);
 		polygon.get(2).setTo(3, 4);
 
-		String found = polygon.format(new MapPrintFormat().fsetPrecision(2));
+		String found = polygon.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("[{x: 1, y: 2},\n{x: 2.12, y: 3},\n{x: 3, y: 4}]", found);
 	}
 }

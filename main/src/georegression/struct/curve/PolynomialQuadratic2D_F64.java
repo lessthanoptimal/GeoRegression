@@ -18,6 +18,7 @@
 
 package georegression.struct.curve;
 
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
 /**
@@ -28,7 +29,7 @@ import org.ejml.MapPrintFormat;
  *
  * @author Peter Abeles
  */
-public class PolynomialQuadratic2D_F64 {
+public class PolynomialQuadratic2D_F64 implements MapFormattable {
 	/**
 	 * Coefficients
 	 */
@@ -58,7 +59,7 @@ public class PolynomialQuadratic2D_F64 {
 		setTo(0, 0, 0, 0, 0, 0);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("a", a, true) +
 				format.pair("b", b, true) +
@@ -69,8 +70,5 @@ public class PolynomialQuadratic2D_F64 {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 }

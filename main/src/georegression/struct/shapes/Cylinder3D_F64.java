@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.line.LineParametric3D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
@@ -32,7 +33,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("NullAway.Init")
 @Getter @Setter
-public class Cylinder3D_F64 implements Serializable {
+public class Cylinder3D_F64 implements Serializable, MapFormattable {
 	/**
 	 * Line which defines the cylinder's axis
 	 */
@@ -112,17 +113,14 @@ public class Cylinder3D_F64 implements Serializable {
 		return ((Cylinder3D_F64)obj).isIdentical(this, 0.0);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("line", line.format(format), true) +
+				format.pair("line", line.formatMap(format), true) +
 				format.pair("radius", radius, false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 
 	@Override
 	public int hashCode() {

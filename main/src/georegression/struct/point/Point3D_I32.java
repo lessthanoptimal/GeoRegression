@@ -100,7 +100,7 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 	}
 
 	/// Converts into a [String] using a Map like format.
-	@Override public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("x", x, true) +
 				format.pair("y", y, true) +

@@ -80,9 +80,9 @@ public class TestSe3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64
 		return SePointOps_F64.transform((Se3_F64)se, (Point3D_F64)point, (Point3D_F64)result);
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Se3_F64(new DMatrixRMaj(new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9.1234}}), new Vector3D_F64(0, 3, 2));
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{R: [{1, 2, 3},\n{4, 5, 6},\n{7, 8, 9.12}], T: {x: 0, y: 3, z: 2}}", found);
 	}
 }

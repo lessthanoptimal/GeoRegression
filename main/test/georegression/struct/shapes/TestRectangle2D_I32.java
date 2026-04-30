@@ -49,9 +49,9 @@ public class TestRectangle2D_I32 {
 		assertTrue(rect.getCorner(3, null).isIdentical(-1, 3));
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Rectangle2D_I32(-1, -2, 2, 3);
-		String found = a.format(new MapPrintFormat());
+		String found = a.formatMap(new MapPrintFormat());
 		assertEquals("{x0: -1, y0: -2, x1: 2, y1: 3}", found);
 	}
 }

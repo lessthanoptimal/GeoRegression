@@ -21,6 +21,7 @@ package georegression.struct.plane;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import lombok.Getter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
 
@@ -34,7 +35,7 @@ import java.util.Objects;
  * @author Peter Abeles
  */
 @Getter
-public class PlaneNormal3D_F64 implements Serializable {
+public class PlaneNormal3D_F64 implements Serializable, MapFormattable {
 	/** An arbitrary point in the plane */
 	public Point3D_F64 p = new Point3D_F64();
 	/** The plane's normal */
@@ -91,16 +92,14 @@ public class PlaneNormal3D_F64 implements Serializable {
 	}
 
 	/// Converts into a [String] using a Map like format.
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("p", p.format(format), true) +
-				format.pair("n", n.format(format), false) +
+				format.pair("p", p.formatMap(format), true) +
+				format.pair("n", n.formatMap(format), false) +
 				format.itemSuffix;
 	}
 
-	@Override public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 
 	@Override public boolean equals( Object o ) {
 		if (this == o) return true;

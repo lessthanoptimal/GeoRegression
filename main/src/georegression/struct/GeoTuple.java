@@ -18,8 +18,9 @@
 
 package georegression.struct;
 
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
-import org.ejml.MatrixPrintFormat;
+import org.ejml.MatrixFormattable;
 
 import java.io.Serializable;
 
@@ -30,7 +31,7 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
+public abstract class GeoTuple<T extends GeoTuple> implements Serializable, MapFormattable, MatrixFormattable {
 
 	/**
 	 * The dimensionality of space the tuple is contained in and the number of values it has.
@@ -70,14 +71,5 @@ public abstract class GeoTuple<T extends GeoTuple> implements Serializable {
 	 */
 	public abstract void zero();
 
-	/// Converts into a [String] using a Matrix like format.
-	public abstract String format( MatrixPrintFormat format );
-
-	/// Converts into a [String] using a Map like format.
-	public abstract String format( MapPrintFormat format );
-
-	public @Override String toString() {
-		return getClass().getSimpleName() + format(new MatrixPrintFormat());
-	}
-
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

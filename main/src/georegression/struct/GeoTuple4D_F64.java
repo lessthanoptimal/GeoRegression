@@ -269,7 +269,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 	}
 
 	/// Converts into a [String] using a Map like format.
-	@Override public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("x", x, true) +
 				format.pair("y", y, true) +

@@ -24,6 +24,7 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,7 +34,7 @@ import java.io.Serializable;
  * Triangle in 2D space. Described by 3 vertices/points.
  */
 @Getter @Setter
-public class Triangle2D_F64 implements Serializable {
+public class Triangle2D_F64 implements Serializable, MapFormattable {
 	public Point2D_F64 v0 = new Point2D_F64();
 	public Point2D_F64 v1 = new Point2D_F64();
 	public Point2D_F64 v2 = new Point2D_F64();
@@ -128,15 +129,13 @@ public class Triangle2D_F64 implements Serializable {
 		return new Triangle2D_F64().setTo(this);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("v0", v0.format(format), true) +
-				format.pair("v1", v1.format(format), true) +
-				format.pair("v2", v2.format(format), false) +
+				format.pair("v0", v0.formatMap(format), true) +
+				format.pair("v1", v1.formatMap(format), true) +
+				format.pair("v2", v2.formatMap(format), false) +
 				format.itemSuffix;
 	}
 
-	@Override public String toString() {
-		return getClass().getSimpleName()+format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

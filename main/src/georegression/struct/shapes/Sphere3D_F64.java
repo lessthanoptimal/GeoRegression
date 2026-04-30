@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
@@ -31,7 +32,7 @@ import java.io.Serializable;
  * @author Peter Abeles
  */
 @Getter @Setter
-public class Sphere3D_F64 implements Serializable {
+public class Sphere3D_F64 implements Serializable, MapFormattable {
 	/** Center point of the sphere */
 	public Point3D_F64 center;
 
@@ -72,15 +73,12 @@ public class Sphere3D_F64 implements Serializable {
 		this.radius = 0;
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("center", center.format(format), true) +
+				format.pair("center", center.formatMap(format), true) +
 				format.pair("radius", radius, false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

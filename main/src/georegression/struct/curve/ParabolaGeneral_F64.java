@@ -18,6 +18,7 @@
 
 package georegression.struct.curve;
 
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 
@@ -28,7 +29,7 @@ import org.ejml.UtilEjml;
  *
  * @author Peter Abeles
  */
-public class ParabolaGeneral_F64 {
+public class ParabolaGeneral_F64 implements MapFormattable {
 
 	/**
 	 * Coefficients.
@@ -146,7 +147,7 @@ public class ParabolaGeneral_F64 {
 		return true;
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("A", A, true) +
 				format.pair("C", C, true) +
@@ -156,8 +157,5 @@ public class ParabolaGeneral_F64 {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 }

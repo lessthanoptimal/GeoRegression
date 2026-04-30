@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point2D_I32;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
  * x0 &le; x1 and y0 &le; y1. (x1,y1) is exclusive and not contained in the rectangle.
  */
 @Getter @Setter
-public class Rectangle2D_I32 {
+public class Rectangle2D_I32 implements MapFormattable {
 	/** Lower extent */
 	public int x0, y0;
 	/** Upper extent */
@@ -125,7 +126,7 @@ public class Rectangle2D_I32 {
 		return (y1 - y0)*(x1 - x0);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("x0", x0, true) +
 				format.pair("y0", y0, true) +
@@ -134,8 +135,7 @@ public class Rectangle2D_I32 {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 
 	@Override
 	public boolean equals( Object obj ) {

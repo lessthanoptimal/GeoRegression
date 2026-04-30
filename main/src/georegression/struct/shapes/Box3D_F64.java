@@ -20,6 +20,7 @@ package georegression.struct.shapes;
 
 import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +32,7 @@ import java.io.Serializable;
  * Point p0 is less or equal to point p1, 0.x &le; p1.x, p0.y &le; p1.y, p0.z &le; p1.z.
  */
 @Getter
-public class Box3D_F64 implements Serializable {
+public class Box3D_F64 implements Serializable, MapFormattable {
 	/** The lower point/extent. */
 	public Point3D_F64 p0 = new Point3D_F64();
 
@@ -167,15 +168,12 @@ public class Box3D_F64 implements Serializable {
 				format.getSuffix();
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("p0", p0.format(format), true) +
-				format.pair("p1", p1.format(format), false) +
+				format.pair("p0", p0.formatMap(format), true) +
+				format.pair("p1", p1.formatMap(format), false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + "{ P0( " + p0.x + " " + p0.y + " " + p0.z + " ) P1( " + p1.x + " " + p1.y + " " + p1.z + " ) }";
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

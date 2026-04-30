@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestEllipseQuadratic_F64 {
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new EllipseQuadratic_F64(1.5,0.1,0.9123,3,2,-217.5);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{A: 1.5, B: 0.1, C: 0.91, D: 3, E: 2, F: -217.5}", found);
 	}
 }

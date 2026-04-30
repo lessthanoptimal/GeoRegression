@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestLinePolar2D_F64 {
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var line = new LinePolar2D_F64(1, 4.1234);
-		String found = line.format(new MapPrintFormat().fsetPrecision(2));
+		String found = line.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{distance: 1, angle: 4.12}", found);
 	}
 }

@@ -33,9 +33,9 @@ public class TestRectangleLength2D_F64 {
 		assertTrue(rect.getCorner(3, null).isIdentical(-1, 3));
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new RectangleLength2D_F64(-1, -2.1234, 2, 3);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{x0: -1, y0: -2.12, width: 2, height: 3}", found);
 	}
 }

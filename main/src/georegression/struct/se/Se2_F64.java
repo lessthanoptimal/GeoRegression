@@ -184,17 +184,14 @@ public class Se2_F64 implements SpecialEuclidean<Se2_F64> {
 		return new Se2_F64(T.x, T.y, c, s);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("yaw", getYaw(), true) +
-				format.pair("T", T.format(format), false) +
+				format.pair("T", T.formatMap(format), false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName()+format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 
 	public void print() {
 		System.out.println(this);

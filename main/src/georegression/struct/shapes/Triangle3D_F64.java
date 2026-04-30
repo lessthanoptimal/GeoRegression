@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
@@ -31,7 +32,7 @@ import java.io.Serializable;
  * @author Peter Abeles
  */
 @Getter @Setter
-public class Triangle3D_F64 implements Serializable {
+public class Triangle3D_F64 implements Serializable, MapFormattable {
 	public Point3D_F64 v0 = new Point3D_F64();
 	public Point3D_F64 v1 = new Point3D_F64();
 	public Point3D_F64 v2 = new Point3D_F64();
@@ -83,15 +84,13 @@ public class Triangle3D_F64 implements Serializable {
 		return new Triangle3D_F64(this);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("v0", v0.format(format), true) +
-				format.pair("v1", v1.format(format), true) +
-				format.pair("v2", v2.format(format), false) +
+				format.pair("v0", v0.formatMap(format), true) +
+				format.pair("v1", v1.formatMap(format), true) +
+				format.pair("v2", v2.formatMap(format), false) +
 				format.itemSuffix;
 	}
 
-	@Override public String toString() {
-		return getClass().getSimpleName()+format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

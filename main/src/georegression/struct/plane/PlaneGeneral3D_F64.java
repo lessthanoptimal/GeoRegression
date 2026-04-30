@@ -20,6 +20,7 @@ package georegression.struct.plane;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
 import org.ejml.UtilEjml;
@@ -46,7 +47,7 @@ import java.util.Objects;
  * @author Peter Abeles
  */
 @Getter @Setter
-public class PlaneGeneral3D_F64 implements Serializable {
+public class PlaneGeneral3D_F64 implements Serializable, MapFormattable {
 	/** Coefficients which define the plane. */
 	public double A, B, C, D;
 
@@ -118,7 +119,7 @@ public class PlaneGeneral3D_F64 implements Serializable {
 	}
 
 	/// Converts into a [String] using a Map like format.
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("A" ,A, true) +
 				format.pair("B" ,B, true) +
@@ -127,10 +128,7 @@ public class PlaneGeneral3D_F64 implements Serializable {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 
 	@Override
 	public boolean equals( Object obj ) {

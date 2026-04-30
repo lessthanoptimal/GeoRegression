@@ -70,7 +70,7 @@ public class PolynomialCubic1D_F64 implements PolynomialCurve_F64 {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
+		return getClass().getSimpleName() + formatMap(MapPrintFormat.DEFAULT);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class PolynomialCubic1D_F64 implements PolynomialCurve_F64 {
 		}
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("a", a, true) +
 				format.pair("b", b, true) +

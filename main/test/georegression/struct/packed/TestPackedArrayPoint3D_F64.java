@@ -89,10 +89,10 @@ public class TestPackedArrayPoint3D_F64 extends GenericPackedArrayChecks<Point3D
 		assertEquals("[{1, 2, 3},\n{2, 3, -4.01}]", alg.format(new MatrixPrintFormat()));
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var alg = new PackedArrayPoint3D_F64();
 		alg.append(1, 2, 3);
 		alg.append(2, 3, -4.01);
-		assertEquals("[{x: 1, y: 2, z: 3},\n{x: 2, y: 3, z: -4.01}]", alg.format(new MapPrintFormat()));
+		assertEquals("[{x: 1, y: 2, z: 3},\n{x: 2, y: 3, z: -4.01}]", alg.formatMap(new MapPrintFormat()));
 	}
 }

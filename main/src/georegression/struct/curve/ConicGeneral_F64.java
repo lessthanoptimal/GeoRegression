@@ -18,7 +18,7 @@
 
 package georegression.struct.curve;
 
-import org.ejml.FancyPrint;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 
@@ -40,7 +40,7 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public class ConicGeneral_F64 implements Serializable {
+public class ConicGeneral_F64 implements Serializable, MapFormattable {
 	/**
 	 * Coefficients
 	 */
@@ -106,7 +106,7 @@ public class ConicGeneral_F64 implements Serializable {
 		return new ConicGeneral_F64(A, B, C, D, E, F);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("A", A, true) +
 				format.pair("B", B, true) +
@@ -117,8 +117,5 @@ public class ConicGeneral_F64 implements Serializable {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 }

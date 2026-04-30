@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
@@ -33,7 +34,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("NullAway.Init")
 @Getter @Setter
-public class CylinderBounded3D_F64 implements Serializable {
+public class CylinderBounded3D_F64 implements Serializable, MapFormattable {
 	/** End points of the cylinder */
 	public Point3D_F64 endA, endB;
 
@@ -105,16 +106,13 @@ public class CylinderBounded3D_F64 implements Serializable {
 		radius = 0;
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("endA", endA.format(format), true) +
-				format.pair("endB", endB.format(format), true) +
+				format.pair("endA", endA.formatMap(format), true) +
+				format.pair("endB", endB.formatMap(format), true) +
 				format.pair("radius", radius, false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 }

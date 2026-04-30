@@ -91,7 +91,7 @@ public abstract class PackedArray_F64<T> implements PackedArray<T> {
 		return builder.toString();
 	}
 
-	protected String format( MapPrintFormat format, String[] keys ) {
+	protected String formatMap( MapPrintFormat format, String[] keys ) {
 		if (keys.length != DOF)
 			throw new IllegalArgumentException("Number of keys should match DOF");
 

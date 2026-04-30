@@ -18,6 +18,7 @@
 
 package georegression.struct.so;
 
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
 import org.ejml.UtilEjml;
@@ -33,7 +34,7 @@ import java.io.Serializable;
 /// q = cos(theta/2) + (x\*i + y\*j + z\*k)\*sin(theta/2)
 ///
 /// where 'theta' is the angle of rotation, (x,y,z) is the unit axis of rotation.
-public class Quaternion_F64 implements Serializable {
+public class Quaternion_F64 implements Serializable, MapFormattable {
 	/// Describes the angle of rotation. See above for how it is encoded.
 	public double w;
 	/// Axis of rotation
@@ -145,7 +146,7 @@ public class Quaternion_F64 implements Serializable {
 	}
 
 	/// Converts into a string using a Map like format.
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("w", w, true) +
 				format.pair("x", x, true) +
@@ -154,7 +155,5 @@ public class Quaternion_F64 implements Serializable {
 				format.itemSuffix;
 	}
 
-	@Override public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

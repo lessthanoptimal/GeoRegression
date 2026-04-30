@@ -42,9 +42,9 @@ public class TestLineparametric2D_F64 {
 		assertNotEquals(a, b);
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var line = new LineParametric2D_F64(1, 2, 3, 4.1234);
-		String found = line.format(new MapPrintFormat().fsetPrecision(2));
+		String found = line.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{line: {x: 1, y: 2}, slope: {x: 3, y: 4.12}}", found);
 	}
 }

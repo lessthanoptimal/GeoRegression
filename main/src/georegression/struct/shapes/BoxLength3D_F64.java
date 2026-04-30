@@ -21,6 +21,7 @@ package georegression.struct.shapes;
 import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
 import lombok.Setter;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,7 +33,7 @@ import java.io.Serializable;
  * is (x0+lengthX , y0+lengthY, z0+lengthZ), the upper extent.
  */
 @Getter @Setter
-public class BoxLength3D_F64 implements Serializable {
+public class BoxLength3D_F64 implements Serializable, MapFormattable {
 	/** Point on the box with the lowest values. The lower extent. */
 	public Point3D_F64 p = new Point3D_F64();
 
@@ -101,17 +102,14 @@ public class BoxLength3D_F64 implements Serializable {
 		return corner;
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("p", p.format(format), true) +
+				format.pair("p", p.formatMap(format), true) +
 				format.pair("lengthX", lengthX, true) +
 				format.pair("lengthY", lengthY, true) +
 				format.pair("lengthZ", lengthZ, false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
 }

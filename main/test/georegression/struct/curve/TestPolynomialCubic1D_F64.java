@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPolynomialCubic1D_F64 {
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new PolynomialCubic1D_F64(1.5,0.1,0.9123, -217.5);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{a: 1.5, b: 0.1, c: 0.91, d: -217.5}", found);
 	}
 }

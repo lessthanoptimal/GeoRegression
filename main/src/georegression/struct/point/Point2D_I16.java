@@ -126,7 +126,7 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 	}
 
 	/// Converts into a [String] using a Map like format.
-	@Override public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.listPrefix + "x" + format.valueSeparator + x +
 				format.pairSeparator + "y" + format.valueSeparator + y +
 				format.itemSuffix;

@@ -21,6 +21,7 @@ package georegression.struct.packed;
 import georegression.struct.point.Point2D_I32;
 import lombok.Getter;
 import org.ddogleg.struct.DogArray_I32;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
 
@@ -29,7 +30,7 @@ import org.ejml.MatrixPrintFormat;
  *
  * @author Peter Abeles
  */
-public class PackedArrayPoint2D_I32 implements PackedArray<Point2D_I32> {
+public class PackedArrayPoint2D_I32 implements PackedArray<Point2D_I32>, MapFormattable {
 	private static final int DOF = 2;
 
 	/** Stores tuple in a single continuous array */
@@ -150,7 +151,7 @@ public class PackedArrayPoint2D_I32 implements PackedArray<Point2D_I32> {
 		return builder.toString();
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format(format, new String[]{"x", "y"});
 	}
 

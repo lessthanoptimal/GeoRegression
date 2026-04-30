@@ -24,6 +24,7 @@ import georegression.metric.Intersection2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.struct.DogArray;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
 import org.jetbrains.annotations.Nullable;
@@ -37,7 +38,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class Polygon2D_F64 implements Serializable {
+public class Polygon2D_F64 implements Serializable, MapFormattable {
 
 	// vertexes in the polygon
 	public DogArray<Point2D_F64> vertexes;
@@ -256,11 +257,11 @@ public class Polygon2D_F64 implements Serializable {
 		return builder.toString();
 	}
 
-	public String format( MapPrintFormat fmt ) {
+	@Override public String formatMap( MapPrintFormat fmt ) {
 		var builder = new StringBuilder();
 		builder.append(fmt.listPrefix);
 		for (int i = 0; i < vertexes.size; i++) {
-			builder.append(vertexes.get(i).format(fmt));
+			builder.append(vertexes.get(i).formatMap(fmt));
 			if (i < vertexes.size - 1)
 				builder.append(fmt.itemSeparator);
 		}
@@ -268,7 +269,6 @@ public class Polygon2D_F64 implements Serializable {
 		return builder.toString();
 	}
 
-	@Override public String toString() {
-		return getClass().getSimpleName()+format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
+
 }

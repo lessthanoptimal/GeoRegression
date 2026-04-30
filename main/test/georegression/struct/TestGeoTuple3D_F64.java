@@ -167,13 +167,13 @@ public class TestGeoTuple3D_F64 {
 
 	@Test void format_Matrix() {
 		var a = new Dummy(1, 2, 0.00000213);
-		String found = a.format(new MatrixPrintFormat().fsetPrecision(2));
+		String found = a.format(new MatrixPrintFormat().withPrecision(2));
 		assertEquals("{1, 2, 2.13e-06}", found);
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Dummy(1, 2, 0.00000213);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{x: 1, y: 2, z: 2.13e-06}", found);
 	}
 

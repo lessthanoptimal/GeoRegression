@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,8 +23,4 @@ import georegression.struct.InvertibleTransform;
 import java.io.Serializable;
 
 
-/**
- * @author Peter Abeles
- */
-public interface Homography<T extends Homography> extends InvertibleTransform<T> , Serializable {
-}
+public interface Homography<T extends Homography> extends InvertibleTransform<T> , Serializable {}

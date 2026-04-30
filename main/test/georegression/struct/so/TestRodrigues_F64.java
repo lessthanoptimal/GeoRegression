@@ -44,13 +44,13 @@ public class TestRodrigues_F64 {
 
 	@Test void format_matric() {
 		var a = new Rodrigues_F64(1, 0, Math.sqrt(0.5), Math.sqrt(0.5));
-		String found = a.format(new MatrixPrintFormat().fsetPrecision(2));
+		String found = a.format(new MatrixPrintFormat().withPrecision(2));
 		assertEquals("{1, 0, 0.71, 0.71}", found);
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Rodrigues_F64(1, 0, Math.sqrt(0.5), Math.sqrt(0.5));
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{theta: 1, axis: {x: 0, y: 0.71, z: 0.71}}", found);
 	}
 }

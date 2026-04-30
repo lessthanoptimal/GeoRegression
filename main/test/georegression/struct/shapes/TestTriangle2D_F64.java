@@ -85,9 +85,9 @@ public class TestTriangle2D_F64 extends GeoStandardJUnit {
 		assertTrue(alg.sideTangent(2, null).isIdentical(-a, a, UtilEjml.TEST_F64));
 	}
 
-	@Test void format_Map() {
+	@Test void formatMap() {
 		var a = new Triangle2D_F64().setTo(1, 2, 3.1234, 4, 5, 6);
-		String found = a.format(new MapPrintFormat().fsetPrecision(2));
+		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{v0: {x: 1, y: 2}, v1: {x: 3.12, y: 4}, v2: {x: 5, y: 6}}", found);
 	}
 }

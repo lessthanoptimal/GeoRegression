@@ -19,6 +19,7 @@
 package georegression.struct.packed;
 
 import georegression.struct.point.Point2D_F64;
+import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
 /**
@@ -26,7 +27,7 @@ import org.ejml.MapPrintFormat;
  *
  * @author Peter Abeles
  */
-public class PackedArrayPoint2D_F64 extends PackedArray_F64<Point2D_F64> {
+public class PackedArrayPoint2D_F64 extends PackedArray_F64<Point2D_F64> implements MapFormattable {
 	// tuple that the result is temporarily written to
 	private final Point2D_F64 temp = new Point2D_F64();
 
@@ -89,8 +90,8 @@ public class PackedArrayPoint2D_F64 extends PackedArray_F64<Point2D_F64> {
 		}
 	}
 
-	public String format( MapPrintFormat format ) {
-		return format(format, new String[]{"x", "y"});
+	@Override public String formatMap( MapPrintFormat format ) {
+		return formatMap(format, new String[]{"x", "y"});
 	}
 
 	/**

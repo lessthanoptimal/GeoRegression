@@ -88,7 +88,7 @@ public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
 		setTo(0, 0, 0);
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
 				format.pair("a", a, true) +
 				format.pair("b", b, true) +
@@ -96,8 +96,5 @@ public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 }

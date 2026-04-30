@@ -371,18 +371,15 @@ public class Se3_F64 implements SpecialEuclidean<Se3_F64> {
 		return ret;
 	}
 
-	public String format( MapPrintFormat format ) {
+	@Override public String formatMap( MapPrintFormat format ) {
 		MatrixPrintFormat matFormat = format.convertToMatrix();
 		return format.itemPrefix +
 				format.pair("R", R.format(matFormat), true) +
-				format.pair("T", T.format(format), false) +
+				format.pair("T", T.formatMap(format), false) +
 				format.itemSuffix;
 	}
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName()+format(MapPrintFormat.DEFAULT);
-	}
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 
 	/**
 	 * More compact toString() where the rotation matrix is encoded in one of the specified formats.
