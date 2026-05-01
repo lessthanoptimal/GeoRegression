@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,6 +25,8 @@ import org.ddogleg.optimization.FactoryOptimization;
 import org.ddogleg.optimization.UnconstrainedLeastSquares;
 import org.ddogleg.optimization.functions.FunctionNtoM;
 import org.ddogleg.optimization.functions.FunctionNtoMxN;
+import org.ddogleg.optimization.lm.ConfigLevenbergMarquardt;
+import org.ejml.LinearSolverType;
 import org.ejml.data.DMatrixRMaj;
 
 import java.util.List;
@@ -80,7 +82,13 @@ public class RefineEllipseEuclideanLeastSquares_F64 {
 	 * Defaults to a robust solver since this problem often encounters singularities.
 	 */
 	public RefineEllipseEuclideanLeastSquares_F64() {
-		this(FactoryOptimization.levenbergMarquardt(null,true));
+		this(createRobustSolve());
+	}
+
+	private static UnconstrainedLeastSquares<DMatrixRMaj> createRobustSolve() {
+		var config = new ConfigLevenbergMarquardt();
+		config.solverType = LinearSolverType.SVD;
+		return FactoryOptimization.levenbergMarquardt(config);
 	}
 
 	public void setFtol(double ftol) {

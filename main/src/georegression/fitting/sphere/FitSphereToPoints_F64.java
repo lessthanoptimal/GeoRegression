@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -75,7 +75,7 @@ public class FitSphereToPoints_F64 implements ModelFitter<Sphere3D_F64,Point3D_F
 	 * @param maxIterations Maximum number of iterations. Try 100
 	 */
 	public FitSphereToPoints_F64( int maxIterations ) {
-		this(FactoryOptimization.levenbergMarquardt(null,false),maxIterations, GrlConstants.DCONV_TOL_B,0);
+		this(FactoryOptimization.levenbergMarquardt(null),maxIterations, GrlConstants.DCONV_TOL_B,0);
 	}
 
 	@Override
