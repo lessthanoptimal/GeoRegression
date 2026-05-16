@@ -12,4 +12,4 @@ shapes can also be done using the same classes.
    :start-after: ExampleMetricLine
    :linenos:
    :tab-width: 4
-   :dedent: 1
+   :dedent:

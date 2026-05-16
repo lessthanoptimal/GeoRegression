@@ -7,6 +7,11 @@
 - Update build.gradle
 - Examples might need to be updated too
   * git diff --name-status TAG_NAME examples
+- Sphinx: Setup Venv
+  cd docs
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r requirements.txt
 - Update project website
   cd docs/website
   conf.py <--- text substitution is now used to spread the version name
