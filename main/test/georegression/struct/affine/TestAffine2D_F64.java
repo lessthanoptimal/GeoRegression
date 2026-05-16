@@ -53,6 +53,10 @@ public class TestAffine2D_F64 extends GenericInvertibleTransformTests_F64<Point2
 		double tx = (double) rand.nextGaussian() * 3.0;
 		double ty = (double) rand.nextGaussian() * 3.0;
 
+		// Make sure its well conditioned
+		a11 += Math.signum(a11)*0.5;
+		a22 += Math.signum(a11)*0.5;
+
 		return new Affine2D_F64( a11, a12, a21, a22, tx, ty );
 	}
 
