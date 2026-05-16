@@ -36,16 +36,11 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
 public class TestGeometryMath_F64 {
 
 	Random rand = new Random(0x33);
 
-	/**
-	 * Sees if crossMatrix produces a valid output
-	 */
+	/// Sees if crossMatrix produces a valid output
 	@Test void crossMatrix_validOut() {
 		double a = 1.1, b = -0.5, c = 2.2;
 
@@ -79,9 +74,7 @@ public class TestGeometryMath_F64 {
 		assertEquals(3, out.numRows);
 	}
 
-	/**
-	 * Sees if both crossMatrix functions produce the same output
-	 */
+	/// Sees if both crossMatrix functions produce the same output
 	@Test void crossMatrix_sameOut() {
 		double a = 1.1, b = -0.5, c = 2.2;
 
@@ -737,7 +730,7 @@ public class TestGeometryMath_F64 {
 		}
 	}
 
-		@Test void pickPerpendicular() {
+	@Test void pickPerpendicular() {
 		for (int i = 0; i < 20; i++) {
 			Vector3D_F64 a = new Vector3D_F64(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
 			Vector3D_F64 b = GeometryMath_F64.pickPerpendicular(a, null);
@@ -761,5 +754,23 @@ public class TestGeometryMath_F64 {
 		assertEquals(1, M.get(2, 0));
 		assertEquals(2, M.get(2, 1));
 		assertEquals(3, M.get(2, 2));
+	}
+
+	@Test void setColumn_beta() {
+		var a = new Vector3D_F64(1, 2, 3);
+		var M = new DMatrixRMaj(3, 10);
+		GeometryMath_F64.setColumn(2, -0.1, a, M);
+		assertEquals(-0.1, M.get(0, 2), UtilEjml.EPS);
+		assertEquals(-0.2, M.get(1, 2), UtilEjml.EPS);
+		assertEquals(-0.3, M.get(2, 2), UtilEjml.EPS);
+	}
+
+	@Test void setRow_beta() {
+		var a = new Vector3D_F64(1, 2, 3);
+		var M = new DMatrixRMaj(10, 3);
+		GeometryMath_F64.setRow(2, -0.1, a, M);
+		assertEquals(-0.1, M.get(2, 0), UtilEjml.EPS);
+		assertEquals(-0.2, M.get(2, 1), UtilEjml.EPS);
+		assertEquals(-0.3, M.get(2, 2), UtilEjml.EPS);
 	}
 }

@@ -1269,4 +1269,28 @@ public class GeometryMath_F64 {
 		a.unsafe_set(row, 1, vector.y);
 		a.unsafe_set(row, 2, vector.z);
 	}
+
+	/// Assigns the specified column in 3 by N matrix `a` to the values in `vector` scaled by `β`.
+	public static void setColumn( int column, double beta, GeoTuple3D_F64<?> vector, DMatrixRMaj a ) {
+		if (a.numRows != 3)
+			throw new IllegalArgumentException("Matrix A must be 3 by n");
+		if (column < 0 || a.numCols <= column)
+			throw new IndexOutOfBoundsException("Requested column is out of bounds");
+
+		a.unsafe_set(0, column, beta*vector.x);
+		a.unsafe_set(1, column, beta*vector.y);
+		a.unsafe_set(2, column, beta*vector.z);
+	}
+
+	/// Assigns the specified row in M by 3 matrix `a` to the values in `vector` scaled by `β`.
+	public static void setRow( int row, double beta, GeoTuple3D_F64<?> vector, DMatrixRMaj a ) {
+		if (a.numCols != 3)
+			throw new IllegalArgumentException("Matrix A must be m by 3");
+		if (row < 0 || a.numRows <= row)
+			throw new IndexOutOfBoundsException("Requested row is out of bounds");
+
+		a.unsafe_set(row, 0, beta*vector.x);
+		a.unsafe_set(row, 1, beta*vector.y);
+		a.unsafe_set(row, 2, beta*vector.z);
+	}
 }
