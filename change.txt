@@ -2,6 +2,18 @@ YEAR-MONTH-DAY
 
 ---------------------------------------------
 Date    : 2026-Jan-22
+Version : 0.28.3
+
+- Added format() and formatMap() to numerous data structures
+- Added Vector.normalized()
+- Added more functions to Quaternion
+- GeometryMath
+  * Added two vector to rotation or quaternion
+  * Added setRow() and setCol() for Mx3 and 3xN matrices
+  * Added pickPerpendicular()
+
+---------------------------------------------
+Date    : 2026-Jan-22
 Version : 0.28.2
 
 - PackedArray

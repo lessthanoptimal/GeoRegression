@@ -208,11 +208,11 @@ subprojects {
                 pom {
                     name = 'GeoRegression'
                     description = 'GeoRegression is a free Java based geometry library for scientific computing in fields such as robotics and computer vision with a focus on 2D/3D space.'
-                    url = 'http://georegression.org'
+                    url = 'https://georegression.org'
                     licenses {
                         license {
                             name = 'The Apache License, Version 2.0'
-                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
                         }
                     }
                     developers {
