@@ -712,4 +712,30 @@ public class TestGeometryMath_F64 {
 
 		assertTrue(found.isIdentical(b, GrlConstants.TEST_F64));
 	}
+
+	@Test void pickPerpendicular() {
+		for (int i = 0; i < 20; i++) {
+			Vector3D_F64 a = new Vector3D_F64(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
+			Vector3D_F64 b = GeometryMath_F64.pickPerpendicular(a, null);
+			assertEquals(0.0, a.dot(b), UtilEjml.TEST_F64);
+		}
+	}
+
+	@Test void setColumn() {
+		var a = new Vector3D_F64(1, 2, 3);
+		var M = new DMatrixRMaj(3, 10);
+		GeometryMath_F64.setColumn(2, a, M);
+		assertEquals(1, M.get(0, 2));
+		assertEquals(2, M.get(1, 2));
+		assertEquals(3, M.get(2, 2));
+	}
+
+	@Test void setRow() {
+		var a = new Vector3D_F64(1, 2, 3);
+		var M = new DMatrixRMaj(10, 3);
+		GeometryMath_F64.setRow(2, a, M);
+		assertEquals(1, M.get(2, 0));
+		assertEquals(2, M.get(2, 1));
+		assertEquals(3, M.get(2, 2));
+	}
 }

@@ -106,7 +106,7 @@ public class GeometryMath_F64 {
 	 *
 	 * @param a Not modified.
 	 * @param b Not modified.
-	 * @param c Modified.
+	 * @param c Modified. Must not be the same instance as a or b.
 	 */
 	public static void cross( GeoTuple3D_F64 a, GeoTuple3D_F64 b, GeoTuple3D_F64 c ) {
 		c.x = a.y*b.z - a.z*b.y;
@@ -1207,5 +1207,65 @@ public class GeometryMath_F64 {
 
 	public static DMatrixRMaj rotationFromTwoVectors( Vector3D_F64 a, Vector3D_F64 b, @Nullable DMatrixRMaj result ) {
 		return rotationFromTwoVectors(a.x, a.y, a.z, b.x, b.y, b.z, result);
+	}
+
+	/// Picks an arbitrary unit vector `b` perpendicular to `a`:
+	/// a · b = 0, |b| = 1.
+	///
+	/// The smallest-magnitude component of `a` is zeroed, the other two are
+	/// swapped, and one is negated — producing a vector exactly perpendicular to
+	/// `a` before normalization, with magnitude ≥ sqrt(2/3) for unit
+	/// `a`. Ties resolve to the lowest-index component, so the output is
+	/// deterministic.
+	///
+	/// @param a Not modified. Must be non-zero; need not be unit length.
+	/// @param b (Optional) Storage for output. Modified; unit length on return.
+	/// @return Perpendicular vector. Same instance as `b` if not null.
+	public static <T extends GeoTuple3D_F64<T>> T pickPerpendicular( T a, @Nullable T b ) {
+		if (b == null)
+			b = a.createNewInstance();
+
+		// @formatter:off
+		// Pick the component with smallest magnitude, gives the largest |b|
+		double absX = Math.abs(a.x), absY = Math.abs(a.y), absZ = Math.abs(a.z);
+		if (absX <= absY && absX <= absZ) {
+			// smallest is x: b = (0, -a.z, a.y), perpendicular by construction
+			b.x = 0;   b.y = -a.z; b.z = a.y;
+		} else if (absY <= absZ) {
+			// smallest is y: b = (-a.z, 0, a.x)
+			b.x = -a.z; b.y = 0;   b.z = a.x;
+		} else {
+			// smallest is z: b = (-a.y, a.x, 0)
+			b.x = -a.y; b.y = a.x;  b.z = 0;
+		}
+		// @formatter:on
+
+		b.divideIP(b.norm());
+
+		return b;
+	}
+
+	/// Assigns the specified column in 3 by N matrix `a` to the values in `vector`
+	public static void setColumn( int column, GeoTuple3D_F64<?> vector, DMatrixRMaj a ) {
+		if (a.numRows != 3)
+			throw new IllegalArgumentException("Matrix A must be 3 by n");
+		if (column < 0 || a.numCols <= column)
+			throw new IndexOutOfBoundsException("Requested column is out of bounds");
+
+		a.unsafe_set(0, column, vector.x);
+		a.unsafe_set(1, column, vector.y);
+		a.unsafe_set(2, column, vector.z);
+	}
+
+	/// Assigns the specified row in M by 3 matrix `a` to the values in `vector`
+	public static void setRow( int row, GeoTuple3D_F64<?> vector, DMatrixRMaj a ) {
+		if (a.numCols != 3)
+			throw new IllegalArgumentException("Matrix A must be m by 3");
+		if (row < 0 || a.numRows <= row)
+			throw new IndexOutOfBoundsException("Requested row is out of bounds");
+
+		a.unsafe_set(row, 0, vector.x);
+		a.unsafe_set(row, 1, vector.y);
+		a.unsafe_set(row, 2, vector.z);
 	}
 }
