@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -95,7 +95,8 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 
 		found = apply(aInv, tran, null);
 
-		assertTrue(found.isIdentical(orig, GrlConstants.TEST_F64));
+		assertTrue(found.isIdentical(orig, GrlConstants.TEST_F64),
+				"expected: " + orig.format() + "\n\nfound: " + found.format());
 	}
 
 	/**
