@@ -699,6 +699,8 @@ public class TestGeometryMath_F64 {
 		rotationFromTwoVectors(1, 0, 0, -1, 0, 0);
 		rotationFromTwoVectors(0, 0, -1, 0, 0, -1);
 		rotationFromTwoVectors(0, 0, -1, 0, 1, 0);
+
+		rotationFromTwoVectors(0, -1, 0, 0, 1, 0);
 	}
 
 	void rotationFromTwoVectors( double ax, double ay, double az, double bx, double by, double bz ) {
@@ -713,7 +715,29 @@ public class TestGeometryMath_F64 {
 		assertTrue(found.isIdentical(b, GrlConstants.TEST_F64));
 	}
 
-	@Test void pickPerpendicular() {
+	// Test anti-parallel case with a non-trivial configuration
+	@Test void rotationFromTwoVectors_antiparallel() {
+		Vector3D_F64[] aValues = {
+				// Branch 1: |ax| > 0.25, a not in xy-plane (so az ≠ 0 → |v| ≠ 1)
+				new Vector3D_F64(0.5, 0.0, Math.sqrt(3)/2),
+				// Branch 2: |ax| ≤ 0.25, |ay| > 0.25, a not in yz-plane (so ax ≠ 0 → |v| ≠ 1)
+				new Vector3D_F64(0.2, 0.5, Math.sqrt(1 - 0.04 - 0.25)),
+				// Branch 3: |ax| ≤ 0.25 AND |ay| ≤ 0.25, a not in xz-plane (so ay ≠ 0 → |v| ≠ 1)
+				new Vector3D_F64(0.1, 0.2, Math.sqrt(1 - 0.01 - 0.04)),
+		};
+
+		for (var a : aValues) {
+			var b = new Vector3D_F64(-a.x, -a.y, -a.z);
+			DMatrixRMaj R = GeometryMath_F64.rotationFromTwoVectors(a, b, null);
+
+			DMatrixRMaj RRT = new DMatrixRMaj(3, 3);
+			CommonOps_DDRM.multTransB(R, R, RRT);
+			assertTrue(MatrixFeatures_DDRM.isIdentity(RRT, GrlConstants.TEST_F64),
+					"Not orthogonal for a=" + a.formatMap());
+		}
+	}
+
+		@Test void pickPerpendicular() {
 		for (int i = 0; i < 20; i++) {
 			Vector3D_F64 a = new Vector3D_F64(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
 			Vector3D_F64 b = GeometryMath_F64.pickPerpendicular(a, null);

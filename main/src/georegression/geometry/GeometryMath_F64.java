@@ -1150,19 +1150,20 @@ public class GeometryMath_F64 {
 		if (c < -1.0 + 1e-10) {
 
 			// Pick a vector which is perpendicular. We need to make sure we use an axis which isn't zero
-			if (Math.abs(ax) > 0.25) {
-				bx = ay;
-				by = -ax;
-				bz = az;
-			} else if (Math.abs(by) > 0.25) {
-				bx = ax;
-				by = az;
-				bz = -ay;
+			double absX = Math.abs(ax), absY = Math.abs(ay), absZ = Math.abs(az);
+			if (absX <= absY && absX <= absZ) {
+				bx = 0;   by = -az; bz = ay;
+			} else if (absY <= absZ) {
+				bx = -az; by = 0;   bz = ax;
 			} else {
-				bx = -az;
-				by = ay;
-				bz = ax;
+				bx = -ay; by = ax;  bz = 0;
 			}
+
+			bnorm = Math.sqrt(bx*bx + by*by + bz*bz);
+			bx /= bnorm;
+			by /= bnorm;
+			bz /= bnorm;
+
 			// cross(a, b)
 			double vx = ay*bz - az*by;
 			double vy = az*bx - ax*bz;
