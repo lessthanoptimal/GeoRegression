@@ -14,7 +14,7 @@ allprojects {
     version = '0.28.3-SNAPSHOT'
 }
 
-project.ext.ddogleg_version = '0.24.3-SNAPSHOT'
+project.ext.ddogleg_version = '0.25.0'
 project.ext.errorprone_version = '2.35.1'
 project.ext.nullaway_version = '0.12.4'
 project.ext.lombok_version = '1.18.28'
