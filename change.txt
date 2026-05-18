@@ -1,8 +1,8 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2026-Jan-22
-Version : 0.28.3
+Date    : 2026-May-18
+Version : 0.29.0
 
 - Added format() and formatMap() to numerous data structures
 - Added Vector.normalized()
