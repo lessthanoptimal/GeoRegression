@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -64,7 +64,7 @@ public abstract class GeneralFitConic_F64 {
 		assertTrue(fitter.process(points,found));
 		assertFalse(found.hasUncountable());
 		// it's a line so a2 needs to be zero
-		assertEquals(0,found.F,GrlConstants.TEST_F64); // goes through the origin
+		assertEquals(0,found.f,GrlConstants.TEST_F64); // goes through the origin
 		// it should fit all the points perfectly
 		for( Point2D_F64 p : points ) {
 			assertEquals(0,found.evaluate(p.x,p.y),GrlConstants.TEST_F64);
@@ -119,7 +119,7 @@ public abstract class GeneralFitConic_F64 {
 		assertTrue(fitter.process(points,weights,found));
 		assertFalse(found.hasUncountable());
 		// it's a line so a2 needs to be zero
-		assertEquals(0,found.F,GrlConstants.TEST_F64); // goes through the origin
+		assertEquals(0,found.f,GrlConstants.TEST_F64); // goes through the origin
 		// it should fit all the points perfectly
 		for( Point2D_F64 p : points ) {
 			assertEquals(0,found.evaluate(p.x,p.y),GrlConstants.TEST_F64);

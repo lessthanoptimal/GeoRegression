@@ -18,30 +18,25 @@
 
 package georegression.struct.curve;
 
+import georegression.struct.arraylike.ArrayLike_F64;
 import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 
-/**
- * Parabola is a specific type of conic that is defined below using 5 coefficients.
- *
- * <p>(A*x + C*y)<sup>2</sup> + D*x + E*y + F = 0</p>
- *
- * @author Peter Abeles
- */
-public class ParabolaGeneral_F64 implements MapFormattable {
+/// Parabola is a specific type of conic that is defined below using 5 coefficients.
+///
+/// (A\*x + C\*y)<sup>2</sup> + D\*x + E\*y + F = 0
+public class ParabolaGeneral_F64 implements MapFormattable, ArrayLike_F64 {
 
-	/**
-	 * Coefficients.
-	 */
-	public double A, C, D, E, F;
+	/// Coefficients.
+	public double a, c, d, e, f;
 
 	public ParabolaGeneral_F64( double a, double c, double d, double e, double f ) {
-		A = a;
-		C = c;
-		D = d;
-		E = e;
-		F = f;
+		this.a = a;
+		this.c = c;
+		this.d = d;
+		this.e = e;
+		this.f = f;
 	}
 
 	public ParabolaGeneral_F64( ParabolaGeneral_F64 original ) {
@@ -51,75 +46,73 @@ public class ParabolaGeneral_F64 implements MapFormattable {
 	public ParabolaGeneral_F64() {}
 
 	public ParabolaGeneral_F64 setTo( ParabolaGeneral_F64 original ) {
-		this.A = original.A;
-		this.C = original.C;
-		this.D = original.D;
-		this.E = original.E;
-		this.F = original.F;
+		this.a = original.a;
+		this.c = original.c;
+		this.d = original.d;
+		this.e = original.e;
+		this.f = original.f;
 		return this;
 	}
 
 	public ParabolaGeneral_F64 setTo( double a, double c, double d, double e, double f ) {
-		A = a;
-		C = c;
-		D = d;
-		E = e;
-		F = f;
+		this.a = a;
+		this.c = c;
+		this.d = d;
+		this.e = e;
+		this.f = f;
 		return this;
 	}
 
 	public void zero() {
-		A = C = D = E = F = 0.0;
+		a = c = d = e = f = 0.0;
 	}
 
 	public double evaluate( double x, double y ) {
-		double inner = A*x + C*y;
-		return inner*inner + D*x + E*y + F;
+		double inner = a*x + c*y;
+		return inner*inner + d*x + e*y + f;
 	}
 
 	public void toArray( double[] array ) {
-		array[0] = A;
-		array[1] = C;
-		array[2] = D;
-		array[3] = E;
-		array[4] = F;
+		array[0] = a;
+		array[1] = c;
+		array[2] = d;
+		array[3] = e;
+		array[4] = f;
 	}
 
 	public void fromArray( double[] array ) {
-		A = array[0];
-		C = array[1];
-		D = array[2];
-		E = array[3];
-		F = array[4];
+		a = array[0];
+		c = array[1];
+		d = array[2];
+		e = array[3];
+		f = array[4];
 	}
 
-	/**
-	 * Returns true if any of its parameters have an uncountable number
-	 */
+	/// Returns true if any of its parameters have an uncountable number
 	public boolean hasUncountable() {
-		return UtilEjml.isUncountable(A) || UtilEjml.isUncountable(C)
-				|| UtilEjml.isUncountable(D) || UtilEjml.isUncountable(E) ||
-				UtilEjml.isUncountable(F);
+		return UtilEjml.isUncountable(a) || UtilEjml.isUncountable(c)
+				|| UtilEjml.isUncountable(d) || UtilEjml.isUncountable(e) ||
+				UtilEjml.isUncountable(f);
 	}
 
 	public double relativeScale( ParabolaGeneral_F64 parabola ) {
-		double scale = A/parabola.A;
-		double max = Math.abs(parabola.A);
-		if (max < Math.abs(parabola.C)) {
-			max = Math.abs(parabola.C);
-			scale = C/parabola.C;
+		double scale = a/parabola.a;
+		double max = Math.abs(parabola.a);
+		if (max < Math.abs(parabola.c)) {
+			max = Math.abs(parabola.c);
+			scale = c/parabola.c;
 		}
-		if (max < Math.abs(parabola.D)) {
-			max = Math.abs(parabola.D);
-			scale = D/parabola.D;
+		if (max < Math.abs(parabola.d)) {
+			max = Math.abs(parabola.d);
+			scale = d/parabola.d;
 		}
-		if (max < Math.abs(parabola.E)) {
-			max = Math.abs(parabola.E);
-			scale = E/parabola.E;
+		if (max < Math.abs(parabola.e)) {
+			max = Math.abs(parabola.e);
+			scale = e/parabola.e;
 		}
-		if (max < Math.abs(parabola.F)) {
-			max = Math.abs(parabola.F);
-			scale = F/parabola.F;
+		if (max < Math.abs(parabola.f)) {
+			max = Math.abs(parabola.f);
+			scale = f/parabola.f;
 		}
 
 		if (max == 0)
@@ -127,33 +120,58 @@ public class ParabolaGeneral_F64 implements MapFormattable {
 		return scale;
 	}
 
-	/**
-	 * Determines if they are equivalent up to a scale factor
-	 */
+	/// Determines if they are equivalent up to a scale factor
 	public boolean isEquivalent( ParabolaGeneral_F64 parabola, double tol ) {
 		double scale = relativeScale(parabola);
 
-		if (Math.abs(A*scale - parabola.A) > tol)
+		if (Math.abs(a*scale - parabola.a) > tol)
 			return false;
-		if (Math.abs(C*scale - parabola.C) > tol)
+		if (Math.abs(c*scale - parabola.c) > tol)
 			return false;
-		if (Math.abs(D*scale - parabola.D) > tol)
+		if (Math.abs(d*scale - parabola.d) > tol)
 			return false;
-		if (Math.abs(E*scale - parabola.E) > tol)
+		if (Math.abs(e*scale - parabola.e) > tol)
 			return false;
-		if (Math.abs(F*scale - parabola.F) > tol)
+		if (Math.abs(f*scale - parabola.f) > tol)
 			return false;
 
 		return true;
 	}
 
+	@Override public double get( int index ) {
+		return switch (index) {
+			case 0 -> a;
+			case 1 -> c;
+			case 2 -> d;
+			case 3 -> e;
+			case 4 -> f;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		};
+	}
+
+	@Override public void set( int index, double value ) {
+		switch (index) {
+			case 0 -> a = value;
+			case 1 -> c = value;
+			case 2 -> d = value;
+			case 3 -> e = value;
+			case 4 -> f = value;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		}
+	}
+
+	@Override public int length() {
+		return 5;
+	}
+
+
 	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("A", A, true) +
-				format.pair("C", C, true) +
-				format.pair("D", D, true) +
-				format.pair("E", E, true) +
-				format.pair("F", F, false) +
+				format.pair("A", a, true) +
+				format.pair("C", c, true) +
+				format.pair("D", d, true) +
+				format.pair("E", e, true) +
+				format.pair("F", f, false) +
 				format.itemSuffix;
 	}
 

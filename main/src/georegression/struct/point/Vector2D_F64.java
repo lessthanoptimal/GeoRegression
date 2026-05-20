@@ -19,7 +19,7 @@
 package georegression.struct.point;
 
 import georegression.geometry.UtilVector2D_F64;
-import georegression.struct.GeoTuple2D_F64;
+import georegression.struct.tuples.GeoTuple2D_F64;
 
 /**
  * Spacial vector in 2D

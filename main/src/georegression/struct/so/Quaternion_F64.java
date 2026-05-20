@@ -18,10 +18,9 @@
 
 package georegression.struct.so;
 
+import georegression.struct.arraylike.ArrayLike_F64;
 import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
-import org.ejml.MatrixPrintFormat;
-import org.ejml.UtilEjml;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -34,7 +33,7 @@ import java.io.Serializable;
 /// q = cos(theta/2) + (x\*i + y\*j + z\*k)\*sin(theta/2)
 ///
 /// where 'theta' is the angle of rotation, (x,y,z) is the unit axis of rotation.
-public class Quaternion_F64 implements Serializable, MapFormattable {
+public class Quaternion_F64 implements Serializable, ArrayLike_F64, MapFormattable {
 	/// Describes the angle of rotation. See above for how it is encoded.
 	public double w;
 	/// Axis of rotation
@@ -131,20 +130,6 @@ public class Quaternion_F64 implements Serializable, MapFormattable {
 		return true;
 	}
 
-	/// Converts into a string using a Matrix like format.
-	public String format( MatrixPrintFormat format ) {
-		char decimal = format.decimal;
-		return format.getRowPrefix() +
-				UtilEjml.fancyString2(w, format.getPrecision(), decimal) +
-				format.getColSeparator() +
-				UtilEjml.fancyString2(x, format.getPrecision(), decimal) +
-				format.getColSeparator() +
-				UtilEjml.fancyString2(y, format.getPrecision(), decimal) +
-				format.getColSeparator() +
-				UtilEjml.fancyString2(z, format.getPrecision(), decimal) +
-				format.getRowSuffix();
-	}
-
 	/// Converts into a string using a Map like format.
 	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
@@ -155,5 +140,29 @@ public class Quaternion_F64 implements Serializable, MapFormattable {
 				format.itemSuffix;
 	}
 
-	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
+
+	@Override public double get( int index ) {
+		return switch (index) {
+			case 0 -> w;
+			case 1 -> x;
+			case 2 -> y;
+			case 3 -> z;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		};
+	}
+
+	@Override public void set( int index, double value ) {
+		switch (index) {
+			case 0 -> w = value;
+			case 1 -> x = value;
+			case 2 -> y = value;
+			case 3 -> z = value;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		}
+	}
+
+	@Override public int length() {
+		return 4;
+	}
 }

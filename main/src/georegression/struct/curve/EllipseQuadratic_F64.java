@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -35,12 +35,12 @@ package georegression.struct.curve;
 public class EllipseQuadratic_F64 extends ConicGeneral_F64 {
 
 	public EllipseQuadratic_F64(double a, double b, double c, double d, double e, double f) {
-		this.A = a;
-		this.B = b;
-		this.C = c;
-		this.D = d;
-		this.E = e;
-		this.F = f;
+		this.a = a;
+		this.b = b;
+		this.c = c;
+		this.d = d;
+		this.e = e;
+		this.f = f;
 	}
 
 	public EllipseQuadratic_F64() {}

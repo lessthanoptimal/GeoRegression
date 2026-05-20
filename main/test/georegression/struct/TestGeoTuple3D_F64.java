@@ -19,6 +19,7 @@
 package georegression.struct;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.tuples.GeoTuple3D_F64;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;

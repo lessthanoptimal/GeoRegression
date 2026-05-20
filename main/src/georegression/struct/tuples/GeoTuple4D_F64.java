@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.struct;
+package georegression.struct.tuples;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -45,8 +45,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 
 	protected GeoTuple4D_F64() {}
 
-	@Override
-	public int getDimension() {
+	@Override public int getDimension() {
 		return 4;
 	}
 
@@ -73,8 +72,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		return (T)this;
 	}
 
-	@Override
-	public void zero() {
+	@Override public void zero() {
 		setTo(0, 0, 0, 0);
 	}
 
@@ -89,16 +87,14 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 				Math.abs( this.w - w ) <= tol );
 	}
 
-	@Override
-	public boolean isIdentical( GeoTuple4D_F64 t, double tol ) {
+	@Override public boolean isIdentical( GeoTuple4D_F64 t, double tol ) {
 		return ( Math.abs( this.x - t.x ) <= tol &&
 				Math.abs( this.y - t.y ) <= tol &&
 				Math.abs( this.z - t.z ) <= tol &&
 				Math.abs( this.w - t.w ) <= tol );
 	}
 
-	@Override
-	public double getIdx(int index ) {
+	@Override public double get(int index ) {
 		switch( index ) {
 			case 0: return x;
 			case 1: return y;
@@ -108,8 +104,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		}
 	}
 
-	@Override
-	public void setIdx(int index, double value ) {
+	@Override public void set(int index, double value ) {
 		switch( index ) {
 			case 0: x = value; break;
 			case 1: y = value; break;
@@ -171,18 +166,15 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		divideIP( norm() );
 	}
 
-	@Override
-	public double norm() {
+	@Override public double norm() {
 		return Math.sqrt( x * x + y * y + z * z + w * w);
 	}
 
-	@Override
-	public double normSq() {
+	@Override public double normSq() {
 		return x * x + y * y + z * z + w * w;
 	}
 
-	@Override
-	public double distance( GeoTuple4D_F64 t ) {
+	@Override public double distance( GeoTuple4D_F64 t ) {
 		double dx = t.x - x;
 		double dy = t.y - y;
 		double dz = t.z - z;
@@ -200,8 +192,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		return Math.sqrt( dx * dx + dy * dy + dz * dz + dw * dw);
 	}
 
-	@Override
-	public double distance2( GeoTuple4D_F64 t ) {
+	@Override public double distance2( GeoTuple4D_F64 t ) {
 		double dx = t.x - x;
 		double dy = t.y - y;
 		double dz = t.z - z;
@@ -223,8 +214,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		System.out.println( this );
 	}
 
-	@Override
-	public boolean isNaN() {
+	@Override public boolean isNaN() {
 		return ( Double.isNaN( x ) || Double.isNaN( y ) || Double.isNaN( z ) || Double.isNaN( w ));
 	}
 
@@ -246,8 +236,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		return found;
 	}
 
-	@Override
-	public T setTo(T src) {
+	@Override public T setTo(T src) {
 		this.x = src.x;
 		this.y = src.y;
 		this.z = src.z;
@@ -255,8 +244,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 		return (T)this;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
+	@Override public boolean equals(Object obj) {
 		if(this == obj)
 			return true;
 
@@ -278,8 +266,7 @@ public abstract class GeoTuple4D_F64 <T extends GeoTuple4D_F64> extends GeoTuple
 				format.itemSuffix;
 	}
 
-	@Override
-	public int hashCode() {
+	@Override public int hashCode() {
 		return Objects.hash(x, y, z, w);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -80,12 +80,12 @@ public class TestFitEllipseAlgebraic_F64 {
 		normalize(expected);
 		normalize(found);
 
-		assertEquals(expected.A,found.A, GrlConstants.TEST_F64);
-		assertEquals(expected.B,found.B, GrlConstants.TEST_F64);
-		assertEquals(expected.C,found.C, GrlConstants.TEST_F64);
-		assertEquals(expected.D,found.D, GrlConstants.TEST_F64);
-		assertEquals(expected.E,found.E, GrlConstants.TEST_F64);
-		assertEquals(expected.F,found.F, GrlConstants.TEST_F64);
+		assertEquals(expected.a,found.a, GrlConstants.TEST_F64);
+		assertEquals(expected.b,found.b, GrlConstants.TEST_F64);
+		assertEquals(expected.c,found.c, GrlConstants.TEST_F64);
+		assertEquals(expected.d,found.d, GrlConstants.TEST_F64);
+		assertEquals(expected.e,found.e, GrlConstants.TEST_F64);
+		assertEquals(expected.f,found.f, GrlConstants.TEST_F64);
 	}
 
 	/**
@@ -109,12 +109,12 @@ public class TestFitEllipseAlgebraic_F64 {
 	}
 
 	private void normalize( EllipseQuadratic_F64 ellipse )  {
-		ellipse.A /= ellipse.F;
-		ellipse.B /= ellipse.F;
-		ellipse.C /= ellipse.F;
-		ellipse.D /= ellipse.F;
-		ellipse.E /= ellipse.F;
-		ellipse.F /= ellipse.F;
+		ellipse.a /= ellipse.f;
+		ellipse.b /= ellipse.f;
+		ellipse.c /= ellipse.f;
+		ellipse.d /= ellipse.f;
+		ellipse.e /= ellipse.f;
+		ellipse.f /= ellipse.f;
 	}
 
 }

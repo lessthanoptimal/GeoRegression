@@ -18,11 +18,11 @@
 
 package georegression.geometry;
 
-import georegression.struct.GeoTuple2D_F64;
-import georegression.struct.GeoTuple3D_F64;
-import georegression.struct.GeoTuple4D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.so.Quaternion_F64;
+import georegression.struct.tuples.GeoTuple2D_F64;
+import georegression.struct.tuples.GeoTuple3D_F64;
+import georegression.struct.tuples.GeoTuple4D_F64;
 import org.ejml.data.DGrowArray;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.MatrixFeatures_DDRM;

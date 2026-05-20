@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -83,12 +83,12 @@ public class TestUtilEllipse_F64 {
 
 		UtilEllipse_F64.convert(rotated,quad);
 
-		quad.A *= scale;
-		quad.B *= scale;
-		quad.C *= scale;
-		quad.D *= scale;
-		quad.E *= scale;
-		quad.F *= scale;
+		quad.a *= scale;
+		quad.b *= scale;
+		quad.c *= scale;
+		quad.d *= scale;
+		quad.e *= scale;
+		quad.f *= scale;
 
 		UtilEllipse_F64.convert(quad,found);
 

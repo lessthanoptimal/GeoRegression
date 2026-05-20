@@ -18,6 +18,7 @@
 
 package georegression.struct.line;
 
+import georegression.struct.arraylike.ArrayLike_F64;
 import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,14 +28,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
-/**
- * Defines a line segment by its two end points.
- *
- * @author Peter Abeles
- * @see georegression.geometry.UtilLine3D_F64
- */
+/// Defines a line segment by its two end points.
+///
+/// @see georegression.geometry.UtilLine3D_F64
 @Getter @Setter
-public class LineSegment3D_F64 implements Serializable, MapFormattable {
+public class LineSegment3D_F64 implements Serializable, MapFormattable, ArrayLike_F64 {
 	public Point3D_F64 a = new Point3D_F64();
 	public Point3D_F64 b = new Point3D_F64();
 
@@ -78,9 +76,7 @@ public class LineSegment3D_F64 implements Serializable, MapFormattable {
 		b.zero();
 	}
 
-	/**
-	 * Computes a point on the line based on the fraction distance between 'a' and 'b'
-	 */
+	/// Computes a point on the line based on the fraction distance between 'a' and 'b'
 	public Point3D_F64 pointOnLine( double fraction, @Nullable Point3D_F64 p ) {
 		if (p == null)
 			p = new Point3D_F64();
@@ -90,23 +86,17 @@ public class LineSegment3D_F64 implements Serializable, MapFormattable {
 		return p;
 	}
 
-	/**
-	 * Value of x-axis for a point on the line at this fractional location between 'a' and 'b'
-	 */
+	/// Value of x-axis for a point on the line at this fractional location between 'a' and 'b'
 	public double axisOnLineX( double fraction ) {
 		return slopeX()*fraction + a.x;
 	}
 
-	/**
-	 * Value of y-axis for a point on the line at this fractional location between 'a' and 'b'
-	 */
+	/// Value of y-axis for a point on the line at this fractional location between 'a' and 'b'
 	public double axisOnLineY( double fraction ) {
 		return slopeY()*fraction + a.y;
 	}
 
-	/**
-	 * Value of z-axis for a point on the line at this fractional location between 'a' and 'b'
-	 */
+	/// Value of z-axis for a point on the line at this fractional location between 'a' and 'b'
 	public double axisOnLineZ( double fraction ) {
 		return slopeZ()*fraction + a.z;
 	}
@@ -142,8 +132,33 @@ public class LineSegment3D_F64 implements Serializable, MapFormattable {
 				format.itemSuffix;
 	}
 
-	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
+	@Override public double get( int index ) {
+		return switch (index) {
+			case 0 -> a.x;
+			case 1 -> a.y;
+			case 2 -> a.z;
+			case 3 -> b.x;
+			case 4 -> b.y;
+			case 5 -> b.z;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		};
+	}
 
+	@Override public void set( int index, double value ) {
+		switch (index) {
+			case 0 -> a.x = value;
+			case 1 -> a.y = value;
+			case 2 -> a.z = value;
+			case 3 -> b.x = value;
+			case 4 -> b.y = value;
+			case 5 -> b.z = value;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		}
+	}
+
+	@Override public int length() {return 6;}
+
+	@Override public String toString() {return MapPrintFormat.DEFAULT.toString(this);}
 
 	@Override
 	public boolean equals( Object obj ) {

@@ -16,10 +16,9 @@
  * limitations under the License.
  */
 
-package georegression.struct;
+package georegression.struct.tuples;
 
-import org.ejml.MatrixPrintFormat;
-import org.ejml.UtilEjml;
+import georegression.struct.arraylike.ArrayLike_F64;
 
 /**
  * Describes geometric objects that are composed of N double values. Where N is the dimension
@@ -28,51 +27,11 @@ import org.ejml.UtilEjml;
  *
  * @author Peter Abeles
  */
-public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
+public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> implements ArrayLike_F64 {
 
-	/**
-	 * Checks to see if the two GeoTuple have values which are nearly the same. False is always
-	 * returned if the dimension is different.
-	 *
-	 * @param t The GeoTuple it is being compared against.
-	 * @param tol How similar each element must be for them to be considered identical.
-	 * @return if they are identical or not.
-	 */
+	/// Same as [#isEquals(ArrayLike_F64 , double)]
 	public boolean isIdentical( T t, double tol ) {
-		if (t.getDimension() != getDimension())
-			return false;
-
-		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			double diff = Math.abs(getIdx(i) - t.getIdx(i));
-
-			if (diff > tol)
-				return false;
-		}
-
-		return true;
-	}
-
-	/** Returns true if at least one value is NaN */
-	public boolean isNaN() {
-		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			if (Double.isNaN(getIdx(i)))
-				return true;
-		}
-
-		return false;
-	}
-
-	/** Returns true if at least one value is INFINITE */
-	public boolean isInfinite() {
-		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			if (Double.isInfinite(getIdx(i)))
-				return true;
-		}
-
-		return false;
+		return isEquals(t, tol);
 	}
 
 	/**
@@ -103,7 +62,7 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 		double total = 0;
 		int N = getDimension();
 		for (int i = 0; i < N; i++) {
-			double a = getIdx(i);
+			double a = get(i);
 			total += a*a;
 		}
 
@@ -121,36 +80,12 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 		double total = 0;
 		final int N = getDimension();
 		for (int i = 0; i < N; i++) {
-			double diff = Math.abs(getIdx(i) - t.getIdx(i));
+			double diff = Math.abs(get(i) - t.get(i));
 
 			total += diff*diff;
 		}
 
 		return total;
-	}
-
-	/**
-	 * Returns the value of the tuple along the specified coordinate system axis.
-	 *
-	 * @param index Which axis in the coordinate system.
-	 * @return Its value.
-	 */
-	public abstract double getIdx( int index );
-
-	public abstract void setIdx( int index, double value );
-
-	@Override public String format( MatrixPrintFormat format ) {
-		int size = getDimension();
-		char decimal = format.decimal;
-		var builder = new StringBuilder();
-		builder.append(format.getRowPrefix());
-		for (int i = 0; i < size - 1; i++) {
-			builder.append(UtilEjml.fancyString2(getIdx(i), format.getPrecision(), decimal));
-			builder.append(format.getColSeparator());
-		}
-		builder.append(UtilEjml.fancyString2(getIdx(size - 1), format.getPrecision(), decimal));
-		builder.append(format.getRowSuffix());
-		return builder.toString();
 	}
 
 	@Override
@@ -167,7 +102,7 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 		if (N != o.getDimension())
 			return false;
 		for (int i = 0; i < N; i++) {
-			if (getIdx(i) != o.getIdx(i))
+			if (get(i) != o.get(i))
 				return false;
 		}
 		return true;
@@ -178,7 +113,7 @@ public abstract class GeoTuple_F64<T extends GeoTuple_F64> extends GeoTuple<T> {
 		final int N = getDimension();
 		int hash = 0;
 		for (int i = 0; i < N; i++) {
-			hash += Double.hashCode(getIdx(i));
+			hash += Double.hashCode(get(i));
 		}
 		return hash;
 	}

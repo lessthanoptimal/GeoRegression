@@ -18,7 +18,7 @@
 
 package georegression.struct.point;
 
-import georegression.struct.GeoTuple_I32;
+import georegression.struct.tuples.GeoTuple_I32;
 import org.ejml.MapPrintFormat;
 
 import java.util.Objects;
@@ -48,8 +48,7 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 		return this;
 	}
 
-	@Override
-	public void zero() {
+	@Override public void zero() {
 		setTo(0, 0);
 	}
 
@@ -95,15 +94,13 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 		return this.x == x && this.y == y;
 	}
 
-	@Override
-	public Point2D_I16 setTo( Point2D_I16 src ) {
+	@Override public Point2D_I16 setTo( Point2D_I16 src ) {
 		this.x = src.x;
 		this.y = src.y;
 		return this;
 	}
 
-	@Override
-	public int getIdx( int index ) {
+	@Override public int get( int index ) {
 		if (index == 0)
 			return x;
 		else if (index == 1)
@@ -111,8 +108,7 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 		throw new RuntimeException("Invalid index " + index);
 	}
 
-	@Override
-	public void setIdx( int index, int value ) {
+	@Override public void set( int index, int value ) {
 		if (index == 0)
 			this.x = (short)value;
 		else if (index == 1)
@@ -132,23 +128,19 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 				format.itemSuffix;
 	}
 
-	@Override
-	public int getDimension() {
+	@Override public int getDimension() {
 		return 2;
 	}
 
-	@Override
-	public Point2D_I16 createNewInstance() {
+	@Override public Point2D_I16 createNewInstance() {
 		return new Point2D_I16();
 	}
 
-	@Override
-	public Point2D_I16 copy() {
+	@Override public Point2D_I16 copy() {
 		return new Point2D_I16(x, y);
 	}
 
-	@Override
-	public boolean equals( Object obj ) {
+	@Override public boolean equals( Object obj ) {
 		if (this == obj)
 			return true;
 
@@ -159,8 +151,7 @@ public class Point2D_I16 extends GeoTuple_I32<Point2D_I16> {
 		return x == o.x && y == o.y;
 	}
 
-	@Override
-	public int hashCode() {
+	@Override public int hashCode() {
 		return Objects.hash(x, y);
 	}
 }

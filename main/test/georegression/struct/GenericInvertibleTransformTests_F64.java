@@ -19,6 +19,7 @@
 package georegression.struct;
 
 import georegression.misc.GrlConstants;
+import georegression.struct.tuples.GeoTuple_F64;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 

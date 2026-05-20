@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,10 +18,10 @@
 
 package georegression.geometry;
 
-import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Rectangle2D_F64;
 import georegression.struct.shapes.RectangleLength2D_F64;
+import georegression.struct.tuples.GeoTuple2D_F64;
 import org.ddogleg.sorting.QuickSort_F64;
 import org.ejml.data.DMatrix;
 import org.ejml.data.ReshapeMatrix;

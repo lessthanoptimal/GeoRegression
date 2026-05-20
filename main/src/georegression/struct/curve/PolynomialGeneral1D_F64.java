@@ -43,23 +43,19 @@ public class PolynomialGeneral1D_F64 implements PolynomialCurve_F64 {
 		return output;
 	}
 
-	@Override
-	public double get(int coefficient) {
+	@Override public double get(int coefficient) {
 		return coefs[coefficient];
 	}
 
-	@Override
-	public void set(int coefficient, double value) {
+	@Override public void set(int coefficient, double value) {
 		coefs[coefficient] = value;
 	}
 
-	@Override
-	public int size() {
+	@Override public int length() {
 		return coefs.length;
 	}
 
-	@Override
-	public int degree() {
+	@Override public int degree() {
 		return coefs.length-1;
 	}
 

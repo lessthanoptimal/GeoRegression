@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.struct;
+package georegression.struct.tuples;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -43,8 +43,7 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 
 	protected GeoTuple3D_F64() {}
 
-	@Override
-	public int getDimension() {
+	@Override public int getDimension() {
 		return 3;
 	}
 
@@ -68,8 +67,7 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		return (T)this;
 	}
 
-	@Override
-	public void zero() {
+	@Override public void zero() {
 		setTo(0, 0, 0);
 	}
 
@@ -81,45 +79,25 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		return (Math.abs(this.x - x) <= tol && Math.abs(this.y - y) <= tol && Math.abs(this.z - z) <= tol);
 	}
 
-	@Override
-	public boolean isIdentical( GeoTuple3D_F64 t, double tol ) {
+	@Override public boolean isIdentical( GeoTuple3D_F64 t, double tol ) {
 		return (Math.abs(this.x - t.x) <= tol && Math.abs(this.y - t.y) <= tol && Math.abs(this.z - t.z) <= tol);
 	}
 
-	@Override
-	public double getIdx( int index ) {
-		switch (index) {
-			case 0:
-				return x;
-
-			case 1:
-				return y;
-
-			case 2:
-				return z;
-
-			default:
-				throw new IllegalArgumentException("Invalid index");
-		}
+	@Override public double get( int index ) {
+		return switch (index) {
+			case 0 -> x;
+			case 1 -> y;
+			case 2 -> z;
+			default -> throw new IllegalArgumentException("Invalid index");
+		};
 	}
 
-	@Override
-	public void setIdx( int index, double value ) {
+	@Override public void set( int index, double value ) {
 		switch (index) {
-			case 0:
-				x = value;
-				break;
-
-			case 1:
-				y = value;
-				break;
-
-			case 2:
-				z = value;
-				break;
-
-			default:
-				throw new IllegalArgumentException("Invalid index");
+			case 0 -> x = value;
+			case 1 -> y = value;
+			case 2 -> z = value;
+			default -> throw new IllegalArgumentException("Invalid index");
 		}
 	}
 
@@ -236,13 +214,11 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		return found;
 	}
 
-	@Override
-	public double norm() {
+	@Override public double norm() {
 		return Math.sqrt(x*x + y*y + z*z);
 	}
 
-	@Override
-	public double normSq() {
+	@Override public double normSq() {
 		return x*x + y*y + z*z;
 	}
 
@@ -254,16 +230,14 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		return Math.sqrt(dx*dx + dy*dy + dz*dz);
 	}
 
-	@Override
-	public T setTo( T src ) {
+	@Override public T setTo( T src ) {
 		this.x = src.x;
 		this.y = src.y;
 		this.z = src.z;
 		return (T)this;
 	}
 
-	@Override
-	public double distance( GeoTuple3D_F64 t ) {
+	@Override public double distance( GeoTuple3D_F64 t ) {
 		double dx = t.x - x;
 		double dy = t.y - y;
 		double dz = t.z - z;
@@ -271,8 +245,7 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		return Math.sqrt(dx*dx + dy*dy + dz*dz);
 	}
 
-	@Override
-	public double distance2( GeoTuple3D_F64 t ) {
+	@Override public double distance2( GeoTuple3D_F64 t ) {
 		double dx = t.x - x;
 		double dy = t.y - y;
 		double dz = t.z - z;
@@ -292,8 +265,7 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 		System.out.println(this);
 	}
 
-	@Override
-	public boolean isNaN() {
+	@Override public boolean isNaN() {
 		return (Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z));
 	}
 
@@ -319,8 +291,7 @@ public abstract class GeoTuple3D_F64<T extends GeoTuple3D_F64> extends GeoTuple_
 				format.itemSuffix;
 	}
 
-	@Override
-	public int hashCode() {
+	@Override public int hashCode() {
 		return Objects.hash(x, y, z);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,12 +20,12 @@ package georegression.fitting.points;
 
 import georegression.fitting.MotionTransformPoint;
 import georegression.misc.StoppingCondition;
-import georegression.struct.GeoTuple;
 import georegression.struct.InvertibleTransform;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
+import georegression.struct.tuples.GeoTuple;
 import georegression.transform.se.SePointOps_F64;
 
 import java.util.ArrayList;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -73,12 +73,12 @@ public class FitConicA_F64 implements FitShapeToPoints_F64<Point2D_F64,ConicGene
 		if( !solver.process(A,1,nullspace) )
 			return false;
 
-		output.A = nullspace.data[0];
-		output.B = nullspace.data[1];
-		output.C = nullspace.data[2];
-		output.D = nullspace.data[3];
-		output.E = nullspace.data[4];
-		output.F = nullspace.data[5];
+		output.a = nullspace.data[0];
+		output.b = nullspace.data[1];
+		output.c = nullspace.data[2];
+		output.d = nullspace.data[3];
+		output.e = nullspace.data[4];
+		output.f = nullspace.data[5];
 
 		return true;
 	}
@@ -117,12 +117,12 @@ public class FitConicA_F64 implements FitShapeToPoints_F64<Point2D_F64,ConicGene
 		if( !solver.process(A,1,nullspace) )
 			return false;
 
-		output.A = nullspace.data[0];
-		output.B = nullspace.data[1];
-		output.C = nullspace.data[2];
-		output.D = nullspace.data[3];
-		output.E = nullspace.data[4];
-		output.F = nullspace.data[5];
+		output.a = nullspace.data[0];
+		output.b = nullspace.data[1];
+		output.c = nullspace.data[2];
+		output.d = nullspace.data[3];
+		output.e = nullspace.data[4];
+		output.f = nullspace.data[5];
 
 		return true;
 	}

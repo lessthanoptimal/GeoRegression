@@ -18,12 +18,11 @@
 
 package georegression.struct.plane;
 
+import georegression.struct.arraylike.ArrayLike_F64;
 import lombok.Getter;
 import lombok.Setter;
 import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
-import org.ejml.MatrixPrintFormat;
-import org.ejml.UtilEjml;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -47,7 +46,7 @@ import java.util.Objects;
  * @author Peter Abeles
  */
 @Getter @Setter
-public class PlaneGeneral3D_F64 implements Serializable, MapFormattable {
+public class PlaneGeneral3D_F64 implements Serializable, MapFormattable, ArrayLike_F64 {
 	/** Coefficients which define the plane. */
 	public double A, B, C, D;
 
@@ -104,20 +103,6 @@ public class PlaneGeneral3D_F64 implements Serializable, MapFormattable {
 		return A == o.A && B == o.B && C == o.C && D == o.D;
 	}
 
-	/// Converts into a [String] using a Matrix like format.
-	public String format( MatrixPrintFormat format ) {
-		char decimal = format.decimal;
-		return format.rowPrefix +
-				UtilEjml.fancyString2(A, format.getPrecision(), decimal) +
-				format.colSeparator +
-				UtilEjml.fancyString2(B, format.getPrecision(), decimal) +
-				format.colSeparator +
-				UtilEjml.fancyString2(C, format.getPrecision(), decimal) +
-				format.colSeparator +
-				UtilEjml.fancyString2(D, format.getPrecision(), decimal) +
-				format.rowSuffix;
-	}
-
 	/// Converts into a [String] using a Map like format.
 	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
@@ -129,6 +114,30 @@ public class PlaneGeneral3D_F64 implements Serializable, MapFormattable {
 	}
 
 	@Override public String toString() { return MapPrintFormat.DEFAULT.toString(this); }
+
+	@Override public double get( int index ) {
+		return switch (index) {
+			case 0 -> A;
+			case 1 -> B;
+			case 2 -> C;
+			case 3 -> D;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		};
+	}
+
+	@Override public void set( int index, double value ) {
+		switch (index) {
+			case 0 -> A = value;
+			case 1 -> B = value;
+			case 2 -> C = value;
+			case 3 -> D = value;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		}
+	}
+
+	@Override public int length() {
+		return 4;
+	}
 
 	@Override
 	public boolean equals( Object obj ) {

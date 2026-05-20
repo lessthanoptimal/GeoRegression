@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -47,13 +47,13 @@ public class UtilCurves_F64 {
 		else
 			dst.reshape(3,3);
 
-		double B = src.B/2.0;
-		double D = src.D/2.0;
-		double E = src.E/2.0;
+		double B = src.b/2.0;
+		double D = src.d/2.0;
+		double E = src.e/2.0;
 
-		dst.data[0] = src.A; dst.data[1] = B;     dst.data[2] = D;
-		dst.data[3] = B;     dst.data[4] = src.C; dst.data[5] = E;
-		dst.data[6] = D;     dst.data[7] = E;     dst.data[8] = src.F;
+		dst.data[0] = src.a; dst.data[1] = B;     dst.data[2] = D;
+		dst.data[3] = B;     dst.data[4] = src.c; dst.data[5] = E;
+		dst.data[6] = D;     dst.data[7] = E;     dst.data[8] = src.f;
 
 		return dst;
 	}
@@ -75,9 +75,9 @@ public class UtilCurves_F64 {
 		if( dst == null )
 			dst = new ConicGeneral_F64();
 
-		dst.A = src.a11; dst.B = 2*src.a12; dst.D = 2*src.a13;
-		dst.C = src.a22; dst.E = 2*src.a23;
-		dst.F = src.a33;
+		dst.a = src.a11; dst.b = 2*src.a12; dst.d = 2*src.a13;
+		dst.c = src.a22; dst.e = 2*src.a23;
+		dst.f = src.a33;
 
 		return dst;
 	}
@@ -96,13 +96,13 @@ public class UtilCurves_F64 {
 		if( dst == null )
 			dst = new DMatrix3x3();
 
-		double B = src.B/2.0;
-		double D = src.D/2.0;
-		double E = src.E/2.0;
+		double B = src.b/2.0;
+		double D = src.d/2.0;
+		double E = src.e/2.0;
 
-		dst.a11 = src.A; dst.a12 = B;     dst.a13 = D;
-		dst.a21 = B;     dst.a22 = src.C; dst.a23 = E;
-		dst.a31 = D;     dst.a32 = E;     dst.a33 = src.F;
+		dst.a11 = src.a; dst.a12 = B;     dst.a13 = D;
+		dst.a21 = B;     dst.a22 = src.c; dst.a23 = E;
+		dst.a31 = D;     dst.a32 = E;     dst.a33 = src.f;
 
 		return dst;
 	}
@@ -125,9 +125,9 @@ public class UtilCurves_F64 {
 		if( dst == null )
 			dst = new ConicGeneral_F64();
 
-		dst.A = src.data[0]; dst.B = 2*src.data[1]; dst.D = 2*src.data[2];
-		dst.C = src.data[4]; dst.E = 2*src.data[5];
-		dst.F = src.data[8];
+		dst.a = src.data[0]; dst.b = 2*src.data[1]; dst.d = 2*src.data[2];
+		dst.c = src.data[4]; dst.e = 2*src.data[5];
+		dst.f = src.data[8];
 
 		return dst;
 	}
@@ -145,11 +145,11 @@ public class UtilCurves_F64 {
 			dst = new ParabolaGeneral_F64();
 
 		// NOTE haven't put much through if this is the correct way to handle negative values of A or C
-		dst.A = Math.signum(src.A) * Math.sqrt(Math.abs(src.A));
-		dst.C = Math.signum(src.C) * Math.sqrt(Math.abs(src.C));
-		dst.D = src.D;
-		dst.E = src.E;
-		dst.F = src.F;
+		dst.a = Math.signum(src.a) * Math.sqrt(Math.abs(src.a));
+		dst.c = Math.signum(src.c) * Math.sqrt(Math.abs(src.c));
+		dst.d = src.d;
+		dst.e = src.e;
+		dst.f = src.f;
 
 		return dst;
 	}
@@ -165,12 +165,12 @@ public class UtilCurves_F64 {
 		if( dst == null )
 			dst = new ConicGeneral_F64();
 
-		dst.A = src.A*src.A;
-		dst.B = src.A*src.C*2.0;
-		dst.C = src.C*src.C;
-		dst.D = src.D;
-		dst.E = src.E;
-		dst.F = src.F;
+		dst.a = src.a*src.a;
+		dst.b = src.a*src.c*2.0;
+		dst.c = src.c*src.c;
+		dst.d = src.d;
+		dst.e = src.e;
+		dst.f = src.f;
 
 		return dst;
 	}
@@ -195,11 +195,11 @@ public class UtilCurves_F64 {
 		if( dst == null )
 			dst = new ParabolaParametric_F64();
 
-		double A = src.A;
-		double C = src.C;
-		double D = src.D;
-		double E = src.E;
-		double F = src.F;
+		double A = src.a;
+		double C = src.c;
+		double D = src.d;
+		double E = src.e;
+		double F = src.f;
 
 		double bottom = C*D-A*E;
 
@@ -225,17 +225,17 @@ public class UtilCurves_F64 {
 
 		double Z = src.A*src.E - src.B*src.D;
 
-		dst.A = src.D/Z;
-		dst.C = -src.A/Z;
-		dst.D = -src.E/Z;
-		dst.E = src.B/Z;
+		dst.a = src.D/Z;
+		dst.c = -src.A/Z;
+		dst.d = -src.E/Z;
+		dst.e = src.B/Z;
 
-		if( Math.abs(dst.A) > Math.abs(dst.C) ) {
-			dst.F = src.F/Z/dst.A;
-		} else if( dst.C != 0 ) {
-			dst.F = -src.C/Z/dst.C;
+		if( Math.abs(dst.a) > Math.abs(dst.c) ) {
+			dst.f = src.F/Z/dst.a;
+		} else if( dst.c != 0 ) {
+			dst.f = -src.C/Z/dst.c;
 		} else {
-			dst.F = 0;
+			dst.f = 0;
 		}
 
 		return dst;

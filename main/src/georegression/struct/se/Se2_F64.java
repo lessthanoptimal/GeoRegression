@@ -18,8 +18,8 @@
 
 package georegression.struct.se;
 
-import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.point.Vector2D_F64;
+import georegression.struct.tuples.GeoTuple2D_F64;
 import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 

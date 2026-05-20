@@ -20,18 +20,12 @@ package georegression.struct.curve;
 
 import org.ejml.MapPrintFormat;
 
-/**
- * Quadratic curve in 1D: f(x) = a + bx + c x<sup>2</sup> + d x<sup>3</sup>
- *
- * <p>NOTE: The coefficient order is the reverse of what you will find for sake of consistency as the order
- * of the polynomial is increased.</p>
- *
- * @author Peter Abeles
- */
+/// Quadratic curve in 1D: f(x) = a + bx + c x<sup>2</sup> + d x<sup>3</sup>
+///
+/// NOTE: The coefficient order is the reverse of what you will find for sake of consistency as the order
+/// of the polynomial is increased.
 public class PolynomialCubic1D_F64 implements PolynomialCurve_F64 {
-	/**
-	 * Coefficients
-	 */
+	/// Coefficients
 	public double a, b, c, d;
 
 	public PolynomialCubic1D_F64() {}
@@ -63,18 +57,15 @@ public class PolynomialCubic1D_F64 implements PolynomialCurve_F64 {
 		return this;
 	}
 
-	@Override
-	public void zero() {
+	@Override public void zero() {
 		setTo(0, 0, 0, 0);
 	}
 
-	@Override
-	public String toString() {
+	@Override public String toString() {
 		return getClass().getSimpleName() + formatMap(MapPrintFormat.DEFAULT);
 	}
 
-	@Override
-	public double get( int coefficient ) {
+	@Override public double get( int coefficient ) {
 		return switch (coefficient) {
 			case 0 -> a;
 			case 1 -> b;
@@ -84,8 +75,7 @@ public class PolynomialCubic1D_F64 implements PolynomialCurve_F64 {
 		};
 	}
 
-	@Override
-	public void set( int coefficient, double value ) {
+	@Override public void set( int coefficient, double value ) {
 		switch (coefficient) {
 			case 0 -> a = value;
 			case 1 -> b = value;
@@ -104,13 +94,11 @@ public class PolynomialCubic1D_F64 implements PolynomialCurve_F64 {
 				format.itemSuffix;
 	}
 
-	@Override
-	public int size() {
+	@Override public int length() {
 		return 4;
 	}
 
-	@Override
-	public int degree() {
+	@Override public int degree() {
 		return 3;
 	}
 

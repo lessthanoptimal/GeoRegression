@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,8 +18,8 @@
 
 package georegression.fitting;
 
-import georegression.struct.GeoTuple;
 import georegression.struct.InvertibleTransform;
+import georegression.struct.tuples.GeoTuple;
 
 import java.util.List;
 

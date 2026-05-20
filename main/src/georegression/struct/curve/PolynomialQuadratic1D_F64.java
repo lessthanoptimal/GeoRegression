@@ -20,52 +20,50 @@ package georegression.struct.curve;
 
 import org.ejml.MapPrintFormat;
 
-/**
- * Quadratic curve in 1D: f(x) = a + bx + c x<sup>2</sup>.
- *
- * <p>NOTE: The coefficient order is the reverse of what you will find for sake of consistency as the order
- * of the polynomial is increased.</p>
- *
- * @author Peter Abeles
- */
+/// Quadratic curve in 1D: f(x) = a + bx + c x<sup>2</sup>.
+///
+/// NOTE: The coefficient order is the reverse of what you will find for sake of consistency as the order
+/// of the polynomial is increased.
 public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
-	/**
-	 * Coefficients
-	 */
-	public double a,b,c;
+	/// Coefficients
+	public double a, b, c;
 
-	public PolynomialQuadratic1D_F64(){}
+	public PolynomialQuadratic1D_F64() {}
 
-	public PolynomialQuadratic1D_F64(double a, double b , double c){
-		this.a = a; this.b = b; this.c = c;
+	public PolynomialQuadratic1D_F64( double a, double b, double c ) {
+		this.a = a;
+		this.b = b;
+		this.c = c;
 	}
 
 	public double evaluate( double t ) {
 		return a + b*t + c*t*t;
 	}
 
-	public PolynomialQuadratic1D_F64 setTo(double a, double b , double c ) {
-		this.a = a; this.b = b; this.c = c;
+	public PolynomialQuadratic1D_F64 setTo( double a, double b, double c ) {
+		this.a = a;
+		this.b = b;
+		this.c = c;
 		return this;
 	}
 
-	public PolynomialQuadratic1D_F64 setTo(PolynomialQuadratic1D_F64 src ) {
-		this.a = src.a; this.b = src.b; this.c = src.c;
+	public PolynomialQuadratic1D_F64 setTo( PolynomialQuadratic1D_F64 src ) {
+		this.a = src.a;
+		this.b = src.b;
+		this.c = src.c;
 		return this;
 	}
 
-	@Override
-	public double get(int coefficient) {
-		switch( coefficient ) {
-			case 0: return a;
-			case 1: return b;
-			case 2: return c;
-		}
-		throw new IllegalArgumentException("Coefficient out of range. "+coefficient);
+	@Override public double get( int coefficient ) {
+		return switch (coefficient) {
+			case 0 -> a;
+			case 1 -> b;
+			case 2 -> c;
+			default -> throw new IllegalArgumentException("Coefficient out of range. " + coefficient);
+		};
 	}
 
-	@Override
-	public void set(int coefficient, double value) {
+	@Override public void set( int coefficient, double value ) {
 		switch (coefficient) {
 			case 0 -> a = value;
 			case 1 -> b = value;
@@ -74,13 +72,11 @@ public class PolynomialQuadratic1D_F64 implements PolynomialCurve_F64 {
 		}
 	}
 
-	@Override
-	public int size() {
+	@Override public int length() {
 		return 3;
 	}
 
-	@Override
-	public int degree() {
+	@Override public int degree() {
 		return 2;
 	}
 

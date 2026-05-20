@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,12 +18,12 @@
 
 package georegression.geometry;
 
-import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.shapes.Box3D_F64;
 import georegression.struct.shapes.Cylinder3D_F64;
+import georegression.struct.tuples.GeoTuple3D_F64;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

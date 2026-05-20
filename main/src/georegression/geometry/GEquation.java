@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,7 @@
 
 package georegression.geometry;
 
-import georegression.struct.*;
+import georegression.struct.tuples.*;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.equation.Equation;
 
@@ -43,7 +43,7 @@ public class GEquation extends Equation {
 			M.data[0] = P.x;
 			M.data[1] = P.y;
 			alias(M,name);
-		} else if( variable instanceof GeoTuple2D_F64 ) {
+		} else if( variable instanceof GeoTuple2D_F64) {
 			GeoTuple2D_F64 P = (GeoTuple2D_F64)variable;
 			DMatrixRMaj M = new DMatrixRMaj(2,1);
 			M.data[0] = P.x;
@@ -56,7 +56,7 @@ public class GEquation extends Equation {
 			M.data[1] = P.y;
 			M.data[2] = P.z;
 			alias(M,name);
-		} else if( variable instanceof GeoTuple3D_F64 ) {
+		} else if( variable instanceof GeoTuple3D_F64) {
 			GeoTuple3D_F64 P = (GeoTuple3D_F64)variable;
 			DMatrixRMaj M = new DMatrixRMaj(3,1);
 			M.data[0] = P.x;

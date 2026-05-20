@@ -18,6 +18,7 @@
 
 package georegression.struct.curve;
 
+import georegression.struct.arraylike.ArrayLike_F64;
 import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 
@@ -29,7 +30,7 @@ import org.ejml.MapPrintFormat;
  *
  * @author Peter Abeles
  */
-public class PolynomialQuadratic2D_F64 implements MapFormattable {
+public class PolynomialQuadratic2D_F64 implements MapFormattable, ArrayLike_F64 {
 	/**
 	 * Coefficients
 	 */
@@ -57,6 +58,34 @@ public class PolynomialQuadratic2D_F64 implements MapFormattable {
 
 	public void zero() {
 		setTo(0, 0, 0, 0, 0, 0);
+	}
+
+	@Override public double get( int index ) {
+		return switch (index) {
+			case 0 -> a;
+			case 1 -> b;
+			case 2 -> c;
+			case 3 -> d;
+			case 4 -> e;
+			case 5 -> f;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		};
+	}
+
+	@Override public void set( int index, double value ) {
+		switch (index) {
+			case 0 -> a = value;
+			case 1 -> b = value;
+			case 2 -> c = value;
+			case 3 -> d = value;
+			case 4 -> e = value;
+			case 5 -> f = value;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		}
+	}
+
+	@Override public int length() {
+		return 6;
 	}
 
 	@Override public String formatMap( MapPrintFormat format ) {

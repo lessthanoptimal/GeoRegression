@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -135,12 +135,12 @@ public class FitEllipseAlgebraic_F64 {
 		// ellipse coefficients
 		CommonOps_DDRM.mult(T,a1,Ta1);
 
-		ellipse.A = a1.data[0];
-		ellipse.B = a1.data[1]/2;
-		ellipse.C = a1.data[2];
-		ellipse.D = Ta1.data[0]/2;
-		ellipse.E = Ta1.data[1]/2;
-		ellipse.F = Ta1.data[2];
+		ellipse.a = a1.data[0];
+		ellipse.b = a1.data[1]/2;
+		ellipse.c = a1.data[2];
+		ellipse.d = Ta1.data[0]/2;
+		ellipse.e = Ta1.data[1]/2;
+		ellipse.f = Ta1.data[2];
 
 		return true;
 	}

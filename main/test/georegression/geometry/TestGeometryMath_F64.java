@@ -19,10 +19,10 @@
 package georegression.geometry;
 
 import georegression.misc.GrlConstants;
-import georegression.struct.GeoTuple3D_F64;
-import georegression.struct.GeoTuple4D_F64;
 import georegression.struct.point.*;
 import georegression.struct.so.Quaternion_F64;
+import georegression.struct.tuples.GeoTuple3D_F64;
+import georegression.struct.tuples.GeoTuple4D_F64;
 import org.ejml.UtilEjml;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,8 +18,8 @@
 
 package georegression.struct.packed;
 
-import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.point.Point3D_F64;
+import georegression.struct.tuples.GeoTuple3D_F64;
 import org.ddogleg.struct.BigDogGrowth;
 
 import java.util.Collection;

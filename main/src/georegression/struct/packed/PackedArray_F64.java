@@ -21,10 +21,11 @@ package georegression.struct.packed;
 import lombok.Getter;
 import org.ddogleg.struct.DogArray_F64;
 import org.ejml.MapPrintFormat;
+import org.ejml.MatrixFormattable;
 import org.ejml.MatrixPrintFormat;
 import org.ejml.UtilEjml;
 
-public abstract class PackedArray_F64<T> implements PackedArray<T> {
+public abstract class PackedArray_F64<T> implements PackedArray<T>, MatrixFormattable {
 	/** Degrees of freedom */
 	protected final int DOF;
 
@@ -69,7 +70,7 @@ public abstract class PackedArray_F64<T> implements PackedArray<T> {
 		array.resize(size*DOF, 0.0);
 	}
 
-	public String format( MatrixPrintFormat format ) {
+	@Override public String format( MatrixPrintFormat format ) {
 		char decimal = format.decimal;
 		var builder = new StringBuilder();
 		builder.append(format.prefix);

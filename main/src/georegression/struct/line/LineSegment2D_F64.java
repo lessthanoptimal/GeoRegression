@@ -18,6 +18,7 @@
 
 package georegression.struct.line;
 
+import georegression.struct.arraylike.ArrayLike_F64;
 import georegression.struct.point.Point2D_F64;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +35,7 @@ import java.io.Serializable;
  * @see georegression.geometry.UtilLine2D_F64
  */
 @Getter @Setter
-public class LineSegment2D_F64 implements Serializable, MapFormattable {
+public class LineSegment2D_F64 implements Serializable, MapFormattable, ArrayLike_F64 {
 	public Point2D_F64 a = new Point2D_F64();
 	public Point2D_F64 b = new Point2D_F64();
 
@@ -149,6 +150,28 @@ public class LineSegment2D_F64 implements Serializable, MapFormattable {
 
 		return b.isIdentical(bx, by, tol);
 	}
+
+	@Override public double get( int index ) {
+		return switch (index) {
+			case 0 -> a.x;
+			case 1 -> a.y;
+			case 2 -> b.x;
+			case 3 -> b.y;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		};
+	}
+
+	@Override public void set( int index, double value ) {
+		switch (index) {
+			case 0 -> a.x = value;
+			case 1 -> a.y = value;
+			case 2 -> b.x = value;
+			case 3 -> b.y = value;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		}
+	}
+
+	@Override public int length() {return 4;}
 
 	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +

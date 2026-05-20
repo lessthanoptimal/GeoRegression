@@ -18,7 +18,7 @@
 
 package georegression.struct.point;
 
-import georegression.struct.GeoTuple3D_F64;
+import georegression.struct.tuples.GeoTuple3D_F64;
 
 /**
  *

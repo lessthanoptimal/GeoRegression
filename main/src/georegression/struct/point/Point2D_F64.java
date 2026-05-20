@@ -18,7 +18,7 @@
 
 package georegression.struct.point;
 
-import georegression.struct.GeoTuple2D_F64;
+import georegression.struct.tuples.GeoTuple2D_F64;
 
 /**
  * A point in 2D
