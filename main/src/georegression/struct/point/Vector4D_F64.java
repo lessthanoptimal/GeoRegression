@@ -18,7 +18,7 @@
 
 package georegression.struct.point;
 
-import georegression.struct.GeoTuple4D_F64;
+import georegression.struct.tuples.GeoTuple4D_F64;
 
 /**
  * Vector in 4D space

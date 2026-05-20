@@ -16,16 +16,16 @@
  * limitations under the License.
  */
 
-package georegression.struct;
+package georegression.struct.tuples;
 
-import org.ejml.MatrixPrintFormat;
+import georegression.struct.arraylike.ArrayLike_S32;
 
 /**
  * Integer tuple class
  *
  * @author Peter Abeles
  */
-public abstract class GeoTuple_I32<T extends GeoTuple_I32<T>> extends GeoTuple<T> {
+public abstract class GeoTuple_I32<T extends GeoTuple_I32<T>> extends GeoTuple<T> implements ArrayLike_S32 {
 	/**
 	 * Checks to see if the two GeoTuple have values which are nearly the same. False is always
 	 * returned if the dimension is different.
@@ -34,41 +34,8 @@ public abstract class GeoTuple_I32<T extends GeoTuple_I32<T>> extends GeoTuple<T
 	 * @param tol How similar each element must be for them to be considered identical.
 	 * @return if they are identical or not.
 	 */
-	public boolean isIdentical( T t, double tol ) {
-		if (t.getDimension() != getDimension())
-			return false;
-
-		int N = getDimension();
-		for (int i = 0; i < N; i++) {
-			double diff = Math.abs(getIdx(i) - t.getIdx(i));
-
-			if (diff > tol)
-				return false;
-		}
-
-		return true;
+	public boolean isIdentical( T t, int tol ) {
+		return isEquals(t, tol);
 	}
 
-	/**
-	 * Returns the value of the tuple along the specified coordinate system axis.
-	 *
-	 * @param index Which axis in the coordinate system.
-	 * @return Its value.
-	 */
-	public abstract int getIdx( int index );
-
-	public abstract void setIdx( int index, int value );
-
-	@Override public String format( MatrixPrintFormat format ) {
-		int size = getDimension();
-		var builder = new StringBuilder();
-		builder.append(format.getRowPrefix());
-		for (int i = 0; i < size - 1; i++) {
-			builder.append(getIdx(i));
-			builder.append(format.getColSeparator());
-		}
-		builder.append(getIdx(size - 1));
-		builder.append(format.getRowSuffix());
-		return builder.toString();
-	}
 }

@@ -26,42 +26,29 @@ import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
 
-/**
- * <p>
- * An ellipse described using its center, semi-axes, and orientation.<br>
- * (x'*cos(phi) + y'*sin(phi))^2/a^2 + (-x'*sin(phi) + y'*cos(phi))^2/b_2 = 1<br>
- * x' = x-x_0, y' = y-y_0<br>
- * where (x_0,y_0) is the center, (a,b) are major and minor axises, and phi is it's orientation.
- * </p>
- *
- * @author Peter Abeles
- */
+/// An ellipse described using its center, semi-axes, and orientation.
+///
+/// (x'\*cos(phi) + y'\*sin(phi))^2/a^2 + (-x'\*sin(phi) + y'\*cos(phi))^2/b\_2 = 1
+///
+/// x' = x-x\_0, y' = y-y\_0
+///
+/// where (x\_0,y\_0) is the center, (a,b) are major and minor axises, and phi is it's orientation.
 public class EllipseRotated_F64 implements Serializable, MapFormattable {
-	/**
-	 * Center of the ellipse
-	 */
+	/// Center of the ellipse
 	public Point2D_F64 center = new Point2D_F64();
-	/**
-	 * semi major-axis
-	 */
+	/// semi major-axis
 	@Getter @Setter public double a;
-	/**
-	 * semi minor-axis
-	 */
+	/// semi minor-axis
 	@Getter @Setter public double b;
-	/**
-	 * counterclockwise angle of rotation from x-axis to the major axis. Standard range is from -PI/2 to PI/2
-	 */
+	/// counterclockwise angle of rotation from x-axis to the major axis. Standard range is from -PI/2 to PI/2
 	@Getter @Setter public double phi;
 
-	/**
-	 * Constructor
-	 *
-	 * @param center Ellipse center
-	 * @param a major axis
-	 * @param b minor axis
-	 * @param phi orientation in radians
-	 */
+	/// Constructor
+	///
+	/// @param center Ellipse center
+	/// @param a major axis
+	/// @param b minor axis
+	/// @param phi orientation in radians
 	public EllipseRotated_F64( Point2D_F64 center, double a, double b, double phi ) {
 		this.center.setTo(center);
 		this.a = a;
@@ -69,24 +56,20 @@ public class EllipseRotated_F64 implements Serializable, MapFormattable {
 		this.phi = phi;
 	}
 
-	/**
-	 * Constructor
-	 *
-	 * @param x0 x coordinate of center
-	 * @param y0 y coordinate of center
-	 * @param a major axis
-	 * @param b minor axis
-	 * @param phi orientation in radians
-	 */
+	/// Constructor
+	///
+	/// @param x0 x coordinate of center
+	/// @param y0 y coordinate of center
+	/// @param a major axis
+	/// @param b minor axis
+	/// @param phi orientation in radians
 	public EllipseRotated_F64( double x0, double y0, double a, double b, double phi ) {
 		setTo(x0, y0, a, b, phi);
 	}
 
-	/**
-	 * Copy constructor
-	 *
-	 * @param original Ellipse which is to be copied
-	 */
+	/// Copy constructor
+	///
+	/// @param original Ellipse which is to be copied
 	public EllipseRotated_F64( EllipseRotated_F64 original ) {
 		this(original.center, original.getA(), original.getB(), original.getPhi());
 	}

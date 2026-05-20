@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.struct;
+package georegression.struct.tuples;
 
 import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
@@ -39,6 +39,9 @@ public abstract class GeoTuple<T extends GeoTuple> implements Serializable, MapF
 	 * @return Dimensionality of the object.
 	 */
 	public abstract int getDimension();
+
+	/// Same as [#getDimension] but required by ArrayList interface
+	public int length() {return getDimension();}
 
 	/**
 	 * <p>

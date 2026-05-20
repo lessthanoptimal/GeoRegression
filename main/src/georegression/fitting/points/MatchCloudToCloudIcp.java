@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,8 +21,8 @@ package georegression.fitting.points;
 import georegression.fitting.MotionTransformPoint;
 import georegression.fitting.points.IterativeClosestPoint.Distance;
 import georegression.misc.StoppingCondition;
-import georegression.struct.GeoTuple;
 import georegression.struct.InvertibleTransform;
+import georegression.struct.tuples.GeoTuple;
 import org.ddogleg.nn.NearestNeighbor;
 import org.ddogleg.nn.NnData;
 import org.jetbrains.annotations.Nullable;

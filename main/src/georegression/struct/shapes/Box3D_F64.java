@@ -22,6 +22,7 @@ import georegression.struct.point.Point3D_F64;
 import lombok.Getter;
 import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
+import org.ejml.MatrixFormattable;
 import org.ejml.MatrixPrintFormat;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,7 +33,7 @@ import java.io.Serializable;
  * Point p0 is less or equal to point p1, 0.x &le; p1.x, p0.y &le; p1.y, p0.z &le; p1.z.
  */
 @Getter
-public class Box3D_F64 implements Serializable, MapFormattable {
+public class Box3D_F64 implements Serializable, MapFormattable, MatrixFormattable {
 	/** The lower point/extent. */
 	public Point3D_F64 p0 = new Point3D_F64();
 
@@ -160,7 +161,7 @@ public class Box3D_F64 implements Serializable, MapFormattable {
 		return storage;
 	}
 
-	public String format( MatrixPrintFormat format ) {
+	@Override public String format( MatrixPrintFormat format ) {
 		return format.getPrefix() +
 				p0.format(format) +
 				format.getRowSeparator() +

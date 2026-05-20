@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,10 +26,10 @@ import georegression.struct.line.LineGeneral2D_F64;
  */
 public class UtilParabola_F64 {
 	public static void axisOfSymmetry(ParabolaGeneral_F64 parabola , LineGeneral2D_F64 axis ) {
-		double A = parabola.A;
-		double C = parabola.C;
-		double D = parabola.D;
-		double E = parabola.E;
+		double A = parabola.a;
+		double C = parabola.c;
+		double D = parabola.d;
+		double E = parabola.e;
 
 		axis.A = A;
 		axis.B = C;

@@ -18,10 +18,10 @@
 
 package georegression.struct.shapes;
 
-import georegression.struct.GeoTuple2D_F64;
 import georegression.struct.line.LineSegment2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
+import georegression.struct.tuples.GeoTuple2D_F64;
 import lombok.Getter;
 import lombok.Setter;
 import org.ejml.MapFormattable;

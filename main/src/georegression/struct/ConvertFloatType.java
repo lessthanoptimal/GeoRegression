@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -262,12 +262,12 @@ public class ConvertFloatType {
 			dst = new EllipseQuadratic_F32();
 		}
 
-		dst.A = (float)src.A;
-		dst.B = (float)src.B;
-		dst.C = (float)src.C;
-		dst.D = (float)src.D;
-		dst.E = (float)src.E;
-		dst.F = (float)src.F;
+		dst.A = (float)src.a;
+		dst.B = (float)src.b;
+		dst.C = (float)src.c;
+		dst.D = (float)src.d;
+		dst.E = (float)src.e;
+		dst.F = (float)src.f;
 
 		return dst;
 	}
@@ -277,12 +277,12 @@ public class ConvertFloatType {
 			dst = new EllipseQuadratic_F64();
 		}
 
-		dst.A = src.A;
-		dst.B = src.B;
-		dst.C = src.C;
-		dst.D = src.D;
-		dst.E = src.E;
-		dst.F = src.F;
+		dst.a = src.A;
+		dst.b = src.B;
+		dst.c = src.C;
+		dst.d = src.D;
+		dst.e = src.E;
+		dst.f = src.F;
 
 		return dst;
 	}

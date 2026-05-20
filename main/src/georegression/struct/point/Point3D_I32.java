@@ -18,7 +18,7 @@
 
 package georegression.struct.point;
 
-import georegression.struct.GeoTuple_I32;
+import georegression.struct.tuples.GeoTuple_I32;
 import lombok.Getter;
 import lombok.Setter;
 import org.ejml.MapPrintFormat;

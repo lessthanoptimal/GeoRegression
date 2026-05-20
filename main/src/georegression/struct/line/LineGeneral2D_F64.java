@@ -19,6 +19,7 @@
 package georegression.struct.line;
 
 import georegression.geometry.UtilLine2D_F64;
+import georegression.struct.arraylike.ArrayLike_F64;
 import lombok.Getter;
 import lombok.Setter;
 import org.ejml.MapFormattable;
@@ -42,7 +43,7 @@ import java.io.Serializable;
  * @see UtilLine2D_F64
  */
 @Getter @Setter
-public class LineGeneral2D_F64 implements Serializable, MapFormattable {
+public class LineGeneral2D_F64 implements Serializable, MapFormattable, ArrayLike_F64 {
 	/** Coefficients which define the line. */
 	public double A, B, C;
 
@@ -141,6 +142,26 @@ public class LineGeneral2D_F64 implements Serializable, MapFormattable {
 		var o = (LineGeneral2D_F64)obj;
 		return A == o.A && B == o.B && C == o.C;
 	}
+
+	@Override public double get( int index ) {
+		return switch (index) {
+			case 0 -> A;
+			case 1 -> B;
+			case 2 -> C;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		};
+	}
+
+	@Override public void set( int index, double value ) {
+		switch (index) {
+			case 0 -> A = value;
+			case 1 -> B = value;
+			case 2 -> C = value;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		}
+	}
+
+	@Override public int length() {return 3;}
 
 	@Override
 	public int hashCode() {

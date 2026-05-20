@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package georegression.struct;
+package georegression.struct.tuples;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -52,8 +52,7 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 		return (T)this;
 	}
 
-	@Override
-	public void zero() {
+	@Override public void zero() {
 		setTo(0, 0);
 	}
 
@@ -65,8 +64,7 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 		return (Math.abs(this.x - x) <= tol && Math.abs(this.y - y) <= tol);
 	}
 
-	@Override
-	public boolean isIdentical( T t, double tol ) {
+	@Override public boolean isIdentical( T t, double tol ) {
 		return (Math.abs(this.x - t.x) <= tol && Math.abs(this.y - t.y) <= tol);
 	}
 
@@ -157,31 +155,27 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 		return dx*dx + dy*dy;
 	}
 
-	@Override
-	public T setTo( T src ) {
+	@Override public T setTo( T src ) {
 		this.x = src.x;
 		this.y = src.y;
 		return (T)this;
 	}
 
-	@Override
-	public double distance( T t ) {
+	@Override public double distance( T t ) {
 		double dx = t.x - x;
 		double dy = t.y - y;
 
 		return Math.sqrt(dx*dx + dy*dy);
 	}
 
-	@Override
-	public double distance2( T t ) {
+	@Override public double distance2( T t ) {
 		double dx = t.x - x;
 		double dy = t.y - y;
 
 		return dx*dx + dy*dy;
 	}
 
-	@Override
-	public double getIdx( int index ) {
+	@Override public double get( int index ) {
 		switch (index) {
 			case 0:
 				return x;
@@ -194,8 +188,7 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 		}
 	}
 
-	@Override
-	public void setIdx( int index, double value ) {
+	@Override public void set( int index, double value ) {
 		switch (index) {
 			case 0:
 				x = value;
@@ -222,18 +215,15 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 		return Math.max(absX, absY);
 	}
 
-	@Override
-	public double norm() {
+	@Override public double norm() {
 		return Math.sqrt(x*x + y*y);
 	}
 
-	@Override
-	public double normSq() {
+	@Override public double normSq() {
 		return x*x + y*y;
 	}
 
-	@Override
-	public int getDimension() {
+	@Override public int getDimension() {
 		return 2;
 	}
 
@@ -255,8 +245,7 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 		return Double.compare(x, o.x) == 0 && Double.compare(y, o.y) == 0;
 	}
 
-	@Override
-	public boolean isNaN() {
+	@Override public boolean isNaN() {
 		return (Double.isNaN(x) || Double.isNaN(y));
 	}
 
@@ -268,8 +257,7 @@ public abstract class GeoTuple2D_F64<T extends GeoTuple2D_F64> extends GeoTuple_
 				format.itemSuffix;
 	}
 
-	@Override
-	public int hashCode() {
+	@Override public int hashCode() {
 		return Objects.hash(x, y);
 	}
 }

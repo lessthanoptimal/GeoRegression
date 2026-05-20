@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,10 +18,10 @@
 
 package georegression.metric;
 
-import georegression.struct.GeoTuple2D_F32;
-import georegression.struct.GeoTuple2D_F64;
-import georegression.struct.GeoTuple3D_F32;
-import georegression.struct.GeoTuple3D_F64;
+import georegression.struct.tuples.GeoTuple2D_F32;
+import georegression.struct.tuples.GeoTuple2D_F64;
+import georegression.struct.tuples.GeoTuple3D_F32;
+import georegression.struct.tuples.GeoTuple3D_F64;
 
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,7 +19,6 @@
 package georegression.misc.test;
 
 import georegression.geometry.UtilPoint2D_F64;
-import georegression.struct.*;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
@@ -27,6 +26,7 @@ import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
+import georegression.struct.tuples.*;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
 import org.ejml.dense.row.MatrixFeatures_FDRM;
 

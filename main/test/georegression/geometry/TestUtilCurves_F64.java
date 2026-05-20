@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -42,12 +42,12 @@ public class TestUtilCurves_F64 {
 		DMatrixRMaj C = UtilCurves_F64.convert(conic,(DMatrixRMaj)null);
 		ConicGeneral_F64 found = UtilCurves_F64.convert(C,(ConicGeneral_F64)null);
 
-		assertEquals(conic.A,found.A, UtilEjml.TEST_F64);
-		assertEquals(conic.B,found.B, UtilEjml.TEST_F64);
-		assertEquals(conic.C,found.C, UtilEjml.TEST_F64);
-		assertEquals(conic.D,found.D, UtilEjml.TEST_F64);
-		assertEquals(conic.E,found.E, UtilEjml.TEST_F64);
-		assertEquals(conic.F,found.F, UtilEjml.TEST_F64);
+		assertEquals(conic.a,found.a, UtilEjml.TEST_F64);
+		assertEquals(conic.b,found.b, UtilEjml.TEST_F64);
+		assertEquals(conic.c,found.c, UtilEjml.TEST_F64);
+		assertEquals(conic.d,found.d, UtilEjml.TEST_F64);
+		assertEquals(conic.e,found.e, UtilEjml.TEST_F64);
+		assertEquals(conic.f,found.f, UtilEjml.TEST_F64);
 	}
 
 	@Test
@@ -68,12 +68,12 @@ public class TestUtilCurves_F64 {
 		DMatrixRMaj C = UtilCurves_F64.convert(conic,(DMatrixRMaj)null);
 		ConicGeneral_F64 found = UtilCurves_F64.convert(C,(ConicGeneral_F64)null);
 
-		assertEquals(conic.A,found.A, UtilEjml.TEST_F64);
-		assertEquals(conic.B,found.B, UtilEjml.TEST_F64);
-		assertEquals(conic.C,found.C, UtilEjml.TEST_F64);
-		assertEquals(conic.D,found.D, UtilEjml.TEST_F64);
-		assertEquals(conic.E,found.E, UtilEjml.TEST_F64);
-		assertEquals(conic.F,found.F, UtilEjml.TEST_F64);
+		assertEquals(conic.a,found.a, UtilEjml.TEST_F64);
+		assertEquals(conic.b,found.b, UtilEjml.TEST_F64);
+		assertEquals(conic.c,found.c, UtilEjml.TEST_F64);
+		assertEquals(conic.d,found.d, UtilEjml.TEST_F64);
+		assertEquals(conic.e,found.e, UtilEjml.TEST_F64);
+		assertEquals(conic.f,found.f, UtilEjml.TEST_F64);
 	}
 
 	@Test
@@ -103,18 +103,18 @@ public class TestUtilCurves_F64 {
 		UtilCurves_F64.convert(conic,parabola);
 		assertEquals(0,conic.evaluate(10,5), UtilEjml.TEST_F64);
 		// make sure it's not all zeros
-		assertTrue(conic.F != 0 );
+		assertTrue(conic.f != 0 );
 
 		// go the reverse direction now
 		ConicGeneral_F64 reversed = new ConicGeneral_F64();
 		UtilCurves_F64.convert(parabola,reversed);
 
-		assertEquals(conic.A,reversed.A, UtilEjml.TEST_F64);
-		assertEquals(conic.B,reversed.B, UtilEjml.TEST_F64);
-		assertEquals(conic.C,reversed.C, UtilEjml.TEST_F64);
-		assertEquals(conic.D,reversed.D, UtilEjml.TEST_F64);
-		assertEquals(conic.E,reversed.E, UtilEjml.TEST_F64);
-		assertEquals(conic.F,reversed.F, UtilEjml.TEST_F64);
+		assertEquals(conic.a,reversed.a, UtilEjml.TEST_F64);
+		assertEquals(conic.b,reversed.b, UtilEjml.TEST_F64);
+		assertEquals(conic.c,reversed.c, UtilEjml.TEST_F64);
+		assertEquals(conic.d,reversed.d, UtilEjml.TEST_F64);
+		assertEquals(conic.e,reversed.e, UtilEjml.TEST_F64);
+		assertEquals(conic.f,reversed.f, UtilEjml.TEST_F64);
 	}
 
 	/**
@@ -126,11 +126,11 @@ public class TestUtilCurves_F64 {
 		ParabolaGeneral_F64 parabola = new ParabolaGeneral_F64();
 		UtilCurves_F64.convert(conic,parabola);
 
-		assertEquals(Math.sqrt(conic.A),parabola.A, UtilEjml.TEST_F64);
-		assertEquals(Math.sqrt(conic.C),parabola.C, UtilEjml.TEST_F64);
-		assertEquals(conic.D,parabola.D, UtilEjml.TEST_F64);
-		assertEquals(conic.E,parabola.E, UtilEjml.TEST_F64);
-		assertEquals(conic.F,parabola.F, UtilEjml.TEST_F64);
+		assertEquals(Math.sqrt(conic.a),parabola.a, UtilEjml.TEST_F64);
+		assertEquals(Math.sqrt(conic.c),parabola.c, UtilEjml.TEST_F64);
+		assertEquals(conic.d,parabola.d, UtilEjml.TEST_F64);
+		assertEquals(conic.e,parabola.e, UtilEjml.TEST_F64);
+		assertEquals(conic.f,parabola.f, UtilEjml.TEST_F64);
 	}
 
 	@Test

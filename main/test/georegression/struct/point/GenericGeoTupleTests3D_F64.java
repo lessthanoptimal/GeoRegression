@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,7 +19,7 @@
 package georegression.struct.point;
 
 import georegression.misc.GrlConstants;
-import georegression.struct.GeoTuple3D_F64;
+import georegression.struct.tuples.GeoTuple3D_F64;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;

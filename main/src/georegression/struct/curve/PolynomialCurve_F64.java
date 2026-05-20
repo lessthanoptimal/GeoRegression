@@ -18,27 +18,14 @@
 
 package georegression.struct.curve;
 
+import georegression.struct.arraylike.ArrayLike_F64;
 import org.ejml.MapFormattable;
 
-/**
- * Interface for all polynomials
- */
-public interface PolynomialCurve_F64 extends MapFormattable {
-
-	double get( int coefficient );
-
-	void set( int coefficient , double value );
-
-	/**
-	 * Number of coeffients
-	 */
-	int size();
-
-	/**
-	 * Polynomial's degree. This is the number of coefficients minus one.
-	 */
+/// Interface for all polynomials
+public interface PolynomialCurve_F64 extends MapFormattable, ArrayLike_F64 {
+	/// Polynomial's degree. This is the number of coefficients minus one.
 	int degree();
 
-	/** Sets all coefficients to zero */
+	/// Sets all coefficients to zero
 	void zero();
 }

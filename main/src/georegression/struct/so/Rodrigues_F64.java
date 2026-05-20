@@ -18,10 +18,12 @@
 
 package georegression.struct.so;
 
+import georegression.struct.arraylike.ArrayLike_F64;
 import georegression.struct.point.Vector3D_F64;
 import lombok.Getter;
 import lombok.Setter;
-import org.ejml.*;
+import org.ejml.MapFormattable;
+import org.ejml.MapPrintFormat;
 
 import java.io.Serializable;
 
@@ -38,7 +40,7 @@ import java.io.Serializable;
  *
  * @author Peter Abeles
  */
-public class Rodrigues_F64 implements Serializable, MapFormattable, MatrixFormattable {
+public class Rodrigues_F64 implements Serializable, MapFormattable, ArrayLike_F64 {
 	// unit vector defining the axis of rotation
 	public Vector3D_F64 unitAxisRotation = new Vector3D_F64();
 	// the angle it is rotated by
@@ -123,18 +125,28 @@ public class Rodrigues_F64 implements Serializable, MapFormattable, MatrixFormat
 		return this;
 	}
 
-	/// Converts into a string using a Matrix like format.
-	@Override public String format( MatrixPrintFormat format ) {
-		char decimal = format.decimal;
-		return format.getRowPrefix() +
-				UtilEjml.fancyString2(theta, format.getPrecision(), decimal) +
-				format.getColSeparator() +
-				UtilEjml.fancyString2(unitAxisRotation.x, format.getPrecision(), decimal) +
-				format.getColSeparator() +
-				UtilEjml.fancyString2(unitAxisRotation.y, format.getPrecision(), decimal) +
-				format.getColSeparator() +
-				UtilEjml.fancyString2(unitAxisRotation.z, format.getPrecision(), decimal) +
-				format.getRowSuffix();
+	@Override public double get( int index ) {
+		return switch (index) {
+			case 0 -> theta;
+			case 1 -> unitAxisRotation.x;
+			case 2 -> unitAxisRotation.y;
+			case 3 -> unitAxisRotation.z;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		};
+	}
+
+	@Override public void set( int index, double value ) {
+		switch (index) {
+			case 0 -> theta = value;
+			case 1 -> unitAxisRotation.x = value;
+			case 2 -> unitAxisRotation.y = value;
+			case 3 -> unitAxisRotation.z = value;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		}
+	}
+
+	@Override public int length() {
+		return 4;
 	}
 
 	/// Converts into a [String] using a Map like format.

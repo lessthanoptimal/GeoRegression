@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -27,10 +27,6 @@ import georegression.helper.KdTreePoint2D_F64;
 import georegression.helper.KdTreePoint3D_F32;
 import georegression.helper.KdTreePoint3D_F64;
 import georegression.misc.StoppingCondition;
-import georegression.struct.GeoTuple2D_F32;
-import georegression.struct.GeoTuple2D_F64;
-import georegression.struct.GeoTuple3D_F32;
-import georegression.struct.GeoTuple3D_F64;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F32;
@@ -39,6 +35,10 @@ import georegression.struct.se.Se2_F32;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F32;
 import georegression.struct.se.Se3_F64;
+import georegression.struct.tuples.GeoTuple2D_F32;
+import georegression.struct.tuples.GeoTuple2D_F64;
+import georegression.struct.tuples.GeoTuple3D_F32;
+import georegression.struct.tuples.GeoTuple3D_F64;
 import org.ddogleg.nn.FactoryNearestNeighbor;
 import org.ddogleg.nn.NearestNeighbor;
 

@@ -18,37 +18,32 @@
 
 package georegression.struct.curve;
 
+import georegression.struct.arraylike.ArrayLike_F64;
 import org.ejml.MapFormattable;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 
 import java.io.Serializable;
 
-/**
- * <p>A*x<sup>2</sup> + B*x*y + C*y<sup>2</sup> + D*x + E*y + F=0</p>
- *
- * <p>All coefficients are real numbers and A,B,C are all not zero. The discriminant is defined as
- * B<sup>2</sup> - 4*A*C.</p>
- *
- * <p><b>Ellipse:</b>  B<sup>2</sup> - 4*A*C &lt; 0</p>
- * <p><b>Parabola:</b>  B<sup>2</sup> - 4*A*C = 0</p>
- * <p><b>Hyperbola:</b>  B<sup>2</sup> - 4*A*C &gt; 0</p>
- *
- * <p>
- * NOTE: these parameters are unique only up to a scale factor.
- * </p>
- *
- * @author Peter Abeles
- */
-public class ConicGeneral_F64 implements Serializable, MapFormattable {
-	/**
-	 * Coefficients
-	 */
-	public double A, B, C, D, E, F;
+/// A\*x<sup>2</sup> + B\*x\*y + C\*y<sup>2</sup> + D\*x + E\*y + F=0
+///
+/// All coefficients are real numbers and A,B,C are all not zero. The discriminant is defined as
+/// B<sup>2</sup> - 4\*A\*C.
+///
+/// **Ellipse:**  B<sup>2</sup> - 4\*A\*C < 0
+///
+/// **Parabola:**  B<sup>2</sup> - 4\*A\*C = 0
+///
+/// **Hyperbola:**  B<sup>2</sup> - 4\*A\*C > 0
+///
+/// NOTE: these parameters are unique only up to a scale factor.
+public class ConicGeneral_F64 implements Serializable, MapFormattable, ArrayLike_F64 {
+	/// Coefficients
+	public double a, b, c, d, e, f;
 
 	public ConicGeneral_F64(double a, double b, double c, double d, double e, double f) {
-		A = a; B = b; C = c;
-		D = d; E = e; F = f;
+		this.a = a; this.b = b; this.c = c;
+		this.d = d; this.e = e; this.f = f;
 	}
 
 	public ConicGeneral_F64( ConicGeneral_F64 original ) {
@@ -59,42 +54,40 @@ public class ConicGeneral_F64 implements Serializable, MapFormattable {
 	}
 
 	public double evaluate( double x, double y ) {
-		return A*x*x + B*x*y + C*y*y + D*x + E*y + F;
+		return a*x*x + b*x*y + c*y*y + d*x + e*y + f;
 	}
 
-	/**
-	 * Returns true if any of its parameters have an uncountable number
-	 */
+	/// Returns true if any of its parameters have an uncountable number
 	public boolean hasUncountable() {
-		return UtilEjml.isUncountable(A) || UtilEjml.isUncountable(B) || UtilEjml.isUncountable(C)
-				|| UtilEjml.isUncountable(D) || UtilEjml.isUncountable(E) || UtilEjml.isUncountable(F);
+		return UtilEjml.isUncountable(a) || UtilEjml.isUncountable(b) || UtilEjml.isUncountable(c)
+				|| UtilEjml.isUncountable(d) || UtilEjml.isUncountable(e) || UtilEjml.isUncountable(f);
 	}
 
 	public boolean isEllipse( double tol ) {
-		return B*B + tol < 4*A*C;
+		return b*b + tol < 4*a*c;
 	}
 
 	public boolean isParabola( double tol ) {
-		return Math.abs(B*B - 4*A*C) <= tol;
+		return Math.abs(b*b - 4*a*c) <= tol;
 	}
 
 	public boolean isHyperbola( double tol ) {
-		return B*B - tol > 4*A*C;
+		return b*b - tol > 4*a*c;
 	}
 
 	public ConicGeneral_F64 setTo( ConicGeneral_F64 original ) {
-		this.A = original.A;
-		this.B = original.B;
-		this.C = original.C;
-		this.D = original.D;
-		this.E = original.E;
-		this.F = original.F;
+		this.a = original.a;
+		this.b = original.b;
+		this.c = original.c;
+		this.d = original.d;
+		this.e = original.e;
+		this.f = original.f;
 		return this;
 	}
 
 	public ConicGeneral_F64 setTo(double a, double b, double c, double d, double e, double f) {
-		A = a; B = b; C = c;
-		D = d; E = e; F = f;
+		this.a = a; this.b = b; this.c = c;
+		this.d = d; this.e = e; this.f = f;
 		return this;
 	}
 
@@ -103,17 +96,45 @@ public class ConicGeneral_F64 implements Serializable, MapFormattable {
 	}
 
 	public ConicGeneral_F64 copy() {
-		return new ConicGeneral_F64(A, B, C, D, E, F);
+		return new ConicGeneral_F64(a, b, c, d, e, f);
+	}
+
+	@Override public double get( int index ) {
+		return switch (index) {
+			case 0 -> a;
+			case 1 -> b;
+			case 2 -> c;
+			case 3 -> d;
+			case 4 -> e;
+			case 5 -> f;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		};
+	}
+
+	@Override public void set( int index, double value ) {
+		switch (index) {
+			case 0 -> a = value;
+			case 1 -> b = value;
+			case 2 -> c = value;
+			case 3 -> d = value;
+			case 4 -> e = value;
+			case 5 -> f = value;
+			default -> throw new ArrayIndexOutOfBoundsException();
+		}
+	}
+
+	@Override public int length() {
+		return 6;
 	}
 
 	@Override public String formatMap( MapPrintFormat format ) {
 		return format.itemPrefix +
-				format.pair("A", A, true) +
-				format.pair("B", B, true) +
-				format.pair("C", C, true) +
-				format.pair("D", D, true) +
-				format.pair("E", E, true) +
-				format.pair("F", F, false) +
+				format.pair("A", a, true) +
+				format.pair("B", b, true) +
+				format.pair("C", c, true) +
+				format.pair("D", d, true) +
+				format.pair("E", e, true) +
+				format.pair("F", f, false) +
 				format.itemSuffix;
 	}
 

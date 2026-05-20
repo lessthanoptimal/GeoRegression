@@ -20,7 +20,7 @@ package georegression.struct.point;
 
 import georegression.geometry.GeometryMath_F64;
 import georegression.geometry.UtilVector3D_F64;
-import georegression.struct.GeoTuple3D_F64;
+import georegression.struct.tuples.GeoTuple3D_F64;
 
 /**
  * Spacial vector in 3D. A vector defines a direction.

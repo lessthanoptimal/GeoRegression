@@ -37,7 +37,7 @@ public class TestConicGeneral_F64 {
 		double B = Math.sqrt(4*A*C)+0.01;
 		ConicGeneral_F64 conic = new ConicGeneral_F64(A,B,C,3,2,-217.5);
 		assertFalse(conic.isEllipse( GrlConstants.EPS ));
-		conic.B -= 0.02;
+		conic.b -= 0.02;
 		assertTrue(conic.isEllipse( GrlConstants.EPS ));
 	}
 
@@ -46,7 +46,7 @@ public class TestConicGeneral_F64 {
 		double B = Math.sqrt(4*A*C)-0.01;
 		ConicGeneral_F64 conic = new ConicGeneral_F64(A,B,C,3,2,-217.5);
 		assertFalse(conic.isHyperbola (GrlConstants.EPS ));
-		conic.B += 0.02;
+		conic.b += 0.02;
 		assertTrue(conic.isHyperbola( GrlConstants.EPS ));
 	}
 
@@ -55,7 +55,7 @@ public class TestConicGeneral_F64 {
 		double B = Math.sqrt(4*A*C)+0.01;
 		ConicGeneral_F64 conic = new ConicGeneral_F64(A,B,C,3,2,-217.5);
 		assertFalse(conic.isParabola( GrlConstants.EPS ));
-		conic.B -= 0.01;
+		conic.b -= 0.01;
 		assertTrue(conic.isParabola (GrlConstants.EPS ));
 	}
 

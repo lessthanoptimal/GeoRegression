@@ -18,6 +18,7 @@
 
 package georegression.struct;
 
+import georegression.struct.tuples.GeoTuple;
 import org.ejml.MapFormattable;
 import org.jetbrains.annotations.Nullable;
 
