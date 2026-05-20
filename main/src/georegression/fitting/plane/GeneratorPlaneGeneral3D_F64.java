@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -26,9 +26,6 @@ import org.ddogleg.fitting.modelset.ModelGenerator;
 
 import java.util.List;
 
-/**
- * @author Peter Abeles
- */
 public class GeneratorPlaneGeneral3D_F64 implements ModelGenerator<PlaneGeneral3D_F64, Point3D_F64> {
 	FitPlane3D_F64 fitter = new FitPlane3D_F64();
 

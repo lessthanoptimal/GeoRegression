@@ -28,18 +28,11 @@ import org.ejml.data.DMatrixRMaj;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestSe3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64> {
-	Random rand = new Random(234234);
-
-	/**
-	 * Checks to see if the constructor correctly saves the reference or copies the values.
-	 */
-	@Test
-	void constructor_assign() {
+	/// Checks to see if the constructor correctly saves the reference or copies the values.
+	@Test void constructor_assign() {
 		DMatrixRMaj R = new DMatrixRMaj(3, 3);
 		Vector3D_F64 T = new Vector3D_F64(1, 2, 3);
 
@@ -85,4 +78,7 @@ public class TestSe3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64
 		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("{R: [{1, 2, 3},\n{4, 5, 6},\n{7, 8, 9.12}], T: {x: 0, y: 3, z: 2}}", found);
 	}
+
+	// Automatic check can't handle DMatrixRMaj
+	@Override public void setTo() {}
 }

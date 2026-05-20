@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.struct;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.affine.Affine2D_F32;
 import georegression.struct.affine.Affine2D_F64;
@@ -30,14 +31,10 @@ import org.ejml.data.FMatrixRMaj;
 import org.ejml.dense.row.RandomMatrices_DDRM;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestConvertFloatType {
-	Random rand = new Random(234);
-
+public class TestConvertFloatType extends GeoRegressionJUnit {
 	@Test void convert_Se_64_32() {
 		Se3_F64 src = new Se3_F64();
 		RandomMatrices_DDRM.fillUniform(src.getR(), rand);

@@ -18,6 +18,7 @@
 
 package georegression.struct.line;
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class TestLineSegment3D_F64 {
+public class TestLineSegment3D_F64 extends GeoRegressionJUnit {
 	@Test void pointOnLine() {
 		var segment = new LineSegment3D_F64(1, 2, 3, 5, 7, 9);
 

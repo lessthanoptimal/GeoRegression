@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,44 +18,45 @@
 
 package georegression.struct;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestMatrix3x3_F64 {
+public class TestMatrix3x3_F64 extends GeoRegressionJUnit {
 
-	@Test void set_matrix() {
+	@Test public void setTo() {
 		var a = new Matrix3x3_F64();
 		a.setTo(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 		var m = new Matrix3x3_F64();
 		m.setTo(a);
 
-		assertEquals(m.a11, 1);
-		assertEquals(m.a12, 2);
-		assertEquals(m.a13, 3);
-		assertEquals(m.a21, 4);
-		assertEquals(m.a22, 5);
-		assertEquals(m.a23, 6);
-		assertEquals(m.a31, 7);
-		assertEquals(m.a32, 8);
-		assertEquals(m.a33, 9);
+		assertEquals(1, m.a11);
+		assertEquals(2, m.a12);
+		assertEquals(3, m.a13);
+		assertEquals(4, m.a21);
+		assertEquals(5, m.a22);
+		assertEquals(6, m.a23);
+		assertEquals(7, m.a31);
+		assertEquals(8, m.a32);
+		assertEquals(9, m.a33);
 	}
 
 	@Test void set_values() {
 		var m = new Matrix3x3_F64();
 		m.setTo(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-		assertEquals(m.a11, 1);
-		assertEquals(m.a12, 2);
-		assertEquals(m.a13, 3);
-		assertEquals(m.a21, 4);
-		assertEquals(m.a22, 5);
-		assertEquals(m.a23, 6);
-		assertEquals(m.a31, 7);
-		assertEquals(m.a32, 8);
-		assertEquals(m.a33, 9);
+		assertEquals(1, m.a11);
+		assertEquals(2, m.a12);
+		assertEquals(3, m.a13);
+		assertEquals(4, m.a21);
+		assertEquals(5, m.a22);
+		assertEquals(6, m.a23);
+		assertEquals(7, m.a31);
+		assertEquals(8, m.a32);
+		assertEquals(9, m.a33);
 	}
 
 	@Test void scale() {

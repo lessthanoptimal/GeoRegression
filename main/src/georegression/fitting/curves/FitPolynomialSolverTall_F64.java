@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2019, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -55,7 +55,7 @@ public class FitPolynomialSolverTall_F64 {
 	public boolean process(double[] data, int offset , int length , PolynomialCurve_F64 output ) {
 		int N = length/2;
 
-		int numCoefs = output.size();
+		int numCoefs = output.length();
 
 		A.reshape(N,numCoefs);
 		b.reshape(N,1);

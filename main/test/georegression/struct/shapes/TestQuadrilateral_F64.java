@@ -18,6 +18,7 @@
 
 package georegression.struct.shapes;
 
+import georegression.GeoRegressionJUnit;
 import georegression.struct.point.Point2D_F64;
 import org.ejml.MapPrintFormat;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestQuadrilateral2D_F64 {
+public class TestQuadrilateral_F64 extends GeoRegressionJUnit {
 	@Test void convert() {
 		var polygon = new Quadrilateral_F64();
 		polygon.a.setTo(1,2);

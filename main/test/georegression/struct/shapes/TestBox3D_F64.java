@@ -18,6 +18,7 @@
 
 package georegression.struct.shapes;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import org.ejml.MapPrintFormat;
@@ -26,10 +27,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestBox3D_F64 {
+public class TestBox3D_F64 extends GeoRegressionJUnit {
 
 	@Test void constructor_box() {
 		Box3D_F64 boxA = new Box3D_F64(1, 2, 3, 4, 5, 6);

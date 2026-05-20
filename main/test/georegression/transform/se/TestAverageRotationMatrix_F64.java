@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.transform.se;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
@@ -29,15 +30,11 @@ import org.ejml.ops.DConvertMatrixStruct;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static georegression.geometry.ConvertRotation3D_F64.eulerToMatrix;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestAverageRotationMatrix_F64 {
-
-	Random rand = new Random(234);
-
+public class TestAverageRotationMatrix_F64 extends GeoRegressionJUnit {
 	/**
 	 * Find the average of one quaternion. Which should be the same as the input quaternion.
 	 */

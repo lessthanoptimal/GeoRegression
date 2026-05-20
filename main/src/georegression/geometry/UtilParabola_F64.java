@@ -21,9 +21,6 @@ package georegression.geometry;
 import georegression.struct.curve.ParabolaGeneral_F64;
 import georegression.struct.line.LineGeneral2D_F64;
 
-/**
- * @author Peter Abeles
- */
 public class UtilParabola_F64 {
 	public static void axisOfSymmetry(ParabolaGeneral_F64 parabola , LineGeneral2D_F64 axis ) {
 		double A = parabola.a;

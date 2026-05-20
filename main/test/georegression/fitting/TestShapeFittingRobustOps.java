@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilPlane3D_F64;
 import georegression.geometry.UtilPoint3D_F64;
 import georegression.metric.Distance3D_F64;
@@ -28,13 +29,10 @@ import georegression.struct.shapes.Cylinder3D_F64;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TestShapeFittingRobustOps {
-	Random rand = new Random(0xDEADBEEFL);
-
+class TestShapeFittingRobustOps extends GeoRegressionJUnit {
 	@Test void ransac_plane_points() {
 		var plane = new PlaneNormal3D_F64(1, 1, 2, 0, 0, 1);
 

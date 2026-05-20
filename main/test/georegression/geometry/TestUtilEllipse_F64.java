@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.curves.TangentLinesTwoEllipses_F64;
 import georegression.geometry.curves.TestTangentLinesTwoEllipses_F64;
 import georegression.metric.Intersection2D_F64;
@@ -30,19 +31,10 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
-public class TestUtilEllipse_F64 {
-
-	Random rand = new Random(234);
-
-	@Test
-	void convert_back_forth() {
+public class TestUtilEllipse_F64 extends GeoRegressionJUnit {
+	@Test void convert_back_forth() {
 		convert_back_forth(0,0,4.5,3,0);
 		convert_back_forth(1,2,4.5,3,0);
 		convert_back_forth(0,0,4.5,3,(double)Math.PI/4);
@@ -56,8 +48,7 @@ public class TestUtilEllipse_F64 {
 		convert_back_forth(0,0,3,3,0);
 	}
 
-	@Test
-	void convert_back_forth_random() {
+	@Test void convert_back_forth_random() {
 
 		for( int i = 0; i < 100; i++ ) {
 			double x = (rand.nextDouble()-0.5)*2;
@@ -99,8 +90,7 @@ public class TestUtilEllipse_F64 {
 		assertEquals(rotated.phi,found.phi, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void convert_rotated_to_quad() {
+	@Test void convert_rotated_to_quad() {
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0.2);
 
 		Point2D_F64 p = UtilEllipse_F64.computePoint(0.45,rotated,null);
@@ -118,8 +108,7 @@ public class TestUtilEllipse_F64 {
 	 * Tests computePoint and evaluate(rotated) by computes points around the ellipse and seeing if they
 	 * meet the expected results.
 	 */
-	@Test
-	void computePoint_evaluate_rotated() {
+	@Test void computePoint_evaluate_rotated() {
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0.2);
 
 		for( int i = 0; i < 100; i++ ) {
@@ -130,8 +119,7 @@ public class TestUtilEllipse_F64 {
 		}
 	}
 
-	@Test
-	void computePoint_evaluate_quadratic() {
+	@Test void computePoint_evaluate_quadratic() {
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0.2);
 		EllipseQuadratic_F64 quad = new EllipseQuadratic_F64();
 		UtilEllipse_F64.convert(rotated,quad);
@@ -147,8 +135,7 @@ public class TestUtilEllipse_F64 {
 	/**
 	 * Try a few simple cases
 	 */
-	@Test
-	void computePoint_rotated() {
+	@Test void computePoint_rotated() {
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,3,2,GrlConstants.PId2);
 
 		Point2D_F64 p = UtilEllipse_F64.computePoint(0,rotated,null);
@@ -160,8 +147,7 @@ public class TestUtilEllipse_F64 {
 		assertEquals( 2.0,p.y, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void computeAngle() {
+	@Test void computeAngle() {
 		EllipseRotated_F64 rotated = new EllipseRotated_F64(1,2,4.5,3,0.2);
 
 		for( int i = 0; i <= 100; i++ ) {
@@ -174,8 +160,7 @@ public class TestUtilEllipse_F64 {
 	}
 
 
-	@Test
-	void computeTangent_rotated() {
+	@Test void computeTangent_rotated() {
 		double delta = GrlConstants.TEST_F64;
 
 		// axis aligned case
@@ -223,8 +208,7 @@ public class TestUtilEllipse_F64 {
 		return output;
 	}
 
-	@Test
-	void tangentLines_point_ellipse() {
+	@Test void tangentLines_point_ellipse() {
 
 		// simple case with a circle at the origin
 		checkTangentLines( -2,2, new EllipseRotated_F64(0,0,2,2,0));
@@ -308,8 +292,7 @@ public class TestUtilEllipse_F64 {
 	 * Very basic unit test. The more rigerous one is in
 	 * {@link TestTangentLinesTwoEllipses_F64}
 	 */
-	@Test
-	void tangentLines_ellipse_ellipse() {
+	@Test void tangentLines_ellipse_ellipse() {
 
 		EllipseRotated_F64 ellipseA = new EllipseRotated_F64(0,1,4,2,0.1);
 		EllipseRotated_F64 ellipseB = new EllipseRotated_F64(-6,1.2,1.5,0.8,-0.6);

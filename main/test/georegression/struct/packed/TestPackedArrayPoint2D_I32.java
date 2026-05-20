@@ -59,7 +59,7 @@ public class TestPackedArrayPoint2D_I32 extends GenericPackedArrayChecks<Point2D
 		assertEquals(2, p.y);
 	}
 
-	@Test void setTo() {
+	@Test public void setTo() {
 		var src = new PackedArrayPoint2D_I32();
 		src.append(1, 2);
 		src.append(2, 3);

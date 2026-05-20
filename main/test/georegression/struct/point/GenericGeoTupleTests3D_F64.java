@@ -27,9 +27,6 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-/**
- * @author Peter Abeles
- */
 @SuppressWarnings({"unchecked","NullAway.Init"})
 public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> extends GenericGeoTupleTests_F64<T> {
 
@@ -51,8 +48,7 @@ public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> exte
 		isNaN();
 	}
 
-	@Test
-	public void checkGetAndSetAxis() {
+	@Test public void checkGetAndSetAxis() {
 		T a = (T) seed.createNewInstance();
 
 		assertEquals( 0, a.getX(), GrlConstants.TEST_F64);
@@ -66,8 +62,7 @@ public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> exte
 		assertEquals( 1.5, a.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	public void checkSetAxisAll() {
+	@Test public void checkSetAxisAll() {
 		T a = (T) seed.createNewInstance();
 
 		a.setTo( 1.5, 2.5, 3.5 );
@@ -77,8 +72,7 @@ public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> exte
 		assertEquals( 3.5, a.getZ(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	public void isIdentical_3_double() {
+	@Test public void isIdentical_3_double() {
 		T a = (T) seed.createNewInstance();
 
 		a.setTo( 1, 2, 3 );
@@ -86,8 +80,7 @@ public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> exte
 		assertTrue( a.isIdentical( 1, 2, 3, GrlConstants.TEST_F64) );
 	}
 
-	@Test
-	public void isIdentical_tuple() {
+	@Test public void isIdentical_tuple() {
 		T a = (T) seed.createNewInstance();
 
 		a.setTo( 1, 2, 3 );
@@ -97,8 +90,7 @@ public abstract class GenericGeoTupleTests3D_F64 <T extends GeoTuple3D_F64> exte
 		assertTrue( a.isIdentical( b, GrlConstants.TEST_F64) );
 	}
 
-	@Test
-	public void isNaN() {
+	@Test public void isNaN() {
 		T a = (T) seed.createNewInstance();
 
 		a.setTo( 1, 2, 3 );

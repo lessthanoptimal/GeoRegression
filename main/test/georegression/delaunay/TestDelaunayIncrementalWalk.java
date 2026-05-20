@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,7 @@
 
 package georegression.delaunay;
 
-import georegression.GeoStandardJUnit;
+import georegression.GeoRegressionJUnit;
 import georegression.delaunay.DelaunayIncrementalWalk.CandidateTriangle;
 import georegression.delaunay.DelaunayIncrementalWalk.OtherSide;
 import georegression.geometry.UtilPolygons2D_F64;
@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestDelaunayIncrementalWalk extends GeoStandardJUnit {
+public class TestDelaunayIncrementalWalk extends GeoRegressionJUnit {
 	@Test void all_grid() {
 		var points = new DogArray<>(Point2D_F64::new);
 		for (int row = 0; row < 6; row++) {

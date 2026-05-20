@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,9 +23,6 @@ import georegression.struct.shapes.Polygon2D_I32;
 import georegression.struct.shapes.Rectangle2D_I32;
 import georegression.struct.shapes.RectangleLength2D_I32;
 
-/**
- * @author Peter Abeles
- */
 public class Intersection2D_I32 {
 	/**
 	 * Checks to see if the two rectangles intersect each other

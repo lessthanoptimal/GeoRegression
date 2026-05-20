@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -66,7 +66,7 @@ public class TestPackedBigArrayPoint2D_F64 extends GenericPackedArrayChecks<Poin
 		assertEquals(2.0, p.y);
 	}
 
-	@Test void setTo() {
+	@Test public void setTo() {
 		var src = new PackedBigArrayPoint2D_F64();
 		src.append(1, 2);
 		src.append(2, 3);

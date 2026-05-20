@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
@@ -25,12 +26,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestUtilVector2D_F64 {
-	@Test
-	void acute() {
+public class TestUtilVector2D_F64 extends GeoRegressionJUnit {
+	@Test void acute() {
 
 		Vector2D_F64 a = new Vector2D_F64(1,0);
 
@@ -38,15 +35,13 @@ public class TestUtilVector2D_F64 {
 		assertEquals(Math.PI, UtilVector2D_F64.acute(a,new Vector2D_F64(-1, 0)), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void acute_pts() {
+	@Test void acute_pts() {
 
 		assertEquals(Math.PI/2.0, UtilVector2D_F64.acute(1,0, 0, 1), GrlConstants.TEST_F64);
 		assertEquals(Math.PI    , UtilVector2D_F64.acute(1,0,-1, 0), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void minus() {
+	@Test void minus() {
 
 		Point2D_F64 a = new Point2D_F64(4,9);
 		Point2D_F64 b = new Point2D_F64(1.2,3.5);

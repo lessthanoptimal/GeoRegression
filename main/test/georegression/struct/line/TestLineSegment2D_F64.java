@@ -18,16 +18,14 @@
 
 package georegression.struct.line;
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
-public class TestLineSegment2D_F64 {
+public class TestLineSegment2D_F64 extends GeoRegressionJUnit {
 	@Test void isIdentical() {
 		var a = new LineSegment2D_F64(1, 2, 3, 4);
 		var b = new LineSegment2D_F64(1, 2, 3, 4);

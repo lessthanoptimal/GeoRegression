@@ -43,7 +43,7 @@ public interface ArrayLike_S32 extends MatrixFormattable {
 	}
 
 	/// Prints as a row vector
-	default String format( MatrixPrintFormat format ) {
+	@Override default String format( MatrixPrintFormat format ) {
 		int size = length();
 		var builder = new StringBuilder();
 		builder.append(format.getRowPrefix());

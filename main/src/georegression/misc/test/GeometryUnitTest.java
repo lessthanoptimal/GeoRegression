@@ -31,9 +31,6 @@ import org.ejml.dense.row.MatrixFeatures_DDRM;
 import org.ejml.dense.row.MatrixFeatures_FDRM;
 
 
-/**
- * @author Peter Abeles
- */
 public class GeometryUnitTest {
 
 	public static void assertEquals( Se3_F64 expected, Se3_F64 found, double tolTran, double tolRotation ) {
@@ -154,7 +151,7 @@ public class GeometryUnitTest {
 
 		int N = a.getDimension();
 		for( int i = 0; i < N; i++ ) {
-			assertEquals( a.getIdx( i ), b.getIdx( i ), tol, "Index " + i + " is not the same." );
+			assertEquals( a.get( i ), b.get( i ), tol, "Index " + i + " is not the same." );
 		}
 	}
 

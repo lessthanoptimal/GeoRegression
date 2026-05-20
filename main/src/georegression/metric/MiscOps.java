@@ -24,9 +24,6 @@ import georegression.struct.tuples.GeoTuple3D_F32;
 import georegression.struct.tuples.GeoTuple3D_F64;
 
 
-/**
- * @author Peter Abeles
- */
 public class MiscOps {
 
 	public static double dot( double x , double y , double z, GeoTuple3D_F64 b ) {

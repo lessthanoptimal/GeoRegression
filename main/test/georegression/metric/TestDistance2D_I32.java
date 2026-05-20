@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.metric;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilTrig_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric2D_I32;
@@ -27,12 +28,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestDistance2D_I32 {
-	@Test
-	void distance_line_segment() {
+public class TestDistance2D_I32 extends GeoRegressionJUnit {
+	@Test void distance_line_segment() {
 		// test inside the line
 		double found = Distance2D_I32.distance( new LineSegment2D_I32( -2, 0, 3, 5 ), new Point2D_I32( 2, 0 ) );
 		double expected = (double) UtilTrig_F64.distance(0, 2, 2, 0);
@@ -49,15 +46,13 @@ public class TestDistance2D_I32 {
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_line_parametric() {
+	@Test void distance_line_parametric() {
 		double found = Distance2D_I32.distance( new LineParametric2D_I32( -2, 0, 5, 5 ), new Point2D_I32( 2, 0 ) );
 		double expected = (double) UtilTrig_F64.distance(0, 2, 2, 0);
 		assertEquals( expected, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distanceSq_line_parametric() {
+	@Test void distanceSq_line_parametric() {
 		double found = Distance2D_I32.distanceSq( new LineParametric2D_I32( -2, 0, 5, 5 ), new Point2D_I32( 2, 0 ) );
 		double expected = (double) UtilTrig_F64.distanceSq(0, 2, 2, 0);
 		assertEquals( expected, found, GrlConstants.TEST_F64);

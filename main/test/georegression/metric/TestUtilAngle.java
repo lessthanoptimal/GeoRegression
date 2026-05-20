@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,10 +18,9 @@
 
 package georegression.metric;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import org.junit.jupiter.api.Test;
-
-import java.util.Random;
 
 import static georegression.metric.UtilAngle.*;
 import static georegression.misc.GrlConstants.*;
@@ -30,9 +29,7 @@ import static org.ejml.UtilEjml.TEST_F32;
 import static org.ejml.UtilEjml.TEST_F64;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestUtilAngle {
-	Random rand = new Random(123);
-
+public class TestUtilAngle extends GeoRegressionJUnit {
 	@Test void atanSafe() {
 		assertEquals(Math.PI/2.0, UtilAngle.atanSafe(0.0, 0.0), 1e-8);
 		assertEquals(Math.PI/2.0, UtilAngle.atanSafe(1.0, 0.0), 1e-8);

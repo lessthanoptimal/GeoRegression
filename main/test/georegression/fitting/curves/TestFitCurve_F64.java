@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.curves;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.PolynomialCubic1D_F64;
 import georegression.struct.curve.PolynomialQuadratic1D_F64;
@@ -27,12 +28,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
-public class TestFitCurve_F64 {
-	@Test
-	void fitMM_quadratic1D() {
+public class TestFitCurve_F64 extends GeoRegressionJUnit {
+	@Test void fitMM_quadratic1D() {
 
 		double[] data = new double[6];
 
@@ -70,8 +67,7 @@ public class TestFitCurve_F64 {
 		}
 	}
 
-	@Test
-	void fitQRP_quadratic1D() {
+	@Test void fitQRP_quadratic1D() {
 
 		double[] data = new double[6];
 
@@ -109,8 +105,7 @@ public class TestFitCurve_F64 {
 		}
 	}
 
-	@Test
-	void fit_float_cubic1D() {
+	@Test void fit_float_cubic1D() {
 		// NOTE: Tolerances are crude because F32 case is unstable, but the math is correct. Works OK in F64
 
 		PolynomialCubic1D_F64 expected = new PolynomialCubic1D_F64(0.1,-0.15,0.02,-0.05);
@@ -157,8 +152,7 @@ public class TestFitCurve_F64 {
 		}
 	}
 
-	@Test
-	void fit_float_quadratic2D() {
+	@Test void fit_float_quadratic2D() {
 		int N = 6;
 		double[] data = new double[N*3];
 

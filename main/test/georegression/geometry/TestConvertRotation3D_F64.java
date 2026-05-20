@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
@@ -39,13 +40,9 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-public class TestConvertRotation3D_F64 {
-
-	Random rand = new Random(234234);
-
+public class TestConvertRotation3D_F64 extends GeoRegressionJUnit {
 	@Test void rodrigues4ToMatrix() {
-		DMatrixRMaj rotZ = ConvertRotation3D_F64.rotZ(0.5, null);
+		DMatrixRMaj rotZ = ConvertRotation3D_F64.rotZ( 0.5, null );
 
 		Rodrigues_F64 r = new Rodrigues_F64(0.5, 0, 0, 1);
 
@@ -62,9 +59,9 @@ public class TestConvertRotation3D_F64 {
 
 		assertTrue(MatrixFeatures_DDRM.isIdentical(expected, found, GrlConstants.TEST_F64));
 	}
-
+	
 	@Test void rodriguesToEuler() throws InvocationTargetException, IllegalAccessException {
-		somethingToEulerTest("rodriguesToEuler", rand);
+		somethingToEulerTest("rodriguesToEuler",rand);
 	}
 
 	public static void rodriguesToEuler( EulerType type, double rotA, double rotB, double rotC ) {

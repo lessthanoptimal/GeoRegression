@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
 import georegression.struct.plane.PlaneGeneral3D_F64;
@@ -33,19 +34,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
-public class TestUtilPlane3D_F64 {
-
-	Random rand = new Random(234);
-
-	@Test
-	void convert_norm_general() {
+public class TestUtilPlane3D_F64 extends GeoRegressionJUnit {
+	@Test void convert_norm_general() {
 		PlaneNormal3D_F64 original = new PlaneNormal3D_F64();
 		original.n.setTo(1,2,3);
 		original.n.normalize();
@@ -60,8 +53,7 @@ public class TestUtilPlane3D_F64 {
 		}
 	}
 
-	@Test
-	void convert_general_norm() {
+	@Test void convert_general_norm() {
 		PlaneGeneral3D_F64 general = new PlaneGeneral3D_F64(1,2,3,4);
 
 		PlaneNormal3D_F64 foundPlane = UtilPlane3D_F64.convert(general,null);
@@ -73,8 +65,7 @@ public class TestUtilPlane3D_F64 {
 		}
 	}
 
-	@Test
-	void convert_tangent_norm() {
+	@Test void convert_tangent_norm() {
 		PlaneNormal3D_F64 original = new PlaneNormal3D_F64();
 		original.n.setTo(1,0,0);
 		original.n.normalize();
@@ -96,8 +87,7 @@ public class TestUtilPlane3D_F64 {
 		}
 	}
 
-	@Test
-	void convert_se3_plane() {
+	@Test void convert_se3_plane() {
 		Se3_F64 p2w = new Se3_F64();
 
 		convert_se3_plane(p2w);
@@ -125,8 +115,7 @@ public class TestUtilPlane3D_F64 {
 		}
 	}
 
-	@Test
-	void hessianNormalForm() {
+	@Test void hessianNormalForm() {
 		PlaneGeneral3D_F64 a = new PlaneGeneral3D_F64(2,-3,4,5);
 		double n = Math.sqrt(2*2 + 3*3 + 4*4);
 
@@ -138,8 +127,7 @@ public class TestUtilPlane3D_F64 {
 		assertEquals(5/n,a.D, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void evaluate_general() {
+	@Test void evaluate_general() {
 		PlaneNormal3D_F64 original = new PlaneNormal3D_F64();
 		original.n.setTo(1,2,3);
 		original.n.normalize();
@@ -155,8 +143,7 @@ public class TestUtilPlane3D_F64 {
 		}
 	}
 
-	@Test
-	void evaluate_normal() {
+	@Test void evaluate_normal() {
 		PlaneNormal3D_F64 input = new PlaneNormal3D_F64();
 		input.n.setTo(1,2,3);
 		input.n.normalize();
@@ -170,8 +157,7 @@ public class TestUtilPlane3D_F64 {
 		}
 	}
 
-	@Test
-	void equals_planeNorm() {
+	@Test void equals_planeNorm() {
 
 		for( int i = 0; i < 100; i++ ) {
 			PlaneNormal3D_F64 a = new PlaneNormal3D_F64(
@@ -236,8 +222,7 @@ public class TestUtilPlane3D_F64 {
 	 * Tests the planeToWorld function by randomly generating 2D points and converting them to 3D. Then it
 	 * tests to see if the points lie on the plane.
 	 */
-	@Test
-	void planeToWorld() {
+	@Test void planeToWorld() {
 		checkPlaneToWorld(new PlaneNormal3D_F64(1,2,3,0,0,1));
 		checkPlaneToWorld(new PlaneNormal3D_F64(1,2,3,0,1,0));
 		checkPlaneToWorld(new PlaneNormal3D_F64(1,2,3,1,0,0));
@@ -267,8 +252,7 @@ public class TestUtilPlane3D_F64 {
 		}
 	}
 
-	@Test
-	void selectAxis2D() {
+	@Test void selectAxis2D() {
 
 		Vector3D_F64 z = new Vector3D_F64(-1.2,5.6,9.9);
 		Vector3D_F64 x = new Vector3D_F64();
@@ -289,8 +273,7 @@ public class TestUtilPlane3D_F64 {
 		assertTrue(found.dot(z) > 0 ); // make sure it's right handed
 	}
 
-	@Test
-	void point3Dto2D_point2Dto3D() {
+	@Test void point3Dto2D_point2Dto3D() {
 
 		Point3D_F64 c = new Point3D_F64(5.1,-3.1,3);
 		Vector3D_F64 z = new Vector3D_F64(-1.2,5.6,9.9);

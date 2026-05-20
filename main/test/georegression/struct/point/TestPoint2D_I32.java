@@ -18,6 +18,7 @@
 
 package georegression.struct.point;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
@@ -25,41 +26,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestPoint2D_I32 {
+public class TestPoint2D_I32 extends GeoRegressionJUnit {
 
-	@Test
-	void distance2() {
+	@Test void distance2() {
 		Point2D_I32 a = new Point2D_I32(1,2);
 		Point2D_I32 b = new Point2D_I32(3,5);
 
 		assertEquals(4+9,a.distance2(b));
 	}
 
-	@Test
-	void distance() {
+	@Test void distance() {
 		Point2D_I32 a = new Point2D_I32(1,2);
 		Point2D_I32 b = new Point2D_I32(3,5);
 
 		assertEquals(Math.sqrt(2*2 + 3*3),a.distance(b), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void copy() {
+	@Test void copy() {
 		Point2D_I32 a = new Point2D_I32(1,2);
 		Point2D_I32 b = a.copy();
-
-		assertEquals(a.x,b.x);
-		assertEquals(a.y,b.y);
-	}
-
-	@Test
-	void setTo() {
-		Point2D_I32 a = new Point2D_I32(1,2);
-		Point2D_I32 b = new Point2D_I32();
-		b.setTo(a);
 
 		assertEquals(a.x,b.x);
 		assertEquals(a.y,b.y);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -32,15 +32,11 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
 public class TestMotionSe2PointSVD_F64 {
 
 	Random rand = new Random( 434324 );
 
-	@Test
-	void noiseless() {
+	@Test void noiseless() {
 		Se2_F64 tran = new Se2_F64( 2, -4, 0.93 );
 
 		List<Point2D_F64> src = UtilPoint2D_F64.random( -10, 10, 30, rand );

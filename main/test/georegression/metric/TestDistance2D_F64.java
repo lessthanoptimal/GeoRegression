@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,7 @@
 
 package georegression.metric;
 
-import georegression.GeoStandardJUnit;
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilLine2D_F64;
 import georegression.geometry.UtilTrig_F64;
 import georegression.misc.GrlConstants;
@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestDistance2D_F64 extends GeoStandardJUnit {
+public class TestDistance2D_F64 extends GeoRegressionJUnit {
 	@Test void distance_parametric_line_case0() {
 		double found = Distance2D_F64.distance( new LineParametric2D_F64( -2, 0, 1, 1 ), new Point2D_F64( 4, -2 ) );
 		double expected = (double) UtilTrig_F64.distance( 0, 2, 4, -2 );

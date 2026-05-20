@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,20 +25,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
 public class TestModelManagerSe2_F64 {
 
-	@Test
-	void createModelInstance() {
+	@Test void createModelInstance() {
 		ModelManagerSe2_F64 alg = new ModelManagerSe2_F64();
 
 		assertTrue(alg.createModelInstance() != null);
 	}
 
-	@Test
-	void copyModel() {
+	@Test void copyModel() {
 		ModelManagerSe2_F64 alg = new ModelManagerSe2_F64();
 
 		Se2_F64 model = new Se2_F64(1,2,0.5);

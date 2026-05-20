@@ -71,7 +71,7 @@ public class TestPackedArrayPoint4D_F64 extends GenericPackedArrayChecks<Point4D
 		assertEquals(4.0, p.w);
 	}
 
-	@Test void setTo() {
+	@Test public void setTo() {
 		var src = new PackedArrayPoint4D_F64();
 		src.append(1, 2, 3, 4);
 		src.append(2, 3, 4, 5);

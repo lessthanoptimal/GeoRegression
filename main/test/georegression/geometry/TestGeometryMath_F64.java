@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.*;
 import georegression.struct.so.Quaternion_F64;
@@ -31,15 +32,10 @@ import org.ejml.dense.row.RandomMatrices_DDRM;
 import org.ejml.equation.Equation;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestGeometryMath_F64 {
-
-	Random rand = new Random(0x33);
-
+public class TestGeometryMath_F64 extends GeoRegressionJUnit {
 	/// Sees if crossMatrix produces a valid output
 	@Test void crossMatrix_validOut() {
 		double a = 1.1, b = -0.5, c = 2.2;
@@ -403,7 +399,7 @@ public class TestGeometryMath_F64 {
 		DMatrixRMaj expected = eq.lookupDDRM(name);
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(expected.get(i), found.getIdx(i), UtilEjml.TEST_F64);
+			assertEquals(expected.get(i), found.get(i), UtilEjml.TEST_F64);
 		}
 	}
 
@@ -411,7 +407,7 @@ public class TestGeometryMath_F64 {
 		DMatrixRMaj expected = eq.lookupDDRM(name);
 
 		for (int i = 0; i < 4; i++) {
-			assertEquals(expected.get(i), found.getIdx(i), UtilEjml.TEST_F64);
+			assertEquals(expected.get(i), found.get(i), UtilEjml.TEST_F64);
 		}
 	}
 
@@ -478,7 +474,7 @@ public class TestGeometryMath_F64 {
 
 		for (int i = 0; i < 2; i++) {
 			double z = expected.get(2);
-			assertEquals(expected.get(i)/z, Y.getIdx(i), UtilEjml.TEST_F64);
+			assertEquals(expected.get(i)/z, Y.get(i), UtilEjml.TEST_F64);
 		}
 	}
 

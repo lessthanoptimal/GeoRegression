@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.polygon;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.metric.Intersection2D_F64;
 import georegression.misc.GrlConstants;
@@ -28,8 +29,6 @@ import org.ddogleg.struct.FastAccess;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,16 +37,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Peter Abeles
  */
-public abstract class CommonConvexHullChecks_F64 {
-	Random rand = new Random(324);
-
+public abstract class CommonConvexHullChecks_F64 extends GeoRegressionJUnit {
 	abstract FitConvexHull_F64 createAlgorithm();
 
 	/**
 	 * Trivial case where there are 4 points that form a square and are axis-aligned
 	 */
-	@Test
-	void square_axis_aligned() {
+	@Test void square_axis_aligned() {
 		var points = new DogArray<>(Point2D_F64::new);
 		points.grow().setTo(0,0);
 		points.grow().setTo(2,0);

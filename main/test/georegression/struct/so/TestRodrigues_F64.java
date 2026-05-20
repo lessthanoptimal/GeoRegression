@@ -18,6 +18,7 @@
 
 package georegression.struct.so;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.MapPrintFormat;
@@ -26,7 +27,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestRodrigues_F64 {
+public class TestRodrigues_F64 extends GeoRegressionJUnit {
 	@Test void setParamVector() {
 		Vector3D_F64 v = new Vector3D_F64(1,2,3);
 		double theta = v.norm();

@@ -16,15 +16,15 @@
  * limitations under the License.
  */
 
-package georegression.struct;
+package georegression.struct.tuples;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
-import georegression.struct.tuples.GeoTuple2D_F64;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestGeoTuple2D_F64 {
+public class TestGeoTuple2D_F64 extends GeoRegressionJUnit {
 	@Test void plusIP() {
 		var a = new Dummy(1, 2);
 		var b = new Dummy(4, 5);

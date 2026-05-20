@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.line;
 
+import georegression.GeoRegressionJUnit;
 import georegression.metric.Distance2D_F64;
 import georegression.struct.line.LineParametric2D_F64;
 import georegression.struct.point.Point2D_F64;
@@ -31,12 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-/**
- * @author Peter Abeles
- */
-public class TestFitLineParametricSvd_F64 {
-	@Test
-	void unweighted() {
+public class TestFitLineParametricSvd_F64 extends GeoRegressionJUnit {
+	@Test void unweighted() {
 		LineParametric2D_F64 expected = new LineParametric2D_F64();
 		expected.p.setTo(6.5,-3.5);
 

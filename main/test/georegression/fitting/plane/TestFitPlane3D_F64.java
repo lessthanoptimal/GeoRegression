@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -29,9 +29,6 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
 @SuppressWarnings("NullAway.Init")
 public class TestFitPlane3D_F64 {
 
@@ -41,8 +38,7 @@ public class TestFitPlane3D_F64 {
 	Point3D_F64 center;
 	List<Point3D_F64> cloud;
 
-	@Test
-	void svd() {
+	@Test void svd() {
 		createCloud();
 
 		// compute the plane's equation
@@ -66,8 +62,7 @@ public class TestFitPlane3D_F64 {
 		assertEquals(0, Math.abs(dot) - 1, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void svdPoint() {
+	@Test void svdPoint() {
 		createCloud();
 
 		// compute the plane's equation

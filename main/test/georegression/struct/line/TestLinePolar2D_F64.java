@@ -18,12 +18,13 @@
 
 package georegression.struct.line;
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.MapPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestLinePolar2D_F64 {
+public class TestLinePolar2D_F64 extends GeoRegressionJUnit {
 	@Test void formatMap() {
 		var line = new LinePolar2D_F64(1, 4.1234);
 		String found = line.formatMap(new MapPrintFormat().withPrecision(2));

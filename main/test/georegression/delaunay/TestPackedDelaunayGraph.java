@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,7 @@
 
 package georegression.delaunay;
 
-import georegression.GeoStandardJUnit;
+import georegression.GeoRegressionJUnit;
 import georegression.struct.TriIndex;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Triangle2D_F64;
@@ -30,7 +30,7 @@ import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TestPackedDelaunayGraph extends GeoStandardJUnit {
+class TestPackedDelaunayGraph extends GeoRegressionJUnit {
 	// this automated test needs to be added to GeoRegression
 //	@Test void reset() {
 //		fail("Implement");

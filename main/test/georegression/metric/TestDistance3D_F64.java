@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.metric;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilPlane3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
@@ -37,13 +38,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-/**
- * @author Peter Abeles
- */
-public class TestDistance3D_F64 {
-
-	@Test
-	void distance_line_line() {
+public class TestDistance3D_F64 extends GeoRegressionJUnit {
+	@Test void distance_line_line() {
 		// test closestPoint
 		LineParametric3D_F64 l0 = new LineParametric3D_F64(0,0,0,1,0,0);
 		LineParametric3D_F64 l1 = new LineParametric3D_F64(0,0,0,0,1,0);
@@ -69,8 +65,7 @@ public class TestDistance3D_F64 {
 		assertEquals(0,Distance3D_F64.distance( l0,l1 ), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_line_point() {
+	@Test void distance_line_point() {
 		// a point above the line
 		LineParametric3D_F64 l = new LineParametric3D_F64(1,2,3,0,1,0);
 		Point3D_F64 p = new Point3D_F64( 3 , 2 , 3);
@@ -82,8 +77,7 @@ public class TestDistance3D_F64 {
 		assertEquals(0,Distance3D_F64.distance( l,p ), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_lineseg_point() {
+	@Test void distance_lineseg_point() {
 		// a point above the line
 		LineSegment3D_F64 l = new LineSegment3D_F64(1,2,3,1,3,3);
 		Point3D_F64 p = new Point3D_F64( 3 , 2 , 3);
@@ -110,8 +104,7 @@ public class TestDistance3D_F64 {
 	 * The distance is zero here, but due to round off error it is a negative number, which can cause
 	 * sqrt to blow up
 	 */
-	@Test
-	void distance_line_point_NegativeZero() {
+	@Test void distance_line_point_NegativeZero() {
 		LineParametric3D_F64 line =
 				new LineParametric3D_F64( 1.2182178902359924 , -0.39089105488200365 , 2.945445527441002 ,
 						0.8728715609439697 , 0.4364357804719848 , -0.21821789023599247 );
@@ -121,8 +114,7 @@ public class TestDistance3D_F64 {
 	}
 
 
-	@Test
-	void distance_plane_point() {
+	@Test void distance_plane_point() {
 		PlaneNormal3D_F64 n = new PlaneNormal3D_F64(3,4,-5,3,4,-5);
 		PlaneGeneral3D_F64 g = UtilPlane3D_F64.convert(n, null);
 
@@ -146,8 +138,7 @@ public class TestDistance3D_F64 {
 		assertEquals(1,found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_sphere_point() {
+	@Test void distance_sphere_point() {
 
 		Sphere3D_F64 sphere = new Sphere3D_F64(2,3,4,4.5);
 		Point3D_F64 outside = new Point3D_F64(-3,4,-6.7);
@@ -163,8 +154,7 @@ public class TestDistance3D_F64 {
 		assertEquals(ri-4.5,Distance3D_F64.distanceSigned(sphere,inside), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_cylinder_point() {
+	@Test void distance_cylinder_point() {
 
 		Cylinder3D_F64 cylinder = new Cylinder3D_F64(1,2,3,0,0,2,3.5);
 		Point3D_F64 outside = new Point3D_F64(1,10,0);
@@ -180,8 +170,7 @@ public class TestDistance3D_F64 {
 		assertEquals(ri-3.5,Distance3D_F64.distanceSigned(cylinder,inside), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void distance_triangle_point() {
+	@Test void distance_triangle_point() {
 		Triangle3D_F64 triangle = new Triangle3D_F64(0,0,0,  0,2,0,  1,1,0);
 
 		double found = Distance3D_F64.distance(triangle,new Point3D_F64(0.2,0.5,2));

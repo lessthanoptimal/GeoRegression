@@ -18,7 +18,7 @@
 
 package georegression.struct.shapes;
 
-import georegression.GeoStandardJUnit;
+import georegression.GeoRegressionJUnit;
 import georegression.struct.point.Point2D_F64;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestTriangle2D_F64 extends GeoStandardJUnit {
+public class TestTriangle2D_F64 extends GeoRegressionJUnit {
 	@Test void zero() {
 		var alg = new Triangle2D_F64().setTo(1, 2, 3, 4, 5, 6);
 		alg.zero();

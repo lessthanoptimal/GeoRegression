@@ -42,9 +42,6 @@ import georegression.struct.tuples.GeoTuple3D_F64;
 import org.ddogleg.nn.FactoryNearestNeighbor;
 import org.ddogleg.nn.NearestNeighbor;
 
-/**
- * @author Peter Abeles
- */
 public class FactoryIterativeClosestPoint {
 	/**
 	 * 2D {@link georegression.struct.se.Se2_F32 rigid-body} {@link IterativeClosestPoint}

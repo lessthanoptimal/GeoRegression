@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,9 +25,6 @@ import georegression.struct.shapes.Polygon2D_F64;
 import georegression.transform.se.SePointOps_F64;
 import org.ddogleg.struct.DogArray;
 
-/**
- * @author Peter Abeles
- */
 public class UtilShape3D_F64 {
 	/**
 	 * Converts a 2D polygon into a 3D polygon. The 2D points will lie on the x-y plane (e.g. (x,y,0)) and are

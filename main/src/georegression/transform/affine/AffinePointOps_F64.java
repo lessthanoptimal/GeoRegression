@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,9 +24,6 @@ import georegression.struct.point.Vector2D_F64;
 import org.jetbrains.annotations.Nullable;
 
 
-/**
- * @author Peter Abeles
- */
 public class AffinePointOps_F64 {
 
 	/**

@@ -69,7 +69,7 @@ public class TestPackedArrayPoint3D_F64 extends GenericPackedArrayChecks<Point3D
 		assertEquals(3.0, p.z);
 	}
 
-	@Test void setTo() {
+	@Test public void setTo() {
 		var src = new PackedArrayPoint3D_F64();
 		src.append(1, 2, 3);
 		src.append(2, 3, 4);

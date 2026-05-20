@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.se;
 
+import georegression.GeoRegressionJUnit;
 import georegression.fitting.MotionTransformPoint;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.geometry.UtilPoint2D_F64;
@@ -36,24 +37,16 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
-/**
- * @author Peter Abeles
- */
-public class TestFitSpecialEuclideanOps_F64 {
-
-	Random rand = new Random(234);
+public class TestFitSpecialEuclideanOps_F64 extends GeoRegressionJUnit {
 
 	/**
 	 * Compares the computation produced from the {@link MotionTransformPoint} to the one found
 	 * by providing two lists
 	 */
-	@Test
-	void fitPoints2D() {
+	@Test void fitPoints2D() {
 		Se2_F64 tran = new Se2_F64( 2, -4, 0.93 );
 
 		List<Point2D_F64> from = UtilPoint2D_F64.random( -10, 10, 30, rand );
@@ -78,8 +71,7 @@ public class TestFitSpecialEuclideanOps_F64 {
 	 * Compares the computation produced from the {@link MotionTransformPoint} to the one found
 	 * by providing two lists
 	 */
-	@Test
-	void fitPoints3D_list() {
+	@Test void fitPoints3D_list() {
 		DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, 0.1, 1.0, -1.5 , null );
 		Se3_F64 tran = new Se3_F64( R , new Vector3D_F64( 1 , 2 , 3));
 

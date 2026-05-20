@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineParametric3D_F64;
 import georegression.struct.line.LineSegment3D_F64;
@@ -26,29 +27,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestUtilLine3D_F64 {
-
-	@Test
-	void convert_ls_lp() {
-		LineSegment3D_F64 ls = new LineSegment3D_F64(1,2,3,6,8,10);
+public class TestUtilLine3D_F64 extends GeoRegressionJUnit {
+	@Test void convert_ls_lp() {
+		var ls = new LineSegment3D_F64(1,2,3,6,8,10);
 
 		LineParametric3D_F64 lp = UtilLine3D_F64.convert(ls,null);
 
-		assertEquals(lp.p.x,1, GrlConstants.TEST_F64);
-		assertEquals(lp.p.y,2, GrlConstants.TEST_F64);
-		assertEquals(lp.p.z,3, GrlConstants.TEST_F64);
+		assertEquals(1, lp.p.x, GrlConstants.TEST_F64);
+		assertEquals(2, lp.p.y, GrlConstants.TEST_F64);
+		assertEquals(3, lp.p.z, GrlConstants.TEST_F64);
 
-		assertEquals(lp.slope.x,5, GrlConstants.TEST_F64);
-		assertEquals(lp.slope.y,6, GrlConstants.TEST_F64);
-		assertEquals(lp.slope.z,7, GrlConstants.TEST_F64);
+		assertEquals(5, lp.slope.x, GrlConstants.TEST_F64);
+		assertEquals(6, lp.slope.y, GrlConstants.TEST_F64);
+		assertEquals(7, lp.slope.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void computeT() {
-		LineParametric3D_F64 line = new LineParametric3D_F64(1,2,3,-4,1.5,0.23);
+	@Test void computeT() {
+		var line = new LineParametric3D_F64(1,2,3,-4,1.5,0.23);
 
 		double t0 = -3.4;
 		double t1 = 1.2;

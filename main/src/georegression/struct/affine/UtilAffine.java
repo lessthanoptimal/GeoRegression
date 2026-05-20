@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,9 +20,6 @@ package georegression.struct.affine;
 
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author Peter Abeles
- */
 public class UtilAffine {
 
 	public static Affine2D_F32 convert( Affine2D_F64 m , @Nullable Affine2D_F32 ret ) {

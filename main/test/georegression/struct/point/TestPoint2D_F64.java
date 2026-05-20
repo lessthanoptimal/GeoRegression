@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,17 +22,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
 public class TestPoint2D_F64 extends GenericGeoTupleTests_F64<Point2D_F64> {
 
 	public TestPoint2D_F64() {
 		super( new Point2D_F64(), 2 );
 	}
 
-	@Test
-	void equals_vector() {
+	@Test void equals_vector() {
 		var a = new Point2D_F64();
 		var b = new Vector2D_F64();
 

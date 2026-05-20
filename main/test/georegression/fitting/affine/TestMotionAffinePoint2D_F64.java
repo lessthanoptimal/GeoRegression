@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.affine;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
@@ -28,20 +29,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+public class TestMotionAffinePoint2D_F64 extends GeoRegressionJUnit {
 
-/**
- * @author Peter Abeles
- */
-public class TestMotionAffinePoint2D_F64 {
-
-	Random rand = new Random( 434324 );
-
-	@Test
-	void noiseless() {
+	@Test void noiseless() {
 		Affine2D_F64 tran = new Affine2D_F64( 2, -4, 0.3, 1.1, 0.93, -3 );
 
 		List<Point2D_F64> from = UtilPoint2D_F64.random( -10, 10, 30, rand );

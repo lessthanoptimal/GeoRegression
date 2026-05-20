@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.cylinder;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.shapes.Cylinder3D_F64;
 import org.junit.jupiter.api.Test;
@@ -25,21 +26,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public class TestModelManagerCylinder3D_F64 {
-
-	@Test
-	void createModelInstance() {
-		ModelManagerCylinder3D_F64 alg = new ModelManagerCylinder3D_F64();
-
+public class TestModelManagerCylinder3D_F64 extends GeoRegressionJUnit {
+	@Test void createModelInstance() {
+		var alg = new ModelManagerCylinder3D_F64();
 		assertTrue( alg.createModelInstance() != null);
 	}
 
-	@Test
-	void copyModel() {
-		ModelManagerCylinder3D_F64 alg = new ModelManagerCylinder3D_F64();
+	@Test void copyModel() {
+		var alg = new ModelManagerCylinder3D_F64();
 
 		Cylinder3D_F64 model = new Cylinder3D_F64(1,2,3,4,5,6,7);
 		Cylinder3D_F64 found = new Cylinder3D_F64();

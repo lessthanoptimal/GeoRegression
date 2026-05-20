@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.curves;
 
+import georegression.GeoRegressionJUnit;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import org.ejml.data.DMatrixRMaj;
@@ -26,14 +27,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestCovarianceToEllipse_F64 {
-	@Test
-	void noRotation() {
-
-		CovarianceToEllipse_F64 alg = new CovarianceToEllipse_F64();
+public class TestCovarianceToEllipse_F64 extends GeoRegressionJUnit {
+	@Test void noRotation() {
+		var alg = new CovarianceToEllipse_F64();
 
 		alg.setCovariance(100,0,9);
 
@@ -47,10 +43,8 @@ public class TestCovarianceToEllipse_F64 {
 		assertEquals(Math.PI/2.0,alg.getAngle(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void rotation() {
-
-		CovarianceToEllipse_F64 alg = new CovarianceToEllipse_F64();
+	@Test void rotation() {
+		var alg = new CovarianceToEllipse_F64();
 
 		for (int i = 0; i < 10; i++) {
 			double angle = (double)(0.5*Math.PI*i/9.0);

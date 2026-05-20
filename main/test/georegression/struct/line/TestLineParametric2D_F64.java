@@ -18,6 +18,7 @@
 
 package georegression.struct.line;
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
@@ -25,12 +26,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestLineparametric2D_F64 {
-	@Test
-	void equals() {
+public class TestLineParametric2D_F64 extends GeoRegressionJUnit {
+	@Test void equals() {
 		LineParametric2D_F64 a = new LineParametric2D_F64(1,2,3,4);
 		LineParametric2D_F64 b = new LineParametric2D_F64(1,2,3,4);
 

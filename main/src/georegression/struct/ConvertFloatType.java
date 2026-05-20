@@ -262,12 +262,12 @@ public class ConvertFloatType {
 			dst = new EllipseQuadratic_F32();
 		}
 
-		dst.A = (float)src.a;
-		dst.B = (float)src.b;
-		dst.C = (float)src.c;
-		dst.D = (float)src.d;
-		dst.E = (float)src.e;
-		dst.F = (float)src.f;
+		dst.a = (float)src.a;
+		dst.b = (float)src.b;
+		dst.c = (float)src.c;
+		dst.d = (float)src.d;
+		dst.e = (float)src.e;
+		dst.f = (float)src.f;
 
 		return dst;
 	}
@@ -277,12 +277,12 @@ public class ConvertFloatType {
 			dst = new EllipseQuadratic_F64();
 		}
 
-		dst.a = src.A;
-		dst.b = src.B;
-		dst.c = src.C;
-		dst.d = src.D;
-		dst.e = src.E;
-		dst.f = src.F;
+		dst.a = src.a;
+		dst.b = src.b;
+		dst.c = src.c;
+		dst.d = src.d;
+		dst.e = src.e;
+		dst.f = src.f;
 
 		return dst;
 	}

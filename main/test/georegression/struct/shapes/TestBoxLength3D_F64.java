@@ -18,6 +18,7 @@
 
 package georegression.struct.shapes;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import org.ejml.MapPrintFormat;
@@ -29,13 +30,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public class TestBoxLength3D_F64 {
+public class TestBoxLength3D_F64 extends GeoRegressionJUnit {
 
-	@Test
-	void constructor_box() {
+	@Test void constructor_box() {
 		BoxLength3D_F64 boxA = new BoxLength3D_F64(1,2,3,4,5,6);
 		BoxLength3D_F64 box = new BoxLength3D_F64(boxA);
 
@@ -47,8 +44,7 @@ public class TestBoxLength3D_F64 {
 		assertEquals(6,box.lengthZ, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void constructor_floats() {
+	@Test void constructor_floats() {
 		BoxLength3D_F64 box = new BoxLength3D_F64(1,2,3,4,5,6);
 
 		assertEquals(1,box.p.x, GrlConstants.TEST_F64);
@@ -59,8 +55,7 @@ public class TestBoxLength3D_F64 {
 		assertEquals(6, box.lengthZ, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void set_box() {
+	@Test void set_box() {
 		BoxLength3D_F64 box = new BoxLength3D_F64();
 		box.setTo(1,2,3,4,5,6);
 
@@ -72,8 +67,7 @@ public class TestBoxLength3D_F64 {
 		assertEquals(6, box.lengthZ, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void set_floats() {
+	@Test void set_floats() {
 		BoxLength3D_F64 boxA = new BoxLength3D_F64(1,2,3,4,5,6);
 		BoxLength3D_F64 box = new BoxLength3D_F64();
 		box.setTo(boxA);
@@ -86,8 +80,7 @@ public class TestBoxLength3D_F64 {
 		assertEquals(6, box.lengthZ, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void getCorner() {
+	@Test void getCorner() {
 		BoxLength3D_F64 boxA = new BoxLength3D_F64(1,2,3,4,5,6);
 
 		List<Point3D_F64> expected = new ArrayList<>();

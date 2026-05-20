@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.plane;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilPlane3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
@@ -27,7 +28,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestGeneratorPlaneFromPlane_F64 {
+public class TestGeneratorPlaneFromPlane_F64 extends GeoRegressionJUnit {
 	@Test void simple() {
 		var alg = new GeneratorPlaneFromPlane_F64();
 		var input = new PlaneNormal3D_F64(1,2,3,4,5,6);

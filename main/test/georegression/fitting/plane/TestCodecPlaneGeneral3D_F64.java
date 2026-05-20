@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,24 +18,21 @@
 
 package georegression.fitting.plane;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestCodecPlaneGeneral3D_F64 {
+public class TestCodecPlaneGeneral3D_F64 extends GeoRegressionJUnit {
 
-	@Test
-	void basicCheck() {
-		PlaneGeneral3D_F64 plane = new PlaneGeneral3D_F64(1,2,3,4);
-		PlaneGeneral3D_F64 found = new PlaneGeneral3D_F64();
-		/**/double param[] = new /**/double[ 4 ];
+	@Test void basicCheck() {
+		var plane = new PlaneGeneral3D_F64(1,2,3,4);
+		var found = new PlaneGeneral3D_F64();
+		/**/double[] param = new /**/double[ 4 ];
 
-		CodecPlaneGeneral3D_F64 alg = new CodecPlaneGeneral3D_F64();
+		var alg = new CodecPlaneGeneral3D_F64();
 
 		alg.encode(plane,param);
 		alg.decode(param,found);
