@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -25,22 +25,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
 public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 
 	public TestVector3D_F64() {
 		super( new Vector3D_F64() );
 	}
 
-	@Test
-	void generic() {
+	@Test void generic() {
 		checkAll();
 	}
 
-	@Test
-	void dot() {
+	@Test void dot() {
 		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
 		Vector3D_F64 b = new Vector3D_F64( 3, 4, 5 );
 
@@ -48,8 +43,7 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 		assertEquals( 26, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void minus_a_b() {
+	@Test void minus_a_b() {
 		for( int i = 0; i < 20; i++ ) {
 			Point3D_F64 a = randomPoint();
 			Point3D_F64 b = randomPoint();
@@ -62,8 +56,7 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 		}
 	}
 
-	@Test
-	void cross_a_b() {
+	@Test void cross_a_b() {
 
 		for( int i = 0; i < 20; i++ ) {
 			Vector3D_F64 a = randomVector();
@@ -77,8 +70,7 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 		}
 	}
 
-	@Test
-	void cross_b() {
+	@Test void cross_b() {
 		for( int i = 0; i < 20; i++ ) {
 			Vector3D_F64 a = randomVector();
 			Vector3D_F64 b = randomVector();
@@ -89,8 +81,7 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 		}
 	}
 
-	@Test
-	void normalize() {
+	@Test void normalize() {
 		Vector3D_F64 a = new Vector3D_F64( 1, 2, 3 );
 		double n = a.norm();
 		a.normalize();
@@ -99,8 +90,7 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 		GeometryUnitTest.assertEquals( a, 1.0 / n, 2.0 / n, 3.0 / n, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void normalize_overflow() {
+	@Test void normalize_overflow() {
 		Vector3D_F64 a = new Vector3D_F64( Double.MAX_VALUE, Double.MAX_VALUE/2, Double.MAX_VALUE/3 );
 		a.normalize();
 
@@ -110,8 +100,7 @@ public class TestVector3D_F64 extends GenericGeoTupleTests3D_F64 {
 		GeometryUnitTest.assertEquals( a, b.x,b.y,b.z, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void acute() {
+	@Test void acute() {
 
 		Vector3D_F64 a = new Vector3D_F64(1,0,0);
 

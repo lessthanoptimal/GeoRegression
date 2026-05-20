@@ -18,23 +18,20 @@
 
 package georegression.struct.point;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.tuples.GeoTuple_F64;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-/**
- * @author Peter Abeles
- */
 @SuppressWarnings({"unchecked"})
-public abstract class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
+public abstract class GenericGeoTupleTests_F64<T extends GeoTuple_F64> extends GeoRegressionJUnit {
 
 	private T seed;
 	int dimension;
 
-	protected GenericGeoTupleTests_F64( T seed , int dimension ) {
+	protected GenericGeoTupleTests_F64( T seed, int dimension ) {
 		this.seed = seed;
 		this.dimension = dimension;
 	}
@@ -50,102 +47,93 @@ public abstract class GenericGeoTupleTests_F64 <T extends GeoTuple_F64> {
 		checkEquals();
 	}
 
-	@Test
-	public void checkCreateNewInstance() {
-		T a = (T) seed.createNewInstance();
+	@Test public void checkCreateNewInstance() {
+		T a = (T)seed.createNewInstance();
 
 		assertNotNull(a);
 		assertSame(a.getClass(), seed.getClass());
 	}
 
-	@Test
-	public void checkDimension() {
-		T a = (T) seed.createNewInstance();
+	@Test public void checkDimension() {
+		T a = (T)seed.createNewInstance();
 
-		assertEquals( this.dimension, a.getDimension() );
+		assertEquals(this.dimension, a.getDimension());
 	}
 
-	@Test
-	public void checkSetAndGetIndex() {
+	@Test public void checkSetAndGetIndex() {
 
-		T a = (T) seed.createNewInstance();
+		T a = (T)seed.createNewInstance();
 
-		for( int i = 0; i < a.getDimension(); i++ ) {
-			assertEquals( 0, a.getIdx( i ), GrlConstants.TEST_F64);
-			a.setIdx( i, 2 );
-			assertEquals( 2, a.getIdx( i ), GrlConstants.TEST_F64);
+		for (int i = 0; i < a.getDimension(); i++) {
+			assertEquals(0, a.get(i), GrlConstants.TEST_F64);
+			a.set(i, 2);
+			assertEquals(2, a.get(i), GrlConstants.TEST_F64);
 		}
 	}
 
-	@Test
-	public void checkNorm() {
-		T a = (T) seed.createNewInstance();
+	@Test public void checkNorm() {
+		T a = (T)seed.createNewInstance();
 		double total = 0;
-		for( int i = 0; i < a.getDimension(); i++ ) {
-			a.setIdx( i, i + 1 );
-			total += ( i + 1 ) * ( i + 1 );
+		for (int i = 0; i < a.getDimension(); i++) {
+			a.set(i, i + 1);
+			total += (i + 1)*(i + 1);
 		}
 
-		double expected = Math.sqrt( total );
-		assertEquals( expected, a.norm(), GrlConstants.TEST_F64);
+		double expected = Math.sqrt(total);
+		assertEquals(expected, a.norm(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	public void checkNormSq() {
-		T a = (T) seed.createNewInstance();
+	@Test public void checkNormSq() {
+		T a = (T)seed.createNewInstance();
 		double total = 0;
-		for( int i = 0; i < a.getDimension(); i++ ) {
-			a.setIdx( i, i + 1 );
-			total += ( i + 1 ) * ( i + 1 );
+		for (int i = 0; i < a.getDimension(); i++) {
+			a.set(i, i + 1);
+			total += (i + 1)*(i + 1);
 		}
 
-		assertEquals( total, a.normSq(), GrlConstants.TEST_F64);
+		assertEquals(total, a.normSq(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	public void checkSetTo() {
-		T a = (T) seed.createNewInstance();
-		for( int i = 0; i < a.getDimension(); i++ ) {
-			a.setIdx( i, i + 1 );
+	@Test public void checkSetTo() {
+		T a = (T)seed.createNewInstance();
+		for (int i = 0; i < a.getDimension(); i++) {
+			a.set(i, i + 1);
 		}
 
-		T b = (T) seed.createNewInstance();
+		T b = (T)seed.createNewInstance();
 		b.setTo(a);
 
-		for( int i = 0; i < a.getDimension(); i++ ) {
-			assertEquals(a.getIdx(i), b.getIdx(i));
+		for (int i = 0; i < a.getDimension(); i++) {
+			assertEquals(a.get(i), b.get(i));
 		}
 	}
 
-	@Test
-	public void checkCopy() {
-		T a = (T) seed.createNewInstance();
-		for( int i = 0; i < a.getDimension(); i++ ) {
-			a.setIdx( i, i + 1 );
+	@Test public void checkCopy() {
+		T a = (T)seed.createNewInstance();
+		for (int i = 0; i < a.getDimension(); i++) {
+			a.set(i, i + 1);
 		}
 
-		T b = (T) a.copy();
+		T b = (T)a.copy();
 
 		assertNotSame(a, b);
-		for( int i = 0; i < a.getDimension(); i++ ) {
-			assertEquals(a.getIdx(i), b.getIdx(i));
+		for (int i = 0; i < a.getDimension(); i++) {
+			assertEquals(a.get(i), b.get(i));
 		}
 	}
 
-	@Test
-	public void checkEquals() {
-		T a = (T) seed.createNewInstance();
-		T b = (T) seed.createNewInstance();
+	@Test public void checkEquals() {
+		T a = (T)seed.createNewInstance();
+		T b = (T)seed.createNewInstance();
 
 		assertNotSame(a, b);
 		assertEquals(a, b);
 
-		for( int i = 0; i < a.getDimension(); i++ ) {
-			a.setIdx(i, 2);
+		for (int i = 0; i < a.getDimension(); i++) {
+			a.set(i, 2);
 			assertNotEquals(a, b);
-			b.setIdx(i, 2);
+			b.set(i, 2);
 			assertEquals(a, b);
 		}
 	}
-
 }

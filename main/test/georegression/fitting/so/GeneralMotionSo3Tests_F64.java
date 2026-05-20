@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.so;
 
+import georegression.GeoRegressionJUnit;
 import georegression.fitting.MotionTransformPoint;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.geometry.GeometryMath_F64;
@@ -32,20 +33,13 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public abstract class GeneralMotionSo3Tests_F64 {
-	Random rand = new Random( 434324 );
-
+public abstract class GeneralMotionSo3Tests_F64 extends GeoRegressionJUnit {
 	abstract MotionTransformPoint<So3_F64, Point3D_F64> createAlg();
 
-	@Test
-	void noiseless() {
+	@Test void noiseless() {
 		for( int i = 0; i < 100; i++ ) {
 			DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian(), null);
@@ -68,8 +62,7 @@ public abstract class GeneralMotionSo3Tests_F64 {
 		}
 	}
 
-	@Test
-	void noiselessPlanar() {
+	@Test void noiselessPlanar() {
 		for( int i = 0; i < 100; i++ ) {
 			DMatrixRMaj R = ConvertRotation3D_F64.eulerToMatrix(EulerType.XYZ, rand.nextGaussian(),
 					rand.nextGaussian(), rand.nextGaussian(), null );

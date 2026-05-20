@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.metric.alg;
 
+import georegression.GeoRegressionJUnit;
 import georegression.metric.Distance3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineSegment3D_F64;
@@ -28,10 +29,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public class TestDistancePointTriangle3D_F64 {
+public class TestDistancePointTriangle3D_F64 extends GeoRegressionJUnit {
 
 	DistancePointTriangle3D_F64 alg = new DistancePointTriangle3D_F64();
 
@@ -49,8 +47,7 @@ public class TestDistancePointTriangle3D_F64 {
 		alg.setTriangle(P0,P1,P2);
 	}
 
-	@Test
-	void sign() {
+	@Test void sign() {
 		assertTrue(alg.sign(new Point3D_F64(0,0,2))> 0);
 		assertTrue(alg.sign(new Point3D_F64(3,-3,2))> 0);
 
@@ -58,14 +55,12 @@ public class TestDistancePointTriangle3D_F64 {
 		assertTrue(alg.sign(new Point3D_F64(3,-3,-2))< 0);
 	}
 
-	@Test
-	void region0() {
+	@Test void region0() {
 		assertEquals(2, distance(0.1, 0.2, 2), GrlConstants.TEST_F64);
 		assertEquals(2, distance(0.1, 0.2, -2), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void region1() {
+	@Test void region1() {
 		Point3D_F64 P = new Point3D_F64(2,1,2);
 		double d = Distance3D_F64.distance(L12,P);
 
@@ -73,8 +68,7 @@ public class TestDistancePointTriangle3D_F64 {
 		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void region2() {
+	@Test void region2() {
 		Point3D_F64 P = new Point3D_F64(-0.2,7.2,2);
 		double d = P1.distance(P);
 
@@ -82,8 +76,7 @@ public class TestDistancePointTriangle3D_F64 {
 		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void region3() {
+	@Test void region3() {
 		Point3D_F64 P = new Point3D_F64(-0.1,1.5,0);
 		double d = Distance3D_F64.distance(L01,P);
 
@@ -91,8 +84,7 @@ public class TestDistancePointTriangle3D_F64 {
 		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void region4() {
+	@Test void region4() {
 		Point3D_F64 P = new Point3D_F64(-0.2,-0.5,2);
 		double d = P0.distance(P);
 
@@ -100,8 +92,7 @@ public class TestDistancePointTriangle3D_F64 {
 		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void region5() {
+	@Test void region5() {
 		Point3D_F64 P = new Point3D_F64(0.6,0.5,2);
 		double d = Distance3D_F64.distance(L20,P);
 
@@ -109,8 +100,7 @@ public class TestDistancePointTriangle3D_F64 {
 		assertEquals(d, distance(P.x,P.y,P.z), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void region6() {
+	@Test void region6() {
 		Point3D_F64 P = new Point3D_F64(1.5,1,2);
 		double d = P2.distance(P);
 

@@ -25,9 +25,6 @@ import org.ejml.data.DMatrix3x3;
 import org.ejml.data.DMatrixRMaj;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author Peter Abeles
- */
 public class UtilCurves_F64 {
 
 	/**

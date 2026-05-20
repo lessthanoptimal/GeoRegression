@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,9 +22,6 @@ import georegression.fitting.MotionTransformPoint;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.so.So3_F64;
 
-/**
- * @author Peter Abeles
- */
 class TestMotionSo3PointSVD_F64 extends GeneralMotionSo3Tests_F64 {
 	@Override
 	MotionTransformPoint<So3_F64, Point3D_F64> createAlg() {

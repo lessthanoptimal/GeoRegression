@@ -26,17 +26,9 @@ import org.ejml.MapPrintFormat;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
 public class TestAffine2D_F64 extends GenericInvertibleTransformTests_F64<Point2D_F64> {
-
-	Random rand = new Random();
-
 	@Override
 	public Point2D_F64 createRandomPoint() {
 		return new Point2D_F64( (double) rand.nextGaussian() * 3,
@@ -54,8 +46,8 @@ public class TestAffine2D_F64 extends GenericInvertibleTransformTests_F64<Point2
 		double ty = (double) rand.nextGaussian() * 3.0;
 
 		// Make sure its well conditioned
-		a11 += Math.signum(a11)*0.5;
-		a22 += Math.signum(a11)*0.5;
+		a11 += Math.signum(a11)*2;
+		a22 += Math.signum(a11)*2;
 
 		return new Affine2D_F64( a11, a12, a21, a22, tx, ty );
 	}

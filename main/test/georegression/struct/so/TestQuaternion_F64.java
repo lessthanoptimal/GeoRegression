@@ -18,6 +18,7 @@
 
 package georegression.struct.so;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
@@ -25,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestQuaternion_F64 {
+public class TestQuaternion_F64 extends GeoRegressionJUnit {
 	@Test void setTo_quat() {
 		var found = new Quaternion_F64().setTo(new Quaternion_F64(1, 2, 3, 4));
 		assertEquals(1, found.w);

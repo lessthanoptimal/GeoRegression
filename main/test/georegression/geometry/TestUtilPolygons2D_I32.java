@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.struct.point.Point2D_I32;
 import georegression.struct.shapes.Polygon2D_I32;
 import georegression.struct.shapes.Rectangle2D_I32;
@@ -25,19 +26,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
-public class TestUtilPolygons2D_I32 {
-
-	Random rand = new Random(234);
-
-	@Test
-	void isConvex() {
+public class TestUtilPolygons2D_I32 extends GeoRegressionJUnit {
+	@Test void isConvex() {
 		Polygon2D_I32 a = new Polygon2D_I32(0, 0, 5, 5, -5, 5);
 		assertTrue(UtilPolygons2D_I32.isConvex(a));
 		a.flip();
@@ -54,8 +47,7 @@ public class TestUtilPolygons2D_I32 {
 		assertFalse(UtilPolygons2D_I32.isConvex(c));
 	}
 
-	@Test
-	void flip() {
+	@Test void flip() {
 
 		// less than 3 has undrfined behavior
 
@@ -90,8 +82,7 @@ public class TestUtilPolygons2D_I32 {
 		assertSame(orig.get(4), poly.get(1));
 	}
 
-	@Test
-	void isIdentical_poly_poly() {
+	@Test void isIdentical_poly_poly() {
 		Polygon2D_I32 poly1 = new Polygon2D_I32(1, 2, 3, 4, 5, 6);
 		Polygon2D_I32 poly2 = new Polygon2D_I32(1, 2, 3, 4, 5, 6);
 
@@ -100,8 +91,7 @@ public class TestUtilPolygons2D_I32 {
 		assertFalse(UtilPolygons2D_I32.isIdentical(poly1, poly2));
 	}
 
-	@Test
-	void isEquivalent_poly_poly() {
+	@Test void isEquivalent_poly_poly() {
 		Polygon2D_I32 poly1 = new Polygon2D_I32(1, 2, 3, 4, 5, 6);
 		Polygon2D_I32 poly2 = new Polygon2D_I32(1, 2, 3, 4, 5, 6);
 
@@ -115,8 +105,7 @@ public class TestUtilPolygons2D_I32 {
 		}
 	}
 
-	@Test
-	void bounding_points_rect() {
+	@Test void bounding_points_rect() {
 		List<Point2D_I32> poly = new ArrayList<Point2D_I32>();
 
 		for( int trial = 0; trial < 10; trial++ ) {
@@ -140,8 +129,7 @@ public class TestUtilPolygons2D_I32 {
 		}
 	}
 
-	@Test
-	void bounding_poly_rect() {
+	@Test void bounding_poly_rect() {
 		Polygon2D_I32 poly = new Polygon2D_I32();
 
 		for( int trial = 0; trial < 10; trial++ ) {
@@ -165,8 +153,7 @@ public class TestUtilPolygons2D_I32 {
 		}
 	}
 
-	@Test
-	void isCCW() {
+	@Test void isCCW() {
 		// check convex case
 		List<Point2D_I32> list = new ArrayList<Point2D_I32>();
 		list.add(new Point2D_I32(2, 2));
@@ -192,8 +179,7 @@ public class TestUtilPolygons2D_I32 {
 		return reverse;
 	}
 
-	@Test
-	void isPositiveZ() {
+	@Test void isPositiveZ() {
 		Point2D_I32 a = new Point2D_I32(2, 2);
 		Point2D_I32 b = new Point2D_I32(4, 2);
 		Point2D_I32 c = new Point2D_I32(4, 4);

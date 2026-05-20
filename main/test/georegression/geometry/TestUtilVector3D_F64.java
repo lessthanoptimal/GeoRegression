@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,26 +18,17 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-
-/**
- * @author Peter Abeles
- */
-public class TestUtilVector3D_F64 {
-
-	Random rand = new Random( 23423 );
-
-	@Test
-	void isIdentical() {
+public class TestUtilVector3D_F64 extends GeoRegressionJUnit {
+	@Test void isIdentical() {
 		Vector3D_F64 a = UtilVector3D_F64.createRandom( -1, 1, rand );
 		Vector3D_F64 b = UtilVector3D_F64.createRandom( -1, 1, rand );
 
@@ -49,8 +40,7 @@ public class TestUtilVector3D_F64 {
 		assertFalse( UtilVector3D_F64.isIdentical( a, b, GrlConstants.TEST_F64) );
 	}
 
-	@Test
-	void normalize() {
+	@Test void normalize() {
 		Vector3D_F64 a = new Vector3D_F64( 3, 3, 4 );
 
 		UtilVector3D_F64.normalize( a );
@@ -58,8 +48,7 @@ public class TestUtilVector3D_F64 {
 		assertEquals( 1, a.norm(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void acute() {
+	@Test void acute() {
 		assertEquals(Math.PI/2.0,
 				UtilVector3D_F64.acute(new Vector3D_F64(1,0,0),new Vector3D_F64(0,1,0)),GrlConstants.TEST_F64);
 		assertEquals(Math.PI/2.0,
@@ -68,8 +57,7 @@ public class TestUtilVector3D_F64 {
 				UtilVector3D_F64.acute(new Vector3D_F64(1,0,0),new Vector3D_F64(-1,0,0)),GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void perpendicularCanonical() {
+	@Test void perpendicularCanonical() {
 //		perpendicularCanonical(new Vector3D_F64(1,0,0));
 //		perpendicularCanonical(new Vector3D_F64(0,-2,0));
 		perpendicularCanonical(new Vector3D_F64(0,0,3));
@@ -102,9 +90,9 @@ public class TestUtilVector3D_F64 {
 		scale = Math.max(scale,Math.abs(A.z));
 
 		if( scale == 0 ) {
-			assertEquals(found.x, 0);
-			assertEquals(found.y, 0);
-			assertEquals(found.z, 0);
+			assertEquals(0, found.x);
+			assertEquals(0, found.y);
+			assertEquals(0, found.z);
 		} else {
 			A.scale(1.0 / scale);
 
@@ -117,8 +105,7 @@ public class TestUtilVector3D_F64 {
 		}
 	}
 
-	@Test
-	void axisMaxMag() {
+	@Test void axisMaxMag() {
 		assertEquals(0,UtilVector3D_F64.axisMaxMag(new Point3D_F64()));
 		assertEquals(1,UtilVector3D_F64.axisMaxMag(new Point3D_F64(10,-11,0)));
 		assertEquals(1,UtilVector3D_F64.axisMaxMag(new Point3D_F64(-10,11,0)));

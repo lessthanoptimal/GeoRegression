@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -29,13 +29,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
 public class TestSphereToPointSignedDistance_F64 {
 
-	@Test
-	void compareToDistance() {
+	@Test void compareToDistance() {
 
 		Sphere3D_F64 sphere = new Sphere3D_F64(1,2,3,4);
 
@@ -65,8 +61,7 @@ public class TestSphereToPointSignedDistance_F64 {
 		}
 	}
 
-	@Test
-	void getN_and_getM() {
+	@Test void getN_and_getM() {
 		SphereToPointSignedDistance_F64 alg = new SphereToPointSignedDistance_F64();
 
 		List<Point3D_F64> points = new ArrayList<Point3D_F64>();

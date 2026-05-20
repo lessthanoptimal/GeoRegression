@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.geometry.polygon;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilPolygons2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.shapes.Polygon2D_F64;
@@ -25,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestAreaIntersectionPolygon_F64 {
+public class TestAreaIntersectionPolygon2D_F64 extends GeoRegressionJUnit {
 	/**
 	 * Unit tests provided by the original author
 	 */

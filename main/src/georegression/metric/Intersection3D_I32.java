@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,9 +21,6 @@ package georegression.metric;
 import georegression.struct.point.Point3D_I32;
 import georegression.struct.shapes.Box3D_I32;
 
-/**
- * @author Peter Abeles
- */
 public class Intersection3D_I32 {
 	/**
 	 * Returns true if the point is contained inside the box. The point is considered to be inside the box

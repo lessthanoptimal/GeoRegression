@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.struct.se;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.geometry.GeometryMath_F64;
 import georegression.misc.GrlConstants;
@@ -36,13 +37,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-/**
- * @author Peter Abeles
- */
-public class TestSpecialEuclideanOps_F64 {
+public class TestSpecialEuclideanOps_F64 extends GeoRegressionJUnit {
 
-	@Test
-	void toAffine_2D() {
+	@Test void toAffine_2D() {
 		Se2_F64 se = new Se2_F64(1.5,-3.4,0.5);
 		Affine2D_F64 affine = SpecialEuclideanOps_F64.toAffine(se,null);
 
@@ -57,8 +54,7 @@ public class TestSpecialEuclideanOps_F64 {
 		assertEquals(expected.y,found.y,GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void toHomogeneous_3D() {
+	@Test void toHomogeneous_3D() {
 		Se3_F64 se = SpecialEuclideanOps_F64.eulerXyz(2, -3, 4.4, 0.1, 2, -0.3, null );
 
 		DMatrixRMaj H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
@@ -70,18 +66,17 @@ public class TestSpecialEuclideanOps_F64 {
 
 		for( int i = 0; i < 3; i++ ) {
 			for( int j = 0; j < 3; j++ ) {
-				assertTrue( R.get( i, j ) == H.get( i, j ) );
+				assertEquals(R.get(i, j), H.get(i, j));
 			}
-			assertTrue( 0 == H.get( 3, i ) );
+			assertEquals(0, H.get(3, i));
 		}
 
-		assertTrue( se.getX() == H.get( 0, 3 ) );
-		assertTrue( se.getY() == H.get( 1, 3 ) );
-		assertTrue( se.getZ() == H.get( 2, 3 ) );
+		assertEquals(se.getX(), H.get(0, 3));
+		assertEquals(se.getY(), H.get(1, 3));
+		assertEquals(se.getZ(), H.get(2, 3));
 	}
 
-	@Test
-	void toHomogeneous_2D() {
+	@Test void toHomogeneous_2D() {
 		Point2D_F64 pt = new Point2D_F64( 3.4, -9.21 );
 		Se2_F64 se = new Se2_F64( -3, 6.9, -1.3 );
 
@@ -103,8 +98,7 @@ public class TestSpecialEuclideanOps_F64 {
 		assertEquals( 1, found.get( 2, 0 ), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void toSe3_F64() {
+	@Test void toSe3_F64() {
 		Se3_F64 se = SpecialEuclideanOps_F64.eulerXyz(2, -3, 4.4, 0.1, 2, -0.3, null );
 
 		DMatrixRMaj H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
@@ -118,8 +112,7 @@ public class TestSpecialEuclideanOps_F64 {
 		assertTrue( MatrixFeatures_DDRM.isIdentical( se.getR(), found.getR(), GrlConstants.TEST_F64) );
 	}
 
-	@Test
-	void toSe2() {
+	@Test void toSe2() {
 		Se2_F64 se = new Se2_F64( -3, 6.9, -1.3 );
 
 		DMatrixRMaj H = SpecialEuclideanOps_F64.toHomogeneous( se, null );
@@ -132,8 +125,7 @@ public class TestSpecialEuclideanOps_F64 {
 		assertEquals( se.getSineYaw(), found.getSineYaw(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void setEulerXYZ() {
+	@Test void setEulerXYZ() {
 		Point3D_F64 orig = new Point3D_F64( 1, 2, 3 );
 
 		Se3_F64 se = SpecialEuclideanOps_F64.eulerXyz(2, -3, 4.4, 0.1, 2, -0.3, null );

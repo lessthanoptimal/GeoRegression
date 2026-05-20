@@ -18,6 +18,7 @@
 
 package georegression.struct.shapes;
 
+import georegression.GeoRegressionJUnit;
 import georegression.struct.point.Point2D_F64;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
@@ -26,10 +27,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TestPolygon2D_F64 {
+public class TestPolygon2D_F64 extends GeoRegressionJUnit {
 	@Test void convert() {
 		var polygon = new Polygon2D_F64(3);
 		polygon.get(0).setTo(1,2);
@@ -39,14 +39,14 @@ public class TestPolygon2D_F64 {
 		List<Point2D_F64> list = polygon.convert(null,false);
 		assertEquals(3,list.size());
 		for ( int i = 0; i < list.size(); i++ ) {
-			assertTrue(list.get(i) == polygon.get(i));
+			assertSame(list.get(i), polygon.get(i));
 		}
 
 		list = polygon.convert(null,true);
 		assertEquals(3,list.size());
 		for ( int i = 0; i < list.size(); i++ ) {
-			assertTrue(list.get(i) != polygon.get(i));
-			assertTrue(list.get(i).equals(polygon.get(i)));
+			assertNotSame(list.get(i), polygon.get(i));
+			assertEquals(list.get(i), polygon.get(i));
 		}
 
 		polygon.vertexes.grow().setTo(4,5);
@@ -65,8 +65,8 @@ public class TestPolygon2D_F64 {
 		polygon.setTo(list);
 		assertEquals(polygon.size(),list.size());
 		for ( int i = 0; i < list.size(); i++ ) {
-			assertTrue(list.get(i) != polygon.get(i));
-			assertTrue(list.get(i).equals(polygon.get(i)));
+			assertNotSame(list.get(i), polygon.get(i));
+			assertEquals(list.get(i), polygon.get(i));
 		}
 	}
 
@@ -89,4 +89,7 @@ public class TestPolygon2D_F64 {
 		String found = polygon.formatMap(new MapPrintFormat().withPrecision(2));
 		assertEquals("[{x: 1, y: 2},\n{x: 2.12, y: 3},\n{x: 3, y: 4}]", found);
 	}
+
+	// Disabling due to DogArrays being used internally
+	@Override public void setTo() {}
 }

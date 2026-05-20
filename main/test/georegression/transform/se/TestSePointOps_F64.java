@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.transform.se;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
@@ -35,7 +36,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestSePointOps_F64 {
+public class TestSePointOps_F64 extends GeoRegressionJUnit {
 
 	@Test void transform_2d_single() {
 		Se2_F64 tran = new Se2_F64( -2, 3, Math.PI );

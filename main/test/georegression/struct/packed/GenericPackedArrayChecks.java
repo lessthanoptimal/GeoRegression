@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,7 @@
 
 package georegression.struct.packed;
 
-import georegression.GeoStandardJUnit;
+import georegression.GeoRegressionJUnit;
 import org.ddogleg.struct.DogArray_I32;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Common tests for implementations of {@link PackedArray}.
  */
-public abstract class GenericPackedArrayChecks<T> extends GeoStandardJUnit {
+public abstract class GenericPackedArrayChecks<T> extends GeoRegressionJUnit {
 	/** Creates a new instance of the algorithm being tested */
 	protected abstract PackedArray<T> createAlg();
 

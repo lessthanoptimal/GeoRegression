@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.metric;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilLine3D_F64;
 import georegression.geometry.UtilPlane3D_F64;
 import georegression.geometry.UtilPoint3D_F64;
@@ -34,13 +35,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
-public class TestClosestPoint3D_F64 {
-	/**
-	 * Compute truth from 3 random points then see if the 3rd point is found again.
-	 */
+public class TestClosestPoint3D_F64 extends GeoRegressionJUnit {
+	/// Compute truth from 3 random points then see if the 3rd point is found again.
 	@Test void closestPoint_line_3D() {
 		Point3D_F64 a = new Point3D_F64(1, 1, 1);
 		Point3D_F64 b = new Point3D_F64(1.5, -2.5, 9);
@@ -434,14 +430,14 @@ public class TestClosestPoint3D_F64 {
 		Point3D_F64 work = pt.copy();
 
 		for (int i = 0; i < 3; i++) {
-			double orig = work.getIdx(i);
-			work.setIdx(i, orig + Math.sqrt(GrlConstants.TEST_F64));
+			double orig = work.get(i);
+			work.set(i, orig + Math.sqrt(GrlConstants.TEST_F64));
 			double d = Distance3D_F64.distance(lineA, work) + Distance3D_F64.distance(lineB, work);
 			assertTrue(found < d + 10*GrlConstants.TEST_F64, found + " " + d);
-			work.setIdx(i, orig - Math.sqrt(GrlConstants.TEST_F64));
+			work.set(i, orig - Math.sqrt(GrlConstants.TEST_F64));
 			d = Distance3D_F64.distance(lineA, work) + Distance3D_F64.distance(lineB, work);
 			assertTrue(found <= d + 10*GrlConstants.TEST_F64, found + " " + d);
-			work.setIdx(i, orig);
+			work.set(i, orig);
 		}
 	}
 
@@ -452,14 +448,14 @@ public class TestClosestPoint3D_F64 {
 		Point3D_F64 work = pt.copy();
 
 		for (int i = 0; i < 3; i++) {
-			double orig = work.getIdx(i);
-			work.setIdx(i, orig + Math.sqrt(GrlConstants.TEST_F64));
+			double orig = work.get(i);
+			work.set(i, orig + Math.sqrt(GrlConstants.TEST_F64));
 			double d = Distance3D_F64.distance(lineA, work) + Distance3D_F64.distance(lineB, work);
 			assertTrue(found <= d + 10*GrlConstants.TEST_F64, found + " " + d);
-			work.setIdx(i, orig - Math.sqrt(GrlConstants.TEST_F64));
+			work.set(i, orig - Math.sqrt(GrlConstants.TEST_F64));
 			d = Distance3D_F64.distance(lineA, work) + Distance3D_F64.distance(lineB, work);
 			assertTrue(found <= d + 10*GrlConstants.TEST_F64, found + " " + d);
-			work.setIdx(i, orig);
+			work.set(i, orig);
 		}
 	}
 }

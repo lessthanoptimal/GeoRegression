@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.line;
 
+import georegression.GeoRegressionJUnit;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LinePolar2D_F64;
@@ -30,13 +31,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-/**
- * @author Peter Abeles
- */
-public class TestFitLine_F64 {
-	@Test
-	void polar() {
-
+public class TestFitLine_F64 extends GeoRegressionJUnit {
+	@Test void polar() {
 		double r = 1.5;
 		double theta = 0.75;
 
@@ -56,10 +52,8 @@ public class TestFitLine_F64 {
 		assertTrue(UtilAngle.dist(theta, found.angle) <= GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void polar_weighted() {
-
-		double weights[] = new double[30];
+	@Test void polar_weighted() {
+		double[] weights = new double[30];
 		double r = 1.5;
 		double theta = 0.75;
 
@@ -90,9 +84,8 @@ public class TestFitLine_F64 {
 	/**
 	 * Test case where sum of weight is zero
 	 */
-	@Test
-	void polar_weighted_zero() {
-		double weights[] = new double[20];
+	@Test void polar_weighted_zero() {
+		double[] weights = new double[20];
 
 		List<Point2D_F64> pts = new ArrayList<Point2D_F64>();
 		for( int i = 0; i < 20; i++ ) {

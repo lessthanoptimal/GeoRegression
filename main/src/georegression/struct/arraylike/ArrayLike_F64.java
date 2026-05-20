@@ -54,7 +54,7 @@ public interface ArrayLike_F64 extends MatrixFormattable {
 	}
 
 	/// Prints as a row vector
-	default String format( MatrixPrintFormat format ) {
+	@Override default String format( MatrixPrintFormat format ) {
 		int size = length();
 		char decimal = format.decimal;
 		var builder = new StringBuilder();

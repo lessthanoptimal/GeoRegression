@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.curves;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilEllipse_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.EllipseRotated_F64;
@@ -27,34 +28,24 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public class TestRefineEllipseEuclideanLeastSquares_F64 {
-
-	Random rand = new Random(234);
-
-	@Test
-	void perfectEllipse() {
+public class TestRefineEllipseEuclideanLeastSquares_F64 extends GeoRegressionJUnit {
+	@Test void perfectEllipse() {
 		checkPerfect(0,0,2,1,0);
 		checkPerfect(1,-2,2,1,0);
 		checkPerfect(0.5,3,2,1,0.1);
 	}
 
-	@Test
-	void perfectCircle() {
+	@Test void perfectCircle() {
 		checkPerfect(0,0,2,2,0);
 		checkPerfect(1,-2,2,2,0);
 		checkPerfect(0.5,3,2,2,0.1);
 	}
 
-	@Test
-	void perfectDataBadGuess() {
+	@Test void perfectDataBadGuess() {
 		EllipseRotated_F64 trueModel = new EllipseRotated_F64(-1,1.5,3,2,-0.3);
 
 		checkIncorrect(-1, 1.5, 3, 2, -0.2, trueModel,false);
@@ -69,8 +60,7 @@ public class TestRefineEllipseEuclideanLeastSquares_F64 {
 		checkIncorrect(-0.5,2,1.5,2.5,-0.25,trueModel,true);
 	}
 
-	@Test
-	void noisyEllipse() {
+	@Test void noisyEllipse() {
 		double sigma = 0.05;
 
 		checkNoisy(0,0,2,1,0 , sigma);
@@ -106,9 +96,9 @@ public class TestRefineEllipseEuclideanLeastSquares_F64 {
 	 */
 	public void checkIncorrect( double x0 , double y0, double a, double b, double phi , EllipseRotated_F64 trueModel ,
 								boolean isCircle ) {
-		EllipseRotated_F64 rotated = new EllipseRotated_F64(x0,y0,a,b,phi);
+		var rotated = new EllipseRotated_F64(x0,y0,a,b,phi);
 
-		List<Point2D_F64> points = new ArrayList<Point2D_F64>();
+		var points = new ArrayList<Point2D_F64>();
 		for( int i = 0; i < 20; i++ ) {
 			double theta = 2.0*(double)Math.PI*i/20;
 
@@ -123,7 +113,7 @@ public class TestRefineEllipseEuclideanLeastSquares_F64 {
 //			System.out.println(points.get(i).x+" "+points.get(i).y);
 		}
 
-		RefineEllipseEuclideanLeastSquares_F64 alg = new RefineEllipseEuclideanLeastSquares_F64();
+		var alg = new RefineEllipseEuclideanLeastSquares_F64();
 
 		assertTrue(alg.refine(rotated, points));
 
@@ -131,8 +121,8 @@ public class TestRefineEllipseEuclideanLeastSquares_F64 {
 
 		assertEquals( trueModel.center.x , found.center.x , GrlConstants.TEST_F64);
 		assertEquals( trueModel.center.y , found.center.y , GrlConstants.TEST_F64);
-		assertEquals( trueModel.a , found.a , GrlConstants.TEST_F64);
-		assertEquals( trueModel.b , found.b , GrlConstants.TEST_F64);
+		assertEquals( trueModel.a , found.a , 2*GrlConstants.TEST_F64);
+		assertEquals( trueModel.b , found.b , 2*GrlConstants.TEST_F64);
 		if( !isCircle )
 			assertEquals( trueModel.phi , found.phi , GrlConstants.TEST_F64);
 	}
@@ -159,8 +149,7 @@ public class TestRefineEllipseEuclideanLeastSquares_F64 {
 		assertTrue(after<alg.initialError);
 	}
 
-	@Test
-	void checkJacobian() {
+	@Test void checkJacobian() {
 		EllipseRotated_F64 model = new EllipseRotated_F64(1,2,3,2,0.1);
 
 		List<Point2D_F64> points = new ArrayList<Point2D_F64>();

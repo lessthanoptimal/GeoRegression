@@ -18,6 +18,7 @@
 
 package georegression.fitting.curves;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilEllipse_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.EllipseQuadratic_F64;
@@ -27,20 +28,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public class TestFitEllipseWeightedAlgebraic_F64 {
-
-	Random rand = new Random(234);
-
-	@Test
-	void checkCircle() {
+public class TestFitEllipseWeightedAlgebraic_F64 extends GeoRegressionJUnit {
+	@Test void checkCircle() {
 		checkEllipse(0, 0, 3, 3, 0);
 	}
 
@@ -48,8 +41,7 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 	 * Give it points which are nearly perfectly describe an ellipse.
 	 * Perfect points is actually a hard case. See comments in random section.
 	 */
-	@Test
-	void checkEllipse() {
+	@Test void checkEllipse() {
 		checkEllipse(0,0,3,1.5,0);
 		checkEllipse(1,2,3,1.5,0);
 		checkEllipse(1,2,3,1.5,0.25);
@@ -98,8 +90,7 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 	/**
 	 * A bad point is given and see if the estimated error gets worse as it's weight is increased
 	 */
-	@Test
-	void checkErrorIncreasedWithWeight() {
+	@Test void checkErrorIncreasedWithWeight() {
 		checkEllipse(0,0,3,1.5,0);
 		checkEllipse(1,2,3,1.5,0);
 		checkEllipse(1,2,3,1.5,0.25);
@@ -153,8 +144,7 @@ public class TestFitEllipseWeightedAlgebraic_F64 {
 	 * The paper mentions that the case of perfect data is actually numerically unstable. The random test
 	 * below has been commented out since even the original algorithm run in octave can't pass that test.
 	 */
-	@Test
-	void checkRandom() {
+	@Test void checkRandom() {
 //		for( int i = 0; i < 100; i++ ) {
 //			System.out.println("i = "+i);
 //			double x0 = (rand.nextDouble()-0.5)*2;

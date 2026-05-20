@@ -25,9 +25,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-/**
- * @author Peter Abeles
- */
 
 // TODO create a UtilGeoTuple3D class for this and point 3d?
 public class UtilVector3D_F64 {
@@ -179,7 +176,7 @@ public class UtilVector3D_F64 {
 		int bestAxis = -1;
 		double best = -1;
 		for (int i = 0; i < 3; i++) {
-			double m = Math.abs(v.getIdx(i));
+			double m = Math.abs(v.get(i));
 			if( m > best ) {
 				best = m;
 				bestAxis = i;

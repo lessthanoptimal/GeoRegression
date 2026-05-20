@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,24 +18,19 @@
 
 package georegression.transform;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.se.Se2_F64;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestInvertibleTransformSequence {
-
-
+public class TestInvertibleTransformSequence extends GeoRegressionJUnit {
 	/**
 	 * Test a sequence where it goes forward and backwards
 	 */
-	@Test
-	void computeTransform() {
-		InvertibleTransformSequence<Se2_F64> path = new InvertibleTransformSequence<Se2_F64>();
+	@Test void computeTransform() {
+		var path = new InvertibleTransformSequence<Se2_F64>();
 
 		path.addTransform( false, new Se2_F64( 1, 2, 0 ) );
 		path.addTransform( true, new Se2_F64( 4, 6, 0 ) );
@@ -51,9 +46,8 @@ public class TestInvertibleTransformSequence {
 	 * Test a sequence where it goes forward twice. This exposed a bug
 	 * where a unique instances were not being passed in to concat().
 	 */
-	@Test
-	void computeTransform2() {
-		InvertibleTransformSequence<Se2_F64> path = new InvertibleTransformSequence<Se2_F64>();
+	@Test void computeTransform2() {
+		var path = new InvertibleTransformSequence<Se2_F64>();
 
 		path.addTransform( true, new Se2_F64( 1, 2, Math.PI/2.0 ) );
 		path.addTransform( true, new Se2_F64( 4, 6, Math.PI/2.0 ) );

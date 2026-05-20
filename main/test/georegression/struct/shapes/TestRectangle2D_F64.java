@@ -18,6 +18,7 @@
 
 package georegression.struct.shapes;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import org.ejml.MapPrintFormat;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestRectangle2D_F64 {
+public class TestRectangle2D_F64 extends GeoRegressionJUnit {
 	@Test void enforceExtents() {
 		var a = new Rectangle2D_F64(-1, -2, 50, 10);
 		a.enforceExtents();

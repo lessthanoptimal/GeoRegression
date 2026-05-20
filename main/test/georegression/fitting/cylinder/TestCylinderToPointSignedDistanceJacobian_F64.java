@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.cylinder;
 
+import georegression.GeoRegressionJUnit;
 import georegression.fitting.sphere.SphereToPointSignedDistanceJacobian_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
@@ -30,13 +31,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public class TestCylinderToPointSignedDistanceJacobian_F64 {
+public class TestCylinderToPointSignedDistanceJacobian_F64 extends GeoRegressionJUnit {
 
-	@Test
-	void compareToNumerical() {
+	@Test void compareToNumerical() {
 
 		CylinderToPointSignedDistance_F64 function = new CylinderToPointSignedDistance_F64();
 		CylinderToPointSignedDistanceJacobian_F64 jacobian = new CylinderToPointSignedDistanceJacobian_F64();
@@ -61,8 +58,7 @@ public class TestCylinderToPointSignedDistanceJacobian_F64 {
 				GrlConstants.TEST_F64));
 	}
 
-	@Test
-	void getN_and_getM() {
+	@Test void getN_and_getM() {
 		SphereToPointSignedDistanceJacobian_F64 alg = new SphereToPointSignedDistanceJacobian_F64();
 
 		List<Point3D_F64> points = new ArrayList<Point3D_F64>();

@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,9 +21,6 @@ package georegression.helper;
 import georegression.struct.point.Point2D_F64;
 import org.ddogleg.nn.alg.KdTreeDistance;
 
-/**
- * @author Peter Abeles
- */
 public class KdTreePoint2D_F64 implements KdTreeDistance<Point2D_F64> {
 	@Override
 	public /**/double distance(Point2D_F64 a, Point2D_F64 b) {

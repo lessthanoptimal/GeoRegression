@@ -18,12 +18,13 @@
 
 package georegression.struct.curve;
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.MapPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestPolynomialQuadratic2D_F64 {
+public class TestPolynomialQuadratic2D_F64 extends GeoRegressionJUnit {
 	@Test void formatMap() {
 		var a = new PolynomialQuadratic2D_F64(1.5,0.1,0.9123,3,2, -217.5);
 		String found = a.formatMap(new MapPrintFormat().withPrecision(2));

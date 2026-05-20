@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,7 @@
 
 package georegression.struct;
 
-import georegression.GeoStandardJUnit;
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.shapes.Triangle2D_F64;
 import org.ejml.UtilEjml;
@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestMesh2D_F64 extends GeoStandardJUnit {
+public class TestMesh2D_F64 extends GeoRegressionJUnit {
 	@Test void stripUnusedPoints() {
 		var alg = new Mesh2D_F64();
 

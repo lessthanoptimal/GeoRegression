@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,9 +18,6 @@
 
 package georegression.fitting.polygon;
 
-/**
- * @author Peter Abeles
- */
 public class TestConvexHullAndrewMonotone_F64 extends CommonConvexHullChecks_F64 {
 	@Override FitConvexHull_F64 createAlgorithm() {
 		return new ConvexHullAndrewMonotone_F64();

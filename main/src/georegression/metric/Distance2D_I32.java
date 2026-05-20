@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -24,9 +24,6 @@ import georegression.struct.line.LineParametric2D_I32;
 import georegression.struct.line.LineSegment2D_I32;
 import georegression.struct.point.Point2D_I32;
 
-/**
- * @author Peter Abeles
- */
 public class Distance2D_I32 {
 	/**
 	 * <p>

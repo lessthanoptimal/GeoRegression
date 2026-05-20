@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.geometry.polygon;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.polygon.TriangulateSimpleRemoveEars_F64.Vertex;
 import georegression.struct.shapes.Polygon2D_F64;
 import org.ddogleg.struct.DogArray;
@@ -27,11 +28,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
 @SuppressWarnings("ConstantConditions")
-public class TestTriangulateSimpleRemoveEars_F64 {
+public class TestTriangulateSimpleRemoveEars_F64 extends GeoRegressionJUnit {
 	/**
 	 * When there's less than three nodes it should be empty
 	 */

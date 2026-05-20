@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.transform.homography;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.GeometryMath_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.homography.Homography2D_F64;
@@ -31,10 +32,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-/**
- * @author Peter Abeles
- */
-public class TestHomographyPointOps_F64 {
+public class TestHomographyPointOps_F64 extends GeoRegressionJUnit {
 
 	DMatrixRMaj M = new DMatrixRMaj(3,3);
 	Homography2D_F64 tran = new Homography2D_F64();
@@ -55,8 +53,7 @@ public class TestHomographyPointOps_F64 {
 		UtilHomography_F64.convert(tran,M);
 	}
 
-	@Test
-	void transform_Point_F64() {
+	@Test void transform_Point_F64() {
 		Point2D_F64 src = new Point2D_F64(1,2);
 		Point2D_F64 dst = new Point2D_F64();
 		Point2D_F64 expected = new Point2D_F64();
@@ -69,8 +66,7 @@ public class TestHomographyPointOps_F64 {
 		assertEquals(expected.y,dst.y, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void transform_DD_F64() {
+	@Test void transform_DD_F64() {
 		Point2D_F64 src = new Point2D_F64(1,2);
 		Point2D_F64 dst = new Point2D_F64();
 		Point2D_F64 expected = new Point2D_F64();

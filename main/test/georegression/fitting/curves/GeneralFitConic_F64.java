@@ -18,6 +18,7 @@
 
 package georegression.fitting.curves;
 
+import georegression.GeoRegressionJUnit;
 import georegression.fitting.FitShapeToPoints_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.ConicGeneral_F64;
@@ -29,18 +30,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
-public abstract class GeneralFitConic_F64 {
+public abstract class GeneralFitConic_F64 extends GeoRegressionJUnit {
 
 	public abstract FitShapeToPoints_F64<Point2D_F64,ConicGeneral_F64> createAlg();
 
 	/**
 	 * Fit to the minimum possible while testing several specific geometric configurations
 	 */
-	@Test
-	void fit_points_3() {
+	@Test void fit_points_3() {
 		FitShapeToPoints_F64<Point2D_F64,ConicGeneral_F64> fitter = createAlg();
 		ConicGeneral_F64 found = new ConicGeneral_F64();
 
@@ -93,8 +90,7 @@ public abstract class GeneralFitConic_F64 {
 	 * Same as above but with weights. Note that this really shouldn't change the results. Mostly a sanity check
 	 * to see if the weights are completely messed up.
 	 */
-	@Test
-	void fit_points_3_weighted() {
+	@Test void fit_points_3_weighted() {
 		double weights[] = {0.8,1.2,0.2};
 		FitShapeToPoints_F64<Point2D_F64,ConicGeneral_F64> fitter = createAlg();
 		ConicGeneral_F64 found = new ConicGeneral_F64();

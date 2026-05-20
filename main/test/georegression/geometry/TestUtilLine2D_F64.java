@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,7 @@
 
 package georegression.geometry;
 
-
+import georegression.GeoRegressionJUnit;
 import georegression.metric.UtilAngle;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LineGeneral2D_F64;
@@ -29,19 +29,11 @@ import georegression.struct.point.Point2D_F64;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
 import static georegression.geometry.UtilLine2D_F64.acuteAngle;
 import static georegression.geometry.UtilLine2D_F64.acuteAngleN;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
-public class TestUtilLine2D_F64 {
-
-	private final Random rand = new Random(234234);
-
+public class TestUtilLine2D_F64 extends GeoRegressionJUnit {
 	@Test void acuteAngle_general() {
 		assertEquals(0, acuteAngle(new LineGeneral2D_F64(1, 0, 0.5), new LineGeneral2D_F64(1, 0, 6)),
 				GrlConstants.TEST_F64);
@@ -69,22 +61,22 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test void convert_segment_parametric() {
-		LineSegment2D_F64 segment = new LineSegment2D_F64();
-		LineParametric2D_F64 para = new LineParametric2D_F64();
+		var segment = new LineSegment2D_F64();
+		var para = new LineParametric2D_F64();
 
 		segment.a.setTo(1,2);
 		segment.b.setTo(5,0);
 
 		UtilLine2D_F64.convert(segment,para);
 
-		assertEquals(para.p.x,1, GrlConstants.TEST_F64);
-		assertEquals(para.p.y,2, GrlConstants.TEST_F64);
-		assertEquals(para.slope.x,4, GrlConstants.TEST_F64);
-		assertEquals(para.slope.y,-2, GrlConstants.TEST_F64);
+		assertEquals(1, para.p.x, GrlConstants.TEST_F64);
+		assertEquals(2, para.p.y, GrlConstants.TEST_F64);
+		assertEquals(4, para.slope.x, GrlConstants.TEST_F64);
+		assertEquals(-2, para.slope.y, GrlConstants.TEST_F64);
 	}
 
 	@Test void convert_segment_general() {
-		LineSegment2D_F64 segment = new LineSegment2D_F64();
+		var segment = new LineSegment2D_F64();
 
 		segment.a.setTo(0,2);
 		segment.b.setTo(5,6);
@@ -97,8 +89,8 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test void convert_segment2pt_general() {
-		Point2D_F64 a = new Point2D_F64(2,6);
-		Point2D_F64 b = new Point2D_F64(7,8);
+		var a = new Point2D_F64(2,6);
+		var b = new Point2D_F64(7,8);
 
 		LineGeneral2D_F64 general = UtilLine2D_F64.convert(a,b,(LineGeneral2D_F64)null);
 
@@ -108,46 +100,46 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test void convert_segment2pt_parametric() {
-		Point2D_F64 a = new Point2D_F64(2,6);
-		Point2D_F64 b = new Point2D_F64(7,8);
+		var a = new Point2D_F64(2,6);
+		var b = new Point2D_F64(7,8);
 
 		LineParametric2D_F64 para = UtilLine2D_F64.convert(a,b,(LineParametric2D_F64) null);
 
-		assertEquals(para.p.x,2, GrlConstants.TEST_F64);
-		assertEquals(para.p.y,6, GrlConstants.TEST_F64);
-		assertEquals(para.slope.x,5, GrlConstants.TEST_F64);
-		assertEquals(para.slope.y,2, GrlConstants.TEST_F64);
+		assertEquals(2, para.p.x, GrlConstants.TEST_F64);
+		assertEquals(6, para.p.y, GrlConstants.TEST_F64);
+		assertEquals(5, para.slope.x, GrlConstants.TEST_F64);
+		assertEquals(2, para.slope.y, GrlConstants.TEST_F64);
 	}
 
 	@Test void convert_pt_angle_parametric() {
-		Point2D_F64 a = new Point2D_F64(2,6);
+		var a = new Point2D_F64(2,6);
 		double angle = Math.PI;
 
 		LineParametric2D_F64 para = UtilLine2D_F64.convert(a,angle,(LineParametric2D_F64) null);
 
-		assertEquals(para.p.x,2, GrlConstants.TEST_F64);
-		assertEquals(para.p.y,6, GrlConstants.TEST_F64);
-		assertEquals(para.slope.x,-1, GrlConstants.TEST_F64);
-		assertEquals(para.slope.y,0, GrlConstants.TEST_F64);
+		assertEquals(2, para.p.x, GrlConstants.TEST_F64);
+		assertEquals(6, para.p.y, GrlConstants.TEST_F64);
+		assertEquals(-1, para.slope.x, GrlConstants.TEST_F64);
+		assertEquals(0, para.slope.y, GrlConstants.TEST_F64);
 	}
 
 	@Test void convert_polar_parametric() {
-		LinePolar2D_F64 polar = new LinePolar2D_F64();
-		LineParametric2D_F64 para = new LineParametric2D_F64();
+		var polar = new LinePolar2D_F64();
+		var para = new LineParametric2D_F64();
 
 		polar.distance = 5;
 		polar.angle = Math.PI/2;
 
 		UtilLine2D_F64.convert(polar,para);
 
-		assertEquals(para.p.x,0, GrlConstants.TEST_F64);
-		assertEquals(para.p.y,5, GrlConstants.TEST_F64);
-		assertEquals(Math.abs(para.slope.x),1, GrlConstants.TEST_F64);
-		assertEquals(para.slope.y,0, GrlConstants.TEST_F64);
+		assertEquals(0, para.p.x, GrlConstants.TEST_F64);
+		assertEquals(5, para.p.y, GrlConstants.TEST_F64);
+		assertEquals(1, Math.abs(para.slope.x), GrlConstants.TEST_F64);
+		assertEquals(0, para.slope.y, GrlConstants.TEST_F64);
 	}
 
 	@Test void convert_polar_general() {
-		LinePolar2D_F64 polar = new LinePolar2D_F64();
+		var polar = new LinePolar2D_F64();
 
 		polar.distance = 5;
 		polar.angle = Math.PI/3.0;
@@ -169,7 +161,7 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test void convert_general_polar() {
-		LineGeneral2D_F64 general = new LineGeneral2D_F64(2,-3,-5);
+		var general = new LineGeneral2D_F64(2,-3,-5);
 		LinePolar2D_F64 found = UtilLine2D_F64.convert(general,(LinePolar2D_F64)null);
 
 		// find two points on the line using the polar equation
@@ -188,26 +180,26 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test void convert_parametric_polar() {
-		LineParametric2D_F64 para = new LineParametric2D_F64();
-		LinePolar2D_F64 polar = new LinePolar2D_F64();
+		var para = new LineParametric2D_F64();
+		var polar = new LinePolar2D_F64();
 
 		para.slope.setTo(1,0);
 		para.setPoint(0,5);
 		UtilLine2D_F64.convert(para,polar);
-		assertEquals(polar.distance,5, GrlConstants.TEST_F64);
-		assertEquals(polar.angle,Math.PI/2, GrlConstants.TEST_F64);
+		assertEquals(5, polar.distance, GrlConstants.TEST_F64);
+		assertEquals(Math.PI/2, polar.angle, GrlConstants.TEST_F64);
 
 		para.slope.setTo(1,-1);
 		para.setPoint(-5,-5);
 		UtilLine2D_F64.convert(para,polar);
 		assertEquals(polar.distance,5*Math.sqrt(2), GrlConstants.TEST_F64);
-		assertEquals(polar.angle,-Math.PI+Math.PI/4, GrlConstants.TEST_F64);
+		assertEquals(-Math.PI+Math.PI/4, polar.angle, GrlConstants.TEST_F64);
 	}
 
 	@Test void convert_BackAndForth_parametric_polar() {
-		LineParametric2D_F64 para = new LineParametric2D_F64();
-		LinePolar2D_F64 polar = new LinePolar2D_F64();
-		LinePolar2D_F64 found = new LinePolar2D_F64();
+		var para = new LineParametric2D_F64();
+		var polar = new LinePolar2D_F64();
+		var found = new LinePolar2D_F64();
 
 		for (int i = 0; i < 100; i++) {
 			polar.distance = (rand.nextDouble() - 0.5) * 3;
@@ -232,8 +224,8 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test void convert_parametric_general() {
-		LineParametric2D_F64 para = new LineParametric2D_F64();
-		LineGeneral2D_F64 general = new LineGeneral2D_F64();
+		var para = new LineParametric2D_F64();
+		var general = new LineGeneral2D_F64();
 
 		para.slope.setTo(1,0.5);
 		para.p.setTo(0.75,0.34);
@@ -251,8 +243,8 @@ public class TestUtilLine2D_F64 {
 	}
 
 	@Test void convert_general_parametric() {
-		LineGeneral2D_F64 general = new LineGeneral2D_F64();
-		LineParametric2D_F64 para = new LineParametric2D_F64();
+		var general = new LineGeneral2D_F64();
+		var para = new LineParametric2D_F64();
 
 		// pick some arbitrary line
 		general.setTo(1,2,3);

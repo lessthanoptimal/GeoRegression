@@ -19,28 +19,12 @@
 package georegression.struct;
 
 import org.ejml.data.DMatrix3x3;
+import org.ejml.dense.fixed.CommonOps_DDF3;
 
-/**
- * Matrix with a fixed size of 3 by 3.
- *
- * @author Peter Abeles
- */
+/// Matrix with a fixed size of 3 by 3.
 public class Matrix3x3_F64 extends DMatrix3x3 {
-	public void setTo( Matrix3x3_F64 b ) {
-		a11=b.a11; a12=b.a12; a13=b.a13;
-		a21=b.a21; a22=b.a22; a23=b.a23;
-		a31=b.a31; a32=b.a32; a33=b.a33;
-	}
 	public void scale( double value ) {
-		a11 *= value;
-		a12 *= value;
-		a13 *= value;
-		a21 *= value;
-		a22 *= value;
-		a23 *= value;
-		a31 *= value;
-		a32 *= value;
-		a33 *= value;
+		CommonOps_DDF3.scale(value, this);
 	}
 
 	public double getA11() {

@@ -18,13 +18,14 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.so.Quaternion_F64;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TestQuaternionMath_F64 {
+class TestQuaternionMath_F64 extends GeoRegressionJUnit {
 	@Test void multiply() {
 		double tol = GrlConstants.TEST_F64;
 

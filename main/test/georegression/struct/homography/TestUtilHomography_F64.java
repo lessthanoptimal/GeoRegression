@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -19,18 +19,15 @@
 package georegression.struct.homography;
 
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.data.DMatrixRMaj;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestUtilHomography_F64 {
+public class TestUtilHomography_F64 extends GeoRegressionJUnit {
 
-	@Test
-	void convert_matrix_F64() {
+	@Test void convert_matrix_F64() {
 		DMatrixRMaj a = new DMatrixRMaj(3,3,true,1,2,3,4,5,6,7,8,9);
 
 		Homography2D_F64 h = UtilHomography_F64.convert(a,null);
@@ -46,8 +43,7 @@ public class TestUtilHomography_F64 {
 		assertEquals(a.get(2, 2), h.a33);
 	}
 
-	@Test
-	void convert_F64_matrix() {
+	@Test void convert_F64_matrix() {
 		Homography2D_F64 h = new Homography2D_F64(1,2,3,4,5,6,7,8,9);
 
 		DMatrixRMaj a = UtilHomography_F64.convert(h,null);

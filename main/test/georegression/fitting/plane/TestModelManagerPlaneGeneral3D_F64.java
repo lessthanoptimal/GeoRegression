@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.plane;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import org.junit.jupiter.api.Test;
@@ -25,24 +26,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-/**
- * @author Peter Abeles
- */
-public class TestModelManagerPlaneGeneral3D_F64 {
-
-	@Test
-	void createModelInstance() {
-		ModelManagerPlaneGeneral3D_F64 alg = new ModelManagerPlaneGeneral3D_F64();
+public class TestModelManagerPlaneGeneral3D_F64 extends GeoRegressionJUnit {
+	@Test void createModelInstance() {
+		var alg = new ModelManagerPlaneGeneral3D_F64();
 
 		assertNotNull(alg.createModelInstance());
 	}
 
-	@Test
-	void copyModel() {
-		ModelManagerPlaneGeneral3D_F64 alg = new ModelManagerPlaneGeneral3D_F64();
+	@Test void copyModel() {
+		var alg = new ModelManagerPlaneGeneral3D_F64();
 
-		PlaneGeneral3D_F64 model = new PlaneGeneral3D_F64(1,2,3,4);
-		PlaneGeneral3D_F64 found = new PlaneGeneral3D_F64();
+		var model = new PlaneGeneral3D_F64(1,2,3,4);
+		var found = new PlaneGeneral3D_F64();
 
 		alg.copyModel(model,found);
 
@@ -51,5 +46,4 @@ public class TestModelManagerPlaneGeneral3D_F64 {
 		assertEquals(model.C,found.C, GrlConstants.TEST_F64);
 		assertEquals(model.D,found.D, GrlConstants.TEST_F64);
 	}
-
 }

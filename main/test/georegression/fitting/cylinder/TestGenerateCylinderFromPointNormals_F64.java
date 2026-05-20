@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.cylinder;
 
+import georegression.GeoRegressionJUnit;
 import georegression.metric.Distance3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
 import georegression.struct.point.Vector3D_F64;
@@ -26,17 +27,12 @@ import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TestGenerateCylinderFromPointNormals_F64 {
-	Random rand = new Random(2345);
-
-	/**
-	 * Test cases with perfect noise free
-	 */
+class TestGenerateCylinderFromPointNormals_F64 extends GeoRegressionJUnit {
+	/// Test cases with perfect noise free
 	@Test void perfect() {
 		var alg = new GenerateCylinderFromPointNormals_F64();
 		var found = new Cylinder3D_F64();

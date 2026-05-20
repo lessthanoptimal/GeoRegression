@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -22,11 +22,7 @@ import georegression.fitting.FitShapeToPoints_F64;
 import georegression.struct.curve.ConicGeneral_F64;
 import georegression.struct.point.Point2D_F64;
 
-/**
- * @author Peter Abeles
- */
 public class TestFitConicAtA_F64 extends GeneralFitConic_F64 {
-
 	@Override
 	public FitShapeToPoints_F64<Point2D_F64, ConicGeneral_F64> createAlg() {
 		return new FitConicAtA_F64();

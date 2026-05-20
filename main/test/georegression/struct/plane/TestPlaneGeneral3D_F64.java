@@ -18,6 +18,7 @@
 
 package georegression.struct.plane;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilPoint3D_F64;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
@@ -26,7 +27,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestPlaneGeneral3D_F64 {
+public class TestPlaneGeneral3D_F64 extends GeoRegressionJUnit {
 	@Test void evaluate() {
 		var a = new PlaneGeneral3D_F64(0, 0, 1, 4);
 

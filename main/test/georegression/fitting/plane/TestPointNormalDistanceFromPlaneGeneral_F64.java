@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.plane;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilPlane3D_F64;
 import georegression.struct.plane.PlaneGeneral3D_F64;
 import georegression.struct.plane.PlaneNormal3D_F64;
@@ -25,13 +26,11 @@ import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-class TestPointNormalFromPlaneGeneral_F64 {
-	Random rand = new Random(234);
+class TestPointNormalDistanceFromPlaneGeneral_F64 extends GeoRegressionJUnit {
 	PlaneNormal3D_F64 normal = new PlaneNormal3D_F64();
 	PlaneGeneral3D_F64 general = new PlaneGeneral3D_F64();
 

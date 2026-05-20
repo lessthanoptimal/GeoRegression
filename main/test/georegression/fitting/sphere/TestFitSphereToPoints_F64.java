@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.sphere;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.geometry.GeometryMath_F64;
 import georegression.misc.GrlConstants;
@@ -29,24 +30,14 @@ import org.ejml.data.DMatrixRMaj;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestFitSphereToPoints_F64 {
+public class TestFitSphereToPoints_F64 extends GeoRegressionJUnit {
+	@Test void perfectModel() {
+		var sphere = new Sphere3D_F64(1,2,3,4);
 
-	Random rand = new Random(234);
-
-	@Test
-	void perfectModel() {
-
-		Sphere3D_F64 sphere = new Sphere3D_F64(1,2,3,4);
-
-		List<Point3D_F64> points = new ArrayList<Point3D_F64>();
+		var points = new ArrayList<Point3D_F64>();
 		for( int i = 0; i < 50; i++ ) {
 
 			double phi = rand.nextDouble()*GrlConstants.PI2;
@@ -55,7 +46,7 @@ public class TestFitSphereToPoints_F64 {
 			points.add(createPt(sphere,phi,theta));
 		}
 
-		FitSphereToPoints_F64 alg = new FitSphereToPoints_F64(200);
+		var alg = new FitSphereToPoints_F64(200);
 
 		Sphere3D_F64 found = new Sphere3D_F64();
 		alg.fitModel(points, sphere, found);
@@ -64,20 +55,18 @@ public class TestFitSphereToPoints_F64 {
 		assertEquals(sphere.radius,found.radius,GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void perfectWithBadInitialModel() {
-		Sphere3D_F64 sphere = new Sphere3D_F64(1,2,3,4);
+	@Test void perfectWithBadInitialModel() {
+		var sphere = new Sphere3D_F64(1,2,3,4);
 
-		List<Point3D_F64> points = new ArrayList<Point3D_F64>();
+		var points = new ArrayList<Point3D_F64>();
 		for( int i = 0; i < 50; i++ ) {
-
 			double phi = rand.nextDouble()*GrlConstants.PI2;
 			double theta = rand.nextDouble()*GrlConstants.PI2;
 
 			points.add(createPt(sphere,phi,theta));
 		}
 
-		FitSphereToPoints_F64 alg = new FitSphereToPoints_F64(200);
+		var alg = new FitSphereToPoints_F64(200);
 
 		// make the initial model a bit off
 		Sphere3D_F64 initial = new Sphere3D_F64(1.05,1.99,3,3.8);
@@ -89,8 +78,7 @@ public class TestFitSphereToPoints_F64 {
 	}
 
 	public static Point3D_F64 createPt( Sphere3D_F64 sphere , double phi , double theta ) {
-		Point3D_F64 p = new Point3D_F64();
-		p.setTo(0,0,sphere.radius);
+		Point3D_F64 p = new Point3D_F64().setTo(0,0,sphere.radius);
 
 		Rodrigues_F64 rodX = new Rodrigues_F64(phi,new Vector3D_F64(1,0,0));
 		DMatrixRMaj rotX = ConvertRotation3D_F64.rodriguesToMatrix(rodX, null);

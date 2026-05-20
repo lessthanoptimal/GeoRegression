@@ -18,6 +18,7 @@
 
 package georegression.struct.curve;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import org.ejml.MapPrintFormat;
 import org.ejml.UtilEjml;
@@ -25,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestConicGeneral_F64 {
+public class TestConicGeneral_F64 extends GeoRegressionJUnit {
 	@Test void evaluate() {
 		// arbitrary but hand constructed conic
 		ConicGeneral_F64 conic = new ConicGeneral_F64(1.5,0.1,0.9,3,2,-217.5);

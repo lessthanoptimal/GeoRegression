@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,16 +18,14 @@
 
 package georegression.geometry.polygon;
 
+import georegression.GeoRegressionJUnit;
 import org.ddogleg.struct.DogLinkedList;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
 @SuppressWarnings("ConstantConditions")
-public class TestCyclicalLinkedList {
+public class TestCyclicalLinkedList extends GeoRegressionJUnit {
 	@Test void pushHead() {
 		var alg = new CyclicalLinkedList<Integer>();
 		alg.pushHead(0);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,28 +18,23 @@
 
 package georegression.fitting.homography;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.homography.Homography2D_F64;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-/**
- * @author Peter Abeles
- */
-public class TestModelManagerHomography2D_F64 {
+public class TestModelManagerHomography2D_F64 extends GeoRegressionJUnit {
+	@Test void createModelInstance() {
+		var alg = new ModelManagerHomography2D_F64();
 
-	@Test
-	void createModelInstance() {
-		ModelManagerHomography2D_F64 alg = new ModelManagerHomography2D_F64();
-
-		assertTrue(alg.createModelInstance() != null);
+		assertNotNull(alg.createModelInstance());
 	}
 
-	@Test
-	void copyModel() {
-		ModelManagerHomography2D_F64 alg = new ModelManagerHomography2D_F64();
+	@Test void copyModel() {
+		var alg = new ModelManagerHomography2D_F64();
 
 		Homography2D_F64 model = new Homography2D_F64(1,2,3,4,5,6,7,8,9);
 		Homography2D_F64 found = new Homography2D_F64();

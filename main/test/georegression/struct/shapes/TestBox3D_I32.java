@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,17 +18,14 @@
 
 package georegression.struct.shapes;
 
+import georegression.GeoRegressionJUnit;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestBox3D_I32 {
+public class TestBox3D_I32 extends GeoRegressionJUnit {
 
-	@Test
-	void constructor_box() {
+	@Test void constructor_box() {
 		Box3D_I32 boxA = new Box3D_I32(1,2,3,4,5,6);
 		Box3D_I32 box = new Box3D_I32(boxA);
 
@@ -40,8 +37,7 @@ public class TestBox3D_I32 {
 		assertEquals(6,box.p1.z);
 	}
 
-	@Test
-	void constructor_ints() {
+	@Test void constructor_ints() {
 		Box3D_I32 box = new Box3D_I32(1,2,3,4,5,6);
 
 		assertEquals(1,box.p0.x);
@@ -52,8 +48,7 @@ public class TestBox3D_I32 {
 		assertEquals(6,box.p1.z);
 	}
 
-	@Test
-	void set_ints() {
+	@Test void set_ints() {
 		Box3D_I32 box = new Box3D_I32();
 		box.setTo(1,2,3,4,5,6);
 
@@ -65,8 +60,7 @@ public class TestBox3D_I32 {
 		assertEquals(6,box.p1.z);
 	}
 
-	@Test
-	void set_box() {
+	@Test void set_box() {
 		Box3D_I32 boxA = new Box3D_I32(1,2,3,4,5,6);
 		Box3D_I32 box = new Box3D_I32();
 		box.setTo(boxA);
@@ -79,30 +73,26 @@ public class TestBox3D_I32 {
 		assertEquals(6,box.p1.z);
 	}
 
-	@Test
-	void area() {
+	@Test void area() {
 		Box3D_I32 box = new Box3D_I32(1,2,3,4,5,6);
 
 		int expected = 3*3*3;
 		assertEquals(expected,box.area());
 	}
 
-	@Test
-	void getLengthX() {
+	@Test void getLengthX() {
 		Box3D_I32 box = new Box3D_I32(1,2,3,4,6,8);
 
 		assertEquals(3,box.getLengthX());
 	}
 
-	@Test
-	void getLengthY() {
+	@Test void getLengthY() {
 		Box3D_I32 box = new Box3D_I32(1,2,3,4,6,8);
 
 		assertEquals(4,box.getLengthY());
 	}
 
-	@Test
-	void getLengthZ() {
+	@Test void getLengthZ() {
 		Box3D_I32 box = new Box3D_I32(1,2,3,4,6,8);
 
 		assertEquals(5,box.getLengthZ());

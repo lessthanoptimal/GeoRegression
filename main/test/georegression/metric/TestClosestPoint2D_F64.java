@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.metric;
 
+import georegression.GeoRegressionJUnit;
 import georegression.fitting.curves.ClosestPointEllipseAngle_F64;
 import georegression.geometry.UtilLine2D_F64;
 import georegression.misc.GrlConstants;
@@ -31,13 +32,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public class TestClosestPoint2D_F64 {
-
-	@Test
-	void closestPoint_general() {
+public class TestClosestPoint2D_F64 extends GeoRegressionJUnit {
+	@Test void closestPoint_general() {
 		LineParametric2D_F64 line = new LineParametric2D_F64( 1, 2, -1, 1 );
 		LineGeneral2D_F64 general = UtilLine2D_F64.convert(line,(LineGeneral2D_F64)null);
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
@@ -47,8 +43,7 @@ public class TestClosestPoint2D_F64 {
 		assertEquals( 1, found.getY(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void closestPoint_parametric() {
+	@Test void closestPoint_parametric() {
 		LineParametric2D_F64 line = new LineParametric2D_F64( 1, 2, -1, 1 );
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
@@ -57,8 +52,7 @@ public class TestClosestPoint2D_F64 {
 		assertEquals( 1, found.getY(), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void closestPointT_parametric() {
+	@Test void closestPointT_parametric() {
 		LineParametric2D_F64 line = new LineParametric2D_F64( 1, 2, -1, 1 );
 		Point2D_F64 pt = new Point2D_F64( 1, 0 );
 
@@ -66,16 +60,14 @@ public class TestClosestPoint2D_F64 {
 		assertEquals( -1, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void closestPointT_parametric_xy() {
+	@Test void closestPointT_parametric_xy() {
 		LineParametric2D_F64 line = new LineParametric2D_F64( 1, 2, -1, 1 );
 
 		double found = ClosestPoint2D_F64.closestPointT( line, 1,0 );
 		assertEquals( -1, found, GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void closestPoint_LineSegment() {
+	@Test void closestPoint_LineSegment() {
 		LineSegment2D_F64 ls; Point2D_F64 found;
 		// test middle
 		ls = new LineSegment2D_F64(1,2,4,5);
@@ -94,8 +86,7 @@ public class TestClosestPoint2D_F64 {
 		assertEquals(5,found.y,GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void closestPointT_LineSegment() {
+	@Test void closestPointT_LineSegment() {
 		LineSegment2D_F64 ls; Point2D_F64 found = new Point2D_F64();
 		double t;
 
@@ -123,8 +114,7 @@ public class TestClosestPoint2D_F64 {
 		assertEquals(5,found.y,GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void closestPoint_ellipse() {
+	@Test void closestPoint_ellipse() {
 		EllipseRotated_F64 ellipse = new EllipseRotated_F64(1,2,3,2,0.1);
 
 		Point2D_F64 p = new Point2D_F64(6,7);

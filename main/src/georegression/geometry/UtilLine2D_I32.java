@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,9 +20,6 @@ package georegression.geometry;
 
 import georegression.struct.line.LineSegment2D_I32;
 
-/**
- * @author Peter Abeles
- */
 public class UtilLine2D_I32 {
 
 	/**

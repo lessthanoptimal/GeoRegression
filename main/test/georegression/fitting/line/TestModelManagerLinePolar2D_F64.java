@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.line;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.line.LinePolar2D_F64;
 import org.junit.jupiter.api.Test;
@@ -25,21 +26,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public class TestModelManagerLinePolar2D_F64 {
+public class TestModelManagerLinePolar2D_F64 extends GeoRegressionJUnit {
 
-	@Test
-	void createModelInstance() {
-		ModelManagerLinePolar2D_F64 alg = new ModelManagerLinePolar2D_F64();
+	@Test void createModelInstance() {
+		var alg = new ModelManagerLinePolar2D_F64();
 
 		assertTrue( alg.createModelInstance() != null);
 	}
 
-	@Test
-	void copyModel() {
-		ModelManagerLinePolar2D_F64 alg = new ModelManagerLinePolar2D_F64();
+	@Test void copyModel() {
+		var alg = new ModelManagerLinePolar2D_F64();
 
 		LinePolar2D_F64 model = new LinePolar2D_F64(1,2);
 		LinePolar2D_F64 found = new LinePolar2D_F64();

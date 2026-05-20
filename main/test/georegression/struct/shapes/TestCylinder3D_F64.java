@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,12 +18,13 @@
 
 package georegression.struct.shapes;
 
+import georegression.GeoRegressionJUnit;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestCylinder3D_F64 {
+public class TestCylinder3D_F64 extends GeoRegressionJUnit {
 	@Test void isIdentical() {
 		var c = new Cylinder3D_F64(1, 2, 3, 4, 5, 6, 7);
 		assertTrue(c.isIdentical(new Cylinder3D_F64(1, 2, 3, 4, 5, 6, 7), 0.0));

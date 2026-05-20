@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,17 +18,13 @@
 
 package georegression.struct.affine;
 
+import georegression.GeoRegressionJUnit;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestUtilAffine {
-
-	@Test
-	void convert_F64_F32() {
+public class TestUtilAffine extends GeoRegressionJUnit {
+	@Test void convert_F64_F32() {
 		Affine2D_F64 a = new Affine2D_F64(1,2,3,4,5,6);
 		Affine2D_F32 b = UtilAffine.convert(a,null);
 

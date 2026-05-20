@@ -18,12 +18,13 @@
 
 package georegression.struct.shapes;
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.MapPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestTriangle3D_F64 {
+public class TestTriangle3D_F64 extends GeoRegressionJUnit {
 	@Test void formatMap() {
 		var a = new Triangle3D_F64().setTo(1,2,3,4.1234,5,6,7,8,9);
 		String found = a.formatMap(new MapPrintFormat().withPrecision(2));

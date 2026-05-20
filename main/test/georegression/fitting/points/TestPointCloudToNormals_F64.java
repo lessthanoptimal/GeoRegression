@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,19 +18,16 @@
 
 package georegression.fitting.points;
 
+import georegression.GeoRegressionJUnit;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
 import org.ddogleg.struct.DogArray;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TestPointCloudToNormals_F64 {
-	private final Random rand = new Random(234);
-
+class TestPointCloudToNormals_F64 extends GeoRegressionJUnit {
 	/**
 	 * Given a known plane, compute the normals for all the points the plane and compare
 	 */

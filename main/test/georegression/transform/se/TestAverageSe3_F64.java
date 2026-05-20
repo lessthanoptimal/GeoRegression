@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.transform.se;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestAverageSe3_F64 {
+public class TestAverageSe3_F64 extends GeoRegressionJUnit {
 	@Test void basic() {
 		var list = new ArrayList<Se3_F64>();
 

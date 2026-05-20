@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,9 +18,6 @@
 
 package georegression;
 
-/**
- * @author Peter Abeles
- */
 public class ProfileOperation {
 
     /**

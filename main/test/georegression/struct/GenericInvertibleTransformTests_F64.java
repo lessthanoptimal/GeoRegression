@@ -18,6 +18,7 @@
 
 package georegression.struct;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.tuples.GeoTuple_F64;
 import org.jetbrains.annotations.Nullable;
@@ -25,20 +26,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SuppressWarnings({"unchecked"})
-public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64> {
+@SuppressWarnings({"unchecked", "rawtypes"})
+public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64> extends GeoRegressionJUnit {
 
 	public abstract T createRandomPoint();
 
-	public abstract InvertibleTransform createRandomTransform();
+	public abstract InvertibleTransform<?> createRandomTransform();
 
-	public abstract T apply( InvertibleTransform se, T point, @Nullable T result );
+	public abstract T apply( InvertibleTransform<?> se, T point, @Nullable T result );
 
-	/**
-	 * Makes sure that after reset is called the transform applies no transform
-	 */
-	@Test void testReset() {
-		InvertibleTransform tran1 = createRandomTransform();
+	/// Makes sure that after reset is called the transform applies no transform
+	@Test void reset() {
+		InvertibleTransform<?> tran1 = createRandomTransform();
 
 		T orig = createRandomPoint();
 		T before = (T)orig.createNewInstance();
@@ -53,11 +52,9 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 		assertTrue(orig.isIdentical(before, GrlConstants.TEST_F64));
 	}
 
-	/**
-	 * See if applying the two transforms is the same as applying the concat of those
-	 * two transforms once.
-	 */
-	@Test void testConcat() {
+	/// See if applying the two transforms is the same as applying the concat of those
+	/// two transforms once.
+	@Test void concat() {
 		InvertibleTransform tran1 = createRandomTransform();
 		InvertibleTransform tran2 = createRandomTransform();
 
@@ -77,11 +74,9 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 		assertTrue(found.isIdentical(expected, GrlConstants.TEST_F64));
 	}
 
-	/**
-	 * Sees if inverting a transform produces the same solution as the point's
-	 * original location
-	 */
-	@Test void testInvert() {
+	/// Sees if inverting a transform produces the same solution as the point's
+	/// original location
+	@Test void invert() {
 		InvertibleTransform a = createRandomTransform();
 		T orig = createRandomPoint();
 		T tran = apply(a, orig, null);
@@ -100,10 +95,8 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 				"expected: " + orig.format() + "\n\nfound: " + found.format());
 	}
 
-	/**
-	 * Makes sure it uses the storage correctlyt
-	 */
-	@Test void testInvert_input() {
+	/// Makes sure it uses the storage correctlyt
+	@Test void invert_input() {
 		InvertibleTransform aInv = createRandomTransform();
 
 		InvertibleTransform a = createRandomTransform();

@@ -18,36 +18,30 @@
 
 package georegression.struct.point;
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Peter Abeles
- */
-public class TestPoint3D_I32 {
+public class TestPoint3D_I32 extends GeoRegressionJUnit {
 
-	@Test
-	void getDimension() {
+	@Test void getDimension() {
 		assertEquals(3, new Point3D_I32().getDimension());
 	}
 
-	@Test
-	void set() {
-		Point3D_I32 p = new Point3D_I32();
-		p.setTo(1, 2, 3);
+	@Test void set() {
+		Point3D_I32 p = new Point3D_I32().setTo(1, 2, 3);
 
 		assertEquals(1, p.x);
 		assertEquals(2, p.y);
 		assertEquals(3, p.z);
 	}
 
-	@Test
-	void isIdentical() {
-		Point3D_I32 a = new Point3D_I32(1, 2, 3);
-		Point3D_I32 b = new Point3D_I32(1, 2, 3);
+	@Test void isIdentical() {
+		var a = new Point3D_I32(1, 2, 3);
+		var b = new Point3D_I32(1, 2, 3);
 
 		assertTrue(a.isIdentical(b));
 		assertFalse(a.isIdentical(new Point3D_I32(2, 2, 3)));
@@ -55,29 +49,16 @@ public class TestPoint3D_I32 {
 		assertFalse(a.isIdentical(new Point3D_I32(1, 2, 4)));
 	}
 
-	@Test
-	void createNewInstance() {
+	@Test void createNewInstance() {
 		assertNotNull(new Point3D_I32().createNewInstance());
 	}
 
-	@Test
-	void copy() {
-		Point3D_I32 p = new Point3D_I32(1, 2, 3).copy();
+	@Test void copy() {
+		var p = new Point3D_I32(1, 2, 3).copy();
 
 		assertEquals(1, p.x);
 		assertEquals(2, p.y);
 		assertEquals(3, p.z);
-	}
-
-	@Test
-	void setTo() {
-		Point3D_I32 a = new Point3D_I32(1, 2, 3);
-		Point3D_I32 b = new Point3D_I32();
-		b.setTo(a);
-
-		assertEquals(1, b.x);
-		assertEquals(2, b.y);
-		assertEquals(3, b.z);
 	}
 
 	@Test void format_Matrix() {

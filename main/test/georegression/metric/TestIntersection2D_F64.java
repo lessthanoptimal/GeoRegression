@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,7 +18,7 @@
 
 package georegression.metric;
 
-import georegression.GeoStandardJUnit;
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilEllipse_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.curve.EllipseRotated_F64;
@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestIntersection2D_F64 extends GeoStandardJUnit {
+public class TestIntersection2D_F64 extends GeoRegressionJUnit {
 	@Test void containsConvex() {
 		var poly = new Polygon2D_F64(4);
 		poly.vertexes.data[0].setTo(-1, -1);

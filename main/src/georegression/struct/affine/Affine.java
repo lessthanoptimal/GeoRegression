@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2015, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,8 +23,5 @@ import georegression.struct.InvertibleTransform;
 import java.io.Serializable;
 
 
-/**
- * @author Peter Abeles
- */
 public interface Affine<T extends Affine> extends InvertibleTransform<T> , Serializable {
 }

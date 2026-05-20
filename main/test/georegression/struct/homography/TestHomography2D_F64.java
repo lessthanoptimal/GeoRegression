@@ -30,9 +30,6 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
 public class TestHomography2D_F64 extends GenericInvertibleTransformTests_F64<Point2D_F64> {
 
 	Random rand = new Random(23423);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,14 +18,12 @@
 
 package georegression.geometry.polygon;
 
+import georegression.GeoRegressionJUnit;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestThreeIndexes {
+public class TestThreeIndexes extends GeoRegressionJUnit {
 	@Test void set() {
 		var a = new ThreeIndexes();
 		a.set(2,3,4);

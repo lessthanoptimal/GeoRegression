@@ -18,13 +18,14 @@
 
 package georegression.struct.plane;
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestPlaneTangent3D_F64 {
+public class TestPlaneTangent3D_F64 extends GeoRegressionJUnit {
 	@Test void format_Matrix() {
 		var a = new PlaneTangent3D_F64(1, 2, 4.1234);
 		String found = a.format(new MatrixPrintFormat().withPrecision(2));

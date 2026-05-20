@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,21 +18,17 @@
 
 package georegression.fitting.sphere;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.shapes.Sphere3D_F64;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestCodecSphere3D_F64 {
-
-	@Test
-	void basicCheck() {
-		Sphere3D_F64 sphere = new Sphere3D_F64(1,2,3,4);
-		Sphere3D_F64 found = new Sphere3D_F64();
+public class TestCodecSphere3D_F64 extends GeoRegressionJUnit {
+	@Test void basicCheck() {
+		var sphere = new Sphere3D_F64(1,2,3,4);
+		var found = new Sphere3D_F64();
 		/**/double param[] = new /**/double[ 4 ];
 
 		CodecSphere3D_F64 alg = new CodecSphere3D_F64();

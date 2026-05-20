@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,16 +18,14 @@
 
 package georegression.helper;
 
+import georegression.GeoRegressionJUnit;
 import georegression.struct.point.Point2D_F64;
 import org.ejml.UtilEjml;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Peter Abeles
- */
-public class TestKdTreePoint2D_F64 {
+public class TestKdTreePoint2D_F64 extends GeoRegressionJUnit {
 	KdTreePoint2D_F64 alg = new KdTreePoint2D_F64();
 
 	@Test void distance() {

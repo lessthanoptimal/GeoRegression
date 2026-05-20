@@ -52,7 +52,7 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 	}
 
 	@Override
-	public int getIdx( int index ) {
+	public int get( int index ) {
 		if (index == 0)
 			return x;
 		else if (index == 1)
@@ -63,7 +63,7 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 	}
 
 	@Override
-	public void setIdx( int index, int value ) {
+	public void set( int index, int value ) {
 		if (index == 0)
 			this.x = value;
 		else if (index == 1)
@@ -74,10 +74,11 @@ public class Point3D_I32 extends GeoTuple_I32<Point3D_I32> {
 			throw new RuntimeException("Invalid index " + index);
 	}
 
-	public void setTo( int x, int y, int z ) {
+	public Point3D_I32 setTo( int x, int y, int z ) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		return this;
 	}
 
 	@Override

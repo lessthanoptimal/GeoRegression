@@ -138,11 +138,12 @@ public class Quadrilateral_F64 implements Serializable, MapFormattable {
 		};
 	}
 
-	public void setTo( Quadrilateral_F64 quad ) {
+	public Quadrilateral_F64 setTo( Quadrilateral_F64 quad ) {
 		this.a.setTo(quad.a);
 		this.b.setTo(quad.b);
 		this.c.setTo(quad.c);
 		this.d.setTo(quad.d);
+		return this;
 	}
 
 	/**
@@ -176,7 +177,7 @@ public class Quadrilateral_F64 implements Serializable, MapFormattable {
 	 *
 	 * @param list List which the polygon will be set to
 	 */
-	public void setTo( List<Point2D_F64> list ) {
+	public Quadrilateral_F64 setTo( List<Point2D_F64> list ) {
 		if (list.size() != 4)
 			throw new IllegalArgumentException("List must have size of 4");
 
@@ -184,6 +185,7 @@ public class Quadrilateral_F64 implements Serializable, MapFormattable {
 		b.setTo(list.get(1));
 		c.setTo(list.get(2));
 		d.setTo(list.get(3));
+		return this;
 	}
 
 	public Quadrilateral_F64 copy() {

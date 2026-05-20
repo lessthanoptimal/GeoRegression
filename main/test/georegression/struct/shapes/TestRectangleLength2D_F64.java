@@ -18,13 +18,14 @@
 
 package georegression.struct.shapes;
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.MapPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestRectangleLength2D_F64 {
+public class TestRectangleLength2D_F64 extends GeoRegressionJUnit {
 	@Test void getCorner() {
 		var rect = new RectangleLength2D_F64(-1, -2, 3, 5);
 		assertTrue(rect.getCorner(0, null).isIdentical(-1, -2));

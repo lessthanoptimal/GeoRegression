@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,32 +18,26 @@
 
 package georegression.fitting.sphere;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import org.ddogleg.optimization.DerivativeChecker;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public class TestSphereToPointSignedDistanceJacobian_F64 {
-
-	@Test
-	void compareToNumerical() {
-
-		SphereToPointSignedDistance_F64 function = new SphereToPointSignedDistance_F64();
-		SphereToPointSignedDistanceJacobian_F64 jacobian = new SphereToPointSignedDistanceJacobian_F64();
+public class TestSphereToPointSignedDistanceJacobian_F64 extends GeoRegressionJUnit {
+	@Test void compareToNumerical() {
+		var function = new SphereToPointSignedDistance_F64();
+		var jacobian = new SphereToPointSignedDistanceJacobian_F64();
 
 		// sphere
-		/**/double param[] = new /**/double[]{1,2,3,4};
+		/**/double[] param = new /**/double[]{1,2,3,4};
 
-		List<Point3D_F64> points = new ArrayList<Point3D_F64>();
+		var points = new ArrayList<Point3D_F64>();
 
 		// inside, should be negative
 		points.add(new Point3D_F64(1.1,1.95,7.2));
@@ -60,11 +54,10 @@ public class TestSphereToPointSignedDistanceJacobian_F64 {
 				GrlConstants.TEST_F64));
 	}
 
-	@Test
-	void getN_and_getM() {
-		SphereToPointSignedDistanceJacobian_F64 alg = new SphereToPointSignedDistanceJacobian_F64();
+	@Test void getN_and_getM() {
+		var alg = new SphereToPointSignedDistanceJacobian_F64();
 
-		List<Point3D_F64> points = new ArrayList<Point3D_F64>();
+		var points = new ArrayList<Point3D_F64>();
 		points.add(new Point3D_F64(1,2,3.5));
 		points.add(new Point3D_F64(1,2,3.5));
 		points.add(new Point3D_F64(1,2,3.5));

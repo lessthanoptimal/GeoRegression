@@ -18,12 +18,13 @@
 
 package georegression.struct.shapes;
 
+import georegression.GeoRegressionJUnit;
 import org.ejml.MapPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestRectangleLength2D_I32 {
+public class TestRectangleLength2D_I32 extends GeoRegressionJUnit {
 	@Test void formatMap() {
 		var a = new RectangleLength2D_I32(-1, -2, 2, 3);
 		String found = a.formatMap(new MapPrintFormat().withPrecision(2));

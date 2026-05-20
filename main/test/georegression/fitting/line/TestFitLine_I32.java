@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.fitting.line;
 
+import georegression.GeoRegressionJUnit;
 import georegression.metric.Distance2D_F32;
 import georegression.metric.Distance2D_F64;
 import georegression.metric.UtilAngle;
@@ -38,12 +39,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-/**
- * @author Peter Abeles
- */
-public class TestFitLine_I32 {
-	@Test
-	void polar_F64() {
+public class TestFitLine_I32 extends GeoRegressionJUnit {
+	@Test void polar_F64() {
 		List<Point2D_I32> pts = new ArrayList<>();
 
 		pts.add(new Point2D_I32(100,200)); // add an outlier that should be ignored
@@ -64,8 +61,7 @@ public class TestFitLine_I32 {
 		assertTrue(UtilAngle.dist(angle, found.angle) <= GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void polar_F32() {
+	@Test void polar_F32() {
 		List<Point2D_I32> pts = new ArrayList<>();
 
 		pts.add(new Point2D_I32(100,200)); // add an outlier that should be ignored

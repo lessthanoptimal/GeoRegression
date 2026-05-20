@@ -16,17 +16,17 @@
  * limitations under the License.
  */
 
-package georegression.struct;
+package georegression.struct.tuples;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
-import georegression.struct.tuples.GeoTuple3D_F64;
 import org.ejml.MapPrintFormat;
 import org.ejml.MatrixPrintFormat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestGeoTuple3D_F64 {
+public class TestGeoTuple3D_F64 extends GeoRegressionJUnit {
 	@Test void plusIP() {
 		var a = new Dummy(1, 2, 3);
 		var b = new Dummy(4, 5, 6);

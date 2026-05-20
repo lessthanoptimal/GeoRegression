@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -18,6 +18,7 @@
 
 package georegression.transform.twist;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.ConvertRotation3D_F64;
 import georegression.geometry.GeometryMath_F64;
 import georegression.misc.GrlConstants;
@@ -31,13 +32,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Abeles
- */
-public class TestTwistOps_F64 {
+public class TestTwistOps_F64 extends GeoRegressionJUnit {
 
-	@Test
-	void homogenous_se3() {
+	@Test void homogenous_se3() {
 		Se3_F64 original = new Se3_F64();
 		original.T.setTo(1,2,3);
 
@@ -50,7 +47,7 @@ public class TestTwistOps_F64 {
 		}
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(original.T.getIdx(i), H.get(i,3), GrlConstants.TEST_F64);
+			assertEquals(original.T.get(i), H.get(i,3), GrlConstants.TEST_F64);
 		}
 		for (int i = 0; i < 3; i++) {
 			assertEquals(0, H.get(3,i), GrlConstants.TEST_F64);
@@ -58,8 +55,7 @@ public class TestTwistOps_F64 {
 		assertEquals(1, H.get(3,3), GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void homogenous_twist() {
+	@Test void homogenous_twist() {
 		TwistCoordinate_F64 twist = new TwistCoordinate_F64();
 		twist.w.setTo(-1,1,2);
 		twist.w.normalize();
@@ -75,15 +71,14 @@ public class TestTwistOps_F64 {
 		}
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(twist.v.getIdx(i), H.get(i,3), GrlConstants.TEST_F64);
+			assertEquals(twist.v.get(i), H.get(i,3), GrlConstants.TEST_F64);
 		}
 		for (int i = 0; i < 4; i++) {
 			assertEquals(0, H.get(3,i), GrlConstants.TEST_F64);
 		}
 	}
 
-	@Test
-	void exponential_twist_pure_r() {
+	@Test void exponential_twist_pure_r() {
 		Rodrigues_F64 rod = new Rodrigues_F64(0.2,0.1,0.3,-0.24);
 		rod.unitAxisRotation.normalize();
 
@@ -99,8 +94,7 @@ public class TestTwistOps_F64 {
 		assertTrue(found.T.norm()<= GrlConstants.TEST_F64);
 	}
 
-	@Test
-	void exponential_twist_pure_t() {
+	@Test void exponential_twist_pure_t() {
 
 		Se3_F64 expected = new Se3_F64();
 		expected.T.setTo(1,0.1,0);
@@ -118,8 +112,7 @@ public class TestTwistOps_F64 {
 	/**
 	 * If the w has a norm of 1 then there should be a unique twist I believe
 	 */
-	@Test
-	void exponential_to_twist_verse_norm1() {
+	@Test void exponential_to_twist_verse_norm1() {
 
 		TwistCoordinate_F64 twist = new TwistCoordinate_F64();
 		twist.w.setTo(-1,1,2);
@@ -142,8 +135,7 @@ public class TestTwistOps_F64 {
 	/**
 	 * The norm of w is not one, but the two twists should describe the same Se3
 	 */
-	@Test
-	void exponential_to_twist_verse_NotNorm1() {
+	@Test void exponential_to_twist_verse_NotNorm1() {
 
 		TwistCoordinate_F64 twist1 = new TwistCoordinate_F64();
 		twist1.w.setTo(-1,1,2);
