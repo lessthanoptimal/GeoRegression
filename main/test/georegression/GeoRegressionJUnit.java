@@ -18,6 +18,10 @@
 
 package georegression;
 
+import georegression.struct.arraylike.ArrayLike_F32;
+import georegression.struct.arraylike.ArrayLike_F64;
+import georegression.struct.arraylike.CheckArrayLike_F32;
+import georegression.struct.arraylike.CheckArrayLike_F64;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,6 +62,39 @@ public class GeoRegressionJUnit {
 		assertFalse(err.used, "stderr was written to which is forbidden by default");
 		System.setOut(systemOut);
 		System.setErr(systemErr);
+	}
+
+	/// Automated contract checks for ArrayLike data structures
+	@Test public void arrayLike() {
+		Class targetClass = lookupTestClass();
+		if (Modifier.isAbstract(targetClass.getModifiers()))
+			return;
+
+		if (ArrayLike_F64.class.isAssignableFrom(targetClass)) {
+			new CheckArrayLike_F64() {
+				@SuppressWarnings("unchecked")
+				@Override public ArrayLike_F64 create() {
+					try {
+						return (ArrayLike_F64)targetClass.getConstructor().newInstance();
+					} catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+					         NoSuchMethodException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}.all();
+		} else if (ArrayLike_F32.class.isAssignableFrom(targetClass)) {
+			new CheckArrayLike_F32() {
+				@SuppressWarnings("unchecked")
+				@Override public ArrayLike_F32 create() {
+					try {
+						return (ArrayLike_F32)targetClass.getConstructor().newInstance();
+					} catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+					         NoSuchMethodException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}.all();
+		}
 	}
 
 	@Test public void setTo() {

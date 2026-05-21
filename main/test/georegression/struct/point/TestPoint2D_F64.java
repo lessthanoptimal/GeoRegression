@@ -20,7 +20,8 @@ package georegression.struct.point;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TestPoint2D_F64 extends GenericGeoTupleTests_F64<Point2D_F64> {
 
@@ -38,8 +39,8 @@ public class TestPoint2D_F64 extends GenericGeoTupleTests_F64<Point2D_F64> {
 
 	@Test void equals() {
 		var a = new Point2D_F64(1, 2);
-		assertFalse(a.equals(new Point2D_F64(1, 3)));
-		assertTrue(a.equals(new Point2D_F64(1, 2)));
-		assertFalse(a.equals(new Vector2D_F64(1, 2)));
+		assertNotEquals(new Point2D_F64(1, 3), a);
+		assertEquals(new Point2D_F64(1, 2), a);
+		assertNotEquals(new Vector2D_F64(1, 2), a);
 	}
 }
