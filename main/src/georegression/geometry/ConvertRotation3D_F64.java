@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -20,8 +20,10 @@ package georegression.geometry;
 
 import georegression.misc.GrlConstants;
 import georegression.struct.EulerType;
+import georegression.struct.point.Vector3D_F64;
 import georegression.struct.so.Quaternion_F64;
 import georegression.struct.so.Rodrigues_F64;
+import org.ejml.UtilEjml;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
@@ -428,62 +430,70 @@ public class ConvertRotation3D_F64 {
 		if( rodrigues == null ) {
 			rodrigues = new Rodrigues_F64();
 		}
-		// parts of this are from wikipedia
-		// http://en.wikipedia.org/wiki/Rotation_representation_%28mathematics%29#Rotation_matrix_.E2.86.94_Euler_axis.2Fangle
+		// Ported from Eigen 2026-May-20. Previous method used atan() instead of atan2() which amplified noise
+		// in edge cases. Accuracy greatly improved after moving to this formulation, as seen in the drastic
+		// change in unit test tolerance
 
-		double diagSum = ( (R.unsafe_get( 0, 0 ) + R.unsafe_get( 1, 1 ) + R.unsafe_get( 2, 2 )) - 1.0 ) / 2.0;
+		// Make code easier to read and slightly faster
+		double r00 = R.unsafe_get(0,0), r01 = R.unsafe_get(0, 1), r02 = R.unsafe_get(0,2);
+		double r10 = R.unsafe_get(1,0), r11 = R.unsafe_get(1, 1), r12 = R.unsafe_get(1,2);
+		double r20 = R.unsafe_get(2,0), r21 = R.unsafe_get(2, 1), r22 = R.unsafe_get(2,2);
 
-		double absDiagSum = Math.abs(diagSum);
+		// Skew-symmetric part gives sin(angle) * axis
+		double sx = r21 - r12;
+		double sy = r02 - r20;
+		double sz = r10 - r01;
+		double s = Math.sqrt(sx*sx + sy*sy + sz*sz); // = 2*sin(angle)
 
-		if( absDiagSum <= 1.0 && 1.0-absDiagSum > 10.0*GrlConstants.EPS ) {
-			// if numerically stable use a faster technique
-			rodrigues.theta = Math.acos(diagSum);
-			double bottom = 2.0 * Math.sin(rodrigues.theta);
+		// trace = 1 + 2*cos(angle)
+		double c = r00 + r11 + r22 - 1.0;
 
-			// in cases where bottom is close to zero that means theta is also close to zero and the vector
-			// doesn't matter that much
-			rodrigues.unitAxisRotation.x = (R.unsafe_get(2, 1) - R.unsafe_get(1, 2)) / bottom;
-			rodrigues.unitAxisRotation.y = (R.unsafe_get(0, 2) - R.unsafe_get(2, 0)) / bottom;
-			rodrigues.unitAxisRotation.z = (R.unsafe_get(1, 0) - R.unsafe_get(0, 1)) / bottom;
+		// Use atan2 for the angle: accurate at all angles including near 0 and pi.
+		rodrigues.theta = Math.atan2(s, c);
 
-			// in extreme underflow situations the result can be unnormalized
-			rodrigues.unitAxisRotation.normalize();
+		// Use the skew-symmetric part only when sin(angle) is large enough for
+		// accurate axis extraction. Near angle=0 or angle=pi, sin(angle) is small
+		// and the axis must be computed differently.
+		double sinThreshold = Math.sqrt(UtilEjml.EPS);
+		Vector3D_F64 axis = rodrigues.unitAxisRotation;
 
-			// In theory this might be more stable
-			// rotationAxis( R, rodrigues.unitAxisRotation);
+		if (s > sinThreshold) {
+			// General case: axis from skew-symmetric part.
+			axis.x = sx / s;
+			axis.y = sy / s;
+			axis.z = sz / s;
+		} else if (c > 0.0) {
+			// Near identity (angle ≈ 0): axis is arbitrary, use (1,0,0).
+			axis.x = 1.0;
+			axis.y = 0.0;
+			axis.z = 0.0;
 		} else {
-
-			// this handles the special case where the bottom is very very small or equal to zero
-			if( diagSum >= 1.0 )
-				rodrigues.theta = 0;
-			else if( diagSum <= -1.0 )
-				rodrigues.theta = Math.PI;
-			else
-				rodrigues.theta = Math.acos(diagSum);
-
-			// compute the value of x, y, z up to a sign ambiguity
-			rodrigues.unitAxisRotation.x = Math.sqrt(Math.max(0.0, R.get(0, 0) + 1) / 2);
-			rodrigues.unitAxisRotation.y = Math.sqrt(Math.max(0.0, R.get(1, 1) + 1) / 2);
-			rodrigues.unitAxisRotation.z = Math.sqrt(Math.max(0.0, R.get(2, 2) + 1) / 2);
-
-			double x = rodrigues.unitAxisRotation.x;
-			double y = rodrigues.unitAxisRotation.y;
-			double z = rodrigues.unitAxisRotation.z;
-
-			if (Math.abs(R.get(1, 0) - 2 * x * y) > GrlConstants.EPS) {
-				x *= -1;
+			// Near angle = pi: extract axis from the symmetric part (R + I) / 2.
+			// The axis is the eigenvector corresponding to eigenvalue 1.
+			// Use the column of (R + I) with the largest diagonal entry for robustness.
+			if (r00 >= r11 && r00 >= r22) {
+				// x is the largest component
+				double x = Math.sqrt(Math.max(r00 - r11 - r22 + 1.0, 0.0) * 0.5);
+				double inv2x = 0.5 / (x + GrlConstants.EPS);
+				axis.x = x;
+				axis.y = (r01 + r10) * inv2x;
+				axis.z = (r02 + r20) * inv2x;
+			} else if (r11 >= r22) {
+				// y is the largest component
+				double y = Math.sqrt(Math.max(r11 - r00 - r22 + 1.0, 0.0) * 0.5);
+				double inv2y = 0.5 / (y + GrlConstants.EPS);
+				axis.x = (r01 + r10) * inv2y;
+				axis.y = y;
+				axis.z = (r12 + r21) * inv2y;
+			} else {
+				// z is the largest component
+				double z = Math.sqrt(Math.max(r22 - r00 - r11 + 1.0, 0.0) * 0.5);
+				double inv2z = 0.5 / (z + GrlConstants.EPS);
+				axis.x = (r02 + r20) * inv2z;
+				axis.y = (r12 + r21) * inv2z;
+				axis.z = z;
 			}
-			if (Math.abs(R.get(2, 0) - 2 * x * z) > GrlConstants.EPS) {
-				z *= -1;
-			}
-			if (Math.abs(R.get(2,1) - 2 * z * y) > GrlConstants.EPS) {
-				y *= -1;
-				x *= -1;
-			}
-
-			rodrigues.unitAxisRotation.x = x;
-			rodrigues.unitAxisRotation.y = y;
-			rodrigues.unitAxisRotation.z = z;
+			axis.normalize();
 		}
 
 		return rodrigues;
