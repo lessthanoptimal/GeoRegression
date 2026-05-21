@@ -53,6 +53,18 @@ public interface ArrayLike_F64 extends MatrixFormattable {
 		return out;
 	}
 
+	default void fromArray( double[] src ) {
+		if (src.length != length())
+			throw new IllegalArgumentException("Expected an array of size " + length());
+		fromArray(src, 0);
+	}
+
+	default void fromArray( double[] src, int offset ) {
+		for (int i = 0; i < length(); i++) {
+			set(i, src[offset + i]);
+		}
+	}
+
 	/// Prints as a row vector
 	@Override default String format( MatrixPrintFormat format ) {
 		int size = length();
