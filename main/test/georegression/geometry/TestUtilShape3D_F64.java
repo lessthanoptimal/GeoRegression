@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.se.Se3_F64;
@@ -28,7 +29,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestUtilShape3D_F64 {
+public class TestUtilShape3D_F64 extends GeoRegressionJUnit {
 	@Test void polygon2Dto3D() {
 		var p = new Polygon2D_F64(3);
 		p.set(0,1,2);

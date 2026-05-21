@@ -18,6 +18,7 @@
 
 package georegression.geometry;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.polygon.ThreeIndexes;
 import georegression.geometry.polygon.TriangulateSimpleRemoveEars_F64;
 import georegression.struct.point.Point2D_F64;
@@ -32,7 +33,7 @@ import java.util.List;
 import static georegression.misc.GrlConstants.TEST_F64;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestUtilPolygons2D_F64 {
+public class TestUtilPolygons2D_F64 extends GeoRegressionJUnit {
 
 	@Test void isConvex() {
 		Polygon2D_F64 a = new Polygon2D_F64(0, 0, 5, 5, -5, 5);

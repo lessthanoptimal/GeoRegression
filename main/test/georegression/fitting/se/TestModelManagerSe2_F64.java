@@ -18,6 +18,7 @@
 
 package georegression.fitting.se;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.se.Se2_F64;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestModelManagerSe2_F64 {
+public class TestModelManagerSe2_F64 extends GeoRegressionJUnit {
 
 	@Test void createModelInstance() {
 		ModelManagerSe2_F64 alg = new ModelManagerSe2_F64();

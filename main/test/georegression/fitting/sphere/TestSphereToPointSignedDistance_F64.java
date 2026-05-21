@@ -18,6 +18,7 @@
 
 package georegression.fitting.sphere;
 
+import georegression.GeoRegressionJUnit;
 import georegression.metric.Distance3D_F64;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
@@ -29,15 +30,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestSphereToPointSignedDistance_F64 {
+public class TestSphereToPointSignedDistance_F64 extends GeoRegressionJUnit {
 
 	@Test void compareToDistance() {
+		var sphere = new Sphere3D_F64(1,2,3,4);
+		var alg = new SphereToPointSignedDistance_F64();
 
-		Sphere3D_F64 sphere = new Sphere3D_F64(1,2,3,4);
-
-		SphereToPointSignedDistance_F64 alg = new SphereToPointSignedDistance_F64();
-
-		/**/double param[] = new /**/double[4];
+		/**/double[] param = new /**/double[4];
 		param[0] = sphere.center.x;
 		param[1] = sphere.center.y;
 		param[2] = sphere.center.z;
@@ -50,7 +49,7 @@ public class TestSphereToPointSignedDistance_F64 {
 		// outside, should be positive
 		points.add(new Point3D_F64(1,2,12));
 
-		/**/double output[] = new /**/double[ points.size() ];
+		/**/double[] output = new /**/double[ points.size() ];
 
 		alg.setPoints(points);
 		alg.process(param,output);
@@ -62,17 +61,17 @@ public class TestSphereToPointSignedDistance_F64 {
 	}
 
 	@Test void getN_and_getM() {
-		SphereToPointSignedDistance_F64 alg = new SphereToPointSignedDistance_F64();
+		var alg = new SphereToPointSignedDistance_F64();
 
-		List<Point3D_F64> points = new ArrayList<Point3D_F64>();
+		var points = new ArrayList<Point3D_F64>();
 		points.add(new Point3D_F64(1,2,3.5));
 		points.add(new Point3D_F64(1,2,3.5));
 		points.add(new Point3D_F64(1,2,3.5));
 
 		alg.setPoints(points);
 
-		assertEquals(4,alg.getNumOfInputsN());
-		assertEquals(points.size(),alg.getNumOfOutputsM());
+		assertEquals(4, alg.getNumOfInputsN());
+		assertEquals(points.size(), alg.getNumOfOutputsM());
 	}
 
 }

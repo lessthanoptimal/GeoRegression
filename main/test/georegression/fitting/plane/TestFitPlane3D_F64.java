@@ -18,6 +18,7 @@
 
 package georegression.fitting.plane;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Vector3D_F64;
@@ -25,16 +26,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SuppressWarnings("NullAway.Init")
-public class TestFitPlane3D_F64 {
-
-	Random rand = new Random(234);
-
-	Vector3D_F64 axisX,axisY,axisZ;
+public class TestFitPlane3D_F64 extends GeoRegressionJUnit {
+	Vector3D_F64 axisX, axisY, axisZ;
 	Point3D_F64 center;
 	List<Point3D_F64> cloud;
 
@@ -47,13 +44,13 @@ public class TestFitPlane3D_F64 {
 
 		FitPlane3D_F64 alg = new FitPlane3D_F64();
 
-		alg.svd(cloud,foundCenter,foundNorm);
+		alg.svd(cloud, foundCenter, foundNorm);
 
 		// see if the found center is on the plane
 		assertEquals(0,
-				(foundCenter.x-center.x)*axisZ.x +
-				(foundCenter.y-center.y)*axisZ.y +
-				(foundCenter.z-center.z)*axisZ.z,
+				(foundCenter.x - center.x)*axisZ.x +
+						(foundCenter.y - center.y)*axisZ.y +
+						(foundCenter.z - center.z)*axisZ.z,
 				GrlConstants.TEST_F64);
 
 		// see if the found normal is valid
@@ -70,7 +67,7 @@ public class TestFitPlane3D_F64 {
 
 		FitPlane3D_F64 alg = new FitPlane3D_F64();
 
-		alg.solvePoint(cloud,cloud.get(10),foundNorm);
+		alg.solvePoint(cloud, cloud.get(10), foundNorm);
 
 		// see if the found normal is valid
 		foundNorm.normalize();
@@ -80,19 +77,19 @@ public class TestFitPlane3D_F64 {
 
 	private void createCloud() {
 		// define a plane and its coordinate system
-		axisX = new Vector3D_F64(1,2,3);
-		axisY = new Vector3D_F64(3,-2,1);
+		axisX = new Vector3D_F64(1, 2, 3);
+		axisY = new Vector3D_F64(3, -2, 1);
 		axisZ = axisX.crossWith(axisY);
 
 		axisX.normalize();
 		axisZ.normalize();
 		axisY = axisX.crossWith(axisZ);
 
-		center = new Point3D_F64(2,-1,0.5);
+		center = new Point3D_F64(2, -1, 0.5);
 
 		// randomly generate points on the plane
 		cloud = new ArrayList<Point3D_F64>();
-		for( int i = 0; i < 100; i++ ) {
+		for (int i = 0; i < 100; i++) {
 			double x = rand.nextGaussian()*5;
 			double y = rand.nextGaussian()*5;
 
@@ -104,5 +101,4 @@ public class TestFitPlane3D_F64 {
 			cloud.add(p);
 		}
 	}
-
 }

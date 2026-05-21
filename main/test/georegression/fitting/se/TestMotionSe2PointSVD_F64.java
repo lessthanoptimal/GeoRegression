@@ -18,6 +18,7 @@
 
 package georegression.fitting.se;
 
+import georegression.GeoRegressionJUnit;
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.misc.GrlConstants;
 import georegression.misc.test.GeometryUnitTest;
@@ -28,14 +29,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestMotionSe2PointSVD_F64 {
-
-	Random rand = new Random( 434324 );
-
+public class TestMotionSe2PointSVD_F64 extends GeoRegressionJUnit {
 	@Test void noiseless() {
 		Se2_F64 tran = new Se2_F64( 2, -4, 0.93 );
 

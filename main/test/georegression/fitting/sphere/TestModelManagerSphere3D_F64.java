@@ -18,34 +18,33 @@
 
 package georegression.fitting.sphere;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.GrlConstants;
 import georegression.struct.shapes.Sphere3D_F64;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class TestModelManagerSphere3D_F64 {
+public class TestModelManagerSphere3D_F64 extends GeoRegressionJUnit {
 
 	@Test void createModelInstance() {
-		ModelManagerSphere3D_F64 alg = new ModelManagerSphere3D_F64();
-
-		assertTrue( alg.createModelInstance() != null);
+		var alg = new ModelManagerSphere3D_F64();
+		assertNotNull(alg.createModelInstance());
 	}
 
 	@Test void copyModel() {
-		ModelManagerSphere3D_F64 alg = new ModelManagerSphere3D_F64();
+		var alg = new ModelManagerSphere3D_F64();
 
-		Sphere3D_F64 model = new Sphere3D_F64(1,2,3,4);
-		Sphere3D_F64 found = new Sphere3D_F64();
+		var model = new Sphere3D_F64(1, 2, 3, 4);
+		var found = new Sphere3D_F64();
 
-		alg.copyModel(model,found);
+		alg.copyModel(model, found);
 
-		assertEquals(model.center.x,found.center.x, GrlConstants.TEST_F64);
-		assertEquals(model.center.y,found.center.y, GrlConstants.TEST_F64);
-		assertEquals(model.center.z,found.center.z, GrlConstants.TEST_F64);
+		assertEquals(model.center.x, found.center.x, GrlConstants.TEST_F64);
+		assertEquals(model.center.y, found.center.y, GrlConstants.TEST_F64);
+		assertEquals(model.center.z, found.center.z, GrlConstants.TEST_F64);
 
 		assertEquals(model.radius, found.radius, GrlConstants.TEST_F64);
 	}
-
 }

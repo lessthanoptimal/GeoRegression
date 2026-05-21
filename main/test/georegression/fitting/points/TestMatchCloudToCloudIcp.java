@@ -18,6 +18,7 @@
 
 package georegression.fitting.points;
 
+import georegression.GeoRegressionJUnit;
 import georegression.misc.StoppingCondition;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
@@ -25,7 +26,7 @@ import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
 import org.junit.jupiter.api.Nested;
 
-public class TestMatchCloudToCloudIcp {
+public class TestMatchCloudToCloudIcp extends GeoRegressionJUnit {
 	@Nested
 	class Cloud2D extends GeneralCloudToCloudChecksSe2 {
 		@Override
