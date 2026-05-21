@@ -72,22 +72,6 @@ public class ParabolaGeneral_F64 implements MapFormattable, ArrayLike_F64 {
 		return inner*inner + d*x + e*y + f;
 	}
 
-	public void toArray( double[] array ) {
-		array[0] = a;
-		array[1] = c;
-		array[2] = d;
-		array[3] = e;
-		array[4] = f;
-	}
-
-	public void fromArray( double[] array ) {
-		a = array[0];
-		c = array[1];
-		d = array[2];
-		e = array[3];
-		f = array[4];
-	}
-
 	/// Returns true if any of its parameters have an uncountable number
 	public boolean hasUncountable() {
 		return UtilEjml.isUncountable(a) || UtilEjml.isUncountable(c)
