@@ -2,12 +2,12 @@ YEAR-MONTH-DAY
 
 ---------------------------------------------
 Date    : 2026-XXX-YY
-Version : 0.29.1
+Version : 0.30.0
 
 - Matrix to Rodrigues: Better numerical stability near boundaries by a good margin
-- ArrayList interface that makes it easier to mix libraries
+- ArrayLike interface that makes it easier to mix libraries
 - Build
-  * Significant improvement to set harness
+  * Significant improvement to test harness
 
 ---------------------------------------------
 Date    : 2026-May-18
