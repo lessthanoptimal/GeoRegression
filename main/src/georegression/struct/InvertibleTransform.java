@@ -113,7 +113,7 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 * no memory creation and more stable numerics.
 	 *
 	 * @param second The second transform which is applied. Not modified.
-	 * @param result (Output) storage for rsulting transform. Can be null
+	 * @param result (Output) storage for resulting transform. Can be null
 	 * @return The computed transform. If result isn't null then result is returned.
 	 */
 	default T invertConcat(T second, @Nullable T result) {
@@ -126,7 +126,7 @@ public interface InvertibleTransform<T extends InvertibleTransform> extends Seri
 	 * no memory creation and more stable numerics.
 	 *
 	 * @param second The second transform which is applied. Not modified.
-	 * @param result (Output) storage for rsulting transform. Can be null
+	 * @param result (Output) storage for resulting transform. Can be null
 	 * @return The computed transform. If result isn't null then result is returned.
 	 */
 	default T concatInvert(T second, @Nullable T result) {

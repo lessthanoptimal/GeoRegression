@@ -26,6 +26,7 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Point4D_F64;
 import georegression.struct.point.Vector3D_F64;
+import georegression.struct.se.QuatPose_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DMatrixRMaj;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestSePointOps_F64 extends GeoRegressionJUnit {
 
@@ -237,5 +239,49 @@ public class TestSePointOps_F64 extends GeoRegressionJUnit {
 		assertEquals( 1, Pt.getX(), GrlConstants.TEST_F64);
 		assertEquals( 7, Pt.getY(), GrlConstants.TEST_F64);
 		assertEquals( 9, Pt.getZ(), GrlConstants.TEST_F64);
+	}
+
+	@Test void transform_QuatPose() {
+		for (int trial = 0; trial < 20; trial++) {
+			QuatPose_F64 pose = randomPose();
+			Se3_F64 se3 = toSe3(pose);
+
+			var p = new Point3D_F64(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
+
+			// ground truth from the matrix-based transform
+			Point3D_F64 expected = SePointOps_F64.transform(se3, p, null);
+			Point3D_F64 found = SePointOps_F64.transform(pose, p.x, p.y, p.z, null);
+
+			assertTrue(found.isIdentical(expected.x, expected.y, expected.z, GrlConstants.TEST_F64));
+		}
+	}
+
+	@Test void transformReverse_QuatPose() {
+		for (int trial = 0; trial < 20; trial++) {
+			QuatPose_F64 pose = randomPose();
+
+			var p = new Point3D_F64(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
+
+			// transform is verified above, so reverse must recover the original point
+			Point3D_F64 forward = SePointOps_F64.transform(pose, p.x, p.y, p.z, null);
+			Point3D_F64 back = SePointOps_F64.transformReverse(pose, forward.x, forward.y, forward.z, null);
+
+			assertTrue(back.isIdentical(p.x, p.y, p.z, GrlConstants.TEST_F64));
+		}
+	}
+
+	private QuatPose_F64 randomPose() {
+		var pose = new QuatPose_F64();
+		pose.t.setTo(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
+		pose.ori.setTo(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
+		pose.ori.normalize();
+		return pose;
+	}
+
+	private Se3_F64 toSe3( QuatPose_F64 pose ) {
+		var se3 = new Se3_F64();
+		ConvertRotation3D_F64.quaternionToMatrix(pose.ori, se3.R);
+		se3.T.setTo(pose.t.x, pose.t.y, pose.t.z);
+		return se3;
 	}
 }
