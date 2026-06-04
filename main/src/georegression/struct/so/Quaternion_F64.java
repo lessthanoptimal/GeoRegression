@@ -63,6 +63,13 @@ public class Quaternion_F64 implements Serializable, ArrayLike_F64, MapFormattab
 		return this;
 	}
 
+	/// Sets quaternion to identity. Same as [#setToIdentity()] but uses a standard name
+	/// for clearing data structures.
+	public Quaternion_F64 reset() {
+		setToIdentity();
+		return this;
+	}
+
 	/// Sets the quaternion to identity and returns a reference to itself
 	public Quaternion_F64 setToIdentity() {
 		this.w = 1;

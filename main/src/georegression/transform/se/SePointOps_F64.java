@@ -19,10 +19,12 @@
 package georegression.transform.se;
 
 import georegression.geometry.GeometryMath_F64;
+import georegression.geometry.QuaternionMath_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point3D_F64;
 import georegression.struct.point.Point4D_F64;
 import georegression.struct.point.Vector3D_F64;
+import georegression.struct.se.QuatPose_F64;
 import georegression.struct.se.Se2_F64;
 import georegression.struct.se.Se3_F64;
 import org.ejml.data.DMatrixRMaj;
@@ -224,8 +226,8 @@ public class SePointOps_F64 {
 	}
 
 	public static Point3D_F64 transform( Se3_F64 se,
-										 final double x, final double y, final double z, final double w,
-										 @Nullable Point3D_F64 dst ) {
+	                                     final double x, final double y, final double z, final double w,
+	                                     @Nullable Point3D_F64 dst ) {
 		if (dst == null)
 			dst = new Point3D_F64();
 
@@ -252,8 +254,8 @@ public class SePointOps_F64 {
 	}
 
 	public static Point3D_F64 transformV( Se3_F64 se,
-										  final double x, final double y, final double z, final double w,
-										  @Nullable Point3D_F64 dst ) {
+	                                      final double x, final double y, final double z, final double w,
+	                                      @Nullable Point3D_F64 dst ) {
 		if (dst == null)
 			dst = new Point3D_F64();
 
@@ -287,8 +289,8 @@ public class SePointOps_F64 {
 	}
 
 	public static Point4D_F64 transform( Se3_F64 se,
-										 final double x, final double y, final double z, final double w,
-										 @Nullable Point4D_F64 dst ) {
+	                                     final double x, final double y, final double z, final double w,
+	                                     @Nullable Point4D_F64 dst ) {
 		if (dst == null)
 			dst = new Point4D_F64();
 
@@ -321,8 +323,8 @@ public class SePointOps_F64 {
 	}
 
 	public static Point4D_F64 transformReverse( Se3_F64 se,
-												final double x, final double y, final double z, final double w,
-												@Nullable Point4D_F64 dst ) {
+	                                            final double x, final double y, final double z, final double w,
+	                                            @Nullable Point4D_F64 dst ) {
 		if (dst == null)
 			dst = new Point4D_F64();
 
@@ -382,5 +384,57 @@ public class SePointOps_F64 {
 	 */
 	public static void average( List<Se3_F64> list, Se3_F64 output ) {
 		new AverageSe3_F64().process(list, output);
+	}
+
+	public static Point3D_F64 transform( QuatPose_F64 se, Point3D_F64 src, @Nullable Point3D_F64 dst ) {
+		return transform(se, src.x, src.y, src.z, dst);
+	}
+
+	public static Point3D_F64 transformReverse( QuatPose_F64 se, Point3D_F64 src, @Nullable Point3D_F64 dst ) {
+		return transformReverse(se, src.x, src.y, src.z, dst);
+	}
+
+	/**
+	 * Applies the transform to the point (x,y,z): dst = R*p + T, where R is the rotation encoded by se.ori.
+	 *
+	 * @param se Transform being applied. Not modified.
+	 * @param x x-coordinate of the point being transformed.
+	 * @param y y-coordinate of the point being transformed.
+	 * @param z z-coordinate of the point being transformed.
+	 * @param dst (Output) storage for the result. Can be null.
+	 * @return The transformed point.
+	 */
+	public static Point3D_F64 transform( QuatPose_F64 se, double x, double y, double z, @Nullable Point3D_F64 dst ) {
+		if (dst == null)
+			dst = new Point3D_F64();
+
+		dst.setTo(x, y, z);
+		QuaternionMath_F64.mult(se.ori, dst, dst);   // R*p   (src == dst is supported)
+		dst.x += se.t.x;                             // + T
+		dst.y += se.t.y;
+		dst.z += se.t.z;
+
+		return dst;
+	}
+
+	/**
+	 * Applies the inverse transform to the point (x,y,z): dst = R^T*(p - T), recovering the point prior to
+	 * transform(...). R is the rotation encoded by se.ori.
+	 *
+	 * @param se Transform whose inverse is applied. Not modified.
+	 * @param x x-coordinate of the point being transformed.
+	 * @param y y-coordinate of the point being transformed.
+	 * @param z z-coordinate of the point being transformed.
+	 * @param dst (Output) storage for the result. Can be null.
+	 * @return The reverse-transformed point.
+	 */
+	public static Point3D_F64 transformReverse( QuatPose_F64 se, double x, double y, double z, @Nullable Point3D_F64 dst ) {
+		if (dst == null)
+			dst = new Point3D_F64();
+
+		dst.setTo(x - se.t.x, y - se.t.y, z - se.t.z);   // p - T
+		QuaternionMath_F64.multTran(se.ori, dst, dst);   // R^T*(p - T)
+
+		return dst;
 	}
 }

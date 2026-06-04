@@ -1,7 +1,14 @@
 YEAR-MONTH-DAY
 
 ---------------------------------------------
-Date    : 2026-XXX-YY
+Date    : 2026-May-25
+Version : 0.31.0
+
+- Added QuatPose: SE3 that encodes rotation with a Quaternion
+- QuaternionMath and SePointOps have been flushed out more
+
+---------------------------------------------
+Date    : 2026-May-25
 Version : 0.30.0
 
 - Matrix to Rodrigues: Better numerical stability near boundaries by a good margin
