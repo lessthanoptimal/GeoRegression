@@ -77,7 +77,7 @@ public class QuatPose_F64 implements SpecialEuclidean<QuatPose_F64> {
 		return result;
 	}
 
-	@Override public QuatPose_F64 invertConcat( QuatPose_F64 second, @Nullable QuatPose_F64 result ) {
+	@Override public QuatPose_F64 concatInvA( QuatPose_F64 second, @Nullable QuatPose_F64 result ) {
 		if (result == null) {
 			result = new QuatPose_F64();
 		}
@@ -92,17 +92,31 @@ public class QuatPose_F64 implements SpecialEuclidean<QuatPose_F64> {
 		return result;
 	}
 
-	@Override public QuatPose_F64 concatInvert( QuatPose_F64 second, @Nullable QuatPose_F64 result ) {
+	@Override public QuatPose_F64 concatInvB( QuatPose_F64 second, @Nullable QuatPose_F64 result ) {
 		if (result == null) {
 			result = new QuatPose_F64();
 		}
 
 		// result = second^-1 applied after this
 		// R = second.R^T * this.R,  T = second.R^T*(this.T - second.T)
-		QuaternionMath_F64.multConjA(second.ori, ori, result.ori);     // second.R^T * this.R
-		QuaternionMath_F64.multTran(second.ori, second.t, result.t);   // second.R^T * second.T
-		result.t.scale(-1);                                            // -second.R^T*second.T
+		QuaternionMath_F64.multConjA(second.ori, ori, result.ori);
+		QuaternionMath_F64.multTran(second.ori, second.t, result.t);
+		result.t.scale(-1);
 		QuaternionMath_F64.addMultTran(result.t, second.ori, t, result.t);
+
+		return result;
+	}
+
+	@Override public QuatPose_F64 concatInvAB( QuatPose_F64 second, @Nullable QuatPose_F64 result ) {
+		if (result == null) {
+			result = new QuatPose_F64();
+		}
+
+		// R = second.R^T * this.R^T,  T = -second.R^T*(this.R^T*this.T + second.T)
+		QuaternionMath_F64.multConjAB(second.ori, ori, result.ori);
+		QuaternionMath_F64.addMultTran(second.t, ori, t, result.t);
+		QuaternionMath_F64.multTran(second.ori, result.t, result.t);
+		result.t.scale(-1);
 
 		return result;
 	}

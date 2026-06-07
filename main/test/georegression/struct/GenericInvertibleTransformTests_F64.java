@@ -95,7 +95,7 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 				"expected: " + orig.format() + "\n\nfound: " + found.format());
 	}
 
-	/// Makes sure it uses the storage correctlyt
+	/// Makes sure it uses the storage correctly
 	@Test void invert_input() {
 		InvertibleTransform aInv = createRandomTransform();
 
@@ -109,44 +109,57 @@ public abstract class GenericInvertibleTransformTests_F64<T extends GeoTuple_F64
 		assertTrue(found.isIdentical(orig, GrlConstants.TEST_F64));
 	}
 
-	@Test void invertConcat() {
+	@Test void concatInvA() {
 		for (int i = 0; i < 20; i++) {
 			InvertibleTransform a = createRandomTransform();
 			InvertibleTransform b = createRandomTransform();
 
-			InvertibleTransform c = a.concat(b, null);
-
-			// Recompute B using invertCat
-			InvertibleTransform bb = a.invertConcat(c, null);
+			InvertibleTransform opDirect = a.invert(null).concat(b, null);
+			InvertibleTransform opFound = a.concatInvA(b, null);
 
 			T orig = createRandomPoint();
 
 			// These should be the same
-			T expected = apply(b, orig, null);
-			T found = apply(bb, orig, null);
+			T expected = apply(opDirect, orig, null);
+			T found = apply(opFound, orig, null);
 
 			assertTrue(expected.isIdentical(found, GrlConstants.TEST_F64));
 		}
 	}
 
-	@Test void concatInvert() {
+	@Test void concatInvB() {
 		for (int i = 0; i < 20; i++) {
 			InvertibleTransform a = createRandomTransform();
 			InvertibleTransform b = createRandomTransform();
 
-			InvertibleTransform c = a.concat(b, null);
-
-			// Recompute B using concatInvert
-			InvertibleTransform aa = c.concatInvert(b, null);
+			InvertibleTransform opDirect = a.concat(b.invert(null), null);
+			InvertibleTransform opFound = a.concatInvB(b, null);
 
 			T orig = createRandomPoint();
 
 			// These should be the same
-			T expected = apply(a, orig, null);
-			T found = apply(aa, orig, null);
+			T expected = apply(opDirect, orig, null);
+			T found = apply(opFound, orig, null);
 
-			// Use the norm to scale the tolerance
-			assertTrue(expected.isIdentical(found, expected.norm()*GrlConstants.TEST_F64), "trial: " + i);
+			assertTrue(expected.isIdentical(found, GrlConstants.TEST_F64));
+		}
+	}
+
+	@Test void concatInvAB() {
+		for (int i = 0; i < 20; i++) {
+			InvertibleTransform a = createRandomTransform();
+			InvertibleTransform b = createRandomTransform();
+
+			InvertibleTransform opDirect = a.invert(null).concat(b.invert(null), null);
+			InvertibleTransform opFound = a.concatInvAB(b, null);
+
+			T orig = createRandomPoint();
+
+			// These should be the same
+			T expected = apply(opDirect, orig, null);
+			T found = apply(opFound, orig, null);
+
+			assertTrue(expected.isIdentical(found, GrlConstants.TEST_F64));
 		}
 	}
 }
