@@ -26,26 +26,16 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector2D_F64;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Functions for extracting information from ellipses and converting between different ellipse formats.
- *
- * @author Peter Abeles
- */
+/// Functions for extracting information from ellipses and converting between different ellipse formats.
 public class UtilEllipse_F64 {
 
-	/**
-	 * <p>
-	 * Convert from quadratic to rotated formats. Equations taken from [1].
-	 * </p>
-	 *
-	 * <p>
-	 * [1] David Eberly "Information About Ellipses", Geometric Tools, LLC 2011
-	 * </p>
-	 *
-	 * @param input Input in quadratic format.
-	 * @param output (Optional) Storage for converted format. Can be null.
-	 * @return Ellipse in rotated format.
-	 */
+	/// Convert from quadratic to rotated formats. Equations taken from \[1\].
+	///
+	/// 1) David Eberly "Information About Ellipses", Geometric Tools, LLC 2011
+	///
+	/// @param input Input in quadratic format.
+	/// @param output (Optional) Storage for converted format. Can be null.
+	/// @return Ellipse in rotated format.
 	public static EllipseRotated_F64 convert( EllipseQuadratic_F64 input , @Nullable EllipseRotated_F64 output ) {
 		if( output == null )
 			output = new EllipseRotated_F64();
@@ -96,13 +86,11 @@ public class UtilEllipse_F64 {
 		return output;
 	}
 
-	/**
-	 * Convert from rotated to quadratic.
-	 *
-	 * @param input Input rotated format.
-	 * @param output (Optional) Storage for quadratic format. Can be null.
-	 * @return Ellipse in quadratic format.
-	 */
+	/// Convert from rotated to quadratic.
+	///
+	/// @param input Input rotated format.
+	/// @param output (Optional) Storage for quadratic format. Can be null.
+	/// @return Ellipse in quadratic format.
 	public static EllipseQuadratic_F64 convert( EllipseRotated_F64 input , @Nullable EllipseQuadratic_F64 output ) {
 		if( output == null )
 			output = new EllipseQuadratic_F64();
@@ -135,27 +123,23 @@ public class UtilEllipse_F64 {
 		return output;
 	}
 
-	/**
-	 * Computes the value of the quadratic ellipse function at point (x,y). Should equal 0 if the point
-	 * is along the ellipse.
-	 *
-	 * @param x x-coordinate
-	 * @param y y-coordinate
-	 * @param ellipse Ellipse equation being evaluated.
-	 * @return value of ellipse equation at point (x,y)
-	 */
+	/// Computes the value of the quadratic ellipse function at point (x,y). Should equal 0 if the point
+	/// is along the ellipse.
+	///
+	/// @param x x-coordinate
+	/// @param y y-coordinate
+	/// @param ellipse Ellipse equation being evaluated.
+	/// @return value of ellipse equation at point (x,y)
 	public static double evaluate( double x , double y , EllipseQuadratic_F64 ellipse ) {
 		return ellipse.a*x*x + 2*ellipse.b*x*y + ellipse.c*y*y + 2*ellipse.d*x + 2*ellipse.e*y + ellipse.f;
 	}
 
-	/**
-	 * Computes the value of the quadratic ellipse function at point (x,y). Should equal 1 if the point is on the
-	 * ellipse.
-	 * @param x x-coordinate
-	 * @param y y-coordinate
-	 * @param ellipse Ellipse equation being evaluated.
-	 * @return value of ellipse equation at point (x,y)
-	 */
+	/// Computes the value of the quadratic ellipse function at point (x,y). Should equal 1 if the point is on the
+	/// ellipse.
+	/// @param x x-coordinate
+	/// @param y y-coordinate
+	/// @param ellipse Ellipse equation being evaluated.
+	/// @return value of ellipse equation at point (x,y)
 	public static double evaluate( double x , double y , EllipseRotated_F64 ellipse ) {
 
 		double cphi = Math.cos(ellipse.phi);
@@ -173,14 +157,12 @@ public class UtilEllipse_F64 {
 		return ll*ll + rr*rr;
 	}
 
-	/**
-	 * Computes the point on the ellipse at location 't', where t is an angle in radians
-	 *
-	 * @param t An angle in radians from 0 to 2*PI
-	 * @param ellipse Ellipse
-	 * @param output (Optional) point on the ellipse . Can be null.
-	 * @return Point on the ellipse
-	 */
+	/// Computes the point on the ellipse at location 't', where t is an angle in radians
+	///
+	/// @param t An angle in radians from 0 to 2\*PI
+	/// @param ellipse Ellipse
+	/// @param output (Optional) point on the ellipse . Can be null.
+	/// @return Point on the ellipse
 	public static Point2D_F64 computePoint( double t , EllipseRotated_F64 ellipse ,
 											@Nullable Point2D_F64 output ) {
 		if( output == null )
@@ -202,13 +184,11 @@ public class UtilEllipse_F64 {
 		return output;
 	}
 
-	/**
-	 * Computes the value of 't' used to specify a point's location
-	 *
-	 * @param p Point on the ellipse
-	 * @param ellipse Ellipse
-	 * @return Angle from -pi to pi
-	 */
+	/// Computes the value of 't' used to specify a point's location
+	///
+	/// @param p Point on the ellipse
+	/// @param ellipse Ellipse
+	/// @return Angle from -pi to pi
 	public static double computeAngle( Point2D_F64 p , EllipseRotated_F64 ellipse ) {
 		// put point into ellipse's reference frame
 		double ce = Math.cos(ellipse.phi);
@@ -224,14 +204,12 @@ public class UtilEllipse_F64 {
 		return Math.atan2( y/ellipse.b , x/ellipse.a );
 	}
 
-	/**
-	 * Computes the tangent to the ellipse at the specified location
-	 *
-	 * @param t Location on the ellipse. Radians
-	 * @param ellipse Ellipse equation
-	 * @param output Optional storage for tangent
-	 * @return The tangent
-	 */
+	/// Computes the tangent to the ellipse at the specified location
+	///
+	/// @param t Location on the ellipse. Radians
+	/// @param ellipse Ellipse equation
+	/// @param output Optional storage for tangent
+	/// @return The tangent
 	public static Vector2D_F64 computeTangent( double t ,
 											   EllipseRotated_F64 ellipse ,
 											   @Nullable Vector2D_F64 output  ) {
@@ -260,18 +238,17 @@ public class UtilEllipse_F64 {
 		return output;
 	}
 
-	/**
-	 * <p>Finds two points on the ellipse that in combination with point 'pt' each define
-	 * a line that is tangent to the ellipse.</p>
-	 *
-	 * Notes:<br>
-	 * Point 'pt' is assumed to be outside of the ellipse.
-	 *
-	 * @param pt Point which the lines will pass though
-	 * @param ellipse The ellipse which the lines will be tangent to
-	 * @param tangentA (output) Point on the ellipse where tangent line A hits it
-	 * @param tangentB (output) Point on the ellipse where tangent line B hits it
-	 */
+	/// Finds two points on the ellipse that in combination with point 'pt' each define
+	/// a line that is tangent to the ellipse.
+	///
+	/// Notes:
+	///
+	/// Point 'pt' is assumed to be outside of the ellipse.
+	///
+	/// @param pt Point which the lines will pass though
+	/// @param ellipse The ellipse which the lines will be tangent to
+	/// @param tangentA (output) Point on the ellipse where tangent line A hits it
+	/// @param tangentB (output) Point on the ellipse where tangent line B hits it
 	public static boolean tangentLines(Point2D_F64 pt , EllipseRotated_F64 ellipse ,
 									   Point2D_F64 tangentA , Point2D_F64 tangentB )
 	{
@@ -361,25 +338,23 @@ public class UtilEllipse_F64 {
 		return true;
 	}
 
-	/**
-	 * <p>Finds four lines which are tangent to both ellipses. Both ellipses must not intersect. Line 0
-	 * and line 3 will not intersect the line joining the center of the two ellipses while line 1 and 2 will.</p>
-
-	 * @see TangentLinesTwoEllipses_F64
-	 *
-	 * @param ellipseA (Input) First ellipse
-	 * @param ellipseB (Input) Second ellipse
-	 * @param tangentA0 (Output) Point on ellipseA in which tangent line0 passes through
-	 * @param tangentA1 (Output) Point on ellipseA in which tangent line1 passes through
-	 * @param tangentA2 (Output) Point on ellipseA in which tangent line2 passes through
-	 * @param tangentA3 (Output) Point on ellipseA in which tangent line3 passes through
-	 * @param tangentB0 (Output) Point on ellipseB in which tangent line0 passes through
-	 * @param tangentB1 (Output) Point on ellipseB in which tangent line1 passes through
-	 * @param tangentB2 (Output) Point on ellipseB in which tangent line2 passes through
-	 * @param tangentB3 (Output) Point on ellipseB in which tangent line3 passes through
-	 *
-	 * @return true if a solution was found or false if it failed
-	 */
+	/// Finds four lines which are tangent to both ellipses. Both ellipses must not intersect. Line 0
+	/// and line 3 will not intersect the line joining the center of the two ellipses while line 1 and 2 will.
+	///
+	/// @see TangentLinesTwoEllipses_F64
+	///
+	/// @param ellipseA (Input) First ellipse
+	/// @param ellipseB (Input) Second ellipse
+	/// @param tangentA0 (Output) Point on ellipseA in which tangent line0 passes through
+	/// @param tangentA1 (Output) Point on ellipseA in which tangent line1 passes through
+	/// @param tangentA2 (Output) Point on ellipseA in which tangent line2 passes through
+	/// @param tangentA3 (Output) Point on ellipseA in which tangent line3 passes through
+	/// @param tangentB0 (Output) Point on ellipseB in which tangent line0 passes through
+	/// @param tangentB1 (Output) Point on ellipseB in which tangent line1 passes through
+	/// @param tangentB2 (Output) Point on ellipseB in which tangent line2 passes through
+	/// @param tangentB3 (Output) Point on ellipseB in which tangent line3 passes through
+	///
+	/// @return true if a solution was found or false if it failed
 	public static boolean tangentLines( EllipseRotated_F64 ellipseA , EllipseRotated_F64 ellipseB ,
 										Point2D_F64 tangentA0 , Point2D_F64 tangentA1 ,
 										Point2D_F64 tangentA2 , Point2D_F64 tangentA3 ,

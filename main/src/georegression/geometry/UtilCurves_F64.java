@@ -27,16 +27,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class UtilCurves_F64 {
 
-	/**
-	 * Converts symmetric 3x3 matrix back into a conic.
-	 *
-	 * <pre>
-	 *        [A    B/2  D/2]
-	 *  dst = [B/2  C    E/2]
-	 *        [D/2  E/2  F  ]
-	 * </pre>
-	 *
-	 */
+	/// Converts symmetric 3x3 matrix back into a conic.
+	/// ```
+	///        [A    B/2  D/2]
+	///  dst = [B/2  C    E/2]
+	///        [D/2  E/2  F  ]
+	/// ```
 	public static DMatrixRMaj convert(ConicGeneral_F64 src , @Nullable DMatrixRMaj dst )
 	{
 		if( dst == null )
@@ -55,19 +51,16 @@ public class UtilCurves_F64 {
 		return dst;
 	}
 
-	/**
-	 * Converts symmetric 3x3 matrix back into a conic. Only the upper right
-	 * portion of src is read.
-	 *
-	 * <pre>
-	 *     A = DST(0,0)
-	 *     B = DST(0,1)*2
-	 *     D = DST(0,2)*2
-	 *     C = DST(1,1)
-	 *     E = DST(1,2)*2
-	 *     F = DST(2,2)
-	 * </pre>
-	 */
+	/// Converts symmetric 3x3 matrix back into a conic. Only the upper right
+	/// portion of src is read.
+	/// ```
+	///     A = DST(0,0)
+	///     B = DST(0,1)*2
+	///     D = DST(0,2)*2
+	///     C = DST(1,1)
+	///     E = DST(1,2)*2
+	///     F = DST(2,2)
+	/// ```
 	public static ConicGeneral_F64 convert(DMatrix3x3 src , @Nullable ConicGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ConicGeneral_F64();
@@ -79,15 +72,12 @@ public class UtilCurves_F64 {
 		return dst;
 	}
 
-	/**
-	 * Converts the conic into a symmetric 3x3 matrix
-	 *
-	 * <pre>
-	 *        [A    B/2  D/2]
-	 *  dst = [B/2  C    E/2]
-	 *        [D/2  E/2  F  ]
-	 * </pre>
-	 */
+	/// Converts the conic into a symmetric 3x3 matrix
+	/// ```
+	///        [A    B/2  D/2]
+	///  dst = [B/2  C    E/2]
+	///        [D/2  E/2  F  ]
+	/// ```
 	public static DMatrix3x3 convert(ConicGeneral_F64 src , @Nullable DMatrix3x3 dst )
 	{
 		if( dst == null )
@@ -104,20 +94,16 @@ public class UtilCurves_F64 {
 		return dst;
 	}
 
-	/**
-	 * Converts symmetric 3x3 matrix back into a conic. Only the upper right
-	 * portion of src is read.
-	 *
-	 * <pre>
-	 *     A = DST(0,0)
-	 *     B = DST(0,1)*2
-	 *     D = DST(0,2)*2
-	 *     C = DST(1,1)
-	 *     E = DST(1,2)*2
-	 *     F = DST(2,2)
-	 * </pre>
-	 *
-	 */
+	/// Converts symmetric 3x3 matrix back into a conic. Only the upper right
+	/// portion of src is read.
+	/// ```
+	///     A = DST(0,0)
+	///     B = DST(0,1)*2
+	///     D = DST(0,2)*2
+	///     C = DST(1,1)
+	///     E = DST(1,2)*2
+	///     F = DST(2,2)
+	/// ```
 	public static ConicGeneral_F64 convert( DMatrixRMaj src , @Nullable ConicGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ConicGeneral_F64();
@@ -129,14 +115,12 @@ public class UtilCurves_F64 {
 		return dst;
 	}
 
-	/**
-	 * Converts the conic into a parabola. If the conic isn't a parabola then it is converted into one
-	 * by adjusting the value of B.
-	 *
-	 * @param src (Input) Conic
-	 * @param dst (Output) Optional storage for converted parabola
-	 * @return Parabola
-	 */
+	/// Converts the conic into a parabola. If the conic isn't a parabola then it is converted into one
+	/// by adjusting the value of B.
+	///
+	/// @param src (Input) Conic
+	/// @param dst (Output) Optional storage for converted parabola
+	/// @return Parabola
 	public static ParabolaGeneral_F64 convert(ConicGeneral_F64 src , @Nullable ParabolaGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ParabolaGeneral_F64();
@@ -151,13 +135,11 @@ public class UtilCurves_F64 {
 		return dst;
 	}
 
-	/**
-	 * Converts the parabola into a conic.
-	 *
-	 * @param src (Input) Parabola
-	 * @param dst (Output) Optional storage for converted conic
-	 * @return Conic
-	 */
+	/// Converts the parabola into a conic.
+	///
+	/// @param src (Input) Parabola
+	/// @param dst (Output) Optional storage for converted conic
+	/// @return Conic
 	public static ConicGeneral_F64 convert(ParabolaGeneral_F64 src , @Nullable ConicGeneral_F64 dst ) {
 		if( dst == null )
 			dst = new ConicGeneral_F64();

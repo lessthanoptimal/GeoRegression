@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -23,19 +23,13 @@ import georegression.struct.line.LineSegment3D_F64;
 import georegression.struct.point.Point3D_F64;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Various utilty functions related to lines in 3D
- *
- * @author Peter Abeles
- */
+/// Various utility functions related to lines in 3D
 public class UtilLine3D_F64 {
-	/**
-	 * Converts a {@link LineSegment3D_F64} into {@link LineParametric3D_F64}.
-	 *
-	 * @param line Line segment
-	 * @param output Storage for converted line. If null new line will be declared.
-	 * @return Line in parametric format
-	 */
+	/// Converts a [LineSegment3D_F64] into [LineParametric3D_F64].
+	///
+	/// @param line Line segment
+	/// @param output Storage for converted line. If null new line will be declared.
+	/// @return Line in parametric format
 	public static LineParametric3D_F64 convert( LineSegment3D_F64 line , @Nullable LineParametric3D_F64 output ) {
 		if( output == null )
 			output = new LineParametric3D_F64();
@@ -48,13 +42,11 @@ public class UtilLine3D_F64 {
 		return output;
 	}
 
-	/**
-	 * Computes the value of T for a point on the parametric line
-	 *
-	 * @param line The line
-	 * @param pointOnLine Point on a line
-	 * @return Value of T for the point
-	 */
+	/// Computes the value of T for a point on the parametric line
+	///
+	/// @param line The line
+	/// @param pointOnLine Point on a line
+	/// @return Value of T for the point
 	public static double computeT( LineParametric3D_F64 line , Point3D_F64 pointOnLine ) {
 
 		double dx = pointOnLine.x - line.p.x;

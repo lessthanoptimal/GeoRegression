@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -21,20 +21,15 @@ package georegression.geometry;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.trig.Circle2D_F64;
 
-/**
- * Functions related to circles.
- *
- * @author Peter Abeles
- */
+/// Functions related to circles.
 public class UtilCircle2D_F64 {
 
-	/**
-	 * Computes (x-x_c)**2 + (y-y_c)**2 - r. If (x,y) lies on the circle then it should be 0.
-	 * @param x x-coordinate of a point
-	 * @param y y-coordinate of a point
-	 * @param circle circle
-	 * @return Result of the equation
-	 */
+	/// Computes (x-x\_c)\*\*2 + (y-y\_c)\*\*2 - r. If (x,y) lies on the circle then it should be 0.
+	///
+	/// @param x x-coordinate of a point
+	/// @param y y-coordinate of a point
+	/// @param circle circle
+	/// @return Result of the equation
 	public static double evaluate( double x , double y, Circle2D_F64 circle ) {
 		x -= circle.center.x;
 		y -= circle.center.y;
@@ -43,15 +38,14 @@ public class UtilCircle2D_F64 {
 
 	}
 
-	/**
-	 * Given three points find the circle that intersects all three. If false is returned that means the points all
-	 * lie along a line and there is no circle.
-	 * @param x0 Point
-	 * @param x1 Point
-	 * @param x2 Point
-	 * @param circle (Output) found circle
-	 * @return true if a circle was found or false if not
-	 */
+	/// Given three points find the circle that intersects all three. If false is returned that means the points all
+	/// lie along a line and there is no circle.
+	///
+	/// @param x0 Point
+	/// @param x1 Point
+	/// @param x2 Point
+	/// @param circle (Output) found circle
+	/// @return true if a circle was found or false if not
 	public static boolean circle(Point2D_F64 x0 , Point2D_F64 x1 , Point2D_F64 x2 , Circle2D_F64 circle ) {
 
 		// points that lie on line a and b
@@ -81,13 +75,12 @@ public class UtilCircle2D_F64 {
 		return true;
 	}
 
-	/**
-	 * Radius squares of the circle that passes through these three points.
-	 * @param x0 Point
-	 * @param x1 Point
-	 * @param x2 Point
-	 * @return Radius squares of circle or NaN if colinear
-	 */
+	/// Radius squares of the circle that passes through these three points.
+	///
+	/// @param x0 Point
+	/// @param x1 Point
+	/// @param x2 Point
+	/// @return Radius squares of circle or NaN if colinear
 	public static double circleRadiusSq(Point2D_F64 x0 , Point2D_F64 x1 , Point2D_F64 x2) {
 		// points that lie on line a and b
 		double xa = (x0.x+x1.x)/2.0;
