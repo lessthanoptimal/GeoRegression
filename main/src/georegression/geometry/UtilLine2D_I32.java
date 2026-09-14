@@ -22,13 +22,11 @@ import georegression.struct.line.LineSegment2D_I32;
 
 public class UtilLine2D_I32 {
 
-	/**
-	 * Computes the acute angle between the two lines. Does not check for intersection
-	 *
-	 * @param line0 First line
-	 * @param line1 Second line
-	 * @return Acute angle in radians
-	 */
+	/// Computes the acute angle between the two lines. Does not check for intersection
+	///
+	/// @param line0 First line
+	/// @param line1 Second line
+	/// @return Acute angle in radians
 	public static double acuteAngle( LineSegment2D_I32 line0 , LineSegment2D_I32 line1 ) {
 		int dx0 = line0.b.x - line0.a.x;
 		int dy0 = line0.b.y - line0.a.y;

@@ -84,16 +84,14 @@ public class QuaternionMath_F64 {
 		return out;
 	}
 
-	/**
-	 * Rotates a 3D point/vector by the quaternion: out = q*v*conj(q). This is the quaternion equivalent of
-	 * GeometryMath_F64.mult(R, src, dst), i.e. R*v. Assumes 'q' is a unit quaternion. src and dst can be the
-	 * same instance.
-	 *
-	 * @param q Unit quaternion encoding the rotation. Not modified.
-	 * @param src (Input) point/vector being rotated.
-	 * @param dst (Output) storage for the result. Can be null.
-	 * @return The rotated point/vector.
-	 */
+	/// Rotates a 3D point/vector by the quaternion: out = q\*v\*conj(q). This is the quaternion equivalent of
+	/// GeometryMath\_F64.mult(R, src, dst), i.e. R\*v. Assumes 'q' is a unit quaternion. src and dst can be the
+	/// same instance.
+	///
+	/// @param q Unit quaternion encoding the rotation. Not modified.
+	/// @param src (Input) point/vector being rotated.
+	/// @param dst (Output) storage for the result. Can be null.
+	/// @return The rotated point/vector.
 	public static <T extends GeoTuple3D_F64<T>> T mult( Quaternion_F64 q, T src, @Nullable T dst ) {
 		if (dst == null)
 			dst = src.createNewInstance();
@@ -114,16 +112,14 @@ public class QuaternionMath_F64 {
 		return dst;
 	}
 
-	/**
-	 * Rotates a 3D point/vector by the inverse of the quaternion: out = conj(q)*v*q. This is the quaternion
-	 * equivalent of GeometryMath_F64.multTran(R, src, dst), i.e. R^T*v. Assumes 'q' is a unit quaternion. src and
-	 * dst can be the same instance.
-	 *
-	 * @param q Unit quaternion encoding the rotation. Not modified.
-	 * @param src (Input) point/vector being rotated.
-	 * @param dst (Output) storage for the result. Can be null.
-	 * @return The rotated point/vector.
-	 */
+	/// Rotates a 3D point/vector by the inverse of the quaternion: out = conj(q)\*v\*q. This is the quaternion
+	/// equivalent of GeometryMath\_F64.multTran(R, src, dst), i.e. R^T\*v. Assumes 'q' is a unit quaternion. src and
+	/// dst can be the same instance.
+	///
+	/// @param q Unit quaternion encoding the rotation. Not modified.
+	/// @param src (Input) point/vector being rotated.
+	/// @param dst (Output) storage for the result. Can be null.
+	/// @return The rotated point/vector.
 	public static <T extends GeoTuple3D_F64<T>> T multTran( Quaternion_F64 q, T src, @Nullable T dst ) {
 		if (dst == null)
 			dst = src.createNewInstance();
@@ -144,17 +140,15 @@ public class QuaternionMath_F64 {
 		return dst;
 	}
 
-	/**
-	 * Adds a point/vector to a rotated point/vector: out = a + q*b*conj(q). Quaternion equivalent of
-	 * GeometryMath_F64.addMult(a, R, b, out), i.e. out = a + R*b. Assumes 'q' is a unit quaternion.
-	 * 'out' may be the same instance as 'a' and/or 'b'.
-	 *
-	 * @param a (Input) point/vector added to the rotated result.
-	 * @param q Unit quaternion encoding the rotation. Not modified.
-	 * @param b (Input) point/vector being rotated.
-	 * @param out (Output) storage for the result. Can be null.
-	 * @return out = a + (rotation of b by q)
-	 */
+	/// Adds a point/vector to a rotated point/vector: out = a + q\*b\*conj(q). Quaternion equivalent of
+	/// GeometryMath\_F64.addMult(a, R, b, out), i.e. out = a + R\*b. Assumes 'q' is a unit quaternion.
+	/// 'out' may be the same instance as 'a' and/or 'b'.
+	///
+	/// @param a (Input) point/vector added to the rotated result.
+	/// @param q Unit quaternion encoding the rotation. Not modified.
+	/// @param b (Input) point/vector being rotated.
+	/// @param out (Output) storage for the result. Can be null.
+	/// @return out = a + (rotation of b by q)
 	public static <T extends GeoTuple3D_F64<T>> T addMult( T a, Quaternion_F64 q, T b, @Nullable T out ) {
 		if (out == null)
 			out = a.createNewInstance();
@@ -176,17 +170,15 @@ public class QuaternionMath_F64 {
 		return out;
 	}
 
-	/**
-	 * Adds a point/vector to an inverse-rotated point/vector: out = a + conj(q)*b*q. Quaternion equivalent of
-	 * GeometryMath_F64.addMultTrans(a, R, b, out), i.e. out = a + R^T*b. Assumes 'q' is a unit quaternion.
-	 * 'out' may be the same instance as 'a' and/or 'b'.
-	 *
-	 * @param a (Input) point/vector added to the rotated result.
-	 * @param q Unit quaternion encoding the rotation. Not modified.
-	 * @param b (Input) point/vector being rotated by the inverse.
-	 * @param out (Output) storage for the result. Can be null.
-	 * @return out = a + (inverse rotation of b by q)
-	 */
+	/// Adds a point/vector to an inverse-rotated point/vector: out = a + conj(q)\*b\*q. Quaternion equivalent of
+	/// GeometryMath\_F64.addMultTrans(a, R, b, out), i.e. out = a + R^T\*b. Assumes 'q' is a unit quaternion.
+	/// 'out' may be the same instance as 'a' and/or 'b'.
+	///
+	/// @param a (Input) point/vector added to the rotated result.
+	/// @param q Unit quaternion encoding the rotation. Not modified.
+	/// @param b (Input) point/vector being rotated by the inverse.
+	/// @param out (Output) storage for the result. Can be null.
+	/// @return out = a + (inverse rotation of b by q)
 	public static <T extends GeoTuple3D_F64<T>> T addMultTran( T a, Quaternion_F64 q, T b, @Nullable T out ) {
 		if (out == null)
 			out = a.createNewInstance();
