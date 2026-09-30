@@ -238,6 +238,27 @@ public class UtilEllipse_F64 {
 		return output;
 	}
 
+	/**
+	 * Computes the outward unit normal to the ellipse at the specified location.
+	 *
+	 * @param t Location on the ellipse. Radians
+	 * @param ellipse Ellipse equation
+	 * @param output Optional storage for normal
+	 * @return The outward normal
+	 */
+	public static Vector2D_F64 computeNormal( double t ,
+											   EllipseRotated_F64 ellipse ,
+											   @Nullable Vector2D_F64 output  ) {
+		output = computeTangent(t, ellipse, output);
+
+		// rotate the tangent -90 degrees so that it points away from the center
+		double x = output.x;
+		output.x = output.y;
+		output.y = -x;
+
+		return output;
+	}
+
 	/// Finds two points on the ellipse that in combination with point 'pt' each define
 	/// a line that is tangent to the ellipse.
 	///
