@@ -322,20 +322,32 @@ public class TestGeometryMath_F64 extends GeoRegressionJUnit {
 	}
 
 	@Test void mult_2d_2d() {
-		Vector3D_F64 a3 = new Vector3D_F64(-1, 2, 1);
+		var a3 = new Vector3D_F64(-1, 2, 1);
 		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 		var expected = new Vector3D_F64();
 
 		GeometryMath_F64.mult(M, a3, expected);
 
-		Vector2D_F64 a2 = new Vector2D_F64(-1, 2);
-		Vector2D_F64 found = new Vector2D_F64();
+		var a2 = new Vector2D_F64(-1, 2);
+		var found = new Vector2D_F64();
 		GeometryMath_F64.mult(M, a2, found);
 
 		double z = expected.z;
 
 		assertEquals(expected.x/z, found.x, GrlConstants.TEST_F64);
 		assertEquals(expected.y/z, found.y, GrlConstants.TEST_F64);
+	}
+
+	// Ensure that the null variant doesn't blow up
+	@Test void mult_2d_2d_null() {
+		var M = new DMatrixRMaj(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+		var a2 = new Vector2D_F64(-1, 2);
+		Vector2D_F64 found = GeometryMath_F64.mult(M, a2, (Vector2D_F64)null);
+		var expected = new Vector2D_F64(3,7);
+		GeometryMath_F64.mult(M, a2, expected);
+
+		assertTrue(found.isIdentical(expected.x, expected.y, UtilEjml.TEST_F64));
 	}
 
 	@Test void multTran_3d_3d() {

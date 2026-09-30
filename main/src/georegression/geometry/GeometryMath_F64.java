@@ -447,7 +447,7 @@ public class GeometryMath_F64 {
 			throw new IllegalArgumentException("Input matrix must be 3 by 3, not " + M.numRows + " " + M.numCols);
 
 		if (mod == null) {
-			throw new IllegalArgumentException("Must provide an instance in mod");
+			mod = (T)pt.createNewInstance();
 		}
 
 		double x = pt.x;
