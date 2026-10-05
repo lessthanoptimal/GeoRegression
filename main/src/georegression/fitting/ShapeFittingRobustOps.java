@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022, Peter Abeles. All Rights Reserved.
+ * Copyright (C) 2026, Peter Abeles. All Rights Reserved.
  *
  * This file is part of Geometric Regression Library (GeoRegression).
  *
@@ -135,15 +135,12 @@ public class ShapeFittingRobustOps {
 		LeastMedianOfSquares<Model, Point> robust;
 		if (useConcurrent(points)) {
 			robust = new LeastMedianOfSquares_MT<>(randomSeed, maxIterations,
-					lsmedMaxAllowedError, lsmedInlierFraction,
-					modelManager,
-					(Class<Point>)points.get(0).getClass());
+					lsmedMaxAllowedError, modelManager, (Class<Point>)points.get(0).getClass());
 		} else {
 			robust = new LeastMedianOfSquares<>(randomSeed, maxIterations,
-					lsmedMaxAllowedError, lsmedInlierFraction,
-					modelManager,
-					(Class<Point>)points.get(0).getClass());
+					lsmedMaxAllowedError, modelManager, (Class<Point>)points.get(0).getClass());
 		}
+		robust.setInlierFraction(lsmedInlierFraction);
 		robust.setModel(factoryGenerator, factoryDistance);
 
 		if (!robust.process(points)) {
@@ -169,15 +166,12 @@ public class ShapeFittingRobustOps {
 		LeastMedianOfSquares<Model, Point> robust;
 		if (useConcurrent(points)) {
 			robust = new LeastMedianOfSquares_MT<>(randomSeed, maxIterations,
-					lsmedMaxAllowedError, lsmedInlierFraction,
-					modelManager,
-					(Class<Point>)points.get(0).getClass());
+					lsmedMaxAllowedError, modelManager, (Class<Point>)points.get(0).getClass());
 		} else {
 			robust = new LeastMedianOfSquares<>(randomSeed, maxIterations,
-					lsmedMaxAllowedError, lsmedInlierFraction,
-					modelManager,
-					(Class<Point>)points.get(0).getClass());
+					lsmedMaxAllowedError, modelManager, (Class<Point>)points.get(0).getClass());
 		}
+		robust.setInlierFraction(lsmedInlierFraction);
 		robust.setModel(factoryGenerator, factoryDistance);
 
 		if (!robust.process(points)) {

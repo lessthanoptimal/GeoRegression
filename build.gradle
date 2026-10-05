@@ -15,7 +15,7 @@ allprojects {
 }
 
 project.ext.autofloat_version = '3.3.0'
-project.ext.ddogleg_version = '0.25.2'
+project.ext.ddogleg_version = '0.25.4-SNAPSHOT'
 project.ext.errorprone_version = '2.35.1'
 project.ext.nullaway_version = '0.12.4'
 project.ext.lombok_version = '1.18.28'
