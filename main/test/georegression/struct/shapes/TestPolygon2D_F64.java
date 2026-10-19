@@ -87,7 +87,7 @@ public class TestPolygon2D_F64 extends GeoRegressionJUnit {
 		polygon.get(2).setTo(3, 4);
 
 		String found = polygon.formatMap(new MapPrintFormat().withPrecision(2));
-		assertEquals("[{x: 1, y: 2},\n{x: 2.12, y: 3},\n{x: 3, y: 4}]", found);
+		assertEquals("[{x: 1, y: 2}, {x: 2.12, y: 3}, {x: 3, y: 4}]", found);
 	}
 
 	// Disabling due to DogArrays being used internally
