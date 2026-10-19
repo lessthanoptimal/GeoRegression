@@ -58,7 +58,7 @@ class TestSo3_F64 extends GenericInvertibleTransformTests_F64<Point3D_F64> {
 	@Test void formatMap() {
 		var a = new So3_F64(new DMatrixRMaj(new double[][]{{1,2,3},{4,5,6},{7,8,9.1234}}));
 		String found = a.formatMap(new MapPrintFormat().withPrecision(2));
-		assertEquals("{R: [{1, 2, 3},\n{4, 5, 6},\n{7, 8, 9.12}]}", found);
+		assertEquals("{R: [{1, 2, 3}, {4, 5, 6}, {7, 8, 9.12}]}", found);
 	}
 
 	// Skip this test since the automatic check can't handle DMatrixRMaj data types

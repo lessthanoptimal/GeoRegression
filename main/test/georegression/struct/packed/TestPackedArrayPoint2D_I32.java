@@ -83,6 +83,6 @@ public class TestPackedArrayPoint2D_I32 extends GenericPackedArrayChecks<Point2D
 		var alg = new PackedArrayPoint2D_I32();
 		alg.append(1, 3);
 		alg.append(2, -4);
-		assertEquals("[{x: 1, y: 3},\n{x: 2, y: -4}]", alg.formatMap(new MapPrintFormat()));
+		assertEquals("[{x: 1, y: 3}, {x: 2, y: -4}]", alg.formatMap(new MapPrintFormat()));
 	}
 }
