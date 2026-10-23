@@ -11,11 +11,11 @@ allprojects {
     apply plugin: 'com.peterabeles.gversion'
 
     group = 'org.georegression'
-    version = '0.30.2-SNAPSHOT'
+    version = '0.30.2'
 }
 
 project.ext.autofloat_version = '3.3.0'
-project.ext.ddogleg_version = '0.25.4-SNAPSHOT'
+project.ext.ddogleg_version = '1.0.0'
 project.ext.errorprone_version = '2.35.1'
 project.ext.nullaway_version = '0.12.4'
 project.ext.lombok_version = '1.18.28'
