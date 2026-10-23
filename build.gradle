@@ -115,6 +115,7 @@ subprojects {
 
         testImplementation("org.junit.jupiter:junit-jupiter-api:$project.junit_version")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$project.junit_version")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
         // needed to use Java 15+ syntax with Java 11 byte code
         annotationProcessor("com.pkware.jabel:jabel-javac-plugin:${project.jabel_version}")
